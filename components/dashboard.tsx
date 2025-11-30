@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog"
+import Link from "next/link"
 import Heatmap from "./heatmap"
 import TopicCard from "./topic-card"
 import { questions } from "@/lib/questions"
@@ -208,6 +209,10 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
           <p className="text-sm md:text-base text-muted-foreground">Master AIIMS CRE with Confidence</p>
         </div>
         <div className="flex items-center gap-3">
+          {/* Settings link (visible on mobile and desktop) */}
+          <Link href="/settings" className="md:hidden">
+            <Button variant="outline" size="sm">Settings</Button>
+          </Link>
           {/* Desktop-only heatmap trigger */}
           <div className="hidden md:block">
             <Dialog>
@@ -229,6 +234,12 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
             <Button variant="ghost" disabled>
               Heatmap (desktop only)
             </Button>
+          </div>
+          {/* Also show Settings on desktop alongside heatmap */}
+          <div className="hidden md:block">
+            <Link href="/settings">
+              <Button variant="outline" size="sm">Settings</Button>
+            </Link>
           </div>
         </div>
       </div>
