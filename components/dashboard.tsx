@@ -229,12 +229,7 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
             </Dialog>
           </div>
 
-          {/* Mobile hint: show disabled button with explanation */}
-          <div className="md:hidden">
-            <Button variant="ghost" disabled>
-              Heatmap (desktop only)
-            </Button>
-          </div>
+          {/* Mobile: no heatmap controls shown */}
           {/* Also show Settings on desktop alongside heatmap */}
           <div className="hidden md:block">
             <Link href="/settings">
