@@ -1,9 +1,4 @@
 ﻿# Kiddo Prep – Quiz App
-
-<p align="center">
-  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaGd0bXcxN2JmN2VtcHF2bWZuN3NybGJrYm9mZDJqNnQzdWg4d3E4aCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Ll22OhMLAlV6S/giphy.gif" width="680" alt="Animated preview" />
-</p>
-
 - Built with Next.js App Router, TypeScript, TailwindCSS, and shadcn/ui.
 - Features timed quizzes, topic selection, results review, and heatmap analytics.
 
@@ -19,10 +14,7 @@
 - shadcn/ui components
 - State + utils under lib/ and components/
 
-## Screenshots
-<p align="center">
-  <img src="public/placeholder-logo.png" width="160" alt="Logo" />
-</p>
+
 - Node.js 18+
 - pnpm (recommended)
 ``
