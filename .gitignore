@@ -1,0 +1,50 @@
+﻿# Node.js / Next.js
+node_modules/
+.next/
+.next/cache/
+.next/static/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage
+coverage/
+*.lcov
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# OS / Editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Build outputs
+out/
+dist/
+
+# Misc
+*.tsbuildinfo
+
+# Storybook
+.storybook-out/
+
+# Next.js export
+.next-turbo/
+
+# pnpm store (if in project)
+.pnpm-store/

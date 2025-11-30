@@ -1,0 +1,348 @@
+{
+  "topics": [
+    {
+      "id": "anatomy",
+      "name": "Anatomy",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Which of the following structures forms the floor of the cranial vault?",
+          "options": ["Frontal bone", "Ethmoid bone", "Sphenoid bone", "Occipital bone"],
+          "correctAnswer": 2,
+          "explanation": "The sphenoid bone forms the floor of the middle cranial fossa and is central to the cranial vault structure. It contains the pituitary gland in the sella turcica."
+        },
+        {
+          "id": 2,
+          "question": "The artery of Adamkiewicz typically arises from which spinal cord level?",
+          "options": ["C5-C6", "T3-T5", "T9-L2", "L4-L5"],
+          "correctAnswer": 2,
+          "explanation": "The artery of Adamkiewicz is the major anterior medullary artery and typically arises on the left side between T9 and L2 levels, supplying the lower spinal cord."
+        },
+        {
+          "id": 3,
+          "question": "Which nerve is most commonly affected in carpal tunnel syndrome?",
+          "options": ["Radial nerve", "Median nerve", "Ulnar nerve", "Axillary nerve"],
+          "correctAnswer": 1,
+          "explanation": "The median nerve passes through the carpal tunnel and is compressed in this syndrome, leading to paresthesia in the thumb and lateral three and a half fingers."
+        },
+        {
+          "id": 4,
+          "question": "The stapes is ossified from which embryological origin?",
+          "options": ["First pharyngeal arch", "Second pharyngeal arch", "Third pharyngeal arch", "Neural crest cells"],
+          "correctAnswer": 1,
+          "explanation": "The stapes, like the incus and malleus, ossifies from Reichert's cartilage which arises from the second pharyngeal arch (Meckel's cartilage from first arch)."
+        },
+        {
+          "id": 5,
+          "question": "Which structure is NOT derived from the foregut?",
+          "options": ["Liver", "Pancreas", "Ascending colon", "Stomach"],
+          "correctAnswer": 2,
+          "explanation": "The ascending colon is derived from the midgut. The foregut gives rise to the esophagus, stomach, liver, pancreas, and proximal part of the duodenum."
+        },
+        {
+          "id": 6,
+          "question": "What is the blood supply of the femoral head primarily from in adults?",
+          "options": [
+            "Medial and lateral circumflex femoral arteries",
+            "Obturator artery only",
+            "Femoral artery only",
+            "Inferior gluteal artery"
+          ],
+          "correctAnswer": 0,
+          "explanation": "The femoral head receives blood primarily from the medial and lateral circumflex femoral arteries. The medial circumflex femoral artery is the dominant supply."
+        },
+        {
+          "id": 7,
+          "question": "The ductus venosus is a remnant of which fetal vessel?",
+          "options": ["Umbilical vein", "Ductus arteriosus", "Foramen ovale", "Umbilical artery"],
+          "correctAnswer": 0,
+          "explanation": "The ductus venosus allows blood from the umbilical vein to bypass the liver. It becomes the ligamentum venosus after birth."
+        },
+        {
+          "id": 8,
+          "question": "Which nerve provides sensory innervation to the posterior and inferior surface of the tympanum?",
+          "options": ["Glossopharyngeal nerve", "Vagus nerve", "Facial nerve", "Trigeminal nerve"],
+          "correctAnswer": 0,
+          "explanation": "The tympanic plexus is supplied by the glossopharyngeal nerve (CN IX), specifically the tympanic branch (Jacobson's nerve)."
+        },
+        {
+          "id": 9,
+          "question": "The thyroid gland descends from which structure during development?",
+          "options": ["First pharyngeal pouch", "Foramen caecum", "Ultimobranchial body", "Pharyngeal floor"],
+          "correctAnswer": 1,
+          "explanation": "The thyroid gland develops from the foramen caecum at the base of the tongue and descends through the thyroglossal duct."
+        },
+        {
+          "id": 10,
+          "question": "What is the innervation of the diaphragm?",
+          "options": ["Vagus nerve", "Phrenic nerve (C3, C4, C5)", "Intercostal nerves", "Lumbar plexus"],
+          "correctAnswer": 1,
+          "explanation": "The diaphragm is innervated by the phrenic nerve which arises from C3, C4, and C5 spinal nerves. Remember: 'C3, 4, 5 keeps the diaphragm alive.'"
+        }
+      ]
+    },
+    {
+      "id": "physiology",
+      "name": "Physiology",
+      "questions": [
+        {
+          "id": 11,
+          "question": "What is the normal resting membrane potential of a neuron?",
+          "options": ["-30 mV", "-70 mV", "-100 mV", "-10 mV"],
+          "correctAnswer": 1,
+          "explanation": "The resting membrane potential is approximately -70 mV, maintained by the Na+/K+ ATPase pump and the differential permeability of the cell membrane."
+        },
+        {
+          "id": 12,
+          "question": "Which phase of cardiac cycle has the longest duration?",
+          "options": ["Isovolumetric contraction", "Isovolumetric relaxation", "Diastole", "Systole"],
+          "correctAnswer": 2,
+          "explanation": "Diastole is the longest phase, especially passive filling. The entire cardiac cycle is approximately 0.8 seconds, with diastole lasting about 0.5 seconds."
+        },
+        {
+          "id": 13,
+          "question": "What is the refractory period after an action potential primarily due to?",
+          "options": [
+            "Closed sodium channels",
+            "Open potassium channels",
+            "Inactivation of sodium channels",
+            "Depolarization"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The refractory period (both absolute and relative) is primarily due to inactivation of sodium channels, preventing another action potential from occurring immediately."
+        },
+        {
+          "id": 14,
+          "question": "Which hormone regulates blood calcium levels primarily?",
+          "options": ["Thyroxine", "Calcitonin", "Parathyroid hormone", "Vitamin D alone"],
+          "correctAnswer": 2,
+          "explanation": "Parathyroid hormone (PTH) is the primary regulator of blood calcium, increasing serum calcium by bone resorption, renal reabsorption, and vitamin D activation."
+        },
+        {
+          "id": 15,
+          "question": "What is the threshold potential for neuronal excitation?",
+          "options": ["-90 mV", "-70 mV", "-55 mV", "-30 mV"],
+          "correctAnswer": 2,
+          "explanation": "The threshold potential is typically around -55 mV. When the membrane potential reaches this value, voltage-gated sodium channels open rapidly."
+        },
+        {
+          "id": 16,
+          "question": "The compliance of the lungs is primarily determined by which structure?",
+          "options": ["Mucosa of airways", "Elastic fibers (elastin)", "Smooth muscle of airways", "Cartilage"],
+          "correctAnswer": 1,
+          "explanation": "Lung compliance is primarily determined by elastic fibers (elastin) and collagen in the lung tissue. Emphysema increases compliance while fibrosis decreases it."
+        },
+        {
+          "id": 17,
+          "question": "What is the primary function of the loop of Henle?",
+          "options": ["Ultrafiltration", "Selective reabsorption", "Countercurrent multiplication", "Secretion"],
+          "correctAnswer": 2,
+          "explanation": "The loop of Henle establishes a concentration gradient through countercurrent multiplication, essential for producing concentrated urine."
+        },
+        {
+          "id": 18,
+          "question": "Which neurotransmitter is the main inhibitory neurotransmitter in the CNS?",
+          "options": ["Acetylcholine", "Dopamine", "GABA", "Glutamate"],
+          "correctAnswer": 2,
+          "explanation": "GABA (gamma-aminobutyric acid) is the primary inhibitory neurotransmitter in the central nervous system, responsible for reducing neuronal excitability."
+        },
+        {
+          "id": 19,
+          "question": "What is the normal value of GFR (Glomerular Filtration Rate)?",
+          "options": ["50-80 mL/min", "80-120 mL/min", "120-160 mL/min", "160-200 mL/min"],
+          "correctAnswer": 2,
+          "explanation": "The normal GFR is approximately 120-160 mL/min/1.73 m² (often stated as 100-120 mL/min). It represents the volume of plasma filtered per unit time."
+        },
+        {
+          "id": 20,
+          "question": "The baroreceptor reflex primarily involves which cranial nerves?",
+          "options": ["CN III and CN IV", "CN IX and CN X", "CN VII and CN VIII", "CN V and CN VI"],
+          "correctAnswer": 1,
+          "explanation": "The glossopharyngeal (CN IX) and vagus (CN X) nerves are involved in the baroreceptor reflex. The vagus mediates the parasympathetic response."
+        }
+      ]
+    },
+    {
+      "id": "pharmacology",
+      "name": "Pharmacology",
+      "questions": [
+        {
+          "id": 21,
+          "question": "Which drug is a selective beta-1 antagonist?",
+          "options": ["Propranolol", "Metoprolol", "Carvedilol", "Labetalol"],
+          "correctAnswer": 1,
+          "explanation": "Metoprolol is a selective beta-1 adrenergic antagonist. Propranolol is non-selective, while carvedilol and labetalol have additional properties."
+        },
+        {
+          "id": 22,
+          "question": "What is the mechanism of action of ACE inhibitors?",
+          "options": [
+            "Blocks angiotensin II receptors",
+            "Inhibits angiotensin-converting enzyme",
+            "Blocks aldosterone receptors",
+            "Inhibits renin"
+          ],
+          "correctAnswer": 1,
+          "explanation": "ACE inhibitors block the enzyme that converts angiotensin I to angiotensin II, reducing vasoconstriction and aldosterone secretion."
+        },
+        {
+          "id": 23,
+          "question": "Which antibiotic has the best penetration into cerebrospinal fluid?",
+          "options": ["Erythromycin", "Cephalexin", "Chloramphenicol", "Amoxicillin"],
+          "correctAnswer": 2,
+          "explanation": "Chloramphenicol has excellent CSF penetration (up to 80%). It's useful for meningitis caused by organisms resistant to better agents."
+        },
+        {
+          "id": 24,
+          "question": "What is the half-life of phenytoin approximately?",
+          "options": ["2-4 hours", "12-24 hours", "24-48 hours", "48-72 hours"],
+          "correctAnswer": 2,
+          "explanation": "Phenytoin has a half-life of 24-48 hours. Its metabolism follows saturation kinetics, making therapeutic drug monitoring essential."
+        },
+        {
+          "id": 25,
+          "question": "Which statin is metabolized by CYP3A4?",
+          "options": ["Pravastatin", "Rosuvastatin", "Simvastatin", "Pravastatin and Rosuvastatin"],
+          "correctAnswer": 2,
+          "explanation": "Simvastatin is extensively metabolized by CYP3A4, leading to multiple drug interactions. Pravastatin and rosuvastatin are minimally metabolized."
+        },
+        {
+          "id": 26,
+          "question": "What is the target INR for atrial fibrillation on warfarin?",
+          "options": ["1.0-1.5", "2.0-3.0", "3.0-4.0", "4.0-5.0"],
+          "correctAnswer": 1,
+          "explanation": "The target INR for atrial fibrillation is 2.0-3.0. Higher targets increase bleeding risk without significant additional thrombotic protection."
+        },
+        {
+          "id": 27,
+          "question": "Which NSAID has the highest selectivity for COX-2?",
+          "options": ["Ibuprofen", "Meloxicam", "Celecoxib", "Aspirin"],
+          "correctAnswer": 2,
+          "explanation": "Celecoxib is a highly selective COX-2 inhibitor. Other COX-2 selective inhibitors like rofecoxib have been withdrawn due to cardiovascular risks."
+        },
+        {
+          "id": 28,
+          "question": "What is the mechanism of action of metformin?",
+          "options": [
+            "Stimulates insulin secretion",
+            "Inhibits hepatic glucose production",
+            "Increases insulin secretion and peripheral utilization",
+            "Slows carbohydrate absorption"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Metformin primarily works by inhibiting hepatic gluconeogenesis and glycogenolysis, reducing glucose production by the liver."
+        },
+        {
+          "id": 29,
+          "question": "Which drug causes a disulfiram-like reaction with alcohol?",
+          "options": ["Metronidazole", "Amoxicillin", "Ciprofloxacin", "Fluconazole"],
+          "correctAnswer": 0,
+          "explanation": "Metronidazole causes a disulfiram-like reaction when combined with alcohol, leading to flushing, nausea, and tachycardia."
+        },
+        {
+          "id": 30,
+          "question": "What is the maximum recommended dose of lisinopril?",
+          "options": ["5 mg daily", "10 mg daily", "20-40 mg daily", "50 mg daily"],
+          "correctAnswer": 2,
+          "explanation": "The maximum recommended dose of lisinopril is typically 20-40 mg daily depending on indication and response."
+        }
+      ]
+    },
+    {
+      "id": "pathology",
+      "name": "Pathology",
+      "questions": [
+        {
+          "id": 31,
+          "question": "What is the most common cause of pulmonary embolism?",
+          "options": ["Fat embolism", "Air embolism", "Deep vein thrombosis", "Amniotic fluid embolism"],
+          "correctAnswer": 2,
+          "explanation": "Deep vein thrombosis (DVT) is the most common source of pulmonary emboli, typically arising from the lower extremity veins."
+        },
+        {
+          "id": 32,
+          "question": "Which type of necrosis is characteristic of acute myocardial infarction?",
+          "options": ["Fat necrosis", "Fibrinoid necrosis", "Caseous necrosis", "Coagulative necrosis"],
+          "correctAnswer": 3,
+          "explanation": "Coagulative necrosis is characteristic of acute MI, where the tissue architecture is preserved but cells are dead due to ischemia."
+        },
+        {
+          "id": 33,
+          "question": "What is the hallmark histopathological finding in Alzheimer's disease?",
+          "options": [
+            "Lewy bodies",
+            "Amyloid-beta plaques and neurofibrillary tangles",
+            "Pick bodies",
+            "Prion deposits"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Amyloid-beta (Aβ) plaques and neurofibrillary tangles composed of tau protein are the hallmark pathological features of Alzheimer's disease."
+        },
+        {
+          "id": 34,
+          "question": "Which mutation is most associated with familial adenomatous polyposis?",
+          "options": ["p53", "RB gene", "APC gene", "KRAS"],
+          "correctAnswer": 2,
+          "explanation": "Germline mutations in the APC (adenomatous polyposis coli) gene cause FAP, leading to hundreds of adenomatous polyps and high colorectal cancer risk."
+        },
+        {
+          "id": 35,
+          "question": "What is the most common type of renal cell carcinoma?",
+          "options": ["Papillary RCC", "Oncocytoma", "Clear cell RCC", "Chromophobe RCC"],
+          "correctAnswer": 2,
+          "explanation": "Clear cell RCC accounts for 70-80% of all renal cell carcinomas and arises from the proximal tubule epithelium."
+        },
+        {
+          "id": 36,
+          "question": "Which virus is associated with cervical cancer?",
+          "options": ["HPV 6 and 11", "HPV 16 and 18", "EBV", "HSV-2"],
+          "correctAnswer": 1,
+          "explanation": "HPV 16 and 18 (high-risk types) are strongly associated with cervical cancer development through inactivation of p53 and Rb genes."
+        },
+        {
+          "id": 37,
+          "question": "What is Virchow's triad for thrombosis?",
+          "options": [
+            "Infection, hemorrhage, inflammation",
+            "Stasis, endothelial injury, hypercoagulability",
+            "Fever, pain, swelling",
+            "Redness, heat, tumor"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Virchow's triad comprises: (1) stasis of blood flow, (2) injury to endothelium, and (3) alterations in blood composition (hypercoagulability)."
+        },
+        {
+          "id": 38,
+          "question": "Which chromosomal abnormality is associated with chronic myeloid leukemia?",
+          "options": ["t(9;22)", "t(8;14)", "t(15;17)", "Trisomy 8"],
+          "correctAnswer": 0,
+          "explanation": "The Philadelphia chromosome (t(9;22)) translocation creates the BCR-ABL fusion gene, which is the hallmark of CML."
+        },
+        {
+          "id": 39,
+          "question": "What is the mechanism of apoptosis via the intrinsic pathway?",
+          "options": [
+            "TNF receptor activation",
+            "Fas receptor engagement",
+            "Mitochondrial permeability transition",
+            "Death receptor clustering"
+          ],
+          "correctAnswer": 2,
+          "explanation": "The intrinsic pathway involves mitochondrial permeability transition, leading to release of cytochrome c and caspase-9 activation."
+        },
+        {
+          "id": 40,
+          "question": "What is the most common cause of bacterial meningitis in adults?",
+          "options": [
+            "Neisseria meningitidis",
+            "Streptococcus pneumoniae",
+            "Haemophilus influenzae",
+            "Listeria monocytogenes"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Streptococcus pneumoniae is the most common cause of bacterial meningitis in adults, particularly in those over 50 years old."
+        }
+      ]
+    }
+  ]
+}
