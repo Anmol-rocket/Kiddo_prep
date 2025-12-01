@@ -538,7 +538,7 @@ export const questions = {
     },
     {
       id: "x_radiation",
-      name: "X-radiation (Pages 103-122)",
+      name: "X-radiation",
       questions: [
         {
           id: 76,
