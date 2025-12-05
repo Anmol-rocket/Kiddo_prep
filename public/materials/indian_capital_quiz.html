@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indian States & Capitals Quiz</title>
+<style>
+    :root {
+        --primary: #FF9933; /* Saffron */
+        --white: #ffffff;
+        --green: #138808; /* India Green */
+        --blue: #000080; /* Navy Blue */
+        --bg: #f4f7f6;
+        --text: #333;
+    }
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg);
+        margin: 0;
+        padding: 20px;
+        color: var(--text);
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: var(--white);
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        border-top: 5px solid var(--primary);
+        border-bottom: 5px solid var(--green);
+    }
+    header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    h1 {
+        color: var(--blue);
+        margin: 0;
+        font-size: 2.2em;
+    }
+    .sub-text {
+        color: #666;
+        margin-top: 5px;
+    }
+    
+    .score-board {
+        background: #eef2f3;
+        padding: 15px;
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+        font-weight: bold;
+        margin-bottom: 25px;
+        color: var(--blue);
+    }
+
+    .question-box {
+        margin-bottom: 25px;
+        padding: 20px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        transition: transform 0.2s;
+    }
+    .question-box:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .q-text {
+        font-size: 1.2em;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: var(--text);
+    }
+    
+    .options-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    @media (max-width: 600px) {
+        .options-grid { grid-template-columns: 1fr; }
+    }
+
+    .opt-btn {
+        background: #fff;
+        border: 2px solid #ddd;
+        padding: 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        text-align: left;
+        font-size: 1em;
+        transition: all 0.2s;
+    }
+    .opt-btn:hover {
+        background: #f0f8ff;
+        border-color: var(--blue);
+    }
+    .opt-btn.correct {
+        background: #d4edda;
+        border-color: #28a745;
+        color: #155724;
+    }
+    .opt-btn.wrong {
+        background: #f8d7da;
+        border-color: #dc3545;
+        color: #721c24;
+    }
+    .disabled {
+        pointer-events: none;
+        opacity: 0.7;
+    }
+
+    .controls {
+        text-align: center;
+        margin-top: 30px;
+    }
+    .btn-main {
+        background: var(--blue);
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        font-size: 1.1em;
+        border-radius: 30px;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .btn-main:hover {
+        background: #000060;
+    }
+
+    /* Modal */
+    #resultModal {
+        display: none;
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.8);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    .modal-content {
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        text-align: center;
+        width: 90%;
+        max-width: 400px;
+    }
+    .final-score {
+        font-size: 4em;
+        color: var(--blue);
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🇮🇳 Indian Capitals Quiz</h1>
+        <div class="sub-text">Test your knowledge of States & UTs</div>
+    </header>
+
+    <div class="score-board">
+        <span>Question: <span id="currentQ">1</span> / <span id="totalQ">0</span></span>
+        <span>Score: <span id="scoreVal">0</span></span>
+    </div>
+
+    <div id="quiz-area">
+        </div>
+
+    <div class="controls">
+        <button class="btn-main" onclick="submitAll()">Submit Quiz</button>
+    </div>
+</div>
+
+<div id="resultModal">
+    <div class="modal-content">
+        <h2>Quiz Completed!</h2>
+        <div class="final-score" id="finalScoreDisplay">0%</div>
+        <p id="finalMsg"></p>
+        <button class="btn-main" onclick="closeModal()">Review Answers</button>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        // STATES
+        { q: "What is the capital of Andhra Pradesh?", o: ["Hyderabad", "Amaravati", "Visakhapatnam", "Kurnool"], a: 1 },
+        { q: "What is the capital of Arunachal Pradesh?", o: ["Dispur", "Imphal", "Itanagar", "Shillong"], a: 2 },
+        { q: "What is the capital of Assam?", o: ["Guwahati", "Silchar", "Tezpur", "Dispur"], a: 3 },
+        { q: "What is the capital of Bihar?", o: ["Ranchi", "Patna", "Gaya", "Muzaffarpur"], a: 1 },
+        { q: "What is the capital of Chhattisgarh?", o: ["Bilaspur", "Raipur", "Bhilai", "Korba"], a: 1 },
+        { q: "What is the capital of Goa?", o: ["Vasco da Gama", "Margao", "Panaji", "Mapusa"], a: 2 },
+        { q: "What is the capital of Gujarat?", o: ["Ahmedabad", "Surat", "Vadodara", "Gandhinagar"], a: 3 },
+        { q: "What is the capital of Haryana?", o: ["Gurugram", "Chandigarh", "Faridabad", "Panipat"], a: 1 },
+        { q: "What is the capital of Himachal Pradesh?", o: ["Manali", "Shimla", "Kullu", "Mandi"], a: 1 },
+        { q: "What is the capital of Jharkhand?", o: ["Jamshedpur", "Dhanbad", "Ranchi", "Bokaro"], a: 2 },
+        { q: "What is the capital of Karnataka?", o: ["Mysuru", "Mangaluru", "Hubballi", "Bengaluru"], a: 3 },
+        { q: "What is the capital of Kerala?", o: ["Kochi", "Kozhikode", "Thiruvananthapuram", "Thrissur"], a: 2 },
+        { q: "What is the capital of Madhya Pradesh?", o: ["Indore", "Gwalior", "Bhopal", "Jabalpur"], a: 2 },
+        { q: "What is the capital of Maharashtra?", o: ["Pune", "Nagpur", "Nashik", "Mumbai"], a: 3 },
+        { q: "What is the capital of Manipur?", o: ["Aizawl", "Kohima", "Imphal", "Shillong"], a: 2 },
+        { q: "What is the capital of Meghalaya?", o: ["Tura", "Shillong", "Cherrapunji", "Nongpoh"], a: 1 },
+        { q: "What is the capital of Mizoram?", o: ["Aizawl", "Lunglei", "Dimapur", "Gangtok"], a: 0 },
+        { q: "What is the capital of Nagaland?", o: ["Dimapur", "Kohima", "Mokokchung", "Wokha"], a: 1 },
+        { q: "What is the capital of Odisha?", o: ["Cuttack", "Puri", "Rourkela", "Bhubaneswar"], a: 3 },
+        { q: "What is the capital of Punjab?", o: ["Ludhiana", "Amritsar", "Jalandhar", "Chandigarh"], a: 3 },
+        { q: "What is the capital of Rajasthan?", o: ["Jodhpur", "Udaipur", "Jaipur", "Ajmer"], a: 2 },
+        { q: "What is the capital of Sikkim?", o: ["Pelling", "Gangtok", "Namchi", "Geyzing"], a: 1 },
+        { q: "What is the capital of Tamil Nadu?", o: ["Madurai", "Coimbatore", "Chennai", "Trichy"], a: 2 },
+        { q: "What is the capital of Telangana?", o: ["Warangal", "Hyderabad", "Nizamabad", "Karimnagar"], a: 1 },
+        { q: "What is the capital of Tripura?", o: ["Agartala", "Dharmanagar", "Udaipur", "Kailashahar"], a: 0 },
+        { q: "What is the capital of Uttar Pradesh?", o: ["Kanpur", "Varanasi", "Lucknow", "Agra"], a: 2 },
+        { q: "What is the capital of Uttarakhand?", o: ["Haridwar", "Nainital", "Dehradun", "Rishikesh"], a: 2 },
+        { q: "What is the capital of West Bengal?", o: ["Howrah", "Darjeeling", "Siliguri", "Kolkata"], a: 3 },
+
+        // UNION TERRITORIES
+        { q: "What is the capital of Andaman & Nicobar Islands?", o: ["Havelock", "Port Blair", "Diglipur", "Car Nicobar"], a: 1 },
+        { q: "What is the capital of Ladakh?", o: ["Kargil", "Leh", "Drass", "Hemis"], a: 1 },
+        { q: "What is the capital of Lakshadweep?", o: ["Minicoy", "Agatti", "Kavaratti", "Andrott"], a: 2 },
+        { q: "What is the capital of Dadra and Nagar Haveli and Daman and Diu?", o: ["Silvassa", "Daman", "Diu", "Dadra"], a: 1 },
+        { q: "What is the capital of Puducherry?", o: ["Karaikal", "Mahe", "Yanam", "Puducherry"], a: 3 }
+    ];
+
+    const quizArea = document.getElementById('quiz-area');
+    document.getElementById('totalQ').innerText = quizData.length;
+
+    // Render Questions
+    quizData.forEach((item, index) => {
+        const box = document.createElement('div');
+        box.className = 'question-box';
+        box.id = `qbox-${index}`;
+
+        let optsHtml = '';
+        item.o.forEach((opt, i) => {
+            optsHtml += `<button class="opt-btn" onclick="selectOption(${index}, ${i}, this)">${opt}</button>`;
+        });
+
+        box.innerHTML = `
+            <div class="q-text">${index + 1}. ${item.q}</div>
+            <div class="options-grid" id="opts-${index}">
+                ${optsHtml}
+            </div>
+        `;
+        quizArea.appendChild(box);
+    });
+
+    // Handle Selection
+    const userAnswers = new Array(quizData.length).fill(null);
+
+    function selectOption(qIndex, optIndex, btnElement) {
+        // Store answer
+        userAnswers[qIndex] = optIndex;
+
+        // Visual feedback for selection (only select one)
+        const parent = document.getElementById(`opts-${qIndex}`);
+        const buttons = parent.getElementsByClassName('opt-btn');
+        
+        for (let btn of buttons) {
+            btn.style.background = '#fff';
+            btn.style.borderColor = '#ddd';
+            btn.style.color = '#333';
+        }
+
+        // Highlight selected
+        btnElement.style.background = '#e3f2fd';
+        btnElement.style.borderColor = '#2196f3';
+    }
+
+    // Submit & Calculate
+    function submitAll() {
+        let score = 0;
+        let attempted = 0;
+
+        quizData.forEach((item, i) => {
+            const parent = document.getElementById(`opts-${i}`);
+            const buttons = parent.getElementsByClassName('opt-btn');
+            
+            // Disable buttons
+            for (let btn of buttons) {
+                btn.classList.add('disabled');
+            }
+
+            if (userAnswers[i] !== null) {
+                attempted++;
+                if (userAnswers[i] === item.a) {
+                    score++;
+                    buttons[userAnswers[i]].classList.add('correct');
+                } else {
+                    buttons[userAnswers[i]].classList.add('wrong');
+                    buttons[item.a].classList.add('correct'); // Show correct one
+                }
+            } else {
+                // If skipped, just show correct
+                buttons[item.a].classList.add('correct');
+            }
+        });
+
+        const percentage = Math.round((score / quizData.length) * 100);
+        document.getElementById('scoreVal').innerText = score;
+        document.getElementById('finalScoreDisplay').innerText = percentage + "%";
+        
+        let msg = "";
+        if(percentage >= 90) msg = "Excellent! You know India perfectly! 🇮🇳";
+        else if(percentage >= 70) msg = "Great job! Very good knowledge.";
+        else msg = "Good effort! Review the answers to learn more.";
+        
+        document.getElementById('finalMsg').innerText = `You scored ${score} out of ${quizData.length}. ${msg}`;
+        document.getElementById('resultModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('resultModal').style.display = 'none';
+        window.scrollTo(0, 0);
+    }
+
+</script>
+
+</body>
+</html>

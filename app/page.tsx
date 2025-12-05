@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import Dashboard from "@/components/dashboard"
+import MaterialsSection from "@/components/materials-section"
 import Review from "@/components/review"
 import TimeSelection from "@/components/time-selection"
 import Quiz from "@/components/quiz"
@@ -164,7 +165,13 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-background">
       <div key={appState} className={navDirection === "forward" ? "page-slide-forward" : "page-slide-back"}>
-        {appState === "dashboard" && <Dashboard onStartQuiz={handleStartQuiz} onReviewTopic={handleReviewTopic} />}
+        {appState === "dashboard" && (
+          <div className="space-y-6">
+            <Dashboard onStartQuiz={handleStartQuiz} onReviewTopic={handleReviewTopic} />
+            {/* Materials section shown on the home page below available topics */}
+            <MaterialsSection />
+          </div>
+        )}
         {appState === "time-selection" && (
           <TimeSelection onTimeSelected={handleTimeSelected} onBack={() => setAppState("dashboard")} />
         )}

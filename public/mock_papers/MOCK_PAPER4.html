@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIIMS CRE Mock Test - SET 4</title>
+<style>
+    :root {
+        --header-bg: #4a148c; /* Purple theme */
+        --primary: #6a1b9a;
+        --light-bg: #f3e5f5;
+        --white: #ffffff;
+        --correct: #2e7d32;
+        --wrong: #c62828;
+    }
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+    }
+    .main-wrapper {
+        max-width: 950px;
+        margin: 0 auto;
+        background: var(--white);
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    header {
+        border-bottom: 3px solid var(--primary);
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    h1 { color: var(--header-bg); margin: 0 0 10px 0; }
+    .meta-info {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        font-weight: 600;
+        color: #555;
+        flex-wrap: wrap;
+    }
+    .badge {
+        background: var(--light-bg);
+        color: var(--primary);
+        padding: 5px 12px;
+        border-radius: 15px;
+        font-size: 0.9em;
+    }
+
+    .section-divider {
+        background: var(--header-bg);
+        color: white;
+        padding: 12px 20px;
+        font-size: 1.2em;
+        font-weight: bold;
+        border-radius: 5px;
+        margin: 40px 0 20px 0;
+    }
+
+    .q-container {
+        border: 1px solid #e0e0e0;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        background: #fff;
+    }
+    .q-text { font-size: 1.1em; font-weight: 600; margin-bottom: 15px; line-height: 1.4; }
+    
+    .opt-group label {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        margin-bottom: 5px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s;
+        background: #fafafa;
+    }
+    .opt-group label:hover { background: #eee; border-color: #ccc; }
+    .opt-group input { margin-right: 12px; transform: scale(1.2); }
+
+    /* Results styling */
+    .explanation {
+        display: none;
+        margin-top: 15px;
+        padding: 15px;
+        background: #e8f5e9;
+        border-left: 5px solid var(--correct);
+        color: #1b5e20;
+        font-size: 0.95em;
+    }
+    .user-correct { background-color: #c8e6c9 !important; border: 1px solid var(--correct) !important; font-weight: bold; }
+    .user-wrong { background-color: #ffcdd2 !important; border: 1px solid var(--wrong) !important; text-decoration: line-through; }
+    .correct-answer-highlight { background-color: #dcedc8 !important; border: 1px solid var(--correct) !important; }
+
+    .btn-finish {
+        display: block;
+        width: 100%;
+        padding: 18px;
+        background: var(--primary);
+        color: white;
+        font-size: 1.3em;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 30px;
+    }
+    .btn-finish:hover { background: var(--header-bg); }
+
+    /* Modal */
+    .modal-overlay {
+        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.8); z-index: 999; justify-content: center; align-items: center;
+    }
+    .modal-box {
+        background: white; padding: 40px; border-radius: 10px; text-align: center; width: 90%; max-width: 450px;
+    }
+    .score-circle {
+        width: 120px; height: 120px; background: var(--header-bg); color: white;
+        border-radius: 50%; display: flex; justify-content: center; align-items: center;
+        font-size: 2.5em; font-weight: bold; margin: 0 auto 20px auto;
+    }
+</style>
+</head>
+<body>
+
+<div class="main-wrapper">
+    <header>
+        <h1>AIIMS CRE Mock Test 04</h1>
+        <div class="meta-info">
+            <span class="badge">Part A: Gen. Aptitude (20)</span>
+            <span class="badge">Part B: Technical (80)</span>
+            <span class="badge">Max Marks: 400</span>
+            <span class="badge">Negative Marking: -1</span>
+        </div>
+    </header>
+
+    <div id="quiz-body"></div>
+    <button class="btn-finish" onclick="calculateResult()">SUBMIT TEST</button>
+</div>
+
+<div id="resultModal" class="modal-overlay">
+    <div class="modal-box">
+        <h2>Result Summary</h2>
+        <div class="score-circle" id="scoreVal">0</div>
+        <p>Total Marks (out of 400)</p>
+        <div style="text-align:left; margin: 20px 0; padding: 10px; background:#f5f5f5; border-radius:5px;">
+            <p>✅ Correct: <span id="res-cor">0</span></p>
+            <p>❌ Incorrect: <span id="res-inc">0</span></p>
+            <p>⚪ Skipped: <span id="res-skip">0</span></p>
+        </div>
+        <button class="btn-finish" style="padding:10px; font-size:1em;" onclick="closeModal()">Check Explanations</button>
+    </div>
+</div>
+
+<script>
+const db = [
+    // ==========================================
+    // PART A: NON-CORE (20 Qs)
+    // ==========================================
+    { q: "Which vitamin is also known as Ascorbic Acid?", o: ["Vitamin A", "Vitamin B12", "Vitamin C", "Vitamin K"], a: 2, e: "Vitamin C is chemically known as Ascorbic Acid." },
+    { q: "The headquarters of the World Health Organization (WHO) is located in:", o: ["New York", "Geneva", "London", "Paris"], a: 1, e: "Geneva, Switzerland." },
+    { q: "Who wrote the Indian National Anthem?", o: ["Bankim Chandra Chatterjee", "Rabindranath Tagore", "Subhash Chandra Bose", "Sarojini Naidu"], a: 1, e: "Rabindranath Tagore wrote Jana Gana Mana." },
+    { q: "In a certain code, 'APPLE' is written as 'BQQMF'. How is 'GRAPE' written?", o: ["HSBQF", "HSBQf", "HRBQF", "HQBQF"], a: 0, e: "Each letter is shifted forward by +1. G->H, R->S, A->B, P->Q, E->F." },
+    { q: "Find the odd one out:", o: ["Zinc", "Iron", "Copper", "Brass"], a: 3, e: "Brass is an alloy (Copper + Zinc); the others are pure elements/metals." },
+    { q: "If A is the brother of B; B is the sister of C; and C is the father of D, how is D related to A?", o: ["Brother", "Sister", "Nephew/Niece", "Uncle"], a: 2, e: "A is D's father's brother (Uncle). Therefore D is A's Nephew or Niece." },
+    { q: "A person travels 10 km North, turns right and walks 5 km. Then turns right again and walks 10 km. How far is he from the starting point?", o: ["5 km", "10 km", "15 km", "0 km"], a: 0, e: "He forms a rectangle. The displacement is the width of the rectangle, which is 5 km." },
+    { q: "The LCM of two numbers is 120 and their HCF is 10. If one number is 30, find the other.", o: ["40", "50", "30", "20"], a: 0, e: "Product of numbers = HCF × LCM. 30 × X = 10 × 120. X = 1200 / 30 = 40." },
+    { q: "A shopkeeper sells an item for Rs. 200 at a loss of 20%. What was the cost price?", o: ["Rs. 220", "Rs. 240", "Rs. 250", "Rs. 260"], a: 2, e: "SP = 80% of CP. 200 = 0.8 × CP. CP = 200 / 0.8 = 250." },
+    { q: "The largest planet in our solar system is:", o: ["Earth", "Mars", "Jupiter", "Saturn"], a: 2, e: "Jupiter is the largest planet." },
+    { q: "Which Article of the Indian Constitution abolishes 'Untouchability'?", o: ["Article 16", "Article 17", "Article 18", "Article 21"], a: 1, e: "Article 17 abolishes untouchability." },
+    { q: "The famous 'Girona' or 'Gir' forest is located in which state?", o: ["Madhya Pradesh", "Gujarat", "Assam", "West Bengal"], a: 1, e: "Gir National Park is in Gujarat, famous for Asiatic Lions." },
+    { q: "What is the square root of 0.09?", o: ["0.3", "0.03", "0.9", "0.003"], a: 0, e: "0.3 × 0.3 = 0.09." },
+    { q: "Current is measured in:", o: ["Volts", "Watts", "Amperes", "Ohms"], a: 2, e: "Ampere (A) is the unit of electric current." },
+    { q: "Complete the series: 2, 5, 10, 17, 26, ?", o: ["35", "36", "37", "39"], a: 2, e: "Pattern is n^2 + 1. (1^2+1=2, 2^2+1=5... 6^2+1=37)." },
+    { q: "The ratio of width to length of the National Flag of India is:", o: ["2:3", "3:2", "1:2", "2:4"], a: 0, e: "The ratio is 2:3 (Height:Width)." },
+    { q: "Who is known as the 'Iron Man of India'?", o: ["Mahatma Gandhi", "Sardar Vallabhbhai Patel", "Bhagat Singh", "Jawaharlal Nehru"], a: 1, e: "Sardar Vallabhbhai Patel." },
+    { q: "Speed = 60 km/hr. Time = 90 minutes. Distance = ?", o: ["60 km", "90 km", "5400 km", "120 km"], a: 1, e: "90 mins = 1.5 hours. Distance = Speed × Time = 60 × 1.5 = 90 km." },
+    { q: "Which blood group is the 'Universal Donor'?", o: ["A+", "AB+", "O-", "O+"], a: 2, e: "O Negative (O-) is the universal donor." },
+    { q: "If P = +, Q = -, R = ×, S = ÷, then find value of: 10 R 2 P 6 S 2", o: ["23", "13", "20", "26"], a: 0, e: "10 × 2 + 6 ÷ 2 => 20 + 3 = 23 (BODMAS)." },
+
+    // ==========================================
+    // PART B: CORE RADIOGRAPHY (80 Qs)
+    // ==========================================
+    // --- PHYSICS & EQUIPMENT ---
+    { q: "Which transformer loss is reduced by laminating the core?", o: ["Copper loss", "Eddy current loss", "Hysteresis loss", "Heat loss"], a: 1, e: "Lamination increases resistance to eddy currents." },
+    { q: "The autotransformer works on the principle of:", o: ["Self induction", "Mutual induction", "Capacitance", "Rectification"], a: 0, e: "It uses a single winding acting as both primary and secondary (Self induction)." },
+    { q: "What is the purpose of the 'filament circuit' in an X-ray generator?", o: ["To accelerate electrons", "To create thermionic emission", "To rotate the anode", "To rectify voltage"], a: 1, e: "It heats the filament to boil off electrons." },
+    { q: "A 'grid' is recommended when the kVp exceeds:", o: ["40 kVp", "50 kVp", "60 kVp", "90 kVp"], a: 2, e: "Generally used when part >10cm thick or kVp > 60-70." },
+    { q: "The atomic number (Z) of Tungsten is:", o: ["42", "53", "74", "82"], a: 2, e: "Tungsten is Z=74." },
+    { q: "Which part of the X-ray tube allows X-rays to leave the tube?", o: ["Cathode", "Window/Port", "Stator", "Rotor"], a: 1, e: "The window is a thinned section of the glass/metal envelope." },
+    { q: "As filtration increases, the beam quality:", o: ["Increases (hardens)", "Decreases (softens)", "Remains same", "Becomes zero"], a: 0, e: "Filtration removes low energy photons, increasing average energy (hardening)." },
+    { q: "The brightness gain of an Image Intensifier is the product of:", o: ["Minification gain × Flux gain", "Input × Output", "kVp × mAs", "Distance × Time"], a: 0, e: "Formula for Total Brightness Gain." },
+    { q: "Which generator type uses an inverter?", o: ["Single phase", "Three phase", "High Frequency", "Falling Load"], a: 2, e: "High Frequency generators use AC-DC-AC inverters." },
+    { q: "If the mAs is doubled, the density (in analog) or receptor exposure (in digital) will:", o: ["Double", "Halve", "Increase by 50%", "Triple"], a: 0, e: "mAs is directly proportional to quantity/exposure." },
+    
+    // --- POSITIONING & ANATOMY ---
+    { q: "The 'Lordotic view' (Lindblom method) is used to demonstrate:", o: ["Lung apices", "Costophrenic angles", "Heart size", "Diaphragm movement"], a: 0, e: "Projects the clavicles above the apices." },
+    { q: "Which position best demonstrates the left colic (splenic) flexure open?", o: ["RPO", "LPO", "RAO", "LAO"], a: 0, e: "RPO (or LAO) opens the left colic flexure." },
+    { q: "The 'Gaynor-Hart' method is used for:", o: ["Carpal Tunnel", "Tarsal bones", "Shoulder joint", "Patella"], a: 0, e: "Tangential view of the carpal canal." },
+    { q: "The acetabulum is formed by the fusion of:", o: ["Ilium and Ischium", "Ischium and Pubis", "Ilium, Ischium, and Pubis", "Femur and Pelvis"], a: 2, e: "Fusion of all three pelvic bones." },
+    { q: "The largest tarsal bone is the:", o: ["Talus", "Calcaneus", "Navicular", "Cuboid"], a: 1, e: "Calcaneus (Os Calcis) is the largest." },
+    { q: "The 'Camp Coventry' method requires the CR to be angled:", o: ["Perpendicular", "40-50 degrees caudad", "40-50 degrees cephalad", "10 degrees"], a: 1, e: "Used for Intercondylar fossa (Tunnel view), prone position." },
+    { q: "In a PA chest, the shoulders are rolled forward to:", o: ["Expand the lungs", "Move scapulae out of lung fields", "Raise the clavicles", "Lower the diaphragm"], a: 1, e: "Prevents scapulae from superimposing the lungs." },
+    { q: "The zygomatic arch is formed by the zygoma and the:", o: ["Frontal bone", "Maxilla", "Temporal bone", "Sphenoid"], a: 2, e: "The temporal process of the zygoma meets the zygomatic process of the temporal bone." },
+    { q: "Which organ lies in the Right Upper Quadrant (RUQ)?", o: ["Stomach", "Spleen", "Liver", "Sigmoid colon"], a: 2, e: "Liver and gallbladder are RUQ." },
+    { q: "The 'Lateral Dorsal Decubitus' position is used when the patient is:", o: ["Standing", "Lying on back (Supine)", "Lying on stomach (Prone)", "Sitting"], a: 1, e: "Patient is supine, X-ray beam is horizontal." },
+
+    // --- CT & ADVANCED IMAGING ---
+    { q: "A 'Ring Artifact' in CT is typically caused by:", o: ["Patient motion", "Detector failure", "Beam hardening", "Tube arcing"], a: 1, e: "A single faulty detector in 3rd gen CT creates a ring." },
+    { q: "The typical matrix size for modern CT is:", o: ["64 x 64", "256 x 256", "512 x 512", "2048 x 2048"], a: 2, e: "512 x 512 is the standard display matrix." },
+    { q: "Window Width (WW) determines the:", o: ["Midpoint density", "Number of gray shades displayed (Contrast)", "Pixel size", "Slice thickness"], a: 1, e: "Width = Contrast. Narrow width = High contrast." },
+    { q: "In CT, 'ROI' stands for:", o: ["Region of Interest", "Rate of Injection", "Range of Intensity", "Rotation of Image"], a: 0, e: "Used to measure HU in a specific area." },
+    { q: "A CT scan of the temporal bones requires:", o: ["Large FOV, thick slices", "Small FOV, thin slices, bone algorithm", "Standard brain protocol", "Soft tissue algorithm only"], a: 1, e: "High detail required for ossicles; thin slices and high-spatial frequency algorithm." },
+    { q: "The contrast phase 'Nephrographic Phase' occurs approx:", o: ["15 sec post injection", "30-40 sec post injection", "80-100 sec post injection", "5 mins post injection"], a: 2, e: "Approx 80-100s, kidneys enhance homogeneously." },
+    { q: "Voxel volume is calculated as:", o: ["Pixel area × Slice thickness", "FOV / Matrix", "Pixel height × width", "Pitch × Time"], a: 0, e: "Pixel dimension squared × slice thickness." },
+    { q: "In MRI, T2 weighted images show fluid as:", o: ["Dark", "Bright/Hyperintense", "Grey", "Black"], a: 1, e: "Water is bright on T2." },
+    { q: "The 'Faraday Cage' in MRI is used to:", o: ["Keep the magnet cool", "Prevent external RF interference", "Protect the patient from magnetic field", "Generate gradients"], a: 1, e: "Copper lining blocks external radio frequencies." },
+    { q: "Which of the following has the highest gyromagnetic ratio?", o: ["Hydrogen", "Carbon", "Sodium", "Phosphorus"], a: 0, e: "Hydrogen (42.58 MHz/T) is the highest, hence used for MRI." },
+
+    // --- DARKROOM & DIGITAL PROCESSING ---
+    { q: "The color of the safelight filter for blue-sensitive film is:", o: ["Red", "Amber/Brown", "Green", "Blue"], a: 1, e: "Amber (Wratten 6B) for blue sensitive; Red (GBX-2) for green sensitive." },
+    { q: "Which chemical acts as the 'clearing agent' in fixer?", o: ["Hydroquinone", "Ammonium Thiosulfate", "Acetic acid", "Potassium bromide"], a: 1, e: "Dissolves unexposed silver halides." },
+    { q: "In Computed Radiography (CR), the IP is erased by:", o: ["Chemical wash", "Bright white light", "Heat", "Laser beam"], a: 1, e: "Intense light releases trapped electrons to ground state." },
+    { q: "The 'S-value' in Fuji CR systems is:", o: ["Directly proportional to exposure", "Inversely proportional to exposure", "Unrelated to exposure", "Linear"], a: 1, e: "High S-number = Low exposure (Underexposed)." },
+    { q: "The phenomenon where digital images look good even with high exposure is:", o: ["Dose Creep", "Latitude", "Contrast", "Noise"], a: 0, e: "Automatic rescaling fixes the brightness, leading techs to overexpose (Dose Creep)." },
+    { q: "Which file format is used for medical images?", o: ["JPEG", "PNG", "DICOM", "TIFF"], a: 2, e: "Digital Imaging and Communications in Medicine." },
+    { q: "Aliasing artifact in digital imaging is also known as:", o: ["Moire pattern", "Ghosting", "Lag", "Quantum mottle"], a: 0, e: "Grid lines clash with sampling frequency." },
+    { q: "The active layer of a DR Direct Flat Panel detector is:", o: ["Cesium Iodide", "Amorphous Silicon", "Amorphous Selenium", "Gadolinium"], a: 2, e: "Direct conversion uses Selenium (a-Se)." },
+    { q: "Bit depth of 10 bits allows how many shades of gray?", o: ["256", "512", "1024", "4096"], a: 2, e: "2^10 = 1024." },
+    { q: "PACS stands for:", o: ["Picture Archiving and Communication System", "Patient Access Computer System", "Picture Analysis and Control System", "Public Access Control Standard"], a: 0, e: "Storage and retrieval system." },
+
+    // --- SPECIAL PROCEDURES ---
+    { q: "Sialography is the study of:", o: ["Sinuses", "Salivary glands", "Spinal cord", "Veins"], a: 1, e: "Contrast study of salivary glands." },
+    { q: "During ERCP, the scope is passed down to the:", o: ["Stomach", "Jejunum", "Duodenum (Ampulla of Vater)", "Ileum"], a: 2, e: "Cannulates the biliary tree at the duodenum." },
+    { q: "Which contrast is used for MRI?", o: ["Iodine", "Barium", "Gadolinium", "Technetium"], a: 2, e: "Gadolinium chelates." },
+    { q: "In Venography, tourniquets are used to:", o: ["Stop blood flow", "Force contrast into deep veins", "Dilate arteries", "Reduce pain"], a: 1, e: "Forces contrast from superficial to deep system." },
+    { q: "Hysterosalpingography (HSG) is used to investigate:", o: ["Renal failure", "Infertility", "Gastric ulcer", "Bladder stones"], a: 1, e: "Checks patency of fallopian tubes." },
+    { q: "The 'Seldinger technique' describes:", o: ["Barium coating", "Catheter insertion into a vessel", "MRI sequence", "Patient positioning"], a: 1, e: "Needle -> Guidewire -> Catheter." },
+    { q: "Contraindication for Barium Enema:", o: ["Polyps", "Suspected perforation", "Constipation", "Diarrhea"], a: 1, e: "Leakage causes peritonitis." },
+    { q: "Myelography contrast is injected into:", o: ["Subdural space", "Subarachnoid space", "Epidural space", "Disk nucleus"], a: 1, e: "Into the CSF in subarachnoid space." },
+    { q: "Operative cholangiography is performed to detect:", o: ["Liver cancer", "Residual stones in biliary ducts", "Pancreatitis", "Stomach ulcer"], a: 1, e: "Done during cholecystectomy." },
+    { q: "In IVU, compression is contraindicated if the patient has:", o: ["High creatinine", "Abdominal aortic aneurysm (AAA)", "Kidney stones", "Bladder fullness"], a: 1, e: "Pressure could rupture the aneurysm." },
+
+    // --- RADIATION SAFETY ---
+    { q: "The annual dose limit for the public (non-radiation workers) is:", o: ["1 mSv", "5 mSv", "20 mSv", "50 mSv"], a: 0, e: "1 mSv per year." },
+    { q: "The most sensitive period for radiation-induced mental retardation in a fetus is:", o: ["0-2 weeks", "8-15 weeks", "20-30 weeks", "30-40 weeks"], a: 1, e: "8-15 weeks is the critical period for brain development." },
+    { q: "Primary barriers must be shielded with lead equivalent of:", o: ["0.5 mm", "1.0 mm", "1.58 mm (1/16 inch)", "3.0 mm"], a: 2, e: "Typically 1/16 inch lead." },
+    { q: "Which dosimeter can be read instantly?", o: ["TLD", "Film Badge", "Pocket Ionization Chamber", "OSL"], a: 2, e: "Pocket dosimeters give immediate reading." },
+    { q: "Leakage radiation from the tube housing must not exceed:", o: ["1 mGy/hr at 1 meter", "10 mGy/hr at 1 meter", "100 mGy/hr at 1 meter", "0.1 mGy/hr at 1 meter"], a: 0, e: "100 mR/hr (approx 1 mGy/hr) at 1 meter." },
+    { q: "The 'Inverse Square Law' states intensity is inversely proportional to:", o: ["Distance", "Distance squared", "Time", "mA"], a: 1, e: "I ∝ 1/d²." },
+    { q: "LD 50/30 means:", o: ["Lethal dose to 30% pop in 50 days", "Lethal dose to 50% pop in 30 days", "Low dose for 30 days", "None"], a: 1, e: "Dose that kills 50% of population in 30 days." },
+    { q: "Filtration reduces patient skin dose by removing:", o: ["High energy photons", "Low energy photons", "Scatter", "Leakage"], a: 1, e: "Soft X-rays are absorbed by skin but don't contribute to image." },
+    { q: "ALARA stands for:", o: ["As Low As Reasonably Achievable", "As Long As Radiation Allows", "Always Leave Area Radioactive", "None"], a: 0, e: "Basic radiation safety principle." },
+    { q: "The monthly dose limit for a pregnant radiographer is:", o: ["0.5 mSv", "2 mSv", "5 mSv", "20 mSv"], a: 0, e: "0.5 mSv per month to the embryo/fetus." },
+
+    // --- FILLER Qs (To reach 100) ---
+    { q: "Barium Sulfate is:", o: ["Soluble in water", "Insoluble suspension", "A solution", "Radio-translucent"], a: 1, e: "It is an insoluble suspension." },
+    { q: "What is 'Quantum Mottle'?", o: ["High resolution", "Grainy image due to low signal (starvation)", "Contrast enhancement", "Blur"], a: 1, e: "Caused by insufficient photons reaching the detector." },
+    { q: "Which view demonstrates the intervertebral foramina of L-Spine?", o: ["AP", "Lateral", "Oblique", "Spot"], a: 1, e: "Lateral view shows L-spine foramina (Compare to C-spine where obliques are needed)." },
+    { q: "Stenvers view was used for:", o: ["Petrous temporal bone", "Optic foramen", "Sella turcica", "Mandible"], a: 0, e: "Visualization of petrous ridge/inner ear." },
+    { q: "The dens is part of:", o: ["Atlas", "Axis", "Occiput", "C7"], a: 1, e: "Axis (C2)." },
+    { q: "The xiphoid process is at level:", o: ["T4-T5", "T9-T10", "L2-L3", "C7"], a: 1, e: "Ensiform/Xiphoid process is T9-T10." },
+    { q: "Which bone is not part of the cranium?", o: ["Frontal", "Sphenoid", "Mandible", "Ethmoid"], a: 2, e: "Mandible is a facial bone." },
+    { q: "Retrograde Urogram (RGU) injects dye:", o: ["Into vein", "Against urine flow via catheter", "Directly into kidney", "Oral"], a: 1, e: "Retrograde means against normal flow." },
+    { q: "Phleboliths are:", o: ["Gallstones", "Calcified clots in veins", "Kidney stones", "Foreign bodies"], a: 1, e: "Commonly seen in pelvic veins." },
+    { q: "Cholecystography examines:", o: ["Gallbladder", "Colon", "Bladder", "Stomach"], a: 0, e: "Gallbladder imaging." },
+    { q: "Trendelenburg position means:", o: ["Head up", "Head lower than feet", "Lateral", "Prone"], a: 1, e: "Used to keep contrast in upper abdomen or treat shock." },
+    { q: "Sims position is similar to:", o: ["Lateral decubitus (recovery)", "Supine", "Lithotomy", "Fowler"], a: 0, e: "LAO position for enema tip insertion." },
+    { q: "Where is the CR for AP Pelvis?", o: ["Iliac crest", "2 inches above symphysis pubis", "Umbilicus", "ASIS"], a: 1, e: "Midway between ASIS and Symphysis Pubis." },
+    { q: "Which carpal bone articulates with the radius?", o: ["Scaphoid and Lunate", "Hamate", "Pisiform", "Capitate"], a: 0, e: "Scaphoid and Lunate form the radiocarpal joint." },
+    { q: "A Colles fracture involves:", o: ["Distal radius, dorsal angulation", "Distal radius, volar angulation", "Ulna", "Humerus"], a: 0, e: "Dinner fork deformity." },
+    { q: "Osgood-Schlatter disease involves:", o: ["Tibial tuberosity", "Femur head", "Calcaneus", "Vertebra"], a: 0, e: "Avulsion of tibial tuberosity in adolescents." },
+    { q: "The 'Scottie Dog' eye represents:", o: ["Pedicle", "Transverse process", "Superior articular process", "Pars interarticularis"], a: 0, e: "Pedicle is the eye." },
+    { q: "CT Hounsfield unit for Water:", o: ["0", "1000", "-1000", "100"], a: 0, e: "The baseline." },
+    { q: "CT Hounsfield unit for Air:", o: ["-1000", "0", "1000", "50"], a: 0, e: "Air is the lowest density." },
+    { q: "The 'Piezoelectric effect' is used in:", o: ["MRI", "CT", "Ultrasound", "X-ray"], a: 2, e: "Crystals convert electricity to sound and vice versa." }
+];
+
+function renderQuiz() {
+    const container = document.getElementById('quiz-body');
+    let html = '';
+    db.forEach((item, index) => {
+        // Section Headers
+        if (index === 0) html += `<div class="section-divider">PART A: General Aptitude & Awareness</div>`;
+        if (index === 20) html += `<div class="section-divider">PART B: Core Radiography</div>`;
+
+        let optionsHtml = '';
+        item.o.forEach((opt, i) => {
+            optionsHtml += `
+            <label id="lbl-${index}-${i}">
+                <input type="radio" name="q${index}" value="${i}">
+                ${opt}
+            </label>`;
+        });
+
+        html += `
+        <div class="q-container" id="card-${index}">
+            <div class="q-text">Q${index+1}. ${item.q}</div>
+            <div class="opt-group">${optionsHtml}</div>
+            <div class="explanation" id="exp-${index}">
+                <strong>Correct: ${item.o[item.a]}</strong><br>
+                ${item.e}
+            </div>
+        </div>`;
+    });
+    container.innerHTML = html;
+}
+
+function calculateResult() {
+    let score = 0, correct = 0, wrong = 0, skip = 0;
+    
+    db.forEach((item, i) => {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        const exp = document.getElementById(`exp-${i}`);
+        
+        // Reset styles
+        for(let j=0; j<4; j++) document.getElementById(`lbl-${i}-${j}`).classList.remove('user-correct', 'user-wrong', 'correct-answer-highlight');
+
+        if (!selected) {
+            skip++;
+        } else {
+            const val = parseInt(selected.value);
+            if (val === item.a) {
+                score += 4;
+                correct++;
+                document.getElementById(`lbl-${i}-${val}`).classList.add('user-correct');
+            } else {
+                score -= 1;
+                wrong++;
+                document.getElementById(`lbl-${i}-${val}`).classList.add('user-wrong');
+                document.getElementById(`lbl-${i}-${item.a}`).classList.add('correct-answer-highlight');
+            }
+        }
+        exp.style.display = 'block';
+    });
+
+    document.getElementById('scoreVal').innerText = score;
+    document.getElementById('res-cor').innerText = correct;
+    document.getElementById('res-inc').innerText = wrong;
+    document.getElementById('res-skip').innerText = skip;
+    document.getElementById('resultModal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('resultModal').style.display = 'none';
+    window.scrollTo(0,0);
+}
+
+// Initialize
+renderQuiz();
+</script>
+
+</body>
+</html>

@@ -278,7 +278,7 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
       <div className="mb-4">
         <h2 className="text-xl md:text-2xl font-bold text-foreground mb-4">Available Topics</h2>
         {/* Scrollable container: caps height and enables vertical scroll for long lists */}
-        <div className="max-h-[60vh] md:max-h-[50vh] overflow-y-auto pr-2">
+        <div className="max-h-[60vh] md:max-h-[50vh] overflow-y-auto pr-2 no-scrollbar">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {questions.topics.map((topic, index) => (
               <TopicCard
