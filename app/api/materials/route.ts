@@ -3,6 +3,9 @@ import path from "path"
 
 // Ensure this API route runs on the Node.js runtime so `fs` works in production
 export const runtime = "nodejs"
+// Ensure the route is always dynamic (no static prerender/caching)
+export const dynamic = "force-dynamic"
+export const revalidate = 0
 
 export async function GET() {
   try {
