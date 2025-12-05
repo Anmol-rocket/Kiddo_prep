@@ -257,6 +257,15 @@ html {
   filter: brightness(0.92);
 }
 
+/* Utility to hide scrollbars completely where desired */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
 /* For small scrollable panels, give a slightly thicker, more visible thumb */
 .scrollable::-webkit-scrollbar {
   width: 14px;
