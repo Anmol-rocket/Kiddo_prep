@@ -160,42 +160,53 @@ export default function MaterialsSection() {
                     <p className="text-xs md:text-sm text-muted-foreground">{fmtSize(it.size)}</p>
                   </div>
 
+                  {/* Primary actions row */}
                   <div className="flex gap-2">
                     {it.type === "pdf" ? (
                       <Button asChild className="flex-1 btn-primary text-sm md:text-base">
-                        <a href={`/materials/pdf?file=${encodeURIComponent(it.url)}`}>View in App</a>
+                        <a href={`/materials/pdf?file=${encodeURIComponent(it.url)}`}>📖 View</a>
                       </Button>
                     ) : (
                       <Button asChild className="flex-1 btn-primary text-sm md:text-base">
-                        <a href={it.url} target="_blank" rel="noreferrer">View</a>
+                        <a href={it.url} target="_blank" rel="noreferrer">📖 View</a>
                       </Button>
                     )}
                     <Button asChild variant="outline" className="flex-1 text-sm md:text-base bg-transparent">
-                      <a href={it.url} download={it.name}>Download</a>
+                      <a href={it.url} download={it.name}>⬇️ Download</a>
                     </Button>
-                    {it.group === "mock_papers" && (
+                  </div>
+
+                  {/* Mock paper actions row */}
+                  {it.group === "mock_papers" && (
+                    <div className="flex flex-col sm:flex-row gap-2 mt-2">
                       <Button
                         type="button"
-                        variant={doneSet.has(it.url) ? "secondary" : "default"}
-                        className="flex-1 text-sm md:text-base"
+                        variant={doneSet.has(it.url) ? "secondary" : "outline"}
+                        className={`flex-1 text-xs sm:text-sm md:text-base transition-all ${
+                          doneSet.has(it.url)
+                            ? "bg-green-500/20 border-green-500/50 text-green-600 dark:text-green-400 hover:bg-green-500/30"
+                            : "hover:border-green-500/50"
+                        }`}
                         onClick={() => toggleDone(it.url)}
                       >
-                        {doneSet.has(it.url) ? "Marked Done" : "Mark as Done"}
+                        {doneSet.has(it.url) ? "✅ Done" : "☑️ Mark Done"}
                       </Button>
-                    )}
-                    {it.group === "mock_papers" && (
                       <Button
                         type="button"
                         variant="outline"
-                        className="flex-1 text-sm md:text-base"
+                        className={`flex-1 text-xs sm:text-sm md:text-base transition-all truncate ${
+                          perfMap[it.name]
+                            ? "bg-blue-500/20 border-blue-500/50 text-blue-600 dark:text-blue-400 hover:bg-blue-500/30"
+                            : "hover:border-blue-500/50"
+                        }`}
                         onClick={() => savePerf(it.name)}
                       >
                         {perfMap[it.name]
-                          ? `Saved: ${perfMap[it.name].score}/${perfMap[it.name].total}${typeof perfMap[it.name].accuracy === "number" ? ` (${perfMap[it.name].accuracy}%)` : ""}`
-                          : "Save Performance"}
+                          ? `📊 ${perfMap[it.name].score}/${perfMap[it.name].total}${typeof perfMap[it.name].accuracy === "number" ? ` • ${perfMap[it.name].accuracy}%` : ""}`
+                          : "📝 Save Score"}
                       </Button>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </Card>
               ))}
             </div>
