@@ -1,6 +1,9 @@
 import fs from "fs"
 import path from "path"
 
+// Ensure this API route runs on the Node.js runtime so `fs` works in production
+export const runtime = "nodejs"
+
 function getMime(ext: string) {
   switch (ext) {
     case ".pdf":
