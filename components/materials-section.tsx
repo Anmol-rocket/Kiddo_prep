@@ -9,6 +9,7 @@ type Item = { name: string; group: string; url: string; ext: string; size: numbe
 export default function MaterialsSection() {
   const [items, setItems] = useState<Item[] | null>(null)
   const [loading, setLoading] = useState(true)
+  const [doneSet, setDoneSet] = useState<Set<string>>(new Set())
 
   useEffect(() => {
     let mounted = true
@@ -24,6 +25,37 @@ export default function MaterialsSection() {
       mounted = false
     }
   }, [])
+
+  // Load persisted "done" marks
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("kiddoprep_mock_done")
+      if (raw) {
+        const arr: string[] = JSON.parse(raw)
+        setDoneSet(new Set(arr))
+      }
+    } catch {
+      // ignore
+    }
+  }, [])
+
+  const persistDone = (next: Set<string>) => {
+    try {
+      localStorage.setItem("kiddoprep_mock_done", JSON.stringify(Array.from(next)))
+    } catch {
+      // ignore
+    }
+  }
+
+  const toggleDone = (key: string) => {
+    setDoneSet((prev) => {
+      const next = new Set(prev)
+      if (next.has(key)) next.delete(key)
+      else next.add(key)
+      persistDone(next)
+      return next
+    })
+  }
 
   if (loading) return <div className="mt-6">Loading materials…</div>
 
@@ -90,6 +122,16 @@ export default function MaterialsSection() {
                     <Button asChild variant="outline" className="flex-1 text-sm md:text-base bg-transparent">
                       <a href={it.url} download={it.name}>Download</a>
                     </Button>
+                    {it.group === "mock_papers" && (
+                      <Button
+                        type="button"
+                        variant={doneSet.has(it.url) ? "secondary" : "default"}
+                        className="flex-1 text-sm md:text-base"
+                        onClick={() => toggleDone(it.url)}
+                      >
+                        {doneSet.has(it.url) ? "Marked Done" : "Mark as Done"}
+                      </Button>
+                    )}
                   </div>
                 </Card>
               ))}
