@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIIMS CRE Radiographer Mock Test</title>
+    <style>
+        :root {
+            --primary: #005f73;
+            --secondary: #0a9396;
+            --light: #e9d8a6;
+            --danger: #ae2012;
+            --success: #2a9d8f;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        h1 { color: var(--primary); margin: 0; }
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #eef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .question-block {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .question-block:hover { background-color: #fafafa; }
+        .q-text { font-size: 1.1em; font-weight: 600; margin-bottom: 10px; }
+        .options label {
+            display: block;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .options label:hover { background-color: #f0f0f0; }
+        input[type="radio"] { margin-right: 10px; }
+        
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary);
+            color: white;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn-submit:hover { background-color: var(--secondary); }
+
+        /* Results Modal */
+        #resultModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+        .score-display { font-size: 3em; font-weight: bold; color: var(--primary); }
+        .breakdown { margin-top: 20px; text-align: left; }
+        .close-btn {
+            background: var(--danger);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        
+        /* Analysis Mode */
+        .correct-ans { color: var(--success); font-weight: bold; }
+        .wrong-ans { color: var(--danger); text-decoration: line-through; }
+        .explanation { 
+            margin-top: 10px; 
+            font-size: 0.9em; 
+            color: var(--primary); 
+            background: #e0f7fa; 
+            padding: 5px; 
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>AIIMS CRE Radiographer Mock Test</h1>
+        <div class="info-bar">
+            <span>Core Technical Subjects</span>
+            <span>Max Marks: <span id="maxMarks">200</span></span>
+            <span>Marking: +4 / -1</span>
+        </div>
+        <p style="text-align:center; font-size:0.9em; color:#666;">ALL THE BEST!</p>
+    </header>
+
+    <form id="quizForm">
+        <div id="quizContainer">
+            </div>
+        <button type="button" class="btn-submit" onclick="submitQuiz()">Submit Test</button>
+    </form>
+</div>
+
+<div id="resultModal">
+    <div class="modal-content">
+        <h2>Test Result</h2>
+        <div class="score-display" id="finalScore">0 / 0</div>
+        <div class="breakdown">
+            <p>Correct (+4): <span id="countCorrect">0</span></p>
+            <p>Incorrect (-1): <span id="countWrong">0</span></p>
+            <p>Unattempted (0): <span id="countSkip">0</span></p>
+            <p>Accuracy: <span id="accuracy">0%</span></p>
+        </div>
+        <button class="close-btn" onclick="closeModal()">Review Answers</button>
+    </div>
+</div>
+
+<script>
+    // THE QUESTION BANK - 50 Core Questions
+    const questions = [
+        // PHYSICS & EQUIPMENT
+        {
+            q: "The 'Heel Effect' is most pronounced when using:",
+            options: ["Large film size and short SID", "Small film size and long SID", "Large film size and long SID", "Small film size and short SID"],
+            a: 0,
+            exp: "Heel effect is more noticeable with large field sizes and short Source-to-Image Distance (SID)."
+        },
+        {
+            q: "Which interaction is responsible for the majority of occupational exposure to radiographers?",
+            options: ["Photoelectric effect", "Compton scattering", "Pair production", "Coherent scattering"],
+            a: 1,
+            exp: "Compton scatter from the patient is the main source of dose to staff."
+        },
+        {
+            q: "The material commonly used for the target in a mammography X-ray tube is:",
+            options: ["Tungsten", "Molybdenum", "Copper", "Aluminum"],
+            a: 1,
+            exp: "Molybdenum (or Rhodium) is used for better soft tissue contrast."
+        },
+        {
+            q: "Grid ratio is defined as the ratio of:",
+            options: ["Height of lead strips to the distance between them", "Height of lead strips to the thickness of strips", "Distance between strips to height of strips", "Grid frequency to grid height"],
+            a: 0,
+            exp: "Grid Ratio = h/D (Height of strips / Distance between them)."
+        },
+        {
+            q: "In CR (Computed Radiography), the latent image is stored in:",
+            options: ["Amorphous Selenium", "Photostimulable Phosphor Plate", "Silver Halide crystals", "Cesium Iodide"],
+            a: 1,
+            exp: "CR uses PSP plates containing Barium Fluorohalide."
+        },
+        
+        // ANATOMY & POSITIONING
+        {
+            q: "The 'Scottie Dog' appearance is seen in the oblique view of the:",
+            options: ["Cervical Spine", "Thoracic Spine", "Lumbar Spine", "Sacrum"],
+            a: 2,
+            exp: "The Scottie Dog sign is classic for Lumbar oblique views."
+        },
+        {
+            q: "To demonstrate the scaphoid bone, the wrist should be positioned in:",
+            options: ["Radial deviation", "Ulnar deviation", "Neutral position", "Flexion"],
+            a: 1,
+            exp: "Ulnar deviation opens up the spaces around the scaphoid."
+        },
+        {
+            q: "Which projection best demonstrates the maxillary sinuses?",
+            options: ["Caldwell", "Waters", "Towne", "Lateral"],
+            a: 1,
+            exp: "Waters view (Occipitomental) is best for maxillary sinuses."
+        },
+        {
+            q: "The greater trochanter is a landmark for locating the:",
+            options: ["Hip joint", "Knee joint", "Sacroiliac joint", "Pubic symphysis"],
+            a: 0,
+            exp: "The greater trochanter is at the level of the hip joint/pubic symphysis."
+        },
+        {
+            q: "For a lateral projection of the chest, which side is usually placed against the IR?",
+            options: ["Right side", "Left side", "Either side", "Side of interest"],
+            a: 1,
+            exp: "Left lateral is standard to minimize heart magnification."
+        },
+
+        // CT SCAN
+        {
+            q: "The Hounsfield Unit (HU) for water is:",
+            options: ["-1000", "0", "+1000", "+50"],
+            a: 1,
+            exp: "Water is the calibration point for CT, set at 0 HU."
+        },
+        {
+            q: "Which generation of CT scanners introduced the 'Slip Ring' technology?",
+            options: ["First", "Second", "Third", "Spiral/Helical"],
+            a: 3,
+            exp: "Slip rings allowed for continuous rotation, enabling Spiral/Helical CT."
+        },
+        {
+            q: "Pitch in CT is defined as:",
+            options: ["Table movement per rotation / Beam width", "Beam width / Table movement", "Slice thickness / Scan time", "Gantry tilt / Slice thickness"],
+            a: 0,
+            exp: "Pitch = Table feed per rotation divided by beam collimation/width."
+        },
+        {
+            q: "The 'Star' artifact in CT is usually caused by:",
+            options: ["Patient motion", "Metal objects", "Beam hardening", "Ring detector failure"],
+            a: 1,
+            exp: "High density metal causes streak or star artifacts."
+        },
+        {
+            q: "Window Width (WW) in CT controls the:",
+            options: ["Image brightness", "Image contrast", "Spatial resolution", "Patient dose"],
+            a: 1,
+            exp: "Window Width controls contrast (range of HU displayed). Level controls brightness."
+        },
+
+        // MRI
+        {
+            q: "The unit of magnetic field strength in MRI is:",
+            options: ["Gray", "Sievert", "Tesla", "Roentgen"],
+            a: 2,
+            exp: "MRI magnet strength is measured in Tesla (T)."
+        },
+        {
+            q: "In T1-weighted images, water (CSF) appears:",
+            options: ["Bright (Hyperintense)", "Dark (Hypointense)", "Grey (Isointense)", "Variable"],
+            a: 1,
+            exp: "Fluid is dark on T1 and bright on T2."
+        },
+        {
+            q: "Which of the following is an absolute contraindication for MRI?",
+            options: ["Dental fillings", "Hip prosthesis (Titanium)", "Cardiac Pacemaker (non-MRI conditional)", "Pregnancy (2nd trimester)"],
+            a: 2,
+            exp: "Standard pacemakers can malfunction or burn tissue in MRI."
+        },
+        {
+            q: "The sound noise produced during an MRI scan is caused by:",
+            options: ["Radio Frequency coils", "Gradient coils", "Main magnet", "Cryogen pump"],
+            a: 1,
+            exp: "Rapid switching of gradient coils creates the loud knocking noise."
+        },
+        {
+            q: "TR (Repetition Time) controls:",
+            options: ["T1 weighting", "T2 weighting", "Proton density", "Spatial resolution"],
+            a: 0,
+            exp: "Short TR maximizes T1 effects; Long TR minimizes them."
+        },
+
+        // RADIATION SAFETY & BIOLOGY
+        {
+            q: "According to AERB, the annual effective dose limit for radiation workers is:",
+            options: ["100 mSv", "50 mSv", "20 mSv (averaged over 5 years)", "5 mSv"],
+            a: 2,
+            exp: "20 mSv averaged over 5 consecutive years, with max 30 mSv in any single year."
+        },
+        {
+            q: "The LD 50/60 for humans is approximately:",
+            options: ["1-2 Gy", "3-4 Gy", "8-10 Gy", "12-15 Gy"],
+            a: 1,
+            exp: "The lethal dose to kill 50% of the population in 60 days is approx 3-4 Gy without treatment."
+        },
+        {
+            q: "Lead apron thickness for fluoroscopy should be at least:",
+            options: ["0.25 mm Pb", "0.5 mm Pb", "1.0 mm Pb", "1.5 mm Pb"],
+            a: 0,
+            exp: "0.25 mm is minimum, though 0.5 mm is standard practice for high workload."
+        },
+        {
+            q: "Which dosimeter is most commonly used for personal monitoring today?",
+            options: ["Film Badge", "TLD (Thermoluminescent Dosimeter)", "Geiger Muller Counter", "Ionization Chamber"],
+            a: 1,
+            exp: "TLD (CaSO4:Dy) is the standard personal monitor in India."
+        },
+        {
+            q: "ALARA stands for:",
+            options: ["As Low As Reasonably Achievable", "As Long As Radiation Allows", "All Levels Are Radiation Active", "Always Lower Annual Radiation"],
+            a: 0,
+            exp: "The fundamental principle of radiation protection."
+        },
+
+        // MISC & ADVANCED
+        {
+            q: "Positive contrast media usually contains:",
+            options: ["Air", "Carbon Dioxide", "Iodine or Barium", "Water"],
+            a: 2,
+            exp: "Positive contrast (Radio-opaque) uses Iodine or Barium."
+        },
+        {
+            q: "The active layer of an intensifying screen is made of:",
+            options: ["Polyester", "Phosphor", "Lead", "Carbon"],
+            a: 1,
+            exp: "Phosphors convert X-rays to light."
+        },
+        {
+            q: "Mammography usually utilizes which kVp range?",
+            options: ["20-35 kVp", "50-70 kVp", "80-100 kVp", "110-125 kVp"],
+            a: 0,
+            exp: "Low kVp is needed for high contrast in soft tissue."
+        },
+        {
+            q: "Which artifact appears as a 'fog' on the image due to scattered radiation?",
+            options: ["Quantum Mottle", "Scatter Fog", "Aliasing", "Ring Artifact"],
+            a: 1,
+            exp: "Scatter reduces contrast and causes gray fogging."
+        },
+        {
+            q: "Pixel size is calculated by:",
+            options: ["FOV / Matrix size", "Matrix size / FOV", "FOV x Matrix size", "Matrix size / Depth"],
+            a: 0,
+            exp: "Field of View divided by Matrix Size equals pixel dimension."
+        },
+        
+        // FILLING TO 50 Qs (Rapid Fire)
+        { q: "An AP axial projection of the skull is also known as:", options: ["Towne's view", "Waters view", "Lateral", "SMV"], a: 0 },
+        { q: "The dens (odontoid process) is part of:", options: ["Atlas (C1)", "Axis (C2)", "C3", "Occiput"], a: 1 },
+        { q: "Which effect causes X-ray intensity to be non-uniform across the beam?", options: ["Line focus principle", "Anode heel effect", "Reciprocity law", "Inverse square law"], a: 1 },
+        { q: "10 Day rule applies to:", options: ["Men over 50", "Women of reproductive age", "Children under 10", "Elderly"], a: 1 },
+        { q: "Stochastic effects of radiation include:", options: ["Skin Erythema", "Cataracts", "Cancer/Genetic effects", "Hair loss"], a: 2 },
+        { q: "The device used to measure bone mineral density is:", options: ["MRI", "DEXA", "CT", "Ultrasound"], a: 1 },
+        { q: "In USG, higher frequency transducers provide:", options: ["Better *****, lower resolution", "Better resolution, less *****", "Better resolution, better *****", "No change"], a: 1 },
+        { q: "Piezoelectric effect is the principle of:", options: ["CT", "MRI", "Ultrasound", "PET"], a: 2 },
+        { q: "The biological half-life of Technetium-99m is:", options: ["6 hours", "24 hours", "60 days", "Depends on excretion"], a: 3, exp: "Physical half life is 6 hrs. Biological depends on excretion." },
+        { q: "Which view best visualizes the patella?", options: ["AP Knee", "Lateral Knee", "Skyline/Sunrise view", "Tunnel view"], a: 2 },
+        { q: "The term 'window level' generally controls:", options: ["Contrast", "Brightness/Density", "Sharpness", "Noise"], a: 1 },
+        { q: "Barium swallow is used to visualize:", options: ["Stomach", "Esophagus", "Colon", "Small Intestine"], a: 1 },
+        { q: "Which magnet alignment is used in most Superconducting MRI systems?", options: ["Horizontal field", "Vertical field", "Resistive", "Permanent"], a: 0 },
+        { q: "The melting point of Tungsten is approximately:", options: ["2000 C", "3422 C", "1000 C", "5000 C"], a: 1 },
+        { q: "Filtration that is part of the tube construction is called:", options: ["Added filtration", "Inherent filtration", "Compensating filtration", "Total filtration"], a: 1 },
+        { q: "The focusing cup is usually made of:", options: ["Tungsten", "Molybdenum", "Nickel", "Copper"], a: 2 },
+        { q: "Quantum mottle is caused by:", options: ["Too much mAs", "Insufficient number of photons (low mAs)", "High kVp", "Slow screens"], a: 1 },
+        { q: "ERCP is a procedure to visualize:", options: ["Urinary tract", "Biliary and Pancreatic ducts", "Spinal cord", "Brain vessels"], a: 1 },
+        { q: "The standard distance (SID) for a chest X-ray is:", options: ["100 cm", "150 cm", "180 cm (72 inches)", "200 cm"], a: 2 },
+        { q: "Contrast resolution is best in:", options: ["X-ray", "CT", "MRI", "Ultrasound"], a: 2 },
+        // --- PASTE THIS AFTER THE LAST COMMA OF THE PREVIOUS LIST ---
+
+    // SPECIAL RADIOGRAPHIC PROCEDURES
+    {
+        q: "The 'Seldinger Technique' is primarily used for:",
+        options: ["Barium Enema intubation", "Vascular catheterization", "MRI coil placement", "Fixing fractures"],
+        a: 1,
+        exp: "It is the standard method for gaining access to blood vessels for angiography."
+    },
+    {
+        q: "Which contrast medium is preferred for a suspected perforation of the GI tract?",
+        options: ["Barium Sulfate", "Water-soluble iodinated contrast (Gastrografin)", "Air only", "Gadolinium"],
+        a: 1,
+        exp: "Barium can cause peritonitis if it leaks into the peritoneal cavity; water-soluble contrast is absorbed."
+    },
+    {
+        q: "Hysterosalpingography (HSG) is best performed during which days of the menstrual cycle?",
+        options: ["Day 1-4", "Day 7-10", "Day 14-20", "Day 21-28"],
+        a: 1,
+        exp: "Day 7-10 (post-menstrual, pre-ovulatory) avoids irradiating a fertilized ovum."
+    },
+    {
+        q: "The projection used to demonstrate the 'Intercondylar Fossa' of the knee is:",
+        options: ["Tunnel view (Holmblad/Camp Coventry)", "Skyline view", "Lateral view", "Frog-leg view"],
+        a: 0,
+        exp: "Tunnel views specifically open up the intercondylar fossa."
+    },
+    {
+        q: "In an Intravenous Urogram (IVU), compression is applied to:",
+        options: ["Retain contrast in the renal pelvicalyceal system", "Empty the bladder", "Immobilize the patient", "Visualize the urethra"],
+        a: 0,
+        exp: "Compression obstructs ureters temporarily to fill the upper tracts."
+    },
+
+    // DIGITAL RADIOGRAPHY & PACS
+    {
+        q: "DICOM stands for:",
+        options: ["Digital Imaging and Communications in Medicine", "Direct Imaging Computer Output Method", "Digital Image Capture of Medicine", "Dual Imaging Computer Operating Mode"],
+        a: 0,
+        exp: "The universal standard for transmitting medical images."
+    },
+    {
+        q: "In digital radiography, a histogram is a graph representing:",
+        options: ["Patient dose vs Time", "Pixel value distribution (frequency of densities)", "Tube heat vs mA", "Resolution vs Contrast"],
+        a: 1,
+        exp: "A histogram plots the frequency of digital values (densities) in the image."
+    },
+    {
+        q: "The term 'fill factor' in a flat-panel detector refers to:",
+        options: ["The percentage of the pixel face sensitive to X-rays", "The speed of the processor", "The amount of storage in PACS", "The contrast range"],
+        a: 0,
+        exp: "A higher fill factor means more efficient detection and lower dose."
+    },
+    {
+        q: "Moire pattern artifacts in CR occur when:",
+        options: ["The grid lines run parallel to the laser scan lines", "The cassette is exposed to light", "The patient moves", "The IP is erased twice"],
+        a: 0,
+        exp: "Aliasing artifact caused by grid frequency clashing with sampling frequency."
+    },
+    {
+        q: "Which matrix size provides the highest spatial resolution?",
+        options: ["512 x 512", "1024 x 1024", "2048 x 2048", "256 x 256"],
+        a: 2,
+        exp: "Larger matrix (with same FOV) = smaller pixels = higher resolution."
+    },
+
+    // ADVANCED CT PHYSICS
+    {
+        q: "The CT number (HU) for acute fresh blood is approximately:",
+        options: ["0 to 10 HU", "40 to 60 HU", "-50 to -100 HU", "1000 HU"],
+        a: 1,
+        exp: "Fresh blood is hyperdense compared to brain tissue, usually 40-60 HU."
+    },
+    {
+        q: "Which artifact is associated with the beam passing through the dense petrous ridges of the skull?",
+        options: ["Beam Hardening (Streak artifact)", "Ring Artifact", "Motion Artifact", "Cone beam artifact"],
+        a: 0,
+        exp: "The posterior fossa often shows dark streaks due to beam hardening between petrous bones."
+    },
+    {
+        q: "CTDI (Computed Tomography Dose Index) measures:",
+        options: ["Radiation dose output per slice", "Total scan time", "Contrast resolution", "Table speed"],
+        a: 0,
+        exp: "CTDI represents the radiation dose delivered to a standardized phantom."
+    },
+    {
+        q: "Partial Volume Effect occurs when:",
+        options: ["A tissue occupies only part of the voxel thickness", "The patient holds their breath", "Contrast is injected too fast", "The gantry is tilted"],
+        a: 0,
+        exp: "The computer averages high and low densities in one voxel, giving an inaccurate HU."
+    },
+    {
+        q: "MIP stands for:",
+        options: ["Maximum Intensity Projection", "Minimum Image Processing", "Magnetic Interference Protocol", "Mean Intensity Pixel"],
+        a: 0,
+        exp: "A post-processing technique used often in CTA to visualize vessels."
+    },
+
+    // ADVANCED MRI & USG
+    {
+        q: "In MRI, 'Quenching' refers to:",
+        options: ["Rapid loss of superconductivity and boiling off of liquid helium", "Injecting contrast media", "Stopping the RF pulse", "Cooling the patient"],
+        a: 0,
+        exp: "An emergency procedure to shut down the magnetic field."
+    },
+    {
+        q: "Gadolinium-based contrast agents shorten which relaxation time primarily?",
+        options: ["T1", "T2", "T2*", "Proton Density"],
+        a: 0,
+        exp: "Gadolinium shortens T1, making tissues appear bright on T1-weighted images."
+    },
+    {
+        q: "The 'Doppler Effect' in ultrasound is used to measure:",
+        options: ["Tissue density", "Blood flow velocity and direction", "Bone thickness", "Heat generation"],
+        a: 1,
+        exp: "Frequency shift correlates with the velocity of moving blood cells."
+    },
+    {
+        q: "Acoustic shadowing is most likely seen behind:",
+        options: ["A fluid-filled cyst", "A gallstone or bone", "The liver", "The bladder"],
+        a: 1,
+        exp: "Sound cannot pass through dense objects like stones, creating a shadow behind them."
+    },
+    {
+        q: "What is K-space in MRI?",
+        options: ["The physical space inside the magnet", "A raw data domain holding spatial frequencies", "The space between the patient and coil", "The cooling chamber"],
+        a: 1,
+        exp: "K-space stores raw data before Fourier Transform converts it into an image."
+    },
+
+    // PHYSICS: TUBE & GENERATORS
+    {
+        q: "The Line Focus Principle allows for:",
+        options: ["A large actual focal spot and a small effective focal spot", "A small actual focal spot and large effective spot", "Elimination of heat", "Zero geometric unsharpness"],
+        a: 0,
+        exp: "This spreads heat over a larger area while maintaining sharp detail."
+    },
+    {
+        q: "Which rectification system provides the lowest voltage ripple (approx 4% or less)?",
+        options: ["Half-wave", "Full-wave single phase", "Three-phase 6 pulse", "High Frequency"],
+        a: 3,
+        exp: "High Frequency generators have <1% ripple, providing the most constant beam."
+    },
+    {
+        q: "Heat Units (HU) for a single phase unit are calculated as:",
+        options: ["kVp x mA x s", "kVp x mA x s x 1.35", "kVp x mA x s x 1.41", "kVp / mAs"],
+        a: 0,
+        exp: "Single phase factor is 1. (3-phase 6-pulse is 1.35; 12-pulse is 1.41)."
+    },
+    {
+        q: "Bremsstrahlung radiation is produced when:",
+        options: ["An electron ejects an inner shell electron", "An electron slows down and changes direction near the nucleus", "A neutron hits the target", "The filament heats up"],
+        a: 1,
+        exp: "Braking radiation accounts for the majority of the X-ray beam."
+    },
+    {
+        q: "The Half Value Layer (HVL) is a measurement of beam:",
+        options: ["Quantity", "Quality (Penetrability)", "Field size", "Scatter"],
+        a: 1,
+        exp: "HVL is the thickness of absorber needed to reduce intensity by half."
+    },
+
+    // ANATOMY & PATHOLOGY RECOGNITION
+    {
+        q: "A 'Bamboo Spine' appearance is characteristic of:",
+        options: ["Osteoarthritis", "Ankylosing Spondylitis", "Scoliosis", "Spina Bifida"],
+        a: 1,
+        exp: "Fusion of vertebrae gives a bamboo appearance."
+    },
+    {
+        q: "The landmark 'Sella Turcica' houses the:",
+        options: ["Pineal gland", "Pituitary gland", "Thyroid gland", "Adrenal gland"],
+        a: 1,
+        exp: "Located in the sphenoid bone."
+    },
+    {
+        q: "Which carpal bone is most commonly fractured?",
+        options: ["Lunate", "Scaphoid", "Capitate", "Pisiform"],
+        a: 1,
+        exp: "Scaphoid fractures are common and tricky to heal."
+    },
+    {
+        q: "Pleural effusion is best demonstrated in which decubitus position?",
+        options: ["Lateral decubitus, affected side down", "Lateral decubitus, affected side up", "Supine", "Prone"],
+        a: 0,
+        exp: "Fluid sinks; affected side down allows fluid to pool against the lateral chest wall."
+    },
+    {
+        q: "The 'Sail Sign' in a pediatric chest X-ray represents the:",
+        options: ["Enlarged Heart", "Normal Thymus", "Collapsed Lung", "Pneumonia"],
+        a: 1,
+        exp: "The thymus gland often looks like a sail in infants."
+    },
+
+    // RAPID FIRE MISC (76-100)
+    { q: "A grid should be used when body part thickness exceeds:", options: ["5 cm", "10 cm", "20 cm", "30 cm"], a: 1 },
+    { q: "Which interaction produces the white contrast of bone on an X-ray?", options: ["Photoelectric effect", "Compton scatter", "Coherent scatter", "Pair production"], a: 0 },
+    { q: "Changing from 100 mA to 200 mA will:", options: ["Double the density", "Halve the density", "Increase contrast", "Decrease contrast"], a: 0 },
+    { q: "Subject contrast depends on:", options: ["Atomic number and tissue density", "mAs only", "Focal spot size", "Film speed"], a: 0 },
+    { q: "The standard rotation speed of a diagnostic rotating anode is approx:", options: ["1000 rpm", "3400 rpm", "10,000 rpm", "500 rpm"], a: 1 },
+    { q: "Stenvers view was historically used to visualize:", options: ["Optic foramen", "Temporal bone (Petrous part)", "Sella turcica", "Mandible"], a: 1 },
+    { q: "Collimation reduces dose and increases:", options: ["Scatter", "Contrast", "Density", "Blur"], a: 1 },
+    { q: "An air-gap technique can be used as an alternative to:", options: ["A Grid", "A Filter", "Intensifying screen", "High kVp"], a: 0 },
+    { q: "The SI unit of radioactivity is:", options: ["Curie", "Becquerel", "Rad", "Rem"], a: 1 },
+    { q: "NCRP recommends annual public dose limit (non-medical) to be:", options: ["1 mSv", "5 mSv", "20 mSv", "50 mSv"], a: 0 },
+    { q: "The emulsion layer of film contains:", options: ["Silver Halide", "Polyester", "Phosphor", "Lead"], a: 0 },
+    { q: "Sialography is the study of:", options: ["Salivary glands", "Spinal cord", "Sinuses", "Veins"], a: 0 },
+    { q: "T-tube cholangiography is performed:", options: ["Pre-operative", "Intra-operative", "Post-operative", "Before ERCP"], a: 2 },
+    { q: "Which view demonstrates the Zygomatic Arches?", options: ["Towne", "Submentovertex (SMV)", "Caldwell", "Lateral"], a: 1 },
+    { q: "Green sensitive screens should be used with:", options: ["Blue sensitive film", "Green sensitive (Orthochromatic) film", "Non-screen film", "Dental film"], a: 1 },
+    { q: "Developer solution is mainly:", options: ["Acidic", "Alkaline", "Neutral", "Water"], a: 1 },
+    { q: "Fixer solution performs which function?", options: ["Converts latent image to visible", "Clears unexposed silver halide", "Hardens the emulsion", "Both B and C"], a: 3 },
+    { q: "Geometric unsharpness (Penumbra) is reduced by:", options: ["Large Focal Spot", "Small Focal Spot", "Short SID", "Long OID"], a: 1 },
+    { q: "Bit depth controls:", options: ["Spatial resolution", "Contrast resolution (Gray shades)", "Pixel size", "Matrix size"], a: 1 },
+    { q: "The specific gravity of Barium Sulfate is approx:", options: ["1.0", "2.5", "4.5", "10.0"], a: 2 },
+    { q: "Metformin should be withheld for 48 hours after iodinated contrast due to risk of:", options: ["Lactic Acidosis", "Anaphylaxis", "Cardiac arrest", "Hypoglycemia"], a: 0 },
+    { q: "Which zone in MRI is strictly restricted to screened personnel?", options: ["Zone I", "Zone II", "Zone III", "Zone IV"], a: 3 },
+    { q: "Flair sequence in MRI is best for:", options: ["Suppressing Fat", "Suppressing CSF (Fluid)", "Vascular flow", "Bone marrow"], a: 1 },
+    { q: "Identify the retroperitoneal organ:", options: ["Stomach", "Spleen", "Kidney", "Transverse Colon"], a: 2 },
+    { q: "The junction of the coronal and sagittal sutures is the:", options: ["Lambda", "Bregma", "Pterion", "Asterion"], a: 1 }
+    ];
+
+    // Initialize Quiz
+    const quizContainer = document.getElementById('quizContainer');
+    const maxMarksDisplay = document.getElementById('maxMarks');
+    
+    // Adjust Marks display based on actual array length
+    maxMarksDisplay.innerText = questions.length * 4;
+
+    function renderQuestions() {
+        quizContainer.innerHTML = '';
+        questions.forEach((q, index) => {
+            const block = document.createElement('div');
+            block.className = 'question-block';
+            block.id = `q-block-${index}`;
+            
+            let optionsHtml = '';
+            q.options.forEach((opt, i) => {
+                optionsHtml += `
+                    <label>
+                        <input type="radio" name="q${index}" value="${i}">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            block.innerHTML = `
+                <div class="q-text">Q${index + 1}. ${q.q}</div>
+                <div class="options">${optionsHtml}</div>
+                <div class="explanation" id="exp-${index}">
+                    <strong>Answer: ${q.options[q.a]}</strong><br>
+                    ${q.exp ? `<em>Explanation: ${q.exp}</em>` : ''}
+                </div>
+            `;
+            quizContainer.appendChild(block);
+        });
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        let correct = 0;
+        let wrong = 0;
+        let skip = 0;
+
+        questions.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            const block = document.getElementById(`q-block-${index}`);
+            const exp = document.getElementById(`exp-${index}`);
+            const inputs = block.querySelectorAll('label');
+
+            // Reset styles
+            inputs.forEach(l => l.style.color = 'black');
+
+            if (!selected) {
+                skip++;
+            } else {
+                const val = parseInt(selected.value);
+                if (val === q.a) {
+                    score += 4;
+                    correct++;
+                    selected.parentElement.classList.add('correct-ans');
+                } else {
+                    score -= 1;
+                    wrong++;
+                    selected.parentElement.classList.add('wrong-ans');
+                    // Highlight correct one
+                    inputs[q.a].classList.add('correct-ans');
+                }
+            }
+            // Show explanation
+            exp.style.display = 'block';
+        });
+
+        // Display Results
+        document.getElementById('finalScore').innerText = `${score} / ${questions.length * 4}`;
+        document.getElementById('countCorrect').innerText = correct;
+        document.getElementById('countWrong').innerText = wrong;
+        document.getElementById('countSkip').innerText = skip;
+        
+        let accuracy = (correct + wrong) > 0 ? ((correct / (correct + wrong)) * 100).toFixed(1) : 0;
+        document.getElementById('accuracy').innerText = `${accuracy}%`;
+
+        document.getElementById('resultModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('resultModal').style.display = 'none';
+        window.scrollTo(0,0);
+    }
+
+    // Run on load
+    renderQuestions();
+
+</script>
+
+</body>
+</html>

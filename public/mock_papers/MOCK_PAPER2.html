@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIIMS Radiographer Mock Test - SET 2</title>
+<style>
+    :root { --primary: #2c3e50; --accent: #3498db; --bg: #ecf0f1; --white: #ffffff; --green: #27ae60; --red: #c0392b; }
+    body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 20px; color: #333; }
+    .container { max-width: 900px; margin: 0 auto; background: var(--white); padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    header { text-align: center; border-bottom: 2px solid var(--accent); padding-bottom: 15px; margin-bottom: 20px; }
+    .stats { display: flex; justify-content: space-around; background: #f8f9fa; padding: 10px; border-radius: 5px; font-weight: bold; color: var(--primary); }
+    .q-card { border: 1px solid #e0e0e0; padding: 15px; margin-bottom: 20px; border-radius: 6px; background: #fff; transition: transform 0.1s; }
+    .q-card:hover { border-color: var(--accent); }
+    .q-title { font-size: 1.1em; font-weight: 600; margin-bottom: 10px; color: var(--primary); }
+    .opt-label { display: flex; align-items: center; padding: 8px; cursor: pointer; border-radius: 4px; transition: background 0.2s; }
+    .opt-label:hover { background: #f1f8ff; }
+    input[type="radio"] { margin-right: 12px; transform: scale(1.2); }
+    .btn { background: var(--accent); color: white; border: none; padding: 15px 30px; font-size: 1.1em; border-radius: 5px; cursor: pointer; width: 100%; margin-top: 20px; }
+    .btn:hover { background: #2980b9; }
+    
+    /* Results & Review Styles */
+    .correct { background-color: rgba(39, 174, 96, 0.2); border-left: 5px solid var(--green); }
+    .wrong { background-color: rgba(192, 57, 43, 0.2); border-left: 5px solid var(--red); }
+    .exp-box { display: none; margin-top: 10px; padding: 10px; background: #fff3cd; border: 1px solid #ffeeba; border-radius: 4px; color: #856404; font-size: 0.95em; }
+    
+    #resultOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; }
+    .res-box { background: white; padding: 40px; border-radius: 10px; text-align: center; width: 90%; max-width: 400px; }
+    .big-score { font-size: 4em; color: var(--accent); font-weight: bold; margin: 10px 0; }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: left; margin: 20px 0; }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>AIIMS CRE Mock Test - SET 2</h1>
+        <div class="stats">
+            <span>Questions: 100</span>
+            <span>Marks: 400</span>
+                    </div>
+    </header>
+
+    <div id="quiz-area"></div>
+    <button class="btn" onclick="submitTest()">SUBMIT TEST</button>
+</div>
+
+<div id="resultOverlay">
+    <div class="res-box">
+        <h2>Performance Report</h2>
+        <div class="big-score" id="scoreVal">0</div>
+        <div>Total Marks / 400</div>
+        <div class="stat-grid">
+            <div>✅ Correct: <span id="r-corr" style="color:var(--green)">0</span></div>
+            <div>❌ Wrong: <span id="r-wrong" style="color:var(--red)">0</span></div>
+            <div>⚪ Skipped: <span id="r-skip">0</span></div>
+            <div>🎯 Accuracy: <span id="r-acc">0%</span></div>
+        </div>
+        <button class="btn" onclick="closeModal()">Review Answers</button>
+    </div>
+</div>
+
+<script>
+const db = [
+    // --- PHYSICS (TRANSFORMERS, CIRCUITS, X-RAY PRODUCTION) ---
+    { q: "A transformer operates on the principle of:", o: ["Self induction only", "Mutual induction", "Static electricity", "Thermionic emission"], a: 1, e: "Transformers work via mutual induction between two coils." },
+    { q: "In a step-up transformer, the current in the secondary coil is:", o: ["Higher than primary", "Lower than primary", "Same as primary", "Zero"], a: 1, e: "Voltage increases, but current must decrease to conserve power (P=VI)." },
+    { q: "The process of boiling off electrons from the filament is called:", o: ["Ionization", "Thermionic emission", "Rectification", "Space charge effect"], a: 1 },
+    { q: "Which component of the X-ray tube reduces leakage radiation?", o: ["Glass envelope", "Protective Housing (Tube housing)", "Focusing cup", "Anode"], a: 1 },
+    { q: "The precise area on the anode where electrons strike is the:", o: ["Effective focal spot", "Actual focal spot", "Target angle", "Filament"], a: 1 },
+    { q: "Voltage ripple in a 3-phase 12-pulse generator is approximately:", o: ["100%", "14%", "4%", "Less than 1%"], a: 2, e: "Single phase: 100%, 3p6p: ~14%, 3p12p: ~4%, High Freq: <1%." },
+    { q: "According to the Inverse Square Law, if distance is doubled, intensity becomes:", o: ["Double", "Half", "One fourth", "Four times"], a: 2 },
+    { q: "Total filtration in a tube operating above 70 kVp must be at least:", o: ["1.5 mm Al", "2.0 mm Al", "2.5 mm Al", "0.5 mm Al"], a: 2, e: "NCRP guideline for equipment operating >70 kVp." },
+    { q: "Which interaction is responsible for image contrast?", o: ["Compton scatter", "Photoelectric absorption", "Coherent scatter", "Pair production"], a: 1, e: "PE absorption differentiates tissue densities (bone vs soft tissue)." },
+    { q: "The binding energy of a K-shell electron in Tungsten is approx:", o: ["69.5 keV", "12 keV", "30 keV", "100 keV"], a: 0 },
+
+    // --- ANATOMY & POSITIONING (UPPER/LOWER LIMB, SPINE) ---
+    { q: "Which carpal bone articulates with the first metacarpal (thumb)?", o: ["Scaphoid", "Trapezium", "Capitate", "Hamate"], a: 1 },
+    { q: "The 'Frog-Leg' lateral view is used to evaluate the:", o: ["Knee", "Hip", "Shoulder", "Ankle"], a: 1 },
+    { q: "The prominence on the anterior proximal tibia is called:", o: ["Tibial Tuberosity", "Medial Malleolus", "Intercondylar eminence", "Fibula head"], a: 0 },
+    { q: "For a lateral projection of the lumbar spine, the CR is directed to:", o: ["L2", "L3", "L4 (Iliac Crest)", "S1"], a: 2 },
+    { q: "Which position best demonstrates the right intervertebral foramina of the cervical spine?", o: ["Right Lateral", "RAO", "LPO", "RPO"], a: 2, e: "C-spine IV foramina: LPO shows Right, RPO shows Left (Upside)." },
+    { q: "The 'Y-view' of the shoulder is primarily used to check for:", o: ["Fracture of clavicle", "Dislocation", "Rotator cuff tear", "AC joint separation"], a: 1 },
+    { q: "Spondylolisthesis is best demonstrated on which view?", o: ["AP", "Lateral", "Oblique", "Open mouth"], a: 1, e: "Lateral view shows the forward slippage of one vertebra on another." },
+    { q: "The mastoid process is part of which cranial bone?", o: ["Parietal", "Temporal", "Occipital", "Sphenoid"], a: 1 },
+    { q: "Ideally, how long should a patient stand before a decubitus abdomen image to visualize air-fluid levels?", o: ["1 minute", "5-20 minutes", "1 hour", "No wait needed"], a: 1 },
+    { q: "The zygapophyseal joints of the thoracic spine are best seen on:", o: ["Lateral view", "AP view", "70-degree Oblique", "90-degree lateral"], a: 2 },
+
+    // --- CT PHYSICS & ARTIFACTS ---
+    { q: "The 'Scout' image in CT is also known as:", o: ["Tomogram", "Topogram/Scanogram", "Axial scan", "Volumetric scan"], a: 1 },
+    { q: "Increasing the pitch in CT results in:", o: ["Higher patient dose", "Lower patient dose", "Better spatial resolution", "Slower scan time"], a: 1, e: "Higher pitch means the table moves faster relative to rotation, reducing dose." },
+    { q: "The window level (WL) generally corresponds to:", o: ["Image Noise", "Image Contrast", "Tissue density of interest", "Scanning range"], a: 2 },
+    { q: "Which HU value represents air?", o: ["0", "-100", "-1000", "1000"], a: 2 },
+    { q: "Streak artifacts in the posterior fossa of the brain are due to:", o: ["Patient motion", "Beam hardening", "Ring detector error", "Low mA"], a: 1 },
+    { q: "The ability to distinguish small objects with high density difference is:", o: ["Spatial resolution", "Contrast resolution", "Temporal resolution", "Linearity"], a: 0 },
+    { q: "Multi-Detector CT (MDCT) allows for:", o: ["Slower scanning", "Isotropic voxels", "Increased tube heating", "Lower resolution"], a: 1, e: "Isotropic means resolution is equal in all 3 planes (x, y, z)." },
+    { q: "Which generation of CT used a 'Pencil Beam' and 'Translate-Rotate' motion?", o: ["First", "Second", "Third", "Fourth"], a: 0 },
+    { q: "The reference detector in CT is used to:", o: ["Measure patient dose", "Monitor beam intensity and correct drift", "Detect scatter", "Align the patient"], a: 1 },
+    { q: "In CT Angiography, the 'Bolus Tracking' technique is used to:", o: ["Track patient movement", "Trigger the scan at peak enhancement", "Measure heart rate", "Calculate creatinine"], a: 1 },
+
+    // --- MRI PHYSICS & SEQUENCES ---
+    { q: "Which tissue has the shortest T1 relaxation time?", o: ["Water", "Fat", "Gray matter", "CSF"], a: 1, e: "Fat relaxes quickly, appearing bright on T1." },
+    { q: "The Larmor frequency of Hydrogen at 1.5 Tesla is approx:", o: ["21 MHz", "42.6 MHz", "63.9 MHz", "128 MHz"], a: 2, e: "42.58 MHz/Tesla x 1.5 T = ~63.9 MHz." },
+    { q: "Which coil acts as both transmitter and receiver in most systems?", o: ["Surface coil", "Body coil", "Shim coil", "Gradient coil"], a: 1 },
+    { q: "The specific absorption rate (SAR) limits are set to prevent:", o: ["Tissue heating", "Hearing loss", "Nerve stimulation", "Claustrophobia"], a: 0 },
+    { q: "STIR sequences are mainly used to:", o: ["Suppress Fat", "Suppress Water", "Enhance vessels", "Visualize hemorrhage"], a: 0 },
+    { q: "Gradient Echo (GRE) sequences are most sensitive to:", o: ["Edema", "Hemorrhage/Calcification (Susceptibility)", "Fat", "Infection"], a: 1 },
+    { q: "A 180-degree RF pulse followed by a 90-degree pulse characterizes:", o: ["Spin Echo", "Inversion Recovery", "Gradient Echo", "Fast Spin Echo"], a: 1 },
+    { q: "The 'Magic Angle' artifact occurs in tendons oriented at:", o: ["90 degrees", "45 degrees", "55 degrees", "0 degrees"], a: 2, e: "Occurs at ~54.7 degrees to the main magnetic field." },
+    { q: "In MRI, spatial localization is achieved using:", o: ["Gradients", "RF pulses", "Shim coils", "Surface coils"], a: 0 },
+    { q: "To eliminate aliasing (wrap-around) artifact, one should:", o: ["Decrease FOV", "Increase FOV", "Decrease TR", "Use a surface coil"], a: 1 },
+
+    // --- ULTRASOUND & DOPPLER ---
+    { q: "The frequency range for diagnostic ultrasound is:", o: ["20-20,000 Hz", "2-15 MHz", "1-5 KHz", "Above 50 MHz"], a: 1 },
+    { q: "Which transducer is best for examining deep abdominal organs?", o: ["Linear array (High freq)", "Curvilinear (Low freq)", "Phased array", "Endocavitary"], a: 1, e: "Lower frequency (3-5 MHz) provides better penetration for deep organs." },
+    { q: "Reverberation artifact in USG looks like:", o: ["A black shadow", "Parallel, equally spaced lines", "A bright flash", "Mirror image"], a: 1 },
+    { q: "Color Doppler shows red and blue colors representing:", o: ["Arteries and Veins", "Temperature", "Flow direction relative to transducer", "Oxygenation"], a: 2 },
+    { q: "Which mode is used for fetal heart rate monitoring?", o: ["A-mode", "B-mode", "M-mode", "3D mode"], a: 2 },
+
+    // --- RADIOBIOLOGY & SAFETY ---
+    { q: "Which phase of the cell cycle is most radiosensitive?", o: ["S phase", "M phase (Mitosis)", "G1 phase", "G2 phase"], a: 1 },
+    { q: "The unit 'Gray' (Gy) measures:", o: ["Equivalent Dose", "Absorbed Dose", "Radioactivity", "Exposure"], a: 1 },
+    { q: "Radiation induced cataracts are considered:", o: ["Stochastic effect", "Deterministic (Non-stochastic) effect", "Genetic effect", "Random effect"], a: 1, e: "They have a threshold dose." },
+    { q: "The primary purpose of the 'Deadman switch' in fluoroscopy is:", o: ["Improve image quality", "Radiation protection", "Cool the tube", "Record the image"], a: 1 },
+    { q: "For a pregnant radiographer, the fetal dose limit for the entire gestation is:", o: ["1 mSv", "5 mSv", "10 mSv", "50 mSv"], a: 0 },
+    { q: "The Law of Bergonie and Tribondeau states that cells are more sensitive if they are:", o: ["Mature and specialized", "Undifferentiated and rapidly dividing", "Slowly dividing", "Hypoxic"], a: 1 },
+    { q: "Which filter material is typically used in mammography?", o: ["Aluminum", "Copper", "Molybdenum/Rhodium", "Lead"], a: 2 },
+    { q: "OER (Oxygen Enhancement Ratio) suggests that cells are:", o: ["More sensitive in oxygenated state", "Less sensitive in oxygenated state", "Unaffected by oxygen", "Resistant to radiation"], a: 0 },
+    { q: "The minimum source-to-skin distance (SSD) for mobile fluoroscopy units is:", o: ["15 cm", "30 cm", "38 cm", "100 cm"], a: 1 },
+    { q: "Secondary protective barriers are designed to protect against:", o: ["Primary beam", "Scatter and leakage radiation", "Only leakage", "Neutrons"], a: 1 },
+
+    // --- SPECIAL PROCEDURES & CONTRAST ---
+    { q: "Myelography involves injection of contrast into the:", o: ["Epidural space", "Subarachnoid space", "Subdural space", "Vertebral disk"], a: 1 },
+    { q: "Which catheter shape is commonly used for coronary angiography?", o: ["Pigtail", "Judkins", "Cobra", "Simmons"], a: 1 },
+    { q: "The term 'osmolality' in contrast media refers to:", o: ["Thickness/Viscosity", "Number of particles in solution", "Iodine concentration", "PH level"], a: 1 },
+    { q: "Voiding Cystourethrography (VCUG) is primarily used to diagnose:", o: ["Kidney stones", "Vesicoureteral reflux (VUR)", "Bladder cancer", "Prostate enlargement"], a: 1 },
+    { q: "For Barium Enema, the bag should be hung no higher than:", o: ["12 inches", "24 inches (60cm)", "36 inches", "48 inches"], a: 1, e: "Prevents excessive pressure and rupture." },
+    { q: "The 'Trendelenburg' position places the patient:", o: ["Head higher than feet", "Feet higher than head", "Prone", "Lateral"], a: 1 },
+    { q: "Which view is specific for the petrous temporal bone?", o: ["Stenvers", "Waters", "Caldwell", "Lateral"], a: 0 },
+    { q: "In DSA, the 'Mask' image is taken:", o: ["After contrast injection", "Before contrast injection", "During peak flow", "At the end"], a: 1 },
+    { q: "Non-ionic contrast media is preferred because it has:", o: ["Higher osmolality", "Lower osmolality and fewer reactions", "Lower cost", "Better opacity"], a: 1 },
+    { q: "Percutaneous Transhepatic Cholangiography (PTC) utilizes a:", o: ["Chiba needle", "Veress needle", "Butterfly needle", "Biopsy gun"], a: 0 },
+
+    // --- DIGITAL & MISC (61-80) ---
+    { q: "DQE (Detective Quantum Efficiency) measures:", o: ["System efficiency in converting X-ray input to image output", "The speed of the computer", "The darkness of the film", "Grid ratio"], a: 0 },
+    { q: "In CR, the fading of the latent image occurs approx:", o: ["25% in 8 hours", "10% in 1 hour", "Never", "100% in 10 minutes"], a: 0 },
+    { q: "The EI (Exposure Index) in digital radiography provides feedback on:", o: ["Patient dose", "Exposure to the detector", "Image resolution", "Processing speed"], a: 1 },
+    { q: "Lossy compression in PACS:", o: ["Retains all original data", "Reduces file size but loses some data", "Is reversible", "Is legally mandatory"], a: 1 },
+    { q: "Which laser is used in a CR reader?", o: ["Argon", "Helium-Neon (Red)", "CO2", "YAG"], a: 1 },
+    { q: "A 'Look-Up Table' (LUT) is used to:", o: ["Store patient names", "Map raw pixel values to display brightness (contrast)", "Control the generator", "Filter the beam"], a: 1 },
+    { q: "Window Width (WW) represents:", o: ["Gray scale (Contrast)", "Image brightness", "Sharpness", "Field of view"], a: 0 },
+    { q: "The smallest component of a digital image matrix is:", o: ["Voxel", "Pixel", "Bit", "Byte"], a: 1 },
+    { q: "Radiographic noise is also called:", o: ["Mottle", "Fog", "Penumbra", "Umbra"], a: 0 },
+    { q: "Which system has the highest spatial resolution?", o: ["MRI", "CT", "Digital Mammography", "Ultrasound"], a: 2, e: "Mammography requires extreme resolution for microcalcifications." },
+    { q: "Pneumothorax is best seen on:", o: ["Inspiration", "Expiration", "Supine", "Lordotic"], a: 1, e: "Expiration reduces lung volume, making the pneumothorax more visible." },
+    { q: "Which bone forms the posterior portion of the acetabulum?", o: ["Ilium", "Ischium", "Pubis", "Sacrum"], a: 1 },
+    { q: "The Olecranon process is part of the:", o: ["Radius", "Ulna", "Humerus", "Scapula"], a: 1 },
+    { q: "Swimmer's view is used to visualize:", o: ["C1-C2", "C7-T1 junction", "L5-S1", "Thoracic spine"], a: 1 },
+    { q: "Which organ is retroperitoneal?", o: ["Liver", "Spleen", "Pancreas", "Transverse colon"], a: 2 },
+    { q: "The contrast agent used in MRI is:", o: ["Iodine", "Barium", "Gadolinium", "Technetium"], a: 2 },
+    { q: "T2* (T2 Star) susceptibility artifacts are prominent in:", o: ["Spin Echo", "Gradient Echo", "FSE", "Inversion Recovery"], a: 1 },
+    { q: "PET scan relies on the detection of:", o: ["Protons", "Neutrons", "Annihilation photons", "Electrons"], a: 2 },
+    { q: "The half-life of FDG (Fluorodeoxyglucose) is approx:", o: ["6 hours", "110 minutes", "60 days", "8 days"], a: 1 },
+    { q: "Fusion imaging typically refers to:", o: ["MRI + USG", "PET + CT", "X-ray + CT", "Fluoro + DSA"], a: 1 },
+
+    // --- RAPID FIRE & IMAGE QUALITY (81-100) ---
+    { q: "Magnification radiography utilizes:", o: ["Large focal spot", "Micro-focus spot (0.3mm or less)", "High mA", "Grid"], a: 1 },
+    { q: "Grid cutoff results in:", o: ["Dark bands or loss of density", "Increased density", "Blurred image", "Magnification"], a: 0 },
+    { q: "The anode heel effect is more pronounced at:", o: ["Cathode end", "Anode end", "Center", "Edges"], a: 1, e: "Intensity is lower at the anode end." },
+    { q: "Spondylolysis refers to defect in:", o: ["Pars interarticularis", "Vertebral body", "Spinous process", "Disk"], a: 0 },
+    { q: "The 'Apple Core' lesion in Barium Enema indicates:", o: ["Diverticulosis", "Colon Cancer", "Polyp", "Volvulus"], a: 1 },
+    { q: "Which dosimeter can be read immediately?", o: ["TLD", "Film Badge", "Pocket Ionization Chamber", "OSL"], a: 2 },
+    { q: "Stochastic effects have:", o: ["No threshold", "A high threshold", "Severity dependent on dose", "Immediate appearance"], a: 0 },
+    { q: "The input phosphor of an Image Intensifier is made of:", o: ["Cesium Iodide", "Zinc Cadmium Sulfide", "Calcium Tungstate", "Silicon"], a: 0 },
+    { q: "Minification gain x Flux gain equals:", o: ["Brightness Gain", "Resolution", "Contrast", "Dose"], a: 0 },
+    { q: "Voxel size in CT depends on:", o: ["Pixel size and Slice thickness", "Matrix only", "FOV only", "KVp"], a: 0 },
+    { q: "The Circle of Willis is best imaged using:", o: ["MRA (Time of Flight)", "Plain X-ray", "USG", "Nuclear Medicine"], a: 0 },
+    { q: "Diffusion Weighted Imaging (DWI) is the gold standard for early:", o: ["Stroke (Ischemia)", "Tumor", "Hemorrhage", "MS"], a: 0 },
+    { q: "Normal Creatinine levels are approx:", o: ["0.6 - 1.2 mg/dL", "5 - 10 mg/dL", "10 - 20 mg/dL", "0.1 - 0.2 mg/dL"], a: 0 },
+    { q: "Extravasation means:", o: ["Allergic reaction", "Leakage of contrast/drug into surrounding tissue", "Fast injection", "Blood clotting"], a: 1 },
+    { q: "In trauma, if a C-spine fracture is suspected, the first view to take is:", o: ["AP Open Mouth", "Cross-table Lateral", "Swimmers", "Oblique"], a: 1 },
+    { q: "The navicular bone of the foot is also called:", o: ["Scaphoid (tarsal)", "Cuboid", "Talus", "Cuneiform"], a: 0 },
+    { q: "Bennett's fracture involves the:", o: ["Base of 1st Metacarpal", "Distal Radius", "Ulna", "Tibia"], a: 0 },
+    { q: "Colles fracture involves:", o: ["Distal radius with dorsal angulation", "Distal radius with volar angulation", "Scaphoid", "Humerus"], a: 0 },
+    { q: "The unit of frequency is:", o: ["Hertz", "Watt", "Joule", "Newton"], a: 0 },
+    { q: "Which modality uses no ionizing radiation?", o: ["CT", "Mammography", "Fluoroscopy", "MRI"], a: 3 }
+];
+
+function renderQuiz() {
+    const area = document.getElementById('quiz-area');
+    let html = '';
+    
+    db.forEach((item, idx) => {
+        let opts = '';
+        item.o.forEach((opt, oIdx) => {
+            opts += `<label class="opt-label"><input type="radio" name="q${idx}" value="${oIdx}"> ${opt}</label>`;
+        });
+        
+        html += `
+        <div class="q-card" id="card-${idx}">
+            <div class="q-title">Q${idx+1}. ${item.q}</div>
+            <div class="opts">${opts}</div>
+            <div class="exp-box" id="exp-${idx}">
+                <b>Correct Answer: ${item.o[item.a]}</b><br>
+                ${item.e ? item.e : ''}
+            </div>
+        </div>`;
+    });
+    area.innerHTML = html;
+}
+
+function submitTest() {
+    let score = 0, correct = 0, wrong = 0, skip = 0;
+    
+    db.forEach((item, idx) => {
+        const sel = document.querySelector(`input[name="q${idx}"]:checked`);
+        const card = document.getElementById(`card-${idx}`);
+        const exp = document.getElementById(`exp-${idx}`);
+        
+        // Reset styles
+        card.classList.remove('correct', 'wrong');
+        
+        if (!sel) {
+            skip++;
+        } else {
+            if (parseInt(sel.value) === item.a) {
+                score += 4;
+                correct++;
+                card.classList.add('correct');
+            } else {
+                score -= 1;
+                wrong++;
+                card.classList.add('wrong');
+            }
+        }
+        exp.style.display = 'block';
+    });
+
+    // Update Results
+    document.getElementById('scoreVal').innerText = score;
+    document.getElementById('r-corr').innerText = correct;
+    document.getElementById('r-wrong').innerText = wrong;
+    document.getElementById('r-skip').innerText = skip;
+    document.getElementById('r-acc').innerText = (correct+wrong) > 0 ? Math.round((correct/(correct+wrong))*100) + "%" : "0%";
+    
+    document.getElementById('resultOverlay').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('resultOverlay').style.display = 'none';
+    window.scrollTo(0,0);
+}
+
+// Start
+renderQuiz();
+</script>
+
+</body>
+</html>
