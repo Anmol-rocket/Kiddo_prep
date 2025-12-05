@@ -10,6 +10,7 @@ export default function MaterialsSection() {
   const [items, setItems] = useState<Item[] | null>(null)
   const [loading, setLoading] = useState(true)
   const [doneSet, setDoneSet] = useState<Set<string>>(new Set())
+  const [perfMap, setPerfMap] = useState<Record<string, { score: number; total: number; accuracy?: number; date: string }>>({})
 
   useEffect(() => {
     let mounted = true
@@ -39,6 +40,18 @@ export default function MaterialsSection() {
     }
   }, [])
 
+  // Load persisted performance
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("kiddoprep_mock_perf")
+      if (raw) {
+        setPerfMap(JSON.parse(raw))
+      }
+    } catch {
+      // ignore
+    }
+  }, [])
+
   const persistDone = (next: Set<string>) => {
     try {
       localStorage.setItem("kiddoprep_mock_done", JSON.stringify(Array.from(next)))
@@ -53,6 +66,39 @@ export default function MaterialsSection() {
       if (next.has(key)) next.delete(key)
       else next.add(key)
       persistDone(next)
+      return next
+    })
+  }
+
+  const savePerf = (key: string) => {
+    const scoreStr = prompt("Enter score obtained", "0")
+    if (scoreStr == null) return
+    const totalStr = prompt("Enter total marks", "100")
+    if (totalStr == null) return
+    const score = Number(scoreStr)
+    const total = Number(totalStr)
+    if (!Number.isFinite(score) || !Number.isFinite(total) || total <= 0) {
+      alert("Please enter valid numeric values.")
+      return
+    }
+    const accStr = prompt("Enter accuracy (%) — optional", "")
+    let accuracy: number | undefined = undefined
+    if (accStr !== null && accStr.trim() !== "") {
+      const accVal = Number(accStr)
+      if (!Number.isFinite(accVal) || accVal < 0 || accVal > 100) {
+        alert("Please enter accuracy as 0-100.")
+        return
+      }
+      accuracy = Math.round(accVal)
+    }
+    const entry = { score, total, accuracy, date: new Date().toISOString() }
+    setPerfMap((prev) => {
+      const next = { ...prev, [key]: entry }
+      try {
+        localStorage.setItem("kiddoprep_mock_perf", JSON.stringify(next))
+      } catch {
+        // ignore
+      }
       return next
     })
   }
@@ -89,7 +135,12 @@ export default function MaterialsSection() {
 
   return (
     <div className="mt-8 md:mt-10 px-4 md:px-0">
-      <h2 className="text-xl md:text-2xl font-bold text-foreground mb-4 md:mb-6">Materials & Mock Papers</h2>
+      <div className="mb-4 md:mb-6 flex items-center justify-between gap-2">
+        <h2 className="text-xl md:text-2xl font-bold text-foreground">Materials & Mock Papers</h2>
+        <Button asChild variant="outline" className="text-sm md:text-base">
+          <a href="/materials/mock-analysis">Mock Analysis</a>
+        </Button>
+      </div>
       <div className="max-h-[60vh] md:max-h-[50vh] overflow-y-auto pr-2 no-scrollbar">
         {Object.entries(groups).map(([group, list]) => (
           <div key={group} className="mb-5 md:mb-6">
@@ -130,6 +181,18 @@ export default function MaterialsSection() {
                         onClick={() => toggleDone(it.url)}
                       >
                         {doneSet.has(it.url) ? "Marked Done" : "Mark as Done"}
+                      </Button>
+                    )}
+                    {it.group === "mock_papers" && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="flex-1 text-sm md:text-base"
+                        onClick={() => savePerf(it.name)}
+                      >
+                        {perfMap[it.name]
+                          ? `Saved: ${perfMap[it.name].score}/${perfMap[it.name].total}${typeof perfMap[it.name].accuracy === "number" ? ` (${perfMap[it.name].accuracy}%)` : ""}`
+                          : "Save Performance"}
                       </Button>
                     )}
                   </div>
