@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
 type Item = { name: string; group: string; url: string; ext: string; size: number; type: string }
 
@@ -12,6 +14,11 @@ export default function MaterialsSection() {
   const [doneSet, setDoneSet] = useState<Set<string>>(new Set())
   const [perfMap, setPerfMap] = useState<Record<string, { score: number; total: number; accuracy?: number; date: string }>>({})
 
+  // Modal state for score input
+  const [scoreModal, setScoreModal] = useState<{ open: boolean; key: string }>({ open: false, key: "" })
+  const [scoreInput, setScoreInput] = useState("")
+  const [totalInput, setTotalInput] = useState("100")
+  const [accuracyInput, setAccuracyInput] = useState("")
   useEffect(() => {
     let mounted = true
     fetch("/api/materials")
@@ -70,30 +77,37 @@ export default function MaterialsSection() {
     })
   }
 
-  const savePerf = (key: string) => {
-    const scoreStr = prompt("Enter score obtained", "0")
-    if (scoreStr == null) return
-    const totalStr = prompt("Enter total marks", "100")
-    if (totalStr == null) return
-    const score = Number(scoreStr)
-    const total = Number(totalStr)
+  const openScoreModal = (key: string) => {
+    const existing = perfMap[key]
+    setScoreInput(existing ? String(existing.score) : "")
+    setTotalInput(existing ? String(existing.total) : "100")
+    setAccuracyInput(existing?.accuracy !== undefined ? String(existing.accuracy) : "")
+    setScoreModal({ open: true, key })
+  }
+
+  const closeScoreModal = () => {
+    setScoreModal({ open: false, key: "" })
+    setScoreInput("")
+    setTotalInput("100")
+    setAccuracyInput("")
+  }
+
+  const submitScore = () => {
+    const score = Number(scoreInput)
+    const total = Number(totalInput)
     if (!Number.isFinite(score) || !Number.isFinite(total) || total <= 0) {
-      alert("Please enter valid numeric values.")
       return
     }
-    const accStr = prompt("Enter accuracy (%) — optional", "")
     let accuracy: number | undefined = undefined
-    if (accStr !== null && accStr.trim() !== "") {
-      const accVal = Number(accStr)
-      if (!Number.isFinite(accVal) || accVal < 0 || accVal > 100) {
-        alert("Please enter accuracy as 0-100.")
-        return
+    if (accuracyInput.trim() !== "") {
+      const accVal = Number(accuracyInput)
+      if (Number.isFinite(accVal) && accVal >= 0 && accVal <= 100) {
+        accuracy = Math.round(accVal)
       }
-      accuracy = Math.round(accVal)
     }
     const entry = { score, total, accuracy, date: new Date().toISOString() }
     setPerfMap((prev) => {
-      const next = { ...prev, [key]: entry }
+      const next = { ...prev, [scoreModal.key]: entry }
       try {
         localStorage.setItem("kiddoprep_mock_perf", JSON.stringify(next))
       } catch {
@@ -101,6 +115,7 @@ export default function MaterialsSection() {
       }
       return next
     })
+    closeScoreModal()
   }
 
   if (loading) return <div className="mt-6">Loading materials…</div>
@@ -199,7 +214,7 @@ export default function MaterialsSection() {
                             ? "bg-blue-500/20 border-blue-500/50 text-blue-600 dark:text-blue-400 hover:bg-blue-500/30"
                             : "hover:border-blue-500/50"
                         }`}
-                        onClick={() => savePerf(it.name)}
+                        onClick={() => openScoreModal(it.name)}
                       >
                         {perfMap[it.name]
                           ? `📊 ${perfMap[it.name].score}/${perfMap[it.name].total}${typeof perfMap[it.name].accuracy === "number" ? ` • ${perfMap[it.name].accuracy}%` : ""}`
@@ -213,6 +228,67 @@ export default function MaterialsSection() {
           </div>
         ))}
       </div>
+
+      {/* Score Input Modal */}
+      {scoreModal.open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4">
+          <Card className="w-full max-w-sm p-6 space-y-4 animate-fade-in">
+            <h3 className="text-lg font-bold text-foreground">Save Score</h3>
+            <p className="text-sm text-muted-foreground truncate">{scoreModal.key}</p>
+
+            <div className="space-y-3">
+              <div className="space-y-1">
+                <Label htmlFor="score-input">Score Obtained</Label>
+                <Input
+                  id="score-input"
+                  type="number"
+                  placeholder="e.g. 45"
+                  value={scoreInput}
+                  onChange={(e) => setScoreInput(e.target.value)}
+                  autoFocus
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="total-input">Total Marks</Label>
+                <Input
+                  id="total-input"
+                  type="number"
+                  placeholder="e.g. 50"
+                  value={totalInput}
+                  onChange={(e) => setTotalInput(e.target.value)}
+                />
+              </div>
+
+              <div className="space-y-1">
+                <Label htmlFor="accuracy-input">Accuracy % (optional)</Label>
+                <Input
+                  id="accuracy-input"
+                  type="number"
+                  placeholder="e.g. 90"
+                  min={0}
+                  max={100}
+                  value={accuracyInput}
+                  onChange={(e) => setAccuracyInput(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-2 pt-2">
+              <Button variant="outline" className="flex-1" onClick={closeScoreModal}>
+                Cancel
+              </Button>
+              <Button
+                className="flex-1"
+                onClick={submitScore}
+                disabled={!scoreInput || !totalInput || Number(totalInput) <= 0}
+              >
+                Save
+              </Button>
+            </div>
+          </Card>
+        </div>
+      )}
     </div>
   )
 }
