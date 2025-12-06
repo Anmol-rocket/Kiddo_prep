@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Special X-Ray Views and Contrast Media/Procedures.</title>
+<title>Anatomy Master Mobile</title>
 <style>
     :root {
         --primary: #2c3e50;
@@ -163,318 +163,278 @@
 // =========================
 // 1. DATA GENERATION
 // =========================
-const db = [
-    // ==========================================
-    // SECTION 1: SKULL & FACIAL SPECIAL VIEWS
-    // ==========================================
-    {
-        q: "The 'Towne View' (AP Axial) is primarily used to demonstrate the:",
-        o: ["Frontal Sinus", "Dorsum Sellae and Posterior Clinoid Processes", "Nasal bone", "Maxillary Sinus"],
-        a: 1,
-        e: "It projects the dorsum sellae within the foramen magnum."
-    },
-    {
-        q: "Which projection best demonstrates the 'Zygomatic Arches' ('Jug Handle' view)?",
-        o: ["Submentovertex (SMV)", "Townes", "Caldwell", "Lateral"],
-        a: 0,
-        e: "SMV projects the arches free of superimposition."
-    },
-    {
-        q: "The 'Waters View' (Parietoacanthial) requires the chin to be raised to place the OML at what angle to the IR?",
-        o: ["15 degrees", "30 degrees", "37 degrees", "45 degrees"],
-        a: 2,
-        e: "37 degrees places the petrous ridges just below the maxillary sinuses."
-    },
-    {
-        q: "The 'Rhese Method' is used to visualize the:",
-        o: ["Optic Foramen", "Mandibular Condyle", "Mastoid Air Cells", "TMJ"],
-        a: 0,
-        e: "It projects the optic foramen into the lower outer quadrant of the orbit."
-    },
-    {
-        q: "The 'Law Method' and 'Schuller Method' are historical views for the:",
-        o: ["Sella Turcica", "Mastoids / TMJ", "Orbits", "Nasal bones"],
-        a: 1,
-        e: "Lateral oblique views used for mastoid air cells and TMJ."
-    },
-    {
-        q: "To demonstrate a 'Blowout Fracture' of the orbit, which view is modified?",
-        o: ["Waters (Modified)", "Lateral", "SMV", "Townes"],
-        a: 0,
-        e: "Modified Waters (shallow angle) shows the orbital floor best."
-    },
-    {
-        q: "The 'Caldwell' projection usually requires a caudal tube angle of:",
-        o: ["5 degrees", "15 degrees", "30 degrees", "45 degrees"],
-        a: 1,
-        e: "15 degrees caudal projects petrous ridges into the lower 1/3 of orbits."
-    },
+const db = [{ q: "The 'Sella Turcica' houses which gland?", o: ["Pineal", "Pituitary", "Thyroid", "Adrenal"], a: 1, e: "Located in the sphenoid bone." },
+    { q: "The junction of the sagittal and coronal sutures is called the:", o: ["Lambda", "Bregma", "Pterion", "Asterion"], a: 1, e: "Bregma is the anterior fontanelle remnant." },
+    { q: "Which bone contains the mastoid process?", o: ["Occipital", "Parietal", "Temporal", "Sphenoid"], a: 2, e: "Part of the temporal bone." },
+    { q: "The 'Circle of Willis' is located in the:", o: ["Subdural space", "Epidural space", "Subarachnoid space", "Brain parenchyma"], a: 2, e: "Where CSF flows." },
+    { q: "Which foramen does the spinal cord pass through?", o: ["Foramen Ovale", "Foramen Magnum", "Foramen Rotundum", "Jugular Foramen"], a: 1, e: "Located in the occipital bone." },
+    { q: "The facial bone that is movable is the:", o: ["Maxilla", "Zygoma", "Mandible", "Vomer"], a: 2, e: "The jaw bone." },
+    { q: "The cribriform plate is part of which bone?", o: ["Ethmoid", "Sphenoid", "Frontal", "Nasal"], a: 0, e: "Olfactory nerves pass through it." },
+    { q: "The hardest bone in the human body is the:", o: ["Femur", "Petrous Temporal Bone", "Frontal Bone", "Calcaneus"], a: 1, e: "Protects the inner ear." },
+    { q: "The depression on the scapula for the articulation of the humerus is:", o: ["Glenoid cavity", "Acetabulum", "Olecranon fossa", "Coroid fossa"], a: 0, e: "Glenohumeral joint." },
+    { q: "The 'Pterion' is a landmark for which artery?", o: ["Middle Meningeal Artery", "Internal Carotid", "Vertebral Artery", "Basilar Artery"], a: 0, e: "Clinical significance: Extradural hemorrhage." },
+    
+    // --- UPPER LIMB ---
+    { q: "Which carpal bone is most commonly fractured?", o: ["Lunate", "Scaphoid", "Capitate", "Hamate"], a: 1, e: "Due to falling on outstretched hand." },
+    { q: "The Olecranon process is part of the:", o: ["Radius", "Ulna", "Humerus", "Scapula"], a: 1, e: "Forms the point of the elbow." },
+    { q: "The head of the radius articulates with the:", o: ["Trochlea", "Capitulum", "Olecranon", "Coronoid fossa"], a: 1, e: "Of the humerus." },
+    { q: "Which carpal bone has a 'hook'?", o: ["Pisiform", "Hamate", "Trapezium", "Trapezoid"], a: 1, e: "Hamulus of Hamate." },
+    { q: "The Coracoid process is located on the:", o: ["Ulna", "Scapula", "Clavicle", "Sternum"], a: 1, e: "Anterior projection of scapula." },
+    
+    // --- THORAX ---
+    { q: "The trachea bifurcates at the level of:", o: ["C7", "T2", "T4/T5 (Carina)", "T10"], a: 2, e: "The Carina." },
+    { q: "How many lobes does the right lung have?", o: ["1", "2", "3", "4"], a: 2, e: "Superior, Middle, Inferior." },
+    { q: "The diaphragm is pierced by the IVC at vertebral level:", o: ["T8", "T10", "T12", "L1"], a: 0, e: "T8 (Vena Cava), T10 (Esophagus), T12 (Aorta)." },
+    { q: "The heart is enclosed in a double-walled sac called:", o: ["Pleura", "Peritoneum", "Pericardium", "Mediastinum"], a: 2, e: "Pericardium." },
+    { q: "Which rib is considered a 'floating rib'?", o: ["7th", "10th", "11th", "1st"], a: 2, e: "11th and 12th are floating." },
+    { q: "The sternal angle (Angle of Louis) is at the level of:", o: ["2nd Costal Cartilage", "4th Rib", "Clavicle", "Xiphoid"], a: 0, e: "Landmark for T4/T5." },
 
-    // ==========================================
-    // SECTION 2: SPINE & PELVIS SPECIAL VIEWS
-    // ==========================================
-    {
-        q: "The 'Swimmer's View' (Twining method) is performed to visualize:",
-        o: ["C1-C2 (Odontoid)", "C7-T1 Junction", "L5-S1 Junction", "Sacrum"],
-        a: 1,
-        e: "Used when the shoulders superimpose C7-T1 on a standard lateral."
-    },
-    {
-        q: "The 'Fuchs Method' is an AP projection used to see the:",
-        o: ["Dens (Odontoid process)", "Spinous process of C7", "Lumbar bodies", "Coccyx"],
-        a: 0,
-        e: "Used when the Open Mouth view is inadequate."
-    },
-    {
-        q: "Which view demonstrates the 'Scottie Dog' anatomy?",
-        o: ["AP Lumbar", "Lateral Lumbar", "Oblique Lumbar", "Spot L5-S1"],
-        a: 2,
-        e: "45-degree oblique view of lumbar spine."
-    },
-    {
-        q: "The 'Judet View' describes oblique projections of the:",
-        o: ["Shoulder", "Acetabulum (Pelvis)", "Ankle", "Cervical spine"],
-        a: 1,
-        e: "Used to assess acetabular fractures (Iliopectineal/Ilioischial lines)."
-    },
-    {
-        q: "The 'Inlet and Outlet' views are essential for trauma to the:",
-        o: ["Skull", "Pelvis (Pelvic Ring)", "Thorax", "Femur"],
-        a: 1,
-        e: "Assess anterior/posterior displacement of the pelvic ring."
-    },
-    {
-        q: "The 'Ferguson Method' is an AP axial projection for the:",
-        o: ["Sacroiliac (SI) Joints", "L5-S1 Joint space", "Hip joint", "Pubic Symphysis"],
-        a: 0,
-        e: "Tube angled 30-35 degrees cephalad."
-    },
+    // --- ABDOMEN & PELVIS ---
+    { q: "Which organ is Retroperitoneal?", o: ["Liver", "Spleen", "Kidney", "Stomach"], a: 2, e: "Kidneys lie behind the peritoneum." },
+    { q: "The common bile duct is formed by the union of:", o: ["Cystic duct and Common Hepatic duct", "Right and Left Hepatic ducts", "Pancreatic duct and Cystic duct", "None"], a: 0, e: "Drains into duodenum." },
+    { q: "The Acetabulum is formed by the fusion of:", o: ["Ilium and Ischium", "Ischium and Pubis", "Ilium, Ischium, and Pubis", "Femur and Pelvis"], a: 2, e: "All three pelvic bones." },
+    { q: "The 'Pylorus' is the distal opening of the:", o: ["Esophagus", "Stomach", "Small Intestine", "Colon"], a: 1, e: "Connects stomach to duodenum." },
+    { q: "Which part of the colon has the Appendix attached?", o: ["Ascending", "Cecum", "Sigmoid", "Transverse"], a: 1, e: "The Cecum." },
+    { q: "The largest solid organ in the body is:", o: ["Spleen", "Liver", "Pancreas", "Kidney"], a: 1, e: "The Liver." },
+    { q: "The head of the pancreas lies in the C-loop of the:", o: ["Duodenum", "Jejunum", "Ileum", "Colon"], a: 0, e: "Curvature of the duodenum." },
+    { q: "The renal pelvis narrows to become the:", o: ["Urethra", "Ureter", "Major Calyx", "Bladder"], a: 1, e: "Ureter carries urine to bladder." },
+    
+    // --- SPINE ---
+    { q: "The 'Odontoid Process' (Dens) is part of:", o: ["Atlas (C1)", "Axis (C2)", "C7", "Occiput"], a: 1, e: "Axis." },
+    { q: "How many thoracic vertebrae are there?", o: ["7", "12", "5", "4"], a: 1, e: "T1-T12." },
+    { q: "The 'Pars Interarticularis' is best visualized in which L-spine view?", o: ["AP", "Lateral", "Oblique", "Spot"], a: 2, e: "The neck of the 'Scottie Dog'." },
+    { q: "The spinal cord ends at the level of:", o: ["T12", "L1/L2", "L4/L5", "S1"], a: 1, e: "Conus Medullaris." },
+    { q: "Which vertebra has no body?", o: ["Axis", "Atlas", "C7", "T1"], a: 1, e: "Atlas (C1) is a ring." },
+    { q: "The prominent spinous process palpable at the base of the neck is:", o: ["C2", "C5", "C7 (Vertebra Prominens)", "T1"], a: 2, e: "C7." },
 
-    // ==========================================
-    // SECTION 3: EXTREMITY SPECIAL VIEWS
-    // ==========================================
-    {
-        q: "The 'Gaynor-Hart' method is a tangential projection of the:",
-        o: ["Carpal Canal (Tunnel)", "Tarsal bones", "Patella", "Glenoid cavity"],
-        a: 0,
-        e: "Demonstrates the hamulus of hamate and carpal tunnel."
-    },
-    {
-        q: "The 'Stecher Method' (Hand elevated 20 degrees) helps to detect fracture of the:",
-        o: ["Lunate", "Scaphoid", "Radius", "Ulna"],
-        a: 1,
-        e: "Elongates the scaphoid."
-    },
-    {
-        q: "The 'Garth View' (Apical Oblique) is useful for diagnosing:",
-        o: ["Posterior Shoulder Dislocation", "Elbow fracture", "Hip dislocation", "AC joint separation"],
-        a: 0,
-        e: "Shows posterior dislocations and Bankart lesions."
-    },
-    {
-        q: "The 'Lawrence Method' (Transthoracic Lateral) is used for the:",
-        o: ["Proximal Humerus", "Sternum", "Ribs", "Scapula"],
-        a: 0,
-        e: "Used when the arm cannot be abducted/rotated due to trauma."
-    },
-    {
-        q: "The 'Merchant', 'Sunrise', and 'Skyline' views all examine the:",
-        o: ["Calcaneus", "Patellofemoral Joint", "Acromioclavicular Joint", "Hip Joint"],
-        a: 1,
-        e: "Tangential views of the patella."
-    },
-    {
-        q: "The 'Rosenberg View' is a weight-bearing PA view of the:",
-        o: ["Knees (flexed 45 deg)", "Ankles", "Hips", "Feet"],
-        a: 0,
-        e: "Best for seeing joint space narrowing in osteoarthritis."
-    },
-    {
-        q: "The 'Camp-Coventry' and 'Holmblad' methods demonstrate the:",
-        o: ["Intercondylar Fossa (Tunnel View)", "Tibial Tuberosity", "Patella", "Femoral Neck"],
-        a: 0,
-        e: "Shows loose bodies in the knee notch."
-    },
-    {
-        q: "The 'Mortise View' of the ankle requires the leg to be rotated:",
-        o: ["Externally 15 degrees", "Internally 15-20 degrees", "Internally 45 degrees", "Externally 45 degrees"],
-        a: 1,
-        e: "Opens the ankle joint space by removing fibular overlap."
-    },
-    {
-        q: "The 'Coyle Method' is a special view for the:",
-        o: ["Radial Head / Coronoid Process", "Shoulder", "Wrist", "Ankle"],
-        a: 0,
-        e: "Trauma view for radial head fractures."
-    },
+    // --- LOWER LIMB ---
+    { q: "The largest tarsal bone is:", o: ["Talus", "Calcaneus", "Navicular", "Cuboid"], a: 1, e: "The heel bone." },
+    { q: "The Lateral Malleolus is part of the:", o: ["Tibia", "Fibula", "Femur", "Talus"], a: 1, e: "Distal Fibula." },
+    { q: "The Tibial Tuberosity is the attachment site for the:", o: ["Achilles Tendon", "Patellar Ligament", "ACL", "PCL"], a: 1, e: "Below the patella." },
+    { q: "Which bone is a sesamoid bone?", o: ["Patella", "Cuboid", "Cuneiform", "Scaphoid"], a: 0, e: "Embedded in tendon." },
+    { q: "The hip joint is classified as what type of joint?", o: ["Hinge", "Ball and Socket", "Pivot", "Saddle"], a: 1, e: "Like the shoulder." },
+    
+    // --- SYSTEMS & CROSS SECTIONAL ---
+    { q: "In CT, Hounsfield Unit for water is:", o: ["-1000", "0", "100", "1000"], a: 1, e: "0 HU." },
+    { q: "The portal vein is formed by the union of:", o: ["SMV and Splenic Vein", "Hepatic Vein and IVC", "Renal vein and IVC", "IMV and SMV"], a: 0, e: "Superior Mesenteric Vein + Splenic." },
+    { q: "Which chamber of the heart forms the apex?", o: ["Right Atrium", "Left Atrium", "Right Ventricle", "Left Ventricle"], a: 3, e: "Left Ventricle." },
+    { q: "The Circle of Willis supplies blood to the:", o: ["Lungs", "Heart", "Brain", "Kidneys"], a: 2, e: "Cerebral circulation." },
+    { q: "The 'Phrenic Nerve' innervates the:", o: ["Heart", "Lungs", "Diaphragm", "Stomach"], a: 2, e: "Essential for breathing." },
+    { q: "Which artery passes through the transverse foramina of cervical vertebrae?", o: ["Carotid", "Vertebral", "Basilar", "Jugular"], a: 1, e: "Vertebral artery." },
+    { q: "The 'Cauda Equina' begins after the:", o: ["Brainstem", "Conus Medullaris", "Filum Terminale", "Sacrum"], a: 1, e: "Horse's tail of nerves." },
+    { q: "Which salivary gland is located anterior to the ear?", o: ["Submandibular", "Sublingual", "Parotid", "Thyroid"], a: 2, e: "Parotid gland." },
+    { q: "The Xiphoid process is at the vertebral level of:", o: ["T4", "T7", "T9/T10", "L1"], a: 2, e: "T9/T10." },
+    { q: "The Iliac Crest is at the level of:", o: ["L2/L3", "L4/L5", "S1", "T12"], a: 1, e: "Landmark for lumbar puncture/CR." },
 
-    // ==========================================
-    // SECTION 4: CONTRAST MEDIA PROPERTIES
-    // ==========================================
-    {
-        q: "Contrast media that dissociates into cations and anions in blood is called:",
-        o: ["Non-ionic", "Ionic", "Insoluble", "Paramagnetic"],
-        a: 1,
-        e: "Ionic contrast breaks into charged particles, increasing osmolality."
-    },
-    {
-        q: "High Osmolality Contrast Media (HOCM) is associated with:",
-        o: ["Fewer adverse reactions", "More adverse reactions", "Better image quality", "Lower cost only"],
-        a: 1,
-        e: "Hyper-osmolality draws water from cells, causing reactions."
-    },
-    {
-        q: "Which of the following is an Iso-osmolar contrast agent?",
-        o: ["Iohexol (Omnipaque)", "Iopamidol", "Iodixanol (Visipaque)", "Diatrizoate"],
-        a: 2,
-        e: "Iodixanol is a non-ionic dimer, iso-osmolar to blood."
-    },
-    {
-        q: "Barium Sulfate is contraindicated in cases of:",
-        o: ["Dysphagia", "Suspected Perforation", "Diverticulosis", "Cancer"],
-        a: 1,
-        e: "Leakage into the peritoneal cavity causes severe peritonitis."
-    },
-    {
-        q: "Gastrografin is a:",
-        o: ["Barium suspension", "Water-soluble iodinated contrast", "Oil-based contrast", "Gas"],
-        a: 1,
-        e: "Used when Barium is contraindicated (suspected perforation)."
-    },
-    {
-        q: "Gadolinium-based contrast is used in MRI because it is:",
-        o: ["Radioactive", "Paramagnetic", "Ferromagnetic", "Radiopaque"],
-        a: 1,
-        e: "It shortens T1 relaxation times."
-    },
-    {
-        q: "Oil-based contrast media (e.g., Lipiodol) is mainly used today for:",
-        o: ["Myelography", "Lymphangiography / Embolization", "IVP", "CT Brain"],
-        a: 1,
-        e: "Rarely used now, except for specific interventions like TACE."
-    },
+    // --- FILLING 51-100 (RAPID FIRE) ---
+    { q: "The navicular bone is found in the:", o: ["Wrist", "Foot", "Skull", "Spine"], a: 1, e: "Tarsal bone." },
+    { q: "The scaphoid bone is found in the:", o: ["Wrist (Carpal)", "Foot", "Skull", "Knee"], a: 0, e: "Carpal bone." },
+    { q: "The 'Incus' is a bone in the:", o: ["Foot", "Hand", "Ear", "Nose"], a: 2, e: "Auditory ossicle." },
+    { q: "The suture between the two parietal bones:", o: ["Sagittal", "Coronal", "Lambdoid", "Squamous"], a: 0, e: "Midline." },
+    { q: "Which is NOT a paranasal sinus?", o: ["Frontal", "Maxillary", "Sphenoid", "Mastoid"], a: 3, e: "Mastoid is air cells, not a sinus." },
+    { q: "The 'Glabella' is located on the:", o: ["Mandible", "Frontal bone", "Occipital", "Maxilla"], a: 1, e: "Between eyebrows." },
+    { q: "The Zygomatic arch is formed by Zygoma and:", o: ["Frontal", "Temporal", "Maxilla", "Sphenoid"], a: 1, e: "Temporal bone." },
+    { q: "The 'Symphysis Pubis' is what type of joint?", o: ["Synovial", "Cartilaginous (Amphiarthrosis)", "Fibrous", "Ball and Socket"], a: 1, e: "Slightly movable." },
+    { q: "The Greater Trochanter is found on the:", o: ["Humerus", "Femur", "Tibia", "Radius"], a: 1, e: "Proximal femur." },
+    { q: "The Greater Tubercle is found on the:", o: ["Humerus", "Femur", "Tibia", "Ulna"], a: 0, e: "Proximal humerus." },
+    { q: "The medial bone of the forearm (anatomical position) is:", o: ["Radius", "Ulna", "Humerus", "Femur"], a: 1, e: "Ulna (Pinky side)." },
+    { q: "The lateral bone of the lower leg is:", o: ["Tibia", "Fibula", "Femur", "Patella"], a: 1, e: "Fibula." },
+    { q: "Which organ produces Bile?", o: ["Gallbladder", "Liver", "Pancreas", "Spleen"], a: 1, e: "Stored in gallbladder, made in Liver." },
+    { q: "The Esophagus enters the stomach at the:", o: ["Fundus", "Cardia", "Pylorus", "Antrum"], a: 1, e: "Cardiac orifice." },
+    { q: "The 'Rugae' are folds found in the:", o: ["Small intestine", "Colon", "Stomach", "Esophagus"], a: 2, e: "Allow expansion." },
+    { q: "The 'Haustra' are pouches found in the:", o: ["Stomach", "Small Intestine", "Large Intestine", "Bladder"], a: 2, e: "Colon features." },
+    { q: "The 'Adrenal Glands' sit on top of:", o: ["Liver", "Spleen", "Kidneys", "Bladder"], a: 2, e: "Suprarenal." },
+    { q: "The 'Urethra' is longer in:", o: ["Males", "Females", "Same length", "None"], a: 0, e: "Passes through prostate/penis." },
+    { q: "The 'Prostate' gland is located:", o: ["Superior to bladder", "Inferior to bladder", "Posterior to rectum", "Anterior to pubis"], a: 1, e: "Surrounds urethra." },
+    { q: "Which is the 'Voice Box'?", o: ["Pharynx", "Larynx", "Trachea", "Esophagus"], a: 1, e: "Larynx." },
+    { q: "The 'Epiglottis' prevents food entering the:", o: ["Esophagus", "Trachea", "Nose", "Mouth"], a: 1, e: "Protects airway." },
+    { q: "The 'Hyoid' bone articulates with:", o: ["Mandible", "C1", "Temporal", "No other bone"], a: 3, e: "Floating bone." },
+    { q: "The 'Deltoid' muscle is located in the:", o: ["Thigh", "Shoulder", "Back", "Chest"], a: 1, e: "Shoulder cap." },
+    { q: "The 'Gastrocnemius' is located in the:", o: ["Arm", "Thigh", "Calf", "Back"], a: 2, e: "Calf muscle." },
+    { q: "The 'Sternocleidomastoid' is in the:", o: ["Neck", "Chest", "Back", "Arm"], a: 0, e: "Turns the head." },
+    { q: "The 'Aorta' originates from:", o: ["RV", "LV", "RA", "LA"], a: 1, e: "Left Ventricle." },
+    { q: "The 'Pulmonary Artery' carries:", o: ["Oxygenated blood", "Deoxygenated blood", "Mixed blood", "Lymph"], a: 1, e: "To lungs." },
+    { q: "The 'Mitral Valve' is between:", o: ["RA and RV", "LA and LV", "RV and PA", "LV and Aorta"], a: 1, e: "Bicuspid valve." },
+    { q: "The 'Tricuspid Valve' is between:", o: ["RA and RV", "LA and LV", "RV and PA", "LV and Aorta"], a: 0, e: "Right side." },
+    { q: "Which vein carries oxygenated blood?", o: ["SVC", "IVC", "Pulmonary Vein", "Jugular"], a: 2, e: "From lungs to heart." },
+    { q: "The 'Circle of Willis' involves which arteries?", o: ["Carotid and Vertebral systems", "External and Internal Carotid", "Subclavian and Axillary", "Aorta and Pulmonary"], a: 0, e: "Anastomosis." },
+    { q: "The 'Popliteal artery' is behind the:", o: ["Elbow", "Knee", "Ankle", "Hip"], a: 1, e: "Knee pit." },
+    { q: "The 'Dura Mater' is the:", o: ["Inner meninge", "Middle meninge", "Outer meninge", "Brain tissue"], a: 2, e: "Tough mother." },
+    { q: "CSF is produced by:", o: ["Arachnoid villi", "Choroid plexus", "Dura mater", "Pituitary"], a: 1, e: "In ventricles." },
+    { q: "The 'Fourth Ventricle' is located between:", o: ["Cerebrum and Skull", "Brainstem and Cerebellum", "Left and Right hemispheres", "Thalamus"], a: 1, e: "Posterior fossa." },
+    { q: "The 'Corpus Callosum' connects:", o: ["Cerebrum and Cerebellum", "Left and Right Hemispheres", "Pons and Medulla", "Brain and Spine"], a: 1, e: "White matter tract." },
+    { q: "Which cranial nerve is for Vision?", o: ["CN I", "CN II", "CN V", "CN X"], a: 1, e: "Optic Nerve." },
+    { q: "Which cranial nerve is the Vagus?", o: ["CN V", "CN VII", "CN X", "CN XII"], a: 2, e: "Wanders to abdomen." },
+    { q: "The 'Islets of Langerhans' are in the:", o: ["Liver", "Spleen", "Pancreas", "Kidney"], a: 2, e: "Endocrine pancreas." },
+    { q: "The 'Glomerulus' is the functional unit of:", o: ["Liver", "Kidney (Nephron)", "Lung", "Brain"], a: 1, e: "Filtration." },
+    { q: "The 'Alveoli' are the functional units of:", o: ["Kidney", "Lung", "Liver", "Heart"], a: 1, e: "Gas exchange." },
+    { q: "Which bone forms the posterior cranial fossa?", o: ["Frontal", "Occipital", "Parietal", "Ethmoid"], a: 1, e: "Houses cerebellum." },
+    { q: "The 'Foramen Magnum' is in the:", o: ["Occipital bone", "Sphenoid", "Temporal", "Parietal"], a: 0, e: "Large opening." },
+    { q: "The 'Acetabulum' articulates with the:", o: ["Humerus head", "Femur head", "Tibia", "Sacrum"], a: 1, e: "Hip joint." },
+    { q: "The 'Manubrium' is part of the:", o: ["Sternum", "Scapula", "Clavicle", "Pelvis"], a: 0, e: "Superior part." },
+    { q: "The 'Medial Malleolus' is on the:", o: ["Fibula", "Tibia", "Femur", "Talus"], a: 1, e: "Inner ankle." },
+    { q: "The 'Lateral Condyle' is found on the:", o: ["Scapula", "Tibia/Femur", "Vertebra", "Skull"], a: 1, e: "Knee joint." },
+    { q: "The 'Styloid Process' is found on the:", o: ["Radius/Ulna/Temporal", "Femur", "Tibia", "Vertebra"], a: 0, e: "Wrist and Skull." },
+    { q: "Which is a 'Flat Bone'?", o: ["Femur", "Vertebra", "Scapula", "Carpal"], a: 2, e: "Scapula/Sternum/Skull." },
+    { q: "Which is an 'Irregular Bone'?", o: ["Femur", "Vertebra", "Scapula", "Humurus"], a: 1, e: "Spine bones." },
+    { q: "The 'Sustentaculum Tali' is a bony prominence on the:", o: ["Talus", "Calcaneus", "Navicular", "Tibia"], a: 1, e: "Supports the talus bone." },
+    { q: "The 'Acetabular Labrum' functions to:", o: ["Lubricate the joint", "Deepen the socket and increase stability", "Connect femur to tibia", "Protect the nerve"], a: 1, e: "Fibrocartilaginous rim." },
+    { q: "Which carpal bone articulates with the 3rd Metacarpal?", o: ["Capitate", "Lunate", "Trapezoid", "Hamate"], a: 0, e: "The largest carpal bone, central pillar." },
+    { q: "The 'Linea Aspera' is a ridge found on the posterior surface of the:", o: ["Tibia", "Femur", "Humerus", "Ulna"], a: 1, e: "Muscle attachment site." },
+    { q: "Which bone forms the superior portion of the nasal septum?", o: ["Vomer", "Perpendicular plate of Ethmoid", "Nasal bone", "Palatine"], a: 1, e: "Vomer forms the inferior portion." },
+    { q: "The 'Mental Foramen' is located on the:", o: ["Maxilla", "Zygoma", "Mandible", "Frontal bone"], a: 2, e: "Transmits mental nerve." },
+    { q: "The 'Coracoclavicular Ligament' connects the clavicle to the:", o: ["Acromion", "Coracoid process of Scapula", "Sternum", "Ribs"], a: 1, e: "Crucial for AC joint stability." },
+    { q: "The 'Fovea Capitis' is a depression on the:", o: ["Head of Humerus", "Head of Femur", "Head of Radius", "Acetabulum"], a: 1, e: "Attachment for Ligamentum Teres." },
+    { q: "Which rib articulates with the Sternal Angle?", o: ["1st", "2nd", "3rd", "4th"], a: 1, e: "The 2nd rib." },
+    { q: "The 'Radial Notch' is located on the:", o: ["Radius", "Ulna", "Humerus", "Scapula"], a: 1, e: "Allows rotation of the radial head." },
+    { q: "Which is the smallest cranial bone?", o: ["Ethmoid", "Lacrimal", "Sphenoid", "Temporal"], a: 0, e: "Ethmoid is cranial; Lacrimal is facial." },
+    { q: "The 'Obturator Foramen' is formed by the:", o: ["Ilium and Ischium", "Ischium and Pubis", "Ilium and Pubis", "Sacrum and Ilium"], a: 1, e: "Largest foramen in the body." },
+    { q: "The 'Tibial Plafond' refers to the:", o: ["Proximal Tibia", "Distal articular surface of Tibia", "Tibial tuberosity", "Medial Malleolus"], a: 1, e: "Roof of the ankle joint." },
+    { q: "The 'Fabella' is a sesamoid bone occasionally found in the:", o: ["Quadriceps tendon", "Lateral head of Gastrocnemius", "Hamstrings", "Achilles tendon"], a: 1, e: "Posterior knee." },
+    { q: "The 'Bicipital Groove' (Intertubercular sulcus) separates the:", o: ["Greater and Lesser Trochanters", "Greater and Lesser Tubercles", "Medial and Lateral Epicondyles", "Condyles"], a: 1, e: "On the proximal humerus." },
+    { q: "Which sinus is located directly inferior to the Sella Turcica?", o: ["Frontal", "Ethmoid", "Sphenoid", "Maxillary"], a: 2, e: "Sphenoid sinus." },
+    { q: "The 'Hard Palate' is formed by the Maxilla and:", o: ["Vomer", "Palatine bones", "Sphenoid", "Zygoma"], a: 1, e: "Posterior 1/3 is Palatine." },
+    { q: "The 'Angle of the Mandible' (Gonions) is at vertebral level:", o: ["C1", "C2/C3", "C4", "C7"], a: 1, e: "C2/C3 level." },
+    { q: "The 'Hyoid Bone' is at the vertebral level of:", o: ["C1", "C3/C4", "C6", "T1"], a: 1, e: "C3/C4." },
+    { q: "The 'Vertebra Prominens' is:", o: ["C1", "C2", "C7", "T1"], a: 2, e: "Long spinous process." },
+    { q: "Which joint is a 'Saddle Joint'?", o: ["Hip", "Shoulder", "1st Carpometacarpal (Thumb)", "Elbow"], a: 2, e: "Allows opposition." },
+    { q: "The 'Mortise' joint involves:", o: ["Tibia, Fibula, Talus", "Tibia, Fibula, Calcaneus", "Femur, Tibia, Patella", "Radius, Ulna, Carpus"], a: 0, e: "The ankle joint." },
+    { q: "The 'Annulus Fibrosus' is the:", o: ["Inner core of IV disk", "Outer ring of IV disk", "Ligament of knee", "Heart valve ring"], a: 1, e: "Outer fibrous ring." },
+    { q: "The 'Nucleus Pulposus' is the:", o: ["Inner gel-like center of IV disk", "Outer ring", "Spinal cord center", "Brain nucleus"], a: 0, e: "Herniates in slip disk." },
+    { q: "The 'Anterior Fontanelle' usually closes by:", o: ["2 months", "6 months", "18 months", "5 years"], a: 2, e: "Becomes the Bregma." },
+    { q: "The 'Lambda' corresponds to the:", o: ["Anterior Fontanelle", "Posterior Fontanelle", "Sphenoid Fontanelle", "Mastoid Fontanelle"], a: 1, e: "Junction of Lambdoid and Sagittal sutures." },
+    { q: "The 'Stylomastoid Foramen' transmits the:", o: ["Facial Nerve (CN VII)", "Vagus Nerve", "Jugular Vein", "Carotid Artery"], a: 0, e: "Exit for facial nerve." },
+    { q: "The 'Foramen Rotundum' is located in the:", o: ["Frontal bone", "Sphenoid bone", "Maxilla", "Temporal bone"], a: 1, e: "Transmits Maxillary nerve (V2)." },
+    { q: "The 'Foramen Ovale' transmits the:", o: ["Mandibular Nerve (V3)", "Maxillary Nerve", "Optic Nerve", "Olfactory Nerve"], a: 0, e: "OVALE: Otic, V3, Accessory meningeal, Lesser petrosal, Emissary." },
+    { q: "Which bone has a 'Coronoid' process?", o: ["Ulna only", "Mandible only", "Both Ulna and Mandible", "Scapula"], a: 2, e: "Both have a coronoid process." },
+    { q: "The 'Glenoid Fossa' of the temporal bone articulates with:", o: ["Humerus", "Mandibular Condyle", "Zygoma", "Occipital condyle"], a: 1, e: "TMJ." },
+    { q: "The 'Trochlea' of the humerus articulates with the:", o: ["Radius", "Ulna (Trochlear notch)", "Scapula", "Clavicle"], a: 1, e: "Hinge joint of elbow." },
+    { q: "The 'Capitulum' of the humerus articulates with the:", o: ["Radius (Head)", "Ulna", "Scapula", "Wrist"], a: 0, e: "Lateral elbow joint." },
+    { q: "The 'Adductor Tubercle' is found on the:", o: ["Proximal Femur", "Distal Femur", "Tibia", "Pelvis"], a: 1, e: "Medial epicondyle of femur." },
+    { q: "The 'Gerdy's Tubercle' is on the:", o: ["Lateral Tibia", "Medial Tibia", "Femur", "Fibula"], a: 0, e: "Insertion of IT band." },
+    { q: "The 'Sustentaculum Tali' is part of which bone?", o: ["Talus", "Calcaneus", "Navicular", "Cuboid"], a: 1, e: "Shelf for the talus." },
+    { q: "The 'Sinus Tarsi' is a canal between:", o: ["Tibia and Fibula", "Talus and Calcaneus", "Navicular and Cuneiform", "Cuboid and Calcaneus"], a: 1, e: "Lateral side of foot." },
+    { q: "The 'Lisfranc Joint' is the:", o: ["Tarsometatarsal joint", "Metatarsophalangeal joint", "Intertarsal joint", "Ankle joint"], a: 0, e: "Common injury site." },
+    { q: "The 'Chopart Joint' is the:", o: ["Midtarsal joint", "Ankle joint", "TMT joint", "MTP joint"], a: 0, e: "Calcaneocuboid + Talonavicular." },
+    { q: "Which vertebrae have 'Transverse Foramina'?", o: ["Cervical", "Thoracic", "Lumbar", "Sacral"], a: 0, e: "For vertebral arteries." },
+    { q: "Which vertebrae have 'Costal Facets'?", o: ["Cervical", "Thoracic", "Lumbar", "Sacral"], a: 1, e: "For rib articulation." },
+    { q: "Which vertebrae have 'Mammillary Processes'?", o: ["Cervical", "Thoracic", "Lumbar", "Coccygeal"], a: 2, e: "On posterior superior articular process." },
+    { q: "The 'Promontory' is a landmark on the:", o: ["Sacrum (S1)", "L5", "Pelvis", "Skull"], a: 0, e: "Anterior superior margin of S1." },
+    { q: "The 'Ala' are the wings of the:", o: ["Sacrum / Ilium", "Axis", "Atlas", "Sternum"], a: 0, e: "Wings of sacrum or ilium." },
+    { q: "The 'Innominate Bone' refers to the:", o: ["Hip Bone", "Sacrum", "Skull", "Sternum"], a: 0, e: "Formed by Ilium, Ischium, Pubis." },
+    { q: "The 'Ischial Tuberosity' is the:", o: ["Bone we sit on", "Hip joint socket", "Pubic bone", "Iliac crest"], a: 0, e: "Origin of hamstrings." },
+    { q: "The 'Greater Sciatic Notch' is part of the:", o: ["Ilium", "Ischium", "Pubis", "Sacrum"], a: 0, e: "Passage for sciatic nerve." },
+    { q: "The 'Lesser Sciatic Notch' is part of the:", o: ["Ilium", "Ischium", "Pubis", "Sacrum"], a: 1, e: "Inferior to spine." },
+    { q: "The 'Symphysis Pubis' is composed of:", o: ["Hyaline Cartilage", "Fibrocartilage", "Elastic Cartilage", "Bone"], a: 1, e: "Shock absorber." },
+    { q: "The 'Angle of Louis' is at the level of intervertebral disk:", o: ["T2-T3", "T4-T5", "T7-T8", "T9-T10"], a: 1, e: "Sternal angle." },
 
-    // ==========================================
-    // SECTION 5: CONTRAST PROCEDURES & PREP
-    // ==========================================
-    {
-        q: "Intrathecal injection (Myelography) MUST USE:",
-        o: ["Ionic Contrast", "Non-ionic Contrast", "Barium", "Gastrografin"],
-        a: 1,
-        e: "Ionic contrast in the spinal canal can cause fatal seizures."
-    },
-    {
-        q: "Metformin (Glucophage) should be withheld after contrast injection to prevent:",
-        o: ["Hypoglycemia", "Lactic Acidosis", "Hyperglycemia", "Heart failure"],
-        a: 1,
-        e: "Withheld for 48 hours in patients with impaired renal function."
-    },
-    {
-        q: "Normal Serum Creatinine range is approximately:",
-        o: ["0.6 - 1.2 mg/dL", "2.0 - 4.0 mg/dL", "10 - 20 mg/dL", "0.1 - 0.2 mg/dL"],
-        a: 0,
-        e: "Levels above 1.5-2.0 indicate renal risk."
-    },
-    {
-        q: "In an IVU, ureteric compression is applied to:",
-        o: ["Stop urine flow completely", "Retain contrast in the pelvicalyceal system", "Reduce patient movement", "Protect the gonads"],
-        a: 1,
-        e: "Distends the upper tract for better visualization."
-    },
-    {
-        q: "Contraindication for Ureteric Compression during IVU includes:",
-        o: ["Hypertension", "Abdominal Aortic Aneurysm (AAA)", "Diabetes", "UTI"],
-        a: 1,
-        e: "Pressure could rupture the aneurysm."
-    },
-    {
-        q: "Hysterosalpingography (HSG) is performed to evaluate:",
-        o: ["Uterine fibroids", "Tubal patency (Infertility)", "Cervical cancer", "Ovarian cysts"],
-        a: 1,
-        e: "Checks if fallopian tubes are open."
-    },
-    {
-        q: "The ideal timing for an HSG is:",
-        o: ["Day 1-4 of cycle", "Day 7-10 (Post-menstrual)", "Day 14 (Ovulation)", "Day 21-28"],
-        a: 1,
-        e: "After bleeding stops but before ovulation (to avoid irradiating a fertilized egg)."
-    },
-    {
-        q: "In Barium Enema, the bag should be suspended:",
-        o: ["12 inches above table", "18-24 inches above table", "36 inches above table", "48 inches above table"],
-        a: 1,
-        e: "Too high causes excessive pressure and cramping."
-    },
-    {
-        q: "ERCP is used to diagnose pathology in the:",
-        o: ["Esophagus", "Biliary and Pancreatic ducts", "Renal arteries", "Colon"],
-        a: 1,
-        e: "Endoscopic Retrograde Cholangiopancreatography."
-    },
-    {
-        q: "A 'Voiding Cystourethrogram' (VCUG/MCU) is primarily used to detect:",
-        o: ["Kidney stones", "Vesicoureteral Reflux (VUR)", "Bladder cancer", "Prostate enlargement"],
-        a: 1,
-        e: "Backflow of urine from bladder to ureters."
-    },
-    {
-        q: "Sialography usually examines which glands?",
-        o: ["Parotid and Submandibular", "Thyroid", "Lacrimal", "Adrenal"],
-        a: 0,
-        e: "Salivary glands."
-    },
-    {
-        q: "Lemon juice (secretagogue) is used in Sialography to:",
-        o: ["Dilate the duct", "Stimulate secretion and open the duct", "Numb the mouth", "Clean the mouth"],
-        a: 1,
-        e: "Stimulates the gland to empty contrast."
-    },
+// ==========================================
+// Q151 - Q200: VISCERAL ANATOMY (THORAX/ABD)
+// ==========================================
+    { q: "The 'Carina' is the:", o: ["Bifurcation of trachea", "Base of heart", "Apex of lung", "Diaphragm opening"], a: 0, e: "Ridge at T4/T5." },
+    { q: "The right lung has how many segments?", o: ["8", "10", "12", "5"], a: 1, e: "10 bronchopulmonary segments." },
+    { q: "The left lung has how many lobes?", o: ["1", "2", "3", "4"], a: 1, e: "Superior and Inferior." },
+    { q: "The 'Lingula' is part of the:", o: ["Right Upper Lobe", "Left Upper Lobe", "Right Lower Lobe", "Left Lower Lobe"], a: 1, e: "Homologous to right middle lobe." },
+    { q: "The 'Hilum' of the lung transmits:", o: ["Bronchi, Vessels, Nerves", "Esophagus", "Aorta", "Trachea"], a: 0, e: "Root of the lung." },
+    { q: "The heart lies in the:", o: ["Anterior Mediastinum", "Middle Mediastinum", "Posterior Mediastinum", "Superior Mediastinum"], a: 1, e: "Middle mediastinum." },
+    { q: "The 'Tricuspid Valve' separates:", o: ["RA and RV", "LA and LV", "RV and PA", "LV and Aorta"], a: 0, e: "Right side AV valve." },
+    { q: "The 'Mitral Valve' (Bicuspid) separates:", o: ["RA and RV", "LA and LV", "RV and PA", "LV and Aorta"], a: 1, e: "Left side AV valve." },
+    { q: "Which vessel carries oxygenated blood to the LA?", o: ["Pulmonary Artery", "Pulmonary Vein", "SVC", "Aorta"], a: 1, e: "From lungs." },
+    { q: "The 'Coronary Arteries' originate from the:", o: ["Ascending Aorta", "Arch of Aorta", "Descending Aorta", "Pulmonary Trunk"], a: 0, e: "Right above aortic valve." },
+    { q: "The 'Esophagus' passes through the diaphragm at:", o: ["T8", "T10", "T12", "L1"], a: 1, e: "Esophageal hiatus." },
+    { q: "The 'Stomach' is located in which quadrant?", o: ["RUQ", "LUQ", "RLQ", "LLQ"], a: 1, e: "Left Upper Quadrant." },
+    { q: "The 'Fundus' of the stomach is the:", o: ["Superior part", "Middle part", "Distal part", "Valve"], a: 0, e: "Gas bubble seen here on CXR." },
+    { q: "The 'Pyloric Sphincter' controls flow into the:", o: ["Esophagus", "Duodenum", "Jejunum", "Ileum"], a: 1, e: "Stomach exit." },
+    { q: "The 'Duodenum' is primarily:", o: ["Intraperitoneal", "Retroperitoneal", "Subcutaneous", "Thoracic"], a: 1, e: "Except for the 1st part." },
+    { q: "The 'Ampulla of Vater' empties into the:", o: ["1st part of Duodenum", "2nd part of Duodenum", "3rd part of Duodenum", "Jejunum"], a: 1, e: "Major duodenal papilla." },
+    { q: "The 'Ligament of Treitz' marks the junction of:", o: ["Stomach and Duodenum", "Duodenum and Jejunum", "Jejunum and Ileum", "Ileum and Cecum"], a: 1, e: "Suspensory muscle of duodenum." },
+    { q: "The 'Appendix' is attached to the:", o: ["Cecum", "Ascending Colon", "Ileum", "Sigmoid"], a: 0, e: "Vermiform appendix." },
+    { q: "Which part of the colon is Retroperitoneal?", o: ["Transverse", "Sigmoid", "Ascending and Descending", "Cecum"], a: 2, e: "Fixed to posterior wall." },
+    { q: "The 'Hepatic Flexure' is between:", o: ["Ascending and Transverse colon", "Transverse and Descending", "Descending and Sigmoid", "Cecum and Ascending"], a: 0, e: "Right colic flexure." },
+    { q: "The 'Splenic Flexure' is between:", o: ["Ascending and Transverse", "Transverse and Descending", "Descending and Sigmoid", "Sigmoid and Rectum"], a: 1, e: "Left colic flexure (Higher than hepatic)." },
+    { q: "The Liver has how many major lobes?", o: ["2", "4", "6", "8"], a: 1, e: "Right, Left, Caudate, Quadrate." },
+    { q: "The 'Porta Hepatis' transmits:", o: ["Portal Vein, Hepatic Artery, Bile Duct", "Hepatic Veins", "IVC", "Aorta"], a: 0, e: "Gateway to liver." },
+    { q: "The 'Falciform Ligament' separates:", o: ["Right and Left lobes of Liver", "Liver and Stomach", "Spleen and Kidney", "Lung lobes"], a: 0, e: "Attaches liver to anterior wall." },
+    { q: "The 'Gallbladder' is located under which liver lobe?", o: ["Left", "Right", "Caudate", "Quadrate"], a: 1, e: "Visceral surface of Right Lobe." },
+    { q: "The 'Cystic Duct' connects the:", o: ["Gallbladder to Common Bile Duct", "Liver to Gallbladder", "Pancreas to Duodenum", "Stomach to Jejunum"], a: 0, e: "Spiral valves of Heister." },
+    { q: "The Pancreas head lies in the:", o: ["C-loop of Duodenum", "Hilum of Spleen", "Pelvis", "Lesser sac"], a: 0, e: "Tail touches spleen." },
+    { q: "The Spleen is located in the:", o: ["RUQ", "LUQ", "RLQ", "LLQ"], a: 1, e: "Left Hypochondrium." },
+    { q: "The Kidneys are located between vertebral levels:", o: ["T12 - L3", "T4 - T8", "L4 - S1", "C7 - T4"], a: 0, e: "Right kidney is slightly lower." },
+    { q: "The 'Hilum' of the kidney transmits:", o: ["Renal Artery, Vein, Ureter", "Portal Vein", "Bile Duct", "Femoral Nerve"], a: 0, e: "Medial margin." },
+    { q: "The 'Adrenal Glands' are located:", o: ["Superior to Kidneys", "Inferior to Kidneys", "Anterior to Pancreas", "In the Pelvis"], a: 0, e: "Suprarenal." },
+    { q: "The Right Adrenal gland is shaped like a:", o: ["Triangle / Pyramid", "Crescent", "Circle", "Square"], a: 0, e: "Left is semilunar." },
+    { q: "The 'Ureters' enter the bladder at the:", o: ["Posterior inferior angle (Trigone)", "Apex", "Dome", "Anterior wall"], a: 0, e: "Ureterovesical junction." },
+    { q: "The 'Trigone' is a smooth area inside the:", o: ["Kidney", "Bladder", "Stomach", "Uterus"], a: 1, e: "Between ureteric orifices and urethra." },
+    { q: "In males, the urethra passes through the:", o: ["Prostate", "Testis", "Ureter", "Seminal Vesicle"], a: 0, e: "Prostatic urethra." },
+    { q: "The 'Prostate' is located:", o: ["Inferior to Bladder", "Superior to Bladder", "Posterior to Rectum", "Lateral to Kidneys"], a: 0, e: "Anterior to rectum." },
+    { q: "The 'Seminal Vesicles' are located:", o: ["Posterior to Bladder", "Anterior to Bladder", "Inside the Testis", "In the Penis"], a: 0, e: "Produce seminal fluid." },
+    { q: "The 'Uterus' is normally:", o: ["Anteverted and Anteflexed", "Retroverted", "Vertical", "Lateral"], a: 0, e: "Tilted forward." },
+    { q: "The 'Fallopian Tubes' connect the:", o: ["Ovaries to Uterus", "Uterus to Vagina", "Bladder to Urethra", "Kidney to Bladder"], a: 0, e: "Site of fertilization." },
+    { q: "The 'Pouch of Douglas' (Rectouterine) is between:", o: ["Rectum and Uterus", "Bladder and Uterus", "Rectum and Bladder", "Liver and Kidney"], a: 0, e: "Lowest point in female peritoneal cavity." },
+    { q: "The 'Morison's Pouch' (Hepatorenal) is between:", o: ["Liver and Right Kidney", "Spleen and Left Kidney", "Stomach and Pancreas", "Bladder and Rectum"], a: 0, e: "Fluid accumulates here in supine patient." },
+    { q: "The 'Lesser Omentum' connects:", o: ["Stomach to Liver", "Stomach to Colon", "Liver to Kidney", "Spleen to Stomach"], a: 0, e: "Hepatogastric ligament." },
+    { q: "The 'Greater Omentum' hangs from the:", o: ["Greater curvature of Stomach", "Lesser curvature", "Liver", "Spleen"], a: 0, e: "Policeman of abdomen." },
+    { q: "The 'Mesentery' attaches the:", o: ["Small Intestine to Posterior Abdominal Wall", "Liver to Diaphragm", "Stomach to Spleen", "Colon to Bladder"], a: 0, e: "Carries blood vessels to bowel." },
+    { q: "The 'Celiac Trunk' branches into:", o: ["Left Gastric, Splenic, Common Hepatic", "SMA, IMA, Renal", "Right Gastric, Cystic", "Renal, Gonadal"], a: 0, e: "Supplies foregut." },
+    { q: "The 'SMA' (Superior Mesenteric Artery) supplies the:", o: ["Midgut", "Foregut", "Hindgut", "Pelvis"], a: 0, e: "Small bowel to Transverse colon." },
+    { q: "The 'IMA' (Inferior Mesenteric Artery) supplies the:", o: ["Hindgut", "Midgut", "Foregut", "Kidneys"], a: 0, e: "Descending colon to Rectum." },
+    { q: "The 'Renal Arteries' arise from the Aorta at level:", o: ["L1/L2", "T10", "L4", "S1"], a: 0, e: "Just below SMA." },
+    { q: "The Aorta bifurcates into Common Iliacs at:", o: ["L4", "L2", "T12", "S1"], a: 0, e: "Umbilicus level." },
+    { q: "The IVC is formed by the union of Common Iliac Veins at:", o: ["L5", "L2", "T12", "S1"], a: 0, e: "Right of L5." },
 
-    // ==========================================
-    // SECTION 6: ADVERSE REACTIONS
-    // ==========================================
-    {
-        q: "Urticaria (Hives) is classified as what type of reaction?",
-        o: ["Mild", "Moderate", "Severe", "Fatal"],
-        a: 0,
-        e: "Mild to moderate cutaneous reaction."
-    },
-    {
-        q: "Laryngeal Edema (throat swelling) is classified as:",
-        o: ["Mild", "Moderate", "Severe", "Psychosomatic"],
-        a: 2,
-        e: "Severe/Life-threatening anaphylactoid reaction."
-    },
-    {
-        q: "The first-line drug for severe anaphylaxis (hypotension/bronchospasm) is:",
-        o: ["Benadryl (Diphenhydramine)", "Adrenaline (Epinephrine)", "Hydrocortisone", "Atropine"],
-        a: 1,
-        e: "Adrenaline 1:1000 IM."
-    },
-    {
-        q: "Vasovagal reaction (Bradycardia + Hypotension) is treated with:",
-        o: ["Adrenaline", "Atropine", "Beta blockers", "Insulin"],
-        a: 1,
-        e: "Atropine increases heart rate."
-    },
-    {
-        q: "Contrast Induced Nephropathy (CIN) is defined as:",
-        o: ["Increase in Creatinine by 25% or 0.5 mg/dL", "Sudden kidney pain", "Blood in urine", "Allergic reaction in kidney"],
-        a: 0,
-        e: "Acute impairment of renal function post-contrast."
-    },
-    {
-        q: "Extravasation of contrast media means:",
-        o: ["Rapid injection", "Leakage of contrast into surrounding tissue", "Allergic reaction", "Backflow into syringe"],
-        a: 1,
-        e: "Can cause tissue necrosis (compartment syndrome)."
-    },
-    {
-        q: "To reduce viscosity of contrast media before injection, one should:",
-        o: ["Shake it", "Cool it", "Warm it to body temperature", "Mix with saline"],
-        a: 2,
-        e: "Warming reduces viscosity, making injection easier."
-    }
+// ==========================================
+// Q201 - Q250: NEURO, VASCULAR & CROSS-SECTIONAL
+// ==========================================
+    { q: "The 'Broca's Area' is located in the:", o: ["Frontal Lobe", "Temporal Lobe", "Parietal Lobe", "Occipital Lobe"], a: 0, e: "Speech production (Left usually)." },
+    { q: "The 'Wernicke's Area' is in the:", o: ["Temporal Lobe", "Frontal Lobe", "Occipital Lobe", "Cerebellum"], a: 0, e: "Language comprehension." },
+    { q: "The 'Central Sulcus' separates:", o: ["Frontal and Parietal Lobes", "Parietal and Occipital", "Temporal and Frontal", "Left and Right hemispheres"], a: 0, e: "Motor and Sensory cortex." },
+    { q: "The 'Sylvian Fissure' (Lateral Sulcus) separates:", o: ["Temporal from Frontal/Parietal", "Left from Right", "Cerebrum from Cerebellum", "Occipital from Parietal"], a: 0, e: "Deep fissure." },
+    { q: "The 'Visual Cortex' is in the:", o: ["Occipital Lobe", "Frontal Lobe", "Temporal Lobe", "Parietal Lobe"], a: 0, e: "Vision processing." },
+    { q: "The 'Thalamus' is the:", o: ["Relay station for sensory info", "Motor control center", "Balance center", "Memory center"], a: 0, e: "Diencephalon." },
+    { q: "The 'Hypothalamus' controls:", o: ["Homeostasis, Temperature, Hunger", "Vision", "Hearing", "Balance"], a: 0, e: "Below thalamus." },
+    { q: "The 'Brainstem' consists of:", o: ["Midbrain, Pons, Medulla", "Cerebrum, Cerebellum", "Thalamus, Hypothalamus", "Frontal, Parietal, Temporal"], a: 0, e: "Vital functions." },
+    { q: "The 'Cerebellum' is responsible for:", o: ["Coordination and Balance", "Vision", "Speech", "Thinking"], a: 0, e: "Little brain." },
+    { q: "CSF flows from 3rd to 4th ventricle via:", o: ["Aqueduct of Sylvius", "Foramen of Monro", "Foramen of Magendie", "Central Canal"], a: 0, e: "Cerebral aqueduct." },
+    { q: "CSF exits the 4th ventricle via:", o: ["Foramina of Luschka and Magendie", "Foramen of Monro", "Aqueduct", "Central canal"], a: 0, e: "Into subarachnoid space." },
+    { q: "The 'Great Cerebral Vein of Galen' drains into the:", o: ["Straight Sinus", "Sagittal Sinus", "Transverse Sinus", "Cavernous Sinus"], a: 0, e: "Deep venous drainage." },
+    { q: "The 'Confluence of Sinuses' (Torcular Herophili) is junction of:", o: ["Superior Sagittal, Straight, Transverse", "Cavernous and Sigmoid", "Inferior and Superior", "Great Vein and Straight"], a: 0, e: "Posterior skull." },
+    { q: "The 'Cavernous Sinus' contains which artery?", o: ["Internal Carotid Artery", "Basilar Artery", "Vertebral Artery", "External Carotid"], a: 0, e: "And CN III, IV, V1, V2, VI." },
+    { q: "Which cranial nerve is the 'Trigeminal'?", o: ["CN V", "CN III", "CN VII", "CN IX"], a: 0, e: "Sensory to face." },
+    { q: "Which cranial nerve controls the tongue?", o: ["Hypoglossal (XII)", "Vagus (X)", "Facial (VII)", "Accessory (XI)"], a: 0, e: "Motor to tongue." },
+    { q: "The 'Basilar Artery' is formed by the union of:", o: ["Vertebral Arteries", "Carotid Arteries", "Cerebral Arteries", "Subclavian Arteries"], a: 0, e: "Supplies brainstem." },
+    { q: "The 'External Carotid Artery' supplies the:", o: ["Face and Neck", "Brain", "Eye", "Inner ear"], a: 0, e: "Internal supplies brain." },
+    { q: "The 'Brachiocephalic Vein' is formed by:", o: ["Internal Jugular and Subclavian", "SVC and IVC", "External and Internal Jugular", "Azygos and Hemiazygos"], a: 0, e: "Left and Right join to form SVC." },
+    { q: "The 'Azygos Vein' drains the:", o: ["Thoracic wall", "Brain", "Legs", "Liver"], a: 0, e: "Empties into SVC." },
+    { q: "The 'Cephalic Vein' is located on the:", o: ["Lateral arm", "Medial arm", "Leg", "Neck"], a: 0, e: "Drains into Axillary/Subclavian." },
+    { q: "The 'Basilic Vein' is located on the:", o: ["Medial arm", "Lateral arm", "Leg", "Neck"], a: 0, e: "Joins brachial to form axillary." },
+    { q: "The 'Median Cubital Vein' is commonly used for:", o: ["Venipuncture", "Pulse check", "BP measurement", "None"], a: 0, e: "Connects Cephalic and Basilic." },
+    { q: "The 'Great Saphenous Vein' is the:", o: ["Longest vein in body", "Deep vein", "Neck vein", "Arm vein"], a: 0, e: "Medial leg, used for grafts." },
+    { q: "The 'Femoral Triangle' boundaries are:", o: ["Sartorius, Adductor Longus, Inguinal Ligament", "Gluteus, Hamstring, Femur", "Rectus, Vastus, Patella", "None"], a: 0, e: "Contains NAVEL." },
+    { q: "The 'Popliteal Fossa' contains:", o: ["Popliteal Artery/Vein, Tibial/Common Peroneal Nerves", "Femoral Nerve", "Sciatic Nerve", "Saphenous Vein"], a: 0, e: "Diamond shape behind knee." },
+    { q: "The 'Thoracic Duct' drains lymph into the:", o: ["Left Subclavian/IJ junction", "Right Subclavian", "SVC", "IVC"], a: 0, e: "Drains 3/4 of body." },
+    { q: "The 'Cisterna Chyli' is the origin of the:", o: ["Thoracic Duct", "Right Lymphatic Duct", "Aorta", "IVC"], a: 0, e: "Abdominal lymph sac." },
+    { q: "On a CT Chest, the 'Aortic Arch' is visible at:", o: ["T4", "T1", "T8", "T12"], a: 0, e: "Arch level." },
+    { q: "On a CT Abdomen, the Pancreas is visible at:", o: ["L1/L2", "T10", "L4", "S1"], a: 0, e: "Transpyloric plane." },
+    { q: "In cross-section, the IVC is usually to the ___ of the Aorta.", o: ["Right", "Left", "Anterior", "Posterior"], a: 0, e: "Right side." },
+    { q: "In cross-section of the neck, the Internal Jugular Vein is ___ to the Carotid.", o: ["Lateral", "Medial", "Posterior", "Anterior"], a: 0, e: "Lateral." },
+    { q: "In the Hila of the lung, the Pulmonary Artery is generally:", o: ["Superior", "Inferior", "Posterior", "Lateral"], a: 0, e: "Variable, but generally superior/anterior to bronchus." },
+    { q: "The 'Uncinate Process' is part of the:", o: ["Pancreas", "Liver", "Vertebra", "Ethmoid"], a: 0, e: "Hook of pancreas head." },
+    { q: "The 'Crura' of the diaphragm attach to:", o: ["Lumbar vertebrae", "Ribs", "Sternum", "Pelvis"], a: 0, e: "Right and Left crus." },
+    { q: "The 'Psoas Muscles' lie lateral to the:", o: ["Lumbar spine", "Thoracic spine", "Pelvis", "Femur"], a: 0, e: "Key landmark on CT." },
+    { q: "The 'Quadratus Lumborum' is ___ to the Psoas.", o: ["Posterior/Lateral", "Anterior", "Medial", "Superior"], a: 0, e: "Posterior abdominal wall." },
+    { q: "The 'Rectus Abdominis' muscles are separated by the:", o: ["Linea Alba", "Linea Nigra", "Inguinal Ligament", "Umbilicus"], a: 0, e: "Midline fibrous band." },
+    { q: "The 'Spleen' has a convex ___ surface.", o: ["Diaphragmatic", "Visceral", "Renal", "Gastric"], a: 0, e: "Fits against diaphragm." },
+    { q: "The 'Prostate' surrounds the:", o: ["Urethra", "Ureter", "Rectum", "Bladder"], a: 0, e: "Prostatic urethra." },
+    { q: "The 'Seminal Vesicles' on CT appear between:", o: ["Bladder and Rectum", "Bladder and Prostate", "Rectum and Sacrum", "Pubis and Bladder"], a: 0, e: "Bow tie shape." },
+    { q: "The 'Ovaries' are usually lateral to the:", o: ["Uterus", "Bladder", "Rectum", "Kidneys"], a: 0, e: "Adnexa." },
+    { q: "The 'Piriformis' muscle is a landmark in the:", o: ["Pelvis/Gluteal region", "Shoulder", "Neck", "Thigh"], a: 0, e: "Sciatic nerve runs under it." },
+    { q: "The 'Achilles Tendon' attaches to the:", o: ["Calcaneus", "Talus", "Tibia", "Fibula"], a: 0, e: "Calcaneal tendon." },
+    { q: "The 'Rotator Cuff' is formed by:", o: ["SITS muscles", "Biceps/Triceps", "Deltoid/Pec", "Trapezius"], a: 0, e: "Supraspinatus, Infraspinatus, Teres Minor, Subscapularis." },
+    { q: "The 'Carpal Tunnel' contains:", o: ["Median Nerve and Flexor tendons", "Ulnar Nerve", "Radial Artery", "Extensor tendons"], a: 0, e: "Compressed in CTS." },
+    { q: "The 'Guyon's Canal' contains the:", o: ["Ulnar Nerve", "Median Nerve", "Radial Nerve", "Musculocutaneous Nerve"], a: 0, e: "Wrist tunnel." },
+    { q: "The 'Anatomical Snuffbox' floor is the:", o: ["Scaphoid", "Lunate", "Triquetrum", "Pisiform"], a: 0, e: "Tenderness indicates fracture." },
+    { q: "The 'Cubital Fossa' boundaries include:", o: ["Pronator Teres, Brachioradialis", "Biceps, Triceps", "Deltoid, Pec", "Flexors"], a: 0, e: "Elbow pit." },
+    { q: "The 'Linea Alba' is:", o: ["Avascular", "Highly vascular", "Nerve rich", "Muscle"], a: 0, e: "Good for incision." }
 ];
 
 // Fill up to 250 with placeholders
