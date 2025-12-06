@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Anatomy Master Mobile</title>
+<style>
+    :root {
+        --primary: #2c3e50;
+        --accent: #e74c3c;
+        --bg: #f4f7f6;
+        --correct: #27ae60;
+        --wrong: #c0392b;
+        --text: #333;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background: var(--bg);
+        margin: 0;
+        padding-top: 60px; /* Space for sticky header */
+        padding-bottom: 70px; /* Space for sticky footer */
+        color: var(--text);
+    }
+
+    /* --- STICKY HEADER --- */
+    .app-header {
+        position: fixed; top: 0; left: 0; width: 100%;
+        background: var(--primary); color: white;
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 10px 15px;
+        z-index: 100;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .header-title { font-size: 1rem; font-weight: bold; }
+    .score-badge {
+        background: rgba(255,255,255,0.15);
+        padding: 5px 12px; border-radius: 20px;
+        font-weight: bold; font-size: 0.9rem;
+        display: flex; gap: 10px;
+    }
+    .score-val { color: #f1c40f; }
+
+    /* --- QUESTION MAP MODAL --- */
+    .map-btn {
+        background: var(--accent); border: none; color: white;
+        padding: 8px 12px; border-radius: 4px; font-weight: bold; cursor: pointer;
+    }
+    .map-overlay {
+        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.8); z-index: 200;
+        justify-content: center; align-items: flex-start;
+        overflow-y: auto; padding: 20px;
+    }
+    .map-content {
+        background: white; width: 100%; max-width: 400px;
+        border-radius: 8px; padding: 15px; margin-top: 50px;
+    }
+    .map-header { display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: bold; color: var(--primary); }
+    .close-map { background: none; border: none; font-size: 1.5rem; color: #888; }
+    
+    .nav-grid {
+        display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+        max-height: 60vh; overflow-y: auto;
+    }
+    .nav-item {
+        padding: 10px 0; text-align: center; background: #eee;
+        border-radius: 4px; font-size: 0.85rem; font-weight: bold; cursor: pointer;
+    }
+    .nav-item.answered { background: var(--primary); color: white; opacity: 0.5; }
+    .nav-item.correct { background: var(--correct); color: white; opacity: 1; }
+    .nav-item.wrong { background: var(--wrong); color: white; opacity: 1; }
+
+    /* --- MAIN CONTENT --- */
+    .container { padding: 15px; max-width: 600px; margin: 0 auto; }
+    
+    .q-card {
+        background: white; border-radius: 8px; padding: 20px;
+        margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        border-left: 5px solid transparent;
+    }
+    .q-card.res-correct { border-left-color: var(--correct); }
+    .q-card.res-wrong { border-left-color: var(--wrong); }
+
+    .q-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; line-height: 1.4; }
+    
+    .opt-label {
+        display: flex; align-items: center;
+        padding: 12px; margin-bottom: 8px;
+        background: #f8f9fa; border: 1px solid #e9ecef;
+        border-radius: 6px; cursor: pointer;
+        font-size: 0.95rem;
+        transition: 0.2s;
+    }
+    .opt-label input { margin-right: 12px; transform: scale(1.3); }
+    
+    /* Feedback States */
+    .re-correct { background: #d4edda !important; border-color: var(--correct) !important; color: #155724; font-weight: bold; }
+    .re-wrong { background: #f8d7da !important; border-color: var(--wrong) !important; color: #721c24; }
+    
+    .explanation {
+        margin-top: 15px; padding: 12px; background: #fff3cd;
+        border-radius: 5px; font-size: 0.9rem; color: #664d03;
+        display: none;
+    }
+
+    /* --- STICKY FOOTER --- */
+    .footer-nav {
+        position: fixed; bottom: 0; left: 0; width: 100%;
+        background: white; border-top: 1px solid #ddd;
+        display: flex; justify-content: space-around; align-items: center;
+        padding: 12px; z-index: 90;
+    }
+    .nav-btn {
+        flex: 1; margin: 0 5px; padding: 12px;
+        border: none; border-radius: 6px;
+        font-weight: bold; font-size: 1rem; color: white;
+        background: var(--primary);
+    }
+    .nav-btn:disabled { background: #ccc; }
+    .page-info { font-size: 0.9rem; font-weight: bold; color: #666; width: 80px; text-align: center; }
+
+    .reset-link {
+        display: block; text-align: center; margin-top: 20px; color: #999; text-decoration: underline; font-size: 0.8rem;
+    }
+</style>
+</head>
+<body>
+
+<div class="app-header">
+    <div class="header-title">Anatomy Master</div>
+    <div class="score-badge">
+        <span>Score:</span> <span class="score-val" id="scoreDisplay">0</span>
+    </div>
+    <button class="map-btn" onclick="toggleMap(true)">Map</button>
+</div>
+
+<div class="map-overlay" id="mapModal" onclick="if(event.target===this) toggleMap(false)">
+    <div class="map-content">
+        <div class="map-header">
+            <span>Question Map (250)</span>
+            <button class="close-map" onclick="toggleMap(false)">&times;</button>
+        </div>
+        <div class="nav-grid" id="navGrid"></div>
+        <div style="text-align: center; margin-top: 15px;">
+            <button onclick="resetData()" style="color:red; background:none; border:none; padding:10px;">Reset All Data</button>
+        </div>
+    </div>
+</div>
+
+<div class="container" id="quizContainer">
+    </div>
+<div class="reset-link" onclick="window.scrollTo(0,0)">Back to Top</div>
+
+<div class="footer-nav">
+    <button class="nav-btn" onclick="changePage(-1)" id="btnPrev">Prev</button>
+    <div class="page-info" id="pageDisplay">1/10</div>
+    <button class="nav-btn" onclick="changePage(1)" id="btnNext">Next</button>
+</div>
+
+<script>
+// =========================
+// 1. DATA GENERATION
+// =========================
+const db = [
+    // --- SKULL & NEURO ---
+    { q: "The 'Sella Turcica' houses which gland?", o: ["Pineal", "Pituitary", "Thyroid", "Adrenal"], a: 1, e: "Located in the sphenoid bone." },
+    { q: "The junction of the sagittal and coronal sutures is called the:", o: ["Lambda", "Bregma", "Pterion", "Asterion"], a: 1, e: "Bregma is the anterior fontanelle remnant." },
+    { q: "Which bone contains the mastoid process?", o: ["Occipital", "Parietal", "Temporal", "Sphenoid"], a: 2, e: "Part of the temporal bone." },
+    { q: "The 'Circle of Willis' is located in the:", o: ["Subdural space", "Epidural space", "Subarachnoid space", "Brain parenchyma"], a: 2, e: "Where CSF flows." },
+    { q: "Which foramen does the spinal cord pass through?", o: ["Foramen Ovale", "Foramen Magnum", "Foramen Rotundum", "Jugular Foramen"], a: 1, e: "Located in the occipital bone." },
+    { q: "The facial bone that is movable is the:", o: ["Maxilla", "Zygoma", "Mandible", "Vomer"], a: 2, e: "The jaw bone." },
+    { q: "The cribriform plate is part of which bone?", o: ["Ethmoid", "Sphenoid", "Frontal", "Nasal"], a: 0, e: "Olfactory nerves pass through it." },
+    { q: "The hardest bone in the human body is the:", o: ["Femur", "Petrous Temporal Bone", "Frontal Bone", "Calcaneus"], a: 1, e: "Protects the inner ear." },
+    { q: "The depression on the scapula for the articulation of the humerus is:", o: ["Glenoid cavity", "Acetabulum", "Olecranon fossa", "Coroid fossa"], a: 0, e: "Glenohumeral joint." },
+    { q: "The 'Pterion' is a landmark for which artery?", o: ["Middle Meningeal Artery", "Internal Carotid", "Vertebral Artery", "Basilar Artery"], a: 0, e: "Clinical significance: Extradural hemorrhage." },
+    
+    // --- UPPER LIMB ---
+    { q: "Which carpal bone is most commonly fractured?", o: ["Lunate", "Scaphoid", "Capitate", "Hamate"], a: 1, e: "Due to falling on outstretched hand." },
+    { q: "The Olecranon process is part of the:", o: ["Radius", "Ulna", "Humerus", "Scapula"], a: 1, e: "Forms the point of the elbow." },
+    { q: "The head of the radius articulates with the:", o: ["Trochlea", "Capitulum", "Olecranon", "Coronoid fossa"], a: 1, e: "Of the humerus." },
+    { q: "Which carpal bone has a 'hook'?", o: ["Pisiform", "Hamate", "Trapezium", "Trapezoid"], a: 1, e: "Hamulus of Hamate." },
+    { q: "The Coracoid process is located on the:", o: ["Ulna", "Scapula", "Clavicle", "Sternum"], a: 1, e: "Anterior projection of scapula." },
+    
+    // --- THORAX ---
+    { q: "The trachea bifurcates at the level of:", o: ["C7", "T2", "T4/T5 (Carina)", "T10"], a: 2, e: "The Carina." },
+    { q: "How many lobes does the right lung have?", o: ["1", "2", "3", "4"], a: 2, e: "Superior, Middle, Inferior." },
+    { q: "The diaphragm is pierced by the IVC at vertebral level:", o: ["T8", "T10", "T12", "L1"], a: 0, e: "T8 (Vena Cava), T10 (Esophagus), T12 (Aorta)." },
+    { q: "The heart is enclosed in a double-walled sac called:", o: ["Pleura", "Peritoneum", "Pericardium", "Mediastinum"], a: 2, e: "Pericardium." },
+    { q: "Which rib is considered a 'floating rib'?", o: ["7th", "10th", "11th", "1st"], a: 2, e: "11th and 12th are floating." },
+    { q: "The sternal angle (Angle of Louis) is at the level of:", o: ["2nd Costal Cartilage", "4th Rib", "Clavicle", "Xiphoid"], a: 0, e: "Landmark for T4/T5." },
+
+    // --- ABDOMEN & PELVIS ---
+    { q: "Which organ is Retroperitoneal?", o: ["Liver", "Spleen", "Kidney", "Stomach"], a: 2, e: "Kidneys lie behind the peritoneum." },
+    { q: "The common bile duct is formed by the union of:", o: ["Cystic duct and Common Hepatic duct", "Right and Left Hepatic ducts", "Pancreatic duct and Cystic duct", "None"], a: 0, e: "Drains into duodenum." },
+    { q: "The Acetabulum is formed by the fusion of:", o: ["Ilium and Ischium", "Ischium and Pubis", "Ilium, Ischium, and Pubis", "Femur and Pelvis"], a: 2, e: "All three pelvic bones." },
+    { q: "The 'Pylorus' is the distal opening of the:", o: ["Esophagus", "Stomach", "Small Intestine", "Colon"], a: 1, e: "Connects stomach to duodenum." },
+    { q: "Which part of the colon has the Appendix attached?", o: ["Ascending", "Cecum", "Sigmoid", "Transverse"], a: 1, e: "The Cecum." },
+    { q: "The largest solid organ in the body is:", o: ["Spleen", "Liver", "Pancreas", "Kidney"], a: 1, e: "The Liver." },
+    { q: "The head of the pancreas lies in the C-loop of the:", o: ["Duodenum", "Jejunum", "Ileum", "Colon"], a: 0, e: "Curvature of the duodenum." },
+    { q: "The renal pelvis narrows to become the:", o: ["Urethra", "Ureter", "Major Calyx", "Bladder"], a: 1, e: "Ureter carries urine to bladder." },
+    
+    // --- SPINE ---
+    { q: "The 'Odontoid Process' (Dens) is part of:", o: ["Atlas (C1)", "Axis (C2)", "C7", "Occiput"], a: 1, e: "Axis." },
+    { q: "How many thoracic vertebrae are there?", o: ["7", "12", "5", "4"], a: 1, e: "T1-T12." },
+    { q: "The 'Pars Interarticularis' is best visualized in which L-spine view?", o: ["AP", "Lateral", "Oblique", "Spot"], a: 2, e: "The neck of the 'Scottie Dog'." },
+    { q: "The spinal cord ends at the level of:", o: ["T12", "L1/L2", "L4/L5", "S1"], a: 1, e: "Conus Medullaris." },
+    { q: "Which vertebra has no body?", o: ["Axis", "Atlas", "C7", "T1"], a: 1, e: "Atlas (C1) is a ring." },
+    { q: "The prominent spinous process palpable at the base of the neck is:", o: ["C2", "C5", "C7 (Vertebra Prominens)", "T1"], a: 2, e: "C7." },
+
+    // --- LOWER LIMB ---
+    { q: "The largest tarsal bone is:", o: ["Talus", "Calcaneus", "Navicular", "Cuboid"], a: 1, e: "The heel bone." },
+    { q: "The Lateral Malleolus is part of the:", o: ["Tibia", "Fibula", "Femur", "Talus"], a: 1, e: "Distal Fibula." },
+    { q: "The Tibial Tuberosity is the attachment site for the:", o: ["Achilles Tendon", "Patellar Ligament", "ACL", "PCL"], a: 1, e: "Below the patella." },
+    { q: "Which bone is a sesamoid bone?", o: ["Patella", "Cuboid", "Cuneiform", "Scaphoid"], a: 0, e: "Embedded in tendon." },
+    { q: "The hip joint is classified as what type of joint?", o: ["Hinge", "Ball and Socket", "Pivot", "Saddle"], a: 1, e: "Like the shoulder." },
+    
+    // --- SYSTEMS & CROSS SECTIONAL ---
+    { q: "In CT, Hounsfield Unit for water is:", o: ["-1000", "0", "100", "1000"], a: 1, e: "0 HU." },
+    { q: "The portal vein is formed by the union of:", o: ["SMV and Splenic Vein", "Hepatic Vein and IVC", "Renal vein and IVC", "IMV and SMV"], a: 0, e: "Superior Mesenteric Vein + Splenic." },
+    { q: "Which chamber of the heart forms the apex?", o: ["Right Atrium", "Left Atrium", "Right Ventricle", "Left Ventricle"], a: 3, e: "Left Ventricle." },
+    { q: "The Circle of Willis supplies blood to the:", o: ["Lungs", "Heart", "Brain", "Kidneys"], a: 2, e: "Cerebral circulation." },
+    { q: "The 'Phrenic Nerve' innervates the:", o: ["Heart", "Lungs", "Diaphragm", "Stomach"], a: 2, e: "Essential for breathing." },
+    { q: "Which artery passes through the transverse foramina of cervical vertebrae?", o: ["Carotid", "Vertebral", "Basilar", "Jugular"], a: 1, e: "Vertebral artery." },
+    { q: "The 'Cauda Equina' begins after the:", o: ["Brainstem", "Conus Medullaris", "Filum Terminale", "Sacrum"], a: 1, e: "Horse's tail of nerves." },
+    { q: "Which salivary gland is located anterior to the ear?", o: ["Submandibular", "Sublingual", "Parotid", "Thyroid"], a: 2, e: "Parotid gland." },
+    { q: "The Xiphoid process is at the vertebral level of:", o: ["T4", "T7", "T9/T10", "L1"], a: 2, e: "T9/T10." },
+    { q: "The Iliac Crest is at the level of:", o: ["L2/L3", "L4/L5", "S1", "T12"], a: 1, e: "Landmark for lumbar puncture/CR." },
+
+    // --- FILLING 51-100 (RAPID FIRE) ---
+    { q: "The navicular bone is found in the:", o: ["Wrist", "Foot", "Skull", "Spine"], a: 1, e: "Tarsal bone." },
+    { q: "The scaphoid bone is found in the:", o: ["Wrist (Carpal)", "Foot", "Skull", "Knee"], a: 0, e: "Carpal bone." },
+    { q: "The 'Incus' is a bone in the:", o: ["Foot", "Hand", "Ear", "Nose"], a: 2, e: "Auditory ossicle." },
+    { q: "The suture between the two parietal bones:", o: ["Sagittal", "Coronal", "Lambdoid", "Squamous"], a: 0, e: "Midline." },
+    { q: "Which is NOT a paranasal sinus?", o: ["Frontal", "Maxillary", "Sphenoid", "Mastoid"], a: 3, e: "Mastoid is air cells, not a sinus." },
+    { q: "The 'Glabella' is located on the:", o: ["Mandible", "Frontal bone", "Occipital", "Maxilla"], a: 1, e: "Between eyebrows." },
+    { q: "The Zygomatic arch is formed by Zygoma and:", o: ["Frontal", "Temporal", "Maxilla", "Sphenoid"], a: 1, e: "Temporal bone." },
+    { q: "The 'Symphysis Pubis' is what type of joint?", o: ["Synovial", "Cartilaginous (Amphiarthrosis)", "Fibrous", "Ball and Socket"], a: 1, e: "Slightly movable." },
+    { q: "The Greater Trochanter is found on the:", o: ["Humerus", "Femur", "Tibia", "Radius"], a: 1, e: "Proximal femur." },
+    { q: "The Greater Tubercle is found on the:", o: ["Humerus", "Femur", "Tibia", "Ulna"], a: 0, e: "Proximal humerus." },
+    { q: "The medial bone of the forearm (anatomical position) is:", o: ["Radius", "Ulna", "Humerus", "Femur"], a: 1, e: "Ulna (Pinky side)." },
+    { q: "The lateral bone of the lower leg is:", o: ["Tibia", "Fibula", "Femur", "Patella"], a: 1, e: "Fibula." },
+    { q: "Which organ produces Bile?", o: ["Gallbladder", "Liver", "Pancreas", "Spleen"], a: 1, e: "Stored in gallbladder, made in Liver." },
+    { q: "The Esophagus enters the stomach at the:", o: ["Fundus", "Cardia", "Pylorus", "Antrum"], a: 1, e: "Cardiac orifice." },
+    { q: "The 'Rugae' are folds found in the:", o: ["Small intestine", "Colon", "Stomach", "Esophagus"], a: 2, e: "Allow expansion." },
+    { q: "The 'Haustra' are pouches found in the:", o: ["Stomach", "Small Intestine", "Large Intestine", "Bladder"], a: 2, e: "Colon features." },
+    { q: "The 'Adrenal Glands' sit on top of:", o: ["Liver", "Spleen", "Kidneys", "Bladder"], a: 2, e: "Suprarenal." },
+    { q: "The 'Urethra' is longer in:", o: ["Males", "Females", "Same length", "None"], a: 0, e: "Passes through prostate/penis." },
+    { q: "The 'Prostate' gland is located:", o: ["Superior to bladder", "Inferior to bladder", "Posterior to rectum", "Anterior to pubis"], a: 1, e: "Surrounds urethra." },
+    { q: "Which is the 'Voice Box'?", o: ["Pharynx", "Larynx", "Trachea", "Esophagus"], a: 1, e: "Larynx." },
+    { q: "The 'Epiglottis' prevents food entering the:", o: ["Esophagus", "Trachea", "Nose", "Mouth"], a: 1, e: "Protects airway." },
+    { q: "The 'Hyoid' bone articulates with:", o: ["Mandible", "C1", "Temporal", "No other bone"], a: 3, e: "Floating bone." },
+    { q: "The 'Deltoid' muscle is located in the:", o: ["Thigh", "Shoulder", "Back", "Chest"], a: 1, e: "Shoulder cap." },
+    { q: "The 'Gastrocnemius' is located in the:", o: ["Arm", "Thigh", "Calf", "Back"], a: 2, e: "Calf muscle." },
+    { q: "The 'Sternocleidomastoid' is in the:", o: ["Neck", "Chest", "Back", "Arm"], a: 0, e: "Turns the head." },
+    { q: "The 'Aorta' originates from:", o: ["RV", "LV", "RA", "LA"], a: 1, e: "Left Ventricle." },
+    { q: "The 'Pulmonary Artery' carries:", o: ["Oxygenated blood", "Deoxygenated blood", "Mixed blood", "Lymph"], a: 1, e: "To lungs." },
+    { q: "The 'Mitral Valve' is between:", o: ["RA and RV", "LA and LV", "RV and PA", "LV and Aorta"], a: 1, e: "Bicuspid valve." },
+    { q: "The 'Tricuspid Valve' is between:", o: ["RA and RV", "LA and LV", "RV and PA", "LV and Aorta"], a: 0, e: "Right side." },
+    { q: "Which vein carries oxygenated blood?", o: ["SVC", "IVC", "Pulmonary Vein", "Jugular"], a: 2, e: "From lungs to heart." },
+    { q: "The 'Circle of Willis' involves which arteries?", o: ["Carotid and Vertebral systems", "External and Internal Carotid", "Subclavian and Axillary", "Aorta and Pulmonary"], a: 0, e: "Anastomosis." },
+    { q: "The 'Popliteal artery' is behind the:", o: ["Elbow", "Knee", "Ankle", "Hip"], a: 1, e: "Knee pit." },
+    { q: "The 'Dura Mater' is the:", o: ["Inner meninge", "Middle meninge", "Outer meninge", "Brain tissue"], a: 2, e: "Tough mother." },
+    { q: "CSF is produced by:", o: ["Arachnoid villi", "Choroid plexus", "Dura mater", "Pituitary"], a: 1, e: "In ventricles." },
+    { q: "The 'Fourth Ventricle' is located between:", o: ["Cerebrum and Skull", "Brainstem and Cerebellum", "Left and Right hemispheres", "Thalamus"], a: 1, e: "Posterior fossa." },
+    { q: "The 'Corpus Callosum' connects:", o: ["Cerebrum and Cerebellum", "Left and Right Hemispheres", "Pons and Medulla", "Brain and Spine"], a: 1, e: "White matter tract." },
+    { q: "Which cranial nerve is for Vision?", o: ["CN I", "CN II", "CN V", "CN X"], a: 1, e: "Optic Nerve." },
+    { q: "Which cranial nerve is the Vagus?", o: ["CN V", "CN VII", "CN X", "CN XII"], a: 2, e: "Wanders to abdomen." },
+    { q: "The 'Islets of Langerhans' are in the:", o: ["Liver", "Spleen", "Pancreas", "Kidney"], a: 2, e: "Endocrine pancreas." },
+    { q: "The 'Glomerulus' is the functional unit of:", o: ["Liver", "Kidney (Nephron)", "Lung", "Brain"], a: 1, e: "Filtration." },
+    { q: "The 'Alveoli' are the functional units of:", o: ["Kidney", "Lung", "Liver", "Heart"], a: 1, e: "Gas exchange." },
+    { q: "Which bone forms the posterior cranial fossa?", o: ["Frontal", "Occipital", "Parietal", "Ethmoid"], a: 1, e: "Houses cerebellum." },
+    { q: "The 'Foramen Magnum' is in the:", o: ["Occipital bone", "Sphenoid", "Temporal", "Parietal"], a: 0, e: "Large opening." },
+    { q: "The 'Acetabulum' articulates with the:", o: ["Humerus head", "Femur head", "Tibia", "Sacrum"], a: 1, e: "Hip joint." },
+    { q: "The 'Manubrium' is part of the:", o: ["Sternum", "Scapula", "Clavicle", "Pelvis"], a: 0, e: "Superior part." },
+    { q: "The 'Medial Malleolus' is on the:", o: ["Fibula", "Tibia", "Femur", "Talus"], a: 1, e: "Inner ankle." },
+    { q: "The 'Lateral Condyle' is found on the:", o: ["Scapula", "Tibia/Femur", "Vertebra", "Skull"], a: 1, e: "Knee joint." },
+    { q: "The 'Styloid Process' is found on the:", o: ["Radius/Ulna/Temporal", "Femur", "Tibia", "Vertebra"], a: 0, e: "Wrist and Skull." },
+    { q: "Which is a 'Flat Bone'?", o: ["Femur", "Vertebra", "Scapula", "Carpal"], a: 2, e: "Scapula/Sternum/Skull." },
+    { q: "Which is an 'Irregular Bone'?", o: ["Femur", "Vertebra", "Scapula", "Humurus"], a: 1, e: "Spine bones." }
+];
+
+// Fill up to 250 with placeholders
+for(let i=21; i<=250; i++) {
+    db.push({
+        q: `Anatomy Question ${i} (Placeholder content)`,
+        o: ["Structure A", "Structure B", "Structure C", "Structure D"],
+        a: 0,
+        e: "Placeholder explanation."
+    });
+}
+
+// =========================
+// 2. STATE MANAGEMENT
+// =========================
+const ITEMS_PER_PAGE = 25;
+let currentPage = 1;
+const STORAGE_KEY = 'cre_mobile_anatomy';
+
+let state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { answers: {}, score: 0 };
+
+function save() {
+    // Recalc score
+    let s = 0;
+    Object.keys(state.answers).forEach(idx => {
+        if(state.answers[idx] === db[idx].a) s += 4;
+        else s -= 1;
+    });
+    state.score = s;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    updateHeader();
+}
+
+function updateHeader() {
+    document.getElementById('scoreDisplay').innerText = state.score;
+}
+
+// =========================
+// 3. RENDERING
+// =========================
+function renderPage(page) {
+    currentPage = page;
+    const container = document.getElementById('quizContainer');
+    container.innerHTML = '';
+    window.scrollTo(0,0);
+
+    const start = (page-1) * ITEMS_PER_PAGE;
+    const end = Math.min(start + ITEMS_PER_PAGE, db.length);
+
+    document.getElementById('pageDisplay').innerText = `${page}/10`;
+    document.getElementById('btnPrev').disabled = page === 1;
+    document.getElementById('btnNext').disabled = page === 10;
+
+    for(let i=start; i<end; i++) {
+        const item = db[i];
+        const hasAns = state.answers.hasOwnProperty(i);
+        const userAns = state.answers[i];
+        
+        // Card status
+        let cardClass = '';
+        if(hasAns) cardClass = (userAns === item.a) ? 'res-correct' : 'res-wrong';
+
+        const div = document.createElement('div');
+        div.className = `q-card ${cardClass}`;
+        div.id = `q-${i}`;
+
+        let optsHtml = '';
+        item.o.forEach((opt, idx) => {
+            let labelClass = '';
+            if(hasAns) {
+                if(idx === item.a) labelClass = 're-correct';
+                else if(idx === userAns) labelClass = 're-wrong';
+            }
+            
+            optsHtml += `
+            <label class="opt-label ${labelClass}">
+                <input type="radio" name="q${i}" ${hasAns && userAns===idx ? 'checked' : ''} 
+                    ${hasAns ? 'disabled' : ''} onclick="handleAnswer(${i}, ${idx})">
+                ${opt}
+            </label>`;
+        });
+
+        div.innerHTML = `
+            <div class="q-text">Q${i+1}. ${item.q}</div>
+            ${optsHtml}
+            <div class="explanation" style="display:${hasAns?'block':'none'}">
+                <strong>Answer:</strong> ${item.o[item.a]}<br>${item.e}
+            </div>
+        `;
+        container.appendChild(div);
+    }
+}
+
+function handleAnswer(qIdx, optIdx) {
+    if(state.answers.hasOwnProperty(qIdx)) return;
+    state.answers[qIdx] = optIdx;
+    save();
+    
+    // Refresh specific card mainly
+    renderPage(currentPage);
+}
+
+// =========================
+// 4. MAP & NAV
+// =========================
+function toggleMap(show) {
+    const modal = document.getElementById('mapModal');
+    if(show) {
+        renderMap();
+        modal.style.display = 'flex';
+    } else {
+        modal.style.display = 'none';
+    }
+}
+
+function renderMap() {
+    const grid = document.getElementById('navGrid');
+    grid.innerHTML = '';
+    db.forEach((item, i) => {
+        const div = document.createElement('div');
+        let status = '';
+        if(state.answers.hasOwnProperty(i)) {
+            status = state.answers[i] === item.a ? 'correct' : 'wrong';
+        }
+        div.className = `nav-item ${status}`;
+        div.innerText = i + 1;
+        div.onclick = () => {
+            toggleMap(false);
+            const targetPage = Math.floor(i / ITEMS_PER_PAGE) + 1;
+            renderPage(targetPage);
+        };
+        grid.appendChild(div);
+    });
+}
+
+function changePage(delta) {
+    const newP = currentPage + delta;
+    if(newP >= 1 && newP <= 10) renderPage(newP);
+}
+
+function resetData() {
+    if(confirm("Reset score and progress?")) {
+        localStorage.removeItem(STORAGE_KEY);
+        location.reload();
+    }
+}
+
+// Init
+updateHeader();
+renderPage(1);
+
+</script>
+</body>
+</html>
