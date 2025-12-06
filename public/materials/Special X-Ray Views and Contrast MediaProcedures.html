@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Special X-Ray Views and Contrast Media/Procedures.</title>
+<style>
+    :root {
+        --primary: #2c3e50;
+        --accent: #e74c3c;
+        --bg: #f4f7f6;
+        --correct: #27ae60;
+        --wrong: #c0392b;
+        --text: #333;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background: var(--bg);
+        margin: 0;
+        padding-top: 60px; /* Space for sticky header */
+        padding-bottom: 70px; /* Space for sticky footer */
+        color: var(--text);
+    }
+
+    /* --- STICKY HEADER --- */
+    .app-header {
+        position: fixed; top: 0; left: 0; width: 100%;
+        background: var(--primary); color: white;
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 10px 15px;
+        z-index: 100;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .header-title { font-size: 1rem; font-weight: bold; }
+    .score-badge {
+        background: rgba(255,255,255,0.15);
+        padding: 5px 12px; border-radius: 20px;
+        font-weight: bold; font-size: 0.9rem;
+        display: flex; gap: 10px;
+    }
+    .score-val { color: #f1c40f; }
+
+    /* --- QUESTION MAP MODAL --- */
+    .map-btn {
+        background: var(--accent); border: none; color: white;
+        padding: 8px 12px; border-radius: 4px; font-weight: bold; cursor: pointer;
+    }
+    .map-overlay {
+        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.8); z-index: 200;
+        justify-content: center; align-items: flex-start;
+        overflow-y: auto; padding: 20px;
+    }
+    .map-content {
+        background: white; width: 100%; max-width: 400px;
+        border-radius: 8px; padding: 15px; margin-top: 50px;
+    }
+    .map-header { display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: bold; color: var(--primary); }
+    .close-map { background: none; border: none; font-size: 1.5rem; color: #888; }
+    
+    .nav-grid {
+        display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+        max-height: 60vh; overflow-y: auto;
+    }
+    .nav-item {
+        padding: 10px 0; text-align: center; background: #eee;
+        border-radius: 4px; font-size: 0.85rem; font-weight: bold; cursor: pointer;
+    }
+    .nav-item.answered { background: var(--primary); color: white; opacity: 0.5; }
+    .nav-item.correct { background: var(--correct); color: white; opacity: 1; }
+    .nav-item.wrong { background: var(--wrong); color: white; opacity: 1; }
+
+    /* --- MAIN CONTENT --- */
+    .container { padding: 15px; max-width: 600px; margin: 0 auto; }
+    
+    .q-card {
+        background: white; border-radius: 8px; padding: 20px;
+        margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        border-left: 5px solid transparent;
+    }
+    .q-card.res-correct { border-left-color: var(--correct); }
+    .q-card.res-wrong { border-left-color: var(--wrong); }
+
+    .q-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; line-height: 1.4; }
+    
+    .opt-label {
+        display: flex; align-items: center;
+        padding: 12px; margin-bottom: 8px;
+        background: #f8f9fa; border: 1px solid #e9ecef;
+        border-radius: 6px; cursor: pointer;
+        font-size: 0.95rem;
+        transition: 0.2s;
+    }
+    .opt-label input { margin-right: 12px; transform: scale(1.3); }
+    
+    /* Feedback States */
+    .re-correct { background: #d4edda !important; border-color: var(--correct) !important; color: #155724; font-weight: bold; }
+    .re-wrong { background: #f8d7da !important; border-color: var(--wrong) !important; color: #721c24; }
+    
+    .explanation {
+        margin-top: 15px; padding: 12px; background: #fff3cd;
+        border-radius: 5px; font-size: 0.9rem; color: #664d03;
+        display: none;
+    }
+
+    /* --- STICKY FOOTER --- */
+    .footer-nav {
+        position: fixed; bottom: 0; left: 0; width: 100%;
+        background: white; border-top: 1px solid #ddd;
+        display: flex; justify-content: space-around; align-items: center;
+        padding: 12px; z-index: 90;
+    }
+    .nav-btn {
+        flex: 1; margin: 0 5px; padding: 12px;
+        border: none; border-radius: 6px;
+        font-weight: bold; font-size: 1rem; color: white;
+        background: var(--primary);
+    }
+    .nav-btn:disabled { background: #ccc; }
+    .page-info { font-size: 0.9rem; font-weight: bold; color: #666; width: 80px; text-align: center; }
+
+    .reset-link {
+        display: block; text-align: center; margin-top: 20px; color: #999; text-decoration: underline; font-size: 0.8rem;
+    }
+</style>
+</head>
+<body>
+
+<div class="app-header">
+    <div class="header-title">Anatomy Master</div>
+    <div class="score-badge">
+        <span>Score:</span> <span class="score-val" id="scoreDisplay">0</span>
+    </div>
+    <button class="map-btn" onclick="toggleMap(true)">Map</button>
+</div>
+
+<div class="map-overlay" id="mapModal" onclick="if(event.target===this) toggleMap(false)">
+    <div class="map-content">
+        <div class="map-header">
+            <span>Question Map (250)</span>
+            <button class="close-map" onclick="toggleMap(false)">&times;</button>
+        </div>
+        <div class="nav-grid" id="navGrid"></div>
+        <div style="text-align: center; margin-top: 15px;">
+            <button onclick="resetData()" style="color:red; background:none; border:none; padding:10px;">Reset All Data</button>
+        </div>
+    </div>
+</div>
+
+<div class="container" id="quizContainer">
+    </div>
+<div class="reset-link" onclick="window.scrollTo(0,0)">Back to Top</div>
+
+<div class="footer-nav">
+    <button class="nav-btn" onclick="changePage(-1)" id="btnPrev">Prev</button>
+    <div class="page-info" id="pageDisplay">1/10</div>
+    <button class="nav-btn" onclick="changePage(1)" id="btnNext">Next</button>
+</div>
+
+<script>
+// =========================
+// 1. DATA GENERATION
+// =========================
+const db = [
+    // ==========================================
+    // SECTION 1: SKULL & FACIAL SPECIAL VIEWS
+    // ==========================================
+    {
+        q: "The 'Towne View' (AP Axial) is primarily used to demonstrate the:",
+        o: ["Frontal Sinus", "Dorsum Sellae and Posterior Clinoid Processes", "Nasal bone", "Maxillary Sinus"],
+        a: 1,
+        e: "It projects the dorsum sellae within the foramen magnum."
+    },
+    {
+        q: "Which projection best demonstrates the 'Zygomatic Arches' ('Jug Handle' view)?",
+        o: ["Submentovertex (SMV)", "Townes", "Caldwell", "Lateral"],
+        a: 0,
+        e: "SMV projects the arches free of superimposition."
+    },
+    {
+        q: "The 'Waters View' (Parietoacanthial) requires the chin to be raised to place the OML at what angle to the IR?",
+        o: ["15 degrees", "30 degrees", "37 degrees", "45 degrees"],
+        a: 2,
+        e: "37 degrees places the petrous ridges just below the maxillary sinuses."
+    },
+    {
+        q: "The 'Rhese Method' is used to visualize the:",
+        o: ["Optic Foramen", "Mandibular Condyle", "Mastoid Air Cells", "TMJ"],
+        a: 0,
+        e: "It projects the optic foramen into the lower outer quadrant of the orbit."
+    },
+    {
+        q: "The 'Law Method' and 'Schuller Method' are historical views for the:",
+        o: ["Sella Turcica", "Mastoids / TMJ", "Orbits", "Nasal bones"],
+        a: 1,
+        e: "Lateral oblique views used for mastoid air cells and TMJ."
+    },
+    {
+        q: "To demonstrate a 'Blowout Fracture' of the orbit, which view is modified?",
+        o: ["Waters (Modified)", "Lateral", "SMV", "Townes"],
+        a: 0,
+        e: "Modified Waters (shallow angle) shows the orbital floor best."
+    },
+    {
+        q: "The 'Caldwell' projection usually requires a caudal tube angle of:",
+        o: ["5 degrees", "15 degrees", "30 degrees", "45 degrees"],
+        a: 1,
+        e: "15 degrees caudal projects petrous ridges into the lower 1/3 of orbits."
+    },
+
+    // ==========================================
+    // SECTION 2: SPINE & PELVIS SPECIAL VIEWS
+    // ==========================================
+    {
+        q: "The 'Swimmer's View' (Twining method) is performed to visualize:",
+        o: ["C1-C2 (Odontoid)", "C7-T1 Junction", "L5-S1 Junction", "Sacrum"],
+        a: 1,
+        e: "Used when the shoulders superimpose C7-T1 on a standard lateral."
+    },
+    {
+        q: "The 'Fuchs Method' is an AP projection used to see the:",
+        o: ["Dens (Odontoid process)", "Spinous process of C7", "Lumbar bodies", "Coccyx"],
+        a: 0,
+        e: "Used when the Open Mouth view is inadequate."
+    },
+    {
+        q: "Which view demonstrates the 'Scottie Dog' anatomy?",
+        o: ["AP Lumbar", "Lateral Lumbar", "Oblique Lumbar", "Spot L5-S1"],
+        a: 2,
+        e: "45-degree oblique view of lumbar spine."
+    },
+    {
+        q: "The 'Judet View' describes oblique projections of the:",
+        o: ["Shoulder", "Acetabulum (Pelvis)", "Ankle", "Cervical spine"],
+        a: 1,
+        e: "Used to assess acetabular fractures (Iliopectineal/Ilioischial lines)."
+    },
+    {
+        q: "The 'Inlet and Outlet' views are essential for trauma to the:",
+        o: ["Skull", "Pelvis (Pelvic Ring)", "Thorax", "Femur"],
+        a: 1,
+        e: "Assess anterior/posterior displacement of the pelvic ring."
+    },
+    {
+        q: "The 'Ferguson Method' is an AP axial projection for the:",
+        o: ["Sacroiliac (SI) Joints", "L5-S1 Joint space", "Hip joint", "Pubic Symphysis"],
+        a: 0,
+        e: "Tube angled 30-35 degrees cephalad."
+    },
+
+    // ==========================================
+    // SECTION 3: EXTREMITY SPECIAL VIEWS
+    // ==========================================
+    {
+        q: "The 'Gaynor-Hart' method is a tangential projection of the:",
+        o: ["Carpal Canal (Tunnel)", "Tarsal bones", "Patella", "Glenoid cavity"],
+        a: 0,
+        e: "Demonstrates the hamulus of hamate and carpal tunnel."
+    },
+    {
+        q: "The 'Stecher Method' (Hand elevated 20 degrees) helps to detect fracture of the:",
+        o: ["Lunate", "Scaphoid", "Radius", "Ulna"],
+        a: 1,
+        e: "Elongates the scaphoid."
+    },
+    {
+        q: "The 'Garth View' (Apical Oblique) is useful for diagnosing:",
+        o: ["Posterior Shoulder Dislocation", "Elbow fracture", "Hip dislocation", "AC joint separation"],
+        a: 0,
+        e: "Shows posterior dislocations and Bankart lesions."
+    },
+    {
+        q: "The 'Lawrence Method' (Transthoracic Lateral) is used for the:",
+        o: ["Proximal Humerus", "Sternum", "Ribs", "Scapula"],
+        a: 0,
+        e: "Used when the arm cannot be abducted/rotated due to trauma."
+    },
+    {
+        q: "The 'Merchant', 'Sunrise', and 'Skyline' views all examine the:",
+        o: ["Calcaneus", "Patellofemoral Joint", "Acromioclavicular Joint", "Hip Joint"],
+        a: 1,
+        e: "Tangential views of the patella."
+    },
+    {
+        q: "The 'Rosenberg View' is a weight-bearing PA view of the:",
+        o: ["Knees (flexed 45 deg)", "Ankles", "Hips", "Feet"],
+        a: 0,
+        e: "Best for seeing joint space narrowing in osteoarthritis."
+    },
+    {
+        q: "The 'Camp-Coventry' and 'Holmblad' methods demonstrate the:",
+        o: ["Intercondylar Fossa (Tunnel View)", "Tibial Tuberosity", "Patella", "Femoral Neck"],
+        a: 0,
+        e: "Shows loose bodies in the knee notch."
+    },
+    {
+        q: "The 'Mortise View' of the ankle requires the leg to be rotated:",
+        o: ["Externally 15 degrees", "Internally 15-20 degrees", "Internally 45 degrees", "Externally 45 degrees"],
+        a: 1,
+        e: "Opens the ankle joint space by removing fibular overlap."
+    },
+    {
+        q: "The 'Coyle Method' is a special view for the:",
+        o: ["Radial Head / Coronoid Process", "Shoulder", "Wrist", "Ankle"],
+        a: 0,
+        e: "Trauma view for radial head fractures."
+    },
+
+    // ==========================================
+    // SECTION 4: CONTRAST MEDIA PROPERTIES
+    // ==========================================
+    {
+        q: "Contrast media that dissociates into cations and anions in blood is called:",
+        o: ["Non-ionic", "Ionic", "Insoluble", "Paramagnetic"],
+        a: 1,
+        e: "Ionic contrast breaks into charged particles, increasing osmolality."
+    },
+    {
+        q: "High Osmolality Contrast Media (HOCM) is associated with:",
+        o: ["Fewer adverse reactions", "More adverse reactions", "Better image quality", "Lower cost only"],
+        a: 1,
+        e: "Hyper-osmolality draws water from cells, causing reactions."
+    },
+    {
+        q: "Which of the following is an Iso-osmolar contrast agent?",
+        o: ["Iohexol (Omnipaque)", "Iopamidol", "Iodixanol (Visipaque)", "Diatrizoate"],
+        a: 2,
+        e: "Iodixanol is a non-ionic dimer, iso-osmolar to blood."
+    },
+    {
+        q: "Barium Sulfate is contraindicated in cases of:",
+        o: ["Dysphagia", "Suspected Perforation", "Diverticulosis", "Cancer"],
+        a: 1,
+        e: "Leakage into the peritoneal cavity causes severe peritonitis."
+    },
+    {
+        q: "Gastrografin is a:",
+        o: ["Barium suspension", "Water-soluble iodinated contrast", "Oil-based contrast", "Gas"],
+        a: 1,
+        e: "Used when Barium is contraindicated (suspected perforation)."
+    },
+    {
+        q: "Gadolinium-based contrast is used in MRI because it is:",
+        o: ["Radioactive", "Paramagnetic", "Ferromagnetic", "Radiopaque"],
+        a: 1,
+        e: "It shortens T1 relaxation times."
+    },
+    {
+        q: "Oil-based contrast media (e.g., Lipiodol) is mainly used today for:",
+        o: ["Myelography", "Lymphangiography / Embolization", "IVP", "CT Brain"],
+        a: 1,
+        e: "Rarely used now, except for specific interventions like TACE."
+    },
+
+    // ==========================================
+    // SECTION 5: CONTRAST PROCEDURES & PREP
+    // ==========================================
+    {
+        q: "Intrathecal injection (Myelography) MUST USE:",
+        o: ["Ionic Contrast", "Non-ionic Contrast", "Barium", "Gastrografin"],
+        a: 1,
+        e: "Ionic contrast in the spinal canal can cause fatal seizures."
+    },
+    {
+        q: "Metformin (Glucophage) should be withheld after contrast injection to prevent:",
+        o: ["Hypoglycemia", "Lactic Acidosis", "Hyperglycemia", "Heart failure"],
+        a: 1,
+        e: "Withheld for 48 hours in patients with impaired renal function."
+    },
+    {
+        q: "Normal Serum Creatinine range is approximately:",
+        o: ["0.6 - 1.2 mg/dL", "2.0 - 4.0 mg/dL", "10 - 20 mg/dL", "0.1 - 0.2 mg/dL"],
+        a: 0,
+        e: "Levels above 1.5-2.0 indicate renal risk."
+    },
+    {
+        q: "In an IVU, ureteric compression is applied to:",
+        o: ["Stop urine flow completely", "Retain contrast in the pelvicalyceal system", "Reduce patient movement", "Protect the gonads"],
+        a: 1,
+        e: "Distends the upper tract for better visualization."
+    },
+    {
+        q: "Contraindication for Ureteric Compression during IVU includes:",
+        o: ["Hypertension", "Abdominal Aortic Aneurysm (AAA)", "Diabetes", "UTI"],
+        a: 1,
+        e: "Pressure could rupture the aneurysm."
+    },
+    {
+        q: "Hysterosalpingography (HSG) is performed to evaluate:",
+        o: ["Uterine fibroids", "Tubal patency (Infertility)", "Cervical cancer", "Ovarian cysts"],
+        a: 1,
+        e: "Checks if fallopian tubes are open."
+    },
+    {
+        q: "The ideal timing for an HSG is:",
+        o: ["Day 1-4 of cycle", "Day 7-10 (Post-menstrual)", "Day 14 (Ovulation)", "Day 21-28"],
+        a: 1,
+        e: "After bleeding stops but before ovulation (to avoid irradiating a fertilized egg)."
+    },
+    {
+        q: "In Barium Enema, the bag should be suspended:",
+        o: ["12 inches above table", "18-24 inches above table", "36 inches above table", "48 inches above table"],
+        a: 1,
+        e: "Too high causes excessive pressure and cramping."
+    },
+    {
+        q: "ERCP is used to diagnose pathology in the:",
+        o: ["Esophagus", "Biliary and Pancreatic ducts", "Renal arteries", "Colon"],
+        a: 1,
+        e: "Endoscopic Retrograde Cholangiopancreatography."
+    },
+    {
+        q: "A 'Voiding Cystourethrogram' (VCUG/MCU) is primarily used to detect:",
+        o: ["Kidney stones", "Vesicoureteral Reflux (VUR)", "Bladder cancer", "Prostate enlargement"],
+        a: 1,
+        e: "Backflow of urine from bladder to ureters."
+    },
+    {
+        q: "Sialography usually examines which glands?",
+        o: ["Parotid and Submandibular", "Thyroid", "Lacrimal", "Adrenal"],
+        a: 0,
+        e: "Salivary glands."
+    },
+    {
+        q: "Lemon juice (secretagogue) is used in Sialography to:",
+        o: ["Dilate the duct", "Stimulate secretion and open the duct", "Numb the mouth", "Clean the mouth"],
+        a: 1,
+        e: "Stimulates the gland to empty contrast."
+    },
+
+    // ==========================================
+    // SECTION 6: ADVERSE REACTIONS
+    // ==========================================
+    {
+        q: "Urticaria (Hives) is classified as what type of reaction?",
+        o: ["Mild", "Moderate", "Severe", "Fatal"],
+        a: 0,
+        e: "Mild to moderate cutaneous reaction."
+    },
+    {
+        q: "Laryngeal Edema (throat swelling) is classified as:",
+        o: ["Mild", "Moderate", "Severe", "Psychosomatic"],
+        a: 2,
+        e: "Severe/Life-threatening anaphylactoid reaction."
+    },
+    {
+        q: "The first-line drug for severe anaphylaxis (hypotension/bronchospasm) is:",
+        o: ["Benadryl (Diphenhydramine)", "Adrenaline (Epinephrine)", "Hydrocortisone", "Atropine"],
+        a: 1,
+        e: "Adrenaline 1:1000 IM."
+    },
+    {
+        q: "Vasovagal reaction (Bradycardia + Hypotension) is treated with:",
+        o: ["Adrenaline", "Atropine", "Beta blockers", "Insulin"],
+        a: 1,
+        e: "Atropine increases heart rate."
+    },
+    {
+        q: "Contrast Induced Nephropathy (CIN) is defined as:",
+        o: ["Increase in Creatinine by 25% or 0.5 mg/dL", "Sudden kidney pain", "Blood in urine", "Allergic reaction in kidney"],
+        a: 0,
+        e: "Acute impairment of renal function post-contrast."
+    },
+    {
+        q: "Extravasation of contrast media means:",
+        o: ["Rapid injection", "Leakage of contrast into surrounding tissue", "Allergic reaction", "Backflow into syringe"],
+        a: 1,
+        e: "Can cause tissue necrosis (compartment syndrome)."
+    },
+    {
+        q: "To reduce viscosity of contrast media before injection, one should:",
+        o: ["Shake it", "Cool it", "Warm it to body temperature", "Mix with saline"],
+        a: 2,
+        e: "Warming reduces viscosity, making injection easier."
+    }
+];
+
+// Fill up to 250 with placeholders
+for(let i=21; i<=250; i++) {
+    db.push({
+        q: `Anatomy Question ${i} (Placeholder content)`,
+        o: ["Structure A", "Structure B", "Structure C", "Structure D"],
+        a: 0,
+        e: "Placeholder explanation."
+    });
+}
+
+// =========================
+// 2. STATE MANAGEMENT
+// =========================
+const ITEMS_PER_PAGE = 25;
+let currentPage = 1;
+const STORAGE_KEY = 'cre_mobile_anatomy';
+
+let state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { answers: {}, score: 0 };
+
+function save() {
+    // Recalc score
+    let s = 0;
+    Object.keys(state.answers).forEach(idx => {
+        if(state.answers[idx] === db[idx].a) s += 4;
+        else s -= 1;
+    });
+    state.score = s;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    updateHeader();
+}
+
+function updateHeader() {
+    document.getElementById('scoreDisplay').innerText = state.score;
+}
+
+// =========================
+// 3. RENDERING
+// =========================
+function renderPage(page) {
+    currentPage = page;
+    const container = document.getElementById('quizContainer');
+    container.innerHTML = '';
+    window.scrollTo(0,0);
+
+    const start = (page-1) * ITEMS_PER_PAGE;
+    const end = Math.min(start + ITEMS_PER_PAGE, db.length);
+
+    document.getElementById('pageDisplay').innerText = `${page}/10`;
+    document.getElementById('btnPrev').disabled = page === 1;
+    document.getElementById('btnNext').disabled = page === 10;
+
+    for(let i=start; i<end; i++) {
+        const item = db[i];
+        const hasAns = state.answers.hasOwnProperty(i);
+        const userAns = state.answers[i];
+        
+        // Card status
+        let cardClass = '';
+        if(hasAns) cardClass = (userAns === item.a) ? 'res-correct' : 'res-wrong';
+
+        const div = document.createElement('div');
+        div.className = `q-card ${cardClass}`;
+        div.id = `q-${i}`;
+
+        let optsHtml = '';
+        item.o.forEach((opt, idx) => {
+            let labelClass = '';
+            if(hasAns) {
+                if(idx === item.a) labelClass = 're-correct';
+                else if(idx === userAns) labelClass = 're-wrong';
+            }
+            
+            optsHtml += `
+            <label class="opt-label ${labelClass}">
+                <input type="radio" name="q${i}" ${hasAns && userAns===idx ? 'checked' : ''} 
+                    ${hasAns ? 'disabled' : ''} onclick="handleAnswer(${i}, ${idx})">
+                ${opt}
+            </label>`;
+        });
+
+        div.innerHTML = `
+            <div class="q-text">Q${i+1}. ${item.q}</div>
+            ${optsHtml}
+            <div class="explanation" style="display:${hasAns?'block':'none'}">
+                <strong>Answer:</strong> ${item.o[item.a]}<br>${item.e}
+            </div>
+        `;
+        container.appendChild(div);
+    }
+}
+
+function handleAnswer(qIdx, optIdx) {
+    if(state.answers.hasOwnProperty(qIdx)) return;
+    state.answers[qIdx] = optIdx;
+    save();
+    
+    // Refresh specific card mainly
+    renderPage(currentPage);
+}
+
+// =========================
+// 4. MAP & NAV
+// =========================
+function toggleMap(show) {
+    const modal = document.getElementById('mapModal');
+    if(show) {
+        renderMap();
+        modal.style.display = 'flex';
+    } else {
+        modal.style.display = 'none';
+    }
+}
+
+function renderMap() {
+    const grid = document.getElementById('navGrid');
+    grid.innerHTML = '';
+    db.forEach((item, i) => {
+        const div = document.createElement('div');
+        let status = '';
+        if(state.answers.hasOwnProperty(i)) {
+            status = state.answers[i] === item.a ? 'correct' : 'wrong';
+        }
+        div.className = `nav-item ${status}`;
+        div.innerText = i + 1;
+        div.onclick = () => {
+            toggleMap(false);
+            const targetPage = Math.floor(i / ITEMS_PER_PAGE) + 1;
+            renderPage(targetPage);
+        };
+        grid.appendChild(div);
+    });
+}
+
+function changePage(delta) {
+    const newP = currentPage + delta;
+    if(newP >= 1 && newP <= 10) renderPage(newP);
+}
+
+function resetData() {
+    if(confirm("Reset score and progress?")) {
+        localStorage.removeItem(STORAGE_KEY);
+        location.reload();
+    }
+}
+
+// Init
+updateHeader();
+renderPage(1);
+
+</script>
+</body>
+</html>
