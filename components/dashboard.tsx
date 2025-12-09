@@ -93,6 +93,13 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
   const [showSwipeConfirm, setShowSwipeConfirm] = useState(false)
   const swipeTimeoutRef = useRef<number | null>(null)
 
+  // Weightage prep stats
+  const [weightageStats, setWeightageStats] = useState<{
+    attempted: number
+    correct: number
+    incorrect: number
+  }>({ attempted: 0, correct: 0, incorrect: 0 })
+
   useEffect(() => {
     // Load stats from localStorage
     const savedStats = localStorage.getItem("kiddoprep_stats")
@@ -101,6 +108,25 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
         setTopicStats(JSON.parse(savedStats))
       } catch (e) {
         console.error("Error loading stats:", e)
+      }
+    }
+
+    // Load weightage prep stats
+    const savedWeightageStats = localStorage.getItem("kiddoprep_weightage_stats")
+    if (savedWeightageStats) {
+      try {
+        const parsed = JSON.parse(savedWeightageStats)
+        let totalAttempted = 0
+        let totalCorrect = 0
+        let totalIncorrect = 0
+        Object.values(parsed).forEach((topicStats: any) => {
+          totalAttempted += topicStats.attempted || 0
+          totalCorrect += topicStats.correct || 0
+          totalIncorrect += topicStats.incorrect || 0
+        })
+        setWeightageStats({ attempted: totalAttempted, correct: totalCorrect, incorrect: totalIncorrect })
+      } catch (e) {
+        console.error("Error loading weightage stats:", e)
       }
     }
   }, [])
@@ -183,6 +209,11 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
       }
     })
 
+    // Include weightage prep stats
+    totalAttempted += weightageStats.attempted
+    totalCorrect += weightageStats.correct
+    totalIncorrect += weightageStats.incorrect
+
     return {
       attempted: totalAttempted,
       correct: totalCorrect,
@@ -191,6 +222,7 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
       score: totalScore,
       avgTimePerQuestion: totalAttempted > 0 ? (totalTime / totalAttempted).toFixed(1) : "0",
       topicsWithData,
+      weightageAttempted: weightageStats.attempted,
     }
   }
 
@@ -284,6 +316,13 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
                 <div>
                   <h3 className="text-lg md:text-xl font-bold text-foreground">Weightage-wise Prep</h3>
                   <p className="text-sm text-muted-foreground">Study topics based on AIIMS CRE exam weightage for maximum marks</p>
+                  {weightageStats.attempted > 0 && (
+                    <div className="flex gap-3 mt-1 text-xs">
+                      <span className="text-green-500">{weightageStats.correct} correct</span>
+                      <span className="text-red-500">{weightageStats.incorrect} incorrect</span>
+                      <span className="text-muted-foreground">{weightageStats.attempted} attempted</span>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="text-orange-500 text-2xl">→</div>
