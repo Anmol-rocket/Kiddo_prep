@@ -44,9 +44,12 @@ export const metadata: Metadata = {
 // Next.js recommends exporting `viewport` separately for the App Router.
 export const viewport = {
   width: "device-width",
-  initialScale: 1,
+  initialSize: 1,
   maximumScale: 1,
-  themeColor: "#a855f7",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f0a1a" },
+  ],
 }
 
 export default function RootLayout({
