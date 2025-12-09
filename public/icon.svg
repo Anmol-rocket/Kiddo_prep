@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180" role="img">
+  <title>KIDDOPREP</title>
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#7c3aed" />
+    </linearGradient>
+  </defs>
+
+  <!-- rounded background with gradient -->
+  <rect fill="url(#grad)" x="0" y="0" width="180" height="180" rx="36" />
+
+  <!-- Graduation cap icon -->
+  <g fill="#ffffff" transform="translate(90, 95)">
+    <!-- Cap top diamond -->
+    <polygon points="0,-50 60,-22 0,6 -60,-22" />
+    <!-- Cap body -->
+    <path d="M-42,-18 L-42,12 Q0,32 42,12 L42,-18 Q0,2 -42,-18" />
+    <!-- Tassel line -->
+    <rect x="53" y="-22" width="5" height="48" rx="2.5" />
+    <!-- Tassel end -->
+    <circle cx="55.5" cy="32" r="8" />
+  </g>
+</svg>
