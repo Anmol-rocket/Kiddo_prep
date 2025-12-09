@@ -11,6 +11,12 @@ export const metadata: Metadata = {
   title: "KIDDOPREP - AIIMS CRE Exam Prep",
   description: "Professional exam preparation for AIIMS CRE with interactive MCQs",
   generator: "v0.app",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "KIDDOPREP",
+  },
   icons: {
     icon: [
       {
@@ -28,7 +34,10 @@ export const metadata: Metadata = {
         type: "image/svg+xml",
       },
     ],
-    apple: "/icon.svg",
+    apple: [
+      { url: "/icon-192x192.svg", sizes: "192x192", type: "image/svg+xml" },
+      { url: "/icon-512x512.svg", sizes: "512x512", type: "image/svg+xml" },
+    ],
   },
 }
 
@@ -37,6 +46,7 @@ export const viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
+  themeColor: "#a855f7",
 }
 
 export default function RootLayout({
