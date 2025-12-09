@@ -14,14 +14,18 @@ export default function SettingsPage() {
       localStorage.removeItem("kiddoprep_appstate")
       localStorage.removeItem("kiddoprep_quizstate")
       localStorage.removeItem("kiddoprep_stats")
+      
+      // Clear weightage prep stats
+      localStorage.removeItem("kiddoprep_weightage_stats")
 
-      // Remove any topic-specific selections/sessions
+      // Remove any topic-specific selections/sessions (including weightage prep sessions)
       const keysToRemove: string[] = []
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i) || ""
         if (
           key.startsWith("kiddoprep_selection_") ||
-          key.startsWith("kiddoprep_session_")
+          key.startsWith("kiddoprep_session_") ||
+          key.startsWith("kiddoprep_weightage_session_")
         ) {
           keysToRemove.push(key)
         }
