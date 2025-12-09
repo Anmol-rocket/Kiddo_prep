@@ -136,21 +136,21 @@ export default function WeightagePrepPage() {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex flex-wrap gap-2 mt-2">
+                <div className="flex flex-col sm:flex-row gap-2 mt-2">
                   {hasQuestions ? (
                     <>
                       <Button
                         onClick={() => handleStartQuiz(topic.id)}
-                        className="flex-1 min-w-[120px]"
+                        className="flex-1 whitespace-nowrap"
                       >
-                        <Target className="w-4 h-4 mr-2" />
-                        Practice ({topic.questions.length} MCQs)
+                        <Target className="w-4 h-4 mr-2 shrink-0" />
+                        <span className="truncate">Practice ({topic.questions.length})</span>
                       </Button>
                       {stats && stats.attempted > 0 && (
                         <Button
                           variant="outline"
                           onClick={() => handleReviewTopic(topic.id)}
-                          className="flex-1 min-w-[120px]"
+                          className="flex-1 whitespace-nowrap"
                         >
                           Review
                         </Button>
