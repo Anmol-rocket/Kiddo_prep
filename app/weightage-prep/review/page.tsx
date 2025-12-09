@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -24,7 +24,7 @@ interface AttemptStats {
   timestamp: string
 }
 
-export default function WeightageReviewPage() {
+function WeightageReviewContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const topicId = searchParams.get("topic")
@@ -254,5 +254,23 @@ export default function WeightageReviewPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+      <div className="text-center">
+        <div className="text-2xl font-bold text-foreground mb-2">Loading...</div>
+      </div>
+    </div>
+  )
+}
+
+export default function WeightageReviewPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <WeightageReviewContent />
+    </Suspense>
   )
 }
