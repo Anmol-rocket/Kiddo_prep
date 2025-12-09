@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Anatomy Master Mobile</title>
+<title>Anatomy Master</title>
 <style>
     :root {
         --primary: #2c3e50;
@@ -437,7 +437,7 @@ const db = [{ q: "The 'Sella Turcica' houses which gland?", o: ["Pineal", "Pitui
     { q: "The 'Linea Alba' is:", o: ["Avascular", "Highly vascular", "Nerve rich", "Muscle"], a: 0, e: "Good for incision." }
 ];
 
-// Fill up to 250 with placeholders
+// Fill up to 250 with placeholders (unchanged)
 for(let i=21; i<=250; i++) {
     db.push({
         q: `Anatomy Question ${i} (Placeholder content)`,
@@ -475,11 +475,15 @@ function updateHeader() {
 // =========================
 // 3. RENDERING
 // =========================
-function renderPage(page) {
+/**
+ * renderPage(page, scrollToTop = false, focusIdx = null)
+ * - scrollToTop: if true, scroll to top of page (used for navigation)
+ * - focusIdx: if provided, after rendering scroll to that question card (keeps you on the chosen question)
+ */
+function renderPage(page, scrollToTop = false, focusIdx = null) {
     currentPage = page;
     const container = document.getElementById('quizContainer');
     container.innerHTML = '';
-    window.scrollTo(0,0);
 
     const start = (page-1) * ITEMS_PER_PAGE;
     const end = Math.min(start + ITEMS_PER_PAGE, db.length);
@@ -526,6 +530,25 @@ function renderPage(page) {
         `;
         container.appendChild(div);
     }
+
+    // After DOM updated: handle scrolling behavior
+    if (scrollToTop) {
+        // keep old behavior for manual navigation / initial load
+        window.scrollTo(0,0);
+    } else if (focusIdx !== null) {
+        // scroll to the question card we just answered, accounting for sticky header height
+        const el = document.getElementById(`q-${focusIdx}`);
+        if (el) {
+            const headerOffset = document.querySelector('.app-header') ? document.querySelector('.app-header').offsetHeight : 60;
+            const rect = el.getBoundingClientRect();
+            const targetScroll = window.pageYOffset + rect.top - (headerOffset + 8);
+            // clamp targetScroll to >=0
+            const finalScroll = targetScroll < 0 ? 0 : targetScroll;
+            window.scrollTo({ top: finalScroll, behavior: 'auto' });
+        }
+    } else {
+        // no explicit scroll instruction: do nothing (preserve current scroll)
+    }
 }
 
 function handleAnswer(qIdx, optIdx) {
@@ -533,8 +556,8 @@ function handleAnswer(qIdx, optIdx) {
     state.answers[qIdx] = optIdx;
     save();
     
-    // Refresh specific card mainly
-    renderPage(currentPage);
+    // Re-render current page but keep the view on the question answered
+    renderPage(currentPage, false, qIdx);
 }
 
 // =========================
@@ -564,7 +587,8 @@ function renderMap() {
         div.onclick = () => {
             toggleMap(false);
             const targetPage = Math.floor(i / ITEMS_PER_PAGE) + 1;
-            renderPage(targetPage);
+            // when navigating via map, show top of page (previous behavior)
+            renderPage(targetPage, true);
         };
         grid.appendChild(div);
     });
@@ -572,7 +596,7 @@ function renderMap() {
 
 function changePage(delta) {
     const newP = currentPage + delta;
-    if(newP >= 1 && newP <= 10) renderPage(newP);
+    if(newP >= 1 && newP <= 10) renderPage(newP, true);
 }
 
 function resetData() {
@@ -584,7 +608,7 @@ function resetData() {
 
 // Init
 updateHeader();
-renderPage(1);
+renderPage(1, true);
 
 </script>
 </body>
