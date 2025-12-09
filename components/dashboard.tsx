@@ -274,6 +274,24 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
         </Card>
       </div>
 
+      {/* Weightage Prep Section */}
+      <div className="mb-6">
+        <Link href="/weightage-prep">
+          <Card className="p-4 md:p-6 bg-gradient-to-r from-orange-500/10 to-red-500/10 border-orange-500/30 hover:from-orange-500/20 hover:to-red-500/20 transition-all cursor-pointer animate-fade-in">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="text-3xl">🔥</div>
+                <div>
+                  <h3 className="text-lg md:text-xl font-bold text-foreground">Weightage-wise Prep</h3>
+                  <p className="text-sm text-muted-foreground">Study topics based on AIIMS CRE exam weightage for maximum marks</p>
+                </div>
+              </div>
+              <div className="text-orange-500 text-2xl">→</div>
+            </div>
+          </Card>
+        </Link>
+      </div>
+
       {/* Topics */}
       <div className="mb-4">
         <h2 className="text-xl md:text-2xl font-bold text-foreground mb-4">Available Topics</h2>
