@@ -1,6 +1,6 @@
 # Materials & Mock Papers Static Hosting
 
-This app now expects materials to be served statically from the `public/` directory for simpler URLs and better performance.
+
 
 ## Move your files
 
@@ -19,6 +19,4 @@ Files become available at these URLs:
 The Settings page lists and links them automatically via the `/api/materials` index.
 
 ## Notes
-
-- The previous `/api/materials/serve` route is no longer required for static files; PDFs are embedded directly in the in-app viewer.
 - If a directory is empty, the list will show “No materials found.”
