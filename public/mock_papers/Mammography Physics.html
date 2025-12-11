@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mammography Physics Mock Exam</title>
+    <style>
+        :root {
+            --primary: #db2777; /* Pink theme for Mammography */
+            --primary-dark: #be185d;
+            --selected: #fce7f3;
+            --selected-border: #db2777;
+            --success-bg: #dcfce7;
+            --success-text: #166534;
+            --error-bg: #fee2e2;
+            --error-text: #991b1b;
+            --bg: #fff1f2;
+            --card: #ffffff;
+            --text: #1f2937;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            padding-bottom: 80px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 15px 20px;
+            border-bottom: 1px solid #fbcfe8;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timer {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.1rem;
+            background: #fce7f3;
+            padding: 6px 12px;
+            border-radius: 8px;
+        }
+
+        /* Question Cards */
+        .question-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #fbcfe8;
+            position: relative;
+        }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .section-tag {
+            background: #fce7f3;
+            color: #be185d;
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .q-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #111827;
+        }
+
+        /* Options */
+        .options-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid #e5e7eb;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text);
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        /* Exam Mode Styles */
+        body.exam-mode .option-btn:hover {
+            background: #fff1f2;
+            border-color: #f9a8d4;
+        }
+
+        body.exam-mode .option-btn.selected {
+            background: var(--selected);
+            border-color: var(--selected-border);
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        /* Review Mode Styles */
+        body.review-mode .option-btn {
+            cursor: default;
+        }
+
+        body.review-mode .option-btn.correct-answer {
+            background: var(--success-bg);
+            border-color: #22c55e;
+            color: var(--success-text);
+        }
+
+        body.review-mode .option-btn.wrong-choice {
+            background: var(--error-bg);
+            border-color: #ef4444;
+            color: var(--error-text);
+            text-decoration: line-through;
+        }
+
+        /* Clear Selection Button */
+        .clear-btn {
+            background: transparent;
+            border: none;
+            color: #be185d;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 5px 0;
+            visibility: hidden;
+        }
+        
+        /* Explanation Box */
+        .explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff1f2;
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+            font-size: 0.95rem;
+            display: none;
+        }
+        body.review-mode .explanation { display: block; }
+
+        /* Result Panel */
+        .result-panel {
+            display: none;
+            background: #831843;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border: 6px solid #f472b6;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px auto;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .score-circle span { font-size: 0.9rem; font-weight: normal; opacity: 0.8; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .stat-box {
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .stat-val { font-size: 1.2rem; font-weight: bold; }
+        .stat-label { font-size: 0.8rem; opacity: 0.8; }
+
+        /* Fixed Footer */
+        .footer-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 15px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(219, 39, 119, 0.3);
+            width: 100%;
+            max-width: 400px;
+        }
+        .submit-btn:hover { background: var(--primary-dark); }
+
+        .retry-btn {
+            display: none;
+            background: white;
+            color: #831843;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        @media(max-width: 600px) {
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body class="exam-mode">
+
+    <div class="header">
+        <h3 style="margin:0">Mammography Physics</h3>
+        <div class="timer" id="timer">00:30:00</div>
+    </div>
+
+    <div class="result-panel" id="result-panel">
+        <div class="score-circle">
+            <div id="final-score">0</div>
+            <span>/ 80</span>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-val" id="stat-correct" style="color:#4ade80">0</div>
+                <div class="stat-label">Correct</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="stat-wrong" style="color:#f87171">0</div>
+                <div class="stat-label">Wrong</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="stat-skip">0</div>
+                <div class="stat-label">Skipped</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="stat-acc">0%</div>
+                <div class="stat-label">Accuracy</div>
+            </div>
+        </div>
+        <button class="retry-btn" onclick="location.reload()" style="display:inline-block">Retake Exam</button>
+    </div>
+
+    <div class="container" id="questions-container">
+        </div>
+
+    <div class="footer-bar" id="footer-bar">
+        <button class="submit-btn" onclick="submitExam()">Submit Exam</button>
+    </div>
+
+<script>
+    // --- Data Source: Mammography PDF (IAEA Chapter 9) ---
+    // Total Questions: 20 Created from Content
+    // Scoring: +4 Correct, -1 Incorrect, 0 Skipped
+    
+    const quizData = [
+        { id: 1, section: "Requirements", q: "Why is a low-energy X-ray spectrum required for mammography?", options: ["To reduce patient dose significantly", "Because breast tissues intrinsically lack subject contrast", "To increase the penetration of the beam", "To reduce the exposure time"], correct: 1, explain: "Breast tissues (fibroglandular and adipose) have very similar atomic numbers and physical densities, leading to low subject contrast. Low energy X-rays emphasize the compositional differences (Slide 6)." },
+        { id: 2, section: "Equipment", q: "Which target/filter combination is commonly used to enrich the X-ray spectrum in the 17-20 keV range?", options: ["Tungsten/Aluminum", "Molybdenum/Molybdenum", "Rhodium/Aluminum", "Tungsten/Silver"], correct: 1, explain: "A Molybdenum (Mo) target with a Mo filter (30-35 µm) is standard. The filter acts as an energy window, transmitting Mo characteristic X-rays while attenuating others (Slide 11)." },
+        { id: 3, section: "Equipment", q: "What is the typical focal spot size used for magnification mammography?", options: ["0.3 mm", "0.1 mm", "0.6 mm", "1.0 mm"], correct: 1, explain: "Spatial resolution is limited by focal spot size in magnification. A small spot (typically 0.1 mm) is critical to reduce geometric unsharpness (Slide 20)." },
+        { id: 4, section: "Equipment", q: "Why is compression applied during mammography?", options: ["To increase the object-to-image distance", "To increase the ratio of scattered to transmitted radiation", "To reduce superposition of tissues and geometric unsharpness", "To increase the overall thickness of the breast"], correct: 2, explain: "Compression reduces tissue superposition, scatter, and geometric unsharpness by bringing structures closer to the receptor, and lowers dose (Slide 13)." },
+        { id: 5, section: "Image Receptors", q: "In screen-film mammography, the film emulsion is matched to be sensitive to:", options: ["Red light", "The spectrum of light emitted from the phosphor screen", "Ultraviolet light", "Infrared radiation"], correct: 1, explain: "The film must be spectrally matched to the light emitted by the specific phosphor screen (e.g., green for Gd2O2S:Tb) (Slide 26)." },
+        { id: 6, section: "Digital Mammo", q: "What material is typically used in 'direct' digital mammography detectors?", options: ["Cesium Iodide (CsI)", "Amorphous Silicon", "Amorphous Selenium (a-Se)", "Gadolinium Oxysulphide"], correct: 2, explain: "Direct detectors use Amorphous Selenium (a photoconductor) to convert X-rays directly into charge (electron-hole pairs) without a light stage (Slide 37)." },
+        { id: 7, section: "Equipment", q: "The grid used in mammography is of which type?", options: ["Crossed grid", "Focused linear grid", "Parallel grid", "Unfocused grid"], correct: 1, explain: "Focused linear grids are integral parts of the system to reduce scatter. They move during exposure to blur grid lines (Slide 14)." },
+        { id: 8, section: "Radiation Dose", q: "What is the primary dosimetric quantity of interest related to cancer risk in breast imaging?", options: ["Entrance Surface Air Kerma (Ke)", "Incident Air Kerma (Ki)", "Mean Glandular Dose (MGD)", "Effective Dose"], correct: 2, explain: "Mean Glandular Dose (MGD or Dg) is the primary quantity for risk assessment (Slide 59)." },
+        { id: 9, section: "Equipment", q: "What is the K-absorption edge energy of a Molybdenum filter?", options: ["17 keV", "20 keV", "23 keV", "25 keV"], correct: 1, explain: "The K-edge of Molybdenum is at 20 keV. Energies above this are strongly attenuated, creating an 'energy window' (Slide 11)." },
+        { id: 10, section: "Image Receptors", q: "How is light spreading reduced in screen-film mammography cassettes?", options: ["Using a double emulsion film", "Placing the film between two screens", "Placing the emulsion side of the film against the screen", "Increasing the distance between screen and film"], correct: 2, explain: "A single emulsion film is used with a single back screen. X-rays pass through the film to the screen; light is emitted back to the emulsion, minimizing the path length (Slide 24)." },
+        { id: 11, section: "Digital Mammo", q: "In 'indirect' digital detectors, what converts X-rays into light?", options: ["Photodiode", "Thin Film Transistor (TFT)", "Phosphor layer (e.g., CsI)", "Amorphous Selenium"], correct: 2, explain: "Indirect detectors use a phosphor layer (typically Thallium-activated CsI) to convert X-rays to light, which is then detected by photodiodes (Slide 35)." },
+        { id: 12, section: "Requirements", q: "What range of spatial resolution is required for digital mammography detectors?", options: ["1-2 cycles/mm", "5-10 cycles/mm (50-100 µm sampling)", "20-50 cycles/mm", "0.5-1 cycles/mm"], correct: 1, explain: "Detectors need a limiting spatial resolution of 5-10 cycles/mm, corresponding to 50-100 µm pixel pitch (Slide 32)." },
+        { id: 13, section: "Display", q: "What is the recommended minimum luminance for a film mammography illuminator?", options: ["1000 cd/m²", "2000 cd/m²", "3000 cd/m²", "5000 cd/m²"], correct: 2, explain: "Film illuminators must provide a luminance of at least 3000 cd/m² to view high density areas (Slide 45)." },
+        { id: 14, section: "Equipment", q: "Why is the X-ray tube window made of Beryllium in mammography?", options: ["To filter out high energy X-rays", "To withstand high heat", "To provide low attenuation for low energy X-rays", "To focus the electron beam"], correct: 2, explain: "Beryllium has a low atomic number and density, allowing low-energy X-rays (essential for soft tissue contrast) to exit the tube with minimal attenuation (Slide 9)." },
+        { id: 15, section: "Advanced Tech", q: "What is the main advantage of Breast Tomosynthesis?", options: ["Higher spatial resolution than 2D", "Lower radiation dose than 2D", "Reducing the masking effect of tissue superposition", "Real-time imaging"], correct: 2, explain: "Tomosynthesis reconstructs planar images to reduce the masking effect caused by overlapping tissues in projection radiography (Slide 49)." },
+        { id: 16, section: "Advanced Tech", q: "Computer-Aided Diagnosis (CAD) systems are designed to:", options: ["Replace the radiologist", "Automatically biopsy lesions", "Assist the reader by identifying suspicious features", "Reduce the radiation dose"], correct: 2, explain: "CAD is an interpretive aid that prompts the reader to look at suspicious areas (microcalcifications, masses) (Slide 53)." },
+        { id: 17, section: "Stereotactic", q: "In stereotactic biopsy, how is the Z-depth of a lesion determined?", options: ["By a single AP view", "By the lateral displacement (shift) between two angulated views", "By ultrasound guidance", "By the density of the lesion"], correct: 1, explain: "Two views (typically +/- 15 degrees) are taken. The lateral shift (parallax) of the object between views allows calculation of its depth (Z) (Slide 57)." },
+        { id: 18, section: "Radiation Dose", q: "According to the BEIR VII model, what is the predicted lifetime risk of cancer induction for a woman at age 60 from a 4 mGy dose received at age 45?", options: ["1 in 100", "7.9 x 10^-7", "1 in 1000", "Zero"], correct: 1, explain: "The risk is very small, modeled at approximately 7.9 x 10^-7 (Slide 62)." },
+        { id: 19, section: "Digital Mammo", q: "What is a potential advantage of quantum-counting detectors?", options: ["They require higher doses", "They have poor scatter rejection", "Elimination of additional noise sources associated with signal conversion", "They use screen-film cassettes"], correct: 2, explain: "Counting individual photons avoids noise from light conversion fluctuation and electronic noise integration (Slide 42)." },
+        { id: 20, section: "Equipment", q: "What happens to the 'Bucky factor' when a grid is used?", options: ["It decreases", "It remains 1", "It increases (dose increases by factor of 2-3)", "It becomes zero"], correct: 2, explain: "The Bucky factor represents the dose increase required when a grid is used (removing primary beam). It can be 2 to 3 in mammography (Slide 14)." }
+    ];
+
+    // --- State Management ---
+    let userAnswers = new Array(quizData.length).fill(null); 
+    let isExamActive = true;
+    let timerInterval;
+    let timeRemaining = 30 * 60; // 30 Minutes
+
+    // --- DOM Elements ---
+    const container = document.getElementById("questions-container");
+    const resultPanel = document.getElementById("result-panel");
+    const footerBar = document.getElementById("footer-bar");
+    const statusText = document.getElementById("timer");
+
+    // --- Initialization ---
+    function initQuiz() {
+        container.innerHTML = "";
+        
+        quizData.forEach((item, index) => {
+            const card = document.createElement("div");
+            card.className = "question-card";
+            card.id = `q-card-${index}`;
+
+            let optionsHTML = "";
+            item.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <button class="option-btn" 
+                            id="btn-${index}-${optIndex}" 
+                            onclick="selectOption(${index}, ${optIndex})">
+                        <span style="font-weight:bold; margin-right:10px;">${String.fromCharCode(65+optIndex)}.</span> ${opt}
+                    </button>`;
+            });
+
+            card.innerHTML = `
+                <div class="q-header">
+                    <span class="section-tag">${item.section}</span>
+                    <span style="color:#be185d; font-size:0.9rem;">Q${index + 1}</span>
+                </div>
+                <div class="q-text">${item.q}</div>
+                <div class="options-grid">
+                    ${optionsHTML}
+                </div>
+                <button class="clear-btn" id="clear-${index}" onclick="clearSelection(${index})" style="visibility:hidden">Clear Selection</button>
+                <div class="explanation" id="explain-${index}">
+                    <strong>Correct Answer:</strong> ${item.options[item.correct]}<br><br>
+                    <strong>Explanation:</strong> ${item.explain}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        startTimer();
+    }
+
+    // --- Timer ---
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                submitExam(true);
+                return;
+            }
+            timeRemaining--;
+            const mins = Math.floor(timeRemaining / 60);
+            const secs = timeRemaining % 60;
+            statusText.innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+        }, 1000);
+    }
+
+    // --- Interactions ---
+    window.selectOption = function(qIndex, optIndex) {
+        if (!isExamActive) return;
+        userAnswers[qIndex] = optIndex;
+        const btns = document.querySelectorAll(`#q-card-${qIndex} .option-btn`);
+        btns.forEach(btn => btn.classList.remove("selected"));
+        document.getElementById(`btn-${qIndex}-${optIndex}`).classList.add("selected");
+        document.getElementById(`clear-${qIndex}`).style.visibility = "visible";
+    };
+
+    window.clearSelection = function(qIndex) {
+        if (!isExamActive) return;
+        userAnswers[qIndex] = null;
+        const btns = document.querySelectorAll(`#q-card-${qIndex} .option-btn`);
+        btns.forEach(btn => btn.classList.remove("selected"));
+        document.getElementById(`clear-${qIndex}`).style.visibility = "hidden";
+    };
+
+    // --- Submission Logic ---
+    window.submitExam = function(auto = false) {
+        if (!auto && !confirm("Are you sure you want to submit? This will end the exam.")) return;
+
+        clearInterval(timerInterval);
+        isExamActive = false;
+        document.body.classList.remove("exam-mode");
+        document.body.classList.add("review-mode");
+        
+        let correctCount = 0;
+        let wrongCount = 0;
+        let skippedCount = 0;
+        let totalScore = 0;
+
+        quizData.forEach((item, index) => {
+            const userChoice = userAnswers[index];
+            document.getElementById(`explain-${index}`).style.display = "block";
+            document.getElementById(`clear-${index}`).style.display = "none";
+            document.getElementById(`btn-${index}-${item.correct}`).classList.add("correct-answer");
+
+            if (userChoice === null) {
+                skippedCount++;
+            } else if (userChoice === item.correct) {
+                correctCount++;
+                totalScore += 4;
+            } else {
+                wrongCount++;
+                totalScore -= 1; 
+                document.getElementById(`btn-${index}-${userChoice}`).classList.add("wrong-choice");
+            }
+        });
+
+        const accuracy = (correctCount + wrongCount) === 0 ? 0 : Math.round((correctCount / (correctCount + wrongCount)) * 100);
+
+        document.getElementById("final-score").innerText = totalScore;
+        document.getElementById("stat-correct").innerText = correctCount;
+        document.getElementById("stat-wrong").innerText = wrongCount;
+        document.getElementById("stat-skip").innerText = skippedCount;
+        document.getElementById("stat-acc").innerText = accuracy + "%";
+
+        resultPanel.style.display = "block";
+        footerBar.style.display = "none";
+        statusText.innerText = "Exam Completed";
+        statusText.style.background = "#fee2e2";
+        statusText.style.color = "#991b1b";
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // Run on Load
+    initQuiz();
+
+</script>
+</body>
+</html>
