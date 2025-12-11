@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSSSC Radiographer Mock Exam</title>
+    <style>
+        :root {
+            --primary: #0284c7;
+            --selected: #e0f2fe;
+            --selected-border: #0284c7;
+            --success-bg: #dcfce7;
+            --success-text: #166534;
+            --error-bg: #fee2e2;
+            --error-text: #991b1b;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #334155;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            padding-bottom: 80px; /* Space for fixed footer */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timer {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        /* Question Cards */
+        .question-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .section-tag {
+            background: #f1f5f9;
+            color: #64748b;
+            font-size: 0.8rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .q-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #0f172a;
+        }
+
+        /* Options */
+        .options-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text);
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        /* Exam Mode Styles */
+        body.exam-mode .option-btn:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        body.exam-mode .option-btn.selected {
+            background: var(--selected);
+            border-color: var(--selected-border);
+            color: #0369a1;
+            font-weight: 500;
+        }
+
+        /* Review Mode Styles */
+        body.review-mode .option-btn {
+            cursor: default;
+        }
+
+        body.review-mode .option-btn.correct-answer {
+            background: var(--success-bg);
+            border-color: #22c55e;
+            color: var(--success-text);
+        }
+
+        body.review-mode .option-btn.wrong-choice {
+            background: var(--error-bg);
+            border-color: #ef4444;
+            color: var(--error-text);
+            text-decoration: line-through;
+        }
+
+        /* Clear Selection Button */
+        .clear-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 5px 0;
+        }
+        .clear-btn:hover { color: var(--error-text); }
+
+        /* Explanation Box */
+        .explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+            font-size: 0.95rem;
+            display: none; /* Hidden by default */
+        }
+        body.review-mode .explanation { display: block; }
+
+        /* Score Panel (Hidden until submit) */
+        .result-panel {
+            display: none;
+            background: #0f172a;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border: 6px solid #22c55e;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px auto;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .score-circle span { font-size: 0.9rem; font-weight: normal; opacity: 0.8; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .stat-box {
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .stat-val { font-size: 1.2rem; font-weight: bold; }
+        .stat-label { font-size: 0.8rem; opacity: 0.8; }
+
+        /* Fixed Footer */
+        .footer-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 15px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(2, 132, 199, 0.3);
+            width: 100%;
+            max-width: 400px;
+        }
+        .submit-btn:hover { background: #0369a1; }
+
+        .retry-btn {
+            display: none; /* Hidden initially */
+            background: var(--text);
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        @media(max-width: 600px) {
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body class="exam-mode">
+
+    <div class="header">
+        <h3 style="margin:0">OSSSC Mock Exam</h3>
+        <div class="timer" id="status-text">Exam in Progress</div>
+    </div>
+
+    <div class="result-panel" id="result-panel">
+        <div class="score-circle">
+            <div id="final-score">0</div>
+            <span>/ 400</span>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-val" id="stat-correct" style="color:#4ade80">0</div>
+                <div class="stat-label">Correct</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="stat-wrong" style="color:#f87171">0</div>
+                <div class="stat-label">Wrong</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="stat-skip">0</div>
+                <div class="stat-label">Skipped</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="stat-acc">0%</div>
+                <div class="stat-label">Accuracy</div>
+            </div>
+        </div>
+        <button class="retry-btn" onclick="location.reload()" style="display:inline-block">Retake Exam</button>
+    </div>
+
+    <div class="container" id="questions-container">
+        </div>
+
+    <div class="footer-bar" id="footer-bar">
+        <button class="submit-btn" onclick="submitExam()">Submit Exam</button>
+    </div>
+
+<script>
+    // --- Data Source ---
+    const quizData = [
+        { id: 1, section: "Arithmetic", q: "A can complete a job in 20 days, and A and B together can complete the same job in 12 days. How many days will it take B to complete the job alone?", options: ["20 days", "12 days", "40 days", "30 days"], correct: 3, explain: "Work rate of B = 1/12 - 1/20 = (5-3)/60 = 2/60 = 1/30. B takes 30 days." },
+        { id: 2, section: "Arithmetic", q: "What is the Highest Common Factor (HCF) of 45 and 60?", options: ["3", "15", "9", "5"], correct: 1, explain: "Factors of 45: 1,3,5,9,15,45. Factors of 60: 1,2,3,4,5,6,10,12,15... HCF is 15." },
+        { id: 3, section: "Arithmetic", q: "If you roll a fair six-sided dice, what is the probability of rolling a number greater than 6?", options: ["1/2", "1/6", "1", "0"], correct: 3, explain: "A standard die has numbers 1-6. Rolling >6 is impossible (Probability 0)." },
+        { id: 4, section: "Arithmetic", q: "What is 30% of 90?", options: ["27", "29", "28", "26"], correct: 0, explain: "0.30 * 90 = 27." },
+        { id: 5, section: "Arithmetic", q: "Find the value of √7921", options: ["73", "99", "79", "89"], correct: 3, explain: "80²=6400, 90²=8100. Ends in 1. 89² = 7921." },
+        { id: 6, section: "Arithmetic", q: "Principal=10000, Rate=10%, Time=2 years. Simple Interest?", options: ["Rs.1100", "Rs.1000", "Rs.2000", "Rs.2100"], correct: 2, explain: "SI = (P*R*T)/100 = (10000*10*2)/100 = 2000." },
+        { id: 7, section: "Arithmetic", q: "Speed required to travel 140 km in 2 hours?", options: ["140kmph", "100kmph", "70kmph", "280kmph"], correct: 2, explain: "Speed = Distance/Time = 140/2 = 70 kmph." },
+        { id: 8, section: "Arithmetic", q: "Probability of picking 'S' from 'COMPUTER'?", options: ["1", "0", "1/4", "1/8"], correct: 1, explain: "'S' is not in COMPUTER. Probability is 0." },
+        { id: 9, section: "Arithmetic", q: "CP=130, SP=100. Loss %?", options: ["23.48%", "22.07%", "21.57%", "23.08%"], correct: 3, explain: "Loss=30. % = (30/130)*100 ≈ 23.076%." },
+        { id: 10, section: "Arithmetic", q: "Average of 5 numbers is 23. If each is multiplied by 5, new average?", options: ["110", "115", "105", "125"], correct: 1, explain: "New Average = Old Average * 5 = 23 * 5 = 115." },
+        { id: 11, section: "English", q: "Fill in: The teacher spoke ___ for Raju when he was wrongly accused.", options: ["up", "of", "about", "too"], correct: 0, explain: "'Speak up for' means to defend someone." },
+        { id: 12, section: "English", q: "Antonym of 'Gloomy'?", options: ["Lively", "Greedy", "Liking", "Unfair"], correct: 0, explain: "Gloomy = sad/dark. Lively = energetic/cheerful." },
+        { id: 13, section: "English", q: "Synonym of 'vapid'?", options: ["Dull", "Fun", "Serious", "Grand"], correct: 0, explain: "Vapid means offering nothing stimulating; dull." },
+        { id: 14, section: "English", q: "Part of speech for 'hilarious' in 'hilarious performance'?", options: ["Verb", "Adverb", "Adjective", "Noun"], correct: 2, explain: "Adjective describing the noun 'performance'." },
+        { id: 15, section: "English", q: "___ dinner you prepared was very delicious.", options: ["The", "A", "An", "No Article"], correct: 0, explain: "Specific dinner prepared by you = 'The'." },
+        { id: 16, section: "Radiology", q: "I = V/R is which law?", options: ["Kramer's equation", "Line focus principle", "Ohm's law", "Gauss law"], correct: 2, explain: "Ohm's Law: Current = Voltage / Resistance." },
+        { id: 17, section: "Radiology", q: "ABO blood system is based on presence of what on blood cells?", options: ["Antibodies", "Antigens", "Agglutinins", "Immunoglobulins"], correct: 1, explain: "Based on Antigens A and B on RBC surface." },
+        { id: 18, section: "Radiology", q: "Full form of ICRU?", options: ["International Centre of radioactive unit...", "Indian Centre of radiation unit...", "International Commission on Radiation Units and Measurements", "International Council of radio unit..."], correct: 2, explain: "International Commission on Radiation Units and Measurements." },
+        { id: 19, section: "Radiology", q: "Hardener in fixing agent?", options: ["Metol", "Phenidone", "Potassium alum", "Hydroquinone"], correct: 2, explain: "Potassium Alum hardens the gelatin." },
+        { id: 20, section: "Radiology", q: "Which is epithelial tissue?", options: ["Blood", "Sweat glands", "Neck", "Adipose tissue"], correct: 1, explain: "Glands are formed from epithelial tissue." },
+        { id: 21, section: "Radiology", q: "Computed radiography phosphor works on what principle?", options: ["Photostimulable luminescence", "Piezoelectric effect", "Distortion", "Positive beam limitation"], correct: 0, explain: "PSL: Releasing stored energy as light when stimulated by laser." },
+        { id: 22, section: "Radiology", q: "Global organization for health rules/regulations?", options: ["ILO", "UN", "AERB", "WHO"], correct: 3, explain: "WHO (World Health Organization)." },
+        { id: 23, section: "Radiology", q: "Instrument to detect/measure ionizing radiation?", options: ["Am meter", "Scintillation detector", "Ion chamber", "GM Counter"], correct: 3, explain: "Geiger-Muller Counter is the standard survey meter." },
+        { id: 24, section: "Radiology", q: "First-line imaging for acute stroke (rapid feasibility)?", options: ["X-ray", "MRI", "CT scan", "USG"], correct: 2, explain: "Non-contrast CT to rule out hemorrhage quickly." },
+        { id: 25, section: "Radiology", q: "Which is a nucleon?", options: ["Molecules", "Valence Electrons", "Proton and Neutron", "Positron"], correct: 2, explain: "Particles inside the nucleus (Protons/Neutrons)." },
+        { id: 26, section: "Radiology", q: "Full form of HRCT?", options: ["High-resolution Computer tomography", "High-resolution computation tomography", "High-resolute computed tomography", "High-resolution computed tomography"], correct: 3, explain: "High-resolution computed tomography." },
+        { id: 27, section: "Radiology", q: "Function of fixing agent?", options: ["Shrinks gelatin", "Remove unexposed silver halide crystals", "Neutralize developer", "Prevent deterioration"], correct: 1, explain: "Clearing agent (Hypo) removes unexposed crystals." },
+        { id: 28, section: "Radiology", q: "Three basic principles of radiation safety?", options: ["Time, distance, Rectifier", "Time, distance, Radiation", "Radiation, distance, shielding", "Time, distance, Shielding"], correct: 3, explain: "Time, Distance, Shielding." },
+        { id: 29, section: "Radiology", q: "Disease transmitted person-to-person?", options: ["Environmental contamination", "Contagious disease", "Catheter infection", "Pathogen"], correct: 1, explain: "Contagious/Communicable disease." },
+        { id: 30, section: "Radiology", q: "Full form of PACS?", options: ["Picture Adding...", "Photo Archiving...", "Picture Archiving Control...", "Picture Archiving and Communication System"], correct: 3, explain: "Picture Archiving and Communication System." },
+        { id: 31, section: "Radiology", q: "Nuclear binding energy unit?", options: ["KeV", "eV", "Joules", "MeV"], correct: 3, explain: "Mega Electron Volts (MeV)." },
+        { id: 32, section: "Radiology", q: "Electron emission involves ejection of:", options: ["Proton/electron", "Beta plus", "Beta minus particle", "Alpha"], correct: 2, explain: "Beta minus decay emits an electron." },
+        { id: 33, section: "Radiology", q: "Standard manual developing time at 68°F?", options: ["9 mins", "3.5 mins", "5 mins", "3 mins"], correct: 2, explain: "5 minutes is the standard." },
+        { id: 34, section: "Radiology", q: "What reduces in Dengue?", options: ["Water", "Platelets", "Hormone", "Bile"], correct: 1, explain: "Thrombocytopenia (low platelets)." },
+        { id: 35, section: "Radiology", q: "Infections acquired in healthcare?", options: ["UTI", "Stomach infection", "Health care associated infections (Nosocomial)", "Septicaemia"], correct: 2, explain: "HAIs or Nosocomial infections." },
+        { id: 36, section: "Radiology", q: "Disadvantage of computerized hospital systems?", options: ["Expense", "Access", "Privacy violations (hacking)", "Resource Mgmt"], correct: 2, explain: "Data security/privacy risks." },
+        { id: 37, section: "Radiology", q: "Radiation effects passed to offspring?", options: ["Somatic", "Radiosensitive", "Future", "Genetic effects"], correct: 3, explain: "Genetic/Hereditary effects." },
+        { id: 38, section: "Radiology", q: "Valve between Left Atrium and Left Ventricle?", options: ["Tricuspid", "Semi-lunar", "Aortic", "Mitral"], correct: 3, explain: "Mitral (Bicuspid) valve." },
+        { id: 39, section: "Radiology", q: "Unit of exposure?", options: ["Rem", "Roentgen", "Gram", "Rad"], correct: 1, explain: "Roentgen (R) measures exposure in air." },
+        { id: 40, section: "Radiology", q: "Bone embedded within a tendon?", options: ["Hyoid", "Sesamoid", "Ethmoid", "Sphenoid"], correct: 1, explain: "Sesamoid bone." },
+        { id: 41, section: "Radiology", q: "Largest sesamoid bone?", options: ["Femur", "Patella", "Mandible", "Hyoid"], correct: 1, explain: "Patella (Kneecap)." },
+        { id: 42, section: "Radiology", q: "Normal creatinine for men?", options: ["2.74-5.35", "0.01-0.70", "1.45-2.35", "0.74 to 1.35 mg/dL"], correct: 3, explain: "~0.7 to 1.3 mg/dL." },
+        { id: 43, section: "Radiology", q: "Entry point to kidney for vessels?", options: ["Column", "Capsule", "Renal hilum", "Pyramid"], correct: 2, explain: "The Hilum." },
+        { id: 44, section: "Radiology", q: "Stenvers view assesses?", options: ["Mandible", "Sella", "Humerus", "Petrous temporal bone"], correct: 3, explain: "Petrous part of temporal bone." },
+        { id: 45, section: "Radiology", q: "Imaging using radioactive substance + camera for 3D?", options: ["3D scan", "SPECT scan", "CT scan", "Network scan"], correct: 1, explain: "Single Photon Emission Computed Tomography." },
+        { id: 46, section: "Radiology", q: "Instructions telling computer what to do?", options: ["Software program", "Memory", "Application", "Hardware"], correct: 0, explain: "Software." },
+        { id: 47, section: "Radiology", q: "Rule for women lower abdomen X-ray?", options: ["Ten day rule", "ALARA", "Shielding", "Collimation"], correct: 0, explain: "10-day rule (safe period)." },
+        { id: 48, section: "Radiology", q: "Film layer containing silver halides?", options: ["Base", "Super coat", "Adhesive", "Emulsion"], correct: 3, explain: "The Emulsion." },
+        { id: 49, section: "Radiology", q: "Sunburst pattern on X-ray indicates?", options: ["Osteomyelitis", "Osteoarthritis", "Osteoporosis", "Osteosarcoma"], correct: 3, explain: "Osteosarcoma (bone cancer)." },
+        { id: 50, section: "Radiology", q: "MLD stands for?", options: ["Median Lethal Dose", "Maximum Legal Dose", "Minimum Legal Dose", "Maximum Lethal Dose"], correct: 0, explain: "Median Lethal Dose (LD50)." },
+        { id: 51, section: "Radiology", q: "Reduced intensity on anode side?", options: ["Line focus", "Off focus", "Protection", "Anode heel effect"], correct: 3, explain: "Heel effect." },
+        { id: 52, section: "Radiology", q: "Anode materials (light/easy rotate)?", options: ["Mo/Fe", "Gr/Fe", "He/Gr", "Molybdenum; Graphite"], correct: 3, explain: "Molybdenum backed by Graphite." },
+        { id: 53, section: "Radiology", q: "Exposure range within useful density?", options: ["Gradient", "Solarization", "Contrast", "Latitude"], correct: 3, explain: "Exposure Latitude." },
+        { id: 54, section: "Radiology", q: "HCW stands for?", options: ["Health Care Workers", "Hospital Care Ward...", "Hospital Care Workers", "Health Care Working..."], correct: 0, explain: "Health Care Workers." },
+        { id: 55, section: "Radiology", q: "X-ray emitted by acceleration of?", options: ["Electrons", "Neutrons", "Protons", "Nucleons"], correct: 0, explain: "Electrons hitting the target." },
+        { id: 56, section: "Radiology", q: "Skull fracture in infants?", options: ["Lateral", "Simple", "Spiral", "Pond fracture"], correct: 3, explain: "Pond (Ping-pong) fracture." },
+        { id: 57, section: "Radiology", q: "Hyperparathyroidism?", options: ["High PTH", "Low K", "High K", "Low Ca"], correct: 0, explain: "High Parathyroid Hormone." },
+        { id: 58, section: "Radiology", q: "Pneumonia?", options: ["Air sacs fill with O2", "Air sacs fill with fluid/pus", "Air sacs fill with air", "Fill with hormones"], correct: 1, explain: "Infection causing consolidation (fluid/pus)." },
+        { id: 59, section: "Radiology", q: "HIS stands for?", options: ["Hospital Imaging...", "Hospital Information System", "Health Imaging...", "Hospital In Mgmt..."], correct: 1, explain: "Hospital Information System." },
+        { id: 60, section: "Radiology", q: "NOT a property of X-Ray?", options: ["Not deflected by fields", "Ionize air", "Requires low voltage", "EM waves"], correct: 2, explain: "Requires HIGH voltage (kV)." },
+        { id: 61, section: "Radiology", q: "Appendix location?", options: ["Hypogastric", "Right iliac fossa", "Left iliac fossa", "Umbilical"], correct: 1, explain: "RIF." },
+        { id: 62, section: "Radiology", q: "Material that attenuates radiation for protection?", options: ["Lead shielding", "Pad", "Collimation", "Cone"], correct: 0, explain: "Lead." },
+        { id: 63, section: "Radiology", q: "DICOM stands for?", options: ["...Mode", "...Computer", "...Dynamic", "Digital Imaging and Communication in Medicine"], correct: 3, explain: "Digital Imaging and Communication in Medicine." },
+        { id: 64, section: "Radiology", q: "ALARA?", options: ["Low absorption", "Achievable...", "As Low As Reasonably Achievable", "Long..."], correct: 2, explain: "As Low As Reasonably Achievable." },
+        { id: 65, section: "Radiology", q: "ACS stands for?", options: ["Acute Coronary System", "Acute Coronary Syndrome", "Advanced Circular...", "Advanced Coronary..."], correct: 1, explain: "Acute Coronary Syndrome." },
+        { id: 66, section: "Radiology", q: "Stage where latent image becomes visible black metallic silver?", options: ["Drying", "Fixing", "Rinsing", "Development"], correct: 3, explain: "Development." },
+        { id: 67, section: "Radiology", q: "Artery behind knee?", options: ["Brachial", "Dorsalis pedis", "Posterior tibial", "Popliteal artery"], correct: 3, explain: "Popliteal." },
+        { id: 68, section: "Radiology", q: "Safe distance for safelight?", options: ["1.5m", "2m", "1.2m", "1m"], correct: 2, explain: "1.2m (4 feet)." },
+        { id: 69, section: "Radiology", q: "Law: Intensity down by square of distance?", options: ["Inverse square Law", "Lens", "Faradays", "Ohms"], correct: 0, explain: "Inverse Square Law." },
+        { id: 70, section: "Radiology", q: "Emission of electrons from heat?", options: ["Thermionic emission", "Photoconduction", "Thermos...", "Ionization"], correct: 0, explain: "Thermionic emission." },
+        { id: 71, section: "Radiology", q: "___ creates detailed cross-sectional images.", options: ["ECG", "Ultrasound", "CT Scan", "Endoscopy"], correct: 2, explain: "Computed Tomography." },
+        { id: 72, section: "Radiology", q: "SARS full form?", options: ["Severe Airway...", "Severe Acute Respiratory Syndrome", "Sudden Attack...", "Severe Attack..."], correct: 1, explain: "Severe Acute Respiratory Syndrome." },
+        { id: 73, section: "Radiology", q: "TLD filter thickness?", options: ["0.8 mm", "16", "26", "15"], correct: 0, explain: "Approx 0.8mm." },
+        { id: 74, section: "Radiology", q: "Unit for CT numbers?", options: ["Quarter wave", "Hounsfield units", "Doppler", "Absorber"], correct: 1, explain: "HU (Hounsfield Units)." },
+        { id: 75, section: "Radiology", q: "SI unit of radioactivity?", options: ["Candela", "Becquerel", "Sievert", "Weber"], correct: 1, explain: "Becquerel (Bq)." },
+        { id: 76, section: "Radiology", q: "Use of lead?", options: ["Immobilization", "Radiation protection", "Stand", "Covering"], correct: 1, explain: "Shielding/Protection." },
+        { id: 77, section: "Radiology", q: "3 domains of industrial safety?", options: ["Fire...", "Occupational...", "Non electrical...", "Functional, electrical, intrinsic"], correct: 3, explain: "Safety standards domains." },
+        { id: 78, section: "Radiology", q: "fMRI assesses functional anatomy of?", options: ["Brain", "Heart", "Lungs", "Face"], correct: 0, explain: "Brain activity." },
+        { id: 79, section: "Radiology", q: "Tungsten used because?", options: ["High vapor", "High melting point", "Low Z", "Low melt"], correct: 1, explain: "High melting point (3422C)." },
+        { id: 80, section: "Radiology", q: "Hematuria?", options: ["Pus in urine", "Blood in urine", "Bowel", "Pus in blood"], correct: 1, explain: "Blood in urine." },
+        { id: 81, section: "Radiology", q: "Most superior bone?", options: ["C2", "Patella", "Manubrium", "Occipital bone"], correct: 3, explain: "Occipital (Skull)." },
+        { id: 82, section: "Radiology", q: "Parkinson's disease?", options: ["Lack WBC", "Lack control of movement", "Hormones", "Urine"], correct: 1, explain: "Motor control disorder." },
+        { id: 83, section: "Radiology", q: "Curve relating exposure to density?", options: ["Characteristic curve", "Ohms", "Line focus", "Lenz"], correct: 0, explain: "H&D / Characteristic Curve." },
+        { id: 84, section: "Radiology", q: "Mammography screen type?", options: ["Double", "Laser", "Single intensifying screen", "Curved"], correct: 2, explain: "Single screen (back) for resolution." },
+        { id: 85, section: "Radiology", q: "Screens reduce dose by > ___ %?", options: ["80", "95", "100", "75"], correct: 1, explain: "95-98% reduction." },
+        { id: 86, section: "Radiology", q: "Enteroclysis?", options: ["Ureters", "Small bowel eval", "Lower GI", "Esophagus"], correct: 1, explain: "Small bowel enema." },
+        { id: 87, section: "Radiology", q: "Optimum manual dev temp?", options: ["60-62", "40-42", "20-22°C", "10-12"], correct: 2, explain: "20°C (68°F)." },
+        { id: 88, section: "Radiology", q: "Equipment for infection protection?", options: ["CSSD", "PPE", "Mask only", "Lead"], correct: 1, explain: "Personal Protective Equipment." },
+        { id: 89, section: "Radiology", q: "Ring enhancing brain lesion?", options: ["Aneurysm", "Infarction", "MS", "Glioblastoma"], correct: 3, explain: "Tumor/Abscess (Glioblastoma)." },
+        { id: 90, section: "Radiology", q: "Protocols to reduce infection?", options: ["Infection prevention and control (IPC)", "Phlebotomy", "Cleaning", "Sweeping"], correct: 0, explain: "IPC." },
+        { id: 91, section: "Radiology", q: "Advantage of Gadolinium?", options: ["Poster", "Vessels", "Reduced allergic risk", "Bony"], correct: 2, explain: "Safer than iodinated contrast." },
+        { id: 92, section: "Radiology", q: "Random fluctuation of film density?", options: ["Distortion", "Noise or mottle", "Artifact", "Blur"], correct: 1, explain: "Quantum Mottle/Noise." },
+        { id: 93, section: "Radiology", q: "Heat transfer in anode?", options: ["Reaction", "Convection", "Radiation", "Condensation"], correct: 2, explain: "Thermal radiation." },
+        { id: 94, section: "Radiology", q: "Department for X-ray/CT?", options: ["Radiology department", "MRD", "PACS", "Pharmacy"], correct: 0, explain: "Radiology." },
+        { id: 95, section: "Radiology", q: "OPG rules out lesion in?", options: ["Skull", "Legs", "Elbow", "Mandible"], correct: 3, explain: "Jaw/Teeth (Mandible)." },
+        { id: 96, section: "Radiology", q: "Sub-speciality for interventional procedures?", options: ["CT", "Interventional radiology", "Biopsy", "PET"], correct: 1, explain: "IR." },
+        { id: 97, section: "Radiology", q: "Target material in Mammography?", options: ["Metal", "Anode", "Molybdenum", "Bismuth"], correct: 2, explain: "Molybdenum." },
+        { id: 98, section: "Radiology", q: "Smallest particle?", options: ["Ion", "Molecule", "Atom", "A Proton"], correct: 3, explain: "Subatomic particle." },
+        { id: 99, section: "Radiology", q: "Golden rule of radiation?", options: ["Apron", "Immobilize", "10 day", "Distance yourself"], correct: 3, explain: "Distance (Inverse Square)." },
+        { id: 100, section: "Radiology", q: "Air gap technique used for?", options: ["Lateral C-spine", "PA", "AP", "Oblique"], correct: 0, explain: "Lateral C-spine has natural air gap." }
+    ];
+
+    // --- State Management ---
+    let userAnswers = new Array(quizData.length).fill(null); // null = skipped
+    let isExamActive = true;
+
+    // --- DOM Elements ---
+    const container = document.getElementById("questions-container");
+    const resultPanel = document.getElementById("result-panel");
+    const footerBar = document.getElementById("footer-bar");
+    const statusText = document.getElementById("status-text");
+
+    // --- Initialization ---
+    function initQuiz() {
+        container.innerHTML = "";
+        
+        quizData.forEach((item, index) => {
+            const card = document.createElement("div");
+            card.className = "question-card";
+            card.id = `q-card-${index}`;
+
+            // Options HTML
+            let optionsHTML = "";
+            item.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <button class="option-btn" 
+                            id="btn-${index}-${optIndex}" 
+                            onclick="selectOption(${index}, ${optIndex})">
+                        <span style="font-weight:bold; margin-right:10px;">${String.fromCharCode(65+optIndex)}.</span> ${opt}
+                    </button>`;
+            });
+
+            card.innerHTML = `
+                <div class="q-header">
+                    <span class="section-tag">${item.section}</span>
+                    <span style="color:#94a3b8; font-size:0.9rem;">Q${index + 1}</span>
+                </div>
+                <div class="q-text">${item.q}</div>
+                <div class="options-grid">
+                    ${optionsHTML}
+                </div>
+                <button class="clear-btn" id="clear-${index}" onclick="clearSelection(${index})" style="visibility:hidden">Clear Selection</button>
+                <div class="explanation" id="explain-${index}">
+                    <strong>Correct Answer:</strong> ${item.options[item.correct]}<br><br>
+                    <strong>Explanation:</strong> ${item.explain}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // --- Interactions ---
+    window.selectOption = function(qIndex, optIndex) {
+        if (!isExamActive) return;
+
+        // Update State
+        userAnswers[qIndex] = optIndex;
+
+        // Update UI
+        const btns = document.querySelectorAll(`#q-card-${qIndex} .option-btn`);
+        btns.forEach(btn => btn.classList.remove("selected"));
+        
+        const selectedBtn = document.getElementById(`btn-${qIndex}-${optIndex}`);
+        selectedBtn.classList.add("selected");
+
+        // Show Clear Button
+        document.getElementById(`clear-${qIndex}`).style.visibility = "visible";
+    };
+
+    window.clearSelection = function(qIndex) {
+        if (!isExamActive) return;
+        userAnswers[qIndex] = null;
+        const btns = document.querySelectorAll(`#q-card-${qIndex} .option-btn`);
+        btns.forEach(btn => btn.classList.remove("selected"));
+        document.getElementById(`clear-${qIndex}`).style.visibility = "hidden";
+    };
+
+    // --- Submission Logic ---
+    window.submitExam = function() {
+        if (!confirm("Are you sure you want to submit? This will end the exam.")) return;
+
+        isExamActive = false;
+        document.body.classList.remove("exam-mode");
+        document.body.classList.add("review-mode");
+        
+        let correctCount = 0;
+        let wrongCount = 0;
+        let skippedCount = 0;
+        let totalScore = 0;
+
+        // Calculate Score & Update UI for Review
+        quizData.forEach((item, index) => {
+            const userChoice = userAnswers[index];
+            const explanationDiv = document.getElementById(`explain-${index}`);
+            const clearBtn = document.getElementById(`clear-${index}`);
+            const card = document.getElementById(`q-card-${index}`);
+
+            // Hide clear button
+            clearBtn.style.display = "none";
+            // Show explanation
+            explanationDiv.style.display = "block";
+
+            // Visual marking
+            const correctBtn = document.getElementById(`btn-${index}-${item.correct}`);
+            correctBtn.classList.add("correct-answer");
+
+            if (userChoice === null) {
+                // Skipped
+                skippedCount++;
+                // 0 marks
+            } else if (userChoice === item.correct) {
+                // Correct
+                correctCount++;
+                totalScore += 4;
+                // Already green from above
+            } else {
+                // Wrong
+                wrongCount++;
+                totalScore -= 1; // Negative marking
+                const wrongBtn = document.getElementById(`btn-${index}-${userChoice}`);
+                wrongBtn.classList.add("wrong-choice");
+            }
+        });
+
+        // Calculate Accuracy (Correct / Attempted * 100)
+        const attempted = correctCount + wrongCount;
+        const accuracy = attempted === 0 ? 0 : Math.round((correctCount / attempted) * 100);
+
+        // Update Result Panel
+        document.getElementById("final-score").innerText = totalScore;
+        document.getElementById("stat-correct").innerText = correctCount;
+        document.getElementById("stat-wrong").innerText = wrongCount;
+        document.getElementById("stat-skip").innerText = skippedCount;
+        document.getElementById("stat-acc").innerText = accuracy + "%";
+
+        // UI Changes
+        resultPanel.style.display = "block";
+        footerBar.style.display = "none";
+        statusText.innerText = "Exam Completed";
+        statusText.style.color = "#ef4444";
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // Run on Load
+    initQuiz();
+
+</script>
+</body>
+</html>
