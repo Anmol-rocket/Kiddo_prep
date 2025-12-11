@@ -1,0 +1,2709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radiology Exam Prep - Part 1</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --success: #22c55e;
+            --error: #ef4444;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            padding: 10px 0;
+            z-index: 100;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .score-box {
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .question-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: #f1f5f9;
+            border: 2px solid transparent;
+            padding: 12px 15px;
+            border-radius: 8px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: #e2e8f0;
+        }
+
+        .option-btn.correct {
+            background: #dcfce7;
+            border-color: var(--success);
+            color: #166534;
+        }
+
+        .option-btn.incorrect {
+            background: #fee2e2;
+            border-color: var(--error);
+            color: #991b1b;
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+            font-size: 0.95rem;
+            display: none;
+        }
+
+        .reset-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: var(--text);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 15px; }
+            .question-text { font-size: 1rem; }
+            .option-btn { padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2>Radiology Quiz</h2>
+        <div class="score-box">Score: <span id="score">0</span> / <span id="total">0</span></div>
+    </div>
+
+    <div id="quiz-container">
+        </div>
+
+    <button class="reset-btn" onclick="resetProgress()">Reset Progress</button>
+</div>
+
+<script>
+    // Data extracted and verified from the first 50 pages of the provided content
+    const quizData = [
+        {
+            id: 1,
+            q: "Which of the following members of the Radiology Department is responsible for ascertaining all radiation guidelines and employing radiation safety measures?",
+            options: ["Radiation officer", "Chief radiologist", "Chief technologist", "Department manager"],
+            correct: 0,
+            explain: "The Radiation Safety Officer (RSO) is specifically responsible for implementing safety measures and ensuring regulatory guidelines are followed to protect patients and staff."
+        },
+        {
+            id: 2,
+            q: "Which of the following devices is used to control the reproducibility of images regardless of tissue density variations?",
+            options: ["X-ray grid", "Phototimer (AEC)", "Penetrometer", "Photostimulable phosphor plate"],
+            correct: 1,
+            explain: "A Phototimer (or Automatic Exposure Control/AEC) automatically terminates the exposure when a specific amount of radiation has reached the detector, ensuring consistent density regardless of patient thickness."
+        },
+        {
+            id: 3,
+            q: "Which of the following is the proper preparation for a patient having a lower abdomen CT scan?",
+            options: ["NPO from midnight prior to scan", "NPO for 3 hours prior to scan", "Laxative 1 day before and NPO from midnight", "NPO for 24 hours and laxative 6 hours prior to scan"],
+            correct: 2,
+            explain: "For a lower abdomen CT, clearing the bowel is crucial to visualize structures. A laxative the day before and NPO (nothing by mouth) from midnight is the standard protocol to reduce bowel content/gas."
+        },
+        {
+            id: 4,
+            q: "Which of the following processes is responsible for creation of the radiographic image?",
+            options: ["Differential absorption", "Electrostatic focusing", "Photoelectric effect", "Beam attenuation"],
+            correct: 0,
+            explain: "Differential absorption is the difference between the x-rays absorbed photoelectrically and those transmitted to the image receptor. This difference creates the contrast (shades of gray) on the image."
+        },
+        {
+            id: 5,
+            q: "A 19-year-old patient is referred to the Emergency Department to exclude fracture in the occipital bone following a car accident. Which projection best demonstrates this?",
+            options: ["Caldwell", "Towne's", "Rheese", "Waters"],
+            correct: 1,
+            explain: "The Towne's method (AP Axial) is specifically designed to project the dorsum sellae and posterior clinoid processes within the foramen magnum, providing the best view of the occipital bone."
+        },
+        {
+            id: 6,
+            q: "Which of the following is the most likely cause for preference of erect position in intravenous urography (IVU) examination?",
+            options: ["Rule out nephroptosis", "Measure the kidney size", "Demonstrate the bladder neck", "Demonstrate the renal surfaces"],
+            correct: 0,
+            explain: "An erect position allows gravity to act on the kidneys. If a kidney drops more than 5cm (2 inches) when standing, it indicates nephroptosis (floating kidney)."
+        },
+        {
+            id: 7,
+            q: "Contrast media is injected to demonstrate the extent of a brain tumor lesion in MRI. Which pulse sequence will best demonstrate it?",
+            options: ["PD weighted", "T2 weighted", "T1 weighted", "T2* weighted"],
+            correct: 2,
+            explain: "Gadolinium contrast agents shorten the T1 relaxation time. Therefore, lesions taking up contrast appear bright (hyperintense) on T1-weighted images."
+        },
+        {
+            id: 8,
+            q: "A dose of 0.25 Gy is delivered to the fetus during the early part of the first trimester. What is the most likely adverse outcome?",
+            options: ["Abortion", "Organogenesis", "Skeletal anomalies", "Neurologic anomalies"],
+            correct: 2,
+            explain: "During the period of organogenesis (early 1st trimester, roughly weeks 2-10), the fetus is most susceptible to structural congenital abnormalities, such as skeletal anomalies."
+        },
+        {
+            id: 9,
+            q: "Which of the following is the subsequent biologic effect resulting from acute whole body exposure to 0.25 sievert?",
+            options: ["Erythema (redness)", "50% chance of death", "Nausea and diarrhoea", "Decreased lymphocytes"],
+            correct: 3,
+            explain: "Lymphocytes are the most radiosensitive blood cells. A dose of 0.25 Sv (25 rads) is sufficient to cause hematologic depression, specifically a decrease in lymphocyte count."
+        },
+        {
+            id: 10,
+            q: "Which of the following projection gives the highest thyroid dose?",
+            options: ["SMV skull", "Chest P.A", "Townes view", "Lumbar view"],
+            correct: 0,
+            explain: "The SMV (Submentovertex) projection directs the primary beam through the neck/throat area to get to the skull base, directly exposing the thyroid gland."
+        },
+        {
+            id: 11,
+            q: "Which of the following is the primary reason to repeat radiographs?",
+            options: ["Excessive kV peak", "Wrong film selection", "Increase of Focus Film Distance", "Poor communication between radiographer and patient"],
+            correct: 3,
+            explain: "Most positioning errors and motion artifacts—the leading causes of repeats—stem from the patient not fully understanding instructions due to poor communication."
+        },
+        {
+            id: 12,
+            q: "A 35-year-old woman has lower back pain. Physician suspects L5-S1 Spondylolisthesis. Which of the following best diagnoses this case?",
+            options: ["Non contrast CT", "CT myelography", "MR myelography", "Contrast enhanced CT"],
+            correct: 0,
+            explain: "Spondylolisthesis is a bony condition (slippage of vertebrae). A Non-contrast CT (or plain radiograph) is excellent for visualizing bony alignment and fractures."
+        },
+        {
+            id: 13,
+            q: "A body is placed 4 feet from a radiation source receiving 20 R/h. What is the distance required for an exposure rate of 5 R/h?",
+            options: ["4 ft", "5 ft", "8 ft", "12 ft"],
+            correct: 2,
+            explain: "Using the Inverse Square Law: To reduce intensity by a factor of 4 (20 divided by 5), you must double the distance. 4 feet x 2 = 8 feet."
+        },
+        {
+            id: 14,
+            q: "A 55-year-old man for IVU has Creatinine 177 (Normal 44-115). What is the appropriate step?",
+            options: ["Cancel the examination", "Continue the examination", "Consult the referring doctor", "Refer to U/S"],
+            correct: 2,
+            explain: "Elevated creatinine indicates impaired renal function. Injecting contrast could cause further damage (Contrast-Induced Nephropathy). You must consult the doctor before proceeding."
+        },
+        {
+            id: 15,
+            q: "Bladder absorbed dose = 0.15 Gy. Radiation weighting (Wr) = 1. Tissue weighting (Wt) = 0.05. What is the effective dose (Sv)?",
+            options: ["0.01", "0.3", "0.8", "3.0"],
+            correct: 0,
+            explain: "Effective Dose (E) = Absorbed Dose (D) x Wr x Wt. E = 0.15 x 1 x 0.05 = 0.0075 Sv. This rounds to roughly 0.01 Sv."
+        },
+        {
+            id: 16,
+            q: "Which of the following is the routine patient position in CT procedure?",
+            options: ["Prone", "Supine", "Right lateral decubitus", "Left lateral decubitus"],
+            correct: 1,
+            explain: "The standard position for most CT scans (Head, Chest, Abdomen/Pelvis) is Supine (lying on back)."
+        },
+        {
+            id: 17,
+            q: "A child has difficulty breathing and is diagnosed with enlarged adenoids. Which projection is of high diagnostic importance?",
+            options: ["PA Caldwell", "Lateral nasopharynx", "Parietoacanthial", "Submentovertex"],
+            correct: 1,
+            explain: "A Lateral Nasopharynx soft tissue neck X-ray is the standard view to evaluate the size of adenoidal tissue and airway patency."
+        },
+        {
+            id: 18,
+            q: "In which period during pregnancy does radiation exposure confer the greatest risk to the fetus?",
+            options: ["1-10 weeks", "11-20 weeks", "21-30 weeks", "31-40 weeks"],
+            correct: 0,
+            explain: "The first trimester (specifically organogenesis, weeks 2-10) is the most radiosensitive period because cells are rapidly dividing and differentiating."
+        },
+        {
+            id: 19,
+            q: "Which of the following most likely contributes to occupational exposure?",
+            options: ["Classical scatter", "Compton scatter", "Thompson scatter", "Photoelectric effect"],
+            correct: 1,
+            explain: "Compton scatter creates photons that are emitted in all directions from the patient. This scattered radiation is the primary source of dose to the radiographer."
+        },
+        {
+            id: 20,
+            q: "CT partial scanning leads to aliasing artifacts. Which action must be done?",
+            options: ["Increase scan time and reduce pitch", "Decrease scan time and increase pitch", "Use appropriate filtration", "Give breathing instructions"],
+            correct: 0,
+            explain: "Aliasing (streaking) occurs when there is undersampling. Increasing scan time (to get more samples) or reducing pitch helps acquire sufficient data to resolve the artifact."
+        },
+        {
+            id: 21,
+            q: "Which of the following is the first decay product of radium?",
+            options: ["Strontium", "Caesium", "Radon", "X-ray"],
+            correct: 2,
+            explain: "Radium-226 decays into Radon-222 (a gas) by emitting an alpha particle."
+        },
+        {
+            id: 22,
+            q: "What should be the position of feet in A.P hip joint examination?",
+            options: ["Any position", "Rotated laterally", "Rotated medially 15-20 degrees", "Parallel to table"],
+            correct: 2,
+            explain: "Internally rotating the feet 15-20 degrees places the femoral necks parallel to the image receptor, preventing foreshortening of the femoral neck."
+        },
+        {
+            id: 23,
+            q: "Which exposure factors will result in the highest radiation dose to the patient?",
+            options: ["85 KVp, 20 mAs", "95 KVp, 16 mAs", "95 KVp, 6 mAs", "95 KVp, 5mAs"],
+            correct: 0,
+            explain: "Lower kVp requires higher mAs to maintain density. mAs is directly proportional to patient dose. 20 mAs is the highest mAs value here, resulting in the highest dose."
+        },
+        {
+            id: 24,
+            q: "MRI scan room walls are lined to accomplish radio frequency shielding. What is the material?",
+            options: ["Iron", "Lead", "Steel", "Copper"],
+            correct: 3,
+            explain: "Copper is the standard material used for RF shielding (Faraday cage) in MRI rooms because of its high conductivity and relatively reasonable cost."
+        },
+        {
+            id: 25,
+            q: "The CT number for water when expressed as a Hounsfield Unit (HU) is:",
+            options: ["-1000", "-500", "0", "+500"],
+            correct: 2,
+            explain: "The Hounsfield scale is calibrated such that distilled water is 0 HU and air is -1000 HU."
+        },
+        {
+            id: 26,
+            q: "Which best describes the amount of energy per unit mass transferred from an X-ray beam to an object?",
+            options: ["Equivalent dose", "Absorbed dose", "Effective dose", "Exposure rate"],
+            correct: 1,
+            explain: "Absorbed dose (measured in Gray) is defined as the energy deposited per unit mass of the absorbing material."
+        },
+        {
+            id: 27,
+            q: "Which of the following most likely reduces the phase aliasing artifact (wrap-around) in MRI?",
+            options: ["Changing echo time", "Using spin echo", "Increasing gap", "Increasing FOV in phase direction"],
+            correct: 3,
+            explain: "Aliasing occurs when anatomy extends outside the Field of View (FOV). Increasing the FOV ensures all anatomy is encoded properly."
+        },
+        {
+            id: 28,
+            q: "Which Repetition Time (TR) and Echo Time (TE) produce a gradient echo T1 weighted image?",
+            options: ["Long TR, short TE, large flip angle", "Long TR, long TE, small flip angle", "Short TR, short TE, large flip angle", "Short TR, short TE, small flip angle"],
+            correct: 2,
+            explain: "T1 weighting in Gradient Echo requires a Short TR, Short TE, and a Large Flip Angle (closer to 70-90 degrees) to maximize T1 contrast."
+        },
+        {
+            id: 29,
+            q: "Which MRI system component reconstructs the images using the Fourier transform?",
+            options: ["Receiver amplifier", "Array processor", "Host computer", "Gradient coil"],
+            correct: 1,
+            explain: "The Array Processor is a specialized computer component dedicated to performing the complex mathematical calculations (Fast Fourier Transform) required for image reconstruction."
+        },
+        {
+            id: 30,
+            q: "A 50yo man with hypertension has sudden severe headache. CT shows blood in the Sylvian fissure. Diagnosis?",
+            options: ["Meningitis", "Epidural hematoma", "Subdural hematoma", "Subarachnoid haemorrhage"],
+            correct: 3,
+            explain: "Blood in the Sylvian fissure and basal cisterns is the hallmark sign of a Subarachnoid Hemorrhage (SAH), often caused by a ruptured aneurysm."
+        },
+        {
+            id: 31,
+            q: "Which projections best visualize a foreign body lodged in the hand?",
+            options: ["Lateral and oblique", "AP and oblique", "PA and oblique", "PA and lateral"],
+            correct: 3,
+            explain: "To locate a foreign body in 3D space, you need two orthogonal views (90 degrees to each other). PA and Lateral provide depth and location information."
+        },
+        {
+            id: 32,
+            q: "Which rotation occurs on stimulation of hydrogen nuclei by an external magnetic field?",
+            options: ["Swinging", "Resonance", "Relaxation", "Precession"],
+            correct: 3,
+            explain: "When placed in a magnetic field, hydrogen protons align and wobble around the axis of the field. This wobble is called Precession."
+        },
+        {
+            id: 33,
+            q: "What is the precession frequency of hydrogen at 1.5 Tesla (Gyromagnetic ratio = 42.57 MHz/T)?",
+            options: ["63.9 MHz", "44.1 MHz", "28.4 MHz", "0.04 MHz"],
+            correct: 0,
+            explain: "Larmor Equation: Frequency = Gyromagnetic Ratio x Field Strength. 42.57 x 1.5 ≈ 63.85 MHz."
+        },
+        {
+            id: 34,
+            q: "Which protocol helps determine blockage of coronary arteries due to plaque?",
+            options: ["High resolution CT", "Routine chest CT", "CT angiography", "Calcium scoring"],
+            correct: 3,
+            explain: "Calcium Scoring (Cardiac CT) specifically quantifies the amount of calcified plaque in the coronary arteries to assess risk of blockage."
+        },
+        {
+            id: 35,
+            q: "Which factor controls the number of electrons accelerated across the X-ray tube?",
+            options: ["Filament current", "Focal spot size", "Tube filtration", "Tube voltage"],
+            correct: 0,
+            explain: "The filament current heats the filament, causing thermionic emission. The higher the current, the more electrons are boiled off (controlling the mA)."
+        },
+        {
+            id: 36,
+            q: "Which tissue type undergoes the most photoelectric absorption in the radiographic kV range?",
+            options: ["Fat", "Muscle", "Soft tissue", "Compact bone"],
+            correct: 3,
+            explain: "Photoelectric absorption increases with Atomic Number (Z). Bone has a much higher effective Z (calcium) compared to soft tissue, leading to high absorption (white appearance)."
+        },
+        {
+            id: 37,
+            q: "Which cavitation type is most likely to cause biologic damage in ultrasonography?",
+            options: ["Acute", "Stable", "Chronic", "Transient (Inertial)"],
+            correct: 3,
+            explain: "Transient (or Inertial) cavitation involves the violent collapse of bubbles, which produces shock waves and high temperatures capable of causing biological damage."
+        },
+        {
+            id: 38,
+            q: "What is the effect of increasing scintillation detector thickness on sensitivity and resolution?",
+            options: ["Increased sensitivity, increased resolution", "Increased sensitivity, decreased resolution", "Decreased sensitivity, increased resolution", "Decreased sensitivity, decreased resolution"],
+            correct: 1,
+            explain: "Thicker crystals catch more photons (higher sensitivity) but allow light to spread more before detection, causing blurring (lower spatial resolution)."
+        },
+        {
+            id: 39,
+            q: "Patient has dilated intrahepatic duct, gallbladder, and common bile duct. Where is the obstruction?",
+            options: ["Gallbladder neck", "Distal common bile duct", "Proximal common bile duct", "Distal common hepatic duct"],
+            correct: 1,
+            explain: "If the CBD, Gallbladder, and intrahepatic ducts are ALL dilated, the blockage must be 'downstream' of all of them, which is the distal common bile duct."
+        },
+        {
+            id: 40,
+            q: "Which of the following is the routine patient position in MRI procedure?",
+            options: ["Prone", "Supine", "Right lateral decubitus", "Left lateral decubitus"],
+            correct: 1,
+            explain: "Supine (lying on the back) is the standard position for the vast majority of MRI examinations."
+        },
+        {
+            id: 41,
+            q: "What is the thickness of the NaI (Tl) crystal typically used in a gamma camera?",
+            options: ["1 mm", "5 mm", "1 cm (approx 9.5mm)", "5 cm"],
+            correct: 2,
+            explain: "Standard gamma cameras typically use a crystal thickness of about 9.5mm (approx 3/8 inch or ~1 cm) to balance sensitivity and resolution."
+        },
+        {
+            id: 42,
+            q: "What is the average gantry aperture (opening) diameter of CT scanners?",
+            options: ["180 cm", "150 cm", "90 cm", "70 cm"],
+            correct: 3,
+            explain: "The standard CT gantry aperture is typically 70 cm. Wide-bore scanners (for therapy or bariatric) may go up to 80-90 cm, but 70 cm is the average standard."
+        },
+        {
+            id: 43,
+            q: "Ultrasound image brightness is inaccurate (too dark) at depth. What should be adjusted?",
+            options: ["Focusing", "Beam intensity", "Beam frequency", "Time-gain compensation (TGC)"],
+            correct: 3,
+            explain: "TGC allows you to adjust brightness at specific depths to compensate for the natural attenuation (weakening) of sound as it travels deeper."
+        },
+        {
+            id: 44,
+            q: "Which abdomen examination gives the largest gonadal dose?",
+            options: ["Male A.P", "Female A.P", "Female P.A", "Male lateral"],
+            correct: 1,
+            explain: "Female ovaries are located within the primary beam path for an AP abdomen. Male gonads are external and often below the primary collimation, receiving less dose."
+        },
+        {
+            id: 45,
+            q: "Ultrasound reveals enlarged anechoic areas within the kidney sinus. Most likely condition?",
+            options: ["Renal cyst", "Renal calculus", "Hydronephrosis", "Polycystic kidney"],
+            correct: 2,
+            explain: "Hydronephrosis is the dilation of the renal collecting system (sinus) due to obstruction, appearing as fluid-filled (anechoic) branching structures."
+        },
+        {
+            id: 46,
+            q: "A patient develops hives (itching/red bumps) after MRI contrast. What medicine is given?",
+            options: ["Diuretic", "Antipyretic", "Antihistamine", "Anticoagulant"],
+            correct: 2,
+            explain: "Hives are a mild allergic reaction. Antihistamines (like Diphenhydramine/Benadryl) block the histamine release responsible for the reaction."
+        },
+        {
+            id: 47,
+            q: "Which material is used to plate the MRI room for passive magnetic shielding?",
+            options: ["Copper", "Lead", "Steel", "Iron"],
+            correct: 2,
+            explain: "Passive magnetic shielding keeps the magnetic fringe field contained. Steel (or soft iron) is highly permeable and used for this purpose. (Note: Copper is for RF shielding)."
+        },
+        {
+            id: 48,
+            q: "How is respiratory monitoring done in sedated patients during MRI?",
+            options: ["ECG gating", "Pulse oximetry", "Peripheral gating", "Verbal communication"],
+            correct: 1,
+            explain: "Pulse oximetry is the standard for monitoring blood oxygen saturation and pulse rate in sedated patients in the MRI environment."
+        },
+        {
+            id: 49,
+            q: "What is the primary function of the gamma camera photomultiplier tube?",
+            options: ["Filter photons", "Convert radioactivity to light", "Convert light into electrical signal and amplify", "Minimize scatter"],
+            correct: 2,
+            explain: "The crystal converts radiation to light. The Photomultiplier Tube (PMT) detects that light, converts it to electrons (electricity), and amplifies the signal."
+        },
+        {
+            id: 50,
+            q: "Which is the best time (in weeks) to do ultrasound to determine the sex of the fetus?",
+            options: ["4 to 8", "10 to 12", "18 to 20", "28 to 30"],
+            correct: 2,
+            explain: "The 18-20 week 'anomaly scan' is the standard time when fetal genitalia are developed enough to be visualized reliably."
+        },
+        {
+        id: 51,
+        q: "Which of the following best describes the step-up transformer?",
+        options: ["Decrease the volt", "Has more turns in primary coil", "Has more turns in the secondary coil", "Can change direct current to alternating"],
+        correct: 2,
+        explain: "A step-up transformer increases voltage from the primary to the secondary side. This is achieved by having more turns of wire in the secondary coil than in the primary coil."
+    },
+    {
+        id: 52,
+        q: "Which of the following is the basic function for the oil in an X-ray tube?",
+        options: ["Radiation insulation", "Noise reduction", "Protection", "Cooling"],
+        correct: 3,
+        explain: "Oil surrounds the X-ray tube insert to dissipate the tremendous heat generated during X-ray production (Cooling) and also provides electrical insulation."
+    },
+    {
+        id: 53,
+        q: "How many half-value layers (HVL) are required to reduce an X-ray beam intensity from 100 R/min to 25 R/min?",
+        options: ["1", "2", "3", "4"],
+        correct: 1,
+        explain: "One HVL reduces intensity to 50% (50 R/min). A second HVL reduces it to 25% (25 R/min). Therefore, 2 HVLs are needed."
+    },
+    {
+        id: 54,
+        q: "If the intensity of an X-ray beam is 540 mR at 40 inches, what is the intensity if the distance is increased to 10 feet (120 inches)?",
+        options: ["270 mR", "60 mR", "54 mR", "28 mR"],
+        correct: 1,
+        explain: "Using the Inverse Square Law: 10 feet = 120 inches. Distance increased by factor of 3 (120/40). Intensity decreases by factor of 3 squared (9). 540 / 9 = 60 mR."
+    },
+    {
+        id: 55,
+        q: "Which of the following tissues is the most radiosensitive?",
+        options: ["Nerve", "Lymph", "Muscle", "Cartilage"],
+        correct: 1,
+        explain: "According to the Law of Bergonie and Tribondeau, tissues with high metabolic activity and rapid division (like Lymphatic tissue and Bone Marrow) are most radiosensitive. Nerve and Muscle are radioresistant."
+    },
+    {
+        id: 56,
+        q: "What is the recommended dose limit for a pregnant radiographer for the entire gestation period?",
+        options: ["5 mSv", "50 mSv", "100 mSv", "500 mSv"],
+        correct: 0,
+        explain: "The NCRP recommends a fetal dose limit of 5 mSv (0.5 rem) for the entire gestation period, and not exceeding 0.5 mSv per month."
+    },
+    {
+        id: 57,
+        q: "Which of the following is the dose quantity used to measure the overall risk of exposure to ionizing radiation?",
+        options: ["Equivalent dose", "Absorbed dose", "Effective dose", "Average dose"],
+        correct: 2,
+        explain: "Effective Dose takes into account both the type of radiation (Equivalent dose) and the radiosensitivity of the specific tissues irradiated, providing the best estimate of overall risk."
+    },
+    {
+        id: 58,
+        q: "When sound waves pass from one tissue to another and change direction at oblique angles, this is called:",
+        options: ["Deflection", "Refraction", "Absorption", "Attenuation"],
+        correct: 1,
+        explain: "Refraction is the bending of the sound beam as it passes through an interface between two tissues with different sound speeds at an oblique angle."
+    },
+    {
+        id: 59,
+        q: "Which of the following cavitation types is most likely to cause biologic damage in ultrasonography?",
+        options: ["Acute", "Stable", "Chronic", "Transient"],
+        correct: 3,
+        explain: "Transient (or Inertial) cavitation involves the violent collapse of bubbles, which can produce shock waves and extreme temperatures capable of damaging tissue."
+    },
+    {
+        id: 60,
+        q: "Which of the following structures on an ultrasound image produces an echo-free (black) appearance?",
+        options: ["Echogenic", "Anechoic", "Array", "Gain"],
+        correct: 1,
+        explain: "Fluid-filled structures that transmit sound without reflecting it appear black on the image. This characteristic is termed 'Anechoic'."
+    },
+    {
+        id: 61,
+        q: "Which of the following is the physical half-life of a radionuclide if it decays from 60 mCi to 7.5 mCi in 12 hours?",
+        options: ["4 hours", "6 hours", "8 hours", "10 hours"],
+        correct: 0,
+        explain: "60 -> 30 (1 HL) -> 15 (2 HL) -> 7.5 (3 HL). It took 3 half-lives to reach 7.5 mCi. 12 hours / 3 = 4 hours."
+    },
+    {
+        id: 62,
+        q: "Which type of collimator is most useful for obtaining high-resolution images of small organs (like the thyroid)?",
+        options: ["Parallel hole", "Diverging", "Flat field", "Pinhole"],
+        correct: 3,
+        explain: "A Pinhole collimator provides magnification and high resolution for small structures like the thyroid or pediatric joints."
+    },
+    {
+        id: 63,
+        q: "What is the essential patient preparation for a renal scintigraphy examination?",
+        options: ["Fasting 6-8 hours", "Drinking plenty of water", "Mild laxative", "Emptying bladder only"],
+        correct: 1,
+        explain: "Patients are typically encouraged to be well-hydrated (drink water) to ensure good urine flow and reduce radiation dose to the bladder."
+    },
+    {
+        id: 64,
+        q: "A patient with acute myocardial infarction is injected with 99mTc-Pyrophosphate. What is the optimal imaging time post-injection?",
+        options: ["10-11 hrs", "4-6 hrs", "2-3 hrs", "0.5-1 hrs"],
+        correct: 2,
+        explain: "Imaging is typically performed 2-3 hours (sometimes up to 4) after injection to allow for clearance of background activity from the blood pool."
+    },
+    {
+        id: 65,
+        q: "Which of the following is the best relevant idiosyncratic anaphylactic reaction timing to iodinated contrast media?",
+        options: ["Starts after 5 days", "Starts after 24 hours", "Starts 30 minutes after injection", "Starts immediately or within minutes"],
+        correct: 3,
+        explain: "Acute anaphylactic/idiosyncratic reactions typically occur immediately or within the first 20 minutes of contrast administration."
+    },
+    {
+        id: 66,
+        q: "Which of the following type of body habitus is characterized by a long, narrow thorax and a very low, long stomach?",
+        options: ["Sthenic", "Asthenic", "Hyposthenic", "Hypersthenic"],
+        correct: 1,
+        explain: "The Asthenic body habitus (very slender) typically features a long, narrow thorax and abdominal organs that sit very low and near the midline."
+    },
+    {
+        id: 67,
+        q: "Which surface landmark is located at the interspace between the T4 and T5 vertebrae?",
+        options: ["Sternal angle", "Xiphoid process", "Suprasternal notch", "Lower costal margin"],
+        correct: 0,
+        explain: "The Sternal Angle (Angle of Louis) corresponds to the level of the T4/T5 intervertebral disc and the bifurcation of the trachea."
+    },
+    {
+        id: 68,
+        q: "Which of the following is the primary purpose of performing breast sonography?",
+        options: ["Micro calcification screening", "Characterization of lesions (Cyst vs Solid)", "Screening for cancer", "Duct assessment"],
+        correct: 1,
+        explain: "Ultrasound is primarily used to differentiate between cystic (fluid-filled) and solid masses, which mammography cannot easily distinguish."
+    },
+    {
+        id: 69,
+        q: "Given the radiation weighting factor for alpha particles is 20. What is the equivalent dose if an individual receives 5 rads (0.05 Gy)?",
+        options: ["0.25 rem", "4 rem", "20 rem", "100 rem"],
+        correct: 3,
+        explain: "Equivalent Dose (Rem) = Absorbed Dose (Rad) x Weighting Factor. 5 Rads x 20 = 100 Rem (or 1 Sv)."
+    },
+    {
+        id: 70,
+        q: "Which projection is the choice for an urgent chest X-ray to diagnose congestive heart failure in an ambulatory patient?",
+        options: ["AP supine", "AP erect", "PA erect", "Lordotic"],
+        correct: 2,
+        explain: "A PA Erect chest X-ray is the standard. It minimizes heart magnification (unlike AP) and allows visualization of air-fluid levels and pleural effusions."
+    },
+    {
+        id: 71,
+        q: "An optical density is produced with 60 kVp. Which kVp would produce one-half of the original density?",
+        options: ["30", "51", "55", "69"],
+        correct: 1,
+        explain: "Using the 15% Rule: To double density, increase kVp by 15%. To halve density, decrease kVp by 15%. 60 x 0.15 = 9. 60 - 9 = 51 kVp."
+    },
+    {
+        id: 72,
+        q: "Blood in the Sylvian fissure on a CT scan is most indicative of:",
+        options: ["Meningitis", "Epidural hematoma", "Subdural hematoma", "Subarachnoid hemorrhage"],
+        correct: 3,
+        explain: "The Sylvian fissure is part of the subarachnoid space. Blood here is the hallmark of a Subarachnoid Hemorrhage (SAH)."
+    },
+    {
+        id: 73,
+        q: "Which structure allows urine to flow from the kidney to the bladder?",
+        options: ["Urethra", "Ureter", "Nephron", "Calyx"],
+        correct: 1,
+        explain: "The Ureters are the tubes that transport urine from the renal pelvis of the kidneys to the urinary bladder."
+    },
+    {
+        id: 74,
+        q: "A patient with a titanium brain clip needs an MRI. What is the appropriate action?",
+        options: ["Cancel exam", "Use open magnet only", "Perform exam (safe)", "Use low field strength"],
+        correct: 2,
+        explain: "Titanium is non-ferromagnetic and is generally considered safe for MRI (up to specified field strengths), unlike older ferromagnetic clips."
+    },
+    {
+        id: 75,
+        q: "Which projection best shows the duodenal loop open with the least superimposition in an Upper GI study?",
+        options: ["PA recumbent", "RAO (Right Anterior Oblique)", "Right lateral", "AP erect"],
+        correct: 1,
+        explain: "The RAO position provides the best view of the pyloric canal and duodenal bulb, spreading out the duodenal loop."
+    },
+    {
+        id: 76,
+        q: "Which CT generation finds principal application in cardiac imaging (Electron Beam)?",
+        options: ["2nd generation", "3rd generation", "4th generation", "5th generation (Electron Beam)"],
+        correct: 3,
+        explain: "Electron Beam CT (EBCT), often called 5th generation, has no moving parts and is fast enough to freeze cardiac motion, making it ideal for cardiac scoring."
+    },
+    {
+        id: 77,
+        q: "Increasing the CT image matrix from 256² to 512² results in:",
+        options: ["Increased reconstruction time", "Decreased resolution", "Increased spatial resolution", "Decreased dose"],
+        correct: 2,
+        explain: "A larger matrix size (with the same FOV) means smaller pixels. Smaller pixels provide better detail, known as higher Spatial Resolution."
+    },
+    {
+        id: 78,
+        q: "Which factor determines the proton resonant frequency in MRI?",
+        options: ["Post processing", "RF coil type", "Field direction", "Strength of magnetic field"],
+        correct: 3,
+        explain: "The Larmor Equation states that Frequency is directly proportional to the Strength of the Magnetic Field (B0)."
+    },
+    {
+        id: 79,
+        q: "Which color represents a high signal intensity area in an MRI image?",
+        options: ["Grey", "Black", "White", "Dark grey"],
+        correct: 2,
+        explain: "In MRI, high signal intensity is displayed as bright or White on the image (e.g., fluid on T2, fat on T1)."
+    },
+    {
+        id: 80,
+        q: "What is the best radiographic position for a very ill patient to demonstrate free abdominal air (pneumoperitoneum)?",
+        options: ["AP supine", "Right lateral decubitus", "Left lateral decubitus", "Ventral decubitus"],
+        correct: 2,
+        explain: "In a Left Lateral Decubitus position, free air rises to the right side (over the liver), where it is easily visible against the liver density, avoiding confusion with the stomach bubble."
+    },
+    {
+        id: 81,
+        q: "Which bone is suspected to be fractured if a patient has bleeding from the ear following head trauma?",
+        options: ["Petrous (Temporal)", "Ethmoid", "Sphenoid", "Squamous"],
+        correct: 0,
+        explain: "Bleeding from the ear (otorrhagia) or bruising behind the ear (Battle's sign) is a classic sign of a Basal Skull Fracture involving the Petrous portion of the Temporal bone."
+    },
+    {
+        id: 82,
+        q: "Which device tracks cardiac motion during MRI gating?",
+        options: ["Pulse oximeter", "Electrocardiogram (ECG)", "Sphygmomanometer", "Injector"],
+        correct: 1,
+        explain: "An ECG (Electrocardiogram) monitors the heart's electrical cycle (R-wave) to trigger the MRI scan during the resting phase of the heart."
+    },
+    {
+        id: 83,
+        q: "Which pulse sequence best demonstrates a brain tumor with contrast?",
+        options: ["PD weighted", "T2 weighted", "T1 weighted", "T2* weighted"],
+        correct: 2,
+        explain: "Gadolinium contrast agents appear bright (hyperintense) on T1-weighted images, making them the standard for tumor enhancement."
+    },
+    {
+        id: 84,
+        q: "Which ultrasound frequency/intensity combination is most likely to result in cavitation?",
+        options: ["Low frequency, Low intensity", "Low frequency, High intensity", "High frequency, Low intensity", "High frequency, High intensity"],
+        correct: 1,
+        explain: "Cavitation (bubble formation) is more likely to occur at Lower Frequencies (which allow bubbles to grow) and Higher Intensities."
+    },
+    {
+        id: 85,
+        q: "What is the CT number (HU) for water?",
+        options: ["-1000", "-100", "0", "1000"],
+        correct: 2,
+        explain: "The Hounsfield scale is defined such that Water is 0 HU, Air is -1000 HU, and dense Bone is +1000 HU or more."
+    },
+    {
+        id: 86,
+        q: "Why is high kVp typically employed in CT imaging?",
+        options: ["Reduce scan time", "Reduce image noise", "Reduce reconstruction time", "Increase beam penetrability"],
+        correct: 3,
+        explain: "High kVp (usually 120-140 kVp) is used to ensure the beam has enough energy to penetrate the patient and reach the detectors, reducing beam hardening artifacts."
+    },
+    {
+        id: 87,
+        q: "Which projection is used to demonstrate the proximal fibula free of tibial superimposition?",
+        options: ["AP", "Lateral", "Medial Oblique", "Lateral Oblique"],
+        correct: 2,
+        explain: "An AP Medial Oblique (internal rotation) of the knee/leg separates the proximal tibiofibular joint, showing the fibular head free of the tibia."
+    },
+    {
+        id: 88,
+        q: "Which artifact appears as a crescent-shaped black mark on a radiographic film?",
+        options: ["Static electricity", "Bad storage", "Bad development", "Bending the film (Kink)"],
+        correct: 3,
+        explain: "Bending or kinking the film sharply before processing creates pressure that sensitizes the emulsion, resulting in a black crescent-shaped 'crinkle' mark."
+    },
+    {
+        id: 89,
+        q: "Which device allows helical scanning in CT by eliminating cables?",
+        options: ["Amplifier", "Slip rings", "Electron gun", "Collimator"],
+        correct: 1,
+        explain: "Slip Ring technology allows the gantry to rotate continuously without winding up cables, enabling continuous (helical/spiral) scanning."
+    },
+    {
+        id: 90,
+        q: "What is the most frequent route for administration of contrast agents in Radiology?",
+        options: ["Oral", "Per rectal", "Intrathecal", "Intravenous"],
+        correct: 3,
+        explain: "Intravenous (IV) injection is the most common route for delivering iodinated contrast media for CT, IVU, and Angiography."
+    },
+    {
+        id: 91,
+        q: "Which of the following is most likely to improve image quality and decrease radiation dose to the patient?",
+        options: ["Use of grid", "Beam restriction (Collimation)", "Low kV and high mAs", "High kV and high mAs"],
+        correct: 1,
+        explain: "Beam restriction (collimation) limits the area irradiated, reducing the volume of tissue creating scatter (improving quality) and reducing the total dose to the patient."
+    },
+    {
+        id: 92,
+        q: "Ionizing radiations are more effective to which of the following cells?",
+        options: ["Rapidly dividing", "Slowly dividing", "Nerve", "Heart"],
+        correct: 0,
+        explain: "The Law of Bergonie and Tribondeau states that cells are most radiosensitive when they are rapidly dividing, undifferentiated, and have a long mitotic future."
+    },
+    {
+        id: 93,
+        q: "Which of the following is the most important layer in intensifying screens?",
+        options: ["Screen base", "Phosphor layer", "Reflective layer", "Protective layer"],
+        correct: 1,
+        explain: "The Phosphor layer is the active layer that converts X-ray photons into visible light photons, which then expose the film."
+    },
+    {
+        id: 94,
+        q: "Which of the following is the most common metal used in filters for diagnostic radiology equipment?",
+        options: ["Iron", "Zinc", "Barium", "Aluminium"],
+        correct: 3,
+        explain: "Aluminium is the standard filtration material used to absorb low-energy (soft) X-rays that contribute to patient dose without adding to image quality."
+    },
+    {
+        id: 95,
+        q: "Which of the following is the grid ratio that will induce the least patient dose when used for a given X-ray exam?",
+        options: ["5:1", "8:1", "10:1", "16:1"],
+        correct: 0,
+        explain: "Lower ratio grids (like 5:1) remove less scatter but require less exposure (mAs) compared to high ratio grids (like 16:1), resulting in a lower patient dose."
+    },
+    {
+        id: 96,
+        q: "Which of the following is a primary disadvantage of mobile (portable) X-ray machines?",
+        options: ["Low output", "High output", "High image quality", "Shorter exposure time"],
+        correct: 0,
+        explain: "Mobile units typically have lower power output (limited mA and kVp capabilities) compared to fixed suites, which can necessitate longer exposure times."
+    },
+    {
+        id: 97,
+        q: "Which of the following is the first decay product of radium?",
+        options: ["Strontium", "Caesium", "Radon", "X-ray"],
+        correct: 2,
+        explain: "Radium-226 decays into Radon-222 (an inert gas) via alpha decay."
+    },
+    {
+        id: 98,
+        q: "If a body is placed 4 feet from a radiation source and receives 20 R/h, what distance is required to reduce the rate to 5 R/h?",
+        options: ["4 ft", "5 ft", "8 ft", "12 ft"],
+        correct: 2,
+        explain: "Inverse Square Law: To reduce intensity by a factor of 4 (20/5 = 4), you must double the distance. 4 feet x 2 = 8 feet."
+    },
+    {
+        id: 99,
+        q: "A radiographer receives 4 mR/h at 5 meters. What is the rate at 10 meters?",
+        options: ["0.4 mR/h", "0.8 mR/h", "1 mR/h", "2 mR/h"],
+        correct: 2,
+        explain: "Doubling the distance (5m to 10m) reduces the exposure to 1/4th of the original value. 4 mR/h / 4 = 1 mR/h."
+    },
+    {
+        id: 100,
+        q: "Which of the following imaging modalities generally gives the highest radiation dose?",
+        options: ["MRI", "CT scan", "Conventional X-ray", "ECG"],
+        correct: 1,
+        explain: "CT scans involve multiple x-ray exposures to create cross-sectional images, resulting in a significantly higher total dose than a single conventional x-ray. (MRI and ECG use no ionizing radiation)."
+    },
+    {
+        id: 101,
+        q: "During radiography, the skin dose of the patient is advised to be reduced. Which is an effective method?",
+        options: ["Using broad tube filament", "Increasing tube current", "Decreasing focus-to-film distance", "Collimating the X-ray beam accurately"],
+        correct: 3,
+        explain: "Collimation restricts the beam to the area of interest, preventing unnecessary exposure to surrounding tissue and reducing the total volume of tissue irradiated."
+    },
+    {
+        id: 102,
+        q: "Which of the following is the maximum dose limit for a pregnant radiographer per month?",
+        options: ["0.5 mSv", "10 Rem", "5 Roentgen", "10 Roentgen"],
+        correct: 0,
+        explain: "Radiation protection guidelines (NCRP) recommend that the equivalent dose to the embryo/fetus should not exceed 0.5 mSv per month."
+    },
+    {
+        id: 103,
+        q: "Which exposure factors will result in the highest radiation dose to the patient?",
+        options: ["85 kVp, 20 mAs", "95 kVp, 16 mAs", "95 kVp, 6 mAs", "95 kVp, 5 mAs"],
+        correct: 0,
+        explain: "Dose is directly proportional to mAs. The option with the highest mAs (20) generally delivers the highest dose, assuming distance and filtration are constant."
+    },
+    {
+        id: 104,
+        q: "The urinary bladder received an absorbed dose of 0.15 Gy. (Wr=1, Wt=0.05). What is the effective dose?",
+        options: ["0.01 Sv", "0.3 Sv", "0.8 Sv", "3.0 Sv"],
+        correct: 0,
+        explain: "Effective Dose = Absorbed Dose x Wr x Wt. 0.15 x 1 x 0.05 = 0.0075 Sv, which rounds to approximately 0.01 Sv."
+    },
+    {
+        id: 105,
+        q: "Which of the following approximately represents the photon rest mass?",
+        options: ["3.6x10^-19 kg", "9x10^-18 kg", "Zero", "102 kg"],
+        correct: 2,
+        explain: "Photons are quanta of energy (electromagnetic radiation) and have no mass and no electrical charge."
+    },
+    {
+        id: 106,
+        q: "Which kVp is approximately required to penetrate an adult skull adequately?",
+        options: ["50", "70-80", "40", "100"],
+        correct: 1,
+        explain: "A kVp range of 70-85 is typically used for adult skull radiography to provide adequate penetration of the dense cranial bone while maintaining contrast."
+    },
+    {
+        id: 107,
+        q: "Which of the following primarily controls the speed of the electron stream in the X-ray tube?",
+        options: ["Beam filtration", "Kilovoltage peak (kVp)", "Filament current", "Anode angle"],
+        correct: 1,
+        explain: "kVp establishes the potential difference (voltage) between the cathode and anode. Higher voltage creates a stronger attraction, accelerating electrons faster."
+    },
+    {
+        id: 108,
+        q: "How does the rare earth film screen reduce patient dose?",
+        options: ["Enables lower kVp", "Enables use of lower mAs", "Reduces scatter", "Decreases beam energy"],
+        correct: 1,
+        explain: "Rare earth screens are more efficient at converting x-rays to light than calcium tungstate screens. This increased speed allows for much lower mAs settings."
+    },
+    {
+        id: 109,
+        q: "Which type of generator makes more effective use of the current?",
+        options: ["Full wave, 4 valve", "Self-rectified", "Half wave", "6 valve (3-phase)"],
+        correct: 3,
+        explain: "A 3-phase, 6-pulse (6 valve) generator produces a nearly constant voltage waveform with much less ripple (voltage drop) than single-phase generators, making it more efficient."
+    },
+    {
+        id: 110,
+        q: "A 24 cm x 30 cm imaging plate is equivalent to which size in inches?",
+        options: ["8 x 10 in", "10 x 12 in", "11 x 14 in", "14 x 17 in"],
+        correct: 1,
+        explain: "1 inch is approximately 2.54 cm. 24cm is ~9.5 inches and 30cm is ~11.8 inches. This corresponds to the standard 10 x 12 inch cassette size."
+    },
+    {
+        id: 111,
+        q: "What should be the position of the hand for the examination of the scaphoid bone?",
+        options: ["Turned to ulnar side", "Turned to radial side", "Lateral position", "AP position"],
+        correct: 0,
+        explain: "Ulnar deviation (turning the hand outward toward the ulna) opens up the spaces between the carpals and elongates the scaphoid, preventing foreshortening."
+    },
+    {
+        id: 112,
+        q: "Which of the following is a common cause of X-ray tube failure?",
+        options: ["Pitting of target", "Full wave rectification", "Half wave rectification", "Burning out of filament"],
+        correct: 3,
+        explain: "Over time, the tungsten filament vaporizes. Eventually, it becomes thin and breaks (burns out), similar to an incandescent light bulb."
+    },
+    {
+        id: 113,
+        q: "For an AP axial cervical spine, if the intervertebral spaces are not open with 10-degree cephalic angle, what modification is needed?",
+        options: ["Caudal angulation", "Increase angulation to 15-20 cephalic", "Center to thyroid", "Increase SID"],
+        correct: 1,
+        explain: "The standard angle for an AP Axial C-spine is 15-20 degrees cephalic to coincide with the angle of the intervertebral spaces."
+    },
+    {
+        id: 114,
+        q: "An adult patient with possible Haemothorax (fluid) is unable to stand. Which position best diagnoses this?",
+        options: ["Lateral recumbent", "Ventral decubitus", "Lateral decubitus (affected side down)", "Dorsal decubitus"],
+        correct: 2,
+        explain: "To demonstrate fluid (hemothorax), the patient should be placed in a Lateral Decubitus position with the AFFECTED side down, so the fluid layers out."
+    },
+    {
+        id: 115,
+        q: "A patient with suspected perforated duodenum (free air) is unable to stand. Which position is used?",
+        options: ["Left lateral decubitus", "Right lateral decubitus", "AP supine", "Prone"],
+        correct: 0,
+        explain: "In a Left Lateral Decubitus position, free air rises to the right side (above the liver), where it is easily visualized against the liver density without gastric bubble interference."
+    },
+    {
+        id: 116,
+        q: "A 50-year-old man has bleeding from the ear after trauma. Which bone is likely fractured?",
+        options: ["Petrous (Temporal)", "Ethmoid", "Sphenoid", "Squamous"],
+        correct: 0,
+        explain: "Bleeding from the ear (otorrhagia) is a classic sign of a basal skull fracture involving the petrous portion of the temporal bone."
+    },
+    {
+        id: 117,
+        q: "Which term refers to a lack of bowel peristalsis?",
+        options: ["Ileus", "Ulcer", "Ascites", "Varices"],
+        correct: 0,
+        explain: "Ileus (specifically adynamic or paralytic ileus) is the medical term for the lack of normal muscle contractions (peristalsis) in the intestines."
+    },
+    {
+        id: 118,
+        q: "A 48-year-old patient moved during a knee X-ray. Which sign indicates rotation on the image?",
+        options: ["Tibial tuberosity obscured", "Joint space open", "Superimposition of fibular head over proximal tibia", "Condyles superimposed"],
+        correct: 2,
+        explain: "In a true AP knee, the fibular head is slightly superimposed by the tibia. Excessive superimposition or total separation indicates rotation."
+    },
+    {
+        id: 119,
+        q: "The CT number for water is:",
+        options: ["-1000", "-500", "0", "+500"],
+        correct: 2,
+        explain: "The Hounsfield scale is set with water at 0. Air is -1000, and Bone is +1000."
+    },
+    {
+        id: 120,
+        q: "Which of the following could produce ring artifacts in CT?",
+        options: ["Detector malfunction", "Increased scan time", "Scattered radiation", "Patient movement"],
+        correct: 0,
+        explain: "Ring artifacts are characteristic of 3rd generation scanners and are caused by a single miscalibrated or defective detector element."
+    },
+    {
+        id: 121,
+        q: "Which term refers to the ability of a CT system to define small objects distinctly?",
+        options: ["Low-contrast resolution", "Temporal resolution", "Contrast resolution", "Spatial resolution"],
+        correct: 3,
+        explain: "Spatial resolution is the ability to distinguish two small, high-contrast objects located very close together as separate entities."
+    },
+    {
+        id: 122,
+        q: "What is the main advantage of CT over projection radiography?",
+        options: ["Speed", "Contrast resolution", "Energy resolution", "Spatial resolution"],
+        correct: 1,
+        explain: "CT has superior contrast resolution (ability to distinguish soft tissues with similar densities) compared to plain radiography, due to the elimination of superimposition."
+    },
+    {
+        id: 123,
+        q: "CT scanning of the spine is limited in which patients?",
+        options: ["Very large patient", "Thin patient", "Trauma", "Children"],
+        correct: 0,
+        explain: "Very large patients may exceed the weight limit of the table or the diameter of the gantry bore, and image quality may suffer due to photon starvation/noise."
+    },
+    {
+        id: 124,
+        q: "Why is a patient asked to extend arms above the head for a thoracic CT?",
+        options: ["Maximizes extension", "Helps hold breath", "Reduces artifacts", "Minimizes movement"],
+        correct: 2,
+        explain: "Removing the arms from the scan field (beam hardening) prevents streak artifacts across the chest and reduces noise."
+    },
+    {
+        id: 125,
+        q: "What is the suitable CT scan range for the cervical spine?",
+        options: ["Axis to T1", "Base of skull to T1", "Atlas to C7", "Atlas to T1"],
+        correct: 1,
+        explain: "A complete cervical spine CT should cover from the Base of the Skull (to include C1/Atlas) down to T1 (to see the cervicothoracic junction)."
+    },
+    {
+        id: 126,
+        q: "Which is the best oral contrast media for a lymphoma patient evaluated for gastric wall thickening?",
+        options: ["Pure water", "Omnipaque", "Barium sulphate", "Gastrografin"],
+        correct: 0,
+        explain: "Water acts as a neutral (negative) contrast agent, distending the stomach without obscuring the wall enhancement, allowing better assessment of wall thickening."
+    },
+    {
+        id: 127,
+        q: "Which imaging protocol is most valuable for a cavernous haemangioma?",
+        options: ["Single phasic", "Non contrast", "Triphasic contrast enhanced liver", "Renal angio"],
+        correct: 2,
+        explain: "Hemangiomas have a characteristic filling pattern (peripheral puddling to centripetal filling). A Triphasic scan (Arterial, Portal Venous, Delayed) captures this dynamic enhancement."
+    },
+    {
+        id: 128,
+        q: "Which of the following describes a temporary loss of blood supply to a cerebral hemisphere?",
+        options: ["Meningitis", "Hydrocephalus", "Cerebral infarction", "Transient Ischemic Attack (TIA)"],
+        correct: 3,
+        explain: "A TIA is often called a 'mini-stroke.' It is a temporary blockage of blood flow that resolves on its own, usually without permanent damage."
+    },
+    {
+        id: 129,
+        q: "How should a patient drink contrast for uniform small bowel enhancement in CT abdomen?",
+        options: ["Over 6 hours", "Intervals 1 hour before", "Immediately before", "Intervals 4 hours before"],
+        correct: 1,
+        explain: "Standard protocol is often drinking contrast in intervals starting about 1 hour before the scan to allow time for it to travel through the small bowel."
+    },
+    {
+        id: 130,
+        q: "A 55-year-old patient develops a hypertensive crisis after contrast CT. History of adrenal tests. Diagnosis?",
+        options: ["Adenocarcinoma", "Diabetes", "Multiple myeloma", "Pheochromocytoma"],
+        correct: 3,
+        explain: "Pheochromocytoma is an adrenal tumor. Contrast media can stimulate it to release massive amounts of catecholamines, triggering a hypertensive crisis."
+    },
+    {
+        id: 131,
+        q: "What is the normal magnetic field strength used in clinical MRI?",
+        options: ["0.15 Tesla", "1.5 Tesla", "15 Tesla", "150 Tesla"],
+        correct: 1,
+        explain: "1.5 Tesla is the standard field strength for most high-field clinical MRI scanners (with 3.0T becoming common). 15T is research only."
+    },
+    {
+        id: 132,
+        q: "Which substances show strong attraction to magnetic fields and retain magnetization?",
+        options: ["Plastic", "Diamagnetic", "Paramagnetic", "Ferromagnetic"],
+        correct: 3,
+        explain: "Ferromagnetic materials (like iron, nickel, cobalt) are strongly attracted to magnets and can become permanently magnetized."
+    },
+    {
+        id: 133,
+        q: "Which metal interacts most strongly with MRI magnets?",
+        options: ["Nickel", "Copper", "Titanium", "Aluminum"],
+        correct: 0,
+        explain: "Nickel is ferromagnetic. Copper, Titanium, and Aluminum are non-ferromagnetic and safe (though they may cause artifacts)."
+    },
+    {
+        id: 134,
+        q: "What is the effect of gadolinium contrast on tissue relaxation times?",
+        options: ["Increases T2", "Decreases T1", "Increases T1", "No effect"],
+        correct: 1,
+        explain: "Gadolinium is paramagnetic and shortens the T1 relaxation time of nearby protons, causing them to appear bright on T1-weighted images."
+    },
+    {
+        id: 135,
+        q: "What occurs if helium escapes from the MRI cryogen system due to loss of superconductivity?",
+        options: ["Precession", "Quenching", "Irradiation", "Recovery"],
+        correct: 1,
+        explain: "A Quench is the sudden boil-off of liquid helium, which turns into gas and escapes, causing the magnet to lose its superconductivity and magnetic field."
+    },
+    {
+        id: 136,
+        q: "An infant brain MRI is performed. Which sequence best differentiates grey from white matter?",
+        options: ["Inversion recovery", "Gradient echo", "T1 spin echo", "T2 spin echo"],
+        correct: 0,
+        explain: "Inversion Recovery (IR) sequences provide superior T1 contrast and are excellent for visualizing the developing grey/white matter differentiation in infants."
+    },
+    {
+        id: 137,
+        q: "Which MRI view best visualizes the base of the tongue and epiglottis?",
+        options: ["Axial", "Coronal", "Oblique", "Sagittal"],
+        correct: 3,
+        explain: "The Sagittal plane provides a profile view of midline structures like the tongue, epiglottis, and spinal cord."
+    },
+    {
+        id: 138,
+        q: "Which pulse sequence helps to null signal from fat?",
+        options: ["Fast Spin Echo", "Gradient Echo", "STIR (Short Tau Inversion Recovery)", "FLAIR"],
+        correct: 2,
+        explain: "STIR uses an inversion time (TI) specifically selected to null the signal from fat, making it appear dark."
+    },
+    {
+        id: 139,
+        q: "A patient has severe back pain. Neuroradiologist suspects cord lesion. Which sequence confirms it?",
+        options: ["MRA", "Phase contrast", "FLAIR", "STIR"],
+        correct: 3,
+        explain: "STIR suppresses fat (bone marrow) and highlights fluid/edema (bright), making it highly sensitive for detecting cord lesions, edema, or inflammation."
+    },
+    {
+        id: 140,
+        q: "Which pulse sequence best demonstrates a brain tumor with contrast?",
+        options: ["PD weighted", "T2 weighted", "T1 weighted", "T2*"],
+        correct: 2,
+        explain: "Contrast agents brighten T1-weighted images. Therefore, a T1 sequence is used after contrast administration to see the enhancement."
+    },
+    {
+        id: 141,
+        q: "What device monitors sedated patients in MRI?",
+        options: ["ECG gating", "Defibrillator", "Pulse oximetry", "Stress BP"],
+        correct: 2,
+        explain: "MRI-compatible Pulse Oximetry is the standard for monitoring oxygen saturation and heart rate in sedated patients."
+    },
+    {
+        id: 142,
+        q: "What is the color of high signal intensity in an MRI image?",
+        options: ["Grey", "Black", "White", "Dark grey"],
+        correct: 2,
+        explain: "High signal intensity (strong signal return) is mapped to White pixels on the display."
+    },
+    {
+        id: 143,
+        q: "What is the unit of frequency?",
+        options: ["Ampere", "Decibel", "Gauss", "Hertz"],
+        correct: 3,
+        explain: "Frequency is measured in Hertz (Hz), which represents cycles per second."
+    },
+    {
+        id: 144,
+        q: "Which factor increases lateral resolution in ultrasound?",
+        options: ["Increasing beam width", "Decreasing gel", "Increasing frequency", "Decreasing frequency"],
+        correct: 2,
+        explain: "Higher frequency transducers produce narrower beams (less divergence) in the far field and have better focusing capabilities, improving lateral resolution."
+    },
+    {
+        id: 145,
+        q: "Why are pelvic structures better visualized trans-vaginally?",
+        options: ["Low frequency used", "Transducer closer to interest", "Performed with empty bladder", "Distance increased"],
+        correct: 1,
+        explain: "The trans-vaginal probe places the transducer physically closer to the pelvic organs, avoiding attenuation by abdominal fat/muscle and allowing higher frequencies for better resolution."
+    },
+    {
+        id: 146,
+        q: "What is the use of an acoustic standoff pad in ultrasound?",
+        options: ["Minimize attenuation", "Visualize deep structures", "Move focal zone to skin", "Move focal zone deeper"],
+        correct: 2,
+        explain: "A standoff pad creates distance between the probe and skin, moving the 'dead zone' away from the skin surface so superficial structures are in the focal zone."
+    },
+    {
+        id: 147,
+        q: "Which organs are best visualized by ultrasound?",
+        options: ["Bones", "Liver and spleen", "Lungs", "Ribs"],
+        correct: 1,
+        explain: "Ultrasound is excellent for solid, soft-tissue organs like the liver and spleen. It cannot penetrate bone or air (lungs)."
+    },
+    {
+        id: 148,
+        q: "Why can neonate brain ventricles be scanned by ultrasound?",
+        options: ["Fontanelle acts as window", "Bones allow penetration", "Ventricles are close", "Head is small"],
+        correct: 0,
+        explain: "The fontanelle (soft spot) is a gap in the cranial bones that has not yet fused, providing an acoustic window for sound waves to enter the brain."
+    },
+    {
+        id: 149,
+        q: "Ultrasound brightness is inaccurate at depth. What should be adjusted?",
+        options: ["Focusing", "Beam intensity", "Beam frequency", "Time-gain compensation (TGC)"],
+        correct: 3,
+        explain: "TGC sliders allow the operator to increase gain (brightness) specifically for deeper echoes to compensate for attenuation as the sound travels."
+    },
+    {
+        id: 150,
+        q: "Direct digital radiography uses a flat panel detector to convert X-ray energy into:",
+        options: ["Mechanical energy", "Chemical energy", "Electrical signal", "Light energy"],
+        correct: 2,
+        explain: "Flat panel detectors (whether direct or indirect) ultimately convert the X-ray information into an electronic (electrical) signal that is digitized."
+    },
+    {
+        id: 151,
+        q: "Which of the following is the best skull projection to demonstrate the facial bones?",
+        options: ["PA axial", "AP axial", "Submentovertex", "Parietoacanthial (Waters)"],
+        correct: 3,
+        explain: "The Parietoacanthial projection (Waters method) projects the petrous ridges below the maxillary sinuses, providing the best unobstructed view of the facial bones."
+    },
+    {
+        id: 152,
+        q: "Radiography is done on a patient for imaging anatomical structures with variable tissue densities. Which of the following provides uniform radiographic density?",
+        options: ["Tube collimator", "Bucky grid", "Compensating filter", "Automatic exposure control"],
+        correct: 2,
+        explain: "Compensating filters (like wedge filters) are designed to compensate for differences in tissue thickness/density (e.g., foot) to produce a more uniform image density."
+    },
+    {
+        id: 153,
+        q: "75-kV is applied by using 0.50-mm lead equivalent apron. Which of the following percentage of protection is provided?",
+        options: ["50%", "66%", "88%", "Over 90%"],
+        correct: 3,
+        explain: "A 0.5mm lead equivalent apron typically attenuates over 90% (usually 95-99%) of scatter radiation at 75 kVp."
+    },
+    {
+        id: 154,
+        q: "Which of the following is the most appropriate position to show basal skull fracture (air-fluid levels)?",
+        options: ["PA position", "SMV position", "Anterior oblique", "Lateral (horizontal beam)"],
+        correct: 3,
+        explain: "A horizontal beam Lateral (shoot-through) is essential in trauma to demonstrate air-fluid levels in the sphenoid sinus, which indicates a basal skull fracture."
+    },
+    {
+        id: 155,
+        q: "Which term best describes the misrepresentation of object size or shape as projected onto radiographic recording media?",
+        options: ["Brightness", "Distortion", "Resolution", "Sharpness"],
+        correct: 1,
+        explain: "Distortion is the misrepresentation of the size (magnification) or shape (elongation/foreshortening) of the projected image."
+    },
+    {
+        id: 156,
+        q: "What is the effect of doubling the distance (SID) on radiographic density if other factors remain constant?",
+        options: ["Increased by 50%", "Increased by 25%", "Decreased to 50%", "Decreased to 25% (1/4)"],
+        correct: 3,
+        explain: "According to the Inverse Square Law, if distance is doubled (2x), intensity/density decreases by 2 squared (4x). It becomes 1/4th (25%) of the original."
+    },
+    {
+        id: 157,
+        q: "Which is the correct order of tracing a food bolus from the mouth to the end of the small intestine?",
+        options: ["Mouth, pharynx, esophagus, stomach, jejunum, duodenum, ileum", "Mouth, pharynx, esophagus, stomach, duodenum, jejunum, ileum", "Mouth, esophagus, pharynx, stomach, duodenum, jejunum, ileum", "Mouth, pharynx, esophagus, stomach, ileum, duodenum, jejunum"],
+        correct: 1,
+        explain: "The small intestine sections in order are: Duodenum -> Jejunum -> Ileum."
+    },
+    {
+        id: 158,
+        q: "Which of the following arteries supplies the myocardium (heart muscle)?",
+        options: ["Pulmonary", "Subclavian", "Coronary", "Carotid"],
+        correct: 2,
+        explain: "The Coronary arteries arise from the aorta and supply oxygenated blood directly to the heart muscle (myocardium)."
+    },
+    {
+        id: 159,
+        q: "What is the number of pairs of Paranasal sinuses?",
+        options: ["3", "4", "5", "6"],
+        correct: 1,
+        explain: "There are 4 pairs of paranasal sinuses: Frontal, Ethmoid, Sphenoid, and Maxillary."
+    },
+    {
+        id: 160,
+        q: "Which flexure is formed by the junction of the transverse colon and the descending colon?",
+        options: ["Hepatic", "Splenic (Left colic)", "Sigmoid", "Transverse"],
+        correct: 1,
+        explain: "The Splenic flexure (Left colic flexure) is located near the spleen where the transverse colon turns downward to become the descending colon."
+    },
+    {
+        id: 161,
+        q: "Which is the blood circulation route to the liver from the digestive organs and the spleen?",
+        options: ["Pulmonary", "Coronary", "Systemic", "Portal"],
+        correct: 3,
+        explain: "The Portal Venous System drains nutrient-rich blood from the digestive tract and spleen directly to the liver for processing."
+    },
+    {
+        id: 162,
+        q: "Which of the following is located on the superior portion of the sternum?",
+        options: ["Sternal notch (Jugular notch)", "Sternal angle", "Xiphoid process", "Costal margin"],
+        correct: 0,
+        explain: "The Jugular Notch (or Suprasternal Notch) is the palpable depression at the superior border of the manubrium of the sternum."
+    },
+    {
+        id: 163,
+        q: "What is the anatomical name of the shoulder joint?",
+        options: ["Glenohumeral", "Sternoclavicular", "Humeroscapular", "Acromioclavicular"],
+        correct: 0,
+        explain: "The main shoulder joint is formed by the articulation of the Glenoid cavity of the scapula and the Head of the Humerus (Glenohumeral joint)."
+    },
+    {
+        id: 164,
+        q: "Which individual should be asked to restrain a child in an X-ray room if necessary?",
+        options: ["Family member (non-pregnant)", "Nuclear medicine technologist", "Student radiographer", "Oldest radiographer"],
+        correct: 0,
+        explain: "To minimize occupational exposure, a non-pregnant family member should hold the child (wearing lead protection) rather than a radiation worker."
+    },
+    {
+        id: 165,
+        q: "What is the total number of phalanges in one hand?",
+        options: ["8", "12", "14", "16"],
+        correct: 2,
+        explain: "There are 14 phalanges in each hand: 2 in the thumb (proximal, distal) and 3 in each of the four fingers (proximal, middle, distal)."
+    },
+    {
+        id: 166,
+        q: "A female technologist hears sexual expressions from a male patient during an exam. What is the appropriate action?",
+        options: ["Continue and reassure", "Discontinue and leave", "Report to supervisor and continue", "Call someone to be in the room and continue"],
+        correct: 3,
+        explain: "Having a chaperone/witness in the room protects the technologist while ensuring the patient care continues professionally."
+    },
+    {
+        id: 167,
+        q: "Dysphagia (difficulty swallowing) is an indication for which examination?",
+        options: ["Barium follow through", "Barium swallow", "Barium enema", "Barium meal"],
+        correct: 1,
+        explain: "A Barium Swallow (Esophagram) is specifically designed to evaluate the swallowing mechanism and the esophagus."
+    },
+    {
+        id: 168,
+        q: "What is the risk of infection following a needle-stick injury with blood containing HIV?",
+        options: ["61-80%", "30-60%", "15-29%", "< 1%"],
+        correct: 3,
+        explain: "The average risk of HIV transmission after a percutaneous exposure to HIV-infected blood is estimated to be approximately 0.3% (less than 1%)."
+    },
+    {
+        id: 169,
+        q: "A team obtains consent from a patient with a language barrier without using an interpreter. Which patient right was missing?",
+        options: ["Valid consent", "Patient's autonomy", "Presence of an interpreter", "Explanation of plan"],
+        correct: 2,
+        explain: "For informed consent to be valid, the patient must understand the procedure. The absence of an interpreter violates the patient's right to communication and understanding."
+    },
+    {
+        id: 170,
+        q: "Which of the following is most likely to dilate a stenotic vessel?",
+        options: ["Surgical nephrostomy", "Percutaneous angioplasty", "Nephrolithotomy", "Cholangiopancreatography"],
+        correct: 1,
+        explain: "Percutaneous Transluminal Angioplasty (PTA) uses a balloon catheter to dilate narrowed (stenotic) blood vessels."
+    },
+    {
+        id: 171,
+        q: "What is the most likely appearance of Hashimoto's thyroiditis on ultrasound?",
+        options: ["Homogeneous", "Heterogeneous with patchy hypoechoic areas", "Homogeneous hyperechoic", "Fluid filled"],
+        correct: 1,
+        explain: "Hashimoto's thyroiditis typically presents as a diffusely heterogeneous, coarse, and hypoechoic thyroid gland."
+    },
+    {
+        id: 172,
+        q: "Which equipment is used to measure blood pressure?",
+        options: ["Stethoscope and Butterfly", "Thermometer and Laryngoscope", "Sphygmomanometer and Stethoscope", "Sphygmomanometer and Laryngoscope"],
+        correct: 2,
+        explain: "A Sphygmomanometer (cuff) measures the pressure, and a Stethoscope is used to listen for the Korotkoff sounds."
+    },
+    {
+        id: 173,
+        q: "What is the typical maximum contrast volume (ml) for a standard power injector syringe?",
+        options: ["100", "150", "200", "250"],
+        correct: 2,
+        explain: "Most standard high-pressure CT injector syringes have a capacity of 200 ml."
+    },
+    {
+        id: 174,
+        q: "How long is it advised for patients treated with I-131 to delay conception after treatment?",
+        options: ["1 month", "3 months", "4 months", "6 months"],
+        correct: 3,
+        explain: "International guidelines typically recommend delaying conception for at least 6 months after I-131 therapy to ensure radiation levels are safe and allow for cell repair."
+    },
+    {
+        id: 175,
+        q: "A radionuclide has a physical half-life of 10 days and a biological half-life of 15 days. What is the effective half-life?",
+        options: ["25 days", "10 days", "6 days", "2 days"],
+        correct: 2,
+        explain: "Effective Half-life (Te) = (Tp * Tb) / (Tp + Tb). (10 * 15) / (10 + 15) = 150 / 25 = 6 days."
+    },
+    {
+        id: 176,
+        q: "Which artifact results from using a Field of View (FOV) smaller than the anatomy?",
+        options: ["Phase miss-mapping", "Chemical shift", "Cross talk", "Aliasing"],
+        correct: 3,
+        explain: "Aliasing (or wrap-around artifact) occurs when anatomy outside the FOV is mapped into the image because the computer misinterprets its signal location."
+    },
+    {
+        id: 177,
+        q: "Which setting will reduce image blurriness caused by involuntary motion?",
+        options: ["High mA and shorter exposure time", "Low mA and shorter exposure time", "High mA and longer exposure time", "Low mA and longer exposure time"],
+        correct: 0,
+        explain: "To reduce motion blur, exposure time must be minimized. To maintain the same mAs (density) with short time, you must increase the mA (Reciprocity Law)."
+    },
+    {
+        id: 178,
+        q: "By employing high kVp for CT imaging, one can reduce which of the following?",
+        options: ["Patient dose", "Image artifacts (Beam Hardening)", "Compton scatter", "Reconstruction time"],
+        correct: 1,
+        explain: "High kVp increases beam penetration, which helps reduce Beam Hardening artifacts (streaking) that occur when lower energy photons are absorbed by dense bone."
+    },
+    {
+        id: 179,
+        q: "A patient develops small sacs in the wall of the colon. What is the pathology?",
+        options: ["Polyp", "Abscess", "Diverticulum", "Intussusception"],
+        correct: 2,
+        explain: "Diverticula are outpouchings (sacs) of the mucosa and submucosa through the muscular layer of the colonic wall."
+    },
+    {
+        id: 180,
+        q: "Which image type is produced by: TR 50ms, TE 5ms, Flip Angle 120?",
+        options: ["Proton density", "T2* weighting", "T2 weighting", "T1 weighting"],
+        correct: 3,
+        explain: "This describes a Gradient Echo sequence. A Short TR, Short TE, and Large Flip Angle maximize T1 contrast."
+    },
+    {
+        id: 181,
+        q: "What is the typical CT number (HU) for brain tissue?",
+        options: ["30-40", "70-90", "120-190", "200-400"],
+        correct: 0,
+        explain: "Normal brain tissue ranges from approx 20-30 HU (White Matter) to 35-45 HU (Grey Matter). 30-40 is the correct range."
+    },
+    {
+        id: 182,
+        q: "The terminal end of the spinal cord is typically at the level of:",
+        options: ["L1-L2", "L3-L4", "L4-L5", "Sacrum"],
+        correct: 0,
+        explain: "The spinal cord ends at the Conus Medullaris, which typically lies at the level of the L1-L2 disc space in adults."
+    },
+    {
+        id: 183,
+        q: "How do you solve chemical shift artifact in MRI?",
+        options: ["Increase time increase FOV", "Decrease time increase FOV", "Decrease time decrease FOV", "Increase receiver bandwidth"],
+        correct: 3,
+        explain: "Chemical shift is a frequency-encoding error. Increasing the Receiver Bandwidth maps the fat/water shift over fewer pixels, reducing the artifact."
+    },
+    {
+        id: 184,
+        q: "If 300 mA is selected, what exposure time is required to produce 6 mAs?",
+        options: ["5 ms", "10 ms", "15 ms", "20 ms"],
+        correct: 3,
+        explain: "mAs = mA x seconds. 6 = 300 x t. t = 6/300 = 0.02 seconds. 0.02 seconds = 20 milliseconds."
+    },
+    {
+        id: 185,
+        q: "Radioactive material has 180 mCi and Half Life of 6 hours. Activity after 2 days?",
+        options: ["5.75", "2.81", "1.4", "0.70"],
+        correct: 3,
+        explain: "2 days = 48 hours. 48 / 6 = 8 Half Lives. 180 / (2^8) = 180 / 256 ≈ 0.70 mCi."
+    },
+    {
+        id: 186,
+        q: "What is the approximate skin dose for a 5 min fluoroscopy at 1.2 mA?",
+        options: ["0.2 rad", "4.2 rad", "0.06 rad", "12 rad"],
+        correct: 1,
+        explain: "Standard fluoro output is ~2-3 R/min/mA? No, total output is usually ~2-5 R/min. 5 mins x ~0.8-1 R/min ≈ 4-5 Rads. 4.2 rad is the most reasonable estimate provided."
+    },
+    {
+        id: 187,
+        q: "The T.B (Tuberculosis) disease requires which type of precaution?",
+        options: ["ICU", "CCU", "NICU", "Isolation (Airborne)"],
+        correct: 3,
+        explain: "TB is transmitted via airborne particles. Patients require Airborne Isolation (Negative pressure room)."
+    },
+    {
+        id: 188,
+        q: "What is the primary reason for performing a breast exam (Mammography)?",
+        options: ["Detect cancer early", "Pneumothorax", "Brain cancer", "None"],
+        correct: 0,
+        explain: "Mammography is the gold standard screening tool for the early detection of breast cancer."
+    },
+    {
+        id: 189,
+        q: "Which part of the hand is used to check a patient's temperature by touch?",
+        options: ["Back of hand (dorsum)", "Finger", "Palmar of hand", "Hear by ear"],
+        correct: 0,
+        explain: "The skin on the back (dorsum) of the hand is thinner and more sensitive to temperature changes than the palm."
+    },
+    {
+        id: 190,
+        q: "A patient asks to see his chart. What is the appropriate response?",
+        options: ["Say no", "Say you don't know", "Refer request to physician", "Give the chart"],
+        correct: 2,
+        explain: "While patients have a right to their information, the chart belongs to the facility. The physician is responsible for interpreting and explaining the contents to the patient."
+    },
+    {
+        id: 191,
+        q: "What is the definition of refraction?",
+        options: ["Change of direction of a ray", "Direct direction", "Four direction", "Two direction"],
+        correct: 0,
+        explain: "Refraction is the change in direction (bending) of a wave (light or sound) passing from one medium to another caused by its change in speed."
+    },
+    {
+        id: 192,
+        q: "Where do hormones T3 and T4 come from?",
+        options: ["Pituitary", "Hypothalamus", "Thyroid gland", "Adrenal"],
+        correct: 2,
+        explain: "T3 (Triiodothyronine) and T4 (Thyroxine) are produced and secreted by the Thyroid gland."
+    },
+    {
+        id: 193,
+        q: "Which heart chamber does the Aorta arise from?",
+        options: ["Left ventricle", "Right ventricle", "Left atrium", "Right atrium"],
+        correct: 0,
+        explain: "The Left Ventricle pumps oxygenated blood through the Aortic Valve into the Ascending Aorta for systemic circulation."
+    },
+    {
+        id: 194,
+        q: "What is the terminology for the sensation of breathlessness in the recumbent position?",
+        options: ["Oligopnea", "Tachypnea", "Orthopnea", "Hyperpnoea"],
+        correct: 2,
+        explain: "Orthopnea is the shortness of breath (dyspnea) that occurs when lying flat, causing the person to have to sleep propped up in bed."
+    },
+    {
+        id: 195,
+        q: "Through which structures does deoxygenated blood pass after leaving the right ventricle?",
+        options: ["Bicuspid valve, pulmonary vein", "Pulmonary semilunar valve, pulmonary artery", "Aortic valve", "Pulmonary vein"],
+        correct: 1,
+        explain: "Blood exits the Right Ventricle through the Pulmonary Valve into the Pulmonary Arteries to go to the lungs."
+    },
+    {
+        id: 196,
+        q: "The term ASCITES refers to:",
+        options: ["Ca breast", "Inflammation", "Fluid in cranial cavity", "Fluid in Peritoneal Cavity"],
+        correct: 3,
+        explain: "Ascites is the abnormal accumulation of fluid in the abdomen (peritoneal cavity)."
+    },
+    {
+        id: 197,
+        q: "What anatomy is seen through the foramen magnum?",
+        options: ["Odontoid (C2)", "Spinal cord", "Sella turcica", "Mastoid"],
+        correct: 1,
+        explain: "The spinal cord (becoming the medulla oblongata) passes through the foramen magnum. The dens (odontoid) can be projected within it on an AP Axial (Fuchs/Towne) view."
+    },
+    {
+        id: 198,
+        q: "How does blood return to the heart from the small intestine?",
+        options: ["Hepatic portal vein -> liver -> hepatic vein -> vena cava", "Hepatic vein -> vena cava -> portal vein", "Portal vein -> vena cava -> hepatic vein", "Vena cava -> portal vein"],
+        correct: 0,
+        explain: "Nutrient-rich blood from the gut travels via the Portal Vein to the Liver for processing, then drains via Hepatic Veins to the IVC."
+    },
+    {
+        id: 199,
+        q: "What is the name of an orbital floor fracture?",
+        options: ["Blowout fracture", "Smith fracture", "Colles fracture", "Depressed fracture"],
+        correct: 0,
+        explain: "A Blowout fracture is caused by direct trauma to the eye, increasing orbital pressure and fracturing the weakest point, the orbital floor."
+    },
+    {
+        id: 200,
+        q: "What part of the kidney transmits blood and urine?",
+        options: ["Renal Artery", "Calyx", "Cortex", "Hilum"],
+        correct: 3,
+        explain: "The Hilum is the concave notch where the renal artery/vein enter/exit and where the renal pelvis/ureter leaves the kidney."
+    },
+    {
+        id: 201,
+        q: "A cholescintigraphy scan reveals delayed visualization of the gallbladder and biliary tree after 4 hours following the injection. What does this explain?",
+        options: ["Acute cholecystitis", "Choledocholithiasis", "Chronic cholecystitis", "Post cholecystectomy"],
+        correct: 2,
+        explain: "In a HIDA scan, if the gallbladder visualizes but it is delayed (appearing after 1 hour but before 4 hours), it is indicative of Chronic Cholecystitis. Non-visualization is Acute."
+    },
+    {
+        id: 202,
+        q: "A thyroid scintigraphy scan reveals a 'cold' nodule. Which condition explains this finding?",
+        options: ["Functioning adenoma", "Thyroid carcinoma", "Hyperthyroidism", "Ectopic gland"],
+        correct: 1,
+        explain: "A 'cold' nodule means the tissue is not taking up the radioactive iodine. This indicates non-functioning tissue, which raises the suspicion for Thyroid Carcinoma (cancer)."
+    },
+    {
+        id: 203,
+        q: "Which process helps to restrict the detected emitted radiation to the given area of interest in Nuclear Medicine?",
+        options: ["Transmission", "Attenuation", "Collimation", "Scattering"],
+        correct: 2,
+        explain: "Collimators are lead grids that only allow gamma rays traveling perpendicular to the detector to pass through, effectively 'focusing' the image."
+    },
+    {
+        id: 204,
+        q: "Which cavity articulates with the femoral head?",
+        options: ["Glenoid", "Sacroiliac", "Acetabulum", "Foramen magnum"],
+        correct: 2,
+        explain: "The Acetabulum is the cup-shaped socket in the hip bone (pelvis) that articulates with the head of the femur to form the hip joint."
+    },
+    {
+        id: 205,
+        q: "At which power current (mA) does the X-ray tube of a fluoroscopy unit typically operate?",
+        options: ["Above 40", "25-35", "10-20", "Less than 5"],
+        correct: 3,
+        explain: "Fluoroscopy uses a very low tube current, typically between 0.5 and 5 mA, to allow for continuous real-time imaging without overheating the tube."
+    },
+    {
+        id: 206,
+        q: "In a barium study, which view best shows the rectosigmoid segments with less overlapping?",
+        options: ["AP axial oblique", "PA post evacuation", "Left lateral decubitus", "Right lateral decubitus"],
+        correct: 0,
+        explain: "The AP Axial Oblique (often called the Butterfly projection) projects the sigmoid colon up and out of the pelvis to view it without superimposition."
+    },
+    {
+        id: 207,
+        q: "Which of the following human cells are most radiosensitive?",
+        options: ["Embryonic", "Red blood", "Nerve", "Brain"],
+        correct: 0,
+        explain: "Embryonic cells are rapidly dividing and undifferentiated, making them extremely sensitive to radiation damage compared to mature, specialized cells."
+    },
+    {
+        id: 208,
+        q: "Which facial bone articulates with the maxillary, temporal, frontal, and sphenoid bones?",
+        options: ["Vomer", "Palatine", "Lacrimal", "Zygomatic"],
+        correct: 3,
+        explain: "The Zygomatic bone (cheekbone) connects to four bones: the Frontal (superiorly), Maxilla (medially), Temporal (posteriorly), and Sphenoid (deeply)."
+    },
+    {
+        id: 209,
+        q: "Which term best relates to the end of a long bone?",
+        options: ["Epiphysis", "Diaphysis", "Osteocyte", "Metaphysis"],
+        correct: 0,
+        explain: "The Epiphysis is the rounded end of a long bone. The Diaphysis is the shaft, and the Metaphysis is the neck portion between them."
+    },
+    {
+        id: 210,
+        q: "The first cervical vertebra (C1) is known as:",
+        options: ["Axis", "Atlas", "Dens", "Body"],
+        correct: 1,
+        explain: "C1 is called the Atlas because it supports the globe of the skull. C2 is called the Axis."
+    },
+    {
+        id: 211,
+        q: "Which vertebral level corresponds to the lower costal margin?",
+        options: ["L2-3", "T9-10", "T12-L1", "T11-12"],
+        correct: 0,
+        explain: "The lower costal margin (bottom of the rib cage) is a palpable landmark typically found at the level of the L2-L3 interspace."
+    },
+    {
+        id: 212,
+        q: "What is the pathway of urine flow through the urinary tract?",
+        options: ["Pelvis -> Urethra -> Ureter -> Bladder", "Pelvis -> Ureter -> Bladder -> Urethra", "Pelvis -> Ureter -> Urethra -> Bladder", "Ureter -> Pelvis -> Bladder"],
+        correct: 1,
+        explain: "Urine flows from the Kidney Pelvis down the Ureter to the Bladder, and finally exits through the Urethra."
+    },
+    {
+        id: 213,
+        q: "Which two bones articulate with the ethmoid bone?",
+        options: ["Parietal and occipital", "Frontal and sphenoid", "Parietal and sphenoid", "Occipital and sphenoid"],
+        correct: 1,
+        explain: "The Ethmoid bone sits centrally in the skull base and articulates with the Frontal bone (anteriorly) and Sphenoid bone (posteriorly)."
+    },
+    {
+        id: 214,
+        q: "Which is the most anteriorly located heart chamber?",
+        options: ["Left atrium", "Right atrium", "Left ventricle", "Right ventricle"],
+        correct: 3,
+        explain: "The Right Ventricle sits directly behind the sternum, making it the most anterior chamber of the heart."
+    },
+    {
+        id: 215,
+        q: "Which finding indicates fallopian tube patency in hysterosalpingography?",
+        options: ["Reflux into cannula", "Spill of contrast into peritoneal cavity", "Spill into bladder", "Regular uterine wall"],
+        correct: 1,
+        explain: "If the fallopian tubes are open (patent), the contrast media will flow through them and spill out into the peritoneal cavity."
+    },
+    {
+        id: 216,
+        q: "What describes a normal kidney that fails to ascend and remains in the pelvis?",
+        options: ["Horseshoe", "Polycystic", "Duplicate", "Ectopic"],
+        correct: 3,
+        explain: "An Ectopic Kidney is one located outside its normal position. If it stays in the pelvis, it is specifically a Pelvic Ectopic Kidney."
+    },
+    {
+        id: 217,
+        q: "Which needle comes with ultrasound enhancement to increase visibility?",
+        options: ["Chiba", "Trocar", "Turner", "Wescott"],
+        correct: 0,
+        explain: "Many Chiba needles are designed with echogenic tips (roughened surfaces) to reflect sound waves, making them highly visible under ultrasound guidance."
+    },
+    {
+        id: 218,
+        q: "Which definition describes Flux Gain in fluoroscopy?",
+        options: ["Output light photons / Input X-ray photons", "Output - Input", "Output + Input", "Output x Input"],
+        correct: 0,
+        explain: "Flux Gain is the ratio of the number of light photons at the output phosphor to the number of X-ray photons at the input phosphor."
+    },
+    {
+        id: 219,
+        q: "Which structure is examined by Cholecystography?",
+        options: ["Intestine", "Blood vessels", "Kidneys", "Gallbladder"],
+        correct: 3,
+        explain: "Cholecystography (Oral Cholecystogram) is a radiographic examination of the Gallbladder after oral administration of contrast."
+    },
+    {
+        id: 220,
+        q: "A radionuclide decays from 60 mCi to 7.5 mCi in 12 hours. What is the physical half-life?",
+        options: ["4 hours", "6 hours", "8 hours", "10 hours"],
+        correct: 0,
+        explain: "60->30 (1 HL), 30->15 (2 HL), 15->7.5 (3 HL). Three half-lives occurred in 12 hours. 12 / 3 = 4 hours."
+    },
+    {
+        id: 221,
+        q: "What is the typical imaging time range for most nuclear medicine tests?",
+        options: ["1 day", "1 to 2 hours", "20 to 45 minutes", "5 to 10 minutes"],
+        correct: 2,
+        explain: "While variable, the actual acquisition time for a typical SPECT or planar scan is usually between 20 and 45 minutes."
+    },
+    {
+        id: 222,
+        q: "Which diagnostic test uses radioactive material to visualize lymphatic drainage?",
+        options: ["Lymphogram", "Lymphography", "Lymphoscintigraphy", "CT scan"],
+        correct: 2,
+        explain: "Lymphoscintigraphy involves injecting a radiotracer to map the sentinel lymph nodes and lymphatic drainage pathways."
+    },
+    {
+        id: 223,
+        q: "What is the most likely injection route for CSF studies (Myelography/Cisternography)?",
+        options: ["Intrathecal", "Intradermal", "Intravenous", "Intramuscular"],
+        correct: 0,
+        explain: "Intrathecal injection places the contrast/tracer directly into the subarachnoid space containing the Cerebrospinal Fluid (CSF)."
+    },
+    {
+        id: 224,
+        q: "Which component is NOT housed inside the scintillation camera head?",
+        options: ["Photomultiplier tubes", "Display monitor", "Lead collimator", "Crystals"],
+        correct: 1,
+        explain: "The display monitor and processing computer are located at the operator console, outside the camera head (gantry)."
+    },
+    {
+        id: 225,
+        q: "What is the primary function of the Photomultiplier Tube (PMT)?",
+        options: ["Filter photons", "Convert radioactivity to light", "Convert light into electrical signal and amplify", "Minimize scatter"],
+        correct: 2,
+        explain: "The PMT detects the weak light flash from the crystal, converts it into electrons (photocathode), and multiplies them to create a measurable electrical signal."
+    },
+    {
+        id: 226,
+        q: "Which structures form the wrist joint?",
+        options: ["Proximal carpals, distal radius and ulna", "Distal carpals, distal radius and ulna", "Proximal carpals and distal radius", "Proximal carpals and distal ulna"],
+        correct: 2,
+        explain: "The Radiocarpal joint (wrist) is formed by the Distal Radius articulating with the Scaphoid and Lunate (Proximal Carpals). The ulna is separated by a disc."
+    },
+    {
+        id: 227,
+        q: "Which movement rotates the hand to place the palm up?",
+        options: ["Pronation", "Abduction", "Extension", "Supination"],
+        correct: 3,
+        explain: "Supination (think 'holding a bowl of soup') rotates the forearm so the palm faces anteriorly/up."
+    },
+    {
+        id: 228,
+        q: "Which condition describes reduced peristalsis in the distal two-thirds of the esophagus?",
+        options: ["Achalasia", "Dysphagia", "Haemoptysis", "Diverticulitis"],
+        correct: 0,
+        explain: "Achalasia is a motor disorder characterized by the failure of the lower esophageal sphincter to relax and a lack of peristalsis."
+    },
+    {
+        id: 229,
+        q: "Which patient position best demonstrates the stomach fundus filled with contrast?",
+        options: ["Erect lateral", "AP supine", "AP erect", "PA erect"],
+        correct: 1,
+        explain: "The fundus is posterior. In the AP Supine position, barium (gravity-dependent) pools in the posterior fundus, filling it."
+    },
+    {
+        id: 230,
+        q: "Which contrast examination is for the esophagus?",
+        options: ["Barium meal", "Barium enema", "Barium swallow", "Barium follow through"],
+        correct: 2,
+        explain: "Barium Swallow is the specific name for the fluoroscopic examination of the pharynx and esophagus."
+    },
+    {
+        id: 231,
+        q: "When do idiosyncratic anaphylactic reactions to contrast media typically start?",
+        options: ["After 5 days", "After 24 hours", "30 minutes after", "Immediately or within minutes"],
+        correct: 3,
+        explain: "Severe reactions are immediate. The majority of acute adverse reactions occur within the first 20 minutes post-injection."
+    },
+    {
+        id: 232,
+        q: "What does an angiogram visualize?",
+        options: ["Ureter", "Jejunum", "Bile ducts", "Blood vessels"],
+        correct: 3,
+        explain: "Angiography ('Angio' = vessel) is the imaging of blood vessels using contrast media."
+    },
+    {
+        id: 233,
+        q: "Which procedure is most likely used to dilate a stenotic vessel?",
+        options: ["Nephrostomy", "Percutaneous angioplasty", "Nephrolithotomy", "Cholangiopancreatography"],
+        correct: 1,
+        explain: "Angioplasty uses a balloon catheter to physically expand a narrowed (stenotic) artery to restore blood flow."
+    },
+    {
+        id: 234,
+        q: "What is produced by radioactive materials?",
+        options: ["X-rays", "Ultrasound", "Gamma rays", "Microwaves"],
+        correct: 2,
+        explain: "Radioactive nuclei decay by emitting energy, typically in the form of Gamma rays (which originate from the nucleus, unlike X-rays)."
+    },
+    {
+        id: 235,
+        q: "Isotope activity is 180 mCi with a 6-hour half-life. What is the activity after 2 days?",
+        options: ["30", "15", "3.8", "0.7"],
+        correct: 3,
+        explain: "2 days = 48 hours. 48/6 = 8 Half-lives. 180 / (2^8) = 180 / 256 ≈ 0.7 mCi."
+    },
+    {
+        id: 236,
+        q: "Which technique is appropriate to assess the fetal heart anatomy?",
+        options: ["Color Doppler", "Jugular ultrasound", "Fetal echocardiography", "Transvaginal"],
+        correct: 2,
+        explain: "Fetal Echocardiography is a specialized, detailed ultrasound exam specifically focusing on the structure and function of the fetal heart."
+    },
+    {
+        id: 237,
+        q: "A neonate has suspected craniosynostosis. X-ray is avoided. What is the alternative modality?",
+        options: ["Ultrasound", "CT angiography", "Cranial scintigraphy", "Digital angiography"],
+        correct: 0,
+        explain: "Ultrasound can be used in neonates to assess cranial sutures (before they fuse) without ionizing radiation, detecting premature fusion (craniosynostosis)."
+    },
+    {
+        id: 238,
+        q: "Which radionuclide is typically used for colon transit scintigraphy?",
+        options: ["111In-DTPA", "99mTc-Pertechnetate", "99mTc-Albumin", "32P-Sodium"],
+        correct: 0,
+        explain: "Indium-111 DTPA (or sometimes Ga-67) is used because its longer half-life (2.8 days) allows for tracking transit over several days."
+    },
+    {
+        id: 239,
+        q: "Which describes the Sacrum bone?",
+        options: ["3 pairs of foramina", "5 fused vertebrae", "4 fused vertebrae", "Articulates with hip joints"],
+        correct: 1,
+        explain: "The Sacrum is formed by the fusion of 5 sacral vertebrae. (The Coccyx is formed by 4 fused vertebrae)."
+    },
+    {
+        id: 240,
+        q: "Direct digital radiography uses a flat panel detector to convert X-ray energy into:",
+        options: ["Mechanical", "Chemical", "Electrical signal", "Light"],
+        correct: 2,
+        explain: "Digital detectors (DR) convert x-ray intensity directly into an electronic (electrical) signal for processing."
+    },
+    {
+        id: 241,
+        q: "What is the standard SID (Source-Image Distance) for extremity radiography?",
+        options: ["180 cm", "150 cm", "100 cm (40 inches)", "40 cm"],
+        correct: 2,
+        explain: "The standard SID for most tabletop and extremity work is 100 cm (40 inches)."
+    },
+    {
+        id: 242,
+        q: "Which projection best demonstrates the facial bones?",
+        options: ["PA axial", "AP axial", "Submentovertex", "Parietoacanthial (Waters)"],
+        correct: 3,
+        explain: "The Waters view projects the dense petrous ridges below the maxillary sinuses, providing a clear view of the orbits, maxillae, and zygomas."
+    },
+    {
+        id: 243,
+        q: "Which device provides uniform radiographic density for parts with variable thickness?",
+        options: ["Collimator", "Grid", "Compensating filter", "AEC"],
+        correct: 2,
+        explain: "Compensating filters (like the wedge or trough) absorb x-rays over thinner body parts to equalize exposure across the image."
+    },
+    {
+        id: 244,
+        q: "A 0.50-mm lead apron provides approximately what percentage of protection at 75 kV?",
+        options: ["50%", "66%", "88%", "Over 90%"],
+        correct: 3,
+        explain: "At standard diagnostic energies (75 kVp), 0.5mm lead equivalent aprons attenuate roughly 95-99% of scattered radiation."
+    },
+    {
+        id: 245,
+        q: "Which position best shows a basal skull fracture (air-fluid levels)?",
+        options: ["PA", "SMV", "Oblique", "Lateral (horizontal beam)"],
+        correct: 3,
+        explain: "A horizontal beam (shoot-through) Lateral skull allows visualization of sphenoid effusion (air-fluid level), a key sign of basal skull fracture."
+    },
+    {
+        id: 246,
+        q: "Misrepresentation of object size or shape on a radiograph is called:",
+        options: ["Brightness", "Distortion", "Resolution", "Sharpness"],
+        correct: 1,
+        explain: "Distortion is the geometric misrepresentation of the true size (magnification) or shape (elongation/foreshortening) of the object."
+    },
+    {
+        id: 247,
+        q: "If SID is doubled, radiographic density changes by:",
+        options: ["Increased 50%", "Increased 25%", "Decreased to 50%", "Decreased to 25%"],
+        correct: 3,
+        explain: "Inverse Square Law: Doubling distance (2x) reduces intensity to 1/4 (2 squared). 1/4 = 25%."
+    },
+    {
+        id: 248,
+        q: "Correct order of food passage from mouth:",
+        options: ["Esophagus, stomach, jejunum, duodenum", "Esophagus, stomach, duodenum, jejunum, ileum", "Esophagus, stomach, ileum, jejunum", "Esophagus, jejunum, stomach"],
+        correct: 1,
+        explain: "Mouth -> Pharynx -> Esophagus -> Stomach -> Small Intestine (Duodenum -> Jejunum -> Ileum)."
+    },
+    {
+        id: 249,
+        q: "Which artery supplies the myocardium?",
+        options: ["Pulmonary", "Subclavian", "Coronary", "Carotid"],
+        correct: 2,
+        explain: "Coronary arteries are the specific vessels that branch off the aorta to supply the heart muscle itself."
+    },
+    {
+        id: 250,
+        q: "To overcome magnification caused by a 3-inch OID, what should be done to the SID?",
+        options: ["Decrease by 3 inches", "Increase by 3 inches", "Increase by 21 inches", "Increase significantly (e.g. 7 inches per inch of OID)"],
+        correct: 2,
+        explain: "To maintain magnification and sharpness when OID increases, SID must be increased. The '7 inch rule' suggests increasing SID by 7 inches for every 1 inch of OID. 3*7=21 inches."
+    },
+    {
+        id: 251,
+        q: "Which of the following radiographic examinations will produce the least possible scattered radiation?",
+        options: ["Skull", "Spine", "Limbs", "Pelvis"],
+        correct: 2,
+        explain: "The limbs have less tissue volume and density compared to the trunk (spine, pelvis), resulting in significantly less Compton scatter production."
+    },
+    {
+        id: 252,
+        q: "Which of the following is the special projection done for the Para nasal sinuses?",
+        options: ["Waters", "Stenvers", "Direct P.A", "Direct A.P"],
+        correct: 0,
+        explain: "The Waters projection (Parietoacanthial) is the standard view for sinuses as it projects the petrous ridges below the maxillary sinuses."
+    },
+    {
+        id: 253,
+        q: "Which of the following is produced when an electric current flows through a wire?",
+        options: ["X-rays", "Radiation", "Gamma rays", "Magnetic field"],
+        correct: 3,
+        explain: "According to electromagnetism principles (Oersted's law), a magnetic field is always created around a conductor carrying an electric current."
+    },
+    {
+        id: 254,
+        q: "Which of the following increases in settings will double the radiographic density?",
+        options: ["mAs by 15%", "kVp by 15%", "SID by 20%", "SOD by 30%"],
+        correct: 1,
+        explain: "The 15% Rule states that increasing kVp by 15% has the same effect on optical density as doubling the mAs."
+    },
+    {
+        id: 255,
+        q: "Which of the following is a high tension (step-up) transformer?",
+        options: ["Changes DC to AC", "Has more turns in the secondary coil", "Has more turns in primary coil", "Decreases the volt"],
+        correct: 1,
+        explain: "A step-up transformer increases voltage. This requires the secondary coil to have more turns of wire than the primary coil."
+    },
+    {
+        id: 256,
+        q: "A patient with pelvic trauma needs an acetabular fracture assessment. The AP is inadequate. which view is best?",
+        options: ["PA Axial", "Erect Lateral", "Frog leg", "Anteroposterior oblique (Judet views)"],
+        correct: 3,
+        explain: "Judet views (Internal and External Oblique) are specific for visualizing the acetabulum and its columns in pelvic trauma."
+    },
+    {
+        id: 257,
+        q: "Which of the following is strongly related to the efficiency of a grid?",
+        options: ["Grid ratio", "Grid radius", "Lines per inch", "Interspacing material"],
+        correct: 0,
+        explain: "Grid ratio (height of lead strips divided by distance between them) is the primary factor determining a grid's ability to clean up scatter."
+    },
+    {
+        id: 258,
+        q: "If three half-value layers (HVL) are used, the original beam intensity is reduced by a factor of:",
+        options: ["3", "6", "8", "9"],
+        correct: 2,
+        explain: "Each HVL reduces intensity by half. 1 HVL = 50%, 2 HVL = 25%, 3 HVL = 12.5%. The reduction factor is 2 x 2 x 2 = 8."
+    },
+    {
+        id: 259,
+        q: "Where should the technologist place the TLD (dosimeter) if wearing a lead apron?",
+        options: ["Under the apron", "Outside the apron (collar level)", "On the wrist", "At waist level"],
+        correct: 1,
+        explain: "The TLD should be worn at the collar level outside the apron to monitor exposure to the unshielded thyroid and eyes."
+    },
+    {
+        id: 260,
+        q: "What is the annual whole body effective dose limit for occupational workers (technologists)?",
+        options: ["1 mSv", "10 mSv", "50 mSv", "100 mSv"],
+        correct: 2,
+        explain: "The NCRP annual effective dose limit for occupational exposure is 50 mSv (5 rem)."
+    },
+    {
+        id: 261,
+        q: "Which fracture of the foot (5th metatarsal) is common?",
+        options: ["Jones", "Colles", "Potts", "Smiths"],
+        correct: 0,
+        explain: "A Jones fracture is a specific fracture at the base of the 5th metatarsal of the foot."
+    },
+    {
+        id: 262,
+        q: "A process uses software to synchronise CT scan to the patient's heart to minimize motion. This is called:",
+        options: ["Gated CT", "Back projection", "Volume rendering", "Contiguous scanning"],
+        correct: 0,
+        explain: "ECG Gating triggers the scan during the resting phase of the cardiac cycle (diastole) to freeze motion."
+    },
+    {
+        id: 263,
+        q: "Which IV contrast is typically used in CT examination?",
+        options: ["Omnipaque 300", "Gastrografin", "Easy Cat", "Topcat"],
+        correct: 0,
+        explain: "Omnipaque (lohexol) is a standard non-ionic, low-osmolar iodinated intravenous contrast medium."
+    },
+    {
+        id: 264,
+        q: "Which MR image is produced due to difference in the transverse relaxation characteristic of tissues?",
+        options: ["T1 weighted", "T2 weighted", "Proton density", "Inversion recovery"],
+        correct: 1,
+        explain: "T2 relaxation is also known as Transverse relaxation (spin-spin interaction). T2 weighted images rely on these differences."
+    },
+    {
+        id: 265,
+        q: "A chest MR reveals ghosting artifact from heart motion. How is this solved?",
+        options: ["Explanation to patient", "Antispasmodic agents", "Peripheral gating", "Cardiac gating"],
+        correct: 3,
+        explain: "Ghosting from pulsatile motion (heartbeat) is corrected by synchronizing the pulse sequence with the cardiac cycle (Cardiac Gating)."
+    },
+    {
+        id: 266,
+        q: "Which MRI system component reconstructs images using the Fourier transform?",
+        options: ["Receiver amplifier", "Array processor", "Host computer", "Gradient coil"],
+        correct: 1,
+        explain: "The Array Processor is the dedicated computer hardware that performs the Fast Fourier Transform (FFT) to convert raw data into an image."
+    },
+    {
+        id: 267,
+        q: "Which ultrasound frequency/intensity combination results in cavitation?",
+        options: ["Low frequency, low intensity", "Low frequency, high intensity", "High frequency, low intensity", "High frequency, high intensity"],
+        correct: 1,
+        explain: "Cavitation (bubble formation) is most likely at Lower Frequencies (allowing bubbles to grow) and Higher Intensities."
+    },
+    {
+        id: 268,
+        q: "Which term describes the number of wave cycles per second?",
+        options: ["Speed", "Period", "Frequency", "Wavelength"],
+        correct: 2,
+        explain: "Frequency is defined as the number of cycles per second, measured in Hertz (Hz)."
+    },
+    {
+        id: 269,
+        q: "Which MRI coil provides a uniform signal intensity level throughout a cross section?",
+        options: ["Linear", "Surface", "Volume", "Flat array"],
+        correct: 2,
+        explain: "Volume coils (like the head coil or body coil) surround the part and provide uniform signal excitation and reception across the entire volume."
+    },
+    {
+        id: 270,
+        q: "Which arteries supply the brain?",
+        options: ["Brachial and common carotid", "Internal carotid and vertebral", "External carotid and vertebral", "Subclavian and common carotid"],
+        correct: 1,
+        explain: "The brain's blood supply comes from the Circle of Willis, fed by the two Internal Carotid arteries and the two Vertebral arteries."
+    },
+    {
+        id: 271,
+        q: "Which bone forms the medial part of the orbital wall between maxilla and ethmoid?",
+        options: ["Vomer", "Lacrimal", "Palatine", "Zygomatic"],
+        correct: 1,
+        explain: "The Lacrimal bone is the smallest facial bone, located on the medial wall of the orbit."
+    },
+    {
+        id: 272,
+        q: "What is the location of the kidneys in the abdomen?",
+        options: ["Lower anterior", "Upper anterior", "Lower posterior", "Upper posterior"],
+        correct: 3,
+        explain: "The kidneys are retroperitoneal organs located in the upper posterior aspect of the abdomen."
+    },
+    {
+        id: 273,
+        q: "The last 2 pairs of ribs (11-12) are referred to as:",
+        options: ["Cervical", "Floating", "Sternal", "Upper"],
+        correct: 1,
+        explain: "Ribs 11 and 12 do not attach to the sternum at all (neither directly nor indirectly), so they are called Floating Ribs."
+    },
+    {
+        id: 274,
+        q: "What is the relation of the coronoid process to the mandibular condyle?",
+        options: ["Medial", "Lateral", "Anterior", "Posterior"],
+        correct: 2,
+        explain: "On the mandible ramus, the Coronoid process is anterior, and the Condylar process (which forms the TMJ) is posterior."
+    },
+    {
+        id: 275,
+        q: "Which type of shock occurs as a result of injection of contrast medium?",
+        options: ["Anaphylactic", "Hypovolemic", "Neurogenic", "Septic"],
+        correct: 0,
+        explain: "Contrast media can trigger a severe allergic reaction known as Anaphylactic shock (or anaphylactoid reaction)."
+    },
+    {
+        id: 276,
+        q: "What is the location of the greater trochanter?",
+        options: ["Proximal femur", "Cervical spine", "Distal femur", "Lower pelvis"],
+        correct: 0,
+        explain: "The Greater Trochanter is a large bony prominence located at the proximal (upper) end of the femur, lateral to the neck."
+    },
+    {
+        id: 277,
+        q: "At which level is the tip of the mastoid process?",
+        options: ["C1", "C2", "C3", "Sternal notch"],
+        correct: 0,
+        explain: "The tip of the mastoid process aligns roughly with the level of the Atlas (C1)."
+    },
+    {
+        id: 278,
+        q: "The Talus bone is part of which region?",
+        options: ["Skull", "Hand", "Facial", "Foot"],
+        correct: 3,
+        explain: "The Talus is the second largest tarsal bone in the foot and creates the ankle joint with the tibia and fibula."
+    },
+    {
+        id: 279,
+        q: "Which facial bones are also known as the cheek bones?",
+        options: ["Frontal", "Maxilla", "Temporal", "Zygomatic"],
+        correct: 3,
+        explain: "The Zygomatic bones form the prominence of the cheeks."
+    },
+    {
+        id: 280,
+        q: "Given K=1000, bone attenuation 0.38, water 0.19. What is the CT number for bone?",
+        options: ["2000", "1500", "1000", "500"],
+        correct: 2,
+        explain: "Formula: CT# = K * (U_tissue - U_water) / U_water. 1000 * (0.38 - 0.19) / 0.19 = 1000 * (0.19/0.19) = 1000."
+    },
+    {
+        id: 281,
+        q: "A fracture involving the whole diameter of the bone is known as:",
+        options: ["Avulsion", "Complete", "Greenstick", "Comminuted"],
+        correct: 1,
+        explain: "A Complete fracture breaks the bone into two or more separate pieces, involving the entire cross-section."
+    },
+    {
+        id: 282,
+        q: "What is the recommended collimation (slice thickness) for imaging lung nodules?",
+        options: ["1 mm", "2-3 mm", "4-5 mm", "6-7 mm"],
+        correct: 0,
+        explain: "High-resolution CT (HRCT) or nodule assessment requires thin slices, typically 1 mm or less, to accurately measure size and shape."
+    },
+    {
+        id: 283,
+        q: "Which MRI pulse sequence suppresses signal from adipose (fat) tissue?",
+        options: ["SSFP", "STIR", "CSE", "TOF"],
+        correct: 1,
+        explain: "STIR (Short Tau Inversion Recovery) is an inversion recovery sequence specifically timed to null (suppress) the signal from fat."
+    },
+    {
+        id: 284,
+        q: "What is the main function of the ultrasound transducer?",
+        options: ["Emit and receive sound", "Display the image", "Modify the image", "Store the image"],
+        correct: 0,
+        explain: "The transducer crystals use the piezoelectric effect to both transmit sound waves into the body and receive the returning echoes."
+    },
+    {
+        id: 285,
+        q: "What is the term for the joint between the forearm and carpal bones?",
+        options: ["Radiocarpal", "Distal radioulnar", "Proximal radioulnar", "Metatarsophalangeal"],
+        correct: 0,
+        explain: "The wrist joint proper is the Radiocarpal joint, formed by the radius and the proximal row of carpal bones."
+    },
+    {
+        id: 286,
+        q: "Through which location is the needle inserted in an air encephalogram (pneumoencephalography)?",
+        options: ["Eye", "Skull", "Neck", "Lumbar spine"],
+        correct: 3,
+        explain: "Though an obsolete procedure, air was injected via a lumbar puncture (intrathecally) to rise up the spinal canal into the brain ventricles."
+    },
+    {
+        id: 287,
+        q: "In scintigraphy, what is the effect of reducing distance between patient and parallel hole collimator?",
+        options: ["Increase size/resolution", "Decrease resolution", "Increase image resolution", "Increase size"],
+        correct: 2,
+        explain: "Parallel hole collimators provide the best resolution when the object is as close to the detector as possible."
+    },
+    {
+        id: 288,
+        q: "The petrous portion is part of which cranial bone?",
+        options: ["Parietal", "Occipital", "Temporal", "Zygomatic"],
+        correct: 2,
+        explain: "The Petrous portion (pyramid) is the dense part of the Temporal bone that houses the organs of hearing and balance."
+    },
+    {
+        id: 289,
+        q: "Which is a major function of the liver?",
+        options: ["Secretion of urea", "Production and secretion of bile", "Concentration of bile", "Production of glucagon"],
+        correct: 1,
+        explain: "The liver produces bile (which emulsifies fats). The gallbladder stores and concentrates it."
+    },
+    {
+        id: 290,
+        q: "A radiographer receives a patient complaining of Left wrist pain, but the order says Right. What to do?",
+        options: ["Perform Left", "Perform Right", "Perform both", "Check with referring physician"],
+        correct: 3,
+        explain: "Any discrepancy between the order and the patient's symptoms/history must be clarified with the ordering physician before proceeding."
+    },
+    {
+        id: 291,
+        q: "If a patient stops breathing in the X-ray department, what is the first action?",
+        options: ["Notify radiologist", "Begin CPR/Call Emergency", "Sit patient up", "Image patient"],
+        correct: 1,
+        explain: "Respiratory arrest is a life-threatening emergency. Immediate BLS (Basic Life Support/CPR) protocols and calling a code/emergency are required."
+    },
+    {
+        id: 292,
+        q: "What is the most likely infection acquired in healthcare facilities?",
+        options: ["Fomite", "Iatrogenic", "Idiopathic", "Nosocomial"],
+        correct: 3,
+        explain: "Nosocomial infections (or Healthcare-Associated Infections - HAIs) are those acquired during a hospital stay."
+    },
+    {
+        id: 293,
+        q: "A 50yo patient on a stretcher develops dyspnea. What is the standard oxygen rate to deliver?",
+        options: ["1-4 L/min", "1-5 L/min", "1-6 L/min", "1-7 L/min"],
+        correct: 0,
+        explain: "Standard oxygen therapy via nasal cannula is typically started at 1-4 Liters per minute."
+    },
+    {
+        id: 294,
+        q: "Which bones form the proximal row of carpals?",
+        options: ["Scaphoid, lunate, triquetrum, pisiform", "Scaphoid, capitate, triquetrum, hamate", "Trapezium, trapezoid, capitate, hamate", "Scaphoid, trapezium, triquetrum, pisiform"],
+        correct: 0,
+        explain: "The proximal row (lateral to medial) consists of: Scaphoid, Lunate, Triquetrum, Pisiform. (SLTP)."
+    },
+    {
+        id: 295,
+        q: "Which term refers to difficulty during urination?",
+        options: ["Oliguria", "Dysuria", "Anuria", "Pyuria"],
+        correct: 1,
+        explain: "Dysuria is the medical term for painful or difficult urination."
+    },
+    {
+        id: 296,
+        q: "Which process converts ultrasound energy into heat in the medium?",
+        options: ["Reflection", "Refraction", "Absorption", "Scattering"],
+        correct: 2,
+        explain: "Absorption is the conversion of sound energy into heat as it passes through tissue, which is the primary cause of attenuation."
+    },
+    {
+        id: 297,
+        q: "In which bone is the sella turcica located?",
+        options: ["Frontal", "Parietal", "Occipital", "Sphenoid"],
+        correct: 3,
+        explain: "The Sella Turcica (Turkish Saddle) is a saddle-shaped depression in the body of the Sphenoid bone that holds the pituitary gland."
+    },
+    {
+        id: 298,
+        q: "Which method helps prevent contrast-induced nephropathy?",
+        options: ["Increase contrast volume", "Use low-osmolality contrast", "Use iodinated contrast", "Dehydrate patient"],
+        correct: 1,
+        explain: "Low-osmolality contrast media (LOCM) is less toxic to the kidneys. Hydration (not dehydration) is also key."
+    },
+    {
+        id: 299,
+        q: "Which type of brain hematoma appears as a low density crescent shape on non-contrast CT?",
+        options: ["Sub-acute subdural", "Chronic subdural", "Chronic epidural", "Acute subdural"],
+        correct: 1,
+        explain: "Acute blood is hyperdense (white). Over time (chronic), it becomes hypodense (dark/low density). Subdurals are crescent-shaped."
+    },
+    {
+        id: 300,
+        q: "Which part of the scapula is the Coracoid process located on?",
+        options: ["Posterior", "Anterior", "Medial", "Inferior"],
+        correct: 1,
+        explain: "The Coracoid process projects anteriorly from the superior border of the scapula."
+    },
+    {
+        id: 301,
+        q: "Which body plane divides the thorax into equal anterior and posterior parts?",
+        options: ["Mid Sagittal", "Mid coronal", "Transthoracic", "Mid-transverse"],
+        correct: 1,
+        explain: "The Mid-coronal (or Mid-axillary) plane divides the body vertically into equal anterior (front) and posterior (back) halves."
+    },
+    {
+        id: 302,
+        q: "Which of the following is the most appropriate description of the Spinal cord end point?",
+        options: ["Ends at S2-S3", "Ends at L1-L2", "Has 35 pairs of nerves", "Comes out of foramen magnum"],
+        correct: 1,
+        explain: "The spinal cord typically terminates at the conus medullaris, located at the level of the L1-L2 intervertebral space in adults."
+    },
+    {
+        id: 303,
+        q: "A perfusion lung scan demonstrates activity in the kidneys and brain. What does this indicate?",
+        options: ["Chronic renal failure", "Congestive heart failure", "Right to left cardiac shunt", "COPD"],
+        correct: 2,
+        explain: "MAA particles are trapped in lung capillaries. If they appear in the brain/kidneys, they must have bypassed the lungs via a Right-to-Left shunt (hole in the heart)."
+    },
+    {
+        id: 304,
+        q: "Rare earth screens have an X-ray to light conversion efficiency of approximately:",
+        options: ["3-5%", "10-15%", "18-20%", "50-60%"],
+        correct: 2,
+        explain: "Rare earth screens are significantly more efficient than Calcium Tungstate (approx 5%), converting about 18-20% of absorbed x-ray energy into light."
+    },
+    {
+        id: 305,
+        q: "Which of the following primarily determines the energy (penetrability) of the produced X-ray?",
+        options: ["Filtration", "Kilovoltage (kVp)", "Milliamperage (mA)", "Exposure time"],
+        correct: 1,
+        explain: "kVp controls the potential difference, which determines the speed of electrons and thus the energy (quality/penetration) of the resulting x-ray beam."
+    },
+    {
+        id: 306,
+        q: "What type of light is safe for a standard radiographic Dark Room?",
+        options: ["Fluorescent", "White", "Green", "Safe (Red filter)"],
+        correct: 3,
+        explain: "A 'Safe light' uses a specific red filter (like GBX-2) that emits wavelengths to which blue/green-sensitive radiographic film is not sensitive."
+    },
+    {
+        id: 307,
+        q: "Which best defines isotopes?",
+        options: ["Same protons, different neutrons", "Same protons, different electrons", "Same neutrons, different protons", "Same protons, electrons, and neutrons"],
+        correct: 0,
+        explain: "Isotopes are atoms of the same element (same number of protons/atomic number) but with a different number of neutrons (different atomic mass)."
+    },
+    {
+        id: 308,
+        q: "Which combination of factors best reduces patient exposure?",
+        options: ["High mAs, Low kVp", "Low kVp, No collimation", "High kVp, Collimation, Immobilization", "High mAs, Grid use"],
+        correct: 2,
+        explain: "High kVp allows for lower mAs (reducing dose). Collimation reduces tissue volume irradiated. Immobilization prevents repeats due to motion."
+    },
+    {
+        id: 309,
+        q: "What is a characteristic of Direct Current (DC)?",
+        options: ["Used in houses", "Flows in 1 direction", "Has 2 directions", "Can be elevated by transformers"],
+        correct: 1,
+        explain: "Direct Current (DC) flows in only one direction (e.g., battery), whereas Alternating Current (AC) oscillates."
+    },
+    {
+        id: 310,
+        q: "What is the most frequently used method for vascular catheterization?",
+        options: ["Moniz", "Grandy", "Doppler", "Seldinger"],
+        correct: 3,
+        explain: "The Seldinger technique is the universal standard for percutaneous access to blood vessels using a needle, guidewire, and catheter."
+    },
+    {
+        id: 311,
+        q: "Through which location is the needle inserted for an air encephalogram (pneumoencephalography)?",
+        options: ["Eye", "Skull", "Neck", "Lumbar spine"],
+        correct: 3,
+        explain: "Air was injected into the subarachnoid space via a lumbar puncture to float up into the brain ventricles (historical procedure, replaced by CT/MRI)."
+    },
+    {
+        id: 312,
+        q: "Why is MRI superior to CT in diagnosing disc herniation?",
+        options: ["Low radiation", "Short scan time", "Better visualization of soft tissue", "Better bony detail"],
+        correct: 2,
+        explain: "MRI has superior soft tissue contrast resolution, allowing clear distinction between the intervertebral disc, spinal cord, and nerve roots."
+    },
+    {
+        id: 313,
+        q: "Why must a patient fast for 8-12 hours prior to a gallbladder ultrasound?",
+        options: ["Enable bile release", "Differentiate stones", "Distend gallbladder", "Reduce gas"],
+        correct: 2,
+        explain: "Fasting prevents the gallbladder from contracting (releasing bile), keeping it distended and fluid-filled for better visualization of stones/walls."
+    },
+    {
+        id: 314,
+        q: "What is the typical shelf-life of a prepared Tc-99m MDP kit?",
+        options: ["11-12 hours", "6-8 hours", "1-2 hours", "24 hours"],
+        correct: 1,
+        explain: "Most Technetium-99m radiopharmaceutical kits are stable for use for approximately 6-8 hours after preparation."
+    },
+    {
+        id: 315,
+        q: "What is the critical organ (highest dose) for Tc-99m MDP?",
+        options: ["Bladder", "Thyroid", "Kidney", "Spleen"],
+        correct: 0,
+        explain: "Tc-99m MDP is excreted via the urinary tract. The bladder wall receives the highest radiation dose, especially if the patient does not void frequently."
+    },
+    {
+        id: 316,
+        q: "Which contrast is used for routine esophagus and stomach exams?",
+        options: ["Urografin", "Omnipaque", "Barium nitrates", "Barium sulphate"],
+        correct: 3,
+        explain: "Barium Sulphate is the standard positive contrast agent for GI tract studies unless a perforation is suspected."
+    },
+    {
+        id: 317,
+        q: "Which bone contains the Coracoid process?",
+        options: ["Radius", "Clavicle", "Scapula", "Humerus"],
+        correct: 2,
+        explain: "The Coracoid process is a hook-like structure on the anterior aspect of the Scapula."
+    },
+    {
+        id: 318,
+        q: "Which type of shock is most likely to occur due to contrast media injection?",
+        options: ["Neurogenic", "Cardiogenic", "Hypovolemic", "Anaphylactic"],
+        correct: 3,
+        explain: "Contrast media can trigger an Anaphylactic (or anaphylactoid) shock, a severe hypersensitivity reaction."
+    },
+    {
+        id: 319,
+        q: "Where does the Left Common Carotid Artery originate?",
+        options: ["Brachiocephalic", "Right subclavian", "Ascending aorta", "Arch of the aorta"],
+        correct: 3,
+        explain: "The Left Common Carotid arises directly from the Aortic Arch. (The Right Common Carotid arises from the Brachiocephalic artery)."
+    },
+    {
+        id: 320,
+        q: "To avoid urine backflow during an exam with a Foley catheter, where should the bag be placed?",
+        options: ["At bladder level", "Below bladder level", "Above bladder level", "Clamped"],
+        correct: 1,
+        explain: "The drainage bag must always be kept lower than the bladder to prevent gravity-dependent backflow, which causes infection."
+    },
+    {
+        id: 321,
+        q: "What is the best method for preventing voluntary motion during radiography?",
+        options: ["Immobilization devices", "Clear communication", "Short exposure", "High kV"],
+        correct: 1,
+        explain: "While short exposure helps, the *best* primary method for *voluntary* motion is giving clear, understandable instructions to the patient."
+    },
+    {
+        id: 322,
+        q: "How should you communicate with a non-Arabic speaking patient?",
+        options: ["Trained interpreter", "Speak slowly", "Draw pictures", "Family member"],
+        correct: 0,
+        explain: "A trained medical interpreter is the standard of care to ensure accurate medical communication and legal consent."
+    },
+    {
+        id: 323,
+        q: "If a technologist releases confidential patient info unauthorized, they are guilty of:",
+        options: ["Spoken defamation", "Written defamation", "False imprisonment", "Invasion of privacy"],
+        correct: 3,
+        explain: "Releasing protected health information (PHI) without consent is a breach of confidentiality, legally termed Invasion of Privacy."
+    },
+    {
+        id: 324,
+        q: "If a patient feels faint while seated, what is the immediate action?",
+        options: ["Lay down and elevate legs", "Trendelenburg", "Recovery position", "Call for help and leave"],
+        correct: 0,
+        explain: "If a patient is faint (syncope), lay them supine and elevate their legs to increase blood flow to the brain."
+    },
+    {
+        id: 325,
+        q: "What is the standard emergency code color for cardiac arrest?",
+        options: ["Red", "Grey", "Blue", "Silver"],
+        correct: 2,
+        explain: "Code Blue is the universal hospital code for a medical emergency, specifically cardiac or respiratory arrest."
+    },
+    {
+        id: 326,
+        q: "Which transport method is best for a patient unable to stand for a foot X-ray?",
+        options: ["Hydraulic lift", "Slider board", "Wheelchair", "Stretcher"],
+        correct: 2,
+        explain: "A wheelchair is suitable for transporting a patient for a foot exam if they cannot walk but can sit. If they cannot sit, a stretcher is used. (Wheelchair is standard for 'unable to stand' but 'able to sit')."
+    },
+    {
+        id: 327,
+        q: "Which description fits the Radius bone?",
+        options: ["Longer than ulna", "Lateral bone of leg", "Lateral bone of forearm", "Medial bone of forearm"],
+        correct: 2,
+        explain: "The Radius is the lateral bone of the forearm (thumb side)."
+    },
+    {
+        id: 328,
+        q: "What is the common passageway for food, fluids, and air?",
+        options: ["Larynx", "Pharynx", "Epiglottis", "Esophagus"],
+        correct: 1,
+        explain: "The Pharynx (throat) serves as a pathway for both the respiratory (air) and digestive (food) systems."
+    },
+    {
+        id: 329,
+        q: "From which chamber does the Pulmonary Artery arise?",
+        options: ["Left atrium", "Right atrium", "Left ventricle", "Right ventricle"],
+        correct: 3,
+        explain: "The Right Ventricle pumps deoxygenated blood into the Pulmonary Artery to go to the lungs."
+    },
+    {
+        id: 330,
+        q: "What is the standard patient position for inserting a Barium Enema tip?",
+        options: ["Prone", "Supine", "Sim's (Left Lateral)", "Right Side"],
+        correct: 2,
+        explain: "The Sim's position (lying on the left side with the right leg flexed) relaxes the abdominal muscles and facilitates tip insertion."
+    },
+    {
+        id: 331,
+        q: "The uppermost portion of the iliac crest is at the level of:",
+        options: ["L4", "Costal margin", "Umbilicus", "L5"],
+        correct: 0,
+        explain: "The iliac crest is a key landmark located at the level of the L4 vertebra."
+    },
+    {
+        id: 332,
+        q: "Which ultrasound mode is used to study blood flow?",
+        options: ["Doppler", "B-mode", "M-mode", "A-mode"],
+        correct: 0,
+        explain: "Doppler ultrasound measures the change in frequency of sound waves reflected off moving red blood cells to assess blood flow."
+    },
+    {
+        id: 333,
+        q: "Sialography is the examination of:",
+        options: ["Cerebral ventricles", "Salivary glands", "Lymphatic system", "Pancreatic duct"],
+        correct: 1,
+        explain: "Sialography is the radiographic examination of the salivary glands and ducts using contrast media."
+    },
+    {
+        id: 334,
+        q: "What frequency transducer is appropriate for Endovaginal Sonography?",
+        options: ["5.0 - 7.5 MHz", "2.0 - 3.0 MHz", "3.5 - 4.0 MHz", "10 - 15 MHz"],
+        correct: 0,
+        explain: "Endovaginal probes are close to the anatomy, allowing higher frequencies (5-7.5 MHz) for better resolution without losing penetration."
+    },
+    {
+        id: 335,
+        q: "If ultrasound brightness is inaccurate at depth, what should be adjusted?",
+        options: ["Focusing", "Beam intensity", "Frequency", "Time-Gain Compensation (TGC)"],
+        correct: 3,
+        explain: "TGC controls allow the operator to selectively increase the gain (brightness) at deeper levels to compensate for attenuation."
+    },
+    {
+        id: 336,
+        q: "Which parameters produce a T2 weighted MRI image?",
+        options: ["Long TR, Short TE", "Long TR, Long TE", "Short TR, Short TE", "Short TR, Long TE"],
+        correct: 1,
+        explain: "T2 weighting requires a Long TR (to minimize T1 effects) and a Long TE (to maximize T2 decay differences)."
+    },
+    {
+        id: 337,
+        q: "In Spin Echo, scan time is determined by:",
+        options: ["TR x Phase steps x NEX", "TR x Frequency steps", "TE x TR", "TR x Slices"],
+        correct: 0,
+        explain: "Scan Time = Repetition Time (TR) x Number of Phase Encoding Steps x Number of Excitations (NEX/NSA)."
+    },
+    {
+        id: 338,
+        q: "If C7 is not visible on a lateral cervical spine X-ray, what is the cause?",
+        options: ["Patient sitting", "Patient erect", "Exposure during respiration", "Shoulders superimposition"],
+        correct: 3,
+        explain: "The shoulders often block the view of C7-T1. A 'Swimmer's View' or depressing the shoulders is required."
+    },
+    {
+        id: 339,
+        q: "What position describes standing with back to IR, left side turned 45 degrees to IR?",
+        options: ["LPO", "RPO", "LAO", "RAO"],
+        correct: 0,
+        explain: "Back to IR = Posterior. Left side touching/turned to IR = Left Posterior Oblique (LPO)."
+    },
+    {
+        id: 340,
+        q: "Patient lying supine with head lower than feet is:",
+        options: ["Lordotic", "Lithotomy", "Trendelenburg", "Sim's"],
+        correct: 2,
+        explain: "Trendelenburg position puts the head lower than the feet, often used to treat shock or assist in venous return."
+    },
+    {
+        id: 341,
+        q: "Which structure is located in the Left Upper Quadrant (LUQ)?",
+        options: ["Spleen", "Gallbladder", "Hepatic flexure", "Appendix"],
+        correct: 0,
+        explain: "The Spleen is located in the LUQ. (Gallbladder is RUQ, Appendix is RLQ)."
+    },
+    {
+        id: 342,
+        q: "Which procedure injects contrast into the renal pelvis via a catheter in the ureter?",
+        options: ["Nephrotomography", "Cystourethrography", "Retrograde pyelography", "IVP"],
+        correct: 2,
+        explain: "Retrograde ('against the flow') Pyelography involves inserting a catheter up the ureter to inject contrast directly into the kidney."
+    },
+    {
+        id: 343,
+        q: "What is the preparation for a bladder ultrasound?",
+        options: ["Full bladder", "Empty bladder", "Fasting 6 hours", "Fasting 12 hours"],
+        correct: 0,
+        explain: "A full bladder acts as an acoustic window to see pelvic organs and allows assessment of the bladder wall and volume."
+    },
+    {
+        id: 344,
+        q: "Which CT generation used a stationary ring of detectors and rotating tube?",
+        options: ["2nd", "3rd", "4th", "Electron beam"],
+        correct: 2,
+        explain: "4th generation scanners feature a fixed 360-degree ring of detectors with only the X-ray tube rotating."
+    },
+    {
+        id: 345,
+        q: "Which case is most urgent in the X-ray department?",
+        options: ["Unstable vital signs", "Result needed for care", "High BP", "Prolapsed disk"],
+        correct: 0,
+        explain: "A patient with unstable vital signs (ABC: Airway, Breathing, Circulation issues) is a medical emergency and takes priority."
+    },
+    {
+        id: 346,
+        q: "How should you position a patient connected to a ventilator?",
+        options: ["Disconnect tubing", "Avoid disconnecting tubing", "Turn off ventilator", "Turn off alarm"],
+        correct: 1,
+        explain: "Never disconnect ventilator tubing or silence alarms without physician/nurse approval. Work around the equipment carefully."
+    },
+    {
+        id: 347,
+        q: "Where does the humeral head articulate to form the shoulder joint?",
+        options: ["Glenoid fossa", "Scapular spine", "Coronoid", "Acromion"],
+        correct: 0,
+        explain: "The Glenoid Fossa (cavity) of the scapula receives the head of the humerus."
+    },
+    {
+        id: 348,
+        q: "What is a Nasogastric (NG) tube used for?",
+        options: ["Feeding/Drainage", "Ventilation", "Heart monitoring", "Dialysis"],
+        correct: 0,
+        explain: "NG tubes are used for administering meds/food (feeding) or removing gastric contents (drainage/suction)."
+    },
+    {
+        id: 349,
+        q: "What results in better visualization of the liver during ultrasound?",
+        options: ["Fasting 8-12 hours", "Drinking water", "Eating fatty meal", "Full bladder"],
+        correct: 0,
+        explain: "Fasting reduces bowel gas (which blocks sound) and prevents gallbladder contraction, improving the view of the RUQ."
+    },
+    {
+        id: 350,
+        q: "What is the term for escape of contrast into subcutaneous tissue?",
+        options: ["Infusion", "Perfusion", "Excretion", "Extravasation"],
+        correct: 3,
+        explain: "Extravasation (or infiltration) is the leakage of IV fluid/contrast from the vein into the surrounding tissue."
+    }
+    
+    ];
+
+    let currentScore = 0;
+    let answeredQuestions = new Set(); // Track unique answered questions
+
+    // Load state from localStorage
+    function loadState() {
+        const savedScore = localStorage.getItem('radQuiz_score');
+        const savedAnswered = localStorage.getItem('radQuiz_answered');
+        
+        if (savedScore) currentScore = parseInt(savedScore);
+        if (savedAnswered) answeredQuestions = new Set(JSON.parse(savedAnswered));
+        
+        updateUI();
+    }
+
+    // Save state to localStorage
+    function saveState() {
+        localStorage.setItem('radQuiz_score', currentScore);
+        localStorage.setItem('radQuiz_answered', JSON.stringify([...answeredQuestions]));
+    }
+
+    function updateUI() {
+        document.getElementById('score').innerText = currentScore;
+        document.getElementById('total').innerText = quizData.length;
+    }
+
+    function renderQuiz() {
+        const container = document.getElementById('quiz-container');
+        container.innerHTML = '';
+
+        quizData.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            
+            // Check if already answered correctly to restore state (optional feature, 
+            // kept simple here by just rendering fresh, but score persists)
+            // Ideally we could visually mark answered questions, but for simplicity
+            // we will let users interact again, but only score on first attempt per session load
+            // OR strictly prevent re-scoring. Logic below prevents re-scoring.
+
+            let optionsHtml = '';
+            item.options.forEach((opt, optIndex) => {
+                optionsHtml += `<button class="option-btn" onclick="checkAnswer(this, ${index}, ${optIndex})">${String.fromCharCode(65+optIndex)}. ${opt}</button>`;
+            });
+
+            card.innerHTML = `
+                <div class="question-text">${index + 1}. ${item.q}</div>
+                <div class="options-grid" id="options-${index}">
+                    ${optionsHtml}
+                </div>
+                <div class="explanation" id="explain-${index}">
+                    <strong>Explanation:</strong> ${item.explain}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function checkAnswer(btn, qIndex, optIndex) {
+        // Prevent clicking if already answered in this view session
+        const optionsDiv = document.getElementById(`options-${qIndex}`);
+        if (optionsDiv.getAttribute('data-answered') === 'true') return;
+
+        const question = quizData[qIndex];
+        const isCorrect = optIndex === question.correct;
+        const explanation = document.getElementById(`explain-${qIndex}`);
+        const allBtns = optionsDiv.querySelectorAll('.option-btn');
+
+        // Mark this question as answered in the UI
+        optionsDiv.setAttribute('data-answered', 'true');
+
+        // Visual feedback
+        if (isCorrect) {
+            btn.classList.add('correct');
+            // Update score only if not previously answered in history
+            if (!answeredQuestions.has(qIndex)) {
+                currentScore++;
+                answeredQuestions.add(qIndex);
+                saveState();
+                updateUI();
+            }
+        } else {
+            btn.classList.add('incorrect');
+            // Highlight the correct one
+            allBtns[question.correct].classList.add('correct');
+        }
+
+        // Show explanation
+        explanation.style.display = 'block';
+    }
+
+    function resetProgress() {
+        if(confirm("Are you sure you want to reset your score?")) {
+            currentScore = 0;
+            answeredQuestions.clear();
+            saveState();
+            updateUI();
+            renderQuiz(); // Re-render to clear visual states
+            window.scrollTo(0,0);
+        }
+    }
+
+    // Initialize
+    loadState();
+    renderQuiz();
+
+</script>
+
+</body>
+</html>
