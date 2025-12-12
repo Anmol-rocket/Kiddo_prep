@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AIIMS CRE Radiographer - Mobile Ready</title>
+    <title>AIIMS CRE Full Mock (100 Q)</title>
     <style>
         :root {
             --primary: #2563eb;
@@ -13,212 +13,95 @@
             --success: #10b981;
             --danger: #ef4444;
             --warning: #f59e0b;
+            --correct-bg: #dcfce7;
+            --wrong-bg: #fee2e2;
         }
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent; /* Remove blue highlight on mobile tap */
-        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-bottom: 80px; }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 0; /* Remove body padding for mobile edge-to-edge feel */
-            padding-bottom: 80px; /* Space for scrolling past bottom */
-        }
+        .container { max-width: 950px; margin: 0 auto; padding: 15px; }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 15px;
-        }
-
-        /* --- STICKY HEADER --- */
+        /* HEADER */
         header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-            padding: 12px 15px;
-            border-radius: 0 0 12px 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 4px solid var(--secondary);
+            background: rgba(255, 255, 255, 0.98);
+            padding: 12px 15px; border-radius: 0 0 12px 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            border-top: 5px solid var(--primary);
         }
+        .header-left h1 { margin: 0; font-size: 1.2rem; color: var(--secondary); }
+        .header-left .sub-info { font-size: 0.75rem; color: #666; margin-top: 2px; }
+        #progress-indicator { background: #e5e7eb; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; color: #374151; }
 
-        .header-left h1 {
-            margin: 0;
-            font-size: 1.1rem;
-            color: var(--secondary);
-        }
-
-        .header-left .exam-info {
-            font-size: 0.75rem;
-            color: #666;
-            margin-top: 2px;
-        }
-
-        #progress-indicator {
-            background: var(--bg);
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        /* --- QUESTIONS --- */
+        /* QUESTION CARDS */
         .question-card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 15px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        .question-text {
-            font-weight: 600;
-            font-size: 1.05rem;
-            margin-bottom: 15px;
-            color: #111;
-        }
-
-        .options-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .option-label {
-            display: flex;
-            align-items: flex-start; /* Align top for long text */
-            padding: 12px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.1s;
-            background: #fff;
-            user-select: none; /* Prevent text selection on rapid tapping */
-        }
-
-        .option-label:active {
-            background-color: #f3f4f6;
-        }
-
-        /* Custom Radio Style */
-        input[type="radio"] {
-            min-width: 20px;
-            min-height: 20px;
-            margin-top: 2px; /* Align with text */
-            margin-right: 12px;
-            accent-color: var(--primary);
-        }
-
-        .option-text {
-            font-size: 0.95rem;
-            line-height: 1.4;
-        }
-
-        .option-label.selected {
-            border-color: var(--primary);
-            background-color: #eff6ff;
-            font-weight: 500;
-        }
-
-        /* --- SUBMIT BUTTON --- */
-        .submit-btn {
-            display: block;
-            width: 100%;
-            padding: 16px;
-            background-color: var(--secondary);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-top: 25px;
-            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
-            /* Prevent double tap zoom */
-            touch-action: manipulation; 
-        }
-
-        .submit-btn:active {
-            transform: scale(0.98);
-            background-color: var(--primary);
-        }
-
-        /* --- RESULT MODAL --- */
-        #result-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 1000;
-            overflow-y: auto; /* Allow scrolling if phone is landscape */
-            padding: 20px;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .result-content {
-            background: white;
-            padding: 25px;
-            border-radius: 16px;
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            margin: auto;
-        }
-
-        .score-display {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin: 15px 0;
-            line-height: 1;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .stat-box {
-            padding: 12px 5px;
-            border-radius: 8px;
-            background: #f9fafb;
+            background: white; padding: 20px; border-radius: 12px; margin-top: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid transparent;
+            transition: all 0.3s ease;
         }
         
-        .stat-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
-        .stat-value { font-size: 1.1rem; font-weight: bold; margin-top: 4px; }
+        .question-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .q-badge { font-size: 0.75rem; font-weight: bold; padding: 2px 8px; border-radius: 4px; display: none; }
+        
+        .question-text { font-weight: 600; font-size: 1.05rem; margin-bottom: 15px; line-height: 1.5; }
 
-        .close-btn {
-            background: #374151;
-            color: white;
-            padding: 14px;
-            width: 100%;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1rem;
+        .options-grid { display: flex; flex-direction: column; gap: 8px; }
+        
+        .option-label {
+            display: flex; align-items: flex-start; padding: 12px;
+            border: 1px solid #e5e7eb; border-radius: 8px; cursor: pointer;
+            background: #fff; transition: 0.1s;
+            position: relative;
         }
 
-        /* --- MOBILE SPECIFIC TWEAKS --- */
-        @media (max-width: 480px) {
-            h1 { font-size: 1rem; }
-            .exam-info { font-size: 0.7rem; }
-            .container { padding: 10px; }
-            .question-card { padding: 15px; }
-            .stat-value { font-size: 1rem; }
+        /* Interactive States */
+        .option-label:active { background-color: #f3f4f6; }
+        .option-label.selected { border-color: var(--primary); background-color: #eff6ff; font-weight: 600; }
+        
+        /* REVIEW MODE STYLES */
+        body.review-mode .option-label { pointer-events: none; } /* Disable clicking in review */
+        
+        .option-label.correct-answer { border-color: var(--success); background-color: var(--correct-bg); color: #065f46; }
+        .option-label.wrong-answer { border-color: var(--danger); background-color: var(--wrong-bg); color: #991b1b; }
+        
+        .option-label.correct-answer::after { content: "✓"; position: absolute; right: 15px; color: var(--success); font-weight: bold; font-size: 1.2rem; }
+        .option-label.wrong-answer::after { content: "✗"; position: absolute; right: 15px; color: var(--danger); font-weight: bold; font-size: 1.2rem; }
+
+        /* EXPLANATION BOX */
+        .explanation-box {
+            margin-top: 15px; padding: 15px; background: #f0fdfa;
+            border-left: 4px solid var(--success); border-radius: 6px;
+            display: none; font-size: 0.95rem; color: #334155;
         }
+        .explanation-title { font-weight: bold; color: #059669; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+
+        input[type="radio"] { margin-right: 12px; margin-top: 4px; accent-color: var(--primary); min-width: 18px; min-height: 18px; }
+
+        /* BUTTONS */
+        .action-btn {
+            display: block; width: 100%; padding: 18px; 
+            border: none; border-radius: 10px; font-size: 1.1rem; font-weight: 700; margin-top: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn-submit { background-color: var(--secondary); color: white; }
+        .btn-review { background-color: #374151; color: white; margin-top: 15px; }
+
+        /* MODAL */
+        #result-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 1000; overflow-y: auto; padding: 20px;
+            align-items: center; justify-content: center;
+        }
+        .result-content { background: white; padding: 30px; border-radius: 16px; width: 100%; max-width: 450px; text-align: center; margin: auto; }
+        .score-big { font-size: 3.5rem; font-weight: 800; color: var(--primary); margin: 10px 0; line-height: 1; }
+        .score-sub { font-size: 1.2rem; color: #6b7280; }
+        
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 25px 0; }
+        .stat-card { background: #f9fafb; padding: 15px; border-radius: 10px; border-bottom: 3px solid #ccc; }
+        .stat-num { font-size: 1.4rem; font-weight: bold; display: block; }
+        .stat-txt { font-size: 0.75rem; color: #666; text-transform: uppercase; }
+
     </style>
 </head>
 <body>
@@ -226,8 +109,8 @@
 <div class="container">
     <header>
         <div class="header-left">
-            <h1>AIIMS CRE Mock</h1>
-            <div class="exam-info">400 Marks | +4 / -1</div>
+            <h1>AIIMS CRE FULL MOCK</h1>
+            <div class="sub-info">100 Questions | 400 Marks | +4 / -1</div>
         </div>
         <div id="progress-indicator">
             <span id="attempt-count">0</span> / 100
@@ -237,169 +120,338 @@
     <div id="quiz-container">
         </div>
 
-    <button class="submit-btn" onclick="submitExam()">SUBMIT EXAM</button>
+    <button id="main-submit-btn" class="action-btn btn-submit" onclick="submitExam()">Submit Exam</button>
 </div>
 
 <div id="result-modal">
     <div class="result-content">
-        <h2 style="margin:0 0 10px 0; color:#333;">Result Summary</h2>
-        <div class="score-display">
-            <span id="final-score">0</span><span style="font-size:1.2rem; color:#999; font-weight:400">/400</span>
-        </div>
+        <h2 style="margin:0; color:#1f2937;">Exam Result</h2>
+        <div class="score-big"><span id="final-score">0</span></div>
+        <div class="score-sub">out of 400</div>
         
         <div class="stats-grid">
-            <div class="stat-box" style="border-bottom: 3px solid var(--success)">
-                <div class="stat-label">Correct</div>
-                <div class="stat-value" id="count-correct" style="color: var(--success)">0</div>
+            <div class="stat-card" style="border-color: var(--success)">
+                <span class="stat-num" id="r-correct" style="color:var(--success)">0</span>
+                <span class="stat-txt">Correct</span>
             </div>
-            <div class="stat-box" style="border-bottom: 3px solid var(--danger)">
-                <div class="stat-label">Incorrect</div>
-                <div class="stat-value" id="count-incorrect" style="color: var(--danger)">0</div>
+            <div class="stat-card" style="border-color: var(--danger)">
+                <span class="stat-num" id="r-incorrect" style="color:var(--danger)">0</span>
+                <span class="stat-txt">Incorrect</span>
             </div>
-            <div class="stat-box" style="border-bottom: 3px solid var(--warning)">
-                <div class="stat-label">Skipped</div>
-                <div class="stat-value" id="count-skipped">0</div>
+            <div class="stat-card" style="border-color: var(--warning)">
+                <span class="stat-num" id="r-skipped">0</span>
+                <span class="stat-txt">Skipped</span>
             </div>
-            <div class="stat-box" style="border-bottom: 3px solid var(--primary)">
-                <div class="stat-label">Accuracy</div>
-                <div class="stat-value" id="accuracy-perc">0%</div>
+            <div class="stat-card" style="border-color: var(--primary)">
+                <span class="stat-num" id="r-accuracy">0%</span>
+                <span class="stat-txt">Accuracy</span>
             </div>
         </div>
 
-        <button class="close-btn" onclick="resetExam()">Reset & Try Again</button>
+        <button class="action-btn btn-submit" onclick="enableReviewMode()">Review Answers & Explanations</button>
+        <button class="action-btn btn-review" onclick="resetExam()">Reset & Start Fresh</button>
     </div>
 </div>
 
 <script>
-    // --- DATABASE OF QUESTIONS (Same 20 samples, extensible to 100) ---
-    const questionsDB = [
-        { id: 1, q: "The 'Anode Heel Effect' is most pronounced when using:", options: ["Large film size and short SID", "Small film size and long SID", "Large film size and long SID", "Small film size and short SID"], correct: 0 },
-        { id: 2, q: "Which material is commonly used in the input phosphor of an image intensifier?", options: ["Calcium Tungstate", "Zinc Cadmium Sulfide", "Cesium Iodide", "Amorphous Selenium"], correct: 2 },
-        { id: 3, q: "What is the annual whole-body effective dose limit for radiation workers in India (AERB)?", options: ["50 mSv", "20 mSv", "100 mSv", "5 mSv"], correct: 1 },
-        { id: 4, q: "In MRI, the time interval between two successive 90-degree RF pulses is known as:", options: ["Echo Time (TE)", "Repetition Time (TR)", "Inversion Time (TI)", "Acquisition Time"], correct: 1 },
-        { id: 5, q: "Which radiographic view is best for visualizing the scaphoid bone?", options: ["AP view", "Lateral view", "Ulnar deviation view", "Radial deviation view"], correct: 2 },
-        { id: 6, q: "The process of removing low-energy X-ray photons from the beam to reduce patient dose is called:", options: ["Collimation", "Filtration", "Rectification", "Grid usage"], correct: 1 },
-        { id: 7, q: "Positive contrast media generally have a:", options: ["Low atomic number", "High atomic number", "Low density", "Similar density to soft tissue"], correct: 1 },
-        { id: 8, q: "Which artifact appears on a digital image if the cassette is not erased for 24-48 hours?", options: ["Moire pattern", "Ghost image / Fogging", "Quantum mottle", "Aliasing"], correct: 1 },
-        { id: 9, q: "The standard rotation speed of a diagnostic X-ray tube anode is approximately:", options: ["1,000 to 2,000 rpm", "3,000 to 3,600 rpm", "10,000 to 12,000 rpm", "500 rpm"], correct: 1 },
-        { id: 10, q: "In CT scan, the Hounsfield Unit (HU) for water is:", options: ["-1000", "0", "+1000", "+50"], correct: 1 },
-        { id: 11, q: "What is the active component of a TLD badge?", options: ["Silver Halide", "Lithium Fluoride", "Sodium Iodide", "Xenon gas"], correct: 1 },
-        { id: 12, q: "For a Lateral projection of the Cervical Spine, the recommended SID is:", options: ["100 cm (40 inches)", "180 cm (72 inches)", "90 cm (36 inches)", "120 cm (48 inches)"], correct: 1 },
-        { id: 13, q: "Which interaction is primarily responsible for subject contrast in diagnostic radiology?", options: ["Photoelectric effect", "Compton scattering", "Pair production", "Coherent scattering"], correct: 0 },
-        { id: 14, q: "The 'Grid Ratio' is defined as:", options: ["Height of lead strips / Distance between strips", "Width of strips / Height of strips", "Height of strips / Width of strips", "Distance between strips / Height of strips"], correct: 0 },
-        { id: 15, q: "In computed radiography (CR), the latent image is stored in:", options: ["Amorphous Silicon", "Photostimulable Phosphor (PSP) plate", "CCD Chip", "Film emulsion"], correct: 1 },
-        { id: 16, q: "Which of the following is a deterministic effect of radiation?", options: ["Cancer", "Genetic mutations", "Cataract", "Leukemia"], correct: 2 },
-        { id: 17, q: "Stenvers view is used to visualize:", options: ["Optic foramen", "Mastoid air cells / Petrous temporal bone", "Sella turcica", "Zygomatic arches"], correct: 1 },
-        { id: 18, q: "During fluoroscopy, the bucky slot cover must have a lead equivalent of at least:", options: ["0.25 mm Pb", "0.5 mm Pb", "1.0 mm Pb", "0.1 mm Pb"], correct: 0 },
-        { id: 19, q: "The 'Swimmer’s view' is used to demonstrate:", options: ["C1-C2 joint", "C7-T1 junction", "L5-S1 junction", "Thoracic spine AP"], correct: 1 },
-        { id: 20, q: "Which chemical is known as the 'clearing agent' in the fixer solution?", options: ["Hydroquinone", "Sodium Thiosulfate", "Potassium Bromide", "Glutaraldehyde"], correct: 1 }
+    // --- 100 QUESTION DATABASE ---
+    // Compressed format for size, but fully functional
+    const db = [
+        // PHYSICS & FUNDAMENTALS (1-20)
+        {id:1, q:"The process by which an AC current is converted into a DC current is called:", o:["Amplification","Rectification","Transformation","Ionization"], c:1, exp:"Rectification converts Alternating Current (AC) to Direct Current (DC), which is essential for X-ray tube operation."},
+        {id:2, q:"Which interaction dominates in diagnostic radiology for high atomic number tissues (like bone) at lower energies?", o:["Compton Scatter","Photoelectric Effect","Pair Production","Coherent Scatter"], c:1, exp:"The Photoelectric effect is proportional to Z^3, making it dominant in bone (high Z) at lower kVp, providing contrast."},
+        {id:3, q:"The unit of frequency is:", o:["Hertz (Hz)","Watt (W)","Joule (J)","Volt (V)"], c:0, exp:"Frequency is measured in Hertz (cycles per second)."},
+        {id:4, q:"The melting point of Tungsten is approximately:", o:["1000°C","3370°C","2500°C","5000°C"], c:1, exp:"Tungsten is used for the anode target because of its high melting point (~3370°C to 3422°C) to withstand heat."},
+        {id:5, q:"Which of the following increases the penetrating power (Quality) of the X-ray beam?", o:["Increasing mAs","Increasing kVp","Decreasing filtration","Increasing SID"], c:1, exp:"kVp (Kilovoltage peak) controls the energy/penetrability (Quality) of the beam."},
+        {id:6, q:"The primary function of a grid is to:", o:["Reduce patient dose","Absorb scattered radiation","Cool the tube","Increase geometric unsharpness"], c:1, exp:"Grids are placed between patient and film to absorb scattered radiation before it hits the receptor, improving contrast."},
+        {id:7, q:"What is the minimum lead equivalent thickness for a lead apron?", o:["0.1 mm Pb","0.25 mm Pb","1.0 mm Pb","2.0 mm Pb"], c:1, exp:"AERB/Standard guidelines typically require a minimum of 0.25 mm lead equivalence for general diagnostic aprons."},
+        {id:8, q:"The 'Heel Effect' causes the X-ray intensity to be:", o:["Higher on the anode side","Higher on the cathode side","Uniform across the beam","Zero at the center"], c:1, exp:"Due to the angle of the anode, X-ray intensity is greater on the Cathode side."},
+        {id:9, q:"In the X-ray tube, the negative terminal is called the:", o:["Anode","Cathode","Rotor","Stator"], c:1, exp:"The Cathode is the negative electrode containing the filament."},
+        {id:10, q:"Total filtration in a general X-ray tube operating above 70 kVp must be at least:", o:["1.5 mm Al","2.5 mm Al","0.5 mm Al","4.0 mm Al"], c:1, exp:"Regulatory standards require 2.5 mm Aluminum equivalent filtration for tubes operating above 70 kVp."},
+        {id:11, q:"The 'Inverse Square Law' states that intensity is inversely proportional to the square of the:", o:["Time","Voltage","Distance","Current"], c:2, exp:"I1/I2 = (D2/D1)^2. Intensity decreases rapidly as distance increases."},
+        {id:12, q:"Which of these is NOT a property of X-rays?", o:["Travel at speed of light","Can ionize matter","Are deflected by magnetic fields","Travel in straight lines"], c:2, exp:"X-rays are electromagnetic photons and have no charge; they are NOT deflected by magnetic or electric fields."},
+        {id:13, q:"The active layer of a radiographic film contains crystals of:", o:["Silver Bromide","Calcium Tungstate","Zinc Sulfide","Sodium Iodide"], c:0, exp:"Silver Halide crystals (mostly Silver Bromide) are the light-sensitive agents in film emulsion."},
+        {id:14, q:"Safe light fogging can occur if the bulb wattage exceeds:", o:["5 Watts","15 Watts","60 Watts","100 Watts"], c:1, exp:"Standard safelight bulbs are typically 15 Watts placed at least 1.2m away."},
+        {id:15, q:"CR (Computed Radiography) uses cassettes containing:", o:["Intensifying screens","Photostimulable Phosphor (PSP)","Amorphous Selenium","CCD"], c:1, exp:"CR uses PSP plates (usually Barium Fluorohalide) to store the latent image."},
+        {id:16, q:"The dose limit for a pregnant radiation worker (fetus dose) is:", o:["1 mSv","20 mSv","5 mSv","50 mSv"], c:0, exp:"The dose to the fetus should not exceed 1 mSv during the remainder of the pregnancy once declared."},
+        {id:17, q:"Which transformer law formula is correct?", o:["Vs/Vp = Ns/Np","Vs/Vp = Np/Ns","Vs/Vp = Is/Ip","None"], c:0, exp:"Voltage ratio is directly proportional to the turns ratio (Secondary/Primary)."},
+        {id:18, q:"To double the optical density of an image, you should:", o:["Double the kVp","Double the mAs","Double the SID","Halve the mAs"], c:1, exp:"mAs is directly proportional to density. Doubling mAs doubles the density."},
+        {id:19, q:"The specific device used to measure the specific gravity of developer solution is:", o:["Thermometer","Hydrometer","Sensitometer","Densitometer"], c:1, exp:"A Hydrometer measures the specific gravity (density) of liquids."},
+        {id:20, q:"Star artifact on a CT image is usually caused by:", o:["Patient motion","Metal implants","Beam hardening","Ring detector failure"], c:1, exp:"High density metal objects cause streak or 'star' artifacts in CT reconstruction."},
+        
+        // ANATOMY & POSITIONING (21-50)
+        {id:21, q:"The 'Odontoid Process' (Dens) is part of which vertebra?", o:["Atlas (C1)","Axis (C2)","C7","T1"], c:1, exp:"The Dens acts as a pivot and is part of the Axis (C2)."},
+        {id:22, q:"Which carpal bone is most commonly fractured?", o:["Lunate","Scaphoid","Capitate","Pisiform"], c:1, exp:"The Scaphoid is the most frequently fractured carpal bone."},
+        {id:23, q:"The 'Olecranon Process' is located on the:", o:["Radius","Humerus","Ulna","Scapula"], c:2, exp:"The Olecranon is the proximal end of the Ulna (the elbow tip)."},
+        {id:24, q:"For a standard PA Chest X-ray, the patient should act:", o:["Full expiration","Full inspiration (2nd breath)","Normal breathing","Shallow breathing"], c:1, exp:"Full inspiration expands the lungs (10 posterior ribs visible) and depresses the diaphragm."},
+        {id:25, q:"Which view best demonstrates the apices of the lungs without clavicular superimposition?", o:["Lordotic View","Lateral View","Oblique View","Decubitus View"], c:0, exp:"The AP Lordotic view (Lindblom method) projects the clavicles above the apices."},
+        {id:26, q:"The 'Acetabulum' is formed by the fusion of:", o:["Ilium and Ischium","Ilium and Pubis","Ilium, Ischium, and Pubis","Sacrum and Coccyx"], c:2, exp:"The hip socket (Acetabulum) is the junction of the Ilium, Ischium, and Pubis."},
+        {id:27, q:"A 'Judet View' is used to evaluate the:", o:["Shoulder","Acetabulum/Pelvis","Knee","Ankle"], c:1, exp:"Judet views (Internal/External Obliques) are specific for Acetabular fractures."},
+        {id:28, q:"The 'Sella Turcica' houses the:", o:["Pineal Gland","Pituitary Gland","Thyroid Gland","Thalamus"], c:1, exp:"The pituitary gland sits in the hypophyseal fossa of the Sella Turcica (Sphenoid bone)."},
+        {id:29, q:"Which projection is used to visualize the Zygomatic Arches?", o:["Submentovertex (SMV) / Jug Handle view","Towne's view","Lateral view","Caldwell view"], c:0, exp:"SMV view projects the zygomatic arches laterally (Jug handle appearance)."},
+        {id:30, q:"The 'Malleolus' is a bony prominence found in the:", o:["Wrist","Ankle","Elbow","Knee"], c:1, exp:"Medial and Lateral Malleoli are parts of the Tibia and Fibula at the ankle."},
+        {id:31, q:"KUB stands for:", o:["Kidney, Ureter, Bladder","Kidney, Urethra, Bowel","Kidney, Upper Bladder","Knee, Under Bone"], c:0, exp:"KUB is the standard abdominal plain film for Kidneys, Ureters, and Bladder."},
+        {id:32, q:"To demonstrate air-fluid levels in the abdomen, the patient must be:", o:["Supine","Prone","Erect or Decubitus","Trendelenburg"], c:2, exp:"A horizontal beam (Erect or Decubitus) is required to see horizontal air-fluid levels."},
+        {id:33, q:"The 'Glenoid Cavity' is part of the:", o:["Humerus","Scapula","Clavicle","Sternum"], c:1, exp:"The Glenoid fossa of the Scapula articulates with the humeral head."},
+        {id:34, q:"'Y-View' of the shoulder is primarily used to check for:", o:["Fracture of clavicle","Dislocation","Rotator cuff tear","Arthritis"], c:1, exp:"The Scapular Y view is excellent for determining anterior vs posterior shoulder dislocation."},
+        {id:35, q:"The anatomical landmark 'Iliopectineal line' is found in the:", o:["Pelvis","Skull","Thorax","Foot"], c:0, exp:"It is a ridge on the Ilium and Pubis bones in the pelvis."},
+        {id:36, q:"Where is the Grid usually placed?", o:["Inside the tube","Between tube and patient","Between patient and image receptor","Behind the image receptor"], c:2, exp:"Grid is placed between patient and IR to catch scatter exiting the patient."},
+        {id:37, q:"Which position demonstrates the 'Intervertebral Foramina' of the Cervical spine?", o:["AP View","Lateral View","Oblique View","Open Mouth View"], c:2, exp:"Cervical Obliques (45 degrees) visualize the Intervertebral Foramina."},
+        {id:38, q:"'Scottie Dog' appearance is seen in which view of the Lumbar spine?", o:["AP","Lateral","Oblique","Spot L5-S1"], c:2, exp:"The Scottie Dog sign is classic for Lumbar Oblique views (Pars interarticularis)."},
+        {id:39, q:"The 'Mastoid Process' is part of which bone?", o:["Temporal","Parietal","Occipital","Frontal"], c:0, exp:"The Mastoid process is a prominence of the Temporal bone."},
+        {id:40, q:"For a Lateral Knee, the knee should be flexed:", o:["90 degrees","20-30 degrees","45 degrees","0 degrees (Extended)"], c:1, exp:"20-30 degrees flexion relaxes muscles and prevents the patella from being drawn into the groove."},
+
+        // SPECIAL PROCEDURES & CONTRAST (41-60)
+        {id:41, q:"Which contrast agent is used for MRI?", o:["Iodine","Barium","Gadolinium","Technetium"], c:2, exp:"Gadolinium-based agents are paramagnetic and used in MRI."},
+        {id:42, q:"A 'Barium Enema' is used to examine the:", o:["Small Intestine","Large Intestine (Colon)","Stomach","Esophagus"], c:1, exp:"Barium enema is the retrograde study of the Colon."},
+        {id:43, q:"In HSG, the contrast is injected into the:", o:["Ovaries","Uterine Cavity","Vagina","Peritoneum"], c:1, exp:"HSG involves injecting contrast via the cervix into the Uterine cavity and Fallopian tubes."},
+        {id:44, q:"Which of these is a mild reaction to IV contrast?", o:["Laryngeal Edema","Cardiac Arrest","Nausea/Vomiting","Convulsions"], c:2, exp:"Nausea, warmth, and flushing are mild self-limiting reactions."},
+        {id:45, q:"The 'Seldinger Technique' is used for:", o:["Barium swallow","Arterial/Venous access (Catheterization)","MRI setup","CT positioning"], c:1, exp:"Seldinger technique is the standard method for vascular access using a guide wire."},
+        {id:46, q:"Which drug is kept ready to treat Anaphylactic shock in radiology?", o:["Adrenaline (Epinephrine)","Aspirin","Insulin","Heparin"], c:0, exp:"Adrenaline is the first-line drug for severe allergic reactions."},
+        {id:47, q:"'Myelography' involves injection of contrast into the:", o:["Subarachnoid space","Epidural space","Subdural space","Vertebral body"], c:0, exp:"Contrast is injected into the Subarachnoid space to outline the spinal cord."},
+        {id:48, q:"RGU stands for:", o:["Retrograde Urethrogram","Renal Gastric Ultrasound","Rapid Gastric Uptake","Retrograde Ureter"], c:0, exp:"Retrograde Urethrogram is used to evaluate the male urethra."},
+        {id:49, q:"Prior to IV contrast injection, which blood test is most important?", o:["Hemoglobin","Creatinine","Platelets","WBC"], c:1, exp:"Serum Creatinine/eGFR checks kidney function to prevent Contrast-Induced Nephropathy (CIN)."},
+        {id:50, q:"Negative contrast media includes:", o:["Barium","Iodine","Air/CO2","Gadolinium"], c:2, exp:"Air and CO2 are radiolucent (low density) and act as negative contrast."},
+        {id:51, q:"Sialography is the examination of:", o:["Sinuses","Salivary Glands","Spinal Cord","Synovial Joints"], c:1, exp:"Sialography images the salivary glands and ducts."},
+        {id:52, q:"Which catheter shape is commonly used for Coronary Angiography?", o:["Judkins","Foley","Swan-Ganz","Nelaton"], c:0, exp:"Judkins catheters are standard for coronary angiography."},
+        {id:53, q:"Small Bowel Enema involves placing a tube into the:", o:["Stomach","Duodenojejunal Flexure","Ileum","Cecum"], c:1, exp:"Also known as Enteroclysis, the tube is advanced to the DJ flexure."},
+        {id:54, q:"Osmolality of Non-ionic contrast media is generally:", o:["Higher than blood","Lower than blood","Closer to blood (Low Osmolar)","Same as water"], c:2, exp:"LOCM (Low Osmolar Contrast Media) is closer to blood plasma, reducing reactions."},
+        {id:55, q:"Oral contrast for CT is usually given:", o:["Immediately before scan","30-60 minutes before scan","24 hours before","During scan"], c:1, exp:"Time is needed for contrast to traverse the bowel loops."},
+        {id:56, q:"Dacrocystography is the study of:", o:["Lacrimal (Tear) Ducts","Bile Ducts","Lymph Ducts","Sweat Glands"], c:0, exp:"Dacro- refers to tears/lacrimal apparatus."},
+        {id:57, q:"The most common access site for Cardiac Catheterization is:", o:["Radial or Femoral Artery","Carotid Artery","Jugular Vein","Subclavian Vein"], c:0, exp:"Femoral was classic, but Radial is now very common."},
+        {id:58, q:"Contraindication for MRI includes:", o:["Titanium plate","Dental fillings","Cardiac Pacemaker (Non-compatible)","Pregnancy (3rd trimester)"], c:2, exp:"Pacemakers can malfunction or overheat in the magnetic field (unless MRI-conditional)."},
+        {id:59, q:"In Double Contrast Barium Enema, 'Polyps' appear as:", o:["Out-pouching filled with barium","Coated filling defects projecting inward","Narrowing of lumen","External compression"], c:1, exp:"Polyps are soft tissue masses projecting into the lumen, appearing as etched defects."},
+        {id:60, q:"ERCP is performed to visualize the Biliary tree and:", o:["Pancreatic duct","Liver parenchyma","Stomach lining","Colon"], c:0, exp:"Cholangio-Pancreatography evaluates bile and pancreatic ducts."},
+
+        // CT & MRI & USG (61-80)
+        {id:61, q:"CT number (HU) for Air is:", o:["0","-1000","+1000","+100"], c:1, exp:"Air is the least dense substance on the HU scale, defined as -1000."},
+        {id:62, q:"Which generation CT scanner used a 'Translate-Rotate' motion?", o:["1st and 2nd","3rd","4th","Helical"], c:0, exp:"1st and 2nd generations used translate-rotate. 3rd gen introduced Rotate-Rotate."},
+        {id:63, q:"In Spiral/Helical CT, 'Pitch' is the relationship between:", o:["kVp and mAs","Table movement and Beam width","Slice thickness and FOV","Patient weight and Dose"], c:1, exp:"Pitch = Table feed per rotation / Beam width."},
+        {id:64, q:"The magnet strength in MRI is measured in:", o:["Volts","Tesla or Gauss","Hertz","Amperes"], c:1, exp:"1 Tesla = 10,000 Gauss."},
+        {id:65, q:"Fluid is BRIGHT on which MRI sequence?", o:["T1 Weighted","T2 Weighted","PD Weighted","FLAIR (Suppressed)"], c:1, exp:"WW2: Water is White on T2."},
+        {id:66, q:"The piezoelectric crystal in an Ultrasound probe is typically made of:", o:["Quartz","Lead Zirconate Titanate (PZT)","Silicon","Tungsten"], c:1, exp:"PZT is the standard synthetic ceramic used in transducers."},
+        {id:67, q:"High frequency ultrasound probes provide:", o:["Better penetration, Lower resolution","Better resolution, Less penetration","Less resolution, Less penetration","High heat"], c:1, exp:"High frequency = Short wavelength = High Resolution but Poor Penetration."},
+        {id:68, q:"Acoustic Shadowing in USG is typically seen behind:", o:["Fluid filled cysts","Stones/Calculi","Liver tissue","Blood vessels"], c:1, exp:"Stones reflect/absorb sound, causing a dark shadow behind them."},
+        {id:69, q:"CT Window Width controls the:", o:["Image Brightness","Image Contrast (Gray scale)","Resolution","Patient Dose"], c:1, exp:"Window Width determines the range of HU displayed as gray, controlling contrast."},
+        {id:70, q:"CT Window Level controls the:", o:["Image Brightness (Center of range)","Image Contrast","Sharpness","Magnification"], c:0, exp:"Window Level determines the center HU value, affecting overall brightness."},
+        {id:71, q:"MIP in CT post-processing stands for:", o:["Maximum Intensity Projection","Minimum Intensity Projection","Most Important Part","Mean Image Processing"], c:0, exp:"MIP projects the brightest voxels to visualize vessels/bones."},
+        {id:72, q:"In MRI, TR stands for:", o:["Time to Relax","Time to Repetition","Time to Recovery","Time to Readout"], c:1, exp:"TR (Repetition Time) is the time between successive excitation pulses."},
+        {id:73, q:"TE in MRI stands for:", o:["Time to Echo","Time to Excite","Total Energy","Time to End"], c:0, exp:"TE (Echo Time) is the time from excitation pulse to echo signal measurement."},
+        {id:74, q:"Which artifact is unique to Ultrasound?", o:["Beam hardening","Reverberation","Partial volume","Motion"], c:1, exp:"Reverberation (comet tail) is a common US artifact. (Others occur in CT/MRI too, but 'Beam hardening' is CT specific)."},
+        {id:75, q:"CT dose index is measured as:", o:["DAP","CTDI","Roentgen","Curie"], c:1, exp:"CTDI (CT Dose Index) and DLP are standard CT dose metrics."},
+        {id:76, q:"The 'Gantry' in CT houses the:", o:["Console","X-ray tube and Detectors","Computer","Film printer"], c:1, exp:"The donut-shaped gantry contains the rotating tube and detectors."},
+        {id:77, q:"T1 weighted images provide good:", o:["Pathology visualization","Anatomical detail","Fluid detection","Bone density"], c:1, exp:"T1 is excellent for anatomy; T2 is better for pathology (edema/fluid)."},
+        {id:78, q:"Doppler Ultrasound is used to evaluate:", o:["Bone density","Blood flow","Lung air","Stomach acid"], c:1, exp:"Doppler shift principle is used to measure velocity and direction of blood flow."},
+        {id:79, q:"Typical matrix size for a CT image is:", o:["64x64","256x256","512x512","1024x1024"], c:2, exp:"512x512 is the industry standard for CT reconstruction matrix."},
+        {id:80, q:"To reduce noise in a CT image, you should:", o:["Decrease mAs","Increase mAs","Decrease slice thickness excessively","Use sharp filter"], c:1, exp:"Quantum noise is due to lack of photons. Increasing mAs increases photons, reducing noise."},
+
+        // DIGITAL, QUALITY & MISC (81-100)
+        {id:81, q:"DICOM stands for:", o:["Digital Image Communication in Medicine","Direct Imaging Computer Output Method","Digital Input Computer On Monitor","Dual Imaging Computer Mode"], c:0, exp:"DICOM is the universal standard for transmitting medical images."},
+        {id:82, q:"PACS stands for:", o:["Picture Archiving and Communication System","Patient Access Computer System","Public Area Control System","Picture Analysis Computer Software"], c:0, exp:"PACS stores and distributes images electronically."},
+        {id:83, q:"In Digital Radiography (DR), 'Fill Factor' refers to:", o:["Percentage of pixel face sensitive to X-rays","Amount of storage space","Speed of developer","Contrast ratio"], c:0, exp:"Higher fill factor means more efficient detection area."},
+        {id:84, q:"The smallest element of a digital image is called a:", o:["Voxel","Pixel","Matrix","Bit"], c:1, exp:"Picture Element = Pixel."},
+        {id:85, q:"Direct DR detectors use which material?", o:["Cesium Iodide","Amorphous Selenium (a-Se)","Amorphous Silicon","Gadolinium"], c:1, exp:"Direct detectors convert X-rays directly to electrons using a photoconductor like Amorphous Selenium."},
+        {id:86, q:"Indirect DR detectors use a scintillator to:", o:["Convert X-rays to Light","Convert Light to Electrons","Store images","Filter scatter"], c:0, exp:"Indirect systems use a scintillator (e.g., CsI) to turn X-rays to Light, then Photodiode turns Light to Signal."},
+        {id:87, q:"'Windowing' in digital imaging refers to:", o:["Changing the room ventilation","Altering Contrast and Brightness","Cropping the image","Printing the film"], c:1, exp:"Windowing (Width/Level) adjusts the grey scale appearance."},
+        {id:88, q:"The ability of a system to image small objects that have high subject contrast is:", o:["Spatial Resolution","Contrast Resolution","Temporal Resolution","Noise"], c:0, exp:"Spatial resolution is the ability to distinguish small details (line pairs per mm)."},
+        {id:89, q:"A 'Spinning Top Test' is used to check:", o:["Timer Accuracy (Single phase)","kVp accuracy","Focal spot size","mA linearity"], c:0, exp:"Classically used for single-phase timer accuracy."},
+        {id:90, q:"HVL (Half Value Layer) is a QC test for:", o:["Beam Filtration/Quality","Timer","Collimator alignment","Focal spot"], c:0, exp:"HVL measures the hardness/penetrability of the beam."},
+        {id:91, q:"The tolerance for Collimator vs Light Beam alignment is:", o:["2% of SID","5% of SID","10% of SID","1% of SID"], c:0, exp:"The X-ray field and light field must align within +/- 2% of the SID."},
+        {id:92, q:"Replenishment rate in an automatic processor is based on:", o:["Film size and number","Temperature","Water flow","Speed of transport"], c:0, exp:"Chemicals are replenished based on the amount of film processed."},
+        {id:93, q:"Which organization in India regulates radiation safety?", o:["BARC","AERB","ICRP","WHO"], c:1, exp:"Atomic Energy Regulatory Board (AERB) is the authority in India."},
+        {id:94, q:"Teleradiology means:", o:["Radiology of the TV","Remote transmission of images for reporting","Radiology of Telephone","Robotic surgery"], c:1, exp:"Transmitting images to a distant location for interpretation."},
+        {id:95, q:"An 'Underexposed' digital image will show:", o:["Quantum Mottle (Noise)","High density","Fog","Ghosting"], c:0, exp:"Digital systems can fix brightness, but lack of signal (underexposure) results in grainy noise (Mottle)."},
+        {id:96, q:"Which type of dosimeter can be read repeatedly?", o:["Film Badge","TLD (once annealed)","Pocket Ionization Chamber","Chemical dosimeter"], c:2, exp:"Pocket dosimeters (Quartz fiber) give immediate reading and can be reset/re-read instantly (TLD needs processing/annealing)."},
+        {id:97, q:"Mammography uses which target/filter combination?", o:["Tungsten/Aluminum","Molybdenum/Molybdenum","Copper/Copper","Tungsten/Lead"], c:1, exp:"Mo/Mo or Mo/Rh is used to produce characteristic X-rays ideal for soft tissue contrast."},
+        {id:98, q:"Ideally, the focal spot size for general radiography is:", o:["0.6 - 1.2 mm","0.1 - 0.3 mm","2.0 - 4.0 mm","5 mm"], c:0, exp:"0.6mm (small) to 1.2mm (large) is standard. 0.1mm is for Mammography."},
+        {id:99, q:"'Dose Creep' refers to:", o:["Gradual increase in patient dose in digital radiography","Leaking radiation","Doctor moving closer to tube","Decrease in dose"], c:0, exp:"In DR, overexposure doesn't ruin the image (it looks good), so techs tend to creep up the dose to avoid noise."},
+        {id:100, q:"The standard file format for medical images is:", o:["JPEG","DICOM (.dcm)","PNG","PDF"], c:1, exp:"DICOM is the medical standard."}
     ];
 
-    // --- LOGIC ---
-    let userAnswers = JSON.parse(localStorage.getItem('aiims_mobile_answers')) || {};
-    const quizContainer = document.getElementById('quiz-container');
-    const attemptCountSpan = document.getElementById('attempt-count');
+    // --- STATE MANAGEMENT ---
+    let userAnswers = JSON.parse(localStorage.getItem('aiims_full_mock')) || {};
+    let isReviewMode = false;
 
-    function renderQuiz() {
-        quizContainer.innerHTML = '';
-        questionsDB.forEach((item, index) => {
-            const questionNum = index + 1;
-            
+    // --- DOM ELEMENTS ---
+    const container = document.getElementById('quiz-container');
+    const attemptSpan = document.getElementById('attempt-count');
+    const modal = document.getElementById('result-modal');
+
+    // --- RENDER ENGINE ---
+    function render() {
+        container.innerHTML = '';
+        db.forEach((item, index) => {
             const card = document.createElement('div');
             card.className = 'question-card';
+            card.id = `q-card-${item.id}`;
+
+            // Status Badge (Correct/Incorrect - only visible in review)
+            const badge = document.createElement('span');
+            badge.className = 'q-badge';
+            badge.id = `badge-${item.id}`;
             
+            const header = document.createElement('div');
+            header.className = 'question-header';
+            const qNum = document.createElement('span');
+            qNum.style.fontWeight = 'bold';
+            qNum.style.color = '#666';
+            qNum.innerText = `Question ${index + 1}`;
+            header.appendChild(qNum);
+            header.appendChild(badge);
+            card.appendChild(header);
+
+            // Question Text
             const qText = document.createElement('div');
             qText.className = 'question-text';
-            qText.innerText = `Q${questionNum}. ${item.q}`;
+            qText.innerText = item.q;
             card.appendChild(qText);
 
+            // Options
             const optionsDiv = document.createElement('div');
             optionsDiv.className = 'options-grid';
 
-            item.options.forEach((optText, optIndex) => {
+            item.o.forEach((optText, optIdx) => {
                 const label = document.createElement('label');
                 label.className = 'option-label';
+                label.id = `lbl-${item.id}-${optIdx}`;
                 
-                // Persistence check
-                const isChecked = userAnswers[item.id] === optIndex;
-                if(isChecked) label.classList.add('selected');
-
                 const radio = document.createElement('input');
                 radio.type = 'radio';
-                radio.name = `q_${item.id}`;
-                radio.value = optIndex;
-                radio.checked = isChecked;
+                radio.name = `q${item.id}`;
+                radio.value = optIdx;
+                
+                // Pre-select if saved
+                if(userAnswers[item.id] === optIdx) {
+                    radio.checked = true;
+                    label.classList.add('selected');
+                }
 
-                // Click Handler
-                radio.addEventListener('change', () => {
-                    handleSelection(item.id, optIndex, label, optionsDiv);
-                });
+                // Interaction
+                radio.onchange = () => {
+                    if(isReviewMode) return; // Block changes in review
+                    userAnswers[item.id] = optIdx;
+                    localStorage.setItem('aiims_full_mock', JSON.stringify(userAnswers));
+                    
+                    // Visual update
+                    optionsDiv.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+                    label.classList.add('selected');
+                    updateCount();
+                };
 
                 const span = document.createElement('span');
-                span.className = 'option-text';
                 span.innerText = optText;
 
                 label.appendChild(radio);
                 label.appendChild(span);
                 optionsDiv.appendChild(label);
             });
-
             card.appendChild(optionsDiv);
-            quizContainer.appendChild(card);
+
+            // Explanation Box
+            const expBox = document.createElement('div');
+            expBox.className = 'explanation-box';
+            expBox.id = `exp-${item.id}`;
+            expBox.innerHTML = `<div class="explanation-title">Explanation</div>${item.exp}`;
+            card.appendChild(expBox);
+
+            container.appendChild(card);
         });
-        updateProgress();
+        updateCount();
     }
 
-    function handleSelection(questionId, optionIndex, labelElement, parentDiv) {
-        // Visual toggle
-        parentDiv.querySelectorAll('.option-label').forEach(sib => sib.classList.remove('selected'));
-        labelElement.classList.add('selected');
-
-        // Logic Save
-        userAnswers[questionId] = optionIndex;
-        localStorage.setItem('aiims_mobile_answers', JSON.stringify(userAnswers));
-        updateProgress();
+    function updateCount() {
+        attemptSpan.innerText = Object.keys(userAnswers).length;
     }
 
-    function updateProgress() {
-        attemptCountSpan.innerText = Object.keys(userAnswers).length;
-    }
-
+    // --- SUBMISSION LOGIC ---
     function submitExam() {
-        if(!confirm("Are you ready to see your score?")) return;
-
+        if(!confirm("Are you sure you want to finish the exam?")) return;
+        
+        // Calculate Logic
         let correct = 0, incorrect = 0, skipped = 0;
-
-        questionsDB.forEach(q => {
-            const val = userAnswers[q.id];
-            if (val === undefined || val === null) skipped++;
-            else if (val === q.correct) correct++;
+        
+        db.forEach(q => {
+            const ans = userAnswers[q.id];
+            if(ans === undefined || ans === null) skipped++;
+            else if(ans === q.c) correct++;
             else incorrect++;
         });
 
-        // Scoring: 400 marks basis (+4, -1)
-        const totalScore = (correct * 4) - (incorrect * 1);
+        const score = (correct * 4) - (incorrect * 1);
         const attempted = correct + incorrect;
-        const accuracy = attempted === 0 ? 0 : Math.round((correct / attempted) * 100);
+        const accuracy = attempted === 0 ? 0 : Math.round((correct/attempted)*100);
 
-        document.getElementById('final-score').innerText = totalScore;
-        document.getElementById('count-correct').innerText = correct;
-        document.getElementById('count-incorrect').innerText = incorrect;
-        document.getElementById('count-skipped').innerText = skipped;
-        document.getElementById('accuracy-perc').innerText = accuracy + "%";
+        // Fill Modal
+        document.getElementById('final-score').innerText = score;
+        document.getElementById('r-correct').innerText = correct;
+        document.getElementById('r-incorrect').innerText = incorrect;
+        document.getElementById('r-skipped').innerText = skipped;
+        document.getElementById('r-accuracy').innerText = accuracy + "%";
 
-        document.getElementById('result-modal').style.display = 'flex';
+        modal.style.display = 'flex';
+    }
+
+    // --- REVIEW MODE LOGIC ---
+    function enableReviewMode() {
+        isReviewMode = true;
+        document.body.classList.add('review-mode');
+        modal.style.display = 'none';
+        document.getElementById('main-submit-btn').style.display = 'none';
+
+        // Loop through all questions and apply styling
+        db.forEach(q => {
+            const userAns = userAnswers[q.id];
+            const card = document.getElementById(`q-card-${q.id}`);
+            const badge = document.getElementById(`badge-${q.id}`);
+            const expBox = document.getElementById(`exp-${q.id}`);
+            
+            // Show Explanation
+            expBox.style.display = 'block';
+            badge.style.display = 'inline-block';
+
+            // Logic for styling
+            const correctLbl = document.getElementById(`lbl-${q.id}-${q.c}`);
+            
+            if(userAns === q.c) {
+                // User Correct
+                correctLbl.classList.add('correct-answer');
+                badge.innerText = "CORRECT";
+                badge.style.background = "#dcfce7";
+                badge.style.color = "#166534";
+                card.style.borderLeft = "5px solid #10b981";
+            } else if (userAns !== undefined) {
+                // User Wrong
+                const userLbl = document.getElementById(`lbl-${q.id}-${userAns}`);
+                userLbl.classList.add('wrong-answer');
+                correctLbl.classList.add('correct-answer'); // Show right one too
+                badge.innerText = "INCORRECT";
+                badge.style.background = "#fee2e2";
+                badge.style.color = "#991b1b";
+                card.style.borderLeft = "5px solid #ef4444";
+            } else {
+                // Skipped
+                correctLbl.classList.add('correct-answer'); // Show answer
+                badge.innerText = "SKIPPED";
+                badge.style.background = "#f3f4f6";
+                badge.style.color = "#6b7280";
+                card.style.borderLeft = "5px solid #9ca3af";
+            }
+        });
+        
+        window.scrollTo(0,0);
+        alert("Review Mode Enabled. Scroll to see answers and explanations.");
     }
 
     function resetExam() {
-        if(confirm("Clear history and start fresh?")) {
-            localStorage.removeItem('aiims_mobile_answers');
+        if(confirm("This will delete all answers and start fresh. Proceed?")) {
+            localStorage.removeItem('aiims_full_mock');
             location.reload();
         }
     }
 
-    renderQuiz();
-</script>
+    // Initial Load
+    render();
 
+</script>
 </body>
 </html>
