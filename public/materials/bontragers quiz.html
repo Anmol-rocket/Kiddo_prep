@@ -2599,111 +2599,145 @@
     ];
 
     let currentScore = 0;
-    let answeredQuestions = new Set(); // Track unique answered questions
+let answeredQuestions = new Set(); 
+let selectedOptions = {}; // NEW — stores chosen option per question
 
-    // Load state from localStorage
-    function loadState() {
-        const savedScore = localStorage.getItem('radQuiz_score');
-        const savedAnswered = localStorage.getItem('radQuiz_answered');
-        
-        if (savedScore) currentScore = parseInt(savedScore);
-        if (savedAnswered) answeredQuestions = new Set(JSON.parse(savedAnswered));
-        
-        updateUI();
-    }
+// Load state from localStorage
+function loadState() {
+    const savedScore = localStorage.getItem('radQuiz_score');
+    const savedAnswered = localStorage.getItem('radQuiz_answered');
+    const savedSelected = localStorage.getItem('radQuiz_selectedOptions');
 
-    // Save state to localStorage
-    function saveState() {
-        localStorage.setItem('radQuiz_score', currentScore);
-        localStorage.setItem('radQuiz_answered', JSON.stringify([...answeredQuestions]));
-    }
+    if (savedScore) currentScore = parseInt(savedScore);
+    if (savedAnswered) answeredQuestions = new Set(JSON.parse(savedAnswered));
+    if (savedSelected) selectedOptions = JSON.parse(savedSelected);
 
-    function updateUI() {
-        document.getElementById('score').innerText = currentScore;
-        document.getElementById('total').innerText = quizData.length;
-    }
+    updateUI();
+}
 
-    function renderQuiz() {
-        const container = document.getElementById('quiz-container');
-        container.innerHTML = '';
+// Save state to localStorage
+function saveState() {
+    localStorage.setItem('radQuiz_score', currentScore);
+    localStorage.setItem('radQuiz_answered', JSON.stringify([...answeredQuestions]));
+    localStorage.setItem('radQuiz_selectedOptions', JSON.stringify(selectedOptions));
+}
 
-        quizData.forEach((item, index) => {
-            const card = document.createElement('div');
-            card.className = 'question-card';
-            
-            // Check if already answered correctly to restore state (optional feature, 
-            // kept simple here by just rendering fresh, but score persists)
-            // Ideally we could visually mark answered questions, but for simplicity
-            // we will let users interact again, but only score on first attempt per session load
-            // OR strictly prevent re-scoring. Logic below prevents re-scoring.
+function updateUI() {
+    document.getElementById('score').innerText = currentScore;
+    document.getElementById('total').innerText = quizData.length;
+}
 
-            let optionsHtml = '';
-            item.options.forEach((opt, optIndex) => {
-                optionsHtml += `<button class="option-btn" onclick="checkAnswer(this, ${index}, ${optIndex})">${String.fromCharCode(65+optIndex)}. ${opt}</button>`;
-            });
+function renderQuiz() {
+    const container = document.getElementById('quiz-container');
+    container.innerHTML = '';
 
-            card.innerHTML = `
-                <div class="question-text">${index + 1}. ${item.q}</div>
-                <div class="options-grid" id="options-${index}">
-                    ${optionsHtml}
-                </div>
-                <div class="explanation" id="explain-${index}">
-                    <strong>Explanation:</strong> ${item.explain}
-                </div>
-            `;
-            container.appendChild(card);
+    quizData.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+
+        let optionsHtml = '';
+        item.options.forEach((opt, optIndex) => {
+            optionsHtml += `
+                <button class="option-btn" onclick="checkAnswer(this, ${index}, ${optIndex})">
+                    ${String.fromCharCode(65 + optIndex)}. ${opt}
+                </button>`;
         });
-    }
 
-    function checkAnswer(btn, qIndex, optIndex) {
-        // Prevent clicking if already answered in this view session
-        const optionsDiv = document.getElementById(`options-${qIndex}`);
-        if (optionsDiv.getAttribute('data-answered') === 'true') return;
+        card.innerHTML = `
+            <div class="question-text">${index + 1}. ${item.q}</div>
+            <div class="options-grid" id="options-${index}">
+                ${optionsHtml}
+            </div>
+            <div class="explanation" id="explain-${index}">
+                <strong>Explanation:</strong> ${item.explain}
+            </div>
+        `;
 
-        const question = quizData[qIndex];
-        const isCorrect = optIndex === question.correct;
-        const explanation = document.getElementById(`explain-${qIndex}`);
-        const allBtns = optionsDiv.querySelectorAll('.option-btn');
+        container.appendChild(card);
 
-        // Mark this question as answered in the UI
-        optionsDiv.setAttribute('data-answered', 'true');
-
-        // Visual feedback
-        if (isCorrect) {
-            btn.classList.add('correct');
-            // Update score only if not previously answered in history
-            if (!answeredQuestions.has(qIndex)) {
-                currentScore++;
-                answeredQuestions.add(qIndex);
-                saveState();
-                updateUI();
-            }
-        } else {
-            btn.classList.add('incorrect');
-            // Highlight the correct one
-            allBtns[question.correct].classList.add('correct');
+        // 🔥 Restore previous selections
+        if (selectedOptions[index] !== undefined) {
+            restoreAnsweredState(index);
         }
+    });
+}
 
-        // Show explanation
-        explanation.style.display = 'block';
+function restoreAnsweredState(qIndex) {
+    const optionsDiv = document.getElementById(`options-${qIndex}`);
+    const explanation = document.getElementById(`explain-${qIndex}`);
+    const selected = selectedOptions[qIndex];
+    const question = quizData[qIndex];
+    const allBtns = optionsDiv.querySelectorAll('.option-btn');
+
+    // Lock buttons
+    optionsDiv.setAttribute('data-answered', 'true');
+
+    // Mark chosen option
+    if (selected == question.correct) {
+        allBtns[selected].classList.add('correct');
+    } else {
+        allBtns[selected].classList.add('incorrect');
+        allBtns[question.correct].classList.add('correct');
     }
 
-    function resetProgress() {
-        if(confirm("Are you sure you want to reset your score?")) {
-            currentScore = 0;
-            answeredQuestions.clear();
-            saveState();
-            updateUI();
-            renderQuiz(); // Re-render to clear visual states
-            window.scrollTo(0,0);
+    explanation.style.display = 'block';
+}
+
+function checkAnswer(btn, qIndex, optIndex) {
+    const optionsDiv = document.getElementById(`options-${qIndex}`);
+    if (optionsDiv.getAttribute('data-answered') === 'true') return;
+
+    const question = quizData[qIndex];
+    const isCorrect = optIndex === question.correct;
+    const explanation = document.getElementById(`explain-${qIndex}`);
+    const allBtns = optionsDiv.querySelectorAll('.option-btn');
+
+    // Lock buttons
+    optionsDiv.setAttribute('data-answered', 'true');
+
+    // Record chosen option
+    selectedOptions[qIndex] = optIndex;
+
+    // Visual feedback
+    if (isCorrect) {
+        btn.classList.add('correct');
+
+        if (!answeredQuestions.has(qIndex)) {
+            currentScore++;
+            answeredQuestions.add(qIndex);
         }
+    } else {
+        btn.classList.add('incorrect');
+        allBtns[question.correct].classList.add('correct');
     }
 
-    // Initialize
-    loadState();
-    renderQuiz();
+    // Save progress
+    saveState();
+    updateUI();
+
+    // Show explanation
+    explanation.style.display = 'block';
+}
+
+function resetProgress() {
+    if (confirm("Are you sure you want to reset your score?")) {
+        currentScore = 0;
+        answeredQuestions.clear();
+        selectedOptions = {}; // NEW — clear stored chosen answers
+        saveState();
+        updateUI();
+        renderQuiz();
+        window.scrollTo(0, 0);
+    }
+}
+
+// Initialize
+loadState();
+renderQuiz();
+
 
 </script>
 
 </body>
+
 </html>
