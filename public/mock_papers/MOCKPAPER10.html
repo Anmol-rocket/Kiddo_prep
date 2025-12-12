@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AIIMS CRE Radiographer - Mobile Ready</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --bg: #f3f4f6;
+            --text: #1f2937;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* Remove blue highlight on mobile tap */
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0; /* Remove body padding for mobile edge-to-edge feel */
+            padding-bottom: 80px; /* Space for scrolling past bottom */
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        /* --- STICKY HEADER --- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            padding: 12px 15px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 4px solid var(--secondary);
+        }
+
+        .header-left h1 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--secondary);
+        }
+
+        .header-left .exam-info {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        #progress-indicator {
+            background: var(--bg);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* --- QUESTIONS --- */
+        .question-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 15px;
+            color: #111;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start; /* Align top for long text */
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.1s;
+            background: #fff;
+            user-select: none; /* Prevent text selection on rapid tapping */
+        }
+
+        .option-label:active {
+            background-color: #f3f4f6;
+        }
+
+        /* Custom Radio Style */
+        input[type="radio"] {
+            min-width: 20px;
+            min-height: 20px;
+            margin-top: 2px; /* Align with text */
+            margin-right: 12px;
+            accent-color: var(--primary);
+        }
+
+        .option-text {
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .option-label.selected {
+            border-color: var(--primary);
+            background-color: #eff6ff;
+            font-weight: 500;
+        }
+
+        /* --- SUBMIT BUTTON --- */
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 25px;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            /* Prevent double tap zoom */
+            touch-action: manipulation; 
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+            background-color: var(--primary);
+        }
+
+        /* --- RESULT MODAL --- */
+        #result-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
+            overflow-y: auto; /* Allow scrolling if phone is landscape */
+            padding: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .result-content {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            margin: auto;
+        }
+
+        .score-display {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 15px 0;
+            line-height: 1;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            padding: 12px 5px;
+            border-radius: 8px;
+            background: #f9fafb;
+        }
+        
+        .stat-label { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-value { font-size: 1.1rem; font-weight: bold; margin-top: 4px; }
+
+        .close-btn {
+            background: #374151;
+            color: white;
+            padding: 14px;
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* --- MOBILE SPECIFIC TWEAKS --- */
+        @media (max-width: 480px) {
+            h1 { font-size: 1rem; }
+            .exam-info { font-size: 0.7rem; }
+            .container { padding: 10px; }
+            .question-card { padding: 15px; }
+            .stat-value { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="header-left">
+            <h1>AIIMS CRE Mock</h1>
+            <div class="exam-info">400 Marks | +4 / -1</div>
+        </div>
+        <div id="progress-indicator">
+            <span id="attempt-count">0</span> / 100
+        </div>
+    </header>
+
+    <div id="quiz-container">
+        </div>
+
+    <button class="submit-btn" onclick="submitExam()">SUBMIT EXAM</button>
+</div>
+
+<div id="result-modal">
+    <div class="result-content">
+        <h2 style="margin:0 0 10px 0; color:#333;">Result Summary</h2>
+        <div class="score-display">
+            <span id="final-score">0</span><span style="font-size:1.2rem; color:#999; font-weight:400">/400</span>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-box" style="border-bottom: 3px solid var(--success)">
+                <div class="stat-label">Correct</div>
+                <div class="stat-value" id="count-correct" style="color: var(--success)">0</div>
+            </div>
+            <div class="stat-box" style="border-bottom: 3px solid var(--danger)">
+                <div class="stat-label">Incorrect</div>
+                <div class="stat-value" id="count-incorrect" style="color: var(--danger)">0</div>
+            </div>
+            <div class="stat-box" style="border-bottom: 3px solid var(--warning)">
+                <div class="stat-label">Skipped</div>
+                <div class="stat-value" id="count-skipped">0</div>
+            </div>
+            <div class="stat-box" style="border-bottom: 3px solid var(--primary)">
+                <div class="stat-label">Accuracy</div>
+                <div class="stat-value" id="accuracy-perc">0%</div>
+            </div>
+        </div>
+
+        <button class="close-btn" onclick="resetExam()">Reset & Try Again</button>
+    </div>
+</div>
+
+<script>
+    // --- DATABASE OF QUESTIONS (Same 20 samples, extensible to 100) ---
+    const questionsDB = [
+        { id: 1, q: "The 'Anode Heel Effect' is most pronounced when using:", options: ["Large film size and short SID", "Small film size and long SID", "Large film size and long SID", "Small film size and short SID"], correct: 0 },
+        { id: 2, q: "Which material is commonly used in the input phosphor of an image intensifier?", options: ["Calcium Tungstate", "Zinc Cadmium Sulfide", "Cesium Iodide", "Amorphous Selenium"], correct: 2 },
+        { id: 3, q: "What is the annual whole-body effective dose limit for radiation workers in India (AERB)?", options: ["50 mSv", "20 mSv", "100 mSv", "5 mSv"], correct: 1 },
+        { id: 4, q: "In MRI, the time interval between two successive 90-degree RF pulses is known as:", options: ["Echo Time (TE)", "Repetition Time (TR)", "Inversion Time (TI)", "Acquisition Time"], correct: 1 },
+        { id: 5, q: "Which radiographic view is best for visualizing the scaphoid bone?", options: ["AP view", "Lateral view", "Ulnar deviation view", "Radial deviation view"], correct: 2 },
+        { id: 6, q: "The process of removing low-energy X-ray photons from the beam to reduce patient dose is called:", options: ["Collimation", "Filtration", "Rectification", "Grid usage"], correct: 1 },
+        { id: 7, q: "Positive contrast media generally have a:", options: ["Low atomic number", "High atomic number", "Low density", "Similar density to soft tissue"], correct: 1 },
+        { id: 8, q: "Which artifact appears on a digital image if the cassette is not erased for 24-48 hours?", options: ["Moire pattern", "Ghost image / Fogging", "Quantum mottle", "Aliasing"], correct: 1 },
+        { id: 9, q: "The standard rotation speed of a diagnostic X-ray tube anode is approximately:", options: ["1,000 to 2,000 rpm", "3,000 to 3,600 rpm", "10,000 to 12,000 rpm", "500 rpm"], correct: 1 },
+        { id: 10, q: "In CT scan, the Hounsfield Unit (HU) for water is:", options: ["-1000", "0", "+1000", "+50"], correct: 1 },
+        { id: 11, q: "What is the active component of a TLD badge?", options: ["Silver Halide", "Lithium Fluoride", "Sodium Iodide", "Xenon gas"], correct: 1 },
+        { id: 12, q: "For a Lateral projection of the Cervical Spine, the recommended SID is:", options: ["100 cm (40 inches)", "180 cm (72 inches)", "90 cm (36 inches)", "120 cm (48 inches)"], correct: 1 },
+        { id: 13, q: "Which interaction is primarily responsible for subject contrast in diagnostic radiology?", options: ["Photoelectric effect", "Compton scattering", "Pair production", "Coherent scattering"], correct: 0 },
+        { id: 14, q: "The 'Grid Ratio' is defined as:", options: ["Height of lead strips / Distance between strips", "Width of strips / Height of strips", "Height of strips / Width of strips", "Distance between strips / Height of strips"], correct: 0 },
+        { id: 15, q: "In computed radiography (CR), the latent image is stored in:", options: ["Amorphous Silicon", "Photostimulable Phosphor (PSP) plate", "CCD Chip", "Film emulsion"], correct: 1 },
+        { id: 16, q: "Which of the following is a deterministic effect of radiation?", options: ["Cancer", "Genetic mutations", "Cataract", "Leukemia"], correct: 2 },
+        { id: 17, q: "Stenvers view is used to visualize:", options: ["Optic foramen", "Mastoid air cells / Petrous temporal bone", "Sella turcica", "Zygomatic arches"], correct: 1 },
+        { id: 18, q: "During fluoroscopy, the bucky slot cover must have a lead equivalent of at least:", options: ["0.25 mm Pb", "0.5 mm Pb", "1.0 mm Pb", "0.1 mm Pb"], correct: 0 },
+        { id: 19, q: "The 'Swimmer’s view' is used to demonstrate:", options: ["C1-C2 joint", "C7-T1 junction", "L5-S1 junction", "Thoracic spine AP"], correct: 1 },
+        { id: 20, q: "Which chemical is known as the 'clearing agent' in the fixer solution?", options: ["Hydroquinone", "Sodium Thiosulfate", "Potassium Bromide", "Glutaraldehyde"], correct: 1 }
+    ];
+
+    // --- LOGIC ---
+    let userAnswers = JSON.parse(localStorage.getItem('aiims_mobile_answers')) || {};
+    const quizContainer = document.getElementById('quiz-container');
+    const attemptCountSpan = document.getElementById('attempt-count');
+
+    function renderQuiz() {
+        quizContainer.innerHTML = '';
+        questionsDB.forEach((item, index) => {
+            const questionNum = index + 1;
+            
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            
+            const qText = document.createElement('div');
+            qText.className = 'question-text';
+            qText.innerText = `Q${questionNum}. ${item.q}`;
+            card.appendChild(qText);
+
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options-grid';
+
+            item.options.forEach((optText, optIndex) => {
+                const label = document.createElement('label');
+                label.className = 'option-label';
+                
+                // Persistence check
+                const isChecked = userAnswers[item.id] === optIndex;
+                if(isChecked) label.classList.add('selected');
+
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `q_${item.id}`;
+                radio.value = optIndex;
+                radio.checked = isChecked;
+
+                // Click Handler
+                radio.addEventListener('change', () => {
+                    handleSelection(item.id, optIndex, label, optionsDiv);
+                });
+
+                const span = document.createElement('span');
+                span.className = 'option-text';
+                span.innerText = optText;
+
+                label.appendChild(radio);
+                label.appendChild(span);
+                optionsDiv.appendChild(label);
+            });
+
+            card.appendChild(optionsDiv);
+            quizContainer.appendChild(card);
+        });
+        updateProgress();
+    }
+
+    function handleSelection(questionId, optionIndex, labelElement, parentDiv) {
+        // Visual toggle
+        parentDiv.querySelectorAll('.option-label').forEach(sib => sib.classList.remove('selected'));
+        labelElement.classList.add('selected');
+
+        // Logic Save
+        userAnswers[questionId] = optionIndex;
+        localStorage.setItem('aiims_mobile_answers', JSON.stringify(userAnswers));
+        updateProgress();
+    }
+
+    function updateProgress() {
+        attemptCountSpan.innerText = Object.keys(userAnswers).length;
+    }
+
+    function submitExam() {
+        if(!confirm("Are you ready to see your score?")) return;
+
+        let correct = 0, incorrect = 0, skipped = 0;
+
+        questionsDB.forEach(q => {
+            const val = userAnswers[q.id];
+            if (val === undefined || val === null) skipped++;
+            else if (val === q.correct) correct++;
+            else incorrect++;
+        });
+
+        // Scoring: 400 marks basis (+4, -1)
+        const totalScore = (correct * 4) - (incorrect * 1);
+        const attempted = correct + incorrect;
+        const accuracy = attempted === 0 ? 0 : Math.round((correct / attempted) * 100);
+
+        document.getElementById('final-score').innerText = totalScore;
+        document.getElementById('count-correct').innerText = correct;
+        document.getElementById('count-incorrect').innerText = incorrect;
+        document.getElementById('count-skipped').innerText = skipped;
+        document.getElementById('accuracy-perc').innerText = accuracy + "%";
+
+        document.getElementById('result-modal').style.display = 'flex';
+    }
+
+    function resetExam() {
+        if(confirm("Clear history and start fresh?")) {
+            localStorage.removeItem('aiims_mobile_answers');
+            location.reload();
+        }
+    }
+
+    renderQuiz();
+</script>
+
+</body>
+</html>

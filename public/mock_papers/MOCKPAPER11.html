@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AIIMS CRE Radiographer - Paper 2</title>
+    <style>
+        /* --- SAME MOBILE OPTIMIZED STYLES --- */
+        :root {
+            --primary: #7c3aed; /* Changed to Purple for Set 2 distinction */
+            --secondary: #5b21b6;
+            --bg: #f3f4f6;
+            --text: #1f2937;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-bottom: 80px; }
+        .container { max-width: 900px; margin: 0 auto; padding: 15px; }
+
+        header {
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px);
+            padding: 12px 15px; border-radius: 0 0 12px 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            border-top: 4px solid var(--secondary);
+        }
+        .header-left h1 { margin: 0; font-size: 1.1rem; color: var(--secondary); }
+        .header-left .exam-info { font-size: 0.75rem; color: #666; }
+        #progress-indicator { background: var(--bg); padding: 5px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+
+        .question-card { background: white; padding: 20px; border-radius: 12px; margin-top: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .question-text { font-weight: 600; font-size: 1.05rem; margin-bottom: 15px; color: #111; }
+        .options-grid { display: flex; flex-direction: column; gap: 8px; }
+        
+        .option-label {
+            display: flex; align-items: flex-start; padding: 12px;
+            border: 1px solid #e5e7eb; border-radius: 8px; cursor: pointer;
+            background: #fff; transition: 0.2s;
+        }
+        .option-label.selected { border-color: var(--primary); background-color: #f5f3ff; font-weight: 500; }
+        input[type="radio"] { margin-right: 12px; margin-top: 3px; accent-color: var(--primary); min-width: 20px; min-height: 20px; }
+
+        .submit-btn {
+            display: block; width: 100%; padding: 16px; background-color: var(--secondary); color: white;
+            border: none; border-radius: 10px; font-size: 1.1rem; font-weight: 700; margin-top: 25px;
+            box-shadow: 0 4px 6px rgba(91, 33, 182, 0.3); touch-action: manipulation;
+        }
+        .submit-btn:active { transform: scale(0.98); }
+
+        #result-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 1000; overflow-y: auto; padding: 20px;
+            align-items: center; justify-content: center;
+        }
+        .result-content { background: white; padding: 25px; border-radius: 16px; width: 100%; max-width: 400px; text-align: center; }
+        .score-display { font-size: 2.5rem; font-weight: 800; color: var(--primary); margin: 15px 0; line-height: 1; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .stat-box { padding: 12px 5px; border-radius: 8px; background: #f9fafb; }
+        .stat-label { font-size: 0.75rem; color: #666; text-transform: uppercase; }
+        .stat-value { font-size: 1.1rem; font-weight: bold; margin-top: 4px; }
+        .close-btn { background: #374151; color: white; padding: 14px; width: 100%; border: none; border-radius: 8px; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="header-left">
+            <h1>AIIMS CRE Paper 2</h1>
+            <div class="exam-info">SET-B | 400 Marks | +4 / -1</div>
+        </div>
+        <div id="progress-indicator">
+            <span id="attempt-count">0</span> / 100
+        </div>
+    </header>
+
+    <div id="quiz-container"></div>
+
+    <button class="submit-btn" onclick="submitExam()">SUBMIT PAPER 2</button>
+</div>
+
+<div id="result-modal">
+    <div class="result-content">
+        <h2 style="margin:0 0 10px 0; color:#333;">Exam Result (Set B)</h2>
+        <div class="score-display">
+            <span id="final-score">0</span><span style="font-size:1.2rem; color:#999; font-weight:400">/400</span>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-box" style="border-bottom: 3px solid var(--success)">
+                <div class="stat-label">Correct</div>
+                <div class="stat-value" id="count-correct" style="color: var(--success)">0</div>
+            </div>
+            <div class="stat-box" style="border-bottom: 3px solid var(--danger)">
+                <div class="stat-label">Incorrect</div>
+                <div class="stat-value" id="count-incorrect" style="color: var(--danger)">0</div>
+            </div>
+            <div class="stat-box" style="border-bottom: 3px solid var(--warning)">
+                <div class="stat-label">Skipped</div>
+                <div class="stat-value" id="count-skipped">0</div>
+            </div>
+            <div class="stat-box" style="border-bottom: 3px solid var(--primary)">
+                <div class="stat-label">Accuracy</div>
+                <div class="stat-value" id="accuracy-perc">0%</div>
+            </div>
+        </div>
+        <button class="close-btn" onclick="resetExam()">Reset & Try Again</button>
+    </div>
+</div>
+
+<script>
+    // --- NEW QUESTION SET (SET B) ---
+    const questionsDB = [
+        { id: 101, q: "Which target material is most commonly used in Mammography tubes?", options: ["Tungsten", "Molybdenum", "Copper", "Aluminum"], correct: 1 },
+        { id: 102, q: "The 'Waters View' is primarily used to visualize:", options: ["Maxillary Sinuses", "Frontal Sinuses", "Sphenoid Sinuses", "Mandible"], correct: 0 },
+        { id: 103, q: "In MRI, the 'Quench' refers to:", options: ["Rapid loss of liquid helium", "Overheating of RF coils", "Computer system failure", "Patient panic attack"], correct: 0 },
+        { id: 104, q: "The unit of absorbed dose is:", options: ["Sievert (Sv)", "Gray (Gy)", "Becquerel (Bq)", "Roentgen (R)"], correct: 1 },
+        { id: 105, q: "Which of the following is an example of a stochastic effect?", options: ["Skin erythema", "Hair loss (Epilation)", "Carcinogenesis (Cancer)", "Acute Radiation Syndrome"], correct: 2 },
+        { id: 106, q: "In Ultrasound, the Piezoelectric effect is responsible for:", options: ["Converting electrical energy to sound waves", "Heating the tissue", "Creating magnetic fields", "Reducing artifacts"], correct: 0 },
+        { id: 107, q: "What is the typical focal spot size for magnification mammography?", options: ["0.6 mm", "1.2 mm", "0.1 mm", "2.0 mm"], correct: 2 },
+        { id: 108, q: "Which generation of CT scanners introduced the 'Rotate-Rotate' geometry?", options: ["First Generation", "Second Generation", "Third Generation", "Fourth Generation"], correct: 2 },
+        { id: 109, q: "The developing agent responsible for the gray tones in radiographic film is:", options: ["Hydroquinone", "Phenidone / Metol", "Sodium Sulfite", "Acetic Acid"], correct: 1 },
+        { id: 110, q: "The 'Line Focus Principle' allows for:", options: ["Larger effective focal spot", "Smaller effective focal spot than actual focal spot", "Reduced anode heat capacity", "Increased heel effect"], correct: 1 },
+        { id: 111, q: "A 'Barium Swallow' is used to evaluate the:", options: ["Stomach", "Esophagus", "Duodenum", "Large Intestine"], correct: 1 },
+        { id: 112, q: "Which artifact in MRI is caused by the patient's breathing or heart motion?", options: ["Chemical Shift", "Aliasing", "Ghosting / Phase mismapping", "Susceptibility"], correct: 2 },
+        { id: 113, q: "The 'Half Value Layer' (HVL) is a measure of X-ray beam:", options: ["Quantity", "Quality / Penetrability", "Intensity", "Duration"], correct: 1 },
+        { id: 114, q: "In Digital Radiography, a high DQE (Detective Quantum Efficiency) indicates:", options: ["High patient dose required", "Poor image quality", "Efficient conversion of X-rays to image", "Need for higher mAs"], correct: 2 },
+        { id: 115, q: "Which projection demonstrates the 'Greater Tuberosity' of the humerus in profile?", options: ["AP External Rotation", "AP Internal Rotation", "Transthoracic Lateral", "Axial View"], correct: 0 },
+        { id: 116, q: "The 'Inverse Square Law' relates to:", options: ["Distance and Intensity", "Voltage and Current", "Time and Temperature", "Focus and Film"], correct: 0 },
+        { id: 117, q: "For a PA Chest X-ray, the X-ray tube should be centered to:", options: ["T4", "T7 (Inferior angle of scapula)", "C7", "L1"], correct: 1 },
+        { id: 118, q: "Gadolinium-based contrast agents in MRI principally shorten:", options: ["T1 relaxation time", "T2 relaxation time", "Proton density", "Flow velocity"], correct: 0 },
+        { id: 119, q: "Which radiation monitoring device provides an immediate reading?", options: ["TLD Badge", "Film Badge", "Pocket Dosimeter", "OSL Dosimeter"], correct: 2 },
+        { id: 120, q: "The standard window width/level for a CT Brain (Soft Tissue) is approximately:", options: ["W:80 L:40", "W:1500 L:-600", "W:2500 L:500", "W:300 L:50"], correct: 0 }
+    ];
+
+    // --- LOGIC (UPDATED STORAGE KEY FOR PAPER 2) ---
+    let userAnswers = JSON.parse(localStorage.getItem('aiims_paper2_answers')) || {};
+    const quizContainer = document.getElementById('quiz-container');
+    const attemptCountSpan = document.getElementById('attempt-count');
+
+    function renderQuiz() {
+        quizContainer.innerHTML = '';
+        questionsDB.forEach((item, index) => {
+            const questionNum = index + 1;
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            
+            const qText = document.createElement('div');
+            qText.className = 'question-text';
+            qText.innerText = `Q${questionNum}. ${item.q}`;
+            card.appendChild(qText);
+
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options-grid';
+
+            item.options.forEach((optText, optIndex) => {
+                const label = document.createElement('label');
+                label.className = 'option-label';
+                const isChecked = userAnswers[item.id] === optIndex;
+                if(isChecked) label.classList.add('selected');
+
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `q_${item.id}`;
+                radio.value = optIndex;
+                radio.checked = isChecked;
+                radio.addEventListener('change', () => handleSelection(item.id, optIndex, label, optionsDiv));
+
+                const span = document.createElement('span');
+                span.innerText = optText;
+
+                label.appendChild(radio);
+                label.appendChild(span);
+                optionsDiv.appendChild(label);
+            });
+            card.appendChild(optionsDiv);
+            quizContainer.appendChild(card);
+        });
+        updateProgress();
+    }
+
+    function handleSelection(id, idx, label, parent) {
+        parent.querySelectorAll('.option-label').forEach(s => s.classList.remove('selected'));
+        label.classList.add('selected');
+        userAnswers[id] = idx;
+        localStorage.setItem('aiims_paper2_answers', JSON.stringify(userAnswers));
+        updateProgress();
+    }
+
+    function updateProgress() { attemptCountSpan.innerText = Object.keys(userAnswers).length; }
+
+    function submitExam() {
+        if(!confirm("Submit Paper 2 and view results?")) return;
+        let correct = 0, incorrect = 0, skipped = 0;
+        questionsDB.forEach(q => {
+            const val = userAnswers[q.id];
+            if (val === undefined || val === null) skipped++;
+            else if (val === q.correct) correct++;
+            else incorrect++;
+        });
+        const score = (correct * 4) - (incorrect * 1);
+        const attempted = correct + incorrect;
+        const acc = attempted === 0 ? 0 : Math.round((correct/attempted)*100);
+
+        document.getElementById('final-score').innerText = score;
+        document.getElementById('count-correct').innerText = correct;
+        document.getElementById('count-incorrect').innerText = incorrect;
+        document.getElementById('count-skipped').innerText = skipped;
+        document.getElementById('accuracy-perc').innerText = acc + "%";
+        document.getElementById('result-modal').style.display = 'flex';
+    }
+
+    function resetExam() {
+        if(confirm("Reset Paper 2 history?")) {
+            localStorage.removeItem('aiims_paper2_answers');
+            location.reload();
+        }
+    }
+
+    renderQuiz();
+</script>
+</body>
+</html>
