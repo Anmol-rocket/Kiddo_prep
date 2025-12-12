@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AIIMS CRE Radiographer - Paper 2</title>
+    <title>AIIMS CRE Radiographer - Paper 4</title>
     <style>
-        /* --- SAME MOBILE OPTIMIZED STYLES --- */
+        /* --- MOBILE OPTIMIZED STYLES (SET D THEME) --- */
         :root {
-            --primary: #7c3aed; /* Changed to Purple for Set 2 distinction */
-            --secondary: #5b21b6;
-            --bg: #f3f4f6;
+            --primary: #e11d48; /* Rose/Red Theme */
+            --secondary: #9f1239;
+            --bg: #fff1f2;
             --text: #1f2937;
             --success: #10b981;
             --danger: #ef4444;
@@ -29,7 +29,7 @@
         }
         .header-left h1 { margin: 0; font-size: 1.1rem; color: var(--secondary); }
         .header-left .exam-info { font-size: 0.75rem; color: #666; }
-        #progress-indicator { background: var(--bg); padding: 5px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+        #progress-indicator { background: white; padding: 5px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
 
         .question-card { background: white; padding: 20px; border-radius: 12px; margin-top: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
         .question-text { font-weight: 600; font-size: 1.05rem; margin-bottom: 15px; color: #111; }
@@ -40,13 +40,13 @@
             border: 1px solid #e5e7eb; border-radius: 8px; cursor: pointer;
             background: #fff; transition: 0.2s;
         }
-        .option-label.selected { border-color: var(--primary); background-color: #f5f3ff; font-weight: 500; }
+        .option-label.selected { border-color: var(--primary); background-color: #fff1f2; font-weight: 500; }
         input[type="radio"] { margin-right: 12px; margin-top: 3px; accent-color: var(--primary); min-width: 20px; min-height: 20px; }
 
         .submit-btn {
             display: block; width: 100%; padding: 16px; background-color: var(--secondary); color: white;
             border: none; border-radius: 10px; font-size: 1.1rem; font-weight: 700; margin-top: 25px;
-            box-shadow: 0 4px 6px rgba(91, 33, 182, 0.3); touch-action: manipulation;
+            box-shadow: 0 4px 6px rgba(159, 18, 57, 0.3); touch-action: manipulation;
         }
         .submit-btn:active { transform: scale(0.98); }
 
@@ -69,8 +69,8 @@
 <div class="container">
     <header>
         <div class="header-left">
-            <h1>AIIMS CRE Paper 2</h1>
-            <div class="exam-info">SET-B | 400 Marks | +4 / -1</div>
+            <h1>AIIMS CRE Paper 4</h1>
+            <div class="exam-info">400 Marks | +4 / -1</div>
         </div>
         <div id="progress-indicator">
             <span id="attempt-count">0</span> / 100
@@ -79,12 +79,12 @@
 
     <div id="quiz-container"></div>
 
-    <button class="submit-btn" onclick="submitExam()">SUBMIT PAPER 2</button>
+    <button class="submit-btn" onclick="submitExam()">SUBMIT PAPER 4</button>
 </div>
 
 <div id="result-modal">
     <div class="result-content">
-        <h2 style="margin:0 0 10px 0; color:#333;">Exam Result (Set B)</h2>
+        <h2 style="margin:0 0 10px 0; color:#333;"> RESULT</h2>
         <div class="score-display">
             <span id="final-score">0</span><span style="font-size:1.2rem; color:#999; font-weight:400">/400</span>
         </div>
@@ -111,32 +111,32 @@
 </div>
 
 <script>
-    // --- NEW QUESTION SET (SET B) ---
+    // --- NEW QUESTION SET (SET D) ---
     const questionsDB = [
-        { id: 101, q: "Which target material is most commonly used in Mammography tubes?", options: ["Tungsten", "Molybdenum", "Copper", "Aluminum"], correct: 1 },
-        { id: 102, q: "The 'Waters View' is primarily used to visualize:", options: ["Maxillary Sinuses", "Frontal Sinuses", "Sphenoid Sinuses", "Mandible"], correct: 0 },
-        { id: 103, q: "In MRI, the 'Quench' refers to:", options: ["Rapid loss of liquid helium", "Overheating of RF coils", "Computer system failure", "Patient panic attack"], correct: 0 },
-        { id: 104, q: "The unit of absorbed dose is:", options: ["Sievert (Sv)", "Gray (Gy)", "Becquerel (Bq)", "Roentgen (R)"], correct: 1 },
-        { id: 105, q: "Which of the following is an example of a stochastic effect?", options: ["Skin erythema", "Hair loss (Epilation)", "Carcinogenesis (Cancer)", "Acute Radiation Syndrome"], correct: 2 },
-        { id: 106, q: "In Ultrasound, the Piezoelectric effect is responsible for:", options: ["Converting electrical energy to sound waves", "Heating the tissue", "Creating magnetic fields", "Reducing artifacts"], correct: 0 },
-        { id: 107, q: "What is the typical focal spot size for magnification mammography?", options: ["0.6 mm", "1.2 mm", "0.1 mm", "2.0 mm"], correct: 2 },
-        { id: 108, q: "Which generation of CT scanners introduced the 'Rotate-Rotate' geometry?", options: ["First Generation", "Second Generation", "Third Generation", "Fourth Generation"], correct: 2 },
-        { id: 109, q: "The developing agent responsible for the gray tones in radiographic film is:", options: ["Hydroquinone", "Phenidone / Metol", "Sodium Sulfite", "Acetic Acid"], correct: 1 },
-        { id: 110, q: "The 'Line Focus Principle' allows for:", options: ["Larger effective focal spot", "Smaller effective focal spot than actual focal spot", "Reduced anode heat capacity", "Increased heel effect"], correct: 1 },
-        { id: 111, q: "A 'Barium Swallow' is used to evaluate the:", options: ["Stomach", "Esophagus", "Duodenum", "Large Intestine"], correct: 1 },
-        { id: 112, q: "Which artifact in MRI is caused by the patient's breathing or heart motion?", options: ["Chemical Shift", "Aliasing", "Ghosting / Phase mismapping", "Susceptibility"], correct: 2 },
-        { id: 113, q: "The 'Half Value Layer' (HVL) is a measure of X-ray beam:", options: ["Quantity", "Quality / Penetrability", "Intensity", "Duration"], correct: 1 },
-        { id: 114, q: "In Digital Radiography, a high DQE (Detective Quantum Efficiency) indicates:", options: ["High patient dose required", "Poor image quality", "Efficient conversion of X-rays to image", "Need for higher mAs"], correct: 2 },
-        { id: 115, q: "Which projection demonstrates the 'Greater Tuberosity' of the humerus in profile?", options: ["AP External Rotation", "AP Internal Rotation", "Transthoracic Lateral", "Axial View"], correct: 0 },
-        { id: 116, q: "The 'Inverse Square Law' relates to:", options: ["Distance and Intensity", "Voltage and Current", "Time and Temperature", "Focus and Film"], correct: 0 },
-        { id: 117, q: "For a PA Chest X-ray, the X-ray tube should be centered to:", options: ["T4", "T7 (Inferior angle of scapula)", "C7", "L1"], correct: 1 },
-        { id: 118, q: "Gadolinium-based contrast agents in MRI principally shorten:", options: ["T1 relaxation time", "T2 relaxation time", "Proton density", "Flow velocity"], correct: 0 },
-        { id: 119, q: "Which radiation monitoring device provides an immediate reading?", options: ["TLD Badge", "Film Badge", "Pocket Dosimeter", "OSL Dosimeter"], correct: 2 },
-        { id: 120, q: "The standard window width/level for a CT Brain (Soft Tissue) is approximately:", options: ["W:80 L:40", "W:1500 L:-600", "W:2500 L:500", "W:300 L:50"], correct: 0 }
+        { id: 301, q: "In trauma radiography, if a cervical spine fracture is suspected, the first view to be taken is:", options: ["AP Open Mouth", "AP Axial", "Lateral (Cross-table)", "Oblique"], correct: 2 },
+        { id: 302, q: "The 'Judet view' is used to evaluate fractures of the:", options: ["Acetabulum", "Scapula", "Calcaneus", "Mandible"], correct: 0 },
+        { id: 303, q: "Which of the following is an example of an 'Occupational Dose Limit' (Annual)?", options: ["1 mSv", "5 mSv", "20 mSv", "500 mSv"], correct: 2 },
+        { id: 304, q: "To reduce patient dose during fluoroscopy, one should use:", options: ["Continuous fluoroscopy", "Pulsed fluoroscopy", "High magnification mode", "Short source-to-skin distance"], correct: 1 },
+        { id: 305, q: "In a 'Spinning Top Test' for a single-phase half-wave rectified unit, how many dots should appear for a 0.1 sec exposure?", options: ["6 dots", "12 dots", "5 dots", "10 dots"], correct: 0 },
+        { id: 306, q: "The 'Y-view' of the shoulder is primarily used to demonstrate:", options: ["Fracture of clavicle", "Shoulder Dislocation", "AC joint separation", "Bicipital groove"], correct: 1 },
+        { id: 307, q: "Which chemical is responsible for the 'rotten egg' smell in a darkroom?", options: ["Acetic acid", "Ammonium thiosulfate", "Sulfur dioxide", "Hydrogen sulfide"], correct: 3 },
+        { id: 308, q: "In CT, 'Beam Hardening' artifact is caused by:", options: ["Patient movement", "Preferential absorption of low-energy photons", "Metal implants", "Detector failure"], correct: 1 },
+        { id: 309, q: "The standard SI unit for Magnetic Field Strength is:", options: ["Gauss", "Tesla", "Weber", "Hertz"], correct: 1 },
+        { id: 310, q: "During a mobile X-ray (portable), the minimum distance the radiographer should stand from the tube is:", options: ["1 meter", "2 meters (6 feet)", "3 meters", "0.5 meters"], correct: 1 },
+        { id: 311, q: "A 'Voiding Cystourethrogram' (VCUG) is performed to diagnose:", options: ["Kidney stones", "Vesicoureteral Reflux (VUR)", "Prostate cancer", "Bladder tumor"], correct: 1 },
+        { id: 312, q: "Which of the following materials is most commonly used for TLD (Thermoluminescent Dosimeter)?", options: ["CaSO4:Dy", "LiF:Mg,Ti", "Al2O3", "NaCl"], correct: 0 },
+        { id: 313, q: "The 'Stryker Notch View' is used to visualize:", options: ["Hill-Sachs lesion", "Bankart lesion", "Rotator cuff tear", "Acromion spur"], correct: 0 },
+        { id: 314, q: "In QA, the 'Collimator Alignment Test' tolerance is usually within:", options: ["± 2% of SID", "± 5% of SID", "± 10% of SID", "± 1% of SID"], correct: 0 },
+        { id: 315, q: "Which interaction produces the majority of X-rays in the diagnostic range?", options: ["Characteristic Radiation", "Bremsstrahlung Radiation", "Photoelectric Effect", "Compton Effect"], correct: 1 },
+        { id: 316, q: "The 'Goython method' is a technique used for measuring:", options: ["Leg length discrepancy", "Scoliosis angle", "Bone age", "Pelvic inlet"], correct: 0 },
+        { id: 317, q: "For a lateral projection of the sacrum, the CR is directed:", options: ["Perpendicular to the level of ASIS", "15 degrees caudal", "10 degrees cephalad", "Perpendicular to the level of the PSIS"], correct: 0 },
+        { id: 318, q: "Which MRI sequence is best for detecting acute hemorrhage (blood)?", options: ["T1", "T2", "GRE / SWI (Susceptibility Weighted Imaging)", "STIR"], correct: 2 },
+        { id: 319, q: "The '15% Rule' states that increasing kVp by 15% has the same effect on density as:", options: ["Doubling the mAs", "Halving the mAs", "Doubling the distance", "Halving the distance"], correct: 0 },
+        { id: 320, q: "Which type of grid error results in 'Grid Cut-off' on both sides of the image?", options: ["Off-center", "Off-level", "Upside-down", "Off-focus (Wrong distance)"], correct: 2 }
     ];
 
-    // --- LOGIC (UPDATED STORAGE KEY FOR PAPER 2) ---
-    let userAnswers = JSON.parse(localStorage.getItem('aiims_paper2_answers')) || {};
+    // --- LOGIC (UPDATED STORAGE KEY FOR PAPER 4) ---
+    let userAnswers = JSON.parse(localStorage.getItem('aiims_paper4_answers')) || {};
     const quizContainer = document.getElementById('quiz-container');
     const attemptCountSpan = document.getElementById('attempt-count');
 
@@ -185,14 +185,14 @@
         parent.querySelectorAll('.option-label').forEach(s => s.classList.remove('selected'));
         label.classList.add('selected');
         userAnswers[id] = idx;
-        localStorage.setItem('aiims_paper2_answers', JSON.stringify(userAnswers));
+        localStorage.setItem('aiims_paper4_answers', JSON.stringify(userAnswers));
         updateProgress();
     }
 
     function updateProgress() { attemptCountSpan.innerText = Object.keys(userAnswers).length; }
 
     function submitExam() {
-        if(!confirm("Submit Paper 2 and view results?")) return;
+        if(!confirm("Submit Paper 4 and view results?")) return;
         let correct = 0, incorrect = 0, skipped = 0;
         questionsDB.forEach(q => {
             const val = userAnswers[q.id];
@@ -213,8 +213,8 @@
     }
 
     function resetExam() {
-        if(confirm("Reset Paper 2 history?")) {
-            localStorage.removeItem('aiims_paper2_answers');
+        if(confirm("Reset Paper 4 history?")) {
+            localStorage.removeItem('aiims_paper4_answers');
             location.reload();
         }
     }
