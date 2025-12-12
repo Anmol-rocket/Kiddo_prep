@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AIIMS CRE Radiographer - Paper 3</title>
+    <title>AIIMS CRE Radiographer</title>
     <style>
-        /* --- MOBILE OPTIMIZED STYLES (SET C THEME) --- */
+        /* --- MOBILE OPTIMIZED STYLES (SET E THEME) --- */
         :root {
-            --primary: #059669; /* Teal/Emerald Theme */
-            --secondary: #065f46;
-            --bg: #f3f4f6;
+            --primary: #ea580c; /* Deep Orange Theme */
+            --secondary: #c2410c;
+            --bg: #fff7ed;
             --text: #1f2937;
             --success: #10b981;
             --danger: #ef4444;
@@ -29,7 +29,7 @@
         }
         .header-left h1 { margin: 0; font-size: 1.1rem; color: var(--secondary); }
         .header-left .exam-info { font-size: 0.75rem; color: #666; }
-        #progress-indicator { background: var(--bg); padding: 5px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+        #progress-indicator { background: white; padding: 5px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
 
         .question-card { background: white; padding: 20px; border-radius: 12px; margin-top: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
         .question-text { font-weight: 600; font-size: 1.05rem; margin-bottom: 15px; color: #111; }
@@ -40,13 +40,13 @@
             border: 1px solid #e5e7eb; border-radius: 8px; cursor: pointer;
             background: #fff; transition: 0.2s;
         }
-        .option-label.selected { border-color: var(--primary); background-color: #ecfdf5; font-weight: 500; }
+        .option-label.selected { border-color: var(--primary); background-color: #ffedd5; font-weight: 500; }
         input[type="radio"] { margin-right: 12px; margin-top: 3px; accent-color: var(--primary); min-width: 20px; min-height: 20px; }
 
         .submit-btn {
             display: block; width: 100%; padding: 16px; background-color: var(--secondary); color: white;
             border: none; border-radius: 10px; font-size: 1.1rem; font-weight: 700; margin-top: 25px;
-            box-shadow: 0 4px 6px rgba(6, 95, 70, 0.3); touch-action: manipulation;
+            box-shadow: 0 4px 6px rgba(194, 65, 12, 0.3); touch-action: manipulation;
         }
         .submit-btn:active { transform: scale(0.98); }
 
@@ -69,8 +69,8 @@
 <div class="container">
     <header>
         <div class="header-left">
-            <h1>AIIMS CRE Paper 3</h1>
-            <div class="exam-info">SET-C | 400 Marks | +4 / -1</div>
+            <h1>AIIMS CRE Paper</h1>
+            <div class="exam-info">400 Marks | +4 / -1</div>
         </div>
         <div id="progress-indicator">
             <span id="attempt-count">0</span> / 100
@@ -79,12 +79,12 @@
 
     <div id="quiz-container"></div>
 
-    <button class="submit-btn" onclick="submitExam()">SUBMIT PAPER 3</button>
+    <button class="submit-btn" onclick="submitExam()">SUBMIT PAPER</button>
 </div>
 
 <div id="result-modal">
     <div class="result-content">
-        <h2 style="margin:0 0 10px 0; color:#333;">Exam Result (Set C)</h2>
+        <h2 style="margin:0 0 10px 0; color:#333;">Exam Result</h2>
         <div class="score-display">
             <span id="final-score">0</span><span style="font-size:1.2rem; color:#999; font-weight:400">/400</span>
         </div>
@@ -111,32 +111,32 @@
 </div>
 
 <script>
-    // --- NEW QUESTION SET (SET C) ---
+    // --- NEW QUESTION SET (SET E) ---
     const questionsDB = [
-        { id: 201, q: "In the cell cycle, which phase is considered the most radiosensitive?", options: ["S Phase (Synthesis)", "M Phase (Mitosis)", "G1 Phase", "G0 Phase"], correct: 1 },
-        { id: 202, q: "For a Towne's view (AP Axial) of the skull, the CR is angled:", options: ["15 degrees Cephalad", "30 degrees Caudal", "25 degrees Cephalad", "45 degrees Caudal"], correct: 1 },
-        { id: 203, q: "Hysterosalpingography (HSG) is primarily performed to evaluate:", options: ["Urinary Bladder stones", "Fallopian tube patency & Uterus", "Renal artery stenosis", "Gallbladder function"], correct: 1 },
-        { id: 204, q: "In Digital Radiography, 'Pixel Pitch' is defined as:", options: ["The number of gray shades", "Distance from the center of one pixel to the center of the next", "The size of the detector", "The maximum mA station"], correct: 1 },
-        { id: 205, q: "Contraindications for applying compression during an IVU (Intravenous Urography) include:", options: ["Hypertension", "Recent abdominal surgery / Aortic Aneurysm", "Diabetes", "History of asthma"], correct: 1 },
-        { id: 206, q: "The term 'Bit Depth' in digital imaging determines the:", options: ["Spatial Resolution", "Number of gray shades available per pixel", "Image noise", "Scan speed"], correct: 1 },
-        { id: 207, q: "Which filter is commonly used in a darkroom safelight for green-sensitive film?", options: ["Amber filter", "GBX-2 (Red) filter", "Blue filter", "Clear filter"], correct: 1 },
-        { id: 208, q: "In a transformer, the core is typically laminated to reduce:", options: ["Eddy current losses", "Hysteresis losses", "Copper losses", "Voltage drop"], correct: 0 },
-        { id: 209, q: "Which view is best to demonstrate the 'Intercondylar Fossa' of the knee?", options: ["AP View", "Lateral View", "Tunnel View (Camp Coventry / Holmblad)", "Skyline View"], correct: 2 },
-        { id: 210, q: "The LD 50/60 for humans (Lethal Dose for 50% population in 60 days) is approx:", options: ["1-2 Gy", "3-4 Gy", "8-10 Gy", "0.5 Gy"], correct: 1 },
-        { id: 211, q: "ERCP stands for:", options: ["Endoscopic Retrograde Cholangiopancreatography", "Emergency Renal Cyst Procedure", "Early Retrograde Colon Procedure", "Endoscopic Renal Catheter Placement"], correct: 0 },
-        { id: 212, q: "If the Pitch in CT is greater than 1, it implies:", options: ["Table moves slower than beam width (Overlap)", "Table moves faster than beam width (Gaps)", "Table does not move", "Patient dose is increased"], correct: 1 },
-        { id: 213, q: "Fluid (like CSF) appears ______ on a T1-weighted MRI image.", options: ["Bright (Hyperintense)", "Dark (Hypointense)", "Grey (Isointense)", "Variable"], correct: 1 },
-        { id: 214, q: "The function of the 'Rectifier' in an X-ray circuit is to:", options: ["Increase voltage", "Convert AC to DC", "Regulate filament current", "Timer control"], correct: 1 },
-        { id: 215, q: "What is the primary purpose of the 'Back-up Timer' in Automatic Exposure Control (AEC)?", options: ["To ensure short exposure", "To prevent tube overload and patient overexposure", "To increase contrast", "To warm up the tube"], correct: 1 },
-        { id: 216, q: "Which anatomical landmark corresponds to the level of L4-L5 vertebrae?", options: ["Xiphoid Process", "Lower Costal Margin", "Iliac Crest", "Symphysis Pubis"], correct: 2 },
-        { id: 217, q: "The 'Skyline view' (Merchant/Sunrise) is used to visualize the:", options: ["Calcaneus", "Patella (Patellofemoral joint)", "Acromioclavicular joint", "Zygomatic arches"], correct: 1 },
-        { id: 218, q: "In radiation protection, 'ALARA' stands for:", options: ["As Low As Reasonably Achievable", "Always Limit Annual Radiation Areas", "As Long As Radiation Allows", "Allow Low Area Radiation Absorption"], correct: 0 },
-        { id: 219, q: "Which of the following is a non-ionic contrast medium?", options: ["Barium Sulfate", "Diatrizoate", "Iohexol / Ioversol", "Sodium Iodide"], correct: 2 },
-        { id: 220, q: "The process of heating a TLD chip to release stored energy as light is called:", options: ["Fluorescence", "Annealing / Readout", "Phosphorescence", "Incandescence"], correct: 1 }
+        { id: 401, q: "The 'Air Gap Technique' is used in radiography primarily to:", options: ["Increase magnification", "Reduce scatter radiation reaching the film (act as a grid)", "Reduce patient dose", "Decrease contrast"], correct: 1 },
+        { id: 402, q: "Which drug is the first-line treatment for a severe anaphylactic reaction to contrast media?", options: ["Diphenhydramine (Benadryl)", "Adrenaline (Epinephrine)", "Hydrocortisone", "Atropine"], correct: 1 },
+        { id: 403, q: "The standard file format for the storage and exchange of medical images is:", options: ["JPEG", "PNG", "DICOM", "TIFF"], correct: 2 },
+        { id: 404, q: "In Computed Tomography (CT), the Hounsfield Unit (HU) for air is:", options: ["0", "+1000", "-1000", "-100"], correct: 2 },
+        { id: 405, q: "DEXA (Dual-Energy X-ray Absorptiometry) is the gold standard for diagnosing:", options: ["Bone metastases", "Osteoporosis (Bone Mineral Density)", "Multiple Myeloma", "Fractures"], correct: 1 },
+        { id: 406, q: "The 'Lordotic View' (Apical Lordotic) of the chest is best for visualizing:", options: ["Lung bases", "Costophrenic angles", "Lung apices / Clavicles", "Heart size"], correct: 2 },
+        { id: 407, q: "What is the primary cause of 'Quantum Mottle' (grainy image) in digital radiography?", options: ["High mAs", "Insufficient number of photons (Low mAs)", "High kVp", "Grid cutoff"], correct: 1 },
+        { id: 408, q: "In the 'Scottie Dog' appearance of the lumbar spine, the 'eye' represents the:", options: ["Pedicle", "Transverse Process", "Superior Articular Process", "Pars Interarticularis"], correct: 0 },
+        { id: 409, q: "PACS stands for:", options: ["Patient Access and Control System", "Picture Archiving and Communication System", "Primary Area Control Section", "Physician Access Computer Station"], correct: 1 },
+        { id: 410, q: "What is the formula for calculating Pixel Size?", options: ["Field of View (FOV) / Matrix Size", "Matrix Size / FOV", "FOV x Matrix Size", "Bit Depth / FOV"], correct: 0 },
+        { id: 411, q: "The recommended temperature for manual processing of X-ray film is approximately:", options: ["18°C (64.4°F)", "20-22°C (68-72°F)", "28°C (82°F)", "37°C (98.6°F)"], correct: 1 },
+        { id: 412, q: "Cryogens like Liquid Helium are used in MRI to:", options: ["Cool the gradient coils", "Maintain superconductivity of the magnet", "Cool the patient", "Enhance contrast"], correct: 1 },
+        { id: 413, q: "For a PA Caldwell view of the skull, the petrous ridges should be projected:", options: ["Into the lower 1/3 of the orbits", "Filling the orbits", "Below the maxillary sinuses", "Above the orbits"], correct: 0 },
+        { id: 414, q: "The dose limit for the general public (non-radiation workers) is:", options: ["20 mSv/year", "1 mSv/year", "5 mSv/year", "50 mSv/year"], correct: 1 },
+        { id: 415, q: "In an IVU, the 'Nephrogram phase' is best visualized at:", options: ["Immediate (0-1 min)", "5 minutes", "15 minutes", "30 minutes"], correct: 0 },
+        { id: 416, q: "Which of the following describes Barium Sulfate?", options: ["Water soluble salt", "Insoluble suspension", "Iodinated compound", "Gas contrast"], correct: 1 },
+        { id: 417, q: "The wattage of the bulb used in a darkroom safelight should not exceed:", options: ["15 Watts", "60 Watts", "100 Watts", "5 Watts"], correct: 0 },
+        { id: 418, q: "A 'Grid Frequency' refers to:", options: ["The height of the lead strips", "The ratio of height to distance", "The number of lead strips per inch/cm", "The speed of the bucky"], correct: 2 },
+        { id: 419, q: "Decreasing the OID (Object-to-Image Distance) results in:", options: ["Increased magnification", "Decreased magnification / Sharper image", "Increased blur", "Reduced contrast"], correct: 1 },
+        { id: 420, q: "The typical wavelength range of diagnostic X-rays is:", options: ["0.1 to 0.5 Angstroms", "400 to 700 nm", "1 to 10 meters", "10 to 100 Angstroms"], correct: 0 }
     ];
 
-    // --- LOGIC (UPDATED STORAGE KEY FOR PAPER 3) ---
-    let userAnswers = JSON.parse(localStorage.getItem('aiims_paper3_answers')) || {};
+    // --- LOGIC (UPDATED STORAGE KEY FOR PAPER 5) ---
+    let userAnswers = JSON.parse(localStorage.getItem('aiims_paper5_answers')) || {};
     const quizContainer = document.getElementById('quiz-container');
     const attemptCountSpan = document.getElementById('attempt-count');
 
@@ -185,14 +185,14 @@
         parent.querySelectorAll('.option-label').forEach(s => s.classList.remove('selected'));
         label.classList.add('selected');
         userAnswers[id] = idx;
-        localStorage.setItem('aiims_paper3_answers', JSON.stringify(userAnswers));
+        localStorage.setItem('aiims_paper5_answers', JSON.stringify(userAnswers));
         updateProgress();
     }
 
     function updateProgress() { attemptCountSpan.innerText = Object.keys(userAnswers).length; }
 
     function submitExam() {
-        if(!confirm("Submit Paper 3 and view results?")) return;
+        if(!confirm("Submit Paper 5 and view results?")) return;
         let correct = 0, incorrect = 0, skipped = 0;
         questionsDB.forEach(q => {
             const val = userAnswers[q.id];
@@ -213,8 +213,8 @@
     }
 
     function resetExam() {
-        if(confirm("Reset Paper 3 history?")) {
-            localStorage.removeItem('aiims_paper3_answers');
+        if(confirm("Reset Paper 5 history?")) {
+            localStorage.removeItem('aiims_paper5_answers');
             location.reload();
         }
     }
