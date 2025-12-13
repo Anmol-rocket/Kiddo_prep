@@ -45,15 +45,723 @@ export const weightageTopics: WeightageTopic[] = [
       "QC tests for X-ray, CT, Mammography"
     ],
     questions: [
-      // Add 100 MCQs here following the format:
-      // {
-      //   id: 1,
-      //   question: "Question text?",
-      //   options: ["Option A", "Option B", "Option C", "Option D"],
-      //   correctAnswer: 0,
-      //   explanation: "Explanation text"
-      // },
-    ]
+  // --- TOPIC: DOSE LIMITS (ICRP) ---
+  {
+    id: 1,
+    question: "According to ICRP, what is the annual effective dose limit for occupational workers averaged over 5 years?",
+    options: ["50 mSv", "20 mSv", "100 mSv", "1 mSv"],
+    correctAnswer: 1,
+    explanation: "The ICRP recommends an effective dose limit of 20 mSv per year, averaged over defined periods of 5 years, with no single year exceeding 50 mSv."
+  },
+  {
+    id: 2,
+    question: "What is the annual effective dose limit for the general public according to ICRP?",
+    options: ["5 mSv", "20 mSv", "1 mSv", "50 mSv"],
+    correctAnswer: 2,
+    explanation: "The annual effective dose limit for members of the public is 1 mSv."
+  },
+  {
+    id: 3,
+    question: "According to ICRP 118, what is the equivalent dose limit for the lens of the eye for occupational workers?",
+    options: ["150 mSv/year", "20 mSv/year", "500 mSv/year", "50 mSv/year"],
+    correctAnswer: 1,
+    explanation: "ICRP 118 reduced the occupational limit for the lens of the eye to 20 mSv per year, averaged over 5 years, with no single year exceeding 50 mSv."
+  },
+  {
+    id: 4,
+    question: "What is the annual equivalent dose limit for the skin for occupational workers?",
+    options: ["150 mSv", "50 mSv", "500 mSv", "20 mSv"],
+    correctAnswer: 2,
+    explanation: "The equivalent dose limit for the skin (and hands/feet) for occupational workers is 500 mSv per year."
+  },
+  {
+    id: 5,
+    question: "For a pregnant radiation worker, the dose to the embryo/fetus must not exceed what value during the remainder of the pregnancy?",
+    options: ["5 mSv", "1 mSv", "2 mSv", "20 mSv"],
+    correctAnswer: 1,
+    explanation: "Once pregnancy is declared, the dose to the embryo/fetus should not exceed 1 mSv for the remainder of the pregnancy."
+  },
+  {
+    id: 6,
+    question: "What is the annual equivalent dose limit for the skin for the general public?",
+    options: ["15 mSv", "50 mSv", "150 mSv", "500 mSv"],
+    correctAnswer: 1,
+    explanation: "For the public, the equivalent dose limit for the skin is 50 mSv per year."
+  },
+  {
+    id: 7,
+    question: "The dose limits recommended by ICRP do NOT apply to:",
+    options: ["Occupational exposure", "Medical exposure of patients", "Public exposure", "Emergency response personnel"],
+    correctAnswer: 1,
+    explanation: "Dose limits do not apply to patients undergoing medical diagnosis or therapy, as the exposure is intended to provide a direct benefit to them."
+  },
+  {
+    id: 8,
+    question: "Which ICRP publication is the primary source for the 2007 recommendations on radiological protection?",
+    options: ["ICRP 60", "ICRP 103", "ICRP 90", "ICRP 118"],
+    correctAnswer: 1,
+    explanation: "ICRP Publication 103 (2007) replaced ICRP 60 and provides the current fundamental recommendations."
+  },
+  {
+    id: 9,
+    question: "The maximum permissible dose in any single year for an occupational worker (provided the 5-year average is maintained) is:",
+    options: ["20 mSv", "30 mSv", "50 mSv", "100 mSv"],
+    correctAnswer: 2,
+    explanation: "While the average is 20 mSv/year, a worker may receive up to 50 mSv in a single year as long as the 5-year total does not exceed 100 mSv."
+  },
+  {
+    id: 10,
+    question: "What is the dose limit for a caregiver (comforter) voluntarily helping a patient undergoing medical procedures?",
+    options: ["1 mSv/episode", "5 mSv/episode", "20 mSv/episode", "Dose constraints are used instead of strict limits"],
+    correctAnswer: 3,
+    explanation: "Strict public dose limits do not apply to comforters/carers; instead, dose constraints (often 5 mSv per episode) are used to manage exposure."
+  },
+
+  // --- TOPIC: CONTROLLED VS UNCONTROLLED AREA ---
+  {
+    id: 11,
+    question: "A 'Controlled Area' is defined as an area where:",
+    options: ["Any member of the public can enter", "Annual dose may exceed 1 mSv", "Specific protection measures and safety provisions are required", "No radiation is present"],
+    correctAnswer: 2,
+    explanation: "A Controlled Area requires specific protection measures to control normal exposures and prevent potential exposures."
+  },
+  {
+    id: 12,
+    question: "Typically, the design limit for weekly dose in an Uncontrolled Area is:",
+    options: ["0.1 mSv/week", "0.02 mSv/week", "1 mSv/week", "0.4 mSv/week"],
+    correctAnswer: 1,
+    explanation: "Uncontrolled areas are designed to ensure public dose limits are met, typically calculated at 0.02 mSv/week (or roughly 1 mSv/year)."
+  },
+  {
+    id: 13,
+    question: "Which of the following is required for a Controlled Area?",
+    options: ["Open access", "Warning signs and access control", "No shielding", "Occupancy factor of 0"],
+    correctAnswer: 1,
+    explanation: "Controlled areas must have warning signs (e.g., radiation symbol) and restricted access."
+  },
+  {
+    id: 14,
+    question: "An area where the annual dose equivalent might exceed 6 mSv (3/10ths of the limit) is generally classified as:",
+    options: ["Uncontrolled Area", "Supervised Area", "Controlled Area", "Public Area"],
+    correctAnswer: 2,
+    explanation: "If doses are expected to be greater than 6 mSv/year (often defined as >3/10 of the limit), the area is usually designated as Controlled."
+  },
+  {
+    id: 15,
+    question: "Who is primarily responsible for classifying areas as Controlled or Supervised?",
+    options: ["The receptionist", "The Radiological Safety Officer (RSO)", "The patient", "The equipment manufacturer"],
+    correctAnswer: 1,
+    explanation: "The RSO (or Qualified Expert) is responsible for designating areas based on radiation levels and safety requirements."
+  },
+  {
+    id: 16,
+    question: "A 'Supervised Area' is one where:",
+    options: ["Occupational exposure conditions are kept under review but special procedures are not normally needed", "Doses exceed 20 mSv/year", "The public has free access", "No monitoring is allowed"],
+    correctAnswer: 0,
+    explanation: "Supervised areas require monitoring/review but not the stringent control measures of a Controlled Area."
+  },
+  {
+    id: 17,
+    question: "The shielding design goal (P) for a Controlled Area is typically:",
+    options: ["0.02 mSv/week", "0.1 mSv/week", "5 mSv/year", "0.1 mSv/year"],
+    correctAnswer: 1,
+    explanation: "For controlled areas (occupational workers), the design goal is typically 0.1 mSv/week (approx 5 mSv/year constraint)."
+  },
+  {
+    id: 18,
+    question: "Which group of people is permitted in an Uncontrolled Area?",
+    options: ["Only radiation workers", "Only patients", "Members of the general public", "Only RSOs"],
+    correctAnswer: 2,
+    explanation: "Uncontrolled areas are those occupied by individuals such as patients' visitors, hospital staff who do not work with radiation, and the general public."
+  },
+  {
+    id: 19,
+    question: "Radiation warning lights (Red lights) are essential for:",
+    options: ["The waiting room", "The darkroom", "The entrance to a Controlled Area (e.g., CT/X-ray room)", "The doctor's office"],
+    correctAnswer: 2,
+    explanation: "Warning lights indicate when the X-ray beam is on and are required at the entrance of Controlled Areas."
+  },
+  {
+    id: 20,
+    question: "Personnel monitoring (e.g., TLD badges) is mandatory for staff working primarily in:",
+    options: ["Uncontrolled Areas", "Controlled Areas", "Administrative offices", "Cafeterias"],
+    correctAnswer: 1,
+    explanation: "Staff working in Controlled Areas are occupationally exposed and typically require individual monitoring."
+  },
+
+  // --- TOPIC: TLD, OSL DOSIMETERS ---
+  {
+    id: 21,
+    question: "What does TLD stand for?",
+    options: ["Thermal Light Detector", "Thermoluminescent Dosimeter", "Time Limited Dose", "Total Lead Density"],
+    correctAnswer: 1,
+    explanation: "TLD stands for Thermoluminescent Dosimeter."
+  },
+  {
+    id: 22,
+    question: "Which material is most commonly used in TLD badges for personnel monitoring?",
+    options: ["CaSO4:Dy", "LiF:Mg,Ti", "Al2O3:C", "NaI:Tl"],
+    correctAnswer: 0,
+    explanation: "In many countries (like India), CaSO4:Dy is used for high sensitivity; globally LiF:Mg,Ti is also very common. CaSO4:Dy is the standard for BARC/AERB personnel monitoring cards."
+  },
+  {
+    id: 23,
+    question: "What does OSL stand for?",
+    options: ["Optical Source Light", "Optically Stimulated Luminescence", "Occupational Safety Limit", "Outer Shield Layer"],
+    correctAnswer: 1,
+    explanation: "OSL stands for Optically Stimulated Luminescence."
+  },
+  {
+    id: 24,
+    question: "The active material typically used in OSL dosimeters is:",
+    options: ["Lithium Fluoride", "Calcium Sulfate", "Aluminum Oxide (Al2O3:C)", "Silver Bromide"],
+    correctAnswer: 2,
+    explanation: "Carbon-doped Aluminum Oxide (Al2O3:C) is the primary phosphor used in OSL dosimeters (e.g., Luxel)."
+  },
+  {
+    id: 25,
+    question: "How is the stored energy released in a TLD reader?",
+    options: ["By exposing it to a laser", "By heating the material", "By applying a magnetic field", "By chemical washing"],
+    correctAnswer: 1,
+    explanation: "TLDs release stored energy as light when they are heated (Thermal stimulation)."
+  },
+  {
+    id: 26,
+    question: "How is the stored energy released in an OSL reader?",
+    options: ["By heating", "By exposing it to light (green laser/LED)", "By crushing the crystal", "By radio frequency"],
+    correctAnswer: 1,
+    explanation: "OSL dosimeters are read by stimulating the material with light (Optical stimulation)."
+  },
+  {
+    id: 27,
+    question: "Which dosimeter allows for re-analysis (re-reading) of the dose?",
+    options: ["Film Badge", "TLD", "OSL", "Pocket Ionization Chamber"],
+    correctAnswer: 2,
+    explanation: "OSL dosimeters can be re-read because the reading process only depletes a small fraction of the stored signal, unlike TLDs which are annealed (cleared) by reading."
+  },
+  {
+    id: 28,
+    question: "What is the main advantage of TLD over Film Badges?",
+    options: ["Permanent record", "Tissue equivalence", "Lower cost", "Instant readout"],
+    correctAnswer: 1,
+    explanation: "TLD materials like LiF are more tissue-equivalent than the silver in film, providing more accurate dose measurements without complex energy filters."
+  },
+  {
+    id: 29,
+    question: "The process of heating a TLD to high temperature to remove residual signal before reuse is called:",
+    options: ["Developing", "Annealing", "Fixing", "Bleaching"],
+    correctAnswer: 1,
+    explanation: "Annealing resets the TLD crystal by emptying all electron traps."
+  },
+  {
+    id: 30,
+    question: "What filter is used in a TLD badge to distinguish between shallow (skin) and deep (body) dose?",
+    options: ["Lead filter only", "Open window, plastic, and metal filters", "No filters are used", "Water filter"],
+    correctAnswer: 1,
+    explanation: "TLD badges use a combination of open windows and metal/plastic filters to differentiate between beta, low-energy X-ray, and high-energy radiation (Hp(0.07) vs Hp(10))."
+  },
+  {
+    id: 31,
+    question: "Which dosimeter is generally more sensitive to low doses?",
+    options: ["Film Badge", "OSL", "TLD (LiF)", "Pocket Dosimeter"],
+    correctAnswer: 1,
+    explanation: "OSL dosimeters (Al2O3:C) generally have a lower limit of detection (approx 0.01 mSv) compared to standard TLDs or Film."
+  },
+  {
+    id: 32,
+    question: "The glow curve is a characteristic output of which device?",
+    options: ["Geiger Muller Counter", "TLD Reader", "Ionization Chamber", "OSL Reader"],
+    correctAnswer: 1,
+    explanation: "A glow curve plots light output vs temperature during the TLD reading cycle."
+  },
+
+  // --- TOPIC: WORKLOAD, OCCUPANCY, USE FACTOR ---
+  {
+    id: 33,
+    question: "In shielding calculations, Workload (W) is typically expressed in units of:",
+    options: ["mSv/week", "mA-min/week", "kVp/week", "Hours/week"],
+    correctAnswer: 1,
+    explanation: "Workload describes the X-ray tube output and usage, measured in milliampere-minutes per week (mA-min/wk)."
+  },
+  {
+    id: 34,
+    question: "The 'Use Factor' (U) describes:",
+    options: ["The fraction of time the beam is directed at a specific barrier", "The fraction of time the room is occupied", "The efficiency of the X-ray tube", "The percentage of leakage radiation"],
+    correctAnswer: 0,
+    explanation: "The Use Factor represents the fraction of the beam-on time that the primary beam is directed toward a specific barrier (e.g., floor, wall)."
+  },
+  {
+    id: 35,
+    question: "What is the typical Use Factor (U) for a floor in a general radiography room?",
+    options: ["0", "1", "1/4", "1/16"],
+    correctAnswer: 1,
+    explanation: "The floor is almost always a primary barrier because the beam is often directed downwards; U is typically taken as 1."
+  },
+  {
+    id: 36,
+    question: "The 'Occupancy Factor' (T) for an office or control room continuously staffed by workers is:",
+    options: ["1", "1/4", "1/16", "1/8"],
+    correctAnswer: 0,
+    explanation: "For areas occupied full-time by the same individual (offices, control rooms), T = 1."
+  },
+  {
+    id: 37,
+    question: "What is a typical Occupancy Factor (T) for a corridor or heavy traffic area?",
+    options: ["1", "1/5 or 1/4", "1/40", "0"],
+    correctAnswer: 1,
+    explanation: "Corridors are used frequently but not continuously by the same person, so T is often 1/5 (NCRP 147) or 1/4."
+  },
+  {
+    id: 38,
+    question: "In the shielding formula B = P * d^2 / (W * U * T), what does 'P' stand for?",
+    options: ["Patient dose", "Protection level (Design goal)", "Primary barrier", "Penetration"],
+    correctAnswer: 1,
+    explanation: "P is the Shielding Design Goal (permissible dose equivalent) for the area being protected."
+  },
+  {
+    id: 39,
+    question: "Which factor is NOT required for calculating Secondary Barrier shielding?",
+    options: ["Workload (W)", "Occupancy Factor (T)", "Use Factor (U)", "Distance (d)"],
+    correctAnswer: 2,
+    explanation: "The Use Factor (U) is effectively 1 for secondary barriers because leakage and scatter radiation are emitted in all directions, so the barrier is always 'in use' when the tube is on."
+  },
+  {
+    id: 40,
+    question: "If the distance (d) from the source to the barrier is doubled, the required shielding thickness:",
+    options: ["Increases", "Decreases", "Remains the same", "Doubles"],
+    correctAnswer: 1,
+    explanation: "By the inverse square law, doubling distance reduces intensity by 4, thus reducing the amount of shielding thickness required."
+  },
+  {
+    id: 41,
+    question: "The Workload for a CT scanner is often best described in terms of:",
+    options: ["mA-min/week", "DLP/week or scans/week", "kVp settings", "Gantry rotation speed"],
+    correctAnswer: 0,
+    explanation: "While CT workload can be complex, it is fundamentally calculated based on the total mA-min generated per week."
+  },
+  {
+    id: 42,
+    question: "For a secondary barrier, the source of radiation is considered to be:",
+    options: ["The X-ray tube focal spot", "The patient (scatter) and tube housing (leakage)", "The control console", "The image receptor"],
+    correctAnswer: 1,
+    explanation: "Secondary barriers protect against scatter (from the patient) and leakage (from the housing)."
+  },
+
+  // --- TOPIC: BARRIERS (PRIMARY & SECONDARY) ---
+  {
+    id: 43,
+    question: "A Primary Barrier is designed to attenuate:",
+    options: ["Leakage radiation only", "Scatter radiation only", "The direct (useful) X-ray beam", "Background radiation"],
+    correctAnswer: 2,
+    explanation: "Primary barriers are placed where the primary X-ray beam can be directly aimed."
+  },
+  {
+    id: 44,
+    question: "Which of the following is typically a Primary Barrier in a general X-ray room?",
+    options: ["The ceiling", "The control booth wall", "The wall behind the chest bucky", "The door to the corridor"],
+    correctAnswer: 2,
+    explanation: "The chest bucky wall receives the direct beam during chest X-rays."
+  },
+  {
+    id: 45,
+    question: "A Secondary Barrier is designed to protect against:",
+    options: ["Primary beam only", "Scatter and Leakage radiation", "Neutron radiation", "Alpha particles"],
+    correctAnswer: 1,
+    explanation: "Secondary barriers are walls that are never struck by the direct beam; they shield scatter and leakage."
+  },
+  {
+    id: 46,
+    question: "The control booth wall is generally considered a:",
+    options: ["Primary Barrier", "Secondary Barrier", "Tertiary Barrier", "Temporary Barrier"],
+    correctAnswer: 1,
+    explanation: "The beam should never be directed at the control booth; therefore, it is a secondary barrier."
+  },
+  {
+    id: 47,
+    question: "Which material is most efficient (requires least thickness) for X-ray shielding?",
+    options: ["Concrete", "Lead", "Gypsum board", "Steel"],
+    correctAnswer: 1,
+    explanation: "Lead has a high atomic number and density, making it the most efficient space-saving shielding material."
+  },
+  {
+    id: 48,
+    question: "1/16 inch of Lead is approximately equivalent to how much concrete?",
+    options: ["4 inches (10 cm)", "1 inch", "12 inches", "0.5 inches"],
+    correctAnswer: 0,
+    explanation: "As a rule of thumb, 4 inches of concrete is roughly equivalent to 1/16 inch (approx 1.6mm) of lead for diagnostic energies."
+  },
+  {
+    id: 49,
+    question: "Barriers are usually specified in terms of:",
+    options: ["HVL (Half Value Layer)", "TVL (Tenth Value Layer)", "Lead Equivalence", "Optical Density"],
+    correctAnswer: 2,
+    explanation: "Structural shielding is often specified in mm of Lead Equivalence."
+  },
+  {
+    id: 50,
+    question: "In a Mammography room, the walls are usually considered:",
+    options: ["Primary barriers requiring thick lead", "Secondary barriers requiring minimal shielding", "No shielding required", "Primary barriers made of concrete"],
+    correctAnswer: 1,
+    explanation: "Due to low kVp in mammography and the fact that the machine absorbs the primary beam (image receptor assembly acts as a stop), room walls are secondary barriers often requiring just drywall or very thin lead."
+  },
+  {
+    id: 51,
+    question: "Lead glass windows in control booths typically require a lead equivalence of:",
+    options: ["0.1 mm", "1.5 mm", "10 mm", "0.05 mm"],
+    correctAnswer: 1,
+    explanation: "Standard regulatory requirement for control windows is often 1.5 mm lead equivalence (at 150 kVp)."
+  },
+  {
+    id: 52,
+    question: "If a barrier must reduce intensity by a factor of 1000, how many TVLs are needed?",
+    options: ["1", "2", "3", "10"],
+    correctAnswer: 2,
+    explanation: "10 x 10 x 10 = 1000. Therefore, 3 Tenth Value Layers are needed."
+  },
+  {
+    id: 53,
+    question: "Scatter radiation intensity at 1 meter from the patient is approximately what fraction of the incident beam intensity?",
+    options: ["10%", "1%", "0.1% (1/1000)", "0.01%"],
+    correctAnswer: 2,
+    explanation: "Rule of thumb: Scatter at 1m is 0.1% (1/1000th) of the entrance skin exposure."
+  },
+
+  // --- TOPIC: LEAKAGE RADIATION ---
+  {
+    id: 54,
+    question: "Leakage radiation emanates from:",
+    options: ["The patient", "The collimator opening", "The X-ray tube housing", "The wall"],
+    correctAnswer: 2,
+    explanation: "Leakage is radiation that passes through the protective housing of the tube, other than the useful beam."
+  },
+  {
+    id: 55,
+    question: "The maximum permissible leakage radiation from a diagnostic X-ray tube housing at 1 meter is:",
+    options: ["100 mGy/hr", "1 mGy/hr (100 mR/hr)", "0.1 mGy/hr", "10 mGy/hr"],
+    correctAnswer: 1,
+    explanation: "Regulations (FDA/AERB/IEC) limit leakage to 1 mGy/hr (100 mR/hr) at 1 meter from the source when operated at maximum rating."
+  },
+  {
+    id: 56,
+    question: "Leakage radiation is considered what type of radiation for shielding purposes?",
+    options: ["Primary", "Secondary", "Remnant", "Background"],
+    correctAnswer: 1,
+    explanation: "Leakage, along with scatter, is classified as secondary radiation."
+  },
+  {
+    id: 57,
+    question: "Which component is responsible for limiting leakage radiation?",
+    options: ["The collimator", "The lead-lined tube housing", "The anode", "The filter"],
+    correctAnswer: 1,
+    explanation: "The protective tube housing is lined with lead to absorb isotropic X-rays not directed at the window."
+  },
+  {
+    id: 58,
+    question: "When calculating secondary barriers, leakage radiation is assumed to be:",
+    options: ["Isotropic (equal in all directions)", "Focused downward", "Negligible", "Higher intensity than the primary beam"],
+    correctAnswer: 0,
+    explanation: "Leakage is assumed to radiate in all directions from the tube housing."
+  },
+
+  // --- TOPIC: QC TESTS (X-RAY, CT, MAMMO) ---
+  {
+    id: 59,
+    question: "Which QC test measures the consistency of X-ray output for the same exposure parameters?",
+    options: ["Linearity", "Reproducibility", "Accuracy", "HVL"],
+    correctAnswer: 1,
+    explanation: "Reproducibility tests whether the machine produces the same output (mR) for repeated exposures at the same settings. Coefficient of variation should be < 0.05."
+  },
+  {
+    id: 60,
+    question: "kVp accuracy for a general X-ray unit must typically be within:",
+    options: ["±2 kVp", "±5% or ±5 kVp", "±10%", "±20%"],
+    correctAnswer: 1,
+    explanation: "Standard limits are ±5% or ±5 kVp of the set value."
+  },
+  {
+    id: 61,
+    question: "The Half Value Layer (HVL) is a measure of:",
+    options: ["Beam Quantity", "Beam Quality (Penetrability)", "Field size", "Timer accuracy"],
+    correctAnswer: 1,
+    explanation: "HVL indicates the filtration and effective energy (quality) of the beam."
+  },
+  {
+    id: 62,
+    question: "Collimator alignment (Light field vs Radiation field) must be within what tolerance?",
+    options: ["2% of SID", "5% of SID", "1 cm regardless of SID", "10% of SID"],
+    correctAnswer: 0,
+    explanation: "The misalignment must not exceed 2% of the Source-to-Image Distance (SID)."
+  },
+  {
+    id: 63,
+    question: "In CT QC, the CT number for water should be:",
+    options: ["-1000 HU", "0 HU ± ~4 HU", "100 HU", "500 HU"],
+    correctAnswer: 1,
+    explanation: "Water is the reference for Hounsfield Units and must calibrate to 0 HU (typically within ±3 to 5 HU)."
+  },
+  {
+    id: 64,
+    question: "What does the 'Low Contrast Resolution' test in CT evaluate?",
+    options: ["Ability to distinguish small objects with high density difference", "Ability to distinguish objects with similar densities", "Accuracy of slice thickness", "Patient dose"],
+    correctAnswer: 1,
+    explanation: "Low contrast resolution measures the scanner's ability to differentiate tissues with very similar densities (slight HU differences)."
+  },
+  {
+    id: 65,
+    question: "The star pattern test tool is used to measure:",
+    options: ["kVp accuracy", "Focal spot size", "Timer accuracy", "Grid ratio"],
+    correctAnswer: 1,
+    explanation: "Star patterns or slit cameras are used to determine the effective focal spot size."
+  },
+  {
+    id: 66,
+    question: "In Mammography QC, the compression force should typically range between:",
+    options: ["50-100 Newtons", "111-200 Newtons (approx 11-20 kg)", "300-400 Newtons", "10-20 Newtons"],
+    correctAnswer: 1,
+    explanation: "AERB/MQSA standards typically require powered compression to be between 111 N and 200 N (25-45 lbs)."
+  },
+  {
+    id: 67,
+    question: "The wire mesh test in screen-film radiography or CR is used to check:",
+    options: ["Screen-film contact", "Developer temperature", "Fog level", "Beam alignment"],
+    correctAnswer: 0,
+    explanation: "Poor contact between the screen and film/plate causes blurring; a wire mesh image reveals these areas."
+  },
+  {
+    id: 68,
+    question: "Which phantom is typically used for CTDI measurements?",
+    options: ["RMI 156", "PMMA (Acrylic) head and body phantoms", "Aluminum step wedge", "Water bath"],
+    correctAnswer: 1,
+    explanation: "Standard CT dosimetry uses 16cm (head) and 32cm (body) cylindrical PMMA phantoms."
+  },
+  {
+    id: 69,
+    question: "The minimum filtration required for a general X-ray tube operating above 70 kVp is:",
+    options: ["0.5 mm Al", "1.5 mm Al", "2.5 mm Al equivalent", "5.0 mm Al"],
+    correctAnswer: 2,
+    explanation: "Total filtration must be at least 2.5 mm Aluminum equivalent for tubes operating above 70 kVp."
+  },
+  {
+    id: 70,
+    question: "In Mammography, the kVp accuracy should be within:",
+    options: ["±5 kVp", "±1 kVp", "±10%", "±0.1 kVp"],
+    correctAnswer: 1,
+    explanation: "Mammography requires high precision; kVp must be accurate within ±1 kVp (or ±5% depending on specific regulation, but usually tighter)."
+  },
+  {
+    id: 71,
+    question: "Which QC test evaluates the linearity of the X-ray output?",
+    options: ["Output is constant when mA and time are varied but mAs is constant", "Output doubles when kVp doubles", "Output remains same over 10 exposures", "Focal spot remains constant"],
+    correctAnswer: 0,
+    explanation: "Linearity (Reciprocity) ensures that any combination of mA and time that results in the same mAs produces the same radiation output (mR/mAs)."
+  },
+  {
+    id: 72,
+    question: "Spatial resolution in CT is typically measured using:",
+    options: ["A water phantom", "Bar patterns or a wire MTF", "Dosimeters", "Uniformity phantom"],
+    correctAnswer: 1,
+    explanation: "High contrast spatial resolution is measured using bar patterns (lp/cm) or by calculating the Modulation Transfer Function (MTF) of a wire."
+  },
+  {
+    id: 73,
+    question: "Uniformity test in CT checks:",
+    options: ["That the CT number of water is the same at the center and periphery of the phantom", "That the table moves smoothly", "That the laser lights are straight", "That slice thickness is constant"],
+    correctAnswer: 0,
+    explanation: "Uniformity ensures the image of a uniform object (water phantom) looks uniform, checking for cupping or capping artifacts."
+  },
+  {
+    id: 74,
+    question: "The exposure timer accuracy for times greater than 10 ms should be within:",
+    options: ["±20%", "±5%", "±50%", "±1%"],
+    correctAnswer: 1,
+    explanation: "Timer accuracy is typically required to be within ±5%."
+  },
+  {
+    id: 75,
+    question: "In Mammography, the phantom image quality test scores:",
+    options: ["Fibers, speck groups, and masses", "Only contrast", "Only resolution", "Patient ID accuracy"],
+    correctAnswer: 0,
+    explanation: "The ACR Mammography phantom requires the visualization of specific numbers of fibers, speck groups, and masses."
+  },
+  {
+    id: 76,
+    question: "Which device is used to check kVp non-invasively?",
+    options: ["Spinning top", "kVp meter (electronic penetrameter)", "Densitometer", "Sensitometer"],
+    correctAnswer: 1,
+    explanation: "Digital kVp meters use filtered detectors to measure the peak voltage without opening the circuitry."
+  },
+  {
+    id: 77,
+    question: "Beam perpendicularity checks ensure the central ray is within what degree of perpendicular to the receptor?",
+    options: ["1 degree", "1.5 degrees", "3 degrees", "5 degrees"],
+    correctAnswer: 0,
+    explanation: "The X-ray beam must be within 1 degree of perpendicularity to the image receptor."
+  },
+
+  // --- MIXED / ADVANCED TOPICS ---
+  {
+    id: 78,
+    question: "The dose limit for the hands of an occupational worker is:",
+    options: ["20 mSv", "150 mSv", "500 mSv", "1000 mSv"],
+    correctAnswer: 2,
+    explanation: "Extremities (hands and feet) have a deterministic limit of 500 mSv/year."
+  },
+  {
+    id: 79,
+    question: "Which of the following describes 'Stochastic Effects'?",
+    options: ["Severity depends on dose (e.g., skin burn)", "Probability depends on dose (e.g., cancer)", "Has a threshold", "Occurs immediately"],
+    correctAnswer: 1,
+    explanation: "Stochastic effects (cancer, genetic effects) have no threshold, and the probability of occurrence increases with dose."
+  },
+  {
+    id: 80,
+    question: "For CT, the dose metric 'DLP' stands for:",
+    options: ["Daily Limit Protocol", "Dose Length Product", "Direct Linear Penetration", "Digital Luminescence Profile"],
+    correctAnswer: 1,
+    explanation: "DLP = CTDIvol × Scan Length. It represents the total energy absorbed."
+  },
+  {
+    id: 81,
+    question: "In Fluoroscopy, the maximum skin entrance exposure rate (normal mode) is typically limited to:",
+    options: ["100 mGy/min (10 R/min)", "10 mGy/min", "1 Gy/min", "5 mGy/min"],
+    correctAnswer: 0,
+    explanation: "Regulatory limit for normal fluoroscopy is typically 100 mGy/min (10 R/min) at the entrance point."
+  },
+  {
+    id: 82,
+    question: "Which is a 'personnel' monitoring device?",
+    options: ["Geiger Muller Survey Meter", "TLD Badge", "Ionization Chamber Survey Meter", "Well Counter"],
+    correctAnswer: 1,
+    explanation: "Survey meters measure area radiation; TLD badges measure individual dose."
+  },
+  {
+    id: 83,
+    question: "The 'Control' TLD badge is used to:",
+    options: ["Measure the dose to the RSO", "Measure background radiation during transit and storage", "Test the reader", "Measure patient dose"],
+    correctAnswer: 1,
+    explanation: "The control badge is kept in a radiation-free area to subtract background/transit dose from the workers' badges."
+  },
+  {
+    id: 84,
+    question: "What is the primary material used in the construction of a CT gantry housing to reduce weight but not necessarily for shielding?",
+    options: ["Lead", "Plastic/Carbon Fiber", "Depleted Uranium", "Tungsten"],
+    correctAnswer: 1,
+    explanation: "While the tube has lead, the covers are plastic. The actual shielding is inside. (This question clarifies structure vs shielding)."
+  },
+  {
+    id: 85,
+    question: "QC for Automatic Exposure Control (AEC) includes checking:",
+    options: ["That it terminates exposure at consistent Optical Density/Index", "That it sets the kVp", "That it collimates the beam", "That it develops the film"],
+    correctAnswer: 0,
+    explanation: "AEC QC ensures that regardless of patient thickness (within limits), the resulting image brightness/density is consistent."
+  },
+  {
+    id: 86,
+    question: "An occupancy factor of T=1/16 is typical for:",
+    options: ["Offices", "Corridors", "Toilets or Stairways", "Control rooms"],
+    correctAnswer: 2,
+    explanation: "Areas with minimal occupancy like toilets, unattended waiting rooms, or stairways are assigned T=1/16 (or 1/20 in NCRP 147)."
+  },
+  {
+    id: 87,
+    question: "The 'Ten Day Rule' applies to:",
+    options: ["Scheduling X-ray exams for women of childbearing age", "TLD reading frequency", "QC testing intervals", "Radioactive decay"],
+    correctAnswer: 0,
+    explanation: "Historical guideline (now often replaced by 28-day rule or just pregnancy checks) to schedule abdominal X-rays during the first 10 days of the menstrual cycle."
+  },
+  {
+    id: 88,
+    question: "For shielding, 'HVL' stands for the thickness required to reduce intensity to:",
+    options: ["10%", "50%", "37%", "90%"],
+    correctAnswer: 1,
+    explanation: "Half Value Layer reduces intensity to 50%."
+  },
+  {
+    id: 89,
+    question: "Which radiation unit is used for 'Effective Dose'?",
+    options: ["Gray (Gy)", "Sievert (Sv)", "Roentgen (R)", "Becquerel (Bq)"],
+    correctAnswer: 1,
+    explanation: "Sievert is the unit for equivalent and effective dose, accounting for biological harm."
+  },
+  {
+    id: 90,
+    question: "A lead apron of 0.5 mm Pb equivalence attenuates approximately what percentage of scatter radiation (at diagnostic energies)?",
+    options: ["10%", "50%", "95-99%", "100%"],
+    correctAnswer: 2,
+    explanation: "At standard scatter energies, 0.5 mm lead attenuates over 95% of the radiation."
+  },
+  {
+    id: 91,
+    question: "If a QC test fails, the first step is usually to:",
+    options: ["Shut down the department", "Repeat the test to confirm", "Call the engineer immediately", "Ignore it"],
+    correctAnswer: 1,
+    explanation: "Verify the result by repeating the test to rule out operator error before calling service."
+  },
+  {
+    id: 92,
+    question: "Slice thickness accuracy in CT is evaluated using:",
+    options: ["Ramps or spirals in a phantom", "Water bucket", "Air scan", "Dosimeter"],
+    correctAnswer: 0,
+    explanation: "Phantoms containing inclined ramps allow calculation of slice width based on the length of the ramp image."
+  },
+  {
+    id: 93,
+    question: "The most radiation-sensitive stage of pregnancy is:",
+    options: ["Pre-implantation", "Organogenesis (2-15 weeks)", "Fetal period", "Third trimester"],
+    correctAnswer: 1,
+    explanation: "Organogenesis is the period of major organ formation and is most sensitive to teratogenic effects."
+  },
+  {
+    id: 94,
+    question: "Which particle is used in OSL readout that is NOT used in TLD?",
+    options: ["Heat", "Light (LED/Laser)", "Electricity", "Sound"],
+    correctAnswer: 1,
+    explanation: "OSL uses optical stimulation (light); TLD uses thermal stimulation (heat)."
+  },
+  {
+    id: 95,
+    question: "Leakage radiation contributes to the dose of:",
+    options: ["The patient", "The image receptor", "Staff and persons in adjacent rooms", "The filament"],
+    correctAnswer: 2,
+    explanation: "Leakage is a safety hazard primarily for staff in the room and people in adjacent areas."
+  },
+  {
+    id: 96,
+    question: "The unit 'Gray' (Gy) measures:",
+    options: ["Absorbed Dose", "Equivalent Dose", "Radioactivity", "Exposure"],
+    correctAnswer: 0,
+    explanation: "Gray is the SI unit for Absorbed Dose (Energy/Mass)."
+  },
+  {
+    id: 97,
+    question: "AERB/ICRP recommends that students/trainees (16-18 years) have an annual dose limit of:",
+    options: ["20 mSv", "6 mSv", "1 mSv", "50 mSv"],
+    correctAnswer: 1,
+    explanation: "For trainees/apprentices, the limit is often set at 6 mSv/year."
+  },
+  {
+    id: 98,
+    question: "What is the typical lead equivalence of a thyroid shield?",
+    options: ["0.25 mm", "0.5 mm", "1.0 mm", "0.1 mm"],
+    correctAnswer: 1,
+    explanation: "Standard thyroid shields usually have 0.5 mm Pb equivalence."
+  },
+  {
+    id: 99,
+    question: "The backup timer in an AEC system is set to terminate exposure at:",
+    options: ["100 mAs", "600 mAs or 6 seconds", "10 mAs", "1 second"],
+    correctAnswer: 1,
+    explanation: "Safety regulation requires a backup timer to stop exposure at 600 mAs (for >50kVp) to prevent tube overload and patient overexposure if AEC fails."
+  },
+  {
+    id: 100,
+    question: "Which QC test uses a SMPTE pattern?",
+    options: ["Monitor/Display calibration", "CT dose", "kVp accuracy", "Lead apron integrity"],
+    correctAnswer: 0,
+    explanation: "The SMPTE pattern is used to check the resolution, contrast, and brightness of medical display monitors."
+  }
+]
+
   },
   {
     id: "radiology_physics",
