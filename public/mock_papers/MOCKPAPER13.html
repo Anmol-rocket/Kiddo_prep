@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AIIMS CRE Radiographer - Full Mock (100 Q)</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --bg: #f8fafc;
+            --text: #0f172a;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding-bottom: 100px;
+        }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 15px; }
+
+        /* HEADER */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            padding: 12px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title h1 { margin: 0; font-size: 1.1rem; color: var(--secondary); }
+        .header-sub { font-size: 0.75rem; color: #64748b; }
+        
+        .counter-badge {
+            background: var(--secondary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* QUESTIONS */
+        .question-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .q-header {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .q-num {
+            background: #e0e7ff;
+            color: var(--secondary);
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 6px;
+            height: fit-content;
+            font-size: 0.9rem;
+        }
+
+        .q-text {
+            font-weight: 600;
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+
+        .options-list { display: flex; flex-direction: column; gap: 8px; }
+
+        .option-item {
+            display: flex;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            cursor: pointer;
+            align-items: flex-start;
+            transition: all 0.2s ease;
+            background: #fff;
+        }
+
+        .option-item:active { transform: scale(0.99); }
+
+        .option-item.selected {
+            border-color: var(--primary);
+            background-color: #eff6ff;
+            box-shadow: 0 0 0 1px var(--primary);
+        }
+
+        input[type="radio"] {
+            margin-right: 12px;
+            margin-top: 4px;
+            accent-color: var(--primary);
+            transform: scale(1.2);
+        }
+
+        .opt-text { font-size: 0.95rem; line-height: 1.4; }
+
+        /* FAB SUBMIT BUTTON */
+        .fab-submit {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+            z-index: 90;
+            width: 90%;
+            max-width: 400px;
+            cursor: pointer;
+        }
+
+        /* RESULT MODAL */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-card {
+            background: white;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .score-big {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 10px 0;
+            line-height: 1;
+        }
+
+        .grid-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 24px 0;
+        }
+
+        .stat-item {
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 8px;
+        }
+        
+        .stat-val { font-size: 1.25rem; font-weight: bold; }
+        .stat-lbl { font-size: 0.75rem; text-transform: uppercase; color: #64748b; letter-spacing: 0.5px; }
+
+        .btn-reset {
+            background: #475569;
+            color: white;
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-title">
+        <h1>AIIMS Full Mock</h1>
+        <div class="header-sub">Max Marks: 400 | +4, -1</div>
+    </div>
+    <div class="counter-badge">
+        <span id="attempted-count">0</span> / 100
+    </div>
+</header>
+
+<div class="container" id="quiz-list">
+    </div>
+
+<button class="fab-submit" onclick="submitExam()">Submit Exam</button>
+
+<div class="modal-overlay" id="result-modal">
+    <div class="modal-card">
+        <h2 style="margin:0; color:#334155;">Final Score</h2>
+        <div class="score-big" id="final-score">0</div>
+        <div style="color:#64748b; font-size:0.9rem;">out of 400 Marks</div>
+
+        <div class="grid-stats">
+            <div class="stat-item" style="border-bottom: 3px solid var(--success)">
+                <div class="stat-val" id="res-correct" style="color:var(--success)">0</div>
+                <div class="stat-lbl">Correct</div>
+            </div>
+            <div class="stat-item" style="border-bottom: 3px solid var(--danger)">
+                <div class="stat-val" id="res-incorrect" style="color:var(--danger)">0</div>
+                <div class="stat-lbl">Incorrect</div>
+            </div>
+            <div class="stat-item" style="border-bottom: 3px solid var(--warning)">
+                <div class="stat-val" id="res-skipped">0</div>
+                <div class="stat-lbl">Skipped</div>
+            </div>
+            <div class="stat-item" style="border-bottom: 3px solid var(--primary)">
+                <div class="stat-val" id="res-accuracy">0%</div>
+                <div class="stat-lbl">Accuracy</div>
+            </div>
+        </div>
+
+        <button class="btn-reset" onclick="resetExam()">Close & Reset</button>
+    </div>
+</div>
+
+<script>
+    // --- 100 QUESTION DATABASE ---
+    const questionsDB = [
+        // --- PHYSICS & EQUIPMENT (20 Q) ---
+        { id: 1, q: "The 'Anode Heel Effect' is most pronounced when using:", options: ["Large film size and short SID", "Small film size and long SID", "Large film size and long SID", "Small film size and short SID"], correct: 0 },
+        { id: 2, q: "Which material is used in the input phosphor of an image intensifier?", options: ["Calcium Tungstate", "Zinc Cadmium Sulfide", "Cesium Iodide", "Amorphous Selenium"], correct: 2 },
+        { id: 3, q: "The process of removing low-energy photons from the X-ray beam is called:", options: ["Collimation", "Filtration", "Rectification", "Grid usage"], correct: 1 },
+        { id: 4, q: "The standard rotation speed of a diagnostic X-ray tube anode is approx:", options: ["1,000-2,000 rpm", "3,000-3,600 rpm", "10,000 rpm", "500 rpm"], correct: 1 },
+        { id: 5, q: "Grid Ratio is defined as:", options: ["Height of lead strips / Distance between strips", "Width of strips / Height", "Height / Width", "Distance / Height"], correct: 0 },
+        { id: 6, q: "Which interaction is responsible for subject contrast?", options: ["Photoelectric effect", "Compton scattering", "Pair production", "Coherent scattering"], correct: 0 },
+        { id: 7, q: "Which part of the X-ray tube is negatively charged?", options: ["Anode", "Cathode", "Stator", "Rotor"], correct: 1 },
+        { id: 8, q: "The focusing cup is made of:", options: ["Tungsten", "Molybdenum", "Nickel", "Copper"], correct: 2 },
+        { id: 9, q: "The Line Focus Principle allows for:", options: ["Larger effective focal spot", "Smaller effective focal spot than actual", "Reduced heat capacity", "Increased heel effect"], correct: 1 },
+        { id: 10, q: "Which rectifier converts AC to DC?", options: ["Transformer", "Diode", "Autotransformer", "Rheostat"], correct: 1 },
+        { id: 11, q: "A 'Spinning Top Test' is used to check:", options: ["kVp accuracy", "Timer accuracy", "Focal spot size", "mA linearity"], correct: 1 },
+        { id: 12, q: "The 15% rule states that increasing kVp by 15% is equivalent to:", options: ["Doubling mAs", "Halving mAs", "Doubling distance", "Halving distance"], correct: 0 },
+        { id: 13, q: "Which target material is used in Mammography?", options: ["Tungsten", "Molybdenum", "Copper", "Aluminum"], correct: 1 },
+        { id: 14, q: "The function of the 'Stator' in an X-ray tube is to:", options: ["Rotate the anode", "Focus the electrons", "Absorb heat", "Filter the beam"], correct: 0 },
+        { id: 15, q: "Total filtration required for X-ray tubes operating above 70 kVp is:", options: ["1.5 mm Al", "2.5 mm Al", "0.5 mm Al", "4.0 mm Al"], correct: 1 },
+        { id: 16, q: "The 'Air Gap Technique' acts as an alternative to:", options: ["Filtration", "Grid", "Collimation", "Intensifying screen"], correct: 1 },
+        { id: 17, q: "What is the primary cause of tube failure?", options: ["Filament evaporation", "Anode cracking", "Bearing failure", "Oil leak"], correct: 0 },
+        { id: 18, q: "Bremsstrahlung radiation accounts for approximately what % of the beam at 100 kVp?", options: ["10-15%", "50%", "85-90%", "100%"], correct: 2 },
+        { id: 19, q: "The measure of the number of electrons crossing the tube is:", options: ["kVp", "mAs", "Voltage", "Frequency"], correct: 1 },
+        { id: 20, q: "High frequency generators have a voltage ripple of approx:", options: ["100%", "13-14%", "3-4%", "<1%"], correct: 3 },
+
+        // --- POSITIONING & ANATOMY (25 Q) ---
+        { id: 21, q: "Which view is best for the Scaphoid bone?", options: ["AP", "Lateral", "Ulnar Deviation", "Radial Deviation"], correct: 2 },
+        { id: 22, q: "Stenvers view visualizes:", options: ["Optic foramen", "Petrous temporal bone", "Sella turcica", "Zygoma"], correct: 1 },
+        { id: 23, q: "The 'Swimmer’s view' demonstrates:", options: ["C1-C2", "C7-T1 junction", "L5-S1", "Thoracic spine"], correct: 1 },
+        { id: 24, q: "Waters view is primarily for:", options: ["Maxillary Sinuses", "Frontal Sinuses", "Sphenoid Sinuses", "Mandible"], correct: 0 },
+        { id: 25, q: "For a Lateral Cervical Spine, the recommended SID is:", options: ["100 cm", "180 cm (72 inches)", "90 cm", "120 cm"], correct: 1 },
+        { id: 26, q: "The 'Y-view' of the shoulder demonstrates:", options: ["Clavicle fracture", "Shoulder Dislocation", "AC joint", "Bicipital groove"], correct: 1 },
+        { id: 27, q: "Judet view evaluates:", options: ["Acetabulum", "Scapula", "Calcaneus", "Mandible"], correct: 0 },
+        { id: 28, q: "Skyline view (Merchant) is for:", options: ["Calcaneus", "Patellofemoral joint", "AC joint", "Zygoma"], correct: 1 },
+        { id: 29, q: "Which landmark corresponds to L4-L5?", options: ["Xiphoid", "Costal Margin", "Iliac Crest", "Symphysis Pubis"], correct: 2 },
+        { id: 30, q: "Colles fracture involves:", options: ["Distal Radius", "Distal Humerus", "Proximal Tibia", "Scaphoid"], correct: 0 },
+        { id: 31, q: "Towne's view angulation is:", options: ["15 deg Cephalad", "30 deg Caudal", "25 deg Cephalad", "45 deg Caudal"], correct: 1 },
+        { id: 32, q: "Which projection demonstrates the Greater Tuberosity in profile?", options: ["AP External Rotation", "AP Internal Rotation", "Axial", "Transthoracic"], correct: 0 },
+        { id: 33, q: "Intercondylar Fossa is best seen in:", options: ["AP", "Lateral", "Tunnel View", "Skyline"], correct: 2 },
+        { id: 34, q: "Gaynor-Hart method visualizes:", options: ["Carpal Tunnel", "Bicipital Groove", "Tarsal Sinus", "Sella Turcica"], correct: 0 },
+        { id: 35, q: "For PA Chest, the tube is centered to:", options: ["T4", "T7", "C7", "L1"], correct: 1 },
+        { id: 36, q: "Lateral Decubitus view is best for detecting:", options: ["Pneumothorax/Pleural Effusion", "Rib fracture", "Heart size", "Masses"], correct: 0 },
+        { id: 37, q: "The 'Olecranon Process' is part of:", options: ["Humerus", "Radius", "Ulna", "Scapula"], correct: 2 },
+        { id: 38, q: "Which bone contains the Sella Turcica?", options: ["Frontal", "Parietal", "Sphenoid", "Ethmoid"], correct: 2 },
+        { id: 39, q: "The 'Scottie Dog' eye represents:", options: ["Pedicle", "Transverse Process", "Pars Interarticularis", "Superior Articular Process"], correct: 0 },
+        { id: 40, q: "Lordotic view of chest visualizes:", options: ["Lung bases", "Lung apices", "Heart", "Mediastinum"], correct: 1 },
+        { id: 41, q: "The 'Frog-leg' lateral is used for:", options: ["Knee", "Hip", "Ankle", "Shoulder"], correct: 1 },
+        { id: 42, q: "Caldwell view angulation is:", options: ["15 deg Caudal", "15 deg Cephalad", "30 deg Caudal", "Perpendicular"], correct: 0 },
+        { id: 43, q: "Which carpal bone is most commonly fractured?", options: ["Lunate", "Scaphoid", "Capitate", "Hamate"], correct: 1 },
+        { id: 44, q: "The 'Mortise view' is used for:", options: ["Wrist", "Ankle", "Elbow", "Hip"], correct: 1 },
+        { id: 45, q: "Zygomatic arches are best seen in:", options: ["Towne's", "Waters", "SMV (Submentovertex)", "Lateral"], correct: 2 },
+
+        // --- CT & MRI (15 Q) ---
+        { id: 46, q: "In CT, HU for water is:", options: ["-1000", "0", "+1000", "+50"], correct: 1 },
+        { id: 47, q: "In MRI, time between two 90-degree pulses is:", options: ["TE", "TR", "TI", "Flip Angle"], correct: 1 },
+        { id: 48, q: "Which generation CT used Rotate-Rotate geometry?", options: ["1st", "2nd", "3rd", "4th"], correct: 2 },
+        { id: 49, q: "CT artifact caused by beam hardening:", options: ["Motion streaks", "Dark bands/Streaks", "Ring artifact", "Blurring"], correct: 1 },
+        { id: 50, q: "Gadolinium shortens:", options: ["T1 relaxation", "T2 relaxation", "PD", "Flow"], correct: 0 },
+        { id: 51, q: "Standard window for Brain CT (Soft tissue):", options: ["W:80 L:40", "W:1500 L:-600", "W:2500 L:500", "W:300 L:50"], correct: 0 },
+        { id: 52, q: "Pitch > 1 in CT implies:", options: ["Overlap", "Gaps (Faster scan)", "No movement", "High dose"], correct: 1 },
+        { id: 53, q: "T1 weighted image shows fluid as:", options: ["Bright", "Dark", "Grey", "Variable"], correct: 1 },
+        { id: 54, q: "MRI sequence best for acute bleed:", options: ["T1", "T2", "GRE/SWI", "STIR"], correct: 2 },
+        { id: 55, q: "Quench in MRI refers to:", options: ["Loss of Helium", "RF failure", "Gradient failure", "Coil burn"], correct: 0 },
+        { id: 56, q: "CT Window Width controls:", options: ["Brightness", "Contrast", "Resolution", "Noise"], correct: 1 },
+        { id: 57, q: "Which is a contraindication for MRI?", options: ["Titanium plate", "Pacemaker", "Dental filling", "Joint replacement"], correct: 1 },
+        { id: 58, q: "In CT, 'Voxel' represents:", options: ["2D element", "3D volume element", "Matrix size", "FOV"], correct: 1 },
+        { id: 59, q: "The most common MRI magnet type is:", options: ["Resistive", "Permanent", "Superconducting", "Hybrid"], correct: 2 },
+        { id: 60, q: "DWI (Diffusion Weighted Imaging) is gold standard for:", options: ["Tumor", "Acute Stroke", "Fracture", "Hemorrhage"], correct: 1 },
+
+        // --- RADIATION SAFETY & BIOLOGY (15 Q) ---
+        { id: 61, q: "Annual whole body dose limit for radiation workers (AERB):", options: ["50 mSv", "20 mSv (averaged over 5 yrs)", "100 mSv", "5 mSv"], correct: 1 },
+        { id: 62, q: "Dose limit for general public:", options: ["20 mSv", "1 mSv", "5 mSv", "50 mSv"], correct: 1 },
+        { id: 63, q: "Active component of TLD badge:", options: ["CaSO4:Dy", "LiF", "AgBr", "NaI"], correct: 0 },
+        { id: 64, q: "Deterministic effect example:", options: ["Cancer", "Genetic mutation", "Cataract", "Leukemia"], correct: 2 },
+        { id: 65, q: "Most radiosensitive phase of cell cycle:", options: ["S phase", "M phase", "G1", "G0"], correct: 1 },
+        { id: 66, q: "ALARA stands for:", options: ["As Low As Reasonably Achievable", "Always Limit Annual Radiation", "As Long As Radiation Allows", "Allow Low Area Radiation"], correct: 0 },
+        { id: 67, q: "Lead apron thickness for fluoroscopy (usually):", options: ["0.25 mm Pb", "0.5 mm Pb", "1.0 mm Pb", "0.1 mm Pb"], correct: 1 },
+        { id: 68, q: "Radiation Weighting Factor for Alpha particles:", options: ["1", "5", "10", "20"], correct: 3 },
+        { id: 69, q: "The inverse square law relates:", options: ["Distance & Intensity", "kVp & mAs", "Time & Distance", "Focus & Film"], correct: 0 },
+        { id: 70, q: "LD 50/60 for humans is approx:", options: ["1-2 Gy", "3-4 Gy", "8-10 Gy", "0.5 Gy"], correct: 1 },
+        { id: 71, q: "Which dosimeter gives immediate reading?", options: ["TLD", "Film Badge", "Pocket Dosimeter", "OSL"], correct: 2 },
+        { id: 72, q: "Which organ is most radiosensitive?", options: ["Brain", "Bone Marrow/Gonads", "Skin", "Muscle"], correct: 1 },
+        { id: 73, q: "Stochastic effects have:", options: ["Threshold", "No Threshold", "Severity depends on dose", "Immediate onset"], correct: 1 },
+        { id: 74, q: "1 Gray (Gy) equals:", options: ["100 Rad", "10 Rad", "1000 Rad", "1 Rad"], correct: 0 },
+        { id: 75, q: "Pregnant radiographer fetal dose limit:", options: ["5 mSv", "1 mSv", "20 mSv", "0.5 mSv"], correct: 1 },
+
+        // --- SPECIAL PROCEDURES & CONTRAST (10 Q) ---
+        { id: 76, q: "Positive contrast media usually has:", options: ["Low atomic #", "High atomic #", "Low density", "Gas"], correct: 1 },
+        { id: 77, q: "Barium Swallow evaluates:", options: ["Stomach", "Esophagus", "Duodenum", "Colon"], correct: 1 },
+        { id: 78, q: "HSG is for:", options: ["Bladder", "Fallopian tubes & Uterus", "Kidney", "Gallbladder"], correct: 1 },
+        { id: 79, q: "ERCP stands for:", options: ["Endoscopic Retrograde Cholangiopancreatography", "Emergency Renal Procedure", "Early Retrograde Colon", "Endoscopic Renal Catheter"], correct: 0 },
+        { id: 80, q: "Contrast contraindicated in perforation:", options: ["Barium", "Gastrografin (Water soluble)", "Iodine", "Air"], correct: 0 },
+        { id: 81, q: "Drug for anaphylactic shock:", options: ["Benadryl", "Adrenaline (Epinephrine)", "Hydrocortisone", "Atropine"], correct: 1 },
+        { id: 82, q: "IVU Nephrogram phase time:", options: ["0-1 min", "5 min", "15 min", "30 min"], correct: 0 },
+        { id: 83, q: "VCUG diagnoses:", options: ["Kidney stones", "Vesicoureteral Reflux (VUR)", "Cancer", "Tumor"], correct: 1 },
+        { id: 84, q: "Sialography examines:", options: ["Spine", "Salivary Glands", "Sinuses", "Joints"], correct: 1 },
+        { id: 85, q: "Non-ionic contrast example:", options: ["Barium", "Diatrizoate", "Iohexol", "Sodium Iodide"], correct: 2 },
+
+        // --- DIGITAL / DARKROOM / USG (15 Q) ---
+        { id: 86, q: "Latent image in CR is stored in:", options: ["Silicon", "PSP Plate", "CCD", "Film"], correct: 1 },
+        { id: 87, q: "DICOM is standard for:", options: ["JPEG", "Text", "Medical Images", "Video"], correct: 2 },
+        { id: 88, q: "Pixel Pitch is:", options: ["Gray shades", "Center-to-center pixel distance", "Detector size", "mA"], correct: 1 },
+        { id: 89, q: "Quantum Mottle is caused by:", options: ["High mAs", "Low mAs (Photon starvation)", "High kVp", "Grid"], correct: 1 },
+        { id: 90, q: "PACS stands for:", options: ["Patient Access System", "Picture Archiving and Communication System", "Primary Area Control", "Physician Access"], correct: 1 },
+        { id: 91, q: "Clearing agent in fixer:", options: ["Hydroquinone", "Ammonium Thiosulfate", "Bromide", "Glutaraldehyde"], correct: 1 },
+        { id: 92, q: "Rotten egg smell in darkroom is:", options: ["Acetic acid", "Sulphur", "Hydrogen Sulfide", "Developer"], correct: 2 },
+        { id: 93, q: "USG uses which effect?", options: ["Piezoelectric", "Photoelectric", "Compton", "Thermal"], correct: 0 },
+        { id: 94, q: "Typical USG frequency:", options: ["20 Hz", "1-20 MHz", "500 kHz", "1 GHz"], correct: 1 },
+        { id: 95, q: "Artifact if CR plate not erased for 48 hrs:", options: ["Moire", "Fogging/Ghosting", "Mottle", "Aliasing"], correct: 1 },
+        { id: 96, q: "Bit Depth determines:", options: ["Resolution", "Gray shades per pixel", "Noise", "Speed"], correct: 1 },
+        { id: 97, q: "Developer agent for gray tones:", options: ["Hydroquinone", "Phenidone", "Sulfite", "Acid"], correct: 1 },
+        { id: 98, q: "Safelight wattage limit:", options: ["15 W", "60 W", "100 W", "5 W"], correct: 0 },
+        { id: 99, q: "DEXA measures:", options: ["Metastases", "Bone Mineral Density", "Myeloma", "Fracture"], correct: 1 },
+        { id: 100, q: "High DQE indicates:", options: ["High dose", "Poor image", "Efficient X-ray conversion", "Need more mAs"], correct: 2 }
+    ];
+
+    // --- APP LOGIC ---
+    let answers = JSON.parse(localStorage.getItem('aiims_full_100_answers')) || {};
+    
+    function init() {
+        const list = document.getElementById('quiz-list');
+        list.innerHTML = '';
+
+        questionsDB.forEach((q, idx) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            
+            // Header
+            const header = document.createElement('div');
+            header.className = 'q-header';
+            header.innerHTML = `<div class="q-num">Q${idx + 1}</div><div class="q-text">${q.q}</div>`;
+            card.appendChild(header);
+
+            // Options
+            const optList = document.createElement('div');
+            optList.className = 'options-list';
+            
+            q.options.forEach((txt, optIdx) => {
+                const item = document.createElement('label');
+                item.className = 'option-item';
+                if(answers[q.id] === optIdx) item.classList.add('selected');
+
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `q${q.id}`;
+                radio.value = optIdx;
+                radio.checked = answers[q.id] === optIdx;
+                
+                radio.onchange = () => {
+                    // Update state
+                    answers[q.id] = optIdx;
+                    localStorage.setItem('aiims_full_100_answers', JSON.stringify(answers));
+                    
+                    // Update UI
+                    item.parentElement.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
+                    item.classList.add('selected');
+                    updateCounter();
+                };
+
+                const span = document.createElement('span');
+                span.className = 'opt-text';
+                span.innerText = txt;
+
+                item.append(radio, span);
+                optList.appendChild(item);
+            });
+
+            card.appendChild(optList);
+            list.appendChild(card);
+        });
+        updateCounter();
+    }
+
+    function updateCounter() {
+        document.getElementById('attempted-count').innerText = Object.keys(answers).length;
+    }
+
+    function submitExam() {
+        if(!confirm("Are you sure you want to finish the exam?")) return;
+
+        let correct = 0, incorrect = 0, skipped = 0;
+        
+        questionsDB.forEach(q => {
+            const userAns = answers[q.id];
+            if(userAns === undefined) skipped++;
+            else if(userAns === q.correct) correct++;
+            else incorrect++;
+        });
+
+        const score = (correct * 4) - (incorrect * 1);
+        const attempted = correct + incorrect;
+        const accuracy = attempted === 0 ? 0 : Math.round((correct/attempted)*100);
+
+        // Fill Modal
+        document.getElementById('final-score').innerText = score;
+        document.getElementById('res-correct').innerText = correct;
+        document.getElementById('res-incorrect').innerText = incorrect;
+        document.getElementById('res-skipped').innerText = skipped;
+        document.getElementById('res-accuracy').innerText = accuracy + '%';
+
+        document.getElementById('result-modal').style.display = 'flex';
+    }
+
+    function resetExam() {
+        if(confirm("This will delete all progress and restart. Continue?")) {
+            localStorage.removeItem('aiims_full_100_answers');
+            location.reload();
+        }
+    }
+
+    // Start
+    init();
+
+</script>
+
+</body>
+</html>
