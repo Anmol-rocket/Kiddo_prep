@@ -203,24 +203,22 @@
         questions = []; // Reset array
 
         // --- SECTION A: NON-CORE (1-20) ---
-        // Topics: Advanced Reasoning, Quantitative, General Awareness
+        // Topics: Reasoning, Math, GK, English, Computers
 
         const nonCoreData = [
-            // Reasoning & Quantitative (Harder)
+            // 1-10 (Previous set)
             ["A clock is set right at 5 AM. The clock loses 16 minutes in 24 hours. What will be the true time when the clock indicates 10 PM on the 4th day?", ["11 PM", "10 PM", "9 PM", "12 AM"], 0, "Time elapsed = 89 hours. Clock moves 23 hr 44 min for every 24 hr of real time. True time calculates to 11 PM."],
             ["In a group of cows and hens, the number of legs are 14 more than twice the number of heads. The number of cows is:", ["5", "7", "10", "12"], 1, "Let Cows=C, Hens=H. Legs=4C+2H. Heads=C+H. 4C+2H = 2(C+H) + 14 => 2C = 14 => C = 7."],
             ["If 'GLOSSARY' is coded as '97533562' and 'GEOGRAPHY' = '915968402', then 'GEOLOGY' is:", ["9157592", "9155792", "9057592", "9157591"], 0, "Direct number coding mapping from the words given."],
             ["Statement: 'All actors are girls. All the girls are beautiful.' Conclusion: 1. All actors are beautiful. 2. Some girls are actors.", ["Only 1 follows", "Only 2 follows", "Both 1 and 2 follow", "Neither follows"], 2, "Both are logically correct based on the syllogism."],
             ["The average of 5 consecutive odd numbers is 61. What is the difference between the highest and lowest numbers?", ["2", "5", "8", "4"], 2, "Numbers are x, x+2, x+4, x+6, x+8. Difference is (x+8) - x = 8."],
-
-            // GK & Current Affairs
             ["Who was the first recipient of the 'Bharat Ratna'?", ["Jawaharlal Nehru", "C. Rajagopalachari", "Indira Gandhi", "M. Visvesvaraya"], 1, "C. Rajagopalachari (along with Sarvepalli Radhakrishnan and CV Raman) in 1954."],
             ["Which hormone is known as the 'Fight or Flight' hormone?", ["Insulin", "Adrenaline", "Thyroxine", "Estrogen"], 1, "Adrenaline (Epinephrine)."],
             ["The 'Suez Canal' connects which two water bodies?", ["Mediterranean Sea and Red Sea", "Atlantic and Pacific", "Red Sea and Indian Ocean", "Black Sea and Caspian Sea"], 0, "Mediterranean Sea and Red Sea."],
             ["Which is the only Indian state with a 'Uniform Civil Code' (as of early 2024)?", ["Kerala", "Goa", "Sikkim", "Punjab"], 1, "Goa."],
             ["'Operation Shakti' was the code name for:", ["Indian Army in Kargil", "Pokhran-II Nuclear Tests", "COVID-19 Relief", "Moon Mission"], 1, "The 1998 Nuclear Tests at Pokhran."],
 
-            // English & Computers
+            // 11-20 (Added to complete Non-Core)
             ["One word for 'A person who collects coins':", ["Philatelist", "Numismatist", "Anthropologist", "Archeologist"], 1, "Numismatist."],
             ["Choose the correct passive voice: 'Who taught you English?'", ["By whom was English taught to you?", "By whom were you taught English?", "Both A and B", "Who was teaching you English?"], 2, "Both forms are grammatically correct."],
             ["Synonym of 'Ephemeral':", ["Permanent", "Transitory", "Eternal", "Stable"], 1, "Transitory / Short-lived."],
@@ -235,10 +233,10 @@
         nonCoreData.forEach((d, i) => questions.push(createQ(i + 1, "Non-Core", d[0], d[1], d[2], d[3])));
 
         // --- SECTION B: CORE (21-100) ---
-        // Advanced Topics
+        // Topics: Advanced Physics, CT, MRI, Interventional, Anatomy, Quality Assurance
 
         const coreData = [
-            // Advanced Physics & Tube Rating
+            // 1. Advanced Physics & Tube Rating (21-30)
             ["An X-ray tube has a heat storage capacity of 300,000 HU. A single exposure uses 90 kVp, 400 mA, 0.1 sec (3-phase 12-pulse). How many such exposures can be made safely?", ["30", "40", "50", "60"], 3, "HU = kVp*mA*s*1.41. HU/exp = 90*400*0.1*1.41 = 5076. 300,000 / 5076 = approx 59. Correct is ~60."],
             ["'Modulation Transfer Function' (MTF) of 1 indicates:", ["No information transfer", "50% information transfer", "Perfect information transfer", "Noise only"], 2, "MTF of 1 represents perfect reproduction of the object contrast."],
             ["The 'K-edge' of Iodine is at:", ["33 keV", "69 keV", "20 keV", "50 keV"], 0, "33.2 keV. (Tungsten K-edge is 69.5 keV)."],
@@ -250,7 +248,7 @@
             ["The 'Grid Frequency' refers to:", ["Height of lead strips", "Number of lead strips per inch/cm", "Ratio of height to distance", "Thickness of interspace"], 1, "Number of lines per unit length."],
             ["Which dosimeter can distinguish between beta and gamma radiation?", ["Film Badge (with filters)", "Pocket Dosimeter", "Geiger Muller", "Ion chamber"], 0, "Filters (Copper/Plastic) allow estimation of energy and type."],
 
-            // CT Physics & Artifacts
+            // 2. CT Physics & Artifacts (31-40)
             ["'Partial Volume Averaging' is best reduced by:", ["Increasing pitch", "Decreasing slice thickness", "Increasing FOV", "Smoothing filter"], 1, "Thinner slices reduce the chance of two tissues occupying one voxel."],
             ["The 'Z-axis' resolution in Helical CT is primarily determined by:", ["Slice thickness / Detector width", "Pixel size", "Reconstruction interval", "Gantry speed"], 0, "Effective slice thickness determines Z-resolution."],
             ["'Cupping Artifact' is a type of:", ["Beam Hardening", "Motion", "Ring artifact", "Cone beam"], 0, "Center of image appears darker than edges due to beam hardening."],
@@ -262,7 +260,7 @@
             ["'DLP' (Dose Length Product) unit is:", ["mGy", "mGy-cm", "mSv", "Gy"], 1, "mGy-cm."],
             ["Overlapping reconstructions (e.g., 5mm slice every 3mm) improves:", ["Z-axis resolution and MPR quality", "Patient dose", "Tube cooling", "Scan speed"], 0, "Better 3D/MPR images, no extra dose to patient (processing only)."],
 
-            // MRI Physics (Advanced)
+            // 3. MRI Physics - Advanced (41-50)
             ["'Chemical Shift' artifact is mapped in which direction?", ["Frequency Encoding", "Phase Encoding", "Slice Select", "Diagonal"], 0, "Frequency encoding direction."],
             ["To reduce 'Crosstalk' between slices in MRI:", ["Use a gap (inter-slice spacing)", "Increase TR", "Use 3D acquisition", "Decrease TE"], 0, "Gaps prevent excitation of adjacent slice edges."],
             ["In 'Gradient Echo' (GRE), the flip angle is typically:", ["90 degrees", "180 degrees", "Variable (<90 degrees)", "0 degrees"], 2, "Low flip angles (<90) allow faster recovery."],
@@ -274,7 +272,7 @@
             ["Active Shielding of the magnet involves:", ["Steel lining in walls", "Secondary coils opposing the main field", "Copper cage", "Lead walls"], 1, "Bucking coils inside the scanner housing to constrain the fringe field."],
             ["'Zipper Artifact' is caused by:", ["RF leak / External RF interference", "Patient motion", "Metal", "Gradient failure"], 0, "Radiofrequency entering the room (door open/shield breach)."],
 
-            // Interventional & Angiography
+            // 4. Interventional & Angiography (51-60)
             ["Digital Subtraction Angiography (DSA) works by:", ["Subtracting 'Mask' image from 'Live' image", "Adding images", "Inverting colors", "Using dual energy"], 0, "Removes background bone/tissue, leaving only contrast-filled vessels."],
             ["Standard guidewire diameter for diagnostic angiography:", ["0.035 inch", "0.014 inch", "0.08 inch", "1 mm"], 0, "0.035 inch is the standard workhorse wire."],
             ["'Roadmapping' feature in Cath Lab is used for:", ["Real-time navigation of wire/catheter", "Reviewing old images", "Lowering dose", "Measuring stenosis"], 0, "Superimposes live fluoro on a static contrast map."],
@@ -286,7 +284,7 @@
             ["PICC line stands for:", ["Peripherally Inserted Central Catheter", "Percutaneous Indwelling Central Catheter", "Permanent Internal Cardiac Catheter", "None"], 0, "Peripherally Inserted Central Catheter."],
             ["'Cone Beam CT' (CBCT) is a feature available in:", ["Cath Lab / Angio Suite", "MRI", "X-ray room", "Ultrasound"], 0, "CT-like images acquired using the C-arm."],
 
-            // Advanced Anatomy & Pathology
+            // 5. Advanced Anatomy & Pathology Signs (61-80)
             ["'Bat Wing' or 'Angel Wing' appearance on Chest X-ray indicates:", ["Pulmonary Edema", "Pneumonia", "TB", "COPD"], 0, "Alveolar edema (typically Heart Failure)."],
             ["'Bamboo Spine' is pathognomonic of:", ["Ankylosing Spondylitis", "Rheumatoid Arthritis", "Osteoporosis", "Metastasis"], 0, "Calcification of longitudinal ligaments."],
             ["'Boot Shaped Heart' (Coeur en sabot) is seen in:", ["Tetralogy of Fallot", "ASD", "VSD", "Mitral Stenosis"], 0, "Right ventricular hypertrophy lifts the apex."],
@@ -308,7 +306,7 @@
             ["'Sandwich Sign' in abdominal CT/USG represents:", ["Mesenteric Lymphadenopathy", "Intussusception", "Pancreatitis", "Aortic Aneurysm"], 0, "Lymphoma nodes surrounding vessels."],
             ["'Mercedes Benz' sign is seen in:", ["Gallstones (Gas containing)", "Aortic dissection", "Disc vacuum", "Meniscus"], 0, "Fissuring within gallstones."],
 
-            // Anatomy Specifics
+            // 6. Anatomy Specifics (81-90)
             ["The 'Carina' is typically at the level of:", ["T4-T5", "T2", "T7", "C7"], 0, "Bifurcation of trachea."],
             ["Which bronchus is shorter, wider, and more vertical?", ["Right", "Left", "Both equal", "Varies"], 0, "Right bronchus (hence inhaled foreign bodies go here)."],
             ["The 'Cystic Duct' contains which valves?", ["Valves of Heister", "Valve of Houston", "Valve of Gerlach", "Mitral Valve"], 0, "Spiral valves of Heister."],
@@ -318,7 +316,19 @@
             ["The 'Torcula Herophili' is:", ["Confluence of Sinuses", "Part of Cerebellum", "Part of Ventricle", "Artery"], 0, "Confluence of Superior Sagittal, Transverse, etc."],
             ["Blood supply to the Inner Ear is by:", ["Labyrinthine artery", "MCA", "PCA", "ECA"], 0, "Branch of AICA or Basilar."],
             ["'Hilgenreiner's Line' is used for:", ["DDH (Hip dysplasia)", "Scoliosis", "Skull fracture", "Flat foot"], 0, "Hip X-rays in pediatrics."],
-            ["The 'Sustentaculum Tali' is a part of:", ["Calcaneus", "Talus", "Navicular", "Tibia"], 0, "Shelf on the Calcaneus."]
+            ["The 'Sustentaculum Tali' is a part of:", ["Calcaneus", "Talus", "Navicular", "Tibia"], 0, "Shelf on the Calcaneus."],
+            
+            // 7. Quality Assurance & Radiation Safety (91-100) (Added to complete set)
+            ["The 'Wire Mesh Test' is used to evaluate:", ["Film-Screen Contact", "Focal Spot Size", "kVp Accuracy", "Timer Accuracy"], 0, "Tests for poor contact between the film and the intensifying screen."],
+            ["The 'Spinning Top Test' measures:", ["Timer Accuracy (Single Phase)", "Focal Spot", "mA Linearity", "kVp"], 0, "Used for single-phase timer accuracy (dots = time * 100/120)."],
+            ["Which test is used for Focal Spot size estimation?", ["Star Pattern / Pinhole Camera", "Step Wedge", "Densitometer", "Wire Mesh"], 0, "Star pattern or slit camera/pinhole."],
+            ["Acceptable limit for collimator vs light beam alignment is:", ["+/- 2% of SID", "+/- 5% of SID", "+/- 10% of SID", "Zero"], 0, "Must be within 2% of the Source-Image Distance."],
+            ["The 'Half Value Layer' (HVL) of a diagnostic X-ray beam is usually expressed in:", ["mm of Aluminum", "mm of Lead", "mm of Copper", "cm of Tissue"], 0, "Millimeters of Aluminum equivalent."],
+            ["Leakage radiation from the tube housing must not exceed:", ["1 mGy/hr at 1 meter", "10 mGy/hr at 1 meter", "0.1 mGy/hr", "5 mGy/hr"], 0, "100 mR/hr or 1 mGy/hr at 1 meter distance."],
+            ["The 'Ten Day Rule' implies that abdominal X-rays for women of childbearing age should be done:", ["During the first 10 days of the menstrual cycle", "During the last 10 days", "Any time", "Only if pregnant"], 0, "To avoid irradiating an early undetected pregnancy."],
+            ["Which of these is a 'Stochastic' effect of radiation?", ["Cancer / Genetic defects", "Skin erythema", "Cataract", "Sterility"], 0, "Probability increases with dose; no threshold."],
+            ["'Deterministic' (Non-stochastic) effects have:", ["A threshold dose", "No threshold", "Random occurrence", "Severity independent of dose"], 0, "Severity increases with dose above a specific threshold."],
+            ["The primary material in TLD badges used in India is:", ["CaSO4:Dy (Calcium Sulfate Dysprosium)", "LiF (Lithium Fluoride)", "Al2O3", "NaCl"], 0, "Calcium Sulfate doped with Dysprosium."]
         ];
 
         coreData.forEach((d, i) => questions.push(createQ(21 + i, "Core", d[0], d[1], d[2], d[3])));
