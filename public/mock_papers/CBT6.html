@@ -203,24 +203,22 @@
         questions = []; // Reset array
 
         // --- SECTION A: NON-CORE (1-20) ---
-        // Topics: Reasoning, Data Interpretation, Current Affairs, English
+        // Topics: Reasoning, Math, GK, English, Computers
 
         const nonCoreData = [
-            // Logical Reasoning & Math
+            // 1-10 (Previous set)
             ["If 'A' denotes 'divided by', 'C' denotes 'multiplied by', 'F' denotes 'added to', 'J' denotes 'subtracted from', then 24 A 6 F 14 J 6 C 2 = ?", ["10", "6", "12", "16"], 1, "24 / 6 + 14 - (6 * 2) => 4 + 14 - 12 => 18 - 12 = 6."],
             ["Statement: 'Some papers are pens. All the pencils are pens.' Conclusion: 1. Some pens are pencils. 2. Some pens are papers.", ["Only 1 follows", "Only 2 follows", "Both 1 and 2 follow", "Neither follows"], 2, "Standard syllogism logic."],
             ["Find the wrong number in the series: 1, 2, 6, 15, 31, 56, 91", ["31", "91", "56", "15"], 1, "Differences are 1, 4, 9, 16, 25, 36 (Squares). 1+1=2, 2+4=6, 6+9=15, 15+16=31, 31+25=56, 56+36=92. So 91 is wrong."],
             ["A sum of money at simple interest amounts to Rs. 815 in 3 years and to Rs. 854 in 4 years. The sum is:", ["Rs. 650", "Rs. 690", "Rs. 698", "Rs. 700"], 2, "Interest for 1 yr = 854 - 815 = 39. For 3 yrs = 39*3 = 117. Principal = 815 - 117 = 698."],
             ["The angle between the minute hand and the hour hand of a clock when the time is 8:30 is:", ["80 degrees", "75 degrees", "60 degrees", "105 degrees"], 1, "Formula: |(30*H) - (5.5*M)|. |240 - 165| = 75 degrees."],
-
-            // General Knowledge
             ["Which is the largest gland in the human body?", ["Pancreas", "Thyroid", "Liver", "Pituitary"], 2, "Liver."],
             ["The 'Dronacharya Award' is given to:", ["Scientists", "Sports Coaches", "Authors", "Actors"], 1, "Sports Coaches."],
             ["Which city hosted the G20 Summit in 2023?", ["Bali", "New Delhi", "Rio de Janeiro", "Rome"], 1, "New Delhi."],
             ["The chemical formula of 'Laughing Gas' is:", ["NO", "N2O", "NO2", "N2O2"], 1, "Nitrous Oxide (N2O)."],
             ["Who is the Chief of Defence Staff (CDS) of India (as of 2024)?", ["Gen. Bipin Rawat", "Gen. Anil Chauhan", "Gen. M.M. Naravane", "Gen. V.K. Singh"], 1, "Gen. Anil Chauhan."],
-
-            // English & Computer Basics
+            
+            // 11-20 (Added to complete Non-Core)
             ["One word substitution: 'A person who does not believe in God':", ["Theist", "Heretic", "Atheist", "Fanatic"], 2, "Atheist."],
             ["Synonym of 'Inevitable':", ["Uncertain", "Unavoidable", "Doubtful", "Fixed"], 1, "Unavoidable."],
             ["Identify the error: 'He is one of the best boy in the class.'", ["He is", "one of", "best boy", "in the class"], 2, "Should be 'best boys' (One of the plural)."],
@@ -235,10 +233,10 @@
         nonCoreData.forEach((d, i) => questions.push(createQ(i + 1, "Non-Core", d[0], d[1], d[2], d[3])));
 
         // --- SECTION B: CORE (21-100) ---
-        // Topics: Emergency Radiology, Nuclear Medicine, Contrast, Physics, Pathology
+        // Topics: Emergency Radiology, Nuclear Medicine, Contrast, Physics, Pathology, Radiotherapy, Quality Assurance
 
         const coreData = [
-            // Nuclear Medicine & PET (Critical for modern Radiography exams)
+            // 1. Nuclear Medicine & PET (21-30)
             ["The most common radioisotope used in Gamma Camera is:", ["Iodine-131", "Technetium-99m", "Gallium-67", "Thallium-201"], 1, "Tc-99m (Ideal 140 keV energy, 6hr half-life)."],
             ["PET Scan relies on the detection of:", ["Single Photons", "Annihilation Photons (511 keV)", "Electrons", "Protons"], 1, "Coincidence detection of two 511 keV photons from positron annihilation."],
             ["The crystal used in PET detectors is typically:", ["NaI(Tl)", "LSO / BGO", "CaSO4", "Amorphous Silicon"], 1, "LSO (Lutetium Oxyorthosilicate) or BGO (Bismuth Germanate)."],
@@ -250,7 +248,7 @@
             ["'Molybdenum Breakthrough' test checks for:", ["Chemical impurity", "Radionuclidic impurity", "Radiochemical impurity", "pH"], 1, "Presence of parent Mo-99 in the Tc-99m eluate."],
             ["Radiation protection in Nuclear Medicine mainly involves:", ["Lead aprons", "Time, Distance, Shielding (Syringe shields)", "Goggles", "None"], 1, "Source is internal/unsealed; Syringe shields and distance are key."],
 
-            // Radiographic Pathology Signs (Image Based logic)
+            // 2. Radiographic Pathology Signs (31-40)
             ["'Coin Lesion' in the lung refers to:", ["Solitary Pulmonary Nodule", "TB Cavity", "Pneumonia", "Abscess"], 0, "Round, well-defined opacity < 3cm."],
             ["'Golden S Sign' is seen in:", ["Right Upper Lobe Collapse", "Left Lower Lobe Collapse", "Pneumothorax", "Pleural Effusion"], 0, "Collapse of RUL with a central mass creating an S-shape fissure."],
             ["'Deep Sulcus Sign' on a supine chest X-ray indicates:", ["Pneumothorax", "Pleural Effusion", "Pneumonia", "Emphysema"], 0, "Deep costophrenic angle due to air collecting anteriorly."],
@@ -262,7 +260,7 @@
             ["'Bamboo Spine' is seen in:", ["Ankylosing Spondylitis", "DISH", "Osteoporosis", "Metastasis"], 0, "Fused vertebrae."],
             ["'Codfish Vertebra' (biconcave) is seen in:", ["Osteoporosis / Osteomalacia", "Sickle Cell", "Thalassemia", "Metastasis"], 0, "Softening of bone leads to disc pressure indenting endplates."],
 
-            // Emergency & Trauma Radiology
+            // 3. Emergency & Trauma Radiology (41-50)
             ["'eFAST' includes scanning of:", ["Pericardium, Perihepatic, Perisplenic, Pelvis + Lung", "Abdomen only", "Chest only", "Brain"], 0, "Extended FAST includes Pleura (Lung) for Pneumothorax."],
             ["Standard views for Trauma C-Spine:", ["AP, Lateral, Odontoid", "Lateral only", "AP, Lateral, Oblique", "Swimmers only"], 0, "Cross-table Lateral, AP, and Open Mouth Odontoid."],
             ["Which is the most reliable sign of C-spine injury on lateral view?", ["Prevertebral soft tissue swelling", "Loss of lordosis", "Disc spacing", "Osteophytes"], 0, "Soft tissue swelling (>6mm at C2, >22mm at C6)."],
@@ -274,7 +272,7 @@
             ["'Galeazzi Fracture-Dislocation' involves:", ["Distal Radius fracture + DRUJ dislocation", "Proximal Ulna fracture", "Scaphoid fracture", "Humerus"], 0, "Radius fracture with Distal Radioulnar Joint dislocation."],
             ["'Lisfranc Injury' involves the:", ["Tarso-Metatarsal joints", "Ankle joint", "Knee joint", "Wrist joint"], 0, "Midfoot injury."],
 
-            // Physics (Imaging & Quality)
+            // 4. Physics (Imaging & Quality) (51-60)
             ["The 'Air Gap Technique' works by:", ["Reducing scatter reaching the film", "Increasing scatter", "Magnifying noise", "Reducing dose"], 0, "Distance allows divergent scatter to miss the receptor."],
             ["Use of a Compression band in abdominal radiography:", ["Reduces tissue thickness & Scatter", "Increases dose", "Increases motion", "Reduces contrast"], 0, "Thinner part = Less scatter = Better contrast."],
             ["'Crossover' effect in screen-film radiography causes:", ["Blurring / Loss of sharpness", "Increased contrast", "Fog", "Speed increase"], 0, "Light from one screen crosses base to expose other emulsion."],
@@ -286,7 +284,7 @@
             ["'Reticulation' of film is caused by:", ["Sudden temperature change between solutions", "Old developer", "Light leak", "Static"], 0, "Cracked emulsion appearance."],
             ["'Pi Lines' on a processed film indicate:", ["Dirt on rollers", "Light leak", "Static", "Fog"], 0, "Dirt on a roller (lines occur at circumference intervals)."],
 
-            // CT & MRI Advanced Protocols
+            // 5. CT & MRI Advanced Protocols (61-70)
             ["Triple Phase CT Liver includes:", ["Arterial, Portal Venous, Delayed", "Plain, Arterial, Venous", "Arterial, Venous, Excretory", "None"], 0, "Late Arterial, Portal Venous, Equilibrium/Delayed."],
             ["CT Pulmonary Angiography (CTPA) bolus tracking ROI is placed in:", ["Main Pulmonary Artery", "Aorta", "Left Ventricle", "SVC"], 0, "Main Pulmonary Artery."],
             ["'Blooming Artifact' in CT is caused by:", ["Calcification / Metal", "Water", "Air", "Fat"], 0, "High density objects appear larger than they are."],
@@ -298,7 +296,7 @@
             ["CT 'Cystography' is used for:", ["Bladder rupture / Leak", "Kidney stone", "Ureter stricture", "Prostate"], 0, "Trauma bladder assessment."],
             ["What is 'Dual Source CT'?", ["Two tubes and two detectors at 90 degrees", "Two monitors", "Two generators", "Double dose"], 0, "High temporal resolution (Cardiac CT)."],
 
-            // Anatomy (Sectional & General)
+            // 6. Anatomy (Sectional & General) (71-80)
             ["On a chest PA view, the right heart border is formed by:", ["Right Atrium", "Right Ventricle", "SVC", "Aorta"], 0, "Right Atrium."],
             ["The left heart border is formed by:", ["Left Ventricle & Auricle", "Left Atrium", "Right Ventricle", "Pulmonary Artery"], 0, "Left Ventricle and Left Atrial Appendage (Auricle)."],
             ["The 'Aortic Knuckle' is seen on the:", ["Left side of mediastinum", "Right side", "Center", "Base"], 0, "Left upper mediastinum."],
@@ -310,7 +308,7 @@
             ["Which sinus is the last to develop?", ["Frontal", "Maxillary", "Ethmoid", "Sphenoid"], 0, "Frontal sinuses develop after birth (around age 6-7)."],
             ["The 'Carpal Tunnel' contains:", ["Median Nerve", "Ulnar Nerve", "Radial Nerve", "Axillary Nerve"], 0, "Median Nerve and flexor tendons."],
 
-            // Contrast & Pharmacology
+            // 7. Contrast & Pharmacology (81-90)
             ["Contrast Induced Nephropathy (CIN) risk is reduced by:", ["Hydration", "Loop diuretics", "N-acetylcysteine", "A and C"], 3, "Hydration is key. NAC is controversial but used. Diuretics are bad."],
             ["Standard dose of Gadolinium is:", ["0.1 mmol/kg", "1.0 mmol/kg", "0.01 mmol/kg", "0.5 mmol/kg"], 0, "0.1 mmol/kg body weight."],
             ["Which drug is used to treat Anaphylactic shock in Radiology?", ["Adrenaline (Epinephrine)", "Atropine", "Heparin", "Digoxin"], 0, "Adrenaline (IM 1:1000)."],
@@ -320,7 +318,19 @@
             ["Iso-osmolar contrast media (e.g., Visipaque) has osmolality equal to:", ["Blood (290 mOsm/kg)", "Urine", "CSF", "Water"], 0, "Isotonic to blood."],
             ["Barium Sulfate is:", ["Insoluble in water", "Soluble in water", "Soluble in acid", "Gas"], 0, "Insoluble suspension."],
             ["Gastrografin is indicated when:", ["Suspected perforation", "Aspiration risk", "Barium allergy", "Normal study"], 0, "Water soluble - safe for peritoneum (but dangerous if aspirated to lungs)."],
-            ["Gadolinium is toxic in free form, so it is:", ["Chelated", "Ionized", "Frozen", "Boiled"], 0, "Chelated with a ligand to make it safe."]
+            ["Gadolinium is toxic in free form, so it is:", ["Chelated", "Ionized", "Frozen", "Boiled"], 0, "Chelated with a ligand to make it safe."],
+            
+            // 8. Radiotherapy & Special Equipment (91-100) (Added to complete set)
+            ["The most common source used in Telecobalt machines is:", ["Cobalt-60", "Cesium-137", "Iridium-192", "Radium-226"], 0, "Cobalt-60 (High energy gamma rays)."],
+            ["'Linear Accelerator' (LINAC) accelerates:", ["Electrons", "Protons", "Neutrons", "Alpha particles"], 0, "Electrons (which can strike a target to produce X-rays)."],
+            ["'Brachytherapy' involves placing the radiation source:", ["Inside or very close to the tumor", "Far away from the patient", "In the bloodstream", "On the skin surface only"], 0, "Short distance therapy."],
+            ["The T-score in DEXA scan for 'Osteoporosis' is:", ["< -2.5", "-1.0 to -2.5", "> -1.0", "0"], 0, "Lower than -2.5 SD indicates Osteoporosis."],
+            ["Mammography typically uses which target-filter combination?", ["Mo/Mo (Molybdenum/Molybdenum)", "W/Al", "Cu/Al", "W/Cu"], 0, "Mo/Mo or Mo/Rh is standard for soft tissue contrast."],
+            ["In Ultrasound, the 'Piezoelectric Effect' converts:", ["Electrical energy to Sound energy (and vice versa)", "Heat to Sound", "Light to Sound", "Magnetic to Sound"], 0, "Electrical <-> Mechanical (Sound)."],
+            ["'Cavitation' is a bio-effect associated with:", ["MRI", "CT", "Ultrasound", "X-ray"], 2, "Formation of bubbles in tissues due to US waves."],
+            ["The 'HVL' of a Co-60 beam is approximately:", ["11 mm Pb", "2 mm Pb", "0.5 mm Cu", "4 mm Al"], 0, "High energy Co-60 has an HVL of ~11-12 mm Lead."],
+            ["Personnel monitoring badges (TLD) should be worn:", ["At chest level (under lead apron)", "At chest level (over lead apron)", "On the foot", "In the pocket"], 0, "Under the apron to estimate body dose (or over if checking apron efficiency - usually under is standard for effective dose)."],
+            ["The 'QA' test for 'Light beam vs X-ray beam alignment' is:", ["Collimator Alignment Test (Penny test)", "Spinning Top", "Wire Mesh", "Sensitometry"], 0, "Verifies that the light field matches the radiation field."]
         ];
 
         coreData.forEach((d, i) => questions.push(createQ(21 + i, "Core", d[0], d[1], d[2], d[3])));
