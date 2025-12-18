@@ -6,13 +6,15 @@
     <title>AIIMS CRE Reasoning Practice</title>
     <style>
         :root {
-            --primary: #005f73; /* Medical Teal */
+            --primary: #005f73;
             --secondary: #0a9396;
             --light: #e9d8a6;
             --white: #ffffff;
             --gray: #f4f4f4;
-            --correct: #2a9d8f;
-            --wrong: #e76f51;
+            --correct-bg: #d1fae5;
+            --correct-border: #059669;
+            --wrong-bg: #fee2e2;
+            --wrong-border: #dc2626;
             --text: #333;
         }
 
@@ -45,7 +47,7 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 1rem;
-            padding-bottom: 80px; /* Space for footer */
+            padding-bottom: 80px;
         }
 
         /* Cards */
@@ -57,9 +59,6 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        /* Start Screen */
-        #start-screen, #result-screen { text-align: center; }
-        
         button {
             background-color: var(--secondary);
             color: white;
@@ -100,40 +99,63 @@
 
         .option-label {
             display: flex;
+            justify-content: space-between;
             align-items: center;
             padding: 12px;
             border: 2px solid #ddd;
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.2s;
+            position: relative;
         }
 
+        .option-content { display: flex; align-items: center; }
         .option-label:hover { background-color: #f9f9f9; border-color: var(--secondary); }
         
-        /* Hiding actual radio button */
         input[type="radio"] {
             margin-right: 10px;
             accent-color: var(--secondary);
         }
 
-        /* Review Styles */
+        /* --- REVIEW MODE STYLES --- */
         .review-mode .option-label.correct {
-            border-color: var(--correct);
-            background-color: rgba(42, 157, 143, 0.1);
+            border-color: var(--correct-border);
+            background-color: var(--correct-bg);
+            color: #065f46;
+        }
+        
+        .review-mode .option-label.correct::after {
+            content: "✓ Correct";
+            font-weight: bold;
+            font-size: 0.85rem;
+            color: var(--correct-border);
         }
 
         .review-mode .option-label.incorrect {
-            border-color: var(--wrong);
-            background-color: rgba(231, 111, 81, 0.1);
+            border-color: var(--wrong-border);
+            background-color: var(--wrong-bg);
+            color: #991b1b;
+        }
+
+        .review-mode .option-label.incorrect::after {
+            content: "✗ Your Answer";
+            font-weight: bold;
+            font-size: 0.85rem;
+            color: var(--wrong-border);
+        }
+
+        .review-mode .option-label:not(.correct):not(.incorrect) {
+            opacity: 0.6;
         }
 
         .explanation {
             margin-top: 15px;
-            padding: 10px;
-            background-color: #eef9f8;
-            border-left: 4px solid var(--secondary);
-            font-size: 0.9rem;
-            display: none; /* Hidden by default */
+            padding: 15px;
+            background-color: #f0f9ff;
+            border-left: 5px solid var(--secondary);
+            border-radius: 4px;
+            font-size: 0.95rem;
+            display: none;
         }
 
         .review-mode .explanation { display: block; }
@@ -148,7 +170,7 @@
         th, td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }
         th { background-color: var(--gray); }
 
-        /* Progress Bar */
+        /* Footer Nav */
         .progress-container {
             position: fixed;
             bottom: 0;
@@ -160,24 +182,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-sizing: border-box;
         }
 
-        .nav-btn {
-            background: transparent;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-            padding: 8px 16px;
-            width: auto;
-            margin: 0;
-        }
-
-        .submit-btn {
-            background: var(--correct);
-        }
+        .submit-btn { background: var(--correct-border); margin: 0; width: auto; }
 
         /* Utility */
         .hidden { display: none !important; }
-        .score-display { font-size: 2rem; font-weight: bold; color: var(--primary); }
+        .score-display { font-size: 2.5rem; font-weight: bold; color: var(--primary); }
+        .score-card { text-align: center; padding: 2rem; }
 
     </style>
 </head>
@@ -185,19 +198,19 @@
 
 <header>
     <h1>AIIMS CRE Reasoning</h1>
-    <div class="subtitle">Clocks, Calendars & Logic</div>
+    <div class="subtitle">Clocks, Calendars & Logic (30 Q)</div>
 </header>
 
 <div class="container">
 
-    <div id="start-screen" class="card">
-        <h2>General Intelligence & Reasoning</h2>
-        <p>30 Questions | Clocks, Angles, Calendar, Series</p>
-        <p>Test your logic skills for the AIIMS Common Recruitment Exam.</p>
+    <div id="start-screen" class="card" style="text-align: center;">
+        <h2>General Intelligence Test</h2>
+        <p>30 Questions | Instant Review | Persistent History</p>
+        <p style="color: #666; font-size: 0.9rem;">Topics: Clocks, Calendars, Angles, Series, Coding-Decoding</p>
         
         <button onclick="startQuiz()">Start Test</button>
         
-        <div style="margin-top: 2rem;">
+        <div style="margin-top: 2rem; border-top: 1px solid #eee; padding-top: 1rem;">
             <h3>Past Performance</h3>
             <div id="history-list">
                 <p>No attempts yet.</p>
@@ -210,231 +223,228 @@
         <div id="questions-list"></div>
     </div>
 
-    <div id="result-screen" class="hidden card">
+    <div id="result-screen" class="hidden card score-card">
         <h2>Test Submitted!</h2>
         <div class="score-display">
             <span id="score-text">0</span> / 30
         </div>
         <p id="feedback-text"></p>
         
-        <button onclick="enableReviewMode()">Review Answers & Explanations</button>
+        <button onclick="enableReviewMode()">Review Answers (with Solutions)</button>
         <button class="secondary-btn" onclick="location.reload()">Back to Home</button>
     </div>
 
 </div>
 
 <div id="quiz-nav" class="progress-container hidden">
-    <div id="progress-text">0/30 Answered</div>
+    <div id="progress-text" style="font-weight: bold; color: var(--primary);">0/30 Answered</div>
     <button id="submit-btn" class="submit-btn" onclick="submitQuiz()">Submit Test</button>
 </div>
 
 <script>
-    // --- QUESTION DATA ---
-    // 30 Standard Reasoning Questions (Clock, Calendar, Series, Logic)
-    const questions = [
-        // CLOCK & ANGLES
-        {
-            q: "What is the angle between the hour hand and the minute hand of a clock at 3:40?",
-            options: ["120°", "130°", "140°", "150°"],
-            correct: 1, // 130
-            expl: "Formula: |30H - 5.5M|. H=3, M=40. |30(3) - 5.5(40)| = |90 - 220| = |-130| = 130°."
-        },
-        {
-            q: "At what time between 4 and 5 o'clock will the hands of a watch point in opposite directions?",
-            options: ["4:54 6/11", "4:45", "4:50", "4:55"],
-            correct: 0,
-            expl: "Opposite means 180°. M = (2/11) * (30H ± 180). For 4-5, use +180. M = (2/11)*(120+180) = (2/11)*300 = 600/11 = 54 6/11."
-        },
-        {
-            q: "A clock is set right at 5 AM. The clock loses 16 minutes in 24 hours. What will be the true time when the clock indicates 10 PM on the 4th day?",
-            options: ["11 PM", "10 PM", "9 PM", "12 PM"],
-            correct: 0,
-            expl: "Time from 5 AM day 1 to 10 PM day 4 = 89 hours. Clock loses 16 min/24 hrs. Real 24 hrs = Clock 23hr 44min. Calculation leads to exactly 11 PM."
-        },
-        {
-            q: "How many times do the hands of a clock coincide in a day?",
-            options: ["20", "21", "22", "24"],
-            correct: 2,
-            expl: "Hands coincide once every hour except between 11-1. They coincide 11 times in 12 hours, so 22 times in 24 hours."
-        },
-        {
-            q: "What is the reflex angle between the hands of a clock at 10:25?",
-            options: ["180°", "192.5°", "197.5°", "162.5°"],
-            correct: 2,
-            expl: "Angle = |30(10) - 5.5(25)| = |300 - 137.5| = 162.5°. Reflex angle = 360 - 162.5 = 197.5°."
-        },
-        
-        // CALENDAR
-        {
-            q: "If today is Monday, what will be the day after 61 days?",
-            options: ["Tuesday", "Wednesday", "Saturday", "Thursday"],
-            correct: 2,
-            expl: "61 ÷ 7 = 8 weeks and 5 odd days. Monday + 5 days = Saturday."
-        },
-        {
-            q: "The calendar for the year 2007 will be the same for the year:",
-            options: ["2014", "2016", "2017", "2018"],
-            correct: 3,
-            expl: "2007 is a normal year (1 odd day). Count odd days until sum is div by 7. 2007(1)+08(2)+09(1)+10(1)+11(1)+12(2)+13(1)+14(1)+15(1)+16(2)+17(1) = 14. Next year 2018 repeats."
-        },
-        {
-            q: "Which of the following is not a leap year?",
-            options: ["700", "800", "1200", "2000"],
-            correct: 0,
-            expl: "Century years must be divisible by 400 to be leap years. 700 is not divisible by 400."
-        },
-        {
-            q: "If 1st January 2006 was Sunday, what was the day of the week on 1st January 2010?",
-            options: ["Sunday", "Saturday", "Friday", "Wednesday"],
-            correct: 2,
-            expl: "2006 (1 odd), 2007 (1 odd), 2008 (Leap, 2 odd), 2009 (1 odd). Total = 1+1+2+1 = 5. Sunday + 5 = Friday."
-        },
-        {
-            q: "How many leap years does 100 years have?",
-            options: ["25", "24", "4", "50"],
-            correct: 1,
-            expl: "100th year is not a leap year usually (unless div by 400). So in first 100 years: 24 leap, 76 normal."
-        },
+    // --- QUESTION DATA (Full Text Restored) ---
+const questions = [
+    // CLOCK & ANGLES
+    {
+        q: "What is the angle between the hour hand and the minute hand of a clock at 3:40?",
+        options: ["120°", "130°", "140°", "150°"],
+        correct: 1,
+        expl: "Angle formula = |30H − 5.5M|. Here H=3, M=40. |30×3 − 5.5×40| = |90 − 220| = 130°."
+    },
+    {
+        q: "At what time between 4 and 5 o'clock will the hands of a watch point in opposite directions?",
+        options: ["4:54 6/11", "4:45", "4:50", "4:55"],
+        correct: 0,
+        expl: "For opposite direction, angle = 180°. Minutes = (2/11)(30H + 180). For H=4: (2/11)(120+180)=600/11=54 6/11 minutes."
+    },
+    {
+        q: "A clock is set right at 5 AM. The clock loses 16 minutes in 24 hours. What will be the true time when the clock indicates 10 PM on the 4th day?",
+        options: ["11 PM", "10 PM", "9 PM", "12 PM"],
+        correct: 0,
+        expl: "From 5 AM day 1 to 10 PM day 4, shown time = 89 hours. Clock shows 23h44m in 24 real hours ⇒ rate = 89/90. Real time = 89 × (90/89) = 90 hours. 5 AM + 90 hours = 11 PM."
+    },
+    {
+        q: "How many times do the hands of a clock coincide in a day?",
+        options: ["20", "21", "22", "24"],
+        correct: 2,
+        expl: "Hands coincide 11 times in 12 hours. Therefore, in 24 hours they coincide 22 times."
+    },
+    {
+        q: "What is the reflex angle between the hands of a clock at 10:25?",
+        options: ["180°", "192.5°", "197.5°", "162.5°"],
+        correct: 2,
+        expl: "Smaller angle = |30×10 − 5.5×25| = |300 − 137.5| = 162.5°. Reflex angle = 360 − 162.5 = 197.5°."
+    },
 
-        // SERIES & ALPHABET
-        {
-            q: "Find the missing number: 2, 6, 12, 20, 30, 42, ?",
-            options: ["56", "54", "50", "62"],
-            correct: 0,
-            expl: "Pattern: 1*2, 2*3, 3*4, 4*5, 5*6, 6*7. Next is 7*8 = 56."
-        },
-        {
-            q: "Find the next term: 3F, 6G, 11I, 18L, ?",
-            options: ["21O", "25N", "27P", "27Q"],
-            correct: 2,
-            expl: "Numbers: +3, +5, +7, next is +9 (18+9=27). Letters: F(+1)G(+2)I(+3)L(+4)P. Answer 27P."
-        },
-        {
-            q: "Complete the series: 1, 9, 25, 49, ?, 121",
-            options: ["64", "81", "91", "100"],
-            correct: 1,
-            expl: "Squares of odd numbers: 1², 3², 5², 7², 9²(81), 11²."
-        },
-        {
-            q: "Look at this series: 7, 10, 8, 11, 9, 12, ... What number should come next?",
-            options: ["7", "10", "12", "13"],
-            correct: 1,
-            expl: "Two alternating series: (7, 8, 9, 10) and (10, 11, 12...). Next is 10."
-        },
-        
-        // CODING DECODING
-        {
-            q: "In a certain code, TEACHER is written as VGCEJGT. How is CHILDREN written in that code?",
-            options: ["EJKNEGTP", "EGKNFITP", "EJKNFGTO", "EJKNFTGP"],
-            correct: 3,
-            expl: "Each letter is shifted forward by +2. C+2=E, H+2=J, I+2=K, L+2=N, D+2=F, R+2=T, E+2=G, N+2=P."
-        },
-        {
-            q: "If Z = 52 and ACT = 48, then BAT will be equal to:",
-            options: ["39", "41", "44", "46"],
-            correct: 3,
-            expl: "A=1, B=2... Z=26. Multiply by 2. Z=26*2=52. ACT=(1+3+20)*2 = 48. BAT=(2+1+20)*2 = 23*2 = 46."
-        },
+    // CALENDAR
+    {
+        q: "If today is Monday, what will be the day after 61 days?",
+        options: ["Tuesday", "Wednesday", "Saturday", "Thursday"],
+        correct: 2,
+        expl: "61 ÷ 7 = 8 weeks + 5 days. Monday + 5 days = Saturday."
+    },
+    {
+        q: "The calendar for the year 2007 will be the same for the year:",
+        options: ["2014", "2016", "2017", "2018"],
+        correct: 3,
+        expl: "2007 is a non-leap year. Counting odd days forward, the total becomes a multiple of 7 again in 2018, so calendars match."
+    },
+    {
+        q: "Which of the following is not a leap year?",
+        options: ["700", "800", "1200", "2000"],
+        correct: 0,
+        expl: "A century year must be divisible by 400 to be a leap year. 700 is not divisible by 400."
+    },
+    {
+        q: "If 1st January 2006 was Sunday, what was the day of the week on 1st January 2010?",
+        options: ["Sunday", "Saturday", "Friday", "Wednesday"],
+        correct: 2,
+        expl: "Odd days: 2006=1, 2007=1, 2008=2 (leap), 2009=1 → total 5. Sunday + 5 = Friday."
+    },
+    {
+        q: "How many leap years does 100 years have?",
+        options: ["25", "24", "4", "50"],
+        correct: 1,
+        expl: "In 100 years there are 25 multiples of 4, but the century year is not leap unless divisible by 400. So leap years = 24."
+    },
 
-        // DIRECTIONS
-        {
-            q: "A man walks 5km toward South and then turns to the right. After walking 3km he turns to the left and walks 5km. Now in which direction is he from the starting place?",
-            options: ["West", "South", "North-East", "South-West"],
-            correct: 3,
-            expl: "South (5km) -> Right turn (West 3km) -> Left turn (South 5km). He is South and West of origin."
-        },
-        {
-            q: "One morning Udai and Vishal were talking to each other face to face at a crossing. If Vishal's shadow was exactly to the left of Udai, which direction was Udai facing?",
-            options: ["East", "West", "North", "South"],
-            correct: 2,
-            expl: "Morning sun is in East. Shadows fall West. If shadow is to Udai's left (West), Udai must be facing North."
-        },
+    // SERIES & ALPHABET
+    {
+        q: "Find the missing number: 2, 6, 12, 20, 30, 42, ?",
+        options: ["56", "54", "50", "62"],
+        correct: 0,
+        expl: "Pattern: n(n+1). Sequence: 1×2, 2×3, 3×4, ... Next = 7×8 = 56."
+    },
+    {
+        q: "Find the next term: 3F, 6G, 11I, 18L, ?",
+        options: ["21O", "25N", "27P", "27Q"],
+        correct: 2,
+        expl: "Numbers increase by +3, +5, +7, +9 → 27. Letters move +1, +2, +3, +4 → P."
+    },
+    {
+        q: "Complete the series: 1, 9, 25, 49, ?, 121",
+        options: ["64", "81", "91", "100"],
+        correct: 1,
+        expl: "Squares of odd numbers: 1², 3², 5², 7², 9², 11²."
+    },
+    {
+        q: "Look at this series: 7, 10, 8, 11, 9, 12, ... What number should come next?",
+        options: ["7", "10", "12", "13"],
+        correct: 1,
+        expl: "Two alternating series: 7,8,9,10 and 10,11,12,… Next term = 10."
+    },
 
-        // BLOOD RELATIONS
-        {
-            q: "Pointing to a photograph of a boy Suresh said, 'He is the son of the only son of my mother.' How is Suresh related to that boy?",
-            options: ["Brother", "Uncle", "Cousin", "Father"],
-            correct: 3,
-            expl: "'Only son of my mother' is Suresh himself. The boy is the son of Suresh. So Suresh is the Father."
-        },
-        {
-            q: "A is B's sister. C is B's mother. D is C's father. E is D's mother. Then, how is A related to D?",
-            options: ["Grandmother", "Grandfather", "Daughter", "Granddaughter"],
-            correct: 3,
-            expl: "A is sister of B, so A is daughter of C. C is daughter of D. So A is granddaughter of D."
-        },
+    // CODING DECODING
+    {
+        q: "In a certain code, TEACHER is written as VGCEJGT. How is CHILDREN written in that code?",
+        options: ["EJKNEGTP", "EGKNFITP", "EJKNFGTO", "EJKNFTGP"],
+        correct: 3,
+        expl: "Each letter is shifted forward by +2 in the alphabet."
+    },
+    {
+        q: "If Z = 52 and ACT = 48, then BAT will be equal to:",
+        options: ["39", "41", "44", "46"],
+        correct: 3,
+        expl: "Letter values summed and multiplied by 2. BAT = (2+1+20)×2 = 46."
+    },
 
-        // LOGICAL DEDUCTION
-        {
-            q: "Statements: All mangoes are golden in colour. No golden-coloured things are cheap.\nConclusion:\n1) All mangoes are cheap.\n2) Golden-coloured mangoes are not cheap.",
-            options: ["Only conclusion 1 follows", "Only conclusion 2 follows", "Either 1 or 2 follows", "Both follow"],
-            correct: 1,
-            expl: "Mangoes -> Golden -> Not Cheap. Therefore, Mangoes are not cheap. Conclusion 2 is correct."
-        },
-        {
-            q: "Arrange the words in a meaningful sequence: 1. Infection 2. Consultation 3. Doctor 4. Treatment 5. Recovery",
-            options: ["1, 3, 4, 5, 2", "1, 3, 2, 4, 5", "1, 2, 3, 4, 5", "2, 3, 5, 1, 4"],
-            correct: 1,
-            expl: "Infection -> Doctor -> Consultation -> Treatment -> Recovery."
-        },
+    // DIRECTIONS
+    {
+        q: "A man walks 5 km toward South, then turns right and walks 3 km, then turns left and walks 5 km. In which direction is he from the starting point?",
+        options: ["West", "South", "North-East", "South-West"],
+        correct: 3,
+        expl: "Final position is south and west of start → South-West."
+    },
+    {
+        q: "One morning Udai and Vishal were talking face to face. Vishal’s shadow was to the left of Udai. Which direction was Udai facing?",
+        options: ["East", "West", "North", "South"],
+        correct: 2,
+        expl: "Morning sun is in East, shadow falls West. If shadow is to Udai’s left, his left = West ⇒ he faces North."
+    },
 
-        // MISC MATH/LOGIC
-        {
-            q: "The average of first 50 natural numbers is:",
-            options: ["25.30", "25.5", "25.00", "12.25"],
-            correct: 1,
-            expl: "Sum of n natural numbers = n(n+1)/2. Average = (n+1)/2. (50+1)/2 = 25.5."
-        },
-        {
-            q: "A train running at the speed of 60 km/hr crosses a pole in 9 seconds. What is the length of the train?",
-            options: ["120 metres", "180 metres", "324 metres", "150 metres"],
-            correct: 3,
-            expl: "Speed = 60 * (5/18) = 50/3 m/s. Distance = Speed * Time. (50/3) * 9 = 150m."
-        },
-        {
-            q: "Today is Tuesday. My uncle will come after 45 days. In which day my uncle will be coming?",
-            options: ["Monday", "Saturday", "Friday", "Sunday"],
-            correct: 2,
-            expl: "45 / 7 = 6 weeks + 3 days. Tuesday + 3 = Friday."
-        },
-        {
-            q: "Find the odd one out: 3, 5, 11, 14, 17, 21",
-            options: ["21", "17", "14", "3"],
-            correct: 2,
-            expl: "3, 5, 11, 17 are Prime Numbers. 14 and 21 are not. However, usually in such series 14 is the only even number."
-        },
-        {
-            q: "A father is aged three times more than his son Ronit. After 8 years, he would be two and a half times of Ronit's age. After further 8 years, how many times would he be of Ronit's age?",
-            options: ["2 times", "2.5 times", "2.75 times", "3 times"],
-            correct: 0,
-            expl: "Let Ronit = x, Father = x + 3x = 4x. (4x+8) = 2.5(x+8). Solve x=8. Father=32. After 16 years: R=24, F=48. F = 2 * R."
-        },
-        {
-            q: "Insert the missing number: 7, 26, 63, 124, 215, 342, ?",
-            options: ["391", "421", "481", "511"],
-            correct: 3,
-            expl: "n^3 - 1. 2^3-1=7, 3^3-1=26... 8^3-1 = 512-1 = 511."
-        },
-        {
-            q: "Two positions of a dice are shown. When 4 is at the bottom, what will be at the top? (Assume standard dice logic if not specified, but usually based on adjacent faces). If faces are: (1,2,3) and (1,3,5).",
-            options: ["2", "5", "6", "1"],
-            correct: 1,
-            expl: "Faces 1 and 3 are common. The remaining faces are opposite. 2 is opposite 5. If 4 is involved in a standard dice, 4 is opposite 3."
-            // *Correction for logic context*: For the specific common reasoning pattern: If (1,2,3) and (1,3,5) are visible, 1 & 3 are adjacent to 2 and 5. Thus 2 is opposite 5.
-        },
-        {
-            q: "Count the number of triangles in a square crossed by two diagonals.",
-            options: ["4", "6", "8", "10"],
-            correct: 2,
-            expl: "Small triangles: 4. Combined triangles (2 small ones): 4. Total = 8."
-        }
-    ];
+    // BLOOD RELATIONS
+    {
+        q: "Pointing to a photograph, Suresh said, 'He is the son of the only son of my mother.' How is Suresh related to the boy?",
+        options: ["Brother", "Uncle", "Cousin", "Father"],
+        correct: 3,
+        expl: "‘Only son of my mother’ refers to Suresh himself. The boy is his son."
+    },
+    {
+        q: "A is B's sister. C is B's mother. D is C's father. How is A related to D?",
+        options: ["Grandmother", "Grandfather", "Daughter", "Granddaughter"],
+        correct: 3,
+        expl: "A → daughter of C → granddaughter of D."
+    },
 
-    // --- STATE MANAGEMENT ---
+    // LOGICAL DEDUCTION
+    {
+        q: "Statements: All mangoes are golden. No golden things are cheap.\nConclusion:\n1) All mangoes are cheap.\n2) Golden mangoes are not cheap.",
+        options: ["Only conclusion 1 follows", "Only conclusion 2 follows", "Either 1 or 2 follows", "Both follow"],
+        correct: 1,
+        expl: "Mangoes → Golden → Not Cheap. Conclusion 2 follows; conclusion 1 is false."
+    },
+    {
+        q: "Arrange the words in a meaningful sequence: 1. Infection 2. Consultation 3. Doctor 4. Treatment 5. Recovery",
+        options: ["1,3,4,5,2", "1,3,2,4,5", "1,2,3,4,5", "2,3,5,1,4"],
+        correct: 1,
+        expl: "Infection → Doctor → Consultation → Treatment → Recovery."
+    },
+
+    // MISC
+    {
+        q: "The average of first 50 natural numbers is:",
+        options: ["25.30", "25.5", "25.00", "12.25"],
+        correct: 1,
+        expl: "Average of first n natural numbers = (n+1)/2 = 25.5."
+    },
+    {
+        q: "A train running at 60 km/hr crosses a pole in 9 seconds. What is the length of the train?",
+        options: ["120 metres", "180 metres", "324 metres", "150 metres"],
+        correct: 3,
+        expl: "Speed = 60×5/18 = 50/3 m/s. Length = speed × time = (50/3)×9 = 150 m."
+    },
+    {
+        q: "Today is Tuesday. My uncle will come after 45 days. On which day will he come?",
+        options: ["Monday", "Saturday", "Friday", "Sunday"],
+        correct: 2,
+        expl: "45 ÷ 7 = 6 weeks + 3 days. Tuesday + 3 = Friday."
+    },
+    {
+        q: "Find the odd one out: 3, 5, 11, 14, 17, 21",
+        options: ["21", "17", "14", "3"],
+        correct: 2,
+        expl: "14 is the only even number in the list; others are odd."
+    },
+    {
+        q: "A father is three times more than his son. After 8 years, he is 2.5 times the son. After further 8 years, how many times will he be?",
+        options: ["2 times", "2.5 times", "2.75 times", "3 times"],
+        correct: 0,
+        expl: "Interpret father = son + 3×son = 4x. Solve: (4x+8)=2.5(x+8) → x=8. After 16 years, father=48, son=24 ⇒ 2 times."
+    },
+    {
+        q: "Insert the missing number: 7, 26, 63, 124, 215, 342, ?",
+        options: ["391", "421", "481", "511"],
+        correct: 3,
+        expl: "Pattern: n³ − 1. Next = 8³ − 1 = 511."
+    },
+    {
+        q: "Two positions of a dice are shown: (1,2,3) and (1,3,5). When 4 is at the bottom, what will be at the top?",
+        options: ["2", "5", "6", "1"],
+        correct: 2,
+        expl: "Common faces 1 and 3 ⇒ adjacent. Remaining faces 2 and 5 are opposite. Remaining pair is 4 and 6. Hence top = 6."
+    },
+    {
+        q: "Count the number of triangles in a square crossed by two diagonals.",
+        options: ["4", "6", "8", "10"],
+        correct: 2,
+        expl: "4 small triangles + 4 larger triangles = 8."
+    }
+];
+
+
     let userAnswers = new Array(questions.length).fill(null);
     const historyKey = 'aiims_cre_history';
 
-    // --- INITIALIZATION ---
     window.onload = function() {
         renderHistory();
     }
@@ -460,18 +470,20 @@
             item.options.forEach((opt, optIndex) => {
                 optionsHtml += `
                     <label class="option-label" id="lbl-${index}-${optIndex}">
-                        <input type="radio" name="q${index}" value="${optIndex}" onchange="selectOption(${index}, ${optIndex})">
-                        ${opt}
+                        <span class="option-content">
+                            <input type="radio" name="q${index}" value="${optIndex}" onchange="selectOption(${index}, ${optIndex})">
+                            ${opt}
+                        </span>
                     </label>
                 `;
             });
 
             qDiv.innerHTML = `
-                <div class="question-number">Question ${index + 1} of 30</div>
+                <div class="question-number">Question ${index + 1}</div>
                 <div class="question-text">${item.q}</div>
                 <div class="options-grid">${optionsHtml}</div>
                 <div class="explanation" id="expl-${index}">
-                    <strong>Explanation:</strong> ${item.expl}
+                    <strong>💡 Explanation:</strong> ${item.expl}
                 </div>
             `;
             container.appendChild(qDiv);
@@ -481,120 +493,98 @@
     function selectOption(qIndex, optIndex) {
         userAnswers[qIndex] = optIndex;
         
-        // Visual feedback for selection
+        // Visual select (reset others)
         const labels = document.querySelectorAll(`#q-card-${qIndex} .option-label`);
-        labels.forEach(l => l.style.borderColor = '#ddd');
-        labels.forEach(l => l.style.backgroundColor = 'white');
+        labels.forEach(l => {
+            l.style.borderColor = '#ddd';
+            l.style.backgroundColor = 'white';
+        });
         
         const selectedLabel = document.getElementById(`lbl-${qIndex}-${optIndex}`);
         selectedLabel.style.borderColor = 'var(--secondary)';
         selectedLabel.style.backgroundColor = '#f0fcfc';
 
-        // Update progress text
-        const answeredCount = userAnswers.filter(a => a !== null).length;
-        document.getElementById('progress-text').innerText = `${answeredCount}/30 Answered`;
+        // Update footer count
+        const count = userAnswers.filter(a => a !== null).length;
+        document.getElementById('progress-text').innerText = `${count}/${questions.length} Answered`;
     }
 
     function submitQuiz() {
-        const unanswered = userAnswers.filter(a => a === null).length;
-        if(unanswered > 0) {
-            if(!confirm(`You have ${unanswered} unanswered questions. Submit anyway?`)) {
-                return;
-            }
+        if(userAnswers.filter(a => a === null).length > 0) {
+            if(!confirm("Submit with unanswered questions?")) return;
         }
 
-        // Calculate Score
         let score = 0;
         questions.forEach((q, i) => {
-            if (userAnswers[i] === q.correct) {
-                score++;
-            }
+            if (userAnswers[i] === q.correct) score++;
         });
 
-        // Save History
         saveHistory(score);
 
-        // UI Changes
         document.getElementById('quiz-container').classList.add('hidden');
         document.getElementById('quiz-nav').classList.add('hidden');
         document.getElementById('result-screen').classList.remove('hidden');
-        
         document.getElementById('score-text').innerText = score;
-        
-        let feedback = "";
-        if (score >= 25) feedback = "Excellent! You are AIIMS ready.";
-        else if (score >= 20) feedback = "Good job! Just a bit more practice.";
-        else feedback = "Keep practicing. Review your mistakes below.";
-        document.getElementById('feedback-text').innerText = feedback;
+
+        let msg = score > 25 ? "Outstanding!" : score > 15 ? "Good effort!" : "Keep practicing!";
+        document.getElementById('feedback-text').innerText = msg;
     }
 
-    // --- REVIEW MODE ---
     function enableReviewMode() {
         document.getElementById('result-screen').classList.add('hidden');
         document.getElementById('quiz-container').classList.remove('hidden');
-        document.body.classList.add('review-mode');
+        document.body.classList.add('review-mode'); // This triggers the CSS magic
 
         questions.forEach((q, i) => {
             const card = document.getElementById(`q-card-${i}`);
             const userPick = userAnswers[i];
             
-            // Disable inputs
-            const inputs = card.querySelectorAll('input');
-            inputs.forEach(inpt => inpt.disabled = true);
+            // Disable interactions
+            card.querySelectorAll('input').forEach(i => i.disabled = true);
 
-            // Highlight Correct Answer
+            // 1. Highlight Correct Answer (ALWAYS GREEN)
             const correctLabel = document.getElementById(`lbl-${i}-${q.correct}`);
-            if(correctLabel) correctLabel.classList.add('correct');
+            if(correctLabel) {
+                correctLabel.classList.add('correct');
+                // Force check radio for correct visual if not selected
+                correctLabel.querySelector('input').checked = true;
+            }
 
-            // Highlight Wrong Selection (if any)
+            // 2. Highlight User Mistake (RED)
             if (userPick !== null && userPick !== q.correct) {
                 const wrongLabel = document.getElementById(`lbl-${i}-${userPick}`);
                 if(wrongLabel) wrongLabel.classList.add('incorrect');
             }
         });
 
-        // Hide navigation, show home button at bottom
-        document.getElementById('quiz-nav').style.display = 'none';
-        
-        // Add a "Back to Home" button at the bottom of the review list
-        const footerBtn = document.createElement('div');
-        footerBtn.innerHTML = `<button onclick="location.reload()" style="margin-top:20px; margin-bottom:50px;">Finish Review</button>`;
-        document.getElementById('quiz-container').appendChild(footerBtn);
+        // Add 'Finish Review' button at bottom
+        const footer = document.createElement('div');
+        footer.innerHTML = `<button onclick="location.reload()" style="margin: 40px auto; background:#333;">Exit Review Mode</button>`;
+        document.getElementById('questions-list').appendChild(footer);
     }
 
-    // --- PERSISTENT STORAGE ---
     function saveHistory(score) {
-        let history = JSON.parse(localStorage.getItem(historyKey)) || [];
-        const attempt = {
-            date: new Date().toLocaleDateString(),
-            score: score,
-            total: questions.length
-        };
-        history.unshift(attempt); // Add to top
-        if(history.length > 5) history.pop(); // Keep last 5
-        localStorage.setItem(historyKey, JSON.stringify(history));
+        let h = JSON.parse(localStorage.getItem(historyKey)) || [];
+        h.unshift({ date: new Date().toLocaleDateString(), score: score });
+        if(h.length > 5) h.pop();
+        localStorage.setItem(historyKey, JSON.stringify(h));
     }
 
     function renderHistory() {
-        const history = JSON.parse(localStorage.getItem(historyKey));
-        const historyList = document.getElementById('history-list');
+        const h = JSON.parse(localStorage.getItem(historyKey));
+        const list = document.getElementById('history-list');
+        if (!h || h.length === 0) return;
         
-        if (!history || history.length === 0) {
-            historyList.innerHTML = '<p>No previous attempts found.</p>';
-            return;
-        }
-
-        let html = '<table><thead><tr><th>Date</th><th>Score</th></tr></thead><tbody>';
-        history.forEach(h => {
-            html += `<tr><td>${h.date}</td><td>${h.score} / ${h.total}</td></tr>`;
-        });
-        html += '</tbody></table>';
-        historyList.innerHTML = html;
+        let html = '<table><tr><th>Date</th><th>Score</th></tr>';
+        h.forEach(x => html += `<tr><td>${x.date}</td><td>${x.score} / 30</td></tr>`);
+        html += '</table>';
+        list.innerHTML = html;
     }
 
     function clearHistory() {
         localStorage.removeItem(historyKey);
         renderHistory();
+        document.getElementById('history-list').innerHTML = '<p>No attempts yet.</p>';
     }
 </script>
 
