@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIIMS CBT - Sectional Timing Mode</title>
+    <style>
+        :root {
+            --header-bg: #3f51b5;
+            --header-text: #fff;
+            --panel-bg: #f5f5f5;
+            --pallet-answered: #4caf50;
+            --pallet-not-answered: #f44336;
+            --pallet-review: #9c27b0;
+            --pallet-not-visited: #e0e0e0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #fff; }
+
+        /* --- Header --- */
+        header {
+            background: var(--header-bg); color: var(--header-text);
+            padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+            height: 60px; flex-shrink: 0;
+        }
+        .timer { font-size: 1.2rem; font-weight: bold; background: #fff; color: #d32f2f; padding: 5px 15px; border-radius: 4px; border: 2px solid #d32f2f; }
+
+        /* --- Main Layout --- */
+        .main-container { display: flex; flex: 1; overflow: hidden; }
+        
+        .question-area { flex: 1; display: flex; flex-direction: column; padding: 20px; overflow-y: auto; }
+        .q-header { display: flex; justify-content: space-between; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.5; }
+        
+        .options-container { display: flex; flex-direction: column; gap: 10px; }
+        .option-label { 
+            display: flex; align-items: center; padding: 10px; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; transition: 0.2s; 
+        }
+        .option-label:hover { background: #f0f8ff; }
+        .option-label input { margin-right: 15px; transform: scale(1.2); }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px; background: var(--panel-bg); border-left: 1px solid #ccc;
+            display: flex; flex-direction: column; flex-shrink: 0;
+        }
+        .user-info { padding: 10px; background: #e8eaf6; border-bottom: 1px solid #ccc; }
+        
+        .palette-legend { padding: 10px; font-size: 0.8rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: #fff; }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+        .question-grid { 
+            padding: 10px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; 
+            overflow-y: auto; flex: 1; align-content: start;
+        }
+        .q-btn {
+            height: 35px; width: 35px; border: 1px solid #ccc; background: #fff; 
+            border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .q-btn.answered { background: var(--pallet-answered); color: white; border-color: var(--pallet-answered); }
+        .q-btn.not-answered { background: var(--pallet-not-answered); color: white; border-color: var(--pallet-not-answered); }
+        .q-btn.review { background: var(--pallet-review); color: white; border-radius: 50%; }
+        .q-btn.current { border: 2px solid blue; box-shadow: 0 0 5px blue; }
+        .q-btn.locked { opacity: 0.4; cursor: not-allowed; background: #444 !important; color: #888; border: 1px solid #000; }
+
+        /* Footer */
+        .footer-controls {
+            height: 60px; background: #fff; border-top: 1px solid #ccc;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+        }
+        .btn { padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+        .btn-primary { background: #2196f3; color: white; }
+        .btn-success { background: #4caf50; color: white; }
+        .btn-warn { background: #ff9800; color: white; }
+        .btn-danger { background: #f44336; color: white; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* Mobile */
+        .mobile-toggle { display: none; background: none; border: none; color: white; font-size: 1.5rem; }
+        @media (max-width: 768px) {
+            .mobile-toggle { display: block; }
+            .sidebar { 
+                position: absolute; right: 0; top: 60px; bottom: 60px; z-index: 100;
+                transform: translateX(100%); transition: transform 0.3s; width: 85%;
+            }
+            .sidebar.active { transform: translateX(0); }
+            .question-grid { grid-template-columns: repeat(6, 1fr); }
+            .footer-controls { flex-wrap: wrap; gap: 5px; height: auto; padding: 10px; }
+            .btn { flex: 1; padding: 8px; font-size: 0.8rem; }
+        }
+
+        /* Overlay */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .hidden { display: none !important; }
+        
+        .review-panel { display: none; padding: 20px; height: 100%; overflow-y: auto; background:#f9f9f9;}
+        .review-item { margin-bottom: 20px; border: 1px solid #ddd; padding: 15px; border-radius: 5px; background:white; }
+        .explanation { background: #fff3cd; padding: 10px; margin-top: 10px; font-size: 0.9rem; border-left: 4px solid #ffc107; }
+
+    </style>
+</head>
+<body>
+
+    <div id="landingPage" class="overlay">
+        <h1>AIIMS CRE CBT (Strict Pattern)</h1>
+        <div style="width: 80%; max-width: 600px; text-align: left; margin: 20px 0;">
+            <h3>Exam Rules:</h3>
+            <ul>
+                <li><strong>Questions:</strong> 100 (5 Sections of 20 questions each).</li>
+                <li><strong>Timing:</strong> 18 Minutes per section (Strictly Dedicated).</li>
+                <li><strong>Total Time:</strong> 90 Minutes.</li>
+                <li><strong>Locking:</strong> Once 18 mins are up, or if you manually proceed to the next section, you <u>cannot</u> return to the previous section.</li>
+                <li><strong>Marking:</strong> +4 Correct, -1 Incorrect.</li>
+            </ul>
+        </div>
+        <button class="btn btn-success" style="font-size: 1.2rem;" onclick="startExam()">START EXAM</button>
+    </div>
+
+    <header id="examHeader" class="hidden">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <h3>AIIMS Radiographer</h3>
+            <span style="font-size:0.8rem; background:#eee; padding:2px 6px; border-radius:4px; color:#333;" id="sectionLabel">Section 1</span>
+        </div>
+        <div class="timer" id="timerDisplay">18:00</div>
+        <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+    </header>
+
+    <div class="main-container hidden" id="examBody">
+        <div class="question-area">
+            <div class="q-header">
+                <span id="qNumDisplay">Question No. 1</span>
+                <span style="color: #666;">Marks: +4, -1</span>
+            </div>
+            <div id="questionText" class="q-text">Loading...</div>
+            <div id="optionsBox" class="options-container"></div>
+        </div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="user-info">
+                <strong>Candidate Name</strong><br><small>Roll No: 123456</small>
+            </div>
+            <div class="palette-legend">
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-answered)"></span> Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-not-answered)"></span> Not Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-review)"></span> Review</div>
+                <div class="legend-item"><span class="dot" style="background:#444"></span> Locked</div>
+            </div>
+            <div class="question-grid" id="questionPalette"></div>
+            <div style="padding:10px; margin-top:auto;">
+                <button class="btn btn-primary" style="width:100%" onclick="submitExam()">FINISH EXAM</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-controls hidden" id="examFooter">
+        <div style="display:flex; gap:10px;">
+            <button class="btn btn-danger" onclick="clearResponse()">Clear</button>
+            <button class="btn btn-warn" onclick="markForReview()">Review</button>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <button class="btn" onclick="prevQuestion()" id="btnPrev">Previous</button>
+            <button class="btn btn-success" onclick="saveAndNext()">Save & Next</button>
+        </div>
+    </div>
+
+    <div id="resultPage" class="overlay hidden" style="display:block; overflow-y:auto; justify-content:start; padding-top:40px;">
+        <h2 style="text-align:center;">Exam Summary</h2>
+        <div id="scoreCard" style="margin: 20px auto; width:90%; max-width:600px; padding: 20px; border: 1px solid #ccc; text-align: center; background:#fff;"></div>
+        <div style="display:flex; justify-content:center; gap:20px; margin-bottom:20px;">
+            <button class="btn btn-primary" onclick="showDetailedReview()">Review Solutions</button>
+            <button class="btn btn-danger" onclick="location.reload()">Exit</button>
+        </div>
+        <div id="detailedReview" class="review-panel" style="width: 90%; max-width: 800px; margin:0 auto;"></div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const TOTAL_QUESTIONS = 100;
+        const SECTION_SIZE = 20; // 20 questions per section
+        const SECTION_TIME_LIMIT = 18 * 60; // 18 minutes in seconds
+        
+        let questions = [];
+
+function generateQuestions() {
+        const createQ = (id, type, text, opts, ans, exp) => ({ id, type, text, opts, ans, exp });
+        questions = []; // Reset array
+
+        // --- SECTION A: NON-CORE (1-20) ---
+        // Difficulty: High (Requires careful reading)
+
+        const nonCoreData = [
+            // Reasoning & Quantitative
+            ["In a certain code, '253' means 'books are old'; '546' means 'man is old' and '378' means 'buy good books'. What stands for 'are' in that code?", ["2", "5", "6", "9"], 0, "'Books' is common in 1&3 (Digit 3). 'Old' is common in 1&2 (Digit 5). Remaining in 1 is 'are' -> 2."],
+            ["A person starts from point A and travels 3 km East to B, then turns Left and travels 3 times that distance to reach C. He again turns Left and travels five times the distance he covered between A and B. What is the shortest distance between his starting point and the final point?", ["15 km", "12 km", "30 km", "√153 km"], 0, "A->B (3 East). B->C (9 North). C->D (15 West). Final is D. Net Horizontal: 3E - 15W = 12 West. Net Vertical: 9 North. Distance = √(12² + 9²) = √(144+81) = √225 = 15 km."],
+            ["Statement: 'All guilty politicians were arrested. Kishan and Chander were among those arrested.' \nConclusion I: All arrested people are politicians. \nConclusion II: Kishan and Chander were not politicians.", ["Only I follows", "Only II follows", "Both follow", "Neither follows"], 3, "Neither. Being arrested doesn't make you a politician (I). Kishan/Chander might be politicians or just other arrested people (II is unsure)."],
+            ["The price of sugar increases by 20%. By what percentage must a housewife reduce her consumption so that the expenditure remains the same?", ["16.66%", "20%", "25%", "10%"], 0, "Formula: [R / (100+R)] * 100. [20/120]*100 = 16.66%."],
+            ["If A=1, FAT=27, FAITH=?", ["44", "42", "40", "41"], 0, "Sum of positions: F(6)+A(1)+T(20)=27. F(6)+A(1)+I(9)+T(20)+H(8) = 44."],
+
+            // GK (Current & Static)
+            ["The 'Bharat Ratna' was awarded posthumously in 2024 to which former Chief Minister of Bihar?", ["Karpoori Thakur", "Lalu Prasad Yadav", "Nitish Kumar", "Jagannath Mishra"], 0, "Karpoori Thakur (Jannayak)."],
+            ["'Article 370' of the Indian Constitution, which was abrogated, granted special status to:", ["Jammu & Kashmir", "Ladakh", "Sikkim", "Nagaland"], 0, "Jammu & Kashmir."],
+            ["Who discovered the 'Neutron'?", ["J.J. Thomson", "Chadwick", "Rutherford", "Bohr"], 1, "James Chadwick (1932)."],
+            ["Which hormone regulates blood sugar levels?", ["Insulin", "Adrenaline", "Thyroxine", "Estrogen"], 0, "Insulin (from Pancreas)."],
+            ["'Yudh Abhyas' is a joint military exercise between India and:", ["USA", "Russia", "UK", "France"], 0, "India and USA."],
+
+            // English
+            ["Select the correct passive form: 'The mechanic has repaired the car.'", ["The car has repaired by the mechanic.", "The car has been repaired by the mechanic.", "The car was repaired by the mechanic.", "The car is repaired by the mechanic."], 1, "Has been repaired (Present Perfect Passive)."],
+            ["Idiom 'To bite the bullet' means:", ["To endure a painful situation courageously", "To eat quickly", "To be aggressive", "To die"], 0, "Facing a difficult situation."],
+            ["Synonym of 'Sporadic':", ["Continuous", "Regular", "Occasional/Scattered", "Frequent"], 2, "Occasional."],
+            ["One who hates mankind:", ["Misanthrope", "Philanthropist", "Misogynist", "Sadist"], 0, "Misanthrope."],
+            ["'He is guilty ___ theft.'", ["for", "of", "with", "at"], 1, "Guilty OF."],
+
+            // Computers
+            ["'Ctrl + Z' is Undo. What is 'Ctrl + Y'?", ["Redo", "Paste", "Cut", "Delete"], 0, "Redo."],
+            ["Which storage is Volatile?", ["RAM", "ROM", "HDD", "Flash Drive"], 0, "RAM."],
+            ["'HTTP' port number is:", ["80", "21", "25", "110"], 0, "Port 80."],
+            ["1 TB is equal to:", ["1024 GB", "1000 GB", "1024 MB", "100 GB"], 0, "1024 Gigabytes."],
+            ["'Firewall' is used for:", ["Network Security", "Data Storage", "Speed Boosting", "Cooling"], 0, "Security (Packet filtering)."]
+        ];
+        nonCoreData.forEach((d, i) => questions.push(createQ(i + 1, "Non-Core", d[0], d[1], d[2], d[3])));
+
+
+        // --- SECTION B: CORE (21-100) ---
+        // Level: High (AIIMS Radiographer Pattern)
+
+        const coreData = [
+            // 1. Physics, Equipment & Quality (21-40)
+            ["'Space Charge Effect' limits the X-ray tube current (mA) in which situation?", ["High kVp, Low mA", "Low kVp, High mA", "High kVp, High mA", "Low kVp, Low mA"], 1, "At low kVp, the electron cloud isn't pulled away fast enough, limiting mA."],
+            ["The 'Grid Conversion Factor' (Bucky Factor) for a 16:1 grid is approx:", ["2", "4", "5", "6"], 3, "GCF for 16:1 is usually cited as 6. (8:1 is 4, 12:1 is 5)."],
+            ["In digital radiography, 'Fill Factor' relates to the:", ["TFT array sensing area", "Pixel depth", "Matrix size", "Storage"], 0, "Percentage of pixel face sensitive to X-rays."],
+            ["The 'Heel Effect' is MOST pronounced when using:", ["Small Anode Angle (e.g. 7 deg)", "Large Anode Angle (e.g. 20 deg)", "Long SID", "Small Field Size"], 0, "Steeper angle increases absorption at the anode heel."],
+            ["'DQE' (Detective Quantum Efficiency) of 1 (100%) implies:", ["No noise added by the system", "50% noise", "High dose", "Poor image"], 0, "Perfect transfer of signal-to-noise ratio."],
+            ["'Beam Hardening' occurs because:", ["Low energy photons are absorbed preferentially", "High energy photons are absorbed", "Scatter increases", "kVp drops"], 0, "Filtration removes soft rays, increasing average beam energy."],
+            ["Which interaction is independent of Atomic Number (Z)?", ["Compton Scattering", "Photoelectric Effect", "Pair Production", "Coherent"], 0, "Compton depends on electron density, not Z (except for Hydrogen)."],
+            ["The 'Line Focus Principle' relationship:", ["Sin(Target Angle) = Eff. Focal Spot / Actual Focal Spot", "Sin(Angle) = Actual / Effective", "Tan(Angle) = Eff / Actual", "None"], 0, "Effective = Actual * Sin(Theta)."],
+            ["'Reciprocity Law' failure is a concern in:", ["Digital Imaging", "Screen-Film Radiography", "CT", "MRI"], 1, "Only relevant to film chemistry response times."],
+            ["'Leakage Radiation' limit for diagnostic tube housing:", ["100 mR/hr (1 mGy/hr) at 1 meter", "10 mR/hr at 1 meter", "1 R/hr", "Zero"], 0, "1 mGy/hr @ 1m."],
+            ["Calculate HU if 80 kVp, 200 mA, 0.5s is used on a 3-phase 12-pulse unit (Factor 1.41).", ["8000", "5600", "11280", "15000"], 2, "80 * 200 * 0.5 * 1.41 = 11,280 HU."],
+            ["'Modulation Transfer Function' (MTF) of 0.1 usually represents:", ["The resolution limit of the system", "Perfect contrast", "No information", "Low noise"], 0, "Often defined as the limiting resolution frequency."],
+            ["'Flux Gain' in Image Intensifier = ?", ["Output Light Photons / Input X-ray Photons", "Input / Output", "Minification x Brightness", "None"], 0, "Ratio of output light to input x-rays."],
+            ["In DR, 'Ghosting' is caused by:", ["Trapped charges (Image Lag)", "Dead pixels", "Motion", "Grid lines"], 0, "Lag in the detector (incomplete clearing)."],
+            ["'Blooming' of the focal spot occurs at:", ["High mA (Space charge expansion)", "High kVp", "Low mA", "Small focus"], 0, "High negative charge repels electrons, widening the beam."],
+            ["The 'Air Gap' technique is roughly equivalent to using a grid of ratio:", ["8:1 (for 10-15cm gap)", "16:1", "5:1", "2:1"], 0, "Typically cited as replacing an 8:1 grid."],
+            ["To reduce 'Quantum Mottle' in CR/DR:", ["Increase mAs", "Increase kVp", "Decrease mAs", "Add filtration"], 0, "Increase signal (photons)."],
+            ["'HVL' is the best measure of:", ["Beam Quality", "Quantity", "Intensity", "Scatter"], 0, "Quality (Penetrability)."],
+            ["What is the 'K-edge' of Barium?", ["37 keV", "33 keV", "69 keV", "50 keV"], 0, "37 keV (Iodine is 33 keV)."],
+            ["Which dosimeter can be re-read?", ["OSL (Optically Stimulated Luminescence)", "TLD", "Film Badge", "Pocket Chamber"], 0, "OSL can be re-read; TLD is destructive read."],
+
+            // 2. Clinical Anatomy & Scenarios (41-65)
+            ["To demonstrate the 'Radial Head' free of superimposition, use:", ["Lateral Oblique Elbow (External rotation)", "Medial Oblique", "True Lateral", "AP"], 0, "External Oblique throws radial head free of ulna."],
+            ["A 'Trans-scapular Y view' shows the humerus head under the coracoid process. This indicates:", ["Anterior Dislocation", "Posterior Dislocation", "Normal shoulder", "Acromion fracture"], 0, "Anterior dislocation (Sub-coracoid)."],
+            ["'Garth View' (Apical Oblique) is best for detecting:", ["Hill-Sachs Lesion / Posterior Dislocation", "Bankart only", "AC separation", "Clavicle fracture"], 0, "Posterior dislocation/Hill-Sachs."],
+            ["'Judet View' - Iliac Oblique (Affected side down) demonstrates:", ["Anterior Column & Posterior Rim", "Posterior Column & Anterior Rim", "Sacrum", "Pubis"], 1, "Trick! Iliac Oblique (Posterior Oblique, side UP?) Judet RPO = Right Iliac Oblique. It shows Posterior Column/Ant Rim. Down side (LPO for Right hip) is Obturator Oblique. Let's simplify: Iliac Oblique = Post Column. Obturator Oblique = Ant Column."],
+            ["'Inlet View' of pelvis assesses:", ["Pelvic Ring inward displacement / AP alignment", "Sacrum fracture", "Acetabulum", "Femur"], 0, "Ring integrity."],
+            ["The 'Merchant View' requires beam angle of:", ["30 deg Caudal (Top down)", "30 deg Cephalad", "Perpendicular", "Horizontal"], 0, "Caudal angle."],
+            ["'Sunrise View' is another name for:", ["Skyline / Settegast", "Tunnel", "Lateral", "AP"], 0, "Patella view."],
+            ["'Mortise View' requires:", ["15-20 deg Internal Rotation", "External Rotation", "Lateral", "None"], 0, "Opens ankle joint."],
+            ["'Calcaneal Spur' is best seen on:", ["Lateral Foot/Heel", "Axial", "AP", "Oblique"], 0, "Lateral."],
+            ["The 'Pars Interarticularis' is best seen on:", ["Lumbar Oblique", "Lateral", "AP", "Spot"], 0, "Scottie Dog neck."],
+            ["To see 'C1-C2' (Dens) if patient cannot open mouth:", ["Fuchs Method (or Judd)", "Towne", "Caldwell", "Lateral"], 0, "AP projection through foramen magnum."],
+            ["'Swimmers View' CR is directed:", ["C7-T1", "C4", "T5", "Occiput"], 0, "Cervicothoracic junction."],
+            ["'Waters View' OML angle:", ["37 degrees to IR", "Perpendicular", "45 degrees", "0 degrees"], 0, "37 degrees."],
+            ["'Stenvers View' visualizes:", ["Petrous Ridge profile", "TMJ", "Orbits", "Sinuses"], 0, "Petrous temporal bone."],
+            ["'Hickey Method' visualizes:", ["Mastoid Air Cells (Tangential)", "Mandible", "Orbit", "Sella"], 0, "Mastoids."],
+            ["'Sialography' lemon juice purpose:", ["Stimulate secretion to open ducts", "Flavor", "Cleanse", "Anesthesia"], 0, "Secretory stimulant."],
+            ["'Myelography' injection site:", ["L3-L4 Subarachnoid space", "Epidural", "L1-L2", "C1"], 0, "Safe zone below cord termination."],
+            ["'T-Tube Cholangiogram' timing:", ["Post-Cholycystectomy (before drain removal)", "Pre-op", "Intra-op", "Before ERCP"], 0, "Check for residual stones."],
+            ["'Small Bowel Enema' (Enteroclysis) tube tip location:", ["Duodenojejunal Flexure", "Stomach", "Ileum", "Rectum"], 0, "Ligament of Treitz."],
+            ["'Defecography' evaluates:", ["Rectocele / Intussusception / Prolapse", "Cancer", "Polyp", "Gastritis"], 0, "Functional rectal disorders."],
+            ["'RGU' (Retrograde Urethrogram) indicates:", ["Urethral Stricture", "Reflux", "Kidney stone", "Tumor"], 0, "Male urethra trauma/stricture."],
+            ["'IVU' Compression contraindicated in:", ["Renal Colic / Stone / Aneurysm / Trauma", "Hypertension", "Diabetes", "UTI"], 0, "Stones or Trauma (risk of rupture)."],
+            ["'HSG' contrast spill into peritoneum indicates:", ["Patent Tubes", "Blocked Tubes", "Infection", "Perforation"], 0, "Normal patency."],
+            ["'Dacryocystography' visualizes:", ["Nasolacrimal duct (Tear duct)", "Salivary gland", "Bile duct", "Spine"], 0, "Tear drainage."],
+            ["'Fistulogram' is to:", ["Trace the tract of a fistula", "See veins", "See arteries", "See stomach"], 0, "Sinus tract evaluation."],
+
+            // 3. CT/MRI/USG Advanced (66-85)
+            ["CT 'Pitch' < 1 means:", ["Overlapping slices (Higher dose)", "Gaps", "Fast scan", "Low resolution"], 0, "High detail, High dose."],
+            ["'Window Width' of 1500, Level -600:", ["Lung Window", "Bone", "Brain", "Soft Tissue"], 0, "Lung."],
+            ["'Cupping Artifact' in CT:", ["Beam Hardening", "Motion", "Ring", "Partial Volume"], 0, "Center is darker than edges."],
+            ["'Isotropic Voxel' enables:", ["Multiplanar Reconstruction (MPR) without distortion", "Lower dose", "Faster scan", "Less noise"], 0, "Equal dimensions (Cube)."],
+            ["'CTA' Bolus Tracking ROI location for Pulmonary Embolism:", ["Main Pulmonary Artery", "Aorta", "Left Ventricle", "SVC"], 0, "Pulmonary Artery."],
+            ["'Fat Saturation' fails in MRI if:", ["Field is inhomogeneous (Metal/Off-center)", "Field is strong", "TR is long", "TE is short"], 0, "Requires homogeneous Bo."],
+            ["'In-Phase / Out-of-Phase' imaging diagnoses:", ["Fatty Liver / Adrenal Adenoma", "Stroke", "MS", "Tumor"], 0, "Intracellular fat cancellation."],
+            ["'Diffusion' (DWI) shows acute stroke as:", ["Bright (Restricted)", "Dark", "Grey", "Invisible"], 0, "Bright signal."],
+            ["'TOF MRA' artifact 'Venetian Blind' is caused by:", ["Patient motion / Slab overlap", "Metal", "Flow", "Fat"], 0, "Slab boundary artifact."],
+            ["'Phase Contrast' MRA can quantify:", ["Velocity of flow", "T1", "T2", "Fat"], 0, "VENC (Velocity Encoding)."],
+            ["USG 'Acoustic Shadowing' is seen with:", ["Gallstones / Bone", "Cyst", "Liver", "Spleen"], 0, "Calculi."],
+            ["USG 'Posterior Enhancement' is seen with:", ["Cyst / Fluid", "Stone", "Tumor", "Fat"], 0, "Fluid (low attenuation)."],
+            ["'Comet Tail' artifact is a form of:", ["Reverberation", "Refraction", "Mirror", "Side lobe"], 0, "Metal/Cholesterol reverberation."],
+            ["'Mirror Image' artifact occurs at:", ["Diaphragm", "Kidney", "Aorta", "Skin"], 0, "Strong reflector."],
+            ["High Frequency USG probe gives:", ["Better Resolution, Less Penetration", "Better Penetration", "Less Resolution", "None"], 0, "Res/Penetration trade-off."],
+            ["PET 'SUV' stands for:", ["Standardized Uptake Value", "Single Unit Value", "Scan Unit Volume", "None"], 0, "Activity quantification."],
+            ["'FDG' in PET mimics:", ["Glucose", "Protein", "Fat", "Oxygen"], 0, "Metabolic tracer."],
+            ["'Gamma Camera' crystal:", ["NaI(Tl)", "BGO", "LSO", "Cesium"], 0, "Sodium Iodide Thallium."],
+            ["'Half Life' of Tc-99m:", ["6 Hours", "60 Days", "8 Days", "110 Mins"], 0, "6 hours."],
+            ["'Molybdenum Breakthrough' tests for:", ["Radionuclidic Purity (Mo-99 contamination)", "Chemical", "Radiochemical", "pH"], 0, "Mo-99 in Tc-99m."],
+
+            // 4. Pathology & Contrast (86-100)
+            ["'Bamboo Spine':", ["Ankylosing Spondylitis", "Osteoporosis", "Metastasis", "Scoliosis"], 0, "Fused spine."],
+            ["'Codman's Triangle':", ["Osteosarcoma", "Cyst", "Fracture", "Infection"], 0, "Periosteal reaction."],
+            ["'Apple Core' Lesion:", ["Colon Cancer", "Polyp", "Ulcer", "Diverticulum"], 0, "Constricting mass."],
+            ["'Bird Beak' Esophagus:", ["Achalasia", "Cancer", "Stricture", "Web"], 0, "Tapering sphincter."],
+            ["'String Sign':", ["Crohn's Disease", "Colitis", "Cancer", "TB"], 0, "Narrowed ileum."],
+            ["'Lead Pipe' Colon:", ["Ulcerative Colitis", "Crohn's", "IBS", "Cancer"], 0, "Chronic UC."],
+            ["'Coffee Bean' Sign:", ["Sigmoid Volvulus", "Cecal Volvulus", "Obstruction", "Hernia"], 0, "Twisted colon."],
+            ["'Snowstorm' USG:", ["Hydatidiform Mole", "Ectopic", "Fibroid", "PCOS"], 0, "Molar pregnancy."],
+            ["'Starry Sky' Liver:", ["Hepatitis (Acute)", "Fatty Liver", "Cirrhosis", "Cancer"], 0, "Edematous liver."],
+            ["'WES' Sign:", ["Gallstones (Packed)", "Kidney stones", "Cyst", "Tumor"], 0, "Wall-Echo-Shadow."],
+            ["'Sandwich Sign':", ["Lymphoma (Mesenteric)", "Pancreatitis", "Aneurysm", "Cyst"], 0, "Nodes around vessels."],
+            ["Iso-osmolar Contrast:", ["Visipaque (Iodixanol)", "Omnipaque", "Urografin", "Barium"], 0, "Safest for kidneys."],
+            ["Contrast Nephropathy prevention:", ["Hydration", "Lasix", "Antibiotics", "Steroids"], 0, "Fluids."],
+            ["Adrenaline Dose (Anaphylaxis):", ["0.5 mg IM (1:1000)", "1 mg IV", "10 mg", "0.1 mg"], 0, "Intramuscular."],
+            ["Metformin risk with Contrast:", ["Lactic Acidosis", "Hypoglycemia", "Bleeding", "Allergy"], 0, "In renal failure."]
+        ];
+
+        coreData.forEach((d, i) => questions.push(createQ(21 + i, "Core", d[0], d[1], d[2], d[3])));
+    }
+
+        // --- STATE MANAGEMENT ---
+        let state = {
+            currentQ: 0,
+            answers: new Array(TOTAL_QUESTIONS).fill(null),
+            status: new Array(TOTAL_QUESTIONS).fill('not-visited'),
+            currentSection: 1,      // 1 to 5
+            sectionTimeLeft: SECTION_TIME_LIMIT,
+            maxSetReached: 1,       // Tracks highest section unlocked
+            isFinished: false
+        };
+
+        const els = {
+            landing: document.getElementById('landingPage'),
+            header: document.getElementById('examHeader'),
+            body: document.getElementById('examBody'),
+            footer: document.getElementById('examFooter'),
+            result: document.getElementById('resultPage'),
+            qText: document.getElementById('questionText'),
+            optsBox: document.getElementById('optionsBox'),
+            qNum: document.getElementById('qNumDisplay'),
+            sectionLabel: document.getElementById('sectionLabel'),
+            palette: document.getElementById('questionPalette'),
+            timer: document.getElementById('timerDisplay'),
+            btnPrev: document.getElementById('btnPrev'),
+            sidebar: document.getElementById('sidebar')
+        };
+
+        let timerInterval;
+
+        function init() {
+            generateQuestions(); // Load data
+            // Persistence check could go here, but for strict timing, fresh start is safer
+            els.landing.classList.remove('hidden');
+            els.result.classList.add('hidden');
+        }
+
+        function startExam() {
+            els.landing.classList.add('hidden');
+            renderExamInterface();
+            startSectionTimer();
+        }
+
+        function startSectionTimer() {
+            if(timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                state.sectionTimeLeft--;
+                
+                // Format Time
+                const m = Math.floor(state.sectionTimeLeft / 60);
+                const s = state.sectionTimeLeft % 60;
+                els.timer.innerText = `${m}:${s < 10 ? '0'+s : s}`;
+                
+                // Visual Warning
+                if(state.sectionTimeLeft < 60) els.timer.style.backgroundColor = "#ffcdd2";
+                else els.timer.style.backgroundColor = "#fff";
+
+                // Time Up Logic
+                if (state.sectionTimeLeft <= 0) {
+                    handleSectionTimeout();
+                }
+            }, 1000);
+        }
+
+        function handleSectionTimeout() {
+            clearInterval(timerInterval);
+            
+            if (state.currentSection < 5) {
+                alert(`Time is up for Section ${state.currentSection}! Moving to Section ${state.currentSection + 1}.`);
+                forceNextSection();
+            } else {
+                alert("Time is up for the final section! Submitting Exam.");
+                finishExam();
+            }
+        }
+
+        function forceNextSection() {
+            state.currentSection++;
+            state.maxSetReached = state.currentSection;
+            state.sectionTimeLeft = SECTION_TIME_LIMIT;
+            
+            // Move to first question of next section
+            const firstQofNextSection = (state.currentSection - 1) * SECTION_SIZE;
+            loadQuestion(firstQofNextSection);
+            startSectionTimer();
+        }
+
+        function renderExamInterface() {
+            els.header.classList.remove('hidden');
+            els.body.classList.remove('hidden');
+            els.footer.classList.remove('hidden');
+            renderPalette();
+            loadQuestion(state.currentQ);
+        }
+
+        function loadQuestion(index) {
+            state.currentQ = index;
+            if(state.status[index] === 'not-visited') state.status[index] = 'not-answered';
+
+            // Update Section Label
+            const secNum = Math.floor(index / SECTION_SIZE) + 1;
+            els.sectionLabel.innerText = `Section ${secNum} (Q${(secNum-1)*20 + 1}-${secNum*20})`;
+
+            // Render Text
+            els.qNum.innerText = `Question ${index + 1}`;
+            els.qText.innerText = questions[index].text;
+            
+            // Render Options
+            els.optsBox.innerHTML = '';
+            questions[index].opts.forEach((opt, i) => {
+                const isChecked = state.answers[index] === i ? 'checked' : '';
+                els.optsBox.innerHTML += `
+                    <label class="option-label">
+                        <input type="radio" name="opt" value="${i}" ${isChecked} onchange="selectOption(${i})">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            // Update Palette UI
+            document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('current'));
+            const currentBtn = document.getElementById(`qbtn-${index}`);
+            if(currentBtn) currentBtn.classList.add('current');
+
+            // Handle Prev Button State (Cannot go back to previous locked section)
+            const startOfCurrentSection = (state.currentSection - 1) * SECTION_SIZE;
+            els.btnPrev.disabled = (index <= startOfCurrentSection);
+        }
+
+        function selectOption(optIndex) {
+            state.answers[state.currentQ] = optIndex;
+        }
+
+        function saveAndNext() {
+            const index = state.currentQ;
+            // Update status
+            state.status[index] = (state.answers[index] !== null) ? 'answered' : 'not-answered';
+            
+            moveToNextQuestion();
+        }
+
+        function markForReview() {
+            const index = state.currentQ;
+            state.status[index] = (state.answers[index] !== null) ? 'marked-answered' : 'review'; // Simplified
+            moveToNextQuestion();
+        }
+
+        function clearResponse() {
+            state.answers[state.currentQ] = null;
+            state.status[state.currentQ] = 'not-answered';
+            loadQuestion(state.currentQ);
+            renderPalette();
+        }
+
+        function moveToNextQuestion() {
+            const nextIndex = state.currentQ + 1;
+            const currentSecBound = state.currentSection * SECTION_SIZE;
+
+            // Check if next question crosses section boundary
+            if (nextIndex >= currentSecBound) {
+                // End of section reached
+                if (state.currentSection < 5) {
+                    if (confirm(`You have reached the end of Section ${state.currentSection}.\nDo you want to submit this section and move to Section ${state.currentSection+1}?\n\nWARNING: You cannot return to this section.`)) {
+                        forceNextSection();
+                    }
+                } else {
+                    if(confirm("This was the last question. Submit Exam?")) {
+                        finishExam();
+                    }
+                }
+            } else {
+                // Normal movement within section
+                renderPalette();
+                loadQuestion(nextIndex);
+            }
+        }
+
+        function prevQuestion() {
+            // Logic handled in loadQuestion to disable button if at start of section
+            if (state.currentQ > 0) {
+                loadQuestion(state.currentQ - 1);
+            }
+        }
+
+        function renderPalette() {
+            els.palette.innerHTML = '';
+            for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+                let statusClass = state.status[i];
+                if(statusClass === 'marked-answered') statusClass = 'review';
+                
+                // Check if question belongs to a locked (previous) section
+                // A question is locked if its section index is < current active section
+                const qSection = Math.floor(i / SECTION_SIZE) + 1;
+                const isLocked = qSection < state.currentSection;
+                const lockedClass = isLocked ? ' locked' : '';
+                
+                // Gray out future sections
+                const isFuture = qSection > state.currentSection;
+                const futureStyle = isFuture ? 'opacity:0.3; pointer-events:none;' : '';
+
+                els.palette.innerHTML += `
+                    <div id="qbtn-${i}" 
+                         class="q-btn ${statusClass}${lockedClass}" 
+                         style="${futureStyle}"
+                         onclick="jumpToQuestion(${i})">
+                        ${i + 1}
+                    </div>
+                `;
+            }
+        }
+
+        function jumpToQuestion(index) {
+            const qSection = Math.floor(index / SECTION_SIZE) + 1;
+            
+            if (qSection < state.currentSection) {
+                alert("This section is locked.");
+                return;
+            }
+            if (qSection > state.currentSection) {
+                alert("You cannot jump to a future section yet.");
+                return;
+            }
+            
+            loadQuestion(index);
+        }
+
+        function submitExam() {
+            if(confirm("Are you sure you want to finish the exam? Unanswered questions in future sections will be marked zero.")) {
+                finishExam();
+            }
+        }
+
+        function finishExam() {
+            clearInterval(timerInterval);
+            state.isFinished = true;
+            
+            els.header.classList.add('hidden');
+            els.body.classList.add('hidden');
+            els.footer.classList.add('hidden');
+            els.result.classList.remove('hidden');
+            
+            calculateResult();
+        }
+
+        function calculateResult() {
+            let correct = 0, wrong = 0, unattempted = 0, score = 0;
+
+            state.answers.forEach((ans, i) => {
+                if (ans === null) {
+                    unattempted++;
+                } else if (questions[i] && ans === questions[i].ans) {
+                    correct++;
+                    score += 4;
+                } else {
+                    wrong++;
+                    score -= 1;
+                }
+            });
+
+            document.getElementById('scoreCard').innerHTML = `
+                <h1 style="color:#3f51b5; font-size:3rem;">${score} / 400</h1>
+                <p><strong>Correct:</strong> ${correct} (+${correct*4})</p>
+                <p><strong>Incorrect:</strong> ${wrong} (-${wrong})</p>
+                <p><strong>Unattempted:</strong> ${unattempted}</p>
+            `;
+        }
+
+        function showDetailedReview() {
+            const container = document.getElementById('detailedReview');
+            container.style.display = 'block';
+            container.innerHTML = '<h3>Detailed Solutions</h3>';
+            
+            questions.forEach((q, i) => {
+                const userAns = state.answers[i];
+                const isCorrect = userAns === q.ans;
+                const statusColor = userAns === null ? 'gray' : (isCorrect ? 'green' : 'red');
+                const statusText = userAns === null ? 'Skipped' : (isCorrect ? 'Correct' : 'Incorrect');
+
+                let optsHtml = '';
+                q.opts.forEach((opt, oi) => {
+                    let style = '';
+                    if (oi === q.ans) style = 'font-weight:bold; color:green;'; 
+                    if (oi === userAns && !isCorrect) style = 'font-weight:bold; color:red;'; 
+                    optsHtml += `<div style="${style}">${oi+1}. ${opt}</div>`;
+                });
+
+                container.innerHTML += `
+                    <div class="review-item">
+                        <div style="color:${statusColor}; font-weight:bold; margin-bottom:5px;">Q${i+1}: ${statusText}</div>
+                        <div>${q.text}</div>
+                        <div style="margin:10px 0; padding-left:15px; border-left:3px solid #ddd;">${optsHtml}</div>
+                        <div class="explanation"><strong>Explanation:</strong> ${q.exp}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleSidebar() {
+            els.sidebar.classList.toggle('active');
+        }
+
+        // Initialize
+        init();
+
+    </script>
+</body>
+</html>
