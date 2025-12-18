@@ -186,140 +186,158 @@
         let questions = [];
 
 function generateQuestions() {
-        const createQ = (id, type, text, opts, ans, exp) => ({ id, type, text, opts, ans, exp });
-        questions = []; // Reset array
+    const createQ = (id, type, text, opts, ans, exp) => ({ id, type, text, opts, ans, exp });
+    
+    // --- NEW HELPER: Shuffle Options & Update Answer Index ---
+    const addShuffled = (arr, id, type, data) => {
+        let [text, opts, origAns, exp] = data;
+        
+        // 1. Identify the actual text of the correct answer
+        const correctText = opts[origAns];
+        
+        // 2. Create a copy of options and shuffle them (Fisher-Yates shuffle)
+        let shuffledOpts = [...opts];
+        for (let i = shuffledOpts.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffledOpts[i], shuffledOpts[j]] = [shuffledOpts[j], shuffledOpts[i]];
+        }
+        
+        // 3. Find the new index of the correct answer
+        const newAns = shuffledOpts.indexOf(correctText);
+        
+        // 4. Push to main array
+        arr.push(createQ(id, type, text, shuffledOpts, newAns, exp));
+    };
 
-        // --- SECTION A: NON-CORE (1-20) ---
-        // Level: High (Time-consuming puzzles, specific GK, tricky English)
+    questions = []; // Reset array
 
-        const nonCoreData = [
-            // Reasoning & Data Interpretation
-            ["Statement: 'If you are a radiographer, you must have a state council registration.' Conclusion I: All registered people are radiographers. Conclusion II: No unregistered person is a radiographer.", ["Only I follows", "Only II follows", "Both follow", "Neither follows"], 1, "The statement implies registration is a necessary condition. Thus, if you are not registered, you cannot be a radiographer (Contrapositive)."],
-            ["Five boxes A, B, C, D, E are stacked. A is above B. C is below D but above E. D is below B. Which box is at the bottom?", ["A", "B", "C", "E"], 3, "Order: A > B > D > C > E. Bottom is E."],
-            ["A man started walking West. He turned Right, then Right again, and finally Left. Towards which direction was he walking effectively?", ["North", "South", "West", "East"], 0, "West -> Right (North) -> Right (East) -> Left (North)."],
-            ["If 15th August 2011 was Monday, what day of the week was 17th September 2011?", ["Saturday", "Sunday", "Friday", "Thursday"], 0, "Days remaining in Aug = 16. Days in Sept = 17. Total = 33. 33/7 = 4 weeks + 5 odd days. Mon + 5 = Saturday."],
-            ["Find the missing number in the matrix:\n  6   8   7\n 36  64   ?\n 24  48  35", ["49", "25", "42", "56"], 0, "Logic: Middle row is square of top row (6^2=36, 8^2=64, 7^2=49). Bottom row is Top * (Top-2) or unrelated logic? Actually, Top row squared. 7*7=49."],
+    // --- SECTION A: NON-CORE (1-20) ---
+    const nonCoreData = [
+        // Reasoning & Data Interpretation
+        ["Statement: 'If you are a radiographer, you must have a state council registration.' Conclusion I: All registered people are radiographers. Conclusion II: No unregistered person is a radiographer.", ["Only I follows", "Only II follows", "Both follow", "Neither follows"], 1, "The statement implies registration is a necessary condition. Thus, if you are not registered, you cannot be a radiographer (Contrapositive)."],
+        ["Five boxes A, B, C, D, E are stacked. A is above B. C is below D but above E. D is below B. Which box is at the bottom?", ["A", "B", "C", "E"], 3, "Order: A > B > D > C > E. Bottom is E."],
+        ["A man started walking West. He turned Right, then Right again, and finally Left. Towards which direction was he walking effectively?", ["North", "South", "West", "East"], 0, "West -> Right (North) -> Right (East) -> Left (North)."],
+        ["If 15th August 2011 was Monday, what day of the week was 17th September 2011?", ["Saturday", "Sunday", "Friday", "Thursday"], 0, "Days remaining in Aug = 16. Days in Sept = 17. Total = 33. 33/7 = 4 weeks + 5 odd days. Mon + 5 = Saturday."],
+        ["Find the missing number in the matrix:\n  6   8   7\n 36  64   ?\n 24  48  35", ["49", "25", "42", "56"], 0, "Logic: Middle row is square of top row (6^2=36, 8^2=64, 7^2=49). Bottom row is Top * (Top-2) or unrelated logic? Actually, Top row squared. 7*7=49."],
 
-            // GK (Recent & Static Hard)
-            ["The 'Aditya-L1' mission is placed in which orbit?", ["Low Earth Orbit", "Geostationary Orbit", "Halo Orbit around L1", "Polar Orbit"], 2, "Halo Orbit around Lagrange Point 1 (L1)."],
-            ["Which Article of the Constitution gives the 'Power of Pardon' to the President of India?", ["Article 72", "Article 61", "Article 123", "Article 52"], 0, "Article 72."],
-            ["The headquarters of the 'International Atomic Energy Agency' (IAEA) is located in:", ["Geneva", "Vienna", "New York", "Paris"], 1, "Vienna, Austria."],
-            ["'Stuxnet', often seen in news, is related to:", ["Space Telescope", "Cyber Warfare / Malware", "New Missile", "Crypto currency"], 1, "A malicious computer worm (Cyber weapon)."],
-            ["Who is the current Chairperson of the National Human Rights Commission (NHRC)?", ["Justice Arun Mishra", "Justice H.L. Dattu", "Justice A.K. Sikri", "Justice Ranjan Gogoi"], 0, "Justice Arun Mishra (as of last major update)."],
+        // GK (Recent & Static Hard)
+        ["The 'Aditya-L1' mission is placed in which orbit?", ["Low Earth Orbit", "Geostationary Orbit", "Halo Orbit around L1", "Polar Orbit"], 2, "Halo Orbit around Lagrange Point 1 (L1)."],
+        ["Which Article of the Constitution gives the 'Power of Pardon' to the President of India?", ["Article 72", "Article 61", "Article 123", "Article 52"], 0, "Article 72."],
+        ["The headquarters of the 'International Atomic Energy Agency' (IAEA) is located in:", ["Geneva", "Vienna", "New York", "Paris"], 1, "Vienna, Austria."],
+        ["'Stuxnet', often seen in news, is related to:", ["Space Telescope", "Cyber Warfare / Malware", "New Missile", "Crypto currency"], 1, "A malicious computer worm (Cyber weapon)."],
+        ["Who is the current Chairperson of the National Human Rights Commission (NHRC)?", ["Justice Arun Mishra", "Justice H.L. Dattu", "Justice A.K. Sikri", "Justice Ranjan Gogoi"], 0, "Justice Arun Mishra (as of last major update)."],
 
-            // English (Contextual)
-            ["Select the word closest in meaning to 'Nebulous':", ["Clear", "Vague", "Heavy", "Bright"], 1, "Nebulous means hazy, vague, or indistinct."],
-            ["'To sit on the fence' means:", ["To be lazy", "To remain undecided", "To be the judge", "To defend oneself"], 1, "Refusing to take a side."],
-            ["Fill in the blank: 'Scarcely had he entered the room ___ the phone rang.'", ["than", "when", "then", "after"], 1, "'Scarcely... when' is the correct correlative conjunction."],
-            ["Identify the error: 'Neither of the two candidates have submitted their resume.'", ["Neither of", "the two", "have submitted", "their resume"], 2, "'Neither' is singular. It should be 'has submitted'."],
-            ["One who is indifferent to pleasure or pain:", ["Stoic", "Cynic", "Epicurean", "Ascetic"], 0, "Stoic."],
+        // English (Contextual)
+        ["Select the word closest in meaning to 'Nebulous':", ["Clear", "Vague", "Heavy", "Bright"], 1, "Nebulous means hazy, vague, or indistinct."],
+        ["'To sit on the fence' means:", ["To be lazy", "To remain undecided", "To be the judge", "To defend oneself"], 1, "Refusing to take a side."],
+        ["Fill in the blank: 'Scarcely had he entered the room ___ the phone rang.'", ["than", "when", "then", "after"], 1, "'Scarcely... when' is the correct correlative conjunction."],
+        ["Identify the error: 'Neither of the two candidates have submitted their resume.'", ["Neither of", "the two", "have submitted", "their resume"], 2, "'Neither' is singular. It should be 'has submitted'."],
+        ["One who is indifferent to pleasure or pain:", ["Stoic", "Cynic", "Epicurean", "Ascetic"], 0, "Stoic."],
 
-            // Computers (Network & Security)
-            ["Which protocol is used to assign IP addresses automatically to devices on a network?", ["DNS", "DHCP", "FTP", "SMTP"], 1, "Dynamic Host Configuration Protocol (DHCP)."],
-            ["In Excel, the intersection of a row and column is called a cell. An absolute cell reference is represented by:", ["A1", "$A$1", "&A&1", "#A#1"], 1, "$A$1 locks the row and column."],
-            ["'Phishing' is distinct from 'Pharming' because Phishing involves:", ["Redirecting to a fake website via DNS poisoning", "Sending deceptive emails to trick users", "Infecting with a virus", "Locking files for ransom"], 1, "Phishing uses emails/messages; Pharming uses DNS redirection."],
-            ["The speed of a Supercomputer is measured in:", ["GHz", "FLOPS", "MIPS", "RPM"], 1, "Floating Point Operations Per Second (FLOPS)."],
-            ["Which shortcut in Windows opens the 'File Explorer'?", ["Win + E", "Win + F", "Ctrl + E", "Alt + E"], 0, "Windows Key + E."]
-        ];
-        nonCoreData.forEach((d, i) => questions.push(createQ(i + 1, "Non-Core", d[0], d[1], d[2], d[3])));
+        // Computers (Network & Security)
+        ["Which protocol is used to assign IP addresses automatically to devices on a network?", ["DNS", "DHCP", "FTP", "SMTP"], 1, "Dynamic Host Configuration Protocol (DHCP)."],
+        ["In Excel, the intersection of a row and column is called a cell. An absolute cell reference is represented by:", ["A1", "$A$1", "&A&1", "#A#1"], 1, "$A$1 locks the row and column."],
+        ["'Phishing' is distinct from 'Pharming' because Phishing involves:", ["Redirecting to a fake website via DNS poisoning", "Sending deceptive emails to trick users", "Infecting with a virus", "Locking files for ransom"], 1, "Phishing uses emails/messages; Pharming uses DNS redirection."],
+        ["The speed of a Supercomputer is measured in:", ["GHz", "FLOPS", "MIPS", "RPM"], 1, "Floating Point Operations Per Second (FLOPS)."],
+        ["Which shortcut in Windows opens the 'File Explorer'?", ["Win + E", "Win + F", "Ctrl + E", "Alt + E"], 0, "Windows Key + E."]
+    ];
+    
+    // Process Non-Core with Shuffling
+    nonCoreData.forEach((d, i) => addShuffled(questions, i + 1, "Non-Core", d));
 
 
-        // --- SECTION B: CORE (21-100) ---
-        // Level: AIIMS CRE / Competitive (Scenario based, Physics heavy)
+    // --- SECTION B: CORE (21-100) ---
+    const coreData = [
+        // 1. Advanced Physics & Dosimetry (21-40)
+        ["A technique uses 80 kVp at 40 mAs. If the kVp is increased to 92 kVp (15% rule), what new mAs will maintain the same optical density?", ["20 mAs", "40 mAs", "80 mAs", "10 mAs"], 0, "Increasing kVp by 15% doubles density, so halve the mAs to 20."],
+        ["'Geometric Unsharpness' (Ug) is calculated as:", ["Focal Spot Size * (OID / SOD)", "Focal Spot * (SID / OID)", "Focal Spot * (SOD / OID)", "OID / SID"], 0, "Ug = F * (OID/SOD). This is the exact formula."],
+        ["The 'Detective Quantum Efficiency' (DQE) of a digital detector at zero spatial frequency is typically:", ["10-20%", "30-40%", "60-80%", "100%"], 2, "Modern DR detectors have DQEs around 60-80% (much higher than film/CR)."],
+        ["If the Linear Attenuation Coefficient (u) of a tissue is 0.2 /cm, what percentage of x-rays are transmitted through 2 cm of this tissue?", ["80%", "67%", "50%", "10%"], 1, "I = Io * e^(-ux). e^(-0.2*2) = e^-0.4 ≈ 0.67 (67%)."],
+        ["Using a Focused Grid upside down will result in:", ["Uniform loss of density", "Normal density in center, severe cutoff at edges", "Normal density at edges, light center", "Cutoff on one side only"], 1, "Center is properly exposed, edges are severely underexposed."],
+        ["The 'Signal-to-Noise Ratio' (SNR) in MRI is directly proportional to:", ["Voxel Volume", "Bandwidth", "TE", "Matrix size"], 0, "Larger voxel = More protons = Higher Signal = Higher SNR."],
+        ["Decreasing the Receiver Bandwidth in MRI results in:", ["Increased SNR and Chemical Shift artifact", "Decreased SNR and less artifact", "Faster scan time", "Lower SAR"], 0, "Narrow bandwidth reads less noise (High SNR) but increases sampling time (Chemical Shift)."],
+        ["In CT, if the 'Pitch' is increased from 1.0 to 2.0, the patient dose is roughly:", ["Doubled", "Halved", "Unchanged", "Increased by 50%"], 1, "Dose is inversely proportional to pitch (1/2)."],
+        ["The 'MTF' of an imaging system describes its ability to:", ["Transfer object contrast to image contrast at various spatial frequencies", "Absorb radiation", "Convert X-rays to light", "Reduce noise"], 0, "Resolution fidelity."],
+        ["'Nyquist Frequency' represents the highest spatial frequency that can be imaged and is equal to:", ["1 / (2 * pixel pitch)", "1 / pixel pitch", "2 * pixel pitch", "Pixel size"], 0, "1 / (2 * Delta). Sampling theorem."],
+        ["Which phosphor is used in Indirect Flat Panel Detectors (DR)?", ["Amorphous Selenium (a-Se)", "Cesium Iodide (CsI)", "Barium Fluorohalide", "Calcium Tungstate"], 1, "CsI (Scintillator) + Amorphous Silicon (Photodiode)."],
+        ["'Fill Factor' of a TFT array is 80%. This means:", ["80% of the pixel area is sensitive to x-rays", "80% of x-rays are absorbed", "80% of image is noise", "None"], 0, "Sensing area ratio."],
+        ["'Heel Effect' is most significant at:", ["100 cm SID", "180 cm SID", "72 inch SID", "40 inch SID"], 3, "Short SID (40 inch / 100 cm) increases the beam divergence angle used."],
+        ["The 'Look-Up Table' (LUT) in digital radiography is primarily used to:", ["Adjust the contrast and brightness of the raw data to give the image its final characteristic curve", "Reduce noise", "Detect edges", "Compress data"], 0, "Maps raw values to display luminance."],
+        ["'Kerma-Area Product' (KAP/DAP) is independent of:", ["Distance from the source", "Collimation", "mAs", "kVp"], 0, "KAP remains constant at different distances (Intensity drops, Area increases)."],
+        ["Which of these has the highest 'Linear Energy Transfer' (LET)?", ["250 kVp X-rays", "Co-60 Gamma", "10 MeV Protons", "Alpha Particles"], 3, "Alpha particles are densely ionizing."],
+        ["The 'Oxygen Enhancement Ratio' (OER) for low-LET radiation is approx:", ["1.0", "2.5 - 3.0", "10", "0.5"], 1, "Oxygen makes low-LET radiation ~3x more effective."],
+        ["In radiobiology, 'Sublethal Damage Repair' is visualized on survival curves as:", ["The shoulder region of the curve", "The linear slope", "The D0 dose", "The extrapolation number"], 0, "The shoulder indicates repair capacity at low doses."],
 
-        const coreData = [
-            // 1. Advanced Physics & Dosimetry (21-40)
-            ["A technique uses 80 kVp at 40 mAs. If the kVp is increased to 92 kVp (15% rule), what new mAs will maintain the same optical density?", ["20 mAs", "40 mAs", "80 mAs", "10 mAs"], 0, "Increasing kVp by 15% doubles density, so halve the mAs to 20."],
-            ["'Geometric Unsharpness' (Ug) is calculated as:", ["Focal Spot Size * (OID / SOD)", "Focal Spot * (SID / OID)", "Focal Spot * (SOD / OID)", "OID / SID"], 0, "Ug = F * (OID/SOD). This is the exact formula."],
-            ["The 'Detective Quantum Efficiency' (DQE) of a digital detector at zero spatial frequency is typically:", ["10-20%", "30-40%", "60-80%", "100%"], 2, "Modern DR detectors have DQEs around 60-80% (much higher than film/CR)."],
-            ["If the Linear Attenuation Coefficient (u) of a tissue is 0.2 /cm, what percentage of x-rays are transmitted through 2 cm of this tissue?", ["80%", "67%", "50%", "10%"], 1, "I = Io * e^(-ux). e^(-0.2*2) = e^-0.4 ≈ 0.67 (67%)."],
-            ["Which of the following grid errors results in 'Grid Cutoff' appearing on only one side of the image?", ["Off-level grid", "Off-center (Lateral decentering)", "Off-focus (Wrong distance)", "Upside down"], 1, "Lateral decentering combined with focus error usually, but pure off-center often causes uniform loss. Actually, 'Upside down' causes severe peripheral cutoff. 'Off-focus' causes cutoff at edges. 'Off-level' causes cutoff across the whole image. Wait - Focus-Grid Distance decentering causes one-sided cutoff if combined with angulation? No. The classic 'One side cutoff' is usually Off-Center (Lateral Decentering) *if* the beam is also angled? Actually, 'Off-Level' (tilting grid) causes uniform cutoff. The only error causing cutoff on ONE side is usually Lateral Decentering *away* from the center line? Standard text: Upside down = Periphery. Off-Focus = Periphery. Off-Center = Uniform density loss. Only **Inclined Grid (Off-level)** with tube angle creates asymmetric cutoff?"],
-            // Correction: Standard texts say Off-level/Tilt = Uniform. Off-Center = Uniform. Off-Focus = Periphery. Upside Down = Severe Periphery. The scenario producing "cutoff on one side" is usually when the grid is TILTED (Off-level) relative to the beam. Wait, let's stick to the most distinct one: "Upside Down".
-            // Let's change the question to be unambiguous.
-            ["Using a Focused Grid upside down will result in:", ["Uniform loss of density", "Normal density in center, severe cutoff at edges", "Normal density at edges, light center", "Cutoff on one side only"], 1, "Center is properly exposed, edges are severely underexposed."],
-            ["The 'Signal-to-Noise Ratio' (SNR) in MRI is directly proportional to:", ["Voxel Volume", "Bandwidth", "TE", "Matrix size"], 0, "Larger voxel = More protons = Higher Signal = Higher SNR."],
-            ["Decreasing the Receiver Bandwidth in MRI results in:", ["Increased SNR and Chemical Shift artifact", "Decreased SNR and less artifact", "Faster scan time", "Lower SAR"], 0, "Narrow bandwidth reads less noise (High SNR) but increases sampling time (Chemical Shift)."],
-            ["In CT, if the 'Pitch' is increased from 1.0 to 2.0, the patient dose is roughly:", ["Doubled", "Halved", "Unchanged", "Increased by 50%"], 1, "Dose is inversely proportional to pitch (1/2)."],
-            ["The 'MTF' of an imaging system describes its ability to:", ["Transfer object contrast to image contrast at various spatial frequencies", "Absorb radiation", "Convert X-rays to light", "Reduce noise"], 0, "Resolution fidelity."],
-            ["'Nyquist Frequency' represents the highest spatial frequency that can be imaged and is equal to:", ["1 / (2 * pixel pitch)", "1 / pixel pitch", "2 * pixel pitch", "Pixel size"], 0, "1 / (2 * Delta). Sampling theorem."],
-            ["Which phosphor is used in Indirect Flat Panel Detectors (DR)?", ["Amorphous Selenium (a-Se)", "Cesium Iodide (CsI)", "Barium Fluorohalide", "Calcium Tungstate"], 1, "CsI (Scintillator) + Amorphous Silicon (Photodiode)."],
-            ["'Fill Factor' of a TFT array is 80%. This means:", ["80% of the pixel area is sensitive to x-rays", "80% of x-rays are absorbed", "80% of image is noise", "None"], 0, "Sensing area ratio."],
-            ["'Heel Effect' is most significant at:", ["100 cm SID", "180 cm SID", "72 inch SID", "40 inch SID"], 3, "Short SID (40 inch / 100 cm) increases the beam divergence angle used."],
-            ["The 'Look-Up Table' (LUT) in digital radiography is primarily used to:", ["Adjust the contrast and brightness of the raw data to give the image its final characteristic curve", "Reduce noise", "Detect edges", "Compress data"], 0, "Maps raw values to display luminance."],
-            ["'Kerma-Area Product' (KAP/DAP) is independent of:", ["Distance from the source", "Collimation", "mAs", "kVp"], 0, "KAP remains constant at different distances (Intensity drops, Area increases)."],
-            ["Which of these has the highest 'Linear Energy Transfer' (LET)?", ["250 kVp X-rays", "Co-60 Gamma", "10 MeV Protons", "Alpha Particles"], 3, "Alpha particles are densely ionizing."],
-            ["The 'Oxygen Enhancement Ratio' (OER) for low-LET radiation is approx:", ["1.0", "2.5 - 3.0", "10", "0.5"], 1, "Oxygen makes low-LET radiation ~3x more effective."],
-            ["In radiobiology, 'Sublethal Damage Repair' is visualized on survival curves as:", ["The shoulder region of the curve", "The linear slope", "The D0 dose", "The extrapolation number"], 0, "The shoulder indicates repair capacity at low doses."],
+        // 2. Clinical Scenarios & Positioning (41-60)
+        ["A patient with suspected 'Acromegaly' is referred for a skull X-ray. Which specific landmark is evaluated for enlargement?", ["External Occipital Protuberance", "Sella Turcica (Pituitary Fossa)", "Mastoid Air Cells", "Zygomatic Arch"], 1, "Pituitary tumor causes erosion/enlargement of Sella."],
+        ["A 'Lateral Decubitus' abdomen is ordered for a patient who cannot stand. To visualize 'Free Air', the patient should be on their:", ["Right side (Liver up)", "Left side (Liver up)", "Left side (Liver down)", "Supine"], 2, "Left Lateral Decubitus (Left side down). This places the Liver UP (Right side). Free air is best seen against the density of the liver."],
+        ["For the 'Rheumatoid Arthritis' protocol of hands, which view is often added to detect early erosions?", ["Ball-catcher (Norgaard)", "Clenched fist", "Fan lateral", "Carpal tunnel"], 0, "Norgaard view."],
+        ["'Bennett's Fracture' involves the:", ["Base of 1st Metacarpal", "Neck of 5th Metacarpal", "Distal Radius", "Scaphoid"], 0, "Intra-articular fracture of thumb base."],
+        ["'Mallet Finger' is a deformity caused by:", ["Avulsion of the Extensor tendon at DIP", "Avulsion of Flexor tendon", "Fracture of PIP", "Dislocation of MCP"], 0, "Extensor tendon injury."],
+        ["A 'Jones Fracture' is located at:", ["Base of 5th Metatarsal", "Neck of 2nd Metatarsal", "Calcaneus", "Talus"], 0, "Base of 5th Metatarsal."],
+        ["'Chopart's Joint' is the:", ["Transverse Tarsal Joint (Talonavicular + Calcaneocuboid)", "Tarsometatarsal Joint", "Ankle Joint", "Subtalar Joint"], 0, "Midtarsal joint."],
+        ["'Lisfranc Joint' is the:", ["Tarsometatarsal Joint", "Transverse Tarsal", "Ankle", "Knee"], 0, "TMT joint."],
+        ["To demonstrate the 'Intervertebral Foramina' of the Lumbar spine, the patient is rotated:", ["45 degrees", "90 degrees (Lateral)", "0 degrees (AP)", "70 degrees"], 1, "Trick! Lumbar foramina are 90 deg to midsagittal. They are seen on LATERAL view. (Obliques show Facet joints)."],
+        ["'Spot view' of the L5-S1 junction is usually performed with:", ["5-8 deg Caudal angle", "5-8 deg Cephalad angle", "Perpendicular", "30 deg Cephalad"], 0, "Generally 5-8 deg Caudal (for Lateral) if hips are wide, or Spot Lateral implies tight collimation."],
+        ["'Spondylolysis' is defined as:", ["Defect in Pars Interarticularis", "Slippage of vertebra", "Fusion of vertebrae", "Disk herniation"], 0, "Defect (Break in Scottie dog neck)."],
+        ["'Spondylolisthesis' is:", ["Forward displacement of a vertebra", "Fracture of pedicle", "Curvature of spine", "Infection"], 0, "Slippage."],
+        ["A 'Blow-out Fracture' involves the:", ["Floor of the orbit", "Nasal bone", "Mandible", "Zygoma"], 0, "Orbital floor."],
+        ["'Tripod Fracture' involves the:", ["Zygoma (Zygomaticomaxillary complex)", "Mandible", "Nasal bone", "Maxilla only"], 0, "Zygoma separates at 3 sutures."],
+        ["'Le Fort Fractures' involve the:", ["Maxilla / Midface", "Mandible", "Orbit only", "Skull base"], 0, "Midface fractures."],
+        ["The 'Waters View' is preferred for facial bones because:", ["It projects the petrous ridges below the maxillary floors", "It shows the mandible best", "It is comfortable", "It shows the sella"], 0, "Clear view of orbits and maxillary sinuses."],
+        ["'ERCP' is contraindicated in:", ["Acute Pancreatitis (Severe)", "Biliary obstruction", "Stone removal", "Stent placement"], 0, "Can exacerbate pancreatitis (though often done to cure gallstone pancreatitis). Absolute: Perforation."],
+        ["'Hysterosalpingography' is best performed:", ["7-10 days after onset of menstruation", "During menstruation", "Premenstrual phase", "Any time"], 0, "Proliferative phase (after bleeding, before ovulation) to avoid pregnancy and endometriosis."],
+        ["'T-Tube Cholangiogram' is performed:", ["Post-Cholecystectomy", "Pre-operative", "During ERCP", "For renal stones"], 0, "Through a drain left in the CBD."],
+        ["The 'Valsalva Maneuver' during a Barium Swallow is used to demonstrate:", ["Esophageal Varices", "Stricture", "Ulcer", "Cancer"], 0, "Increases intrathoracic pressure to distend varices."],
 
-            // 2. Clinical Scenarios & Positioning (41-60)
-            ["A patient with suspected 'Acromegaly' is referred for a skull X-ray. Which specific landmark is evaluated for enlargement?", ["External Occipital Protuberance", "Sella Turcica (Pituitary Fossa)", "Mastoid Air Cells", "Zygomatic Arch"], 1, "Pituitary tumor causes erosion/enlargement of Sella."],
-            ["A 'Lateral Decubitus' abdomen is ordered for a patient who cannot stand. To visualize 'Free Air', the patient should be on their:", ["Right side (Liver up)", "Left side (Liver up)", "Left side (Liver down)", "Supine"], 2, "Left Lateral Decubitus (Left side down). This places the Liver UP (Right side). Free air is best seen against the density of the liver."],
-            ["For the 'Rheumatoid Arthritis' protocol of hands, which view is often added to detect early erosions?", ["Ball-catcher (Norgaard)", "Clenched fist", "Fan lateral", "Carpal tunnel"], 0, "Norgaard view."],
-            ["'Bennett's Fracture' involves the:", ["Base of 1st Metacarpal", "Neck of 5th Metacarpal", "Distal Radius", "Scaphoid"], 0, "Intra-articular fracture of thumb base."],
-            ["'Mallet Finger' is a deformity caused by:", ["Avulsion of the Extensor tendon at DIP", "Avulsion of Flexor tendon", "Fracture of PIP", "Dislocation of MCP"], 0, "Extensor tendon injury."],
-            ["A 'Jones Fracture' is located at:", ["Base of 5th Metatarsal", "Neck of 2nd Metatarsal", "Calcaneus", "Talus"], 0, "Base of 5th Metatarsal."],
-            ["'Chopart's Joint' is the:", ["Transverse Tarsal Joint (Talonavicular + Calcaneocuboid)", "Tarsometatarsal Joint", "Ankle Joint", "Subtalar Joint"], 0, "Midtarsal joint."],
-            ["'Lisfranc Joint' is the:", ["Tarsometatarsal Joint", "Transverse Tarsal", "Ankle", "Knee"], 0, "TMT joint."],
-            ["To demonstrate the 'Intervertebral Foramina' of the Lumbar spine, the patient is rotated:", ["45 degrees", "90 degrees (Lateral)", "0 degrees (AP)", "70 degrees"], 1, "Trick! Lumbar foramina are 90 deg to midsagittal. They are seen on LATERAL view. (Obliques show Facet joints)."],
-            ["'Spot view' of the L5-S1 junction is usually performed with:", ["5-8 deg Caudal angle", "5-8 deg Cephalad angle", "Perpendicular", "30 deg Cephalad"], 0, "Generally 5-8 deg Caudal (for Lateral) if hips are wide, or Spot Lateral implies tight collimation. If AP Axial L5-S1, it's 30-35 Cephalad. Assuming Lateral Spot: often 5-8 Caudal."],
-            ["'Spondylolysis' is defined as:", ["Defect in Pars Interarticularis", "Slippage of vertebra", "Fusion of vertebrae", "Disk herniation"], 0, "Defect (Break in Scottie dog neck)."],
-            ["'Spondylolisthesis' is:", ["Forward displacement of a vertebra", "Fracture of pedicle", "Curvature of spine", "Infection"], 0, "Slippage."],
-            ["A 'Blow-out Fracture' involves the:", ["Floor of the orbit", "Nasal bone", "Mandible", "Zygoma"], 0, "Orbital floor."],
-            ["'Tripod Fracture' involves the:", ["Zygoma (Zygomaticomaxillary complex)", "Mandible", "Nasal bone", "Maxilla only"], 0, "Zygoma separates at 3 sutures."],
-            ["'Le Fort Fractures' involve the:", ["Maxilla / Midface", "Mandible", "Orbit only", "Skull base"], 0, "Midface fractures."],
-            ["The 'Waters View' is preferred for facial bones because:", ["It projects the petrous ridges below the maxillary floors", "It shows the mandible best", "It is comfortable", "It shows the sella"], 0, "Clear view of orbits and maxillary sinuses."],
-            ["'ERCP' is contraindicated in:", ["Acute Pancreatitis (Severe)", "Biliary obstruction", "Stone removal", "Stent placement"], 0, "Can exacerbate pancreatitis (though often done to cure gallstone pancreatitis). Absolute: Perforation."],
-            ["'Hysterosalpingography' is best performed:", ["7-10 days after onset of menstruation", "During menstruation", "Premenstrual phase", "Any time"], 0, "Proliferative phase (after bleeding, before ovulation) to avoid pregnancy and endometriosis."],
-            ["'T-Tube Cholangiogram' is performed:", ["Post-Cholecystectomy", "Pre-operative", "During ERCP", "For renal stones"], 0, "Through a drain left in the CBD."],
-            ["The 'Valsalva Maneuver' during a Barium Swallow is used to demonstrate:", ["Esophageal Varices", "Stricture", "Ulcer", "Cancer"], 0, "Increases intrathoracic pressure to distend varices."],
+        // 3. CT, MRI & Special Procedures (61-80)
+        ["In CT, 'Volume Averaging' artifacts can be reduced by:", ["Thinner slice thickness", "Larger FOV", "Higher kVp", "Lower mA"], 0, "Reduces the mix of tissues in one voxel."],
+        ["The 'CTDIvol' is 20 mGy. The scan length is 50 cm. What is the DLP?", ["1000 mGy-cm", "100 mGy-cm", "10 mGy-cm", "2.5 mGy-cm"], 0, "DLP = CTDIvol * Length = 20 * 50 = 1000."],
+        ["'Over-beaming' in CT refers to:", ["Opening collimation wider than detector to avoid penumbra effect", "Scanning past the anatomy", "High mA", "High kVp"], 0, "Wasted dose at the edges of the beam."],
+        ["'Over-ranging' in Helical CT refers to:", ["Scanning extra half-rotations at start and end for interpolation", "High mA", "Wide FOV", "Thick slices"], 0, "Z-axis overscanning."],
+        ["'Dual Energy CT' uses:", ["Two kVp settings (e.g., 80 & 140)", "Two mAs settings", "Two gantries", "Two patients"], 0, "To differentiate materials based on K-edge (e.g., Uric acid vs Calcium)."],
+        ["In MRI, 'Fat Saturation' (FatSat) works best in:", ["High Homogeneity Magnetic Fields", "Low Field Scanners", "Open MRI", "Gradient Echo"], 0, "Requires very homogeneous field to target the specific Fat frequency."],
+        ["'Magic Angle' artifact appears in tendons at:", ["55 degrees to B0", "90 degrees", "0 degrees", "45 degrees"], 0, "Increases T2 signal mimicking a tear."],
+        ["'Time of Flight' (TOF) MRA relies on:", ["Flow-related enhancement (Inflow)", "Phase shift", "Contrast media", "Subtraction"], 0, "Unsaturated spins entering the slice appear bright."],
+        ["'Phase Contrast' MRA is sensitive to:", ["Velocity and Direction of flow", "Only presence of flow", "T1 differences", "T2 differences"], 0, "Can quantify velocity (VENC)."],
+        ["'Functional MRI' (fMRI) uses the:", ["BOLD effect (Blood Oxygen Level Dependent)", "T1 contrast", "Proton density", "Diffusion"], 0, "Oxy vs Deoxyhemoglobin differences."],
+        ["In Ultrasound, 'Posterior Acoustic Enhancement' occurs behind:", ["A fluid-filled cyst", "A stone", "Bone", "Air"], 0, "Fluid attenuates less than surrounding tissue."],
+        ["'Posterior Acoustic Shadowing' occurs behind:", ["Gallstones / Bone", "Cyst", "Liver", "Spleen"], 0, "High attenuation/reflection."],
+        ["'Mirror Image' artifact in Ultrasound is common at the:", ["Diaphragm - Liver interface", "Kidney", "Aorta", "Skin"], 0, "Sound bounces off diaphragm."],
+        ["'Reverberation' artifact looks like:", ["Equidistant parallel lines", "Black shadow", "Bright enhancement", "Duplication"], 0, "Bouncing between transducer and interface."],
+        ["Frequency for Transvaginal Ultrasound (TVS):", ["5 - 9 MHz", "2 - 4 MHz", "15 MHz", "1 MHz"], 0, "Higher frequency/Resolution, lower penetration."],
+        ["In PET-CT, 'FDG' is an analog of:", ["Glucose", "Protein", "Fat", "Oxygen"], 0, "Fluorodeoxyglucose."],
+        ["FDG is trapped in cells because:", ["It is phosphorylated but cannot be metabolized", "It is broken down", "It binds to DNA", "It attaches to mitochondria"], 0, "Metabolic trapping."],
+        ["Normal physiological uptake of FDG is seen in:", ["Brain, Heart, Bladder", "Bone, Lung", "Liver only", "Prostate only"], 0, "Brain (high usage), Heart, Kidneys/Bladder (excretion)."],
+        ["'SUVmax' > 2.5 in a lung nodule generally suggests:", ["Malignancy", "Benign cyst", "Infection", "Scar"], 0, "High metabolic activity (Cancer or Active TB)."],
+        ["Gamma Camera collimator for general purpose Tc-99m:", ["Low Energy All Purpose (LEAP)", "High Energy", "Medium Energy", "Pinhole"], 0, "LEAP."],
 
-            // 3. CT, MRI & Special Procedures (61-80)
-            ["In CT, 'Volume Averaging' artifacts can be reduced by:", ["Thinner slice thickness", "Larger FOV", "Higher kVp", "Lower mA"], 0, "Reduces the mix of tissues in one voxel."],
-            ["The 'CTDIvol' is 20 mGy. The scan length is 50 cm. What is the DLP?", ["1000 mGy-cm", "100 mGy-cm", "10 mGy-cm", "2.5 mGy-cm"], 0, "DLP = CTDIvol * Length = 20 * 50 = 1000."],
-            ["'Over-beaming' in CT refers to:", ["Opening collimation wider than detector to avoid penumbra effect", "Scanning past the anatomy", "High mA", "High kVp"], 0, "Wasted dose at the edges of the beam."],
-            ["'Over-ranging' in Helical CT refers to:", ["Scanning extra half-rotations at start and end for interpolation", "High mA", "Wide FOV", "Thick slices"], 0, "Z-axis overscanning."],
-            ["'Dual Energy CT' uses:", ["Two kVp settings (e.g., 80 & 140)", "Two mAs settings", "Two gantries", "Two patients"], 0, "To differentiate materials based on K-edge (e.g., Uric acid vs Calcium)."],
-            ["In MRI, 'Fat Saturation' (FatSat) works best in:", ["High Homogeneity Magnetic Fields", "Low Field Scanners", "Open MRI", "Gradient Echo"], 0, "Requires very homogeneous field to target the specific Fat frequency."],
-            ["'Magic Angle' artifact appears in tendons at:", ["55 degrees to B0", "90 degrees", "0 degrees", "45 degrees"], 0, "Increases T2 signal mimicking a tear."],
-            ["'Time of Flight' (TOF) MRA relies on:", ["Flow-related enhancement (Inflow)", "Phase shift", "Contrast media", "Subtraction"], 0, "Unsaturated spins entering the slice appear bright."],
-            ["'Phase Contrast' MRA is sensitive to:", ["Velocity and Direction of flow", "Only presence of flow", "T1 differences", "T2 differences"], 0, "Can quantify velocity (VENC)."],
-            ["'Functional MRI' (fMRI) uses the:", ["BOLD effect (Blood Oxygen Level Dependent)", "T1 contrast", "Proton density", "Diffusion"], 0, "Oxy vs Deoxyhemoglobin differences."],
-            ["In Ultrasound, 'Posterior Acoustic Enhancement' occurs behind:", ["A fluid-filled cyst", "A stone", "Bone", "Air"], 0, "Fluid attenuates less than surrounding tissue."],
-            ["'Posterior Acoustic Shadowing' occurs behind:", ["Gallstones / Bone", "Cyst", "Liver", "Spleen"], 0, "High attenuation/reflection."],
-            ["'Mirror Image' artifact in Ultrasound is common at the:", ["Diaphragm - Liver interface", "Kidney", "Aorta", "Skin"], 0, "Sound bounces off diaphragm."],
-            ["'Reverberation' artifact looks like:", ["Equidistant parallel lines", "Black shadow", "Bright enhancement", "Duplication"], 0, "Bouncing between transducer and interface."],
-            ["Frequency for Transvaginal Ultrasound (TVS):", ["5 - 9 MHz", "2 - 4 MHz", "15 MHz", "1 MHz"], 0, "Higher frequency/Resolution, lower penetration."],
-            ["In PET-CT, 'FDG' is an analog of:", ["Glucose", "Protein", "Fat", "Oxygen"], 0, "Fluorodeoxyglucose."],
-            ["FDG is trapped in cells because:", ["It is phosphorylated but cannot be metabolized", "It is broken down", "It binds to DNA", "It attaches to mitochondria"], 0, "Metabolic trapping."],
-            ["Normal physiological uptake of FDG is seen in:", ["Brain, Heart, Bladder", "Bone, Lung", "Liver only", "Prostate only"], 0, "Brain (high usage), Heart, Kidneys/Bladder (excretion)."],
-            ["'SUVmax' > 2.5 in a lung nodule generally suggests:", ["Malignancy", "Benign cyst", "Infection", "Scar"], 0, "High metabolic activity (Cancer or Active TB)."],
-            ["Gamma Camera collimator for general purpose Tc-99m:", ["Low Energy All Purpose (LEAP)", "High Energy", "Medium Energy", "Pinhole"], 0, "LEAP."],
+        // 4. Contrast, Pharmacology & Emergency (81-100)
+        ["Which of these is a 'High Osmolar' contrast agent?", ["Diatrizoate (Hypaque/Urografin)", "Iohexol", "Iodixanol", "Iopamidol"], 0, "Ionic monomer (High Osmolality)."],
+        ["'Chemotoxicity' of contrast media is related to:", ["Hydrophilicity (Less is better)", "Hydrophobicity", "Binding to proteins", "Osmolality"], 2, "Protein binding causes toxic effects. Modern agents are Hydrophilic."],
+        ["Metformin is withheld 48hrs post-contrast to prevent:", ["Lactic Acidosis (if AKI occurs)", "Hypoglycemia", "Hyperglycemia", "Contrast reaction"], 0, "Metformin accumulation in renal failure."],
+        ["Immediate treatment for 'Laryngeal Edema' post-contrast:", ["Adrenaline (Epinephrine)", "Atropine", "Beta blocker", "Aspirin"], 0, "Adrenaline reduces swelling."],
+        ["'Air Embolism' treatment position:", ["Left Lateral Decubitus + Trendelenburg", "Right Lateral", "Supine", "Prone"], 0, "Traps air in Right Atrium, preventing it from entering Pulmonary Artery."],
+        ["CPR ratio (Compressions:Breaths) for adults:", ["30:2", "15:2", "5:1", "Continuous"], 0, "30:2."],
+        ["'Shock' in trauma is usually:", ["Hypovolemic", "Septic", "Neurogenic", "Anaphylactic"], 0, "Blood loss."],
+        ["Needle gauge for rapid fluid resuscitation:", ["14G / 16G (Large bore)", "22G", "24G", "20G"], 0, "Large bore (Orange/Grey)."],
+        ["'Glasgow Coma Scale' (GCS) minimum score:", ["3", "0", "1", "5"], 0, "Min 3, Max 15."],
+        ["In case of 'Needle Stick Injury', first step:", ["Wash with soap and water", "Squeeze the wound", "Apply bandage", "Report"], 0, "Wash immediately. Do NOT squeeze."],
+        ["'Nosocomial Infection' is:", ["Hospital Acquired", "Community Acquired", "Genetic", "Congenital"], 0, "Hospital acquired (>48 hrs)."],
+        ["Standard precaution for TB patient:", ["Airborne precautions (N95 mask)", "Contact", "Droplet", "None"], 0, "Negative pressure room + N95."],
+        ["'Sterilization' implies:", ["Killing ALL microorganisms including spores", "Killing bacteria only", "Cleaning visible dirt", "Reducing count"], 0, "Absolute freedom from germs."],
+        ["Autoclave parameters (Standard):", ["121°C for 15 mins at 15 psi", "100°C for 30 mins", "150°C dry heat", "Chemical"], 0, "Steam under pressure."],
+        ["Which chemical is used for 'Cold Sterilization' of endoscopes?", ["Glutaraldehyde (Cidex)", "Alcohol", "Iodine", "Chlorine"], 0, "2% Glutaraldehyde."],
+        ["'Fomite' refers to:", ["Contaminated inanimate object", "Insect vector", "Droplet", "Food"], 0, "Object (table, cassette) that transmits disease."],
+        ["Contrast warmers are used to:", ["Reduce viscosity", "Reduce osmolality", "Reduce toxicity", "Increase comfort"], 0, "Viscosity drops at body temp, making injection easier."],
+        ["'BUN' (Blood Urea Nitrogen) normal range:", ["7 - 20 mg/dL", "0.1 - 1.0", "50 - 100", "100 - 200"], 0, "Renal function marker."],
+        ["'Creatinine' normal range:", ["0.6 - 1.2 mg/dL", "5 - 10", "15 - 20", "0.1 - 0.2"], 0, "Key renal marker."],
+        ["'eGFR' < 30 mL/min implies:", ["Severe renal failure (Contrast risky)", "Normal", "Mild", "Dehydration"], 0, "High risk for NSF and CIN."]
+    ];
 
-            // 4. Contrast, Pharmacology & Emergency (81-100)
-            ["Which of these is a 'High Osmolar' contrast agent?", ["Diatrizoate (Hypaque/Urografin)", "Iohexol", "Iodixanol", "Iopamidol"], 0, "Ionic monomer (High Osmolality)."],
-            ["'Chemotoxicity' of contrast media is related to:", ["Hydrophilicity (Less is better)", "Hydrophobicity", "Binding to proteins", "Osmolality"], 2, "Protein binding causes toxic effects. Modern agents are Hydrophilic."],
-            ["Metformin is withheld 48hrs post-contrast to prevent:", ["Lactic Acidosis (if AKI occurs)", "Hypoglycemia", "Hyperglycemia", "Contrast reaction"], 0, "Metformin accumulation in renal failure."],
-            ["Immediate treatment for 'Laryngeal Edema' post-contrast:", ["Adrenaline (Epinephrine)", "Atropine", "Beta blocker", "Aspirin"], 0, "Adrenaline reduces swelling."],
-            ["'Air Embolism' treatment position:", ["Left Lateral Decubitus + Trendelenburg", "Right Lateral", "Supine", "Prone"], 0, "Traps air in Right Atrium, preventing it from entering Pulmonary Artery."],
-            ["CPR ratio (Compressions:Breaths) for adults:", ["30:2", "15:2", "5:1", "Continuous"], 0, "30:2."],
-            ["'Shock' in trauma is usually:", ["Hypovolemic", "Septic", "Neurogenic", "Anaphylactic"], 0, "Blood loss."],
-            ["Needle gauge for rapid fluid resuscitation:", ["14G / 16G (Large bore)", "22G", "24G", "20G"], 0, "Large bore (Orange/Grey)."],
-            ["'Glasgow Coma Scale' (GCS) minimum score:", ["3", "0", "1", "5"], 0, "Min 3, Max 15."],
-            ["In case of 'Needle Stick Injury', first step:", ["Wash with soap and water", "Squeeze the wound", "Apply bandage", "Report"], 0, "Wash immediately. Do NOT squeeze."],
-            ["'Nosocomial Infection' is:", ["Hospital Acquired", "Community Acquired", "Genetic", "Congenital"], 0, "Hospital acquired (>48 hrs)."],
-            ["Standard precaution for TB patient:", ["Airborne precautions (N95 mask)", "Contact", "Droplet", "None"], 0, "Negative pressure room + N95."],
-            ["'Sterilization' implies:", ["Killing ALL microorganisms including spores", "Killing bacteria only", "Cleaning visible dirt", "Reducing count"], 0, "Absolute freedom from germs."],
-            ["Autoclave parameters (Standard):", ["121°C for 15 mins at 15 psi", "100°C for 30 mins", "150°C dry heat", "Chemical"], 0, "Steam under pressure."],
-            ["Which chemical is used for 'Cold Sterilization' of endoscopes?", ["Glutaraldehyde (Cidex)", "Alcohol", "Iodine", "Chlorine"], 0, "2% Glutaraldehyde."],
-            ["'Fomite' refers to:", ["Contaminated inanimate object", "Insect vector", "Droplet", "Food"], 0, "Object (table, cassette) that transmits disease."],
-            ["Contrast warmers are used to:", ["Reduce viscosity", "Reduce osmolality", "Reduce toxicity", "Increase comfort"], 0, "Viscosity drops at body temp, making injection easier."],
-            ["'BUN' (Blood Urea Nitrogen) normal range:", ["7 - 20 mg/dL", "0.1 - 1.0", "50 - 100", "100 - 200"], 0, "Renal function marker."],
-            ["'Creatinine' normal range:", ["0.6 - 1.2 mg/dL", "5 - 10", "15 - 20", "0.1 - 0.2"], 0, "Key renal marker."],
-            ["'eGFR' < 30 mL/min implies:", ["Severe renal failure (Contrast risky)", "Normal", "Mild", "Dehydration"], 0, "High risk for NSF and CIN."]
-        ];
-
-        coreData.forEach((d, i) => questions.push(createQ(21 + i, "Core", d[0], d[1], d[2], d[3])));
-    }
+    // Process Core with Shuffling
+    coreData.forEach((d, i) => addShuffled(questions, 21 + i, "Core", d));
+}
 
         // --- STATE MANAGEMENT ---
         let state = {
