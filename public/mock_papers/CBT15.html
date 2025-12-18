@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIIMS CBT - Sectional Timing Mode</title>
+    <style>
+        :root {
+            --header-bg: #3f51b5;
+            --header-text: #fff;
+            --panel-bg: #f5f5f5;
+            --pallet-answered: #4caf50;
+            --pallet-not-answered: #f44336;
+            --pallet-review: #9c27b0;
+            --pallet-not-visited: #e0e0e0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #fff; }
+
+        /* --- Header --- */
+        header {
+            background: var(--header-bg); color: var(--header-text);
+            padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+            height: 60px; flex-shrink: 0;
+        }
+        .timer { font-size: 1.2rem; font-weight: bold; background: #fff; color: #d32f2f; padding: 5px 15px; border-radius: 4px; border: 2px solid #d32f2f; }
+
+        /* --- Main Layout --- */
+        .main-container { display: flex; flex: 1; overflow: hidden; }
+        
+        .question-area { flex: 1; display: flex; flex-direction: column; padding: 20px; overflow-y: auto; }
+        .q-header { display: flex; justify-content: space-between; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.5; }
+        
+        .options-container { display: flex; flex-direction: column; gap: 10px; }
+        .option-label { 
+            display: flex; align-items: center; padding: 10px; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; transition: 0.2s; 
+        }
+        .option-label:hover { background: #f0f8ff; }
+        .option-label input { margin-right: 15px; transform: scale(1.2); }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px; background: var(--panel-bg); border-left: 1px solid #ccc;
+            display: flex; flex-direction: column; flex-shrink: 0;
+        }
+        .user-info { padding: 10px; background: #e8eaf6; border-bottom: 1px solid #ccc; }
+        
+        .palette-legend { padding: 10px; font-size: 0.8rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: #fff; }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+        .question-grid { 
+            padding: 10px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; 
+            overflow-y: auto; flex: 1; align-content: start;
+        }
+        .q-btn {
+            height: 35px; width: 35px; border: 1px solid #ccc; background: #fff; 
+            border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .q-btn.answered { background: var(--pallet-answered); color: white; border-color: var(--pallet-answered); }
+        .q-btn.not-answered { background: var(--pallet-not-answered); color: white; border-color: var(--pallet-not-answered); }
+        .q-btn.review { background: var(--pallet-review); color: white; border-radius: 50%; }
+        .q-btn.current { border: 2px solid blue; box-shadow: 0 0 5px blue; }
+        .q-btn.locked { opacity: 0.4; cursor: not-allowed; background: #444 !important; color: #888; border: 1px solid #000; }
+
+        /* Footer */
+        .footer-controls {
+            height: 60px; background: #fff; border-top: 1px solid #ccc;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+        }
+        .btn { padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+        .btn-primary { background: #2196f3; color: white; }
+        .btn-success { background: #4caf50; color: white; }
+        .btn-warn { background: #ff9800; color: white; }
+        .btn-danger { background: #f44336; color: white; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* Mobile */
+        .mobile-toggle { display: none; background: none; border: none; color: white; font-size: 1.5rem; }
+        @media (max-width: 768px) {
+            .mobile-toggle { display: block; }
+            .sidebar { 
+                position: absolute; right: 0; top: 60px; bottom: 60px; z-index: 100;
+                transform: translateX(100%); transition: transform 0.3s; width: 85%;
+            }
+            .sidebar.active { transform: translateX(0); }
+            .question-grid { grid-template-columns: repeat(6, 1fr); }
+            .footer-controls { flex-wrap: wrap; gap: 5px; height: auto; padding: 10px; }
+            .btn { flex: 1; padding: 8px; font-size: 0.8rem; }
+        }
+
+        /* Overlay */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .hidden { display: none !important; }
+        
+        .review-panel { display: none; padding: 20px; height: 100%; overflow-y: auto; background:#f9f9f9;}
+        .review-item { margin-bottom: 20px; border: 1px solid #ddd; padding: 15px; border-radius: 5px; background:white; }
+        .explanation { background: #fff3cd; padding: 10px; margin-top: 10px; font-size: 0.9rem; border-left: 4px solid #ffc107; }
+
+    </style>
+</head>
+<body>
+
+    <div id="landingPage" class="overlay">
+        <h1>AIIMS CRE CBT (Strict Pattern)</h1>
+        <div style="width: 80%; max-width: 600px; text-align: left; margin: 20px 0;">
+            <h3>Exam Rules:</h3>
+            <ul>
+                <li><strong>Questions:</strong> 100 (5 Sections of 20 questions each).</li>
+                <li><strong>Timing:</strong> 18 Minutes per section (Strictly Dedicated).</li>
+                <li><strong>Total Time:</strong> 90 Minutes.</li>
+                <li><strong>Locking:</strong> Once 18 mins are up, or if you manually proceed to the next section, you <u>cannot</u> return to the previous section.</li>
+                <li><strong>Marking:</strong> +4 Correct, -1 Incorrect.</li>
+            </ul>
+        </div>
+        <button class="btn btn-success" style="font-size: 1.2rem;" onclick="startExam()">START EXAM</button>
+    </div>
+
+    <header id="examHeader" class="hidden">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <h3>AIIMS Radiographer</h3>
+            <span style="font-size:0.8rem; background:#eee; padding:2px 6px; border-radius:4px; color:#333;" id="sectionLabel">Section 1</span>
+        </div>
+        <div class="timer" id="timerDisplay">18:00</div>
+        <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+    </header>
+
+    <div class="main-container hidden" id="examBody">
+        <div class="question-area">
+            <div class="q-header">
+                <span id="qNumDisplay">Question No. 1</span>
+                <span style="color: #666;">Marks: +4, -1</span>
+            </div>
+            <div id="questionText" class="q-text">Loading...</div>
+            <div id="optionsBox" class="options-container"></div>
+        </div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="user-info">
+                <strong>Candidate Name</strong><br><small>Roll No: 123456</small>
+            </div>
+            <div class="palette-legend">
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-answered)"></span> Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-not-answered)"></span> Not Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-review)"></span> Review</div>
+                <div class="legend-item"><span class="dot" style="background:#444"></span> Locked</div>
+            </div>
+            <div class="question-grid" id="questionPalette"></div>
+            <div style="padding:10px; margin-top:auto;">
+                <button class="btn btn-primary" style="width:100%" onclick="submitExam()">FINISH EXAM</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-controls hidden" id="examFooter">
+        <div style="display:flex; gap:10px;">
+            <button class="btn btn-danger" onclick="clearResponse()">Clear</button>
+            <button class="btn btn-warn" onclick="markForReview()">Review</button>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <button class="btn" onclick="prevQuestion()" id="btnPrev">Previous</button>
+            <button class="btn btn-success" onclick="saveAndNext()">Save & Next</button>
+        </div>
+    </div>
+
+    <div id="resultPage" class="overlay hidden" style="display:block; overflow-y:auto; justify-content:start; padding-top:40px;">
+        <h2 style="text-align:center;">Exam Summary</h2>
+        <div id="scoreCard" style="margin: 20px auto; width:90%; max-width:600px; padding: 20px; border: 1px solid #ccc; text-align: center; background:#fff;"></div>
+        <div style="display:flex; justify-content:center; gap:20px; margin-bottom:20px;">
+            <button class="btn btn-primary" onclick="showDetailedReview()">Review Solutions</button>
+            <button class="btn btn-danger" onclick="location.reload()">Exit</button>
+        </div>
+        <div id="detailedReview" class="review-panel" style="width: 90%; max-width: 800px; margin:0 auto;"></div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const TOTAL_QUESTIONS = 100;
+        const SECTION_SIZE = 20; // 20 questions per section
+        const SECTION_TIME_LIMIT = 18 * 60; // 18 minutes in seconds
+        
+        let questions = [];
+
+function generateQuestions() {
+        const createQ = (id, type, text, opts, ans, exp) => ({ id, type, text, opts, ans, exp });
+        questions = []; // Reset array
+
+        // --- SECTION A: NON-CORE (1-20) ---
+        // Level: Difficult (Time Management Focus)
+
+        const nonCoreData = [
+            // Reasoning (Puzzles & Statement Analysis)
+            ["Read the following information: P, Q, R, S, T and U are six members of a family. P is the father of Q. R is the only daughter of S. U is the mother of P. T is the sister-in-law of Q. S is the husband of U. How is R related to Q?", ["Sister", "Aunt", "Mother", "Cousin"], 1, "S is husband of U. U is mother of P. So S is father of P. R is daughter of S. P is son of S. Thus P and R are siblings (Brother/Sister). Q is child of P. Therefore, R is the Aunt (P's sister) of Q."],
+            ["Statement: 'The Company X has rejected the proposal to increase the retirement age of employees from 60 to 62 years.' \nAssumptions:\nI. The employees of Company X are demanding a hike in retirement age.\nII. The company wants to reduce its workforce.", ["Only I is implicit", "Only II is implicit", "Both I and II are implicit", "Neither is implicit"], 0, "Rejection implies there was a proposal/demand (Assumption I). Assumption II is not necessarily the reason; cost or efficiency could be reasons."],
+            ["In a certain code, 'dom pul ta' means 'bring hot food', 'pul tir sop' means 'food is good', and 'tak da sop' means 'good bright boy'. Which word means 'hot'?", ["dom", "pul", "ta", "Cannot be determined"], 3, "'Food' is 'pul'. 'Good' is 'sop'. 'Hot' is in the first sentence ('dom' or 'ta'). We cannot distinguish 'bring' from 'hot' with the given data."],
+            ["A clock gains 15 minutes per day. It is set right at 12 noon. What time will it show at 4:00 AM, the next day?", ["4:10 AM", "4:15 AM", "4:20 AM", "4:30 AM"], 0, "Total hours = 16 hours. Gain = (15/24) * 16 = 10 minutes. Time shown = 4:10 AM."],
+            ["If A + B means A is the brother of B; A - B means A is the sister of B and A x B means A is the father of B. Which of the following means that C is the son of M?", ["M - N x C + F", "F - C + N x M", "N + M - F x C", "M x N - C + F"], 3, "Check option D: M x N (M is father of N), N - C (N is sister of C). So M is father of C. C + F (C is brother of F). C is male. Thus C is son of M."],
+
+            // General Knowledge (Current & Static)
+            ["The 'Nobel Prize in Physics 2023' was awarded to Pierre Agostini, Ferenc Krausz, and Anne L'Huillier for experimental methods that generate 'Attosecond pulses' of light. These pulses are used to study:", ["Electron dynamics in matter", "Black holes", "Climate change", "DNA structure"], 0, "Electron dynamics."],
+            ["Which of the following Rights is NOT considered a 'Fundamental Right' under the Constitution of India today?", ["Right to Equality", "Right to Property", "Right to Freedom of Religion", "Right against Exploitation"], 1, "Right to Property was removed from Fundamental Rights by the 44th Amendment (1978)."],
+            ["'Pragyan', part of India's Chandrayaan-3 mission, is a:", ["Orbiter", "Lander", "Rover", "Rocket"], 2, "Pragyan is the Rover; Vikram is the Lander."],
+            ["The 'Sunderbans' delta is formed by the confluence of which three major rivers?", ["Ganga, Yamuna, Saraswati", "Ganga, Brahmaputra, Meghna", "Godavari, Krishna, Kaveri", "Indus, Jhelum, Chenab"], 1, "Ganga, Brahmaputra, and Meghna."],
+            ["Which Indian state recently implemented the 'Gruha Jyothi' scheme, providing free electricity up to 200 units for households?", ["Telangana", "Karnataka", "Tamil Nadu", "Kerala"], 1, "Karnataka."],
+
+            // English (Grammar & Vocab)
+            ["Choose the correct alternative to improve the sentence: 'He is addicted to smoke.'", ["addicted to smoking", "used to smoke", "addicted of smoking", "addicted with smoke"], 0, "'Addicted to' is followed by a gerund (verb+ing)."],
+            ["One word substitution: 'A remedy which is supposed to cure all diseases but is actually worthless'.", ["Panacea", "Placebo", "Antidote", "Nostrum"], 3, "Nostrum (Quack remedy). Placebo is a control substance, Panacea is a universal cure (often mythical). Nostrum fits 'worthless quack medicine' best."],
+            ["'To leave no stone unturned' implies:", ["To try every possible course of action", "To build a house", "To work in a mine", "To be lazy"], 0, "Make every effort."],
+            ["Antonym of 'OBSCURE':", ["Vague", "Dark", "Clear", "Hidden"], 2, "Obscure means hidden/unclear. Clear is the opposite."],
+            ["'It has been raining ____ morning.'", ["for", "since", "from", "till"], 1, "Since morning (Point of time)."],
+
+            // Computers (Technical)
+            ["What is the main difference between 'RAM' and 'ROM'?", ["RAM is permanent, ROM is temporary", "RAM is read/write and volatile; ROM is read-only and non-volatile", "RAM holds the BIOS", "ROM stores user data"], 1, "RAM is volatile (temporary), ROM is non-volatile."],
+            ["Which of the following is a 'Loopback IP address' used for testing the network card on the local machine?", ["127.0.0.1", "192.168.1.1", "10.0.0.1", "255.255.255.0"], 0, "127.0.0.1 (Localhost)."],
+            ["In the context of Cyber Security, 'Trojan Horse' refers to:", ["A virus that replicates itself", "A malicious program disguised as legitimate software", "A hardware lock", "A firewall"], 1, "Disguised malware."],
+            ["Which shortcut key in MS Excel inserts the 'Current Time'?", ["Ctrl + ;", "Ctrl + Shift + ;", "Alt + T", "Ctrl + T"], 1, "Ctrl + Shift + ; (Colon). (Ctrl + ; inserts Date)."],
+            ["The protocol 'HTTPS' uses which port number by default?", ["80", "21", "443", "25"], 2, "Port 443. (HTTP is 80)."]
+        ];
+        nonCoreData.forEach((d, i) => questions.push(createQ(i + 1, "Non-Core", d[0], d[1], d[2], d[3])));
+
+
+        // --- SECTION B: CORE (21-100) ---
+        // High Yield / Clinical / Physics
+
+        const coreData = [
+            // 1. Advanced Physics (21-40)
+            ["In the interaction of X-rays with matter, the probability of the 'Photoelectric Effect' is directly proportional to the cube of the Atomic Number (Z^3) and inversely proportional to:", ["The square of the energy (E^2)", "The cube of the energy (E^3)", "The mass of the electron", "The filament current"], 1, "Probability is proportional to Z^3 / E^3."],
+            ["A radiographer uses a technique of 80 kVp and 32 mAs. If the distance (SID) is doubled from 40 inches to 80 inches, what new mAs is required to maintain the same image receptor exposure?", ["64 mAs", "128 mAs", "16 mAs", "8 mAs"], 1, "Exposure Maintenance Formula (Direct Square Law): New mAs = Old mAs * (New Dist^2 / Old Dist^2). 32 * (80^2/40^2) = 32 * 4 = 128 mAs."],
+            ["Which of the following rectifier circuits produces a voltage waveform with 100% ripple, dropping to zero 120 times per second (assuming 60Hz)?", ["High Frequency", "Three Phase 12-Pulse", "Three Phase 6-Pulse", "Single Phase Full-Wave"], 3, "Single Phase Full Wave."],
+            ["The 'Focusing Cup' surrounding the filament carries a negative charge. If this negative charge is increased significantly beyond normal, it can act as a switch to stop the electron flow. This tube design is called:", ["Rotating Anode Tube", "Grid-Controlled Tube", "Dual Focus Tube", "Line Focus Tube"], 1, "Grid-Controlled X-ray tube (used in pulsed fluoro/angio)."],
+            ["'Modulation Transfer Function' (MTF) is a graph that plots contrast transfer against spatial frequency. An ideal imaging system would have an MTF of:", ["0 at all frequencies", "1 at all frequencies", "0.5 at high frequency", "Variable"], 1, "1.0 implies perfect transfer of information."],
+            ["In digital fluoroscopy, 'Temporal Frame Averaging' (or Persistence) is used to:", ["Increase image brightness", "Reduce noise by averaging multiple frames together", "Increase temporal resolution", "Reduce patient dose"], 1, "Reduces noise but causes 'image lag' or ghosting with moving objects."],
+            ["What is the primary purpose of the 'Back-up Timer' in an Automatic Exposure Control (AEC) system?", ["To stop exposure if the AEC circuit fails, protecting the tube and patient", "To ensure minimum exposure time", "To switch between buckys", "To control kVp"], 0, "Safety mechanism to prevent massive overdose/tube overload."],
+            ["The 'Latent Image' on a PSP plate (CR) is constituted by:", ["Silver halide crystals", "Electrons trapped in 'F-centers' (metastable states)", "Light photons", "Digital bits"], 1, "Trapped electrons in the phosphor layer."],
+            ["If a grid is used with a ratio of 12:1 instead of 6:1, and technical factors are NOT adjusted, the resulting image will show:", ["Increased density (darker)", "Decreased density (lighter)", "No change in density", "Increased blur"], 1, "High ratio grid absorbs more primary beam; image will be underexposed."],
+            ["'Crossover' in film-screen radiography refers to:", ["Light from one screen passing through the film base to expose the opposite emulsion layer", "Chemicals mixing", "The patient moving", "X-rays passing through the cassette"], 0, "Causes blurring/loss of sharpness."],
+            ["Which of the following factors affects the 'Quality' (Energy) of the X-ray beam?", ["mAs", "kVp and Filtration", "SID", "Focal Spot Size"], 1, "kVp determines max energy; Filtration raises average energy."],
+            ["The 'Bremsstrahlung' spectrum is continuous because:", ["Electrons can lose any amount of kinetic energy when braking near the nucleus", "Binding energies are fixed", "The target rotates", "The filament heats up"], 0, "The braking electron can lose anywhere from 0 to 100% of its energy."],
+            ["'Off-Focus' radiation causes which visual artifact on the radiograph?", ["Quantum mottle", "Ghosting of anatomy outside the collimated field", "Grid lines", "Magnification"], 1, "Anatomy (e.g., ears on a skull AP) appearing outside the collimated borders."],
+            ["A 'Wedge Filter' is correctly positioned for a T-spine AP projection with the thick part of the filter over the:", ["Lower Thoracic spine", "Upper Thoracic spine", "Lumbar spine", "Neck"], 1, "Upper T-spine is thinner than Lower. Wait. Wedge filter compensates for thickness *differences*. Upper T-spine is thinner (less density needed). Lower is thicker. So THICK part of wedge goes over THIN part of patient. Thick wedge -> Upper T-spine."],
+            ["The unit 'Gray-Area Product' (DAP/KAP) is a useful metric because:", ["It reflects the total radiation energy incident on the patient", "It indicates peak skin dose", "It measures scatter", "It is independent of kVp"], 0, "Dose * Area. Good proxy for total energy and stochastic risk."],
+            ["In Mammography, the 'Heel Effect' is utilized by placing the cathode side of the tube towards the:", ["Nipple", "Chest Wall", "Axilla", "Top of breast"], 1, "Chest wall is thicker; Cathode (higher intensity) goes over chest wall."],
+            ["The 'Half Value Layer' (HVL) of a diagnostic beam usually measures between:", ["0.1 - 0.5 mm Al", "2.5 - 4.0 mm Al", "10 - 20 mm Al", "1 - 2 mm Pb"], 1, "Typical diagnostic range (80kVp) is around 2.5 - 3.5 mm Al."],
+            ["'Leakage Radiation' is radiation that:", ["Exits the tube window", "Scatters from the patient", "Escapes through the protective tube housing", "Reflects off the collimator"], 2, "Through the housing housing (must be < 100 mR/hr @ 1m)."],
+            ["Which dosimeter uses 'Lithium Fluoride' (LiF) crystals?", ["Film Badge", "OSL", "TLD", "Pocket Ion Chamber"], 2, "Thermo Luminescent Dosimeter."],
+            ["'Effective Dose' (E) is calculated as:", ["Absorbed Dose x Wr", "Equivalent Dose x Tissue Weighting Factor (Wt)", "Exposure x Area", "Radioactivity x Time"], 1, "Sum of (Equivalent Dose * Wt) for all tissues."],
+
+            // 2. Clinical Anatomy & Scenarios (41-65)
+            ["A patient with suspected 'Cervical Rib' should be evaluated with:", ["AP C-Spine", "Lateral C-Spine", "Oblique C-Spine", "AP Thoracic"], 0, "AP C-Spine demonstrates the extra rib arising from C7."],
+            ["'Clay Shoveler's Fracture' is an avulsion fracture of the:", ["Spinous Process of C6, C7, or T1", "Vertebral Body of C2", "Odontoid Process", "Transverse Process of C5"], 0, "Spinous Process."],
+            ["To visualize the 'Sternum' in a Lateral projection, the patient is instructed to:", ["Take a deep breath and hold (Inspiration)", "Exhale fully", "Breathe normally", "Valsalva"], 0, "Deep inspiration pushes the sternum anteriorly away from the heart/mediastinum shadow."],
+            ["The 'Rafert-Long Method' is a specialized view for:", ["Scaphoid healing", "Patella fractures", "AC Joints", "Sternoclavicular Joints"], 0, "Scaphoid series (angulated views)."],
+            ["A 'Boxer's Fracture' is best evaluated on the:", ["Lateral Wrist", "PA Hand", "Oblique Hand with fingers extended", "Lateral Hand with fingers flexed"], 1, "PA and Oblique Hand."],
+            ["'Rolando Fracture' is similar to Bennett's fracture but is:", ["Comminuted (Y-shaped)", "Transverse", "Spiral", "Extra-articular"], 0, "Comminuted intra-articular fracture of 1st metacarpal base."],
+            ["For a 'Transthoracic Lateral Humerus' (Lawrence Method), the breathing technique is:", ["Full Inspiration", "Full Expiration", "Quiet breathing (Autotomography)", "Suspended respiration"], 2, "Quiet breathing blurs the ribs/lungs while humerus stays sharp."],
+            ["'Hill-Sachs Defect' is a compression fracture located on the:", ["Anterior Glenoid rim", "Posterior aspect of the Humeral Head", "Acromion", "Coracoid"], 1, "Posterior-lateral humeral head (from hitting the glenoid rim)."],
+            ["'Bankart Lesion' involves the:", ["Anterior-inferior Glenoid labrum/rim", "Humeral head", "Clavicle", "Scapular spine"], 0, "Anterior glenoid rim fracture/detachment."],
+            ["'Fabella' is a normal variant sesamoid bone found in the:", ["Triceps tendon", "Lateral head of Gastrocnemius (Knee)", "Achilles tendon", "Quadriceps"], 1, "Posterior knee."],
+            ["The 'Rosenberg View' is a PA weight-bearing view of the knees flexed at:", ["45 degrees", "90 degrees", "10 degrees", "0 degrees"], 0, "45 degrees flexion."],
+            ["'Pott's Fracture' involves:", ["Distal Fibula and Tibia (Bimalleolar)", "Femur", "Calcaneus", "Metatarsals"], 0, "Ankle fracture (distal fibula + medial malleolus/deltoid lig)."],
+            ["'Calcaneal Spur' is best visualized on:", ["Lateral Foot/Ankle", "AP Foot", "Axial Calcaneus", "Oblique"], 0, "Lateral view."],
+            ["The 'Sella Turcica' is best measured and visualized on a:", ["True Lateral Skull", "PA Caldwell", "Towne", "SMV"], 0, "Lateral Skull."],
+            ["'Blowout Fracture' signs on X-ray/CT include:", ["Teardrop sign (herniated fat/muscle)", "Bamboo spine", "Vacuum phenomenon", "Crescent sign"], 0, "Soft tissue/fat herniating into maxillary sinus."],
+            ["'Stenvers View' is primarily used to demonstrate the:", ["Petrous Temporal Bone", "Orbits", "Zygoma", "Mandible"], 0, "Petrous ridge."],
+            ["A patient with 'Situs Inversus' will have:", ["The Heart on the Right, Liver on the Left", "Heart on Left, Liver on Right", "No spleen", "Two livers"], 0, "Total mirroring of organs."],
+            ["'Chilaiditi Syndrome' refers to:", ["Interposition of colon between liver and diaphragm", "Situs inversus", "Hiatal hernia", "Volvulus"], 0, "Colon mimics free air under diaphragm."],
+            ["'Rigler's Sign' (Double Wall Sign) indicates:", ["Pneumoperitoneum (Free Air)", "Ascites", "Obstruction", "Tumor"], 0, "Air on both sides of bowel wall visible."],
+            ["'Thumbprinting' sign on abdominal X-ray is indicative of:", ["Ischemic Colitis / Bowel Edema", "Feces", "Gas", "Intussusception"], 0, "Thickened mucosal folds."],
+            ["A 'Sentinel Loop' is a localized dilated loop of bowel suggesting:", ["Adjacent inflammation (e.g., Pancreatitis)", "Cancer", "Constipation", "Normal gas"], 0, "Localized ileus."],
+            ["'Lead Pipe' appearance of the colon is seen in chronic:", ["Ulcerative Colitis", "Crohn's Disease", "Diverticulitis", "IBS"], 0, "Loss of haustra."],
+            ["'String Sign of Kantor' is pathognomonic for:", ["Crohn's Disease (Terminal Ileum)", "Ulcerative Colitis", "Cancer", "TB"], 0, "Narrowing of ileum."],
+            ["In 'Intravenous Urography', the 'Nephrogram Phase' represents:", ["Contrast in the renal tubules/parenchyma", "Contrast in the calyces", "Contrast in the bladder", "Contrast in the urethra"], 0, "Parenchymal enhancement."],
+            ["'Cystogram' is specifically used to evaluate the:", ["Urinary Bladder", "Gallbladder", "Kidney Cysts", "Ovarian Cysts"], 0, "Bladder."],
+
+            // 3. CT/MRI/USG Advanced (66-85)
+            ["In CT, 'Window Level' should be set close to:", ["The average attenuation (HU) of the tissue of interest", "The highest HU", "The lowest HU", "Zero"], 0, "Ensures the tissue of interest is in the middle of the gray scale."],
+            ["'Beam Hardening' in CT mimics pathology by causing:", ["Dark streaks or bands between thick bones (e.g., Posterior Fossa)", "Bright spots", "Rings", "Blur"], 0, "Inter-petrous streak artifact."],
+            ["'Volume Averaging' in CT can lead to:", ["Small nodules appearing less dense or disappearing", "Better resolution", "Increased noise", "Higher dose"], 0, "Partial volume effect averages the density."],
+            ["'CTDIvol' is calculated as:", ["CTDIw / Pitch", "CTDIw * Pitch", "DLP / Length", "mAs * kVp"], 0, "Weighted CTDI divided by Pitch."],
+            ["In MRI, 'T1 Recovery' is the time taken for:", ["63% of longitudinal magnetization to recover", "37% recovery", "100% recovery", "63% decay"], 0, "63% regrowth along Z-axis."],
+            ["In MRI, 'T2 Decay' is the time taken for:", ["Transverse magnetization to decay to 37% of its initial value", "63% decay", "100% decay", "Recovery"], 0, "37% remaining signal."],
+            ["'Inversion Recovery' (IR) sequences start with a:", ["180 degree pulse", "90 degree pulse", "45 degree pulse", "Gradient"], 0, "180 deg inversion pulse."],
+            ["The 'TI' (Time to Inversion) to suppress fat (STIR) depends on:", ["Field Strength (Bo)", "Patient weight", "TR", "TE"], 0, "Depends on Bo (Fat null point is ~150ms at 1.5T)."],
+            ["'Diffusion' in DWI refers to the random motion of:", ["Water molecules (Brownian motion)", "Blood", "Fat", "Ions"], 0, "Water."],
+            ["'ADC Map' (Apparent Diffusion Coefficient) is used to:", ["Confirm true restriction (Dark on ADC) vs T2 Shine-through", "Measure flow", "Measure fat", "Measure temperature"], 0, "True infarcts are Bright on DWI, Dark on ADC."],
+            ["'TOF MRA' saturation band is placed:", ["Above or below the slab to saturate venous/arterial flow entering", "On the skull", "On the neck", "Nowhere"], 0, "To eliminate signal from unwanted flow (e.g., sat band above slab to kill venous flow in neck MRA)."],
+            ["In Ultrasound, 'Frequency' is inversely related to:", ["Penetration (Depth)", "Resolution", "Speed", "Gain"], 0, "High Freq = Low Penetration."],
+            ["'Axial Resolution' in Ultrasound is determined by:", ["Spatial Pulse Length (SPL)", "Beam width", "Frame rate", "Gain"], 0, "Length of the pulse."],
+            ["'Lateral Resolution' in Ultrasound is determined by:", ["Beam Width", "SPL", "Frequency", "Time"], 0, "Narrower beam = Better lateral resolution."],
+            ["'Shadowing' is helpful in USG to diagnose:", ["Cholelithiasis (Gallstones)", "Cysts", "Hemangioma", "Fluid"], 0, "Stones cast shadows."],
+            ["'Posterior Enhancement' helps diagnose:", ["Cysts / Abscesses", "Stones", "Tumors", "Fat"], 0, "Fluid-filled structures."],
+            ["'Comet Tail' artifact is a type of:", ["Reverberation", "Refraction", "Mirror", "Side lobe"], 0, "Reverberation (seen in Adenomyomatosis/Metal)."],
+            ["'Mirror Image' artifact typically duplicates a lesion:", ["On the other side of a strong reflector (Diaphragm)", "Laterally", "Superficially", "Nowhere"], 0, "e.g., Liver hemangioma mirrored into the lung field."],
+            ["'Doppler Angle' should be kept below:", ["60 degrees", "90 degrees", "20 degrees", "0 degrees"], 0, "Above 60 deg, cosine error becomes significant."],
+            ["'Aliasing' in Pulsed Wave Doppler occurs when:", ["Velocity > Nyquist Limit", "Gain is high", "Probe is low freq", "Angle is 0"], 0, "Sampling rate is too slow for the speed."],
+
+            // 4. Contrast & Pharmacology & Misc (86-100)
+            ["Which contrast agent is safe for intrathecal (Myelography) use?", ["Omnipaque (Iohexol)", "Urografin", "Gastrografin", "Barium"], 0, "Non-ionic water soluble only (Omnipaque). Ionics cause seizures."],
+            ["'Gastrografin' is contraindicated in:", ["Risk of Aspiration (causes pulmonary edema)", "Perforation", "Obstruction", "CT"], 0, "High osmolality causes severe lung damage if aspirated."],
+            ["'Adrenaline' dose for anaphylaxis (Adult):", ["0.5 ml of 1:1000 IM", "1 ml of 1:10000 IV", "10 ml IV", "0.1 ml SC"], 0, "0.5mg (0.5ml) IM."],
+            ["'Atropine' is used to treat:", ["Bradycardia (Vagal reaction)", "Tachycardia", "Hypertension", "Hives"], 0, "Increases heart rate."],
+            ["'Nitroglycerin' is used in Angio to:", ["Prevent vasospasm / Dilate vessels", "Clot blood", "Increase BP", "Sedate"], 0, "Vasodilator."],
+            ["'Heparin' is an:", ["Anticoagulant", "Thrombolytic", "Antibiotic", "Analgesic"], 0, "Prevents clots."],
+            ["'tPA' (Tissue Plasminogen Activator) is a:", ["Thrombolytic (Clot buster)", "Anticoagulant", "Contrast", "Sedative"], 0, "Dissolves clots (Stroke/PE)."],
+            ["Normal Platelet count:", ["1.5 - 4.5 Lakhs/mcL", "50,000", "10,000", "1 Million"], 0, "150,000 - 450,000."],
+            ["'INR' (International Normalized Ratio) monitors:", ["Prothrombin Time (Warfarin therapy)", "Platelets", "RBC", "WBC"], 0, "Coagulation status."],
+            ["'Creatinine' levels are crucial before:", ["Contrast CT", "Ultrasound", "Plain X-ray", "Dexa"], 0, "Kidney function check."],
+            ["'eFAST' scan is primarily used for:", ["Trauma (Pneumothorax/Hemoperitoneum)", "Appendicitis", "Pregnancy", "Gallstones"], 0, "Trauma triage."],
+            ["'PET' scan uses which physics principle?", ["Positron Annihilation", "Proton Resonance", "Electron Capture", "Reflection"], 0, "Positron meets Electron -> Annihilation -> 2 Photons."],
+            ["Standard uptake time for FDG-PET is:", ["60 minutes", "10 mins", "4 hours", "24 hours"], 0, "1 hour rest."],
+            ["'Gamma Camera' crystal is usually:", ["Sodium Iodide Thallium activated NaI(Tl)", "BGO", "LSO", "Cesium"], 0, "NaI(Tl)."],
+            ["'Half-Life' of Tc-99m:", ["6 Hours", "60 Days", "8 Days", "110 Mins"], 0, "6 Hours."]
+        ];
+
+        coreData.forEach((d, i) => questions.push(createQ(21 + i, "Core", d[0], d[1], d[2], d[3])));
+    }
+
+        // --- STATE MANAGEMENT ---
+        let state = {
+            currentQ: 0,
+            answers: new Array(TOTAL_QUESTIONS).fill(null),
+            status: new Array(TOTAL_QUESTIONS).fill('not-visited'),
+            currentSection: 1,      // 1 to 5
+            sectionTimeLeft: SECTION_TIME_LIMIT,
+            maxSetReached: 1,       // Tracks highest section unlocked
+            isFinished: false
+        };
+
+        const els = {
+            landing: document.getElementById('landingPage'),
+            header: document.getElementById('examHeader'),
+            body: document.getElementById('examBody'),
+            footer: document.getElementById('examFooter'),
+            result: document.getElementById('resultPage'),
+            qText: document.getElementById('questionText'),
+            optsBox: document.getElementById('optionsBox'),
+            qNum: document.getElementById('qNumDisplay'),
+            sectionLabel: document.getElementById('sectionLabel'),
+            palette: document.getElementById('questionPalette'),
+            timer: document.getElementById('timerDisplay'),
+            btnPrev: document.getElementById('btnPrev'),
+            sidebar: document.getElementById('sidebar')
+        };
+
+        let timerInterval;
+
+        function init() {
+            generateQuestions(); // Load data
+            // Persistence check could go here, but for strict timing, fresh start is safer
+            els.landing.classList.remove('hidden');
+            els.result.classList.add('hidden');
+        }
+
+        function startExam() {
+            els.landing.classList.add('hidden');
+            renderExamInterface();
+            startSectionTimer();
+        }
+
+        function startSectionTimer() {
+            if(timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                state.sectionTimeLeft--;
+                
+                // Format Time
+                const m = Math.floor(state.sectionTimeLeft / 60);
+                const s = state.sectionTimeLeft % 60;
+                els.timer.innerText = `${m}:${s < 10 ? '0'+s : s}`;
+                
+                // Visual Warning
+                if(state.sectionTimeLeft < 60) els.timer.style.backgroundColor = "#ffcdd2";
+                else els.timer.style.backgroundColor = "#fff";
+
+                // Time Up Logic
+                if (state.sectionTimeLeft <= 0) {
+                    handleSectionTimeout();
+                }
+            }, 1000);
+        }
+
+        function handleSectionTimeout() {
+            clearInterval(timerInterval);
+            
+            if (state.currentSection < 5) {
+                alert(`Time is up for Section ${state.currentSection}! Moving to Section ${state.currentSection + 1}.`);
+                forceNextSection();
+            } else {
+                alert("Time is up for the final section! Submitting Exam.");
+                finishExam();
+            }
+        }
+
+        function forceNextSection() {
+            state.currentSection++;
+            state.maxSetReached = state.currentSection;
+            state.sectionTimeLeft = SECTION_TIME_LIMIT;
+            
+            // Move to first question of next section
+            const firstQofNextSection = (state.currentSection - 1) * SECTION_SIZE;
+            loadQuestion(firstQofNextSection);
+            startSectionTimer();
+        }
+
+        function renderExamInterface() {
+            els.header.classList.remove('hidden');
+            els.body.classList.remove('hidden');
+            els.footer.classList.remove('hidden');
+            renderPalette();
+            loadQuestion(state.currentQ);
+        }
+
+        function loadQuestion(index) {
+            state.currentQ = index;
+            if(state.status[index] === 'not-visited') state.status[index] = 'not-answered';
+
+            // Update Section Label
+            const secNum = Math.floor(index / SECTION_SIZE) + 1;
+            els.sectionLabel.innerText = `Section ${secNum} (Q${(secNum-1)*20 + 1}-${secNum*20})`;
+
+            // Render Text
+            els.qNum.innerText = `Question ${index + 1}`;
+            els.qText.innerText = questions[index].text;
+            
+            // Render Options
+            els.optsBox.innerHTML = '';
+            questions[index].opts.forEach((opt, i) => {
+                const isChecked = state.answers[index] === i ? 'checked' : '';
+                els.optsBox.innerHTML += `
+                    <label class="option-label">
+                        <input type="radio" name="opt" value="${i}" ${isChecked} onchange="selectOption(${i})">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            // Update Palette UI
+            document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('current'));
+            const currentBtn = document.getElementById(`qbtn-${index}`);
+            if(currentBtn) currentBtn.classList.add('current');
+
+            // Handle Prev Button State (Cannot go back to previous locked section)
+            const startOfCurrentSection = (state.currentSection - 1) * SECTION_SIZE;
+            els.btnPrev.disabled = (index <= startOfCurrentSection);
+        }
+
+        function selectOption(optIndex) {
+            state.answers[state.currentQ] = optIndex;
+        }
+
+        function saveAndNext() {
+            const index = state.currentQ;
+            // Update status
+            state.status[index] = (state.answers[index] !== null) ? 'answered' : 'not-answered';
+            
+            moveToNextQuestion();
+        }
+
+        function markForReview() {
+            const index = state.currentQ;
+            state.status[index] = (state.answers[index] !== null) ? 'marked-answered' : 'review'; // Simplified
+            moveToNextQuestion();
+        }
+
+        function clearResponse() {
+            state.answers[state.currentQ] = null;
+            state.status[state.currentQ] = 'not-answered';
+            loadQuestion(state.currentQ);
+            renderPalette();
+        }
+
+        function moveToNextQuestion() {
+            const nextIndex = state.currentQ + 1;
+            const currentSecBound = state.currentSection * SECTION_SIZE;
+
+            // Check if next question crosses section boundary
+            if (nextIndex >= currentSecBound) {
+                // End of section reached
+                if (state.currentSection < 5) {
+                    if (confirm(`You have reached the end of Section ${state.currentSection}.\nDo you want to submit this section and move to Section ${state.currentSection+1}?\n\nWARNING: You cannot return to this section.`)) {
+                        forceNextSection();
+                    }
+                } else {
+                    if(confirm("This was the last question. Submit Exam?")) {
+                        finishExam();
+                    }
+                }
+            } else {
+                // Normal movement within section
+                renderPalette();
+                loadQuestion(nextIndex);
+            }
+        }
+
+        function prevQuestion() {
+            // Logic handled in loadQuestion to disable button if at start of section
+            if (state.currentQ > 0) {
+                loadQuestion(state.currentQ - 1);
+            }
+        }
+
+        function renderPalette() {
+            els.palette.innerHTML = '';
+            for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+                let statusClass = state.status[i];
+                if(statusClass === 'marked-answered') statusClass = 'review';
+                
+                // Check if question belongs to a locked (previous) section
+                // A question is locked if its section index is < current active section
+                const qSection = Math.floor(i / SECTION_SIZE) + 1;
+                const isLocked = qSection < state.currentSection;
+                const lockedClass = isLocked ? ' locked' : '';
+                
+                // Gray out future sections
+                const isFuture = qSection > state.currentSection;
+                const futureStyle = isFuture ? 'opacity:0.3; pointer-events:none;' : '';
+
+                els.palette.innerHTML += `
+                    <div id="qbtn-${i}" 
+                         class="q-btn ${statusClass}${lockedClass}" 
+                         style="${futureStyle}"
+                         onclick="jumpToQuestion(${i})">
+                        ${i + 1}
+                    </div>
+                `;
+            }
+        }
+
+        function jumpToQuestion(index) {
+            const qSection = Math.floor(index / SECTION_SIZE) + 1;
+            
+            if (qSection < state.currentSection) {
+                alert("This section is locked.");
+                return;
+            }
+            if (qSection > state.currentSection) {
+                alert("You cannot jump to a future section yet.");
+                return;
+            }
+            
+            loadQuestion(index);
+        }
+
+        function submitExam() {
+            if(confirm("Are you sure you want to finish the exam? Unanswered questions in future sections will be marked zero.")) {
+                finishExam();
+            }
+        }
+
+        function finishExam() {
+            clearInterval(timerInterval);
+            state.isFinished = true;
+            
+            els.header.classList.add('hidden');
+            els.body.classList.add('hidden');
+            els.footer.classList.add('hidden');
+            els.result.classList.remove('hidden');
+            
+            calculateResult();
+        }
+
+        function calculateResult() {
+            let correct = 0, wrong = 0, unattempted = 0, score = 0;
+
+            state.answers.forEach((ans, i) => {
+                if (ans === null) {
+                    unattempted++;
+                } else if (questions[i] && ans === questions[i].ans) {
+                    correct++;
+                    score += 4;
+                } else {
+                    wrong++;
+                    score -= 1;
+                }
+            });
+
+            document.getElementById('scoreCard').innerHTML = `
+                <h1 style="color:#3f51b5; font-size:3rem;">${score} / 400</h1>
+                <p><strong>Correct:</strong> ${correct} (+${correct*4})</p>
+                <p><strong>Incorrect:</strong> ${wrong} (-${wrong})</p>
+                <p><strong>Unattempted:</strong> ${unattempted}</p>
+            `;
+        }
+
+        function showDetailedReview() {
+            const container = document.getElementById('detailedReview');
+            container.style.display = 'block';
+            container.innerHTML = '<h3>Detailed Solutions</h3>';
+            
+            questions.forEach((q, i) => {
+                const userAns = state.answers[i];
+                const isCorrect = userAns === q.ans;
+                const statusColor = userAns === null ? 'gray' : (isCorrect ? 'green' : 'red');
+                const statusText = userAns === null ? 'Skipped' : (isCorrect ? 'Correct' : 'Incorrect');
+
+                let optsHtml = '';
+                q.opts.forEach((opt, oi) => {
+                    let style = '';
+                    if (oi === q.ans) style = 'font-weight:bold; color:green;'; 
+                    if (oi === userAns && !isCorrect) style = 'font-weight:bold; color:red;'; 
+                    optsHtml += `<div style="${style}">${oi+1}. ${opt}</div>`;
+                });
+
+                container.innerHTML += `
+                    <div class="review-item">
+                        <div style="color:${statusColor}; font-weight:bold; margin-bottom:5px;">Q${i+1}: ${statusText}</div>
+                        <div>${q.text}</div>
+                        <div style="margin:10px 0; padding-left:15px; border-left:3px solid #ddd;">${optsHtml}</div>
+                        <div class="explanation"><strong>Explanation:</strong> ${q.exp}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleSidebar() {
+            els.sidebar.classList.toggle('active');
+        }
+
+        // Initialize
+        init();
+
+    </script>
+</body>
+</html>
