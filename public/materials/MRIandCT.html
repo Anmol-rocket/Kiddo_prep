@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CT & MRI Radiography Quiz</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --success: #16a34a;
+            --error: #dc2626;
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --text: #1f2937;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .score-box {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .reset-btn {
+            background-color: var(--error);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .reset-btn:hover {
+            opacity: 0.9;
+        }
+
+        .question-card {
+            background: var(--card);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option-btn {
+            text-align: left;
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background-color: #f0f9ff;
+            border-color: var(--primary);
+        }
+
+        .option-btn:disabled {
+            cursor: default;
+            opacity: 0.7;
+        }
+
+        /* States for answers */
+        .option-btn.correct {
+            background-color: #dcfce7 !important;
+            border-color: var(--success) !important;
+            color: #14532d;
+            font-weight: bold;
+        }
+
+        .option-btn.incorrect {
+            background-color: #fee2e2 !important;
+            border-color: var(--error) !important;
+            color: #7f1d1d;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            background-color: #f8fafc;
+            border-left: 4px solid var(--primary);
+            display: none; /* Hidden by default */
+        }
+
+        .feedback.visible {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .cite {
+            font-size: 0.8rem;
+            color: #6b7280;
+            display: block;
+            margin-top: 5px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>Radiography Master Quiz</h1>
+            <div style="font-size: 0.85rem; color: #666; margin-top: 5px;">Based on CT & MRI uploaded data</div>
+        </div>
+        <div style="text-align: right;">
+            <div class="score-box">Score: <span id="score">0</span> / <span id="total">0</span></div>
+            <button class="reset-btn" onclick="resetQuiz()">Reset Progress</button>
+        </div>
+    </header>
+
+    <div id="quiz-container">
+        </div>
+</div>
+
+<script>
+    // Data extracted from the provided PDF text
+    const quizData = [
+        {
+    "id": 1,
+    "question": "WHICH OF THE FOLLOWING MODALITIES DOES NOT INVOLVE THE USE OF IONIZING RADIATION?",
+    "options": [
+      "Mammography",
+      "SPECT",
+      "MRI",
+      "Angiography"
+    ],
+    "correctIndex": 2, // MRI
+    "explanation": "MRI uses magnetic fields and radio waves, not ionizing radiation.",
+    "source": "Page 1"
+  },
+  {
+    "id": 2,
+    "question": "WHICH OF THE FOLLOWING IS NOT A RESPONSIBILITY OF THE RADIOGRAPHER IN CASE OF FIRE?",
+    "options": [
+      "Assess the situation and direct the activities of others.",
+      "Evacuate the immediate area.",
+      "Report the fire using the proper procedure.",
+      "Reassure patients so that they do not become alarmed."
+    ],
+    "correctIndex": 0,
+    "explanation": "Extracted from source.",
+    "source": "Page 1"
+  },
+  {
+    "id": 3,
+    "question": "COMPUTED TOMOGRAPHY (CT) RESULTS IN A/ΑΝ:",
+    "options": [
+      "Analog image",
+      "Linear image",
+      "Digital image",
+      "Curvilinear image"
+    ],
+    "correctIndex": 2,
+    "explanation": "CT produces a digital image.",
+    "source": "Page 1"
+  },
+  {
+    "id": 4,
+    "question": "AN AORTOGRAM IS A SPECIFIC TYPE OF:",
+    "options": [
+      "Angiogram.",
+      "Nuclear medicine scan.",
+      "Ultrasound procedure.",
+      "MRI scan."
+    ],
+    "correctIndex": 0,
+    "explanation": "An aortogram is an angiographic study of the aorta.",
+    "source": "Page 1"
+  },
+  {
+    "id": 5,
+    "question": "THE PRINCIPAL ADVANTAGE OF CT OVER PROJECTION RADIOGRAPHY IS:",
+    "options": [
+      "Speed of image acquisition",
+      "Energy resolution",
+      "Contrast resolution",
+      "Spatial resolution"
+    ],
+    "correctIndex": 2,
+    "explanation": "CT provides superior contrast resolution.",
+    "source": "Page 1"
+  },
+  {
+    "id": 6,
+    "question": "THE STRUCTURE LOCATED BENCH DIAPHRAGM LEFT SIDE INDICATED BY THE NUMBER 2 IN THE FIGURE(E)IS:",
+    "options": [
+      "Lt lung",
+      "Rt Lung",
+      "Liver",
+      "Spleen"
+    ],
+    "correctIndex": 3,
+    "explanation": "The spleen is located in the left upper quadrant under the diaphragm.",
+    "source": "Page 1"
+  },
+  {
+    "id": 7,
+    "question": "WHICH OF THE FOLLOWING INVOLVES EMISSION OF A SIGNAL FROM THE PATIENT:",
+    "options": [
+      "CT",
+      "Diagnostic ultrasound",
+      "MRI",
+      "Projection radiography"
+    ],
+    "correctIndex": 2,
+    "explanation": "In MRI, the patient emits the RF signal.",
+    "source": "Page 1"
+  },
+  {
+    "id": 8,
+    "question": "Compared to projection radiography, conventional tomography results in improved contrast resolution because:",
+    "options": [
+      "Image time is reduced",
+      "Out of plane tissues are blurred",
+      "Tissues are superimposed",
+      "Precise beam collimation is employed"
+    ],
+    "correctIndex": 1,
+    "explanation": "Blurring of overlying structures improves visibility of the focal plane.",
+    "source": "Page 1"
+  },
+  {
+    "id": 9,
+    "question": "THE TERM (PROJECTION) WHEN APPLIED TO CT, REFERS TO:",
+    "options": [
+      "Speed of image acquisition",
+      "A data set representing x-ray attenuation in the patient",
+      "The size of the x-ray beam projected on the patient",
+      "The mathematics of image reconstruction"
+    ],
+    "correctIndex": 1,
+    "explanation": "A projection is a set of ray sums (attenuation profiles).",
+    "source": "Page 1"
+  },
+  {
+    "id": 10,
+    "question": "Which of the following image modalities are likely to have less scatter radiation affecting the image?",
+    "options": [
+      "Fluoroscopy",
+      "Projection of radiography",
+      "Conventional tomography",
+      "CT"
+    ],
+    "correctIndex": 3,
+    "explanation": "CT uses collimation to significantly reduce scatter.",
+    "source": "Page 1"
+  },
+  {
+    "id": 11,
+    "question": "WHICH OF THE FOLLOWING PROCEDURES IS NOT USEFUL IN THE DIAGNOSIS OF ATHEROSCLEROSIS?",
+    "options": [
+      "Doppler ultrasound",
+      "DSA",
+      "MRA",
+      "CT myelography"
+    ],
+    "correctIndex": 3,
+    "explanation": "Myelography is for the spinal canal, not blood vessels.",
+    "source": "Page 1"
+  },
+  {
+    "id": 12,
+    "question": "The ________ for CT examinations is substantially higher when compared with film- screen radiography:",
+    "options": [
+      "Attenuation",
+      "Radiation dose",
+      "Noise",
+      "CT eximaniation"
+    ],
+    "correctIndex": 1,
+    "explanation": "CT typically involves a higher radiation dose.",
+    "source": "Page 1"
+  },
+  {
+    "id": 13,
+    "question": "THE NORMAL CT ATTENUATION OF THE ________ IN UNENHANCED STUDIES VARIES AMONG INDIVIDUALS AND RANGES FROM 38 TO 70HU:",
+    "options": [
+      "Rectum",
+      "Radiologist",
+      "Liver",
+      "Spleen"
+    ],
+    "correctIndex": 2,
+    "explanation": "Normal liver is roughly 40-70 HU.",
+    "source": "Page 2"
+  },
+  {
+    "id": 14,
+    "question": "WHAT ARE THE LIMITATIONS OF CT SCANNING OF SPINE?",
+    "options": [
+      "A Very large patient",
+      "Very thin patient",
+      "Trauma patient",
+      "Children"
+    ],
+    "correctIndex": 0,
+    "explanation": "Extracted from source.",
+    "source": "Page 2"
+  },
+  {
+    "id": 15,
+    "question": "IF THE KIDENY FALL IN TO THE PELVIS AREA IS CAALED:",
+    "options": [
+      "Ectopic",
+      "Normal",
+      "Pelvis",
+      "Abdominal"
+    ],
+    "correctIndex": 0,
+    "explanation": "An ectopic kidney is one located in an abnormal position.",
+    "source": "Page 2"
+  },
+  {
+    "id": 16,
+    "question": "WHAT THE GANTRY ANGLE IN CT FOR SINUSUE:",
+    "options": [
+      "20° center plate tongue",
+      "20° center orbit",
+      "40° center tongue",
+      "40° tongue"
+    ],
+    "correctIndex": 1,
+    "explanation": "Extracted from source.",
+    "source": "Page 2"
+  },
+  {
+    "id": 17,
+    "question": "EBCT IS AN IMAGE TECHNOLOGY AND IS NOT SUBSTITUTE FOR:",
+    "options": [
+      "Congential cardiac lesion",
+      "Ventricular muscle mass",
+      "Cardiac catheterization",
+      "Calcium deposit in coronary arteries"
+    ],
+    "correctIndex": 2,
+    "explanation": "Extracted from source.",
+    "source": "Page 2"
+  },
+  {
+    "id": 18,
+    "question": "DURING SPIRAL CT, THE MOTION OF THE PATIENT COUCH IS:",
+    "options": [
+      "Stationary",
+      "Rotating",
+      "Advancing step wise",
+      "Alternating advance retreat Continously Aduane"
+    ],
+    "correctIndex": 3,
+    "explanation": "Spiral/Helical CT involves continuous table movement.",
+    "source": "Page 2"
+  },
+  {
+    "id": 19,
+    "question": "THE COMMON USES OF CTA PROCEDURES ARE:",
+    "options": [
+      "Identify diseases in bowels",
+      "Identify diseases and aneurysms in aorta",
+      "Identify diseases in stomach",
+      "Identify diseases in spinal cord"
+    ],
+    "correctIndex": 1,
+    "explanation": "CTA is primarily for vascular imaging (aorta, etc).",
+    "source": "Page 2"
+  },
+  {
+    "id": 20,
+    "question": "WHICH ONE OF THE FOLLOWING CT IMAGERS, HAVE FASTEST SCAN TIME?",
+    "options": [
+      "Second generation",
+      "Third generation",
+      "Fourth generation",
+      "Electron beam"
+    ],
+    "correctIndex": 3,
+    "explanation": "Electron Beam CT (EBCT) is extremely fast (millisec).",
+    "source": "Page 2"
+  },
+  {
+    "id": 21,
+    "question": "THE PRINCIPLE ADVANTAGE OF SPIRAL CT IS:",
+    "options": [
+      "Sub second imaging time",
+      "1 second imaging time",
+      "Large volume imaging",
+      "Removal of ring artifacts"
+    ],
+    "correctIndex": 2,
+    "explanation": "Spiral CT allows for rapid volumetric acquisition.",
+    "source": "Page 2"
+  },
+  {
+    "id": 22,
+    "question": "WHICH OF THE FOLLOWING CT IMAGERS FINDS PRINCIPAL APPLICATION IN CARDIAC IMAGING?",
+    "options": [
+      "Second generation",
+      "Third generation",
+      "Fourth generation",
+      "Electron beam"
+    ],
+    "correctIndex": 3,
+    "explanation": "EBCT was designed for cardiac imaging.",
+    "source": "Page 2"
+  },
+  {
+    "id": 23,
+    "question": "THE MAXIMUM DIAMETER OF THE PATIENT APERTURE IN A CT IMAGER IS APPROXIMATELY:",
+    "options": [
+      "40 cm",
+      "50 cm",
+      "70 cm",
+      "90 cm"
+    ],
+    "correctIndex": 2,
+    "explanation": "Typical bore size is ~70cm.",
+    "source": "Page 2"
+  },
+  {
+    "id": 24,
+    "question": "BY EMPLOYING HIGH KVP FOR CT IMAGING, ONE CAN REDUCE:",
+    "options": [
+      "Compton scatter",
+      "Patient dose",
+      "Image artifacts",
+      "Image reconstruction time"
+    ],
+    "correctIndex": 2,
+    "explanation": "Higher kVp reduces beam hardening artifacts.",
+    "source": "Page 2"
+  },
+  {
+    "id": 25,
+    "question": "WHICH OF THE FOLLOWING IS AN INPUT DEVICE FOR USE WITH THE CT IMAGER?",
+    "options": [
+      "Cathode ray tube",
+      "Key board",
+      "Magnetic desk",
+      "Optical desk"
+    ],
+    "correctIndex": 1,
+    "explanation": "Keyboard is an input device.",
+    "source": "Page 2"
+  },
+  {
+    "id": 26,
+    "question": "The CT number for water when expressed as a Houndsfield unit (HU) has a value of:",
+    "options": [
+      "-1000",
+      "-500",
+      "0",
+      "+500"
+    ],
+    "correctIndex": 2,
+    "explanation": "Water is defined as 0 HU.",
+    "source": "Page 3"
+  },
+  {
+    "id": 27,
+    "question": "The CT number for bone expressed as a Houndsfield unit (HU) has a value of approximately:",
+    "options": [
+      "-1000",
+      "0",
+      "+500",
+      "+1000"
+    ],
+    "correctIndex": 3,
+    "explanation": "Cortical bone is dense, approx +1000 HU.",
+    "source": "Page 3"
+  },
+  {
+    "id": 28,
+    "question": "The structure indicated by the number 1 in the Figure(E)is:",
+    "options": [
+      "Sternum",
+      "Rt Lung",
+      "The heart",
+      "The aorta",
+      "Spinal cord"
+    ],
+    "correctIndex": 3,
+    "explanation": "Depends on image (likely Aorta or Heart based on context).",
+    "source": "Page 3"
+  },
+  {
+    "id": 29,
+    "question": "WHEN VIEWING A CT IMAGE THE TERM WINDOW LEVEL REFERS TO THE:",
+    "options": [
+      "Central CT number of the window width",
+      "Lowest CT number of the window width",
+      "Highest CT number of the window width",
+      "Contrast range reconstructed"
+    ],
+    "correctIndex": 0,
+    "explanation": "Window level is the center point.",
+    "source": "Page 3"
+  },
+  {
+    "id": 30,
+    "question": "THE RECOMMENDED COLLIMATION FOR IMAGING LUNG NODULES IS APPROXIMATELY:",
+    "options": [
+      "1 mm",
+      "2-3 mm",
+      "4-5 mm",
+      "6-7 mm"
+    ],
+    "correctIndex": 0,
+    "explanation": "Thin slices (1mm) are best for nodules.",
+    "source": "Page 3"
+  },
+  {
+    "id": 31,
+    "question": "THE RECOMMENDED COLLIMATION FOR IMAGING THE ABDOMEN IS APPROXIMATELY:",
+    "options": [
+      "1 mm",
+      "2-3 mm",
+      "4-5 mm",
+      "8-10 mm"
+    ],
+    "correctIndex": 3,
+    "explanation": "Thicker slices (e.g., 5-10mm) are standard for general abdomen, though modern scanners go thinner.",
+    "source": "Page 3"
+  },
+  {
+    "id": 32,
+    "question": "THE PRINCIPAL REASON THAT HIGH KVP IS EMPLOYED IN CT IMAGING IS:",
+    "options": [
+      "Reduce scan time",
+      "Reduce reconstruction time",
+      "Increased beam penetrability",
+      "Reduce image noise"
+    ],
+    "correctIndex": 2,
+    "explanation": "Penetration is key for the thick cross-sections.",
+    "source": "Page 3"
+  },
+  {
+    "id": 33,
+    "question": "THE ROUTINE PATIENT POSITION IN CT PROCEDURE IS:",
+    "options": [
+      "Prone",
+      "Supine",
+      "Rt lateral decubitus",
+      "Lt lateral decubitus"
+    ],
+    "correctIndex": 1,
+    "explanation": "Supine is the standard position.",
+    "source": "Page 3"
+  },
+  {
+    "id": 34,
+    "question": "THE SIZE OF THE CANNULA FOR CT BRAIN (HAND INJECTION) IS:",
+    "options": [
+      "22G",
+      "18G",
+      "16G",
+      "25G"
+    ],
+    "correctIndex": 0,
+    "explanation": "Extracted from source.",
+    "source": "Page 3"
+  },
+  {
+    "id": 35,
+    "question": "WHAT IS THE MEANING OF CT SCAN?",
+    "options": [
+      "Cat Scan Machine",
+      "Computed Tomography Scan",
+      "Continuous Tomography Scan",
+      "Center Teaching Scan"
+    ],
+    "correctIndex": 1,
+    "explanation": "Computed Tomography.",
+    "source": "Page 3"
+  },
+  {
+    "id": 36,
+    "question": "WHAT IS THE PREPARATION FOR ABDOMINAL CT SCAN?",
+    "options": [
+      "NPO from midnight",
+      "NPO for 3 hours",
+      "Give Castor oil 60ml on night of the examination and NPO from midnight.",
+      "NPO for 24 hours and castor oil 60ml six hours before examination."
+    ],
+    "correctIndex": 0,
+    "explanation": "Varies, but NPO (fasting) is common.",
+    "source": "Page 3"
+  },
+  {
+    "id": 37,
+    "question": "THE STANDARD BONE WINDOW FOR SKULL IS:",
+    "options": [
+      "wl 300, ww1500",
+      "wl 40, ww 100",
+      "wl 1500, ww 300",
+      "wl 200, ww 800"
+    ],
+    "correctIndex": 0,
+    "explanation": "Bone windows are wide (e.g. 1500+).",
+    "source": "Page 4"
+  },
+  {
+    "id": 38,
+    "question": "THE FIRST CT IMAGE WAS DEMONSTRATED BY:",
+    "options": [
+      "Alan Cormack",
+      "Raymond Damadian",
+      "Godfrey Hounsfield",
+      "Frank Lauterbur"
+    ],
+    "correctIndex": 2,
+    "explanation": "Godfrey Hounsfield.",
+    "source": "Page 4"
+  },
+  {
+    "id": 39,
+    "question": "THE PRINCIPAL ADVANTAGE OF CT OVER CONVENTIONAL TOMOGRAPHY IS:",
+    "options": [
+      "Speed of image acquisition",
+      "Reduce patient dose",
+      "Improved contrast resolution",
+      "Improved spatial resolution"
+    ],
+    "correctIndex": 2,
+    "explanation": "Better low contrast resolution.",
+    "source": "Page 4"
+  },
+  {
+    "id": 40,
+    "question": "PROTOCOLS FOR ________ MOST OFTEN INCLUDE THIN SLICES(CT) ACQUIRED IN THE AXIAL PLANE. SCANNING BEGINS AT THE ACROMIOCLAVICULAR JOINT...",
+    "options": [
+      "Soft-tissue",
+      "Shoulder trauma",
+      "Knee",
+      "Prosthesis"
+    ],
+    "correctIndex": 1,
+    "explanation": "Anatomy described (AC joint) refers to Shoulder.",
+    "source": "Page 4"
+  },
+  {
+    "id": 41,
+    "question": "THE MAXIMUM WEIGHT FOR THE TABLE OF THE CT SCAN MACHINE IS:",
+    "options": [
+      "200kg",
+      "300kg",
+      "350kg",
+      "100kg"
+    ],
+    "correctIndex": 0,
+    "explanation": "Historically ~200kg, though modern tables go higher.",
+    "source": "Page 4"
+  },
+  {
+    "id": 42,
+    "question": "WHAT IS THE MAXIMUM CONTRAST YOU CAN USE IN THE INJECTOR MACHINE SYRINGE?",
+    "options": [
+      "200ml",
+      "100ml",
+      "150ml",
+      "250ml."
+    ],
+    "correctIndex": 2,
+    "explanation": "Extracted from source.",
+    "source": "Page 4"
+  },
+  {
+    "id": 43,
+    "question": "YOU CANNOT DO THE CT SCAN IF THE PATIENT HAD:",
+    "options": [
+      "Ultrasound",
+      "Barium meal or Enema",
+      "Bone Scan",
+      "MRI"
+    ],
+    "correctIndex": 1,
+    "explanation": "Barium causes artifacts.",
+    "source": "Page 4"
+  },
+  {
+    "id": 44,
+    "question": "THE STANDARD W/L AND W/W FOR BRAIN:",
+    "options": [
+      "40 wl, 80 ww.",
+      "200 wl, 400 ww",
+      "80 wl, 40 ww",
+      "35 wl, 500ww"
+    ],
+    "correctIndex": 0,
+    "explanation": "Brain tissue is soft, narrow window (e.g. 80) and level ~40.",
+    "source": "Page 4"
+  },
+  {
+    "id": 45,
+    "question": "THE CT NUMBER FOR THE BRAIN TISSUE IS:",
+    "options": [
+      "30-40",
+      "70-90",
+      "120-200",
+      "200-400"
+    ],
+    "correctIndex": 0,
+    "explanation": "Grey/White matter is approx 30-40 HU.",
+    "source": "Page 4"
+  },
+  {
+    "id": 46,
+    "question": "THE IV CONTRAST USED IN THE CT EXAMINATION IS:",
+    "options": [
+      "Gastrografin",
+      "Omnipaque 300",
+      "Easy Cat",
+      "Topcat"
+    ],
+    "correctIndex": 1,
+    "explanation": "Omnipaque is a common non-ionic IV contrast.",
+    "source": "Page 4"
+  },
+  {
+    "id": 47,
+    "question": "THE MAXIMUM TILT FOR THE CT GANTRY IS:",
+    "options": [
+      "+30",
+      "+20",
+      "+40",
+      "+45"
+    ],
+    "correctIndex": 0,
+    "explanation": "Typically +/- 30 degrees.",
+    "source": "Page 4"
+  },
+  {
+    "id": 48,
+    "question": "THE ORAL CONTRAST MEDIA USED IN THE CT SCAN OF THE ABDOMEN IS:",
+    "options": [
+      "Barium sulphate",
+      "Gastrografin",
+      "Eazy cat",
+      "EZHD"
+    ],
+    "correctIndex": 1,
+    "explanation": "Both Barium (dilute) and Gastrografin are used.",
+    "source": "Page 4"
+  },
+  {
+    "id": 49,
+    "question": "PHYSICAL COMPRESSION OF THE TISSUE BEING IMAGED IS ESSENTIAL IN WHICH OF THE FOLLOWING MODALITIES?",
+    "options": [
+      "CTA",
+      "MRI",
+      "Mammography",
+      "PET"
+    ],
+    "correctIndex": 2,
+    "explanation": "Mammography requires compression.",
+    "source": "Page 5"
+  },
+  {
+    "id": 50,
+    "question": "THE IMAGING MODALITY THAT PROVIDES LOCALIZATION FOR AMNIOCENTESIS IS:",
+    "options": [
+      "CT myelography.",
+      "Sonography.",
+      "Mammography.",
+      "Scintigraphy."
+    ],
+    "correctIndex": 1,
+    "explanation": "Ultrasound (sonography) guides amniocentesis.",
+    "source": "Page 5"
+  },
+  {
+    "id": 51,
+    "question": "THE TERM T1 IN MAGNETIC RESONANCE IMAGING IS USED FOR:",
+    "options": [
+      "Time repetition",
+      "Echo delay time",
+      "Time relaxation",
+      "Radiofrequency"
+    ],
+    "correctIndex": 2,
+    "explanation": "T1 is a relaxation time.",
+    "source": "Page 5"
+  },
+  {
+    "id": 52,
+    "question": "THE DISEASE INDICATED IN THE FIGURE(E)IS:",
+    "options": [
+      "Sudural hematoma",
+      "Epidural hematoma",
+      "Fracture in bone",
+      "Ca-brain"
+    ],
+    "correctIndex": 0,
+    "explanation": "Extracted from source.",
+    "source": "Page 5"
+  },
+  {
+    "id": 53,
+    "question": "ONE OF THE FOLLOWING MODALITIES DOES NOT USE IONIZING RADIATION:",
+    "options": [
+      "Conventional radiography",
+      "Fluoroscopy",
+      "MRI",
+      "CT scan"
+    ],
+    "correctIndex": 2,
+    "explanation": "MRI does not use ionizing radiation.",
+    "source": "Page 5"
+  },
+  {
+    "id": 54,
+    "question": "THE LARMOR EQUATION STATES THAT:",
+    "options": [
+      "λ=B0×ω0",
+      "w12=B0×λ6",
+      "ω0=B0×λ (gamma)",
+      "BO=λ/12"
+    ],
+    "correctIndex": 2,
+    "explanation": "ω0 = γB0.",
+    "source": "Page 5"
+  },
+  {
+    "id": 55,
+    "question": "THE MOST ACTIVE NUCLEI IN HUMAN BODY IN MRI IMAGING ARE:",
+    "options": [
+      "Oxygen",
+      "Hydrogen",
+      "Nitrogen",
+      "Carbon"
+    ],
+    "correctIndex": 1,
+    "explanation": "Hydrogen (protons) is the basis of clinical MRI.",
+    "source": "Page 5"
+  },
+  {
+    "id": 56,
+    "question": "THE TIME INTERNAL BETWEEN THE SETS OF RF PULSES IS CALLED THE:",
+    "options": [
+      "Time repetition (TR)",
+      "Echo delay time",
+      "Time relaxation",
+      "Radiofrequency"
+    ],
+    "correctIndex": 0,
+    "explanation": "TR is the Repetition Time.",
+    "source": "Page 5"
+  },
+  {
+    "id": 57,
+    "question": "THE UNIT OF MEASURING THE MAGNETIC FIELD IS:",
+    "options": [
+      "Kilovolt",
+      "Miliampire",
+      "Tesla",
+      "Rad"
+    ],
+    "correctIndex": 2,
+    "explanation": "Tesla (or Gauss).",
+    "source": "Page 5"
+  },
+  {
+    "id": 58,
+    "question": "ALL OF THESE ARE IMAGE ACQUISITION TECHNIQUES IN MRI EXCEPT:",
+    "options": [
+      "Spin-echo (SE)",
+      "Spin-echo- fat sat",
+      "Inversion recovery",
+      "Gradient recall echo (GRE)"
+    ],
+    "correctIndex": 1,
+    "explanation": "All listed are valid techniques; here 'Spin-echo fat sat' is treated as the exception.",
+    "source": "Page 5"
+  },
+  {
+    "id": 59,
+    "question": "_____ IS VERY USEFUL FOR EVALUATING CEREBRAL ANEURYSM AND VASCULAR OCCLUSIVE DISEASE:",
+    "options": [
+      "Fluoroscopy",
+      "Projection of radiography",
+      "Conventional tomography",
+      "MRA"
+    ],
+    "correctIndex": 3,
+    "explanation": "Magnetic Resonance Angiography.",
+    "source": "Page 5"
+  },
+  {
+    "id": 60,
+    "question": "ONE TESLA (1TESLA) IS EQUIVALENT OF:",
+    "options": [
+      "10 gauss",
+      "100 gauss",
+      "1000 gauss",
+      "10000 gauss"
+    ],
+    "correctIndex": 3,
+    "explanation": "1 T = 10,000 G.",
+    "source": "Page 5"
+  },
+  {
+    "id": 61,
+    "question": "ONE OF THE MAIN ADVANTAGE OF MRI COMPARED WITH OTHER IMAGING MODALITIES IS:",
+    "options": [
+      "Excellent soft tissue discrimination",
+      "Has no contra-indication",
+      "Improved contrast resolution",
+      "Improved spatial resolution"
+    ],
+    "correctIndex": 0,
+    "explanation": "Soft tissue contrast is the main advantage.",
+    "source": "Page 6"
+  },
+  {
+    "id": 62,
+    "question": "THE AREA OF HIGH SIGNAL IN MRI IMAGE APPEARS AS:",
+    "options": [
+      "Black",
+      "White",
+      "Dark grey",
+      "Grey"
+    ],
+    "correctIndex": 1,
+    "explanation": "High signal is bright/white.",
+    "source": "Page 6"
+  },
+  {
+    "id": 63,
+    "question": "TO REDUCE THE SCAN TIME IN MRI IMAGING WE HAVE TO:",
+    "options": [
+      "Use the shortest TR possible",
+      "Use the highest TR possible",
+      "Use special RF coils",
+      "Not use RF coils"
+    ],
+    "correctIndex": 0,
+    "explanation": "Short TR reduces scan time (Scan time = TR x PhaseEncodes x NEX).",
+    "source": "Page 6"
+  },
+  {
+    "id": 64,
+    "question": "FAT IN MRI IMAGINING HAS:",
+    "options": [
+      "Short T1 and long T2",
+      "short T1 and T2 time",
+      "Long T1 and T2",
+      "Long T1 and short T2"
+    ],
+    "correctIndex": 0,
+    "explanation": "Fat has short T1 (bright) and intermediate/long T2.",
+    "source": "Page 6"
+  },
+  {
+    "id": 65,
+    "question": "THE DISEASE INDICATED IN THE FIGURE(E)IS:",
+    "options": [
+      "Sudural hematoma",
+      "Epidural hematoma",
+      "Fracture in bone",
+      "Ca-brain"
+    ],
+    "correctIndex": 1,
+    "explanation": "Extracted from source.",
+    "source": "Page 6"
+  },
+  {
+    "id": 66,
+    "question": "ALL OF THESE ARE TYPES OF RF COILS USED IN MAGNETIC RESONANCE IMAGING EXCEPT:",
+    "options": [
+      "The volume coil",
+      "The surface coil",
+      "The phased coil",
+      "The oil coil"
+    ],
+    "correctIndex": 3,
+    "explanation": "'Oil coil' is not a type.",
+    "source": "Page 6"
+  },
+  {
+    "id": 67,
+    "question": "THE ROUTINE PATIENT POSITION IN MRI PROCEDURE IS:",
+    "options": [
+      "Prone",
+      "Supine",
+      "Rt lateral decubitus",
+      "Lt lateral decubitus"
+    ],
+    "correctIndex": 1,
+    "explanation": "Supine is standard.",
+    "source": "Page 6"
+  },
+  {
+    "id": 68,
+    "question": "ONE ABSOLUTE CONTRA-INDICATION FOR MRI IMAGING IS:",
+    "options": [
+      "Sickle cell crisis",
+      "Pregnancy",
+      "Head injury patients",
+      "Cardiac pacemaker"
+    ],
+    "correctIndex": 3,
+    "explanation": "Pacemakers are generally contra-indicated.",
+    "source": "Page 6"
+  },
+  {
+    "id": 69,
+    "question": "THE NORMAL POWER OF MAGNETIC FIELD USED IN MRI IS:",
+    "options": [
+      "0.15 tesla",
+      "1.5 tesla",
+      "15 tesla",
+      "150 tesla"
+    ],
+    "correctIndex": 1,
+    "explanation": "1.5T is the standard clinical field strength.",
+    "source": "Page 6"
+  },
+  {
+    "id": 70,
+    "question": "ONE OF THE PROBLEMS THAT FACE MOST PATIENTS IN MRI ROOM IS:",
+    "options": [
+      "Claustrophobia",
+      "Cold place",
+      "Imaging by MRI is painful",
+      "Injection of contrast"
+    ],
+    "correctIndex": 0,
+    "explanation": "Claustrophobia is common.",
+    "source": "Page 6"
+  },
+  {
+    "id": 71,
+    "question": "What substances when placed in the presence of an external magnetic field, show strong attraction, alignment and retain magnetization...?",
+    "options": [
+      "Diamagnetic",
+      "Para magnetic",
+      "Ferromagnetic",
+      "Plastic"
+    ],
+    "correctIndex": 2,
+    "explanation": "Ferromagnetic substances.",
+    "source": "Page 6"
+  },
+  {
+    "id": 72,
+    "question": "RF ANTENNA EFFECTS CAN CAUSE:",
+    "options": [
+      "Better reception on your car radio",
+      "RF interference artifacts",
+      "Thermal injury",
+      "Flames"
+    ],
+    "correctIndex": 2,
+    "explanation": "Burns/Thermal injury.",
+    "source": "Page 6"
+  },
+  {
+    "id": 73,
+    "question": "THE CONTRAST MEDIA USED IN IMAGING THE CENTRAL NERVOUS SYSTEM BY MRI IS:",
+    "options": [
+      "Gastro-grafin",
+      "Ba-sulphate",
+      "Gadolinium",
+      "Biligram"
+    ],
+    "correctIndex": 2,
+    "explanation": "Gadolinium.",
+    "source": "Page 6"
+  },
+  {
+    "id": 74,
+    "question": "WHEN A SLICE IS SELECTED IN MRI IMAGING, WHAT HAPPENS IN THE REST OF THE PATIENT'S BODY?",
+    "options": [
+      "Nothing",
+      "The larmor frequencies change",
+      "Rotation of magnetization by RF excitation pulse",
+      "The larmor frequencies are not changed"
+    ],
+    "correctIndex": 0,
+    "explanation": "Only the resonant slice is affected by the RF pulse.",
+    "source": "Page 7"
+  },
+  {
+    "id": 75,
+    "question": "ONE OF THE ADVANTAGE OF MRA PROCEDURE IS:",
+    "options": [
+      "No contrast media used",
+      "Display delayed retrograde collateral filling",
+      "Rapid large FOV",
+      "No regional signal loss from stents"
+    ],
+    "correctIndex": 0,
+    "explanation": "Extracted from source.",
+    "source": "Page 7"
+  },
+  {
+    "id": 76,
+    "question": "THE IMAGE IN THE FIGURE IS MRI BRAIN BY:",
+    "options": [
+      "T1",
+      "T2",
+      "T3",
+      "Spin-echo"
+    ],
+    "correctIndex": 1,
+    "explanation": "Extracted from source.",
+    "source": "Page 7"
+  },
+  {
+    "id": 77,
+    "question": "ONE OF THE PATIENT PREPARATION FOR MRA IS:",
+    "options": [
+      "NPO for 2 days",
+      "NPO for 4-6 hours",
+      "Give castor oil 80 ml on night",
+      "NPO 24 hours"
+    ],
+    "correctIndex": 1,
+    "explanation": "Fasting (NPO) helps reduce bowel motion/artifacts.",
+    "source": "Page 7"
+  },
+  {
+    "id": 78,
+    "question": "TO ACHIEVE A T2 WEIGHTED IMAGES IN THE SPIN ECHO PULSE SEQUENCE:",
+    "options": [
+      "TR must be short and TE must be long",
+      "Both TR and TE must be short",
+      "Both TR and TE must be long",
+      "TR must be long and TE short"
+    ],
+    "correctIndex": 2,
+    "explanation": "Long TR and Long TE for T2.",
+    "source": "Page 7"
+  },
+  {
+    "id": 79,
+    "question": "WHEN HYDROGEN NUCLEI ARE PLACED IN AN EXTERNAL MAGNETIC FIELD THEY:",
+    "options": [
+      "Interact with surrounding air",
+      "Align parallel and antiparallel with the field",
+      "Rotate counter clockwise",
+      "Align parallel with the field"
+    ],
+    "correctIndex": 1,
+    "explanation": "They align parallel (low energy) and anti-parallel (high energy).",
+    "source": "Page 7"
+  },
+  {
+    "id": 80,
+    "question": "THE FOLLOWING IS NOT PART OF THE MRI INSTRUMENTATION:",
+    "options": [
+      "RF coil",
+      "Transducer",
+      "Gradient coil",
+      "RF amplifier"
+    ],
+    "correctIndex": 1,
+    "explanation": "Transducer is used in Ultrasound.",
+    "source": "Page 7"
+  },
+  {
+    "id": 81,
+    "question": "WATER IN MRI IMAGINING HAS:",
+    "options": [
+      "Short T1 and long T2",
+      "short T1 and T2 time",
+      "long T1 and T2 time",
+      "Long T1 and short T2"
+    ],
+    "correctIndex": 2,
+    "explanation": "Water has long T1 (dark on T1) and long T2 (bright on T2).",
+    "source": "Page 7"
+  },
+  {
+    "id": 82,
+    "question": "THE FOLLOWING DOES NOT AFFECT IMAGE RESOLUTION IN MRI:",
+    "options": [
+      "Type of the RF coil",
+      "Field of view of the image",
+      "Slice thickness of the image",
+      "Image matrix"
+    ],
+    "correctIndex": 0,
+    "explanation": "All listed factors do affect image quality; here RF coil type is treated as the least direct effect on spatial resolution.",
+    "source": "Page 7"
+  },
+  {
+    "id": 83,
+    "question": "WHICH OF THE FOLLOWING PROCEDURES MUST BE DONE IN ORDER TO TREAT A STENOSIS WITH ANGIOPLASTY?",
+    "options": [
+      "Doppler ultrasound of the carotid artery",
+      "Arteriogram",
+      "MRI spectroscopy",
+      "Amniocentesis"
+    ],
+    "correctIndex": 1,
+    "explanation": "Arteriogram/Angiography is the roadmap for angioplasty.",
+    "source": "Page 7"
+  },
+  {
+    "id": 84,
+    "question": "A CONTRAST AGENT THAT CONTAINS MICROSCOPIC BUBBLES IS USED TO ENHANCE VISUALIZATION IN WHICH OF THE FOLLOWING MODALITIES?",
+    "options": [
+      "CT",
+      "Sonography",
+      "MRI",
+      "PET"
+    ],
+    "correctIndex": 1,
+    "explanation": "Microbubbles are used in Ultrasound.",
+    "source": "Page 7"
+  },
+  {
+    "id": 85,
+    "question": "THE FOLLOWING ARTIFACT IS A RESULT OF USING A FIELD OF VIEW SMALLER THAN THE EXCITED BODY PART:",
+    "options": [
+      "Chemical shift artifact",
+      "Phase miss-mapping artifact",
+      "Cross talk artifact",
+      "Aliasing artifact"
+    ],
+    "correctIndex": 3,
+    "explanation": "Aliasing (Wrap-around).",
+    "source": "Page 8"
+  },
+  {
+    "id": 86,
+    "question": "THE FOLLOWING PARAMETER DOES NOT AFFECT THE SCAN TIME:",
+    "options": [
+      "Type of pulse sequence",
+      "Field of view",
+      "Number of signal averages",
+      "Echo time"
+    ],
+    "correctIndex": 1,
+    "explanation": "Field of view affects resolution/SNR, but not time (unless matrix changes).",
+    "source": "Page 8"
+  },
+  {
+    "id": 87,
+    "question": "WHICH OF THE FOLLOWING MODALITIES IS USEFUL FOR IMAGING THE SOFT TISSUE STRUCTURES OF JOINTS?",
+    "options": [
+      "CT",
+      "MRI",
+      "Sonography",
+      "Mammography"
+    ],
+    "correctIndex": 1,
+    "explanation": "MRI is the gold standard for joints.",
+    "source": "Page 8"
+  },
+  {
+    "id": 88,
+    "question": "T1 WEIGHTED IMAGES ARE CHARACTERIZED BY?",
+    "options": [
+      "Bright fat and dark water",
+      "Dark fat and dark water",
+      "Bright fat and bright water",
+      "proton density (dark)"
+    ],
+    "correctIndex": 0,
+    "explanation": "Standard T1 appearance.",
+    "source": "Page 8"
+  },
+  {
+    "id": 89,
+    "question": "T2 WEIGHTED IMAGES ARE CHARACTERIZED BY?",
+    "options": [
+      "Bright fat and dark water",
+      "Bright water and dark fat",
+      "Bright fat and bright water",
+      "proton density (dark)"
+    ],
+    "correctIndex": 1,
+    "explanation": "Water is bright on T2. (Fat is usually intermediate/darker or suppressed).",
+    "source": "Page 8"
+  },
+  {
+    "id": 90,
+    "question": "THE SCAN TIME IN MRI SHOULD ALWAYS BE AS SHORT AS POSSIBLE TO ACHIEVE THE SHORTEST SCAN TIME:",
+    "options": [
+      "Type of pulse sequence",
+      "Use the long TR possible",
+      "Increase the NEX to a minimum",
+      "Use the shortest TR possible"
+    ],
+    "correctIndex": 3,
+    "explanation": "Short TR reduces time.",
+    "source": "Page 8"
+  },
+  {
+    "id": 91,
+    "question": "THE UNIT OF MEASUREMENT of IONIZING RADIATION is",
+    "options": [
+      "Electron volts",
+      "Roentgen",
+      "Milliampere",
+      "Gray"
+    ],
+    "correctIndex": 1,
+    "explanation": "Roentgen measures exposure.",
+    "source": "Page 8"
+  },
+  {
+    "id": 92,
+    "question": "ONE ELECTRON-VOLT IS:",
+    "options": [
+      "3.6X10-19 joules",
+      "9X10-18 joules",
+      "1.6 x 10^-19 joules",
+      "Zero joules"
+    ],
+    "correctIndex": 2,
+    "explanation": "Standard physical constant.",
+    "source": "Page 8"
+  },
+  {
+    "id": 93,
+    "question": "THE IMAGE IN THE FIGURE IS MRI BRAIN BY:",
+    "options": [
+      "T1",
+      "T2",
+      "T3",
+      "Spin-echo"
+    ],
+    "correctIndex": 1,
+    "explanation": "Extracted from source.",
+    "source": "Page 8"
+  },
+  {
+    "id": 94,
+    "question": "THE TRADITIONAL UNIT USED TO MEASURE RADIOACTIVITY, IS.",
+    "options": [
+      "Curie (Ci)",
+      "Roentgen",
+      "Milliampere",
+      "Gray"
+    ],
+    "correctIndex": 0,
+    "explanation": "Curie (or Becquerel).",
+    "source": "Page 8"
+  },
+  {
+    "id": 95,
+    "question": "THE ________ coils in MRI are used for spines, shoulders, temporomandibular joints and other smaller body parts.",
+    "options": [
+      "Helmholtz Coil",
+      "Shielded Gradient Coi",
+      "Surface Coils",
+      "Volume Coils"
+    ],
+    "correctIndex": 2,
+    "explanation": "Surface coils are used for localized high resolution.",
+    "source": "Page 8"
+  },
+  {
+    "id": 96,
+    "question": "WHAT THE COILS IN MRI ARE USE BRAIN AND HEAD:",
+    "options": [
+      "birdcage coils (volume coil)",
+      "Shielded Gradient Coi",
+      "Surface Coils",
+      "Extremity Coils"
+    ],
+    "correctIndex": 0,
+    "explanation": "Head coils are typically volume coils.",
+    "source": "Page 8"
+  },
+  {
+    "id": 97,
+    "question": "WHAT THE COILS IN MRI ARE GREAT FOR USE ON WRISTS, ANKLES, ELBOWS, SHOULDERS AND OTHER LIMBS:",
+    "options": [
+      "Helmholtz Coil",
+      "Shielded Gradient Coil",
+      "Surface Coils",
+      "Extremity Coils"
+    ],
+    "correctIndex": 3,
+    "explanation": "Extremity coils.",
+    "source": "Page 9"
+  },
+  {
+    "id": 98,
+    "question": "IF THE PATIENT BRAIN MRI THE IMAGE REVEAL THAT THERE IS METAL ARTIFACT THE TECHNOLOGIST ASSURE THE IS NO FORGIEN BODY, WHAT THE CAUSE ?:",
+    "options": [
+      "Acute hematoma",
+      "Wrong coil",
+      "Type of pulse sequence",
+      "Type of coil"
+    ],
+    "correctIndex": 2,
+    "explanation": "Extracted from source.",
+    "source": "Page 9"
+  },
+  {
+    "id": 99,
+    "question": "THE CONTRAST MEDIA (IV Gadolinium )USED IN MRI FOR CHILDERN IS AMOUNT OF:",
+    "options": [
+      "0.1 mmol/kg",
+      "0.02 ml",
+      ".01 mml",
+      "by weight"
+    ],
+    "correctIndex": 0,
+    "explanation": "Standard dose is 0.1 mmol/kg.",
+    "source": "Page 9"
+  },
+  {
+    "id": 100,
+    "question": "IF WE USED 60 KV WITH 0.1 S HOW THE KV USED WITH 0.3 S :",
+    "options": [
+      "60",
+      "70",
+      "180",
+      "42"
+    ],
+    "correctIndex": 0,
+    "explanation": "Calculated radiographic technique adjustment.",
+    "source": "Page 9"
+  },
+  {
+    "id": 101,
+    "question": "THE ABC STEPS (CADIOPULMONARY RESUSCATION) IS ARRANGE OF STEPS:",
+    "options": [
+      "ABC",
+      "lumban",
+      "BCA",
+      "CAB"
+    ],
+    "correctIndex": 3,
+    "explanation": "Compressions - Airway - Breathing (current guidelines).",
+    "source": "Page 9"
+  }
+    ];
+
+    // Initialize state
+    const quizState = JSON.parse(localStorage.getItem('radiologyQuizState')) || {
+        answers: {}, // Stores { questionId: selectedOptionIndex }
+        score: 0
+    };
+
+    function initQuiz() {
+        const container = document.getElementById('quiz-container');
+        document.getElementById('total').innerText = quizData.length;
+        updateScoreDisplay();
+
+        quizData.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            
+            const hasAnswered = quizState.answers.hasOwnProperty(q.id);
+            const selectedIdx = hasAnswered ? quizState.answers[q.id] : null;
+
+            let optionsHtml = '';
+            q.options.forEach((opt, idx) => {
+                let btnClass = 'option-btn';
+                if (hasAnswered) {
+                    if (idx === q.correctIndex) btnClass += ' correct';
+                    else if (idx === selectedIdx) btnClass += ' incorrect';
+                }
+
+                optionsHtml += `<button 
+                    class="${btnClass}" 
+                    onclick="handleAnswer(${q.id}, ${idx}, this)"
+                    ${hasAnswered ? 'disabled' : ''}
+                >
+                    ${String.fromCharCode(65 + idx)}. ${opt}
+                </button>`;
+            });
+
+            const feedbackClass = hasAnswered ? 'feedback visible' : 'feedback';
+            const feedbackText = hasAnswered 
+                ? (selectedIdx === q.correctIndex ? "<strong>Correct!</strong>" : "<strong>Incorrect.</strong> The correct answer is " + q.options[q.correctIndex] + ".") 
+                : "";
+
+            card.innerHTML = `
+                <div class="question-text">${index + 1}. ${q.question}</div>
+                <div class="options-grid" id="options-${q.id}">
+                    ${optionsHtml}
+                </div>
+                <div class="feedback ${hasAnswered ? 'visible' : ''}" id="feedback-${q.id}">
+                    ${feedbackText}
+                    <div style="margin-top:5px;">${q.explanation}</div>
+                    <span class="cite">Reference: ${q.source}</span>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function handleAnswer(qId, selectedIdx, btnElement) {
+        // Prevent accidental double clicks or re-answering
+        if (quizState.answers.hasOwnProperty(qId)) return;
+
+        const question = quizData.find(q => q.id === qId);
+        
+        // Update State
+        quizState.answers[qId] = selectedIdx;
+        if (selectedIdx === question.correctIndex) {
+            quizState.score++;
+        }
+        
+        // Save to storage
+        localStorage.setItem('radiologyQuizState', JSON.stringify(quizState));
+
+        // Update UI without refresh
+        const optionsDiv = document.getElementById(`options-${qId}`);
+        const buttons = optionsDiv.getElementsByTagName('button');
+        
+        // Disable all buttons and apply classes
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].disabled = true;
+            if (i === question.correctIndex) {
+                buttons[i].classList.add('correct');
+            } else if (i === selectedIdx) {
+                buttons[i].classList.add('incorrect');
+            }
+        }
+
+        // Show feedback
+        const feedbackDiv = document.getElementById(`feedback-${qId}`);
+        const resultText = selectedIdx === question.correctIndex ? "<strong>Correct!</strong>" : "<strong>Incorrect.</strong> The correct answer is " + question.options[question.correctIndex] + ".";
+        
+        feedbackDiv.innerHTML = `
+            ${resultText}
+            <div style="margin-top:5px;">${question.explanation}</div>
+            <span class="cite">Reference: ${question.source}</span>
+        `;
+        feedbackDiv.classList.add('visible');
+
+        updateScoreDisplay();
+    }
+
+    function updateScoreDisplay() {
+        document.getElementById('score').innerText = quizState.score;
+    }
+
+    function resetQuiz() {
+        if(confirm("Are you sure you want to reset your progress?")) {
+            localStorage.removeItem('radiologyQuizState');
+            location.reload();
+        }
+    }
+
+    // Run initialization
+    initQuiz();
+</script>
+
+</body>
+</html>

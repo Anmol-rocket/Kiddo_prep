@@ -11,30 +11,45 @@ export const metadata: Metadata = {
   title: "KIDDOPREP - AIIMS CRE Exam Prep",
   description: "Professional exam preparation for AIIMS CRE with interactive MCQs",
   generator: "v0.app",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "KIDDOPREP",
+  },
   icons: {
     icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
       {
         url: "/icon.svg",
         type: "image/svg+xml",
       },
+      {
+        url: "/icon-light-32x32.svg",
+        media: "(prefers-color-scheme: light)",
+        type: "image/svg+xml",
+      },
+      {
+        url: "/icon-dark-32x32.svg",
+        media: "(prefers-color-scheme: dark)",
+        type: "image/svg+xml",
+      },
     ],
-    apple: "/apple-icon.png",
+    apple: [
+      { url: "/icon-192x192.svg", sizes: "192x192", type: "image/svg+xml" },
+      { url: "/icon-512x512.svg", sizes: "512x512", type: "image/svg+xml" },
+    ],
   },
 }
 
 // Next.js recommends exporting `viewport` separately for the App Router.
 export const viewport = {
   width: "device-width",
-  initialScale: 1,
+  initialSize: 1,
   maximumScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f0a1a" },
+  ],
 }
 
 export default function RootLayout({

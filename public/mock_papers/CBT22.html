@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIIMS CBT - Sectional Timing Mode</title>
+    <style>
+        :root {
+            --header-bg: #3f51b5;
+            --header-text: #fff;
+            --panel-bg: #f5f5f5;
+            --pallet-answered: #4caf50;
+            --pallet-not-answered: #f44336;
+            --pallet-review: #9c27b0;
+            --pallet-not-visited: #e0e0e0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #fff; }
+
+        /* --- Header --- */
+        header {
+            background: var(--header-bg); color: var(--header-text);
+            padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+            height: 60px; flex-shrink: 0;
+        }
+        .timer { font-size: 1.2rem; font-weight: bold; background: #fff; color: #d32f2f; padding: 5px 15px; border-radius: 4px; border: 2px solid #d32f2f; }
+
+        /* --- Main Layout --- */
+        .main-container { display: flex; flex: 1; overflow: hidden; }
+        
+        .question-area { flex: 1; display: flex; flex-direction: column; padding: 20px; overflow-y: auto; }
+        .q-header { display: flex; justify-content: space-between; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.5; }
+        
+        .options-container { display: flex; flex-direction: column; gap: 10px; }
+        .option-label { 
+            display: flex; align-items: center; padding: 10px; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; transition: 0.2s; 
+        }
+        .option-label:hover { background: #f0f8ff; }
+        .option-label input { margin-right: 15px; transform: scale(1.2); }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px; background: var(--panel-bg); border-left: 1px solid #ccc;
+            display: flex; flex-direction: column; flex-shrink: 0;
+        }
+        .user-info { padding: 10px; background: #e8eaf6; border-bottom: 1px solid #ccc; }
+        
+        .palette-legend { padding: 10px; font-size: 0.8rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: #fff; }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+        .question-grid { 
+            padding: 10px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; 
+            overflow-y: auto; flex: 1; align-content: start;
+        }
+        .q-btn {
+            height: 35px; width: 35px; border: 1px solid #ccc; background: #fff; 
+            border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .q-btn.answered { background: var(--pallet-answered); color: white; border-color: var(--pallet-answered); }
+        .q-btn.not-answered { background: var(--pallet-not-answered); color: white; border-color: var(--pallet-not-answered); }
+        .q-btn.review { background: var(--pallet-review); color: white; border-radius: 50%; }
+        .q-btn.current { border: 2px solid blue; box-shadow: 0 0 5px blue; }
+        .q-btn.locked { opacity: 0.4; cursor: not-allowed; background: #444 !important; color: #888; border: 1px solid #000; }
+
+        /* Footer */
+        .footer-controls {
+            height: 60px; background: #fff; border-top: 1px solid #ccc;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+        }
+        .btn { padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+        .btn-primary { background: #2196f3; color: white; }
+        .btn-success { background: #4caf50; color: white; }
+        .btn-warn { background: #ff9800; color: white; }
+        .btn-danger { background: #f44336; color: white; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* Mobile */
+        .mobile-toggle { display: none; background: none; border: none; color: white; font-size: 1.5rem; }
+        @media (max-width: 768px) {
+            .mobile-toggle { display: block; }
+            .sidebar { 
+                position: absolute; right: 0; top: 60px; bottom: 60px; z-index: 100;
+                transform: translateX(100%); transition: transform 0.3s; width: 85%;
+            }
+            .sidebar.active { transform: translateX(0); }
+            .question-grid { grid-template-columns: repeat(6, 1fr); }
+            .footer-controls { flex-wrap: wrap; gap: 5px; height: auto; padding: 10px; }
+            .btn { flex: 1; padding: 8px; font-size: 0.8rem; }
+        }
+
+        /* Overlay */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .hidden { display: none !important; }
+        
+        .review-panel { display: none; padding: 20px; height: 100%; overflow-y: auto; background:#f9f9f9;}
+        .review-item { margin-bottom: 20px; border: 1px solid #ddd; padding: 15px; border-radius: 5px; background:white; }
+        .explanation { background: #fff3cd; padding: 10px; margin-top: 10px; font-size: 0.9rem; border-left: 4px solid #ffc107; }
+
+    </style>
+</head>
+<body>
+
+    <div id="landingPage" class="overlay">
+        <h1>AIIMS CRE CBT (Strict Pattern)</h1>
+        <div style="width: 80%; max-width: 600px; text-align: left; margin: 20px 0;">
+            <h3>Exam Rules:</h3>
+            <ul>
+                <li><strong>Questions:</strong> 100 (5 Sections of 20 questions each).</li>
+                <li><strong>Timing:</strong> 18 Minutes per section (Strictly Dedicated).</li>
+                <li><strong>Total Time:</strong> 90 Minutes.</li>
+                <li><strong>Locking:</strong> Once 18 mins are up, or if you manually proceed to the next section, you <u>cannot</u> return to the previous section.</li>
+                <li><strong>Marking:</strong> +4 Correct, -1 Incorrect.</li>
+            </ul>
+        </div>
+        <button class="btn btn-success" style="font-size: 1.2rem;" onclick="startExam()">START EXAM</button>
+    </div>
+
+    <header id="examHeader" class="hidden">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <h3>AIIMS Radiographer</h3>
+            <span style="font-size:0.8rem; background:#eee; padding:2px 6px; border-radius:4px; color:#333;" id="sectionLabel">Section 1</span>
+        </div>
+        <div class="timer" id="timerDisplay">18:00</div>
+        <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+    </header>
+
+    <div class="main-container hidden" id="examBody">
+        <div class="question-area">
+            <div class="q-header">
+                <span id="qNumDisplay">Question No. 1</span>
+                <span style="color: #666;">Marks: +4, -1</span>
+            </div>
+            <div id="questionText" class="q-text">Loading...</div>
+            <div id="optionsBox" class="options-container"></div>
+        </div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="user-info">
+                <strong>Candidate Name</strong><br><small>Roll No: 123456</small>
+            </div>
+            <div class="palette-legend">
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-answered)"></span> Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-not-answered)"></span> Not Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-review)"></span> Review</div>
+                <div class="legend-item"><span class="dot" style="background:#444"></span> Locked</div>
+            </div>
+            <div class="question-grid" id="questionPalette"></div>
+            <div style="padding:10px; margin-top:auto;">
+                <button class="btn btn-primary" style="width:100%" onclick="submitExam()">FINISH EXAM</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-controls hidden" id="examFooter">
+        <div style="display:flex; gap:10px;">
+            <button class="btn btn-danger" onclick="clearResponse()">Clear</button>
+            <button class="btn btn-warn" onclick="markForReview()">Review</button>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <button class="btn" onclick="prevQuestion()" id="btnPrev">Previous</button>
+            <button class="btn btn-success" onclick="saveAndNext()">Save & Next</button>
+        </div>
+    </div>
+
+    <div id="resultPage" class="overlay hidden" style="display:block; overflow-y:auto; justify-content:start; padding-top:40px;">
+        <h2 style="text-align:center;">Exam Summary</h2>
+        <div id="scoreCard" style="margin: 20px auto; width:90%; max-width:600px; padding: 20px; border: 1px solid #ccc; text-align: center; background:#fff;"></div>
+        <div style="display:flex; justify-content:center; gap:20px; margin-bottom:20px;">
+            <button class="btn btn-primary" onclick="showDetailedReview()">Review Solutions</button>
+            <button class="btn btn-danger" onclick="location.reload()">Exit</button>
+        </div>
+        <div id="detailedReview" class="review-panel" style="width: 90%; max-width: 800px; margin:0 auto;"></div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const TOTAL_QUESTIONS = 100;
+        const SECTION_SIZE = 20; // 20 questions per section
+        const SECTION_TIME_LIMIT = 18 * 60; // 18 minutes in seconds
+        
+        let questions = [];
+
+function generateQuestions() {
+        const createQ = (id, type, text, opts, ans, exp) => ({ id, type, text, opts, ans, exp });
+        questions = []; // Reset array
+
+        // --- SECTION A: NON-CORE (1-20) ---
+        // Mixed Difficulty (Standard AIIMS Pattern)
+
+        const nonCoreData = [
+            // Reasoning & Math
+            ["A mother is three times as old as her daughter. Six years ago, the mother was five times as old as the daughter. What is the daughter's present age?", ["12", "15", "18", "20"], 0, "Let daughter = x, Mother = 3x. 6 years ago: (3x-6) = 5(x-6). 3x-6 = 5x-30. 2x=24. x=12."],
+            ["If 'SKY' is coded as 'T LZ', how is 'ROCK' coded?", ["S P D L", "S Q D L", "S P C L", "R P D L"], 0, "Next letter: R->S, O->P, C->D, K->L. (S P D L)."],
+            ["Find the next number in the series: 2, 6, 12, 20, 30, ?", ["40", "42", "44", "46"], 1, "Differences are +4, +6, +8, +10. Next is +12. 30+12 = 42."],
+            ["A man points to a lady and says, 'She is the daughter of the woman who is the mother of the husband of my mother.' Who is the lady to the man?", ["Aunt", "Granddaughter", "Sister", "Cousin"], 0, "'Husband of my mother' = Father. 'Mother of my father' = Grandmother. 'Daughter of Grandmother' = Father's sister = Aunt."],
+            ["In a class of 60 students, the number of girls is twice that of boys. How many boys are there?", ["10", "15", "20", "30"], 2, "Boys=x, Girls=2x. 3x=60. x=20."],
+
+            // GK (Current & Static)
+            ["Which Indian state is known as the 'Spice Garden of India'?", ["Karnataka", "Kerala", "Assam", "Tamil Nadu"], 1, "Kerala."],
+            ["The 'Nobel Peace Prize' is awarded in which city?", ["Stockholm", "Geneva", "Oslo", "New York"], 2, "Oslo, Norway. (All others in Stockholm)."],
+            ["Who is the current Governor of the Reserve Bank of India (RBI)?", ["Urjit Patel", "Shaktikanta Das", "Raghuram Rajan", "Nirmala Sitharaman"], 1, "Shaktikanta Das."],
+            ["The 'Chipko Movement' was related to:", ["Water Conservation", "Forest Conservation", "Tiger Protection", "Soil Fertility"], 1, "Forest Conservation (Sundarlal Bahuguna)."],
+            ["Which gas protects us from UV rays in the atmosphere?", ["Oxygen", "Nitrogen", "Ozone", "Argon"], 2, "Ozone (O3)."],
+
+            // English
+            ["Synonym of 'ABUNDANT':", ["Scarce", "Rare", "Plentiful", "Empty"], 2, "Plentiful."],
+            ["Antonym of 'TRANSPARENT':", ["Clear", "Opaque", "Lucid", "Vivid"], 1, "Opaque."],
+            ["Idiom 'To kick the bucket' means:", ["To start a fight", "To die", "To play a game", "To clean up"], 1, "To die."],
+            ["'He is addicted ___ gambling.'", ["of", "with", "to", "for"], 2, "Addicted TO."],
+            ["Find the correct spelling:", ["Accomodation", "Accommodation", "Acommodation", "Accommodetion"], 1, "Accommodation (Double C, Double M)."],
+
+            // Computers
+            ["Which shortcut creates a 'New Folder' in Windows?", ["Ctrl+N", "Ctrl+Shift+N", "Alt+N", "Shift+N"], 1, "Ctrl+Shift+N."],
+            ["'HTTP' stands for:", ["Hyper Text Transfer Protocol", "High Text Transfer Protocol", "Hyper Transfer Text Protocol", "None"], 0, "Hyper Text Transfer Protocol."],
+            ["1 Gigabyte (GB) is equal to:", ["1024 MB", "1000 MB", "1024 KB", "1024 TB"], 0, "1024 MB."],
+            ["Which is an 'Output' device?", ["Mouse", "Scanner", "Plotter", "Keyboard"], 2, "Plotter."],
+            ["'RAM' is a type of:", ["Secondary Memory", "Volatile Memory", "Non-Volatile Memory", "Optical Memory"], 1, "Volatile."]
+        ];
+        nonCoreData.forEach((d, i) => questions.push(createQ(i + 1, "Non-Core", d[0], d[1], d[2], d[3])));
+
+
+        // --- SECTION B: CORE (21-100) ---
+        // "Must Know" Topics for Exam Day
+
+        const coreData = [
+            // 1. Physics & Equipment (21-40)
+            ["The target material in a general diagnostic X-ray tube is typically made of:", ["Copper", "Molybdenum", "Tungsten", "Lead"], 2, "Tungsten (High melting point Z=74)."],
+            ["Which interaction is responsible for 'Fog' on the radiograph?", ["Photoelectric", "Compton Scattering", "Coherent", "Pair Production"], 1, "Compton Scatter reduces contrast."],
+            ["To reduce patient skin dose, the primary X-ray beam is:", ["Filtered", "Focused", "Grid-controlled", "Rectified"], 0, "Filtration removes soft rays."],
+            ["The 'Line Focus Principle' allows for a:", ["Large actual focal spot, Small effective focal spot", "Small actual, Large effective", "Small actual, Small effective", "Large actual, Large effective"], 0, "Large Actual (Heat), Small Effective (Detail)."],
+            ["'Grid Ratio' is calculated as:", ["Height / Distance", "Distance / Height", "Height * Distance", "Lines per inch"], 0, "Height of strips / Distance between them (h/D)."],
+            ["Which generator has the LOWEST voltage ripple?", ["Single Phase", "Three Phase 6-Pulse", "Three Phase 12-Pulse", "High Frequency"], 3, "High Frequency (<1%)."],
+            ["If the SID is doubled, the intensity of the beam becomes:", ["1/2", "1/4", "Double", "4 times"], 1, "Inverse Square Law (1/2^2 = 1/4)."],
+            ["'Quantum Mottle' is caused by:", ["High mAs", "Insufficient photons (Low Signal)", "High kVp", "Grid lines"], 1, "Photon starvation (Noise)."],
+            ["The 'Active Layer' of a PSP (CR) plate contains:", ["Silver Halide", "Barium Fluorohalide", "Amorphous Selenium", "Cesium Iodide"], 1, "BaFBr:Eu."],
+            ["'DQE' (Detective Quantum Efficiency) measures:", ["Resolution", "System dose efficiency", "Contrast", "Speed"], 1, "How efficiently X-rays are converted to image."],
+            ["The 'Anode Heel Effect' is more pronounced with:", ["Long SID", "Short SID", "Large Anode Angle", "Small Field Size"], 1, "Short SID uses the divergent (uneven) part of the beam."],
+            ["'Leakage Radiation' limit for tube housing:", ["10 mR/hr", "100 mR/hr (1 mGy/hr) at 1m", "500 mR/hr", "1 R/hr"], 1, "100 mR/hr."],
+            ["Which device measures 'Focal Spot Size'?", ["Spinning Top", "Star Pattern", "Penetrometer", "Densitometer"], 1, "Star Pattern or Slit Camera."],
+            ["'Tenth Value Layer' (TVL) is equal to approx:", ["2 HVL", "3.3 HVL", "10 HVL", "5 HVL"], 1, "3.3 HVLs."],
+            ["Which interaction provides the most 'Subject Contrast'?", ["Compton", "Photoelectric Effect", "Coherent", "Pair Production"], 1, "Photoelectric (depends on Z)."],
+            ["'Heat Units' (HU) for a Single Phase unit = ?", ["kVp x mA x s", "kVp x mA x s x 1.35", "kVp x mA x s x 1.41", "None"], 0, "Factor is 1.0."],
+            ["Which matrix size offers the best resolution?", ["256x256", "512x512", "1024x1024", "2048x2048"], 3, "Largest Matrix = Smallest Pixels."],
+            ["'Air Gap Technique' reduces scatter by:", ["Filtering the beam", "Allowing scatter to miss the receptor due to OID", "Absorbing scatter", "Collimation"], 1, "Divergent scatter misses the film."],
+            ["'Back-up Timer' in AEC should be set to:", ["100% of expected mAs", "150-200% of expected mAs", "50%", "10s"], 1, "Safety margin of 1.5x."],
+            ["The 'Input Phosphor' of an II tube is made of:", ["ZnCdS", "Cesium Iodide (CsI)", "Calcium Tungstate", "Gadolinium"], 1, "CsI."],
+
+            // 2. Anatomy & Procedures (41-65)
+            ["The 'Olecranon Process' is located on the:", ["Humerus", "Radius", "Ulna", "Scapula"], 2, "Proximal Ulna."],
+            ["'Colles Fracture' involves the:", ["Distal Radius", "Proximal Ulna", "Scaphoid", "Humerus"], 0, "Distal Radius (Dorsal tilt)."],
+            ["To visualize the 'Scaphoid' bone, the wrist is positioned in:", ["Radial Deviation", "Ulnar Deviation", "Flexion", "Extension"], 1, "Ulnar Deviation."],
+            ["The 'Sella Turcica' houses the:", ["Pineal Gland", "Pituitary Gland", "Thyroid", "Thalamus"], 1, "Pituitary."],
+            ["'Stenvers View' is used for:", ["Orbits", "Petrous Temporal Bone", "Mandible", "Sinuses"], 1, "Petrous Ridge."],
+            ["The 'Common Bile Duct' empties into the:", ["Stomach", "Duodenum", "Jejunum", "Ileum"], 1, "Duodenum (Ampulla of Vater)."],
+            ["'McBurney's Point' is the landmark for:", ["Gallbladder", "Appendix", "Spleen", "Kidney"], 1, "Appendix."],
+            ["Which carpal bone has a 'Hook'?", ["Scaphoid", "Hamate", "Capitate", "Lunate"], 1, "Hamate."],
+            ["The 'Vertebra Prominens' is:", ["C2", "C7", "T1", "L5"], 1, "C7."],
+            ["'Spondylolisthesis' is best seen on which view?", ["AP", "Lateral", "Oblique", "Open Mouth"], 1, "Lateral (Slippage)."],
+            ["'Pars Interarticularis' is best seen on:", ["AP", "Lateral", "Oblique", "Flexion"], 2, "Oblique (Scottie Dog)."],
+            ["'Waters View' shows the:", ["Frontal Sinus", "Maxillary Sinus", "Sphenoid", "Ethmoid"], 1, "Maxillary Sinuses."],
+            ["'Hysterosalpingography' (HSG) investigates:", ["Uterine Fibroids", "Tubal Patency", "Ovarian Cysts", "Cervix"], 1, "Fallopian Tubes."],
+            ["'Myelography' contrast is injected into the:", ["Epidural space", "Subarachnoid space", "Subdural space", "Disc"], 1, "Subarachnoid space."],
+            ["'Sialography' examines:", ["Salivary Glands", "Veins", "Spine", "Joints"], 0, "Salivary Glands."],
+            ["The 'Glenoid Cavity' is part of the:", ["Humerus", "Scapula", "Clavicle", "Sternum"], 1, "Scapula."],
+            ["'Pott's Fracture' involves the:", ["Wrist", "Ankle", "Knee", "Elbow"], 1, "Ankle (Distal Tibia/Fibula)."],
+            ["The 'Xiphoid Process' is at level:", ["T4", "T10", "L2", "S1"], 1, "T9-T10."],
+            ["'Hirschsprung's Disease' affects the:", ["Stomach", "Small Bowel", "Colon", "Esophagus"], 2, "Colon (Megacolon)."],
+            ["'Zenker's Diverticulum' is found in the:", ["Esophagus", "Stomach", "Colon", "Bladder"], 0, "Upper Esophagus."],
+            ["'Volvulus' of the Sigmoid Colon appears as:", ["Apple Core", "Coffee Bean Sign", "Bird Beak", "String Sign"], 1, "Coffee Bean."],
+            ["'Intussusception' appears as:", ["Target / Donut Sign", "Lead Pipe", "Saw Tooth", "Rat Tail"], 0, "Target Sign."],
+            ["'Bamboo Spine' is seen in:", ["Osteoporosis", "Ankylosing Spondylitis", "Scoliosis", "Metastasis"], 1, "Ankylosing Spondylitis."],
+            ["'Codman's Triangle' indicates:", ["Benign Cyst", "Osteosarcoma", "Fracture", "Infection"], 1, "Malignant bone tumor."],
+            ["'Greenstick Fracture' is common in:", ["Elderly", "Children", "Athletes", "Soldiers"], 1, "Children."],
+
+            // 3. CT/MRI/USG (66-85)
+            ["CT Number for 'Water' is:", ["+1000", "0", "-1000", "+50"], 1, "0 HU."],
+            ["'Window Width' in CT controls:", ["Brightness", "Contrast", "Resolution", "Dose"], 1, "Contrast."],
+            ["'Ring Artifact' in CT is caused by:", ["Motion", "Detector Failure", "Beam Hardening", "Metal"], 1, "3rd Gen Detector fault."],
+            ["'Pitch' > 1 in CT implies:", ["Overlapping slices", "Gaps in data (Lower Dose)", "Higher resolution", "Slower scan"], 1, "Faster scan, Gaps."],
+            ["In MRI, Fluid is 'Bright' on:", ["T1", "T2", "PD", "FLAIR"], 1, "T2 Weighted."],
+            ["'STIR' sequence suppresses:", ["Water", "Fat", "Bone", "Flow"], 1, "Fat."],
+            ["'Gadolinium' shortens:", ["T1 relaxation", "T2 relaxation", "PD", "TR"], 0, "T1 (Bright on T1)."],
+            ["'Diffusion Weighted Imaging' (DWI) detects:", ["Blood Flow", "Acute Stroke (Restricted Diffusion)", "Fat", "Calcification"], 1, "Acute Stroke."],
+            ["'TOF MRA' relies on:", ["Flow Related Enhancement", "Phase Shift", "Contrast", "Subtraction"], 0, "Inflow effect."],
+            ["In USG, 'Acoustic Shadowing' is seen behind:", ["Fluid", "Stone / Bone", "Liver", "Spleen"], 1, "Calculi."],
+            ["'Posterior Enhancement' in USG is seen behind:", ["Bone", "Cyst / Fluid", "Solid Mass", "Air"], 1, "Fluid."],
+            ["'Mirror Image' artifact in USG occurs at the:", ["Diaphragm", "Kidney", "Aorta", "Skin"], 0, "Diaphragm."],
+            ["'Doppler Shift' measures:", ["Tissue Stiffness", "Flow Velocity", "Temp", "Density"], 1, "Velocity."],
+            ["'PET' scan detects:", ["Protons", "Annihilation Photons (511 keV)", "Electrons", "Neutrons"], 1, "Gamma rays."],
+            ["'FDG' is an analog of:", ["Fat", "Glucose", "Protein", "Oxygen"], 1, "Glucose."],
+            ["'Quench' in MRI is:", ["Cooling", "Loss of Superconductivity", "Start up", "Reset"], 1, "Emergency shutdown."],
+            ["'Chemical Shift' artifact occurs in the:", ["Phase Encoding direction", "Frequency Encoding direction", "Slice Select", "Readout"], 1, "Frequency direction."],
+            ["'Aliasing' (Wrap-around) occurs when:", ["FOV is too small", "FOV is too large", "TR is too long", "TE is too short"], 0, "Anatomy outside FOV."],
+            ["'Beam Hardening' in CT causes:", ["Dark Streaks / Cupping", "Rings", "Blur", "Dots"], 0, "Streaks."],
+            ["'Isotropic Voxel' means:", ["Pixel is square", "Voxel is a perfect cube", "Slice is thick", "None"], 1, "Equal dimensions."],
+
+            // 4. Contrast & Emergency (86-100)
+            ["Which contrast is 'Iso-osmolar'?", ["Iohexol", "Iopamidol", "Iodixanol (Visipaque)", "Diatrizoate"], 2, "Iodixanol."],
+            ["'Metformin' is stopped to prevent:", ["Hypoglycemia", "Lactic Acidosis", "Allergy", "Bleeding"], 1, "MALA."],
+            ["Treatment for 'Anaphylaxis':", ["Atropine", "Digoxin", "Adrenaline", "Heparin"], 2, "Adrenaline."],
+            ["'Atropine' is used for:", ["Tachycardia", "Bradycardia", "Hypertension", "Vomiting"], 1, "Increases heart rate."],
+            ["'Universal Donor' is:", ["AB+", "A+", "O Negative", "B-"], 2, "O Negative."],
+            ["'Sterilization' kills:", ["Bacteria only", "Viruses only", "All forms (Spores included)", "Fungi"], 2, "All life."],
+            ["'Nosocomial' means:", ["Community Acquired", "Hospital Acquired", "Genetic", "Congenital"], 1, "Hospital Acquired."],
+            ["'Needle Stick Injury' first step:", ["Squeeze", "Bandage", "Wash with soap/water", "Report"], 2, "Wash."],
+            ["'Normal Creatinine' range:", ["2.0 - 5.0", "5.0 - 10.0", "0.6 - 1.2 mg/dL", "0.1 - 0.2"], 2, "0.6-1.2."],
+            ["'Syncope' means:", ["Vomiting", "Seizure", "Fainting", "Bleeding"], 2, "Fainting."],
+            ["'Nitroglycerin' is used for:", ["Headache", "Nausea", "Angina (Chest Pain)", "Fever"], 2, "Angina."],
+            ["'Heparin' is an:", ["Antibiotic", "Analgesic", "Anticoagulant", "Contrast"], 2, "Blood thinner."],
+            ["'Shock' with low BP and high pulse is typically:", ["Neurogenic", "Septic", "Hypovolemic", "Anaphylactic"], 2, "Hypovolemic."],
+            ["'Pulse Oximeter' measures:", ["BP", "Temp", "SpO2", "Glucose"], 2, "Oxygen Saturation."],
+            ["'Triage' means:", ["Treating everyone", "Billing", "Sorting based on priority", "Discharge"], 2, "Prioritizing."]
+        ];
+
+        coreData.forEach((d, i) => questions.push(createQ(21 + i, "Core", d[0], d[1], d[2], d[3])));
+    }
+
+        // --- STATE MANAGEMENT ---
+        let state = {
+            currentQ: 0,
+            answers: new Array(TOTAL_QUESTIONS).fill(null),
+            status: new Array(TOTAL_QUESTIONS).fill('not-visited'),
+            currentSection: 1,      // 1 to 5
+            sectionTimeLeft: SECTION_TIME_LIMIT,
+            maxSetReached: 1,       // Tracks highest section unlocked
+            isFinished: false
+        };
+
+        const els = {
+            landing: document.getElementById('landingPage'),
+            header: document.getElementById('examHeader'),
+            body: document.getElementById('examBody'),
+            footer: document.getElementById('examFooter'),
+            result: document.getElementById('resultPage'),
+            qText: document.getElementById('questionText'),
+            optsBox: document.getElementById('optionsBox'),
+            qNum: document.getElementById('qNumDisplay'),
+            sectionLabel: document.getElementById('sectionLabel'),
+            palette: document.getElementById('questionPalette'),
+            timer: document.getElementById('timerDisplay'),
+            btnPrev: document.getElementById('btnPrev'),
+            sidebar: document.getElementById('sidebar')
+        };
+
+        let timerInterval;
+
+        function init() {
+            generateQuestions(); // Load data
+            // Persistence check could go here, but for strict timing, fresh start is safer
+            els.landing.classList.remove('hidden');
+            els.result.classList.add('hidden');
+        }
+
+        function startExam() {
+            els.landing.classList.add('hidden');
+            renderExamInterface();
+            startSectionTimer();
+        }
+
+        function startSectionTimer() {
+            if(timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                state.sectionTimeLeft--;
+                
+                // Format Time
+                const m = Math.floor(state.sectionTimeLeft / 60);
+                const s = state.sectionTimeLeft % 60;
+                els.timer.innerText = `${m}:${s < 10 ? '0'+s : s}`;
+                
+                // Visual Warning
+                if(state.sectionTimeLeft < 60) els.timer.style.backgroundColor = "#ffcdd2";
+                else els.timer.style.backgroundColor = "#fff";
+
+                // Time Up Logic
+                if (state.sectionTimeLeft <= 0) {
+                    handleSectionTimeout();
+                }
+            }, 1000);
+        }
+
+        function handleSectionTimeout() {
+            clearInterval(timerInterval);
+            
+            if (state.currentSection < 5) {
+                alert(`Time is up for Section ${state.currentSection}! Moving to Section ${state.currentSection + 1}.`);
+                forceNextSection();
+            } else {
+                alert("Time is up for the final section! Submitting Exam.");
+                finishExam();
+            }
+        }
+
+        function forceNextSection() {
+            state.currentSection++;
+            state.maxSetReached = state.currentSection;
+            state.sectionTimeLeft = SECTION_TIME_LIMIT;
+            
+            // Move to first question of next section
+            const firstQofNextSection = (state.currentSection - 1) * SECTION_SIZE;
+            loadQuestion(firstQofNextSection);
+            startSectionTimer();
+        }
+
+        function renderExamInterface() {
+            els.header.classList.remove('hidden');
+            els.body.classList.remove('hidden');
+            els.footer.classList.remove('hidden');
+            renderPalette();
+            loadQuestion(state.currentQ);
+        }
+
+        function loadQuestion(index) {
+            state.currentQ = index;
+            if(state.status[index] === 'not-visited') state.status[index] = 'not-answered';
+
+            // Update Section Label
+            const secNum = Math.floor(index / SECTION_SIZE) + 1;
+            els.sectionLabel.innerText = `Section ${secNum} (Q${(secNum-1)*20 + 1}-${secNum*20})`;
+
+            // Render Text
+            els.qNum.innerText = `Question ${index + 1}`;
+            els.qText.innerText = questions[index].text;
+            
+            // Render Options
+            els.optsBox.innerHTML = '';
+            questions[index].opts.forEach((opt, i) => {
+                const isChecked = state.answers[index] === i ? 'checked' : '';
+                els.optsBox.innerHTML += `
+                    <label class="option-label">
+                        <input type="radio" name="opt" value="${i}" ${isChecked} onchange="selectOption(${i})">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            // Update Palette UI
+            document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('current'));
+            const currentBtn = document.getElementById(`qbtn-${index}`);
+            if(currentBtn) currentBtn.classList.add('current');
+
+            // Handle Prev Button State (Cannot go back to previous locked section)
+            const startOfCurrentSection = (state.currentSection - 1) * SECTION_SIZE;
+            els.btnPrev.disabled = (index <= startOfCurrentSection);
+        }
+
+        function selectOption(optIndex) {
+            state.answers[state.currentQ] = optIndex;
+        }
+
+        function saveAndNext() {
+            const index = state.currentQ;
+            // Update status
+            state.status[index] = (state.answers[index] !== null) ? 'answered' : 'not-answered';
+            
+            moveToNextQuestion();
+        }
+
+        function markForReview() {
+            const index = state.currentQ;
+            state.status[index] = (state.answers[index] !== null) ? 'marked-answered' : 'review'; // Simplified
+            moveToNextQuestion();
+        }
+
+        function clearResponse() {
+            state.answers[state.currentQ] = null;
+            state.status[state.currentQ] = 'not-answered';
+            loadQuestion(state.currentQ);
+            renderPalette();
+        }
+
+        function moveToNextQuestion() {
+            const nextIndex = state.currentQ + 1;
+            const currentSecBound = state.currentSection * SECTION_SIZE;
+
+            // Check if next question crosses section boundary
+            if (nextIndex >= currentSecBound) {
+                // End of section reached
+                if (state.currentSection < 5) {
+                    if (confirm(`You have reached the end of Section ${state.currentSection}.\nDo you want to submit this section and move to Section ${state.currentSection+1}?\n\nWARNING: You cannot return to this section.`)) {
+                        forceNextSection();
+                    }
+                } else {
+                    if(confirm("This was the last question. Submit Exam?")) {
+                        finishExam();
+                    }
+                }
+            } else {
+                // Normal movement within section
+                renderPalette();
+                loadQuestion(nextIndex);
+            }
+        }
+
+        function prevQuestion() {
+            // Logic handled in loadQuestion to disable button if at start of section
+            if (state.currentQ > 0) {
+                loadQuestion(state.currentQ - 1);
+            }
+        }
+
+        function renderPalette() {
+            els.palette.innerHTML = '';
+            for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+                let statusClass = state.status[i];
+                if(statusClass === 'marked-answered') statusClass = 'review';
+                
+                // Check if question belongs to a locked (previous) section
+                // A question is locked if its section index is < current active section
+                const qSection = Math.floor(i / SECTION_SIZE) + 1;
+                const isLocked = qSection < state.currentSection;
+                const lockedClass = isLocked ? ' locked' : '';
+                
+                // Gray out future sections
+                const isFuture = qSection > state.currentSection;
+                const futureStyle = isFuture ? 'opacity:0.3; pointer-events:none;' : '';
+
+                els.palette.innerHTML += `
+                    <div id="qbtn-${i}" 
+                         class="q-btn ${statusClass}${lockedClass}" 
+                         style="${futureStyle}"
+                         onclick="jumpToQuestion(${i})">
+                        ${i + 1}
+                    </div>
+                `;
+            }
+        }
+
+        function jumpToQuestion(index) {
+            const qSection = Math.floor(index / SECTION_SIZE) + 1;
+            
+            if (qSection < state.currentSection) {
+                alert("This section is locked.");
+                return;
+            }
+            if (qSection > state.currentSection) {
+                alert("You cannot jump to a future section yet.");
+                return;
+            }
+            
+            loadQuestion(index);
+        }
+
+        function submitExam() {
+            if(confirm("Are you sure you want to finish the exam? Unanswered questions in future sections will be marked zero.")) {
+                finishExam();
+            }
+        }
+
+        function finishExam() {
+            clearInterval(timerInterval);
+            state.isFinished = true;
+            
+            els.header.classList.add('hidden');
+            els.body.classList.add('hidden');
+            els.footer.classList.add('hidden');
+            els.result.classList.remove('hidden');
+            
+            calculateResult();
+        }
+
+        function calculateResult() {
+            let correct = 0, wrong = 0, unattempted = 0, score = 0;
+
+            state.answers.forEach((ans, i) => {
+                if (ans === null) {
+                    unattempted++;
+                } else if (questions[i] && ans === questions[i].ans) {
+                    correct++;
+                    score += 4;
+                } else {
+                    wrong++;
+                    score -= 1;
+                }
+            });
+
+            document.getElementById('scoreCard').innerHTML = `
+                <h1 style="color:#3f51b5; font-size:3rem;">${score} / 400</h1>
+                <p><strong>Correct:</strong> ${correct} (+${correct*4})</p>
+                <p><strong>Incorrect:</strong> ${wrong} (-${wrong})</p>
+                <p><strong>Unattempted:</strong> ${unattempted}</p>
+            `;
+        }
+
+        function showDetailedReview() {
+            const container = document.getElementById('detailedReview');
+            container.style.display = 'block';
+            container.innerHTML = '<h3>Detailed Solutions</h3>';
+            
+            questions.forEach((q, i) => {
+                const userAns = state.answers[i];
+                const isCorrect = userAns === q.ans;
+                const statusColor = userAns === null ? 'gray' : (isCorrect ? 'green' : 'red');
+                const statusText = userAns === null ? 'Skipped' : (isCorrect ? 'Correct' : 'Incorrect');
+
+                let optsHtml = '';
+                q.opts.forEach((opt, oi) => {
+                    let style = '';
+                    if (oi === q.ans) style = 'font-weight:bold; color:green;'; 
+                    if (oi === userAns && !isCorrect) style = 'font-weight:bold; color:red;'; 
+                    optsHtml += `<div style="${style}">${oi+1}. ${opt}</div>`;
+                });
+
+                container.innerHTML += `
+                    <div class="review-item">
+                        <div style="color:${statusColor}; font-weight:bold; margin-bottom:5px;">Q${i+1}: ${statusText}</div>
+                        <div>${q.text}</div>
+                        <div style="margin:10px 0; padding-left:15px; border-left:3px solid #ddd;">${optsHtml}</div>
+                        <div class="explanation"><strong>Explanation:</strong> ${q.exp}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleSidebar() {
+            els.sidebar.classList.toggle('active');
+        }
+
+        // Initialize
+        init();
+
+    </script>
+</body>
+</html>

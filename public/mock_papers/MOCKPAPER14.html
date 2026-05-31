@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>AIIMS CRE Radiographer</title>
+
+<style>
+:root{
+  --primary:#e11d48;
+  --secondary:#9f1239;
+  --bg:#fff1f2;
+  --text:#1f2937;
+  --correct:#10b981;
+  --wrong:#ef4444;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system;
+  background:var(--bg);
+  padding-bottom:90px;
+}
+
+.container{max-width:900px;margin:auto;padding:15px}
+
+header{
+  position:sticky;top:0;z-index:10;
+  background:#fff;
+  padding:12px 15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-top:4px solid var(--secondary);
+  border-radius:0 0 12px 12px;
+}
+
+h1{margin:0;font-size:1.1rem;color:var(--secondary)}
+.exam-info{font-size:.75rem;color:#666}
+
+.header-right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+#timer{
+  background:#111827;
+  color:#fff;
+  padding:6px 10px;
+  border-radius:8px;
+  font-weight:700;
+  font-size:.85rem;
+}
+
+#progress{
+  background:#fff;
+  padding:5px 10px;
+  border-radius:20px;
+  font-weight:600;
+  font-size:.85rem;
+}
+
+.question-card{
+  background:#fff;
+  margin-top:15px;
+  padding:20px;
+  border-radius:12px;
+}
+
+.question-text{
+  font-weight:600;
+  margin-bottom:15px;
+}
+
+.options-grid{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.option-label{
+  display:flex;
+  gap:10px;
+  padding:12px;
+  border:1px solid #e5e7eb;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.option-label.selected{
+  border-color:var(--primary);
+  background:#fff1f2;
+}
+
+.option-label.correct{
+  border-color:var(--correct);
+  background:#dcfce7;
+  font-weight:600;
+}
+
+.option-label.wrong{
+  border-color:var(--wrong);
+  background:#fee2e2;
+  font-weight:600;
+}
+
+input[type=radio]{accent-color:var(--primary)}
+
+.explanation{
+  margin-top:10px;
+  font-size:.9rem;
+  color:#374151;
+}
+
+.submit-btn{
+  width:100%;
+  margin-top:25px;
+  padding:16px;
+  background:var(--secondary);
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  font-size:1.05rem;
+  font-weight:700;
+}
+
+/* RESULT MODAL */
+#result-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  z-index:100;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.result-box{
+  background:#fff;
+  max-width:420px;
+  width:100%;
+  padding:25px;
+  border-radius:16px;
+  text-align:center;
+}
+
+.score{
+  font-size:2.4rem;
+  font-weight:800;
+  color:var(--primary);
+}
+
+.result-btn{
+  width:100%;
+  margin-top:10px;
+  padding:14px;
+  border:none;
+  border-radius:8px;
+  font-weight:600;
+}
+
+.review-btn{background:var(--primary);color:#fff}
+.reset-btn{background:#374151;color:#fff}
+</style>
+</head>
+
+<body>
+<div class="container">
+<header>
+  <div>
+    <h1>AIIMS CRE Paper</h1>
+    <div class="exam-info">400 Marks | +4 / -1</div>
+  </div>
+  <div class="header-right">
+    <div id="timer">01:30:00</div>
+    <div id="progress"><span id="attempted">0</span> / 100</div>
+  </div>
+</header>
+
+<div id="quiz"></div>
+<button class="submit-btn" onclick="submitExam()">SUBMIT PAPER</button>
+</div>
+
+<!-- RESULT -->
+<div id="result-modal">
+<div class="result-box">
+  <h2>Result</h2>
+  <div class="score"><span id="score">0</span>/400</div>
+  <p>
+    Correct: <b id="c"></b> |
+    Wrong: <b id="w"></b> |
+    Skipped: <b id="s"></b><br>
+    Accuracy: <b id="acc"></b>%
+  </p>
+  <button class="result-btn review-btn" onclick="startReview()">REVIEW PAPER</button>
+  <button class="result-btn reset-btn" onclick="resetExam()">RESET</button>
+</div>
+</div>
+
+<script>
+/* ================== QUESTIONS ==================
+   PASTE YOUR questionsDB ARRAY HERE
+================================================ */
+// const questionsDB = [ ... ];
+const questionsDB = [
+    // =========================================================================
+    // PART A: NON-CORE (20 Questions) - Reasoning, Quant, GK, English
+    // =========================================================================
+    
+    {
+  id: 1,
+  q: "If 'PNEUMONIA' is coded as 'OOFVLNMJZ', how is 'BRONCHUS' coded?",
+  options: ["AQPMBIVR", "AQNMZGTR", "ASPMBGVR", "AQPMBGTR"],
+  correct: 3,
+  explanation: "The coding follows an alternating -1, +1 letter shift pattern. Applying the same pattern to BRONCHUS gives AQPMBGTR."
+},
+{
+  id: 2,
+  q: "A man points to a photograph and says, 'The lady in the photograph is my nephew's maternal grandmother.' How is the lady related to the man's sister?",
+  options: ["Mother", "Mother-in-law", "Cousin", "Aunt"],
+  correct: 0,
+  explanation: "The nephew is the sister’s son. His maternal grandmother is the mother of his mother (the sister)."
+},
+{
+  id: 3,
+  q: "Find the missing number in the matrix:\n7  14  4\n4  12  9\n6  24  ?",
+  options: ["14", "16", "20", "22"],
+  correct: 1,
+  explanation: "Logic: (Column 2 ÷ Column 1)² = Column 3. (14/7)²=4, (12/4)²=9, (24/6)²=16."
+},
+{
+  id: 4,
+  q: "Statement: 'All grids are filters. No filter is a film.' Conclusion: I. No grid is a film. II. Some filters are grids.",
+  options: ["Only I follows", "Only II follows", "Both I and II follow", "Neither follows"],
+  correct: 2,
+  explanation: "All grids ⊂ filters and no filter ⊂ film ⇒ no grid is film. Since grids exist, some filters are grids."
+},
+{
+  id: 5,
+  q: "At what time between 3 and 4 o'clock will the minute and hour hands coincide?",
+  options: ["3:15", "3:16:22", "3:16 4/11", "3:17:20"],
+  correct: 2,
+  explanation: "Time = (60H)/(11). For H=3 → 180/11 = 16 4/11 minutes."
+},
+
+/* --- QUANT --- */
+{
+  id: 6,
+  q: "A tank is filled by pipe A in 10 hours and B in 15 hours. Pipe C empties it in 20 hours. Time to fill if all are opened?",
+  options: ["7.5 h", "8.6 h", "6 h", "12 h"],
+  correct: 1,
+  explanation: "Rate = 1/10 + 1/15 − 1/20 = 7/60. Time = 60/7 ≈ 8.57 hours."
+},
+{
+  id: 7,
+  q: "Price increases by 20%. Reduction needed to keep expenditure same?",
+  options: ["20%", "16.66%", "25%", "10%"],
+  correct: 1,
+  explanation: "Reduction = R/(100+R) ×100 = 20/120 ×100 = 16.66%."
+},
+{
+  id: 8,
+  q: "A train 240m long passes a pole in 24 sec. Time to pass a 650m platform?",
+  options: ["65 s", "100 s", "89 s", "50 s"],
+  correct: 2,
+  explanation: "Speed = 10 m/s. Distance = 240+650=890m → 89 sec."
+},
+{
+  id: 9,
+  q: "CI on ₹30,000 at 7% is ₹4347. Time?",
+  options: ["2", "2.5", "3", "4"],
+  correct: 0,
+  explanation: "30000(1.07)² = 34347 → 2 years."
+},
+{
+  id: 10,
+  q: "Two dice are thrown. Probability that sum is a prime number?",
+  options: ["5/12", "7/12", "1/2", "13/36"],
+  correct: 0,
+  explanation: "Prime sums occur in 15 out of 36 outcomes → 15/36 = 5/12."
+},
+
+/* --- GENERAL AWARENESS --- */
+{
+  id: 11,
+  q: "Current Union Minister of Health & Family Welfare (India) as of 2025?",
+  options: ["Dr. Mansukh Mandaviya", "J.P. Nadda", "Amit Shah", "Nitin Gadkari"],
+  correct: 1,
+  explanation: "J.P. Nadda assumed office in June 2024."
+},
+{
+  id: 12,
+  q: "Article prohibiting discrimination?",
+  options: ["14", "15", "16", "17"],
+  correct: 1,
+  explanation: "Article 15."
+},
+{
+  id: 13,
+  q: "Bharat Ratna 2024 (Green Revolution)?",
+  options: ["M.S. Swaminathan", "Verghese Kurien", "Homi Bhabha", "C.V. Raman"],
+  correct: 0,
+  explanation: "Awarded posthumously to M.S. Swaminathan."
+},
+{
+  id: 14,
+  q: "Isotope used in PET scan?",
+  options: ["Tc-99m", "Fluorine-18", "I-131", "Co-60"],
+  correct: 1,
+  explanation: "F-18 FDG is standard PET tracer."
+},
+{
+  id: 15,
+  q: "2024 Nobel Prize in Physics was for research in:",
+  options: ["Black holes", "Machine learning / Neural networks", "Quantum dots", "Attosecond physics"],
+  correct: 1,
+  explanation: "Awarded for foundational work in AI and neural networks."
+},
+
+/* --- ENGLISH --- */
+{
+  id: 16,
+  q: "Synonym of 'MITIGATE':",
+  options: ["Aggravate", "Alleviate", "Initiate", "Debate"],
+  correct: 1,
+  explanation: "Mitigate means to reduce severity."
+},
+{
+  id: 17,
+  q: "Doctor specializing in imaging:",
+  options: ["Radiographer", "Radiologist", "Pathologist", "Cardiologist"],
+  correct: 1,
+  explanation: "Radiologist is a physician."
+},
+{
+  id: 18,
+  q: "Spot the error: 'Neither of the two scanners are working properly.'",
+  options: ["Neither", "two", "are", "properly"],
+  correct: 2,
+  explanation: "Neither is singular → 'is working'."
+},
+{
+  id: 19,
+  q: "Meaning of 'turn a blind eye':",
+  options: ["Cannot see", "Ignore deliberately", "Inspect closely", "Sleep"],
+  correct: 1,
+  explanation: "Means to deliberately ignore."
+},
+{
+  id: 20,
+  q: "Fill blank: He is adept ___ interpreting MRI scans.",
+  options: ["in", "at", "with", "for"],
+  correct: 1,
+  explanation: "Correct usage: adept at."
+},
+
+/* ===================== PART B : CORE RADIOGRAPHY (80) ===================== */
+
+/* --- PHYSICS & EQUIPMENT --- */
+{
+  id: 21,
+  q: "K-shell binding energy of Tungsten:",
+  options: ["12 keV", "33 keV", "69.5 keV", "88 keV"],
+  correct: 2,
+  explanation: "Minimum energy needed for K-characteristic X-rays."
+},
+{
+  id: 22,
+  q: "Generator with lowest voltage ripple:",
+  options: ["High Frequency Generator", "3-Phase 6 Pulse", "3-Phase 12 Pulse", "Single Phase"],
+  correct: 0,
+  explanation: "<1% ripple."
+},
+{
+  id: 23,
+  q: "Bucky factor of 12:1 grid:",
+  options: ["2", "3", "5", "6"],
+  correct: 2,
+  explanation: "12:1 grid ≈ 5."
+},
+{
+  id: 24,
+  q: "Anode heel effect intensity variation:",
+  options: ["5%", "10%", "20%", "45%"],
+  correct: 3,
+  explanation: "Can reach ~45%."
+},
+{
+  id: 25,
+  q: "Minimum filtration at >70 kVp:",
+  options: ["1.5 mm Al", "2.5 mm Al", "0.5 mm Al", "4 mm Al"],
+  correct: 1,
+  explanation: "NCRP requirement."
+},
+{
+  id: 26,
+  q: "Flux gain is due to:",
+  options: ["Minification", "Electron acceleration", "Lenses", "Light conversion"],
+  correct: 1,
+  explanation: "25 kV acceleration."
+},
+{
+  id: 27,
+  q: "Pixel size (250mm FOV, 1024 matrix):",
+  options: ["0.4 mm", "0.24 mm", "2.4 mm", "0.1 mm"],
+  correct: 1,
+  explanation: "250/1024 ≈ 0.244 mm."
+},
+{
+  id: 28,
+  q: "Ideal DQE:",
+  options: ["0.5", "1", "100", "0"],
+  correct: 1,
+  explanation: "Perfect efficiency."
+},
+{
+  id: 29,
+  q: "Main source of occupational exposure:",
+  options: ["Photoelectric", "Compton", "Coherent", "Pair production"],
+  correct: 1,
+  explanation: "Patient scatter."
+},
+{
+  id: 30,
+  q: "High-speed anode rotation:",
+  options: ["3000 rpm", "10000 rpm", "500 rpm", "20000 rpm"],
+  correct: 1,
+  explanation: "Better heat dissipation."
+},
+    { id: 31, q: "In Computed Radiography (CR), the 'S-value' (Fuji) is:", options: ["Directly proportional to dose", "Inversely proportional to dose", "Unrelated to dose", "Proportional to kVp"], correct: 1, explanation: "High S-value (e.g., 400) means Low Dose (underexposed); Low S-value (e.g., 100) means High Dose." },
+    { id: 32, q: "A 'Wedge Filter' is most appropriate for:", options: ["PA Chest", "AP Foot", "Lateral Skull", "Knee"], correct: 1, explanation: "Compensates for the thickness difference between toes and tarsus." },
+    { id: 33, q: "The 'Look-Up Table' (LUT) primarily controls:", options: ["Spatial Resolution", "Contrast and Brightness (Grayscale mapping)", "Dose", "Geometric distortion"], correct: 1, explanation: "LUT maps raw pixel values to display values for proper contrast." },
+    { id: 34, q: "Which artifact appears as a 'Moiré Pattern' in CR?", options: ["Grid lines parallel to scan lines", "Dust on plate", "Backscatter", "Overexposure"], correct: 0, explanation: "Aliasing caused when grid frequency matches laser sampling frequency." },
+    { id: 35, q: "The 'Air Gap Technique' with a 10-15 cm gap is equivalent to a grid ratio of:", options: ["5:1", "8:1", "16:1", "None"], correct: 1, explanation: "Roughly equivalent to an 8:1 grid." },
+
+    // --- CT PHYSICS (Advanced) ---
+    { id: 36, q: "The Hounsfield Unit (HU) for Blood is approximately:", options: ["0", "10-20", "40-60", "100-200"], correct: 2, explanation: "Fresh clotted blood is ~60-80 HU; fluid blood ~40 HU." },
+    { id: 37, q: "Which CT generation uses a 'Rotate-Fixed' geometry with a 360-degree detector ring?", options: ["3rd", "4th", "2nd", "5th"], correct: 1, explanation: "4th Generation has a stationary ring of detectors and a rotating tube." },
+    { id: 38, q: "Increasing CT Pitch > 1.0 results in:", options: ["Higher spatial resolution", "Lower patient dose", "Higher patient dose", "Streak artifacts"], correct: 1, explanation: "Table moves faster than beam width, spreading dose over a larger volume (gaps), lowering total dose." },
+    { id: 39, q: "Iterative Reconstruction allows for:", options: ["Dose reduction by noise modeling", "Faster scan times", "Higher kVp", "Removal of all artifacts"], correct: 0, explanation: "IR reduces noise mathematically, allowing scans at lower mA/kVp." },
+    { id: 40, q: "Beam Hardening artifact appears as:", options: ["Dark streaks between dense objects", "Rings", "Blurring", "Bright streaks"], correct: 0, explanation: "Cupping or dark streaks (e.g., between petrous bones) due to preferential absorption of low-energy photons." },
+    { id: 41, q: "CTDI-vol is derived from:", options: ["CTDIw / Pitch", "CTDIw * Pitch", "DLP / Length", "mA * s"], correct: 0, explanation: "CTDI-vol corrects the weighted CTDI for the helical pitch." },
+    { id: 42, q: "The 'Bow-tie' filter in CT helps to:", options: ["Equalize surface dose and harden the beam", "Remove high energy photons", "Increase scatter", "Improve Z-axis resolution"], correct: 0, explanation: "Compensates for the body's oval shape, reducing dose at the periphery." },
+    { id: 43, q: "Ring artifacts in 3rd Gen CT are caused by:", options: ["Patient motion", "Single detector failure", "Tube arcing", "Beam hardening"], correct: 1, explanation: "A bad detector traces a ring on every rotation." },
+    { id: 44, q: "Temporal resolution in cardiac CT is best improved by:", options: ["Lower pitch", "Faster gantry rotation", "Thicker slices", "Higher kVp"], correct: 1, explanation: "Faster rotation captures the moving heart with less blur." },
+    { id: 45, q: "Which window setting is best for 'Lung Parenchyma'?", options: ["W:400 L:40", "W:1500 L:-600", "W:2500 L:400", "W:80 L:35"], correct: 1, explanation: "Wide window, low (negative) level." },
+
+    // --- MRI PHYSICS (Advanced) ---
+    { id: 46, q: "The Gyromagnetic Ratio for Hydrogen is:", options: ["21 MHz/T", "42.58 MHz/T", "63 MHz/T", "100 MHz/T"], correct: 1, explanation: "The fundamental constant for 1H." },
+    { id: 47, q: "Chemical Shift artifact is due to the frequency difference between:", options: ["Bone and Muscle", "Fat and Water", "Air and Tissue", "Blood and CSF"], correct: 1, explanation: "3.5 ppm difference causes misregistration in the frequency direction." },
+    { id: 48, q: "In Spin Echo, the 180-degree pulse is used to:", options: ["Flip magnetization to transverse plane", "Refocus dephasing spins", "Saturate fat", "Invert magnetization"], correct: 1, explanation: "It corrects for T2* dephasing to produce a T2 echo." },
+    { id: 49, q: "STIR sequences relies on:", options: ["Short TI to null fat", "Long TI to null fluid", "Gradient echo", "Flow compensation"], correct: 0, explanation: "Short Tau Inversion Recovery suppresses fat signal." },
+    { id: 50, q: "Specific Absorption Rate (SAR) limits are set to prevent:", options: ["Nerve stimulation", "Tissue heating", "Hearing loss", "Claustrophobia"], correct: 1, explanation: "RF energy deposits heat. Limit is 4 W/kg (Whole body)." },
+    { id: 51, q: "Diffusion Weighted Imaging (DWI) detects:", options: ["Blood flow velocity", "Brownian motion of water molecules", "Fat content", "Iron deposition"], correct: 1, explanation: "Restricted diffusion (e.g., in stroke) appears bright." },
+    { id: 52, q: "The 'Magic Angle' effect occurs at:", options: ["55 degrees to B0", "90 degrees", "45 degrees", "Parallel"], correct: 0, explanation: "Increased signal in tendons oriented at 55 degrees." },
+    { id: 53, q: "Aliasing (Wrap-around) occurs when:", options: ["FOV is smaller than anatomy", "TR is too short", "TE is too long", "Slice is too thick"], correct: 0, explanation: "Anatomy outside FOV wraps into the image." },
+    { id: 54, q: "Gadolinium contrast shortens:", options: ["T1 relaxation time", "T2 relaxation time", "Proton density", "Scan time"], correct: 0, explanation: "Shortening T1 makes enhancing tissue appear bright on T1w." },
+    { id: 55, q: "Which gradient determines Slice Thickness?", options: ["Phase Encoding", "Frequency Encoding", "Slice Select", "Shim"], correct: 2, explanation: "Slice Select Gradient + RF Bandwidth = Thickness." },
+
+    // --- ANATOMY & PATHOLOGY SIGNS ---
+    { id: 56, q: "A 'Boxer's Fracture' involves:", options: ["Neck of 5th Metacarpal", "Distal Radius", "Scaphoid", "Thumb Base"], correct: 0, explanation: "Fracture of the 5th metacarpal neck." },
+    { id: 57, q: "'Bamboo Spine' is pathognomonic for:", options: ["Ankylosing Spondylitis", "Osteoporosis", "Metastasis", "DISH"], correct: 0, explanation: "Calcification of spinal ligaments." },
+    { id: 58, q: "The 'Sail Sign' (Fat Pad) at the elbow suggests:", options: ["Occult Radial Head Fracture", "Dislocation", "Bursitis", "Normal Anatomy"], correct: 0, explanation: "Joint effusion displaces fat pads." },
+    { id: 59, q: "'Apple Core' lesion in Barium Enema indicates:", options: ["Colorectal Carcinoma", "Diverticulitis", "Polyp", "Intussusception"], correct: 0, explanation: "Constricting annular cancer." },
+    { id: 60, q: "'Cotton Wool' skull appearance is seen in:", options: ["Paget's Disease", "Myeloma", "Rickets", "Anemia"], correct: 0, explanation: "Mixed sclerotic/lytic phase of Paget's." },
+    { id: 61, q: "A 'Hangman's Fracture' is:", options: ["Fracture of C2 pars interarticularis", "Fracture of C1", "Fracture of Dens", "Fracture of C7"], correct: 0, explanation: "Traumatic spondylolisthesis of Axis." },
+    { id: 62, q: "The 'Scottie Dog' sign is seen in:", options: ["Lumbar Oblique", "Lumbar Lateral", "Cervical AP", "Thoracic Lateral"], correct: 0, explanation: "Pars interarticularis forms the neck of the dog." },
+    { id: 63, q: "'Sunburst' periosteal reaction usually indicates:", options: ["Osteosarcoma", "Ewing's Sarcoma", "Osteomyelitis", "Bone Cyst"], correct: 0, explanation: "Aggressive malignancy." },
+    { id: 64, q: "The 'Silhouette Sign' in Chest X-ray refers to:", options: ["Loss of a normal border", "Air Bronchogram", "Fluid level", "Pneumothorax"], correct: 0, explanation: "Obliteration of heart/diaphragm border by adjacent pathology." },
+    { id: 65, q: "Monteggia Fracture-Dislocation involves:", options: ["Proximal Ulnar # + Radial Head Dislocation", "Distal Radius #", "Radial Shaft # + Ulnar Dislocation", "Scaphoid #"], correct: 0, explanation: "MUGR: Monteggia (Ulnar #), Galeazzi (Radial #)." },
+
+    // --- POSITIONING & PROCEDURES ---
+    { id: 66, q: "The 'Judet View' evaluates:", options: ["Acetabular Columns", "Femoral Neck", "Sacroiliac Joint", "Pubic Symphysis"], correct: 0, explanation: "Internal/External obliques for acetabulum." },
+    { id: 67, q: "Stryker Notch view is for:", options: ["Hill-Sachs Defect", "Bankart Lesion", "AC Joint", "Clavicle"], correct: 0, explanation: "Posterolateral humeral head defect." },
+    { id: 68, q: "Which view demonstrates the Optic Foramen?", options: ["Rhese Method", "Waters", "Caldwell", "Towne"], correct: 0, explanation: "Parieto-orbital oblique." },
+    { id: 69, q: "For 'Scoliosis Series', the Ferguson method uses:", options: ["Elevation block under convex side", "Bending views", "Supine", "Lateral"], correct: 0, explanation: "To differentiate structural vs non-structural curves." },
+    { id: 70, q: "The 'Outlet View' (Taylor) of the pelvis requires:", options: ["Cephalic angle (20-45 deg)", "Caudal angle (40 deg)", "Perpendicular", "Lateral"], correct: 0, explanation: "Elongates the pubic/ischial rami." },
+    { id: 71, q: "The 'Gaynor-Hart' method visualizes:", options: ["Carpal Tunnel", "Tarsal Sinus", "Bicipital Groove", "Sella Turcica"], correct: 0, explanation: "Inferosuperior tangential for carpal canal." },
+    { id: 72, q: "In HSG, free spill of contrast indicates:", options: ["Patent tubes", "Perforation", "Blocked tubes", "Infection"], correct: 0, explanation: "Normal patency." },
+    { id: 73, q: "T-Tube Cholangiogram is performed:", options: ["Post-Cholecystectomy", "Pre-Op", "Intra-Op", "Instead of USG"], correct: 0, explanation: "Through a drain left in the CBD." },
+    { id: 74, q: "Seldinger Technique is for:", options: ["Vascular Access", "Biopsy", "Enema", "Film Processing"], correct: 0, explanation: "Arterial puncture method." },
+    { id: 75, q: "Valsalva Maneuver helps demonstrate:", options: ["Esophageal Varices", "Hiatal Hernia", "Reflux", "Achalasia"], correct: 0, explanation: "Increases intrathoracic pressure." },
+
+    // --- RADIATION SAFETY (AERB/NCRP) ---
+    { id: 76, q: "Annual occupational effective dose limit (AERB):", options: ["20 mSv (avg over 5 yrs)", "50 mSv", "150 mSv", "5 mSv"], correct: 0, explanation: "20 mSv/year average. Max 30 mSv in one year." },
+    { id: 77, q: "Dose limit for the lens of the eye (Radiation Worker):", options: ["20 mSv", "150 mSv", "500 mSv", "50 mSv"], correct: 0, explanation: "New lower limit (ICRP) to prevent cataracts." },
+    { id: 78, q: "Leakage radiation limit from tube housing:", options: ["1 mGy/hr at 1 meter", "10 mGy/hr", "0.1 mGy/hr", "5 mGy/hr"], correct: 0, explanation: "100 mR/hr (1 mGy/hr)." },
+    { id: 79, q: "Primary barrier lead equivalence (typical):", options: ["1.5 - 2.0 mm Pb", "0.5 mm Pb", "0.25 mm Pb", "5 mm Pb"], correct: 0, explanation: "1/16 inch (~1.6mm) is standard for 100kVp+." },
+    { id: 80, q: "Genetically Significant Dose (GSD) is:", options: ["Genetic risk to population", "Individual gonadal dose", "Somatic risk", "Fetal dose"], correct: 0, explanation: "Weighted average gonad dose." },
+    { id: 81, q: "Threshold for temporary epilation:", options: ["3 Gy", "7 Gy", "1 Gy", "10 Gy"], correct: 0, explanation: "Hair loss starts at ~3 Gy." },
+    { id: 82, q: "LD 50/60 for humans:", options: ["3.5 - 4.0 Gy", "10 Gy", "1 Gy", "20 Gy"], correct: 0, explanation: "Lethal dose for 50% in 60 days." },
+    { id: 83, q: "Which dosimeter can be re-read?", options: ["OSL", "Film", "TLD", "Pocket"], correct: 0, explanation: "OSL can be re-analyzed; TLD is annealed (erased) during reading." },
+    { id: 84, q: "Half Value Layer (HVL) at 80 kVp:", options: ["2.5 mm Al", "1.5 mm Al", "0.5 mm Al", "4.0 mm Al"], correct: 0, explanation: "Standard beam quality requirement." },
+    { id: 85, q: "Fetal dose limit (entire pregnancy):", options: ["1 mSv", "5 mSv", "10 mSv", "20 mSv"], correct: 0, explanation: "Equivalent to public limit." },
+
+    // --- QA & MISCELLANEOUS ---
+    { id: 86, q: "Collimator alignment tolerance:", options: ["± 2% of SID", "± 5%", "± 1%", "± 10%"], correct: 0, explanation: "Light field vs X-ray field." },
+    { id: 87, q: "Exposure reproducibility variance limit:", options: ["< 5%", "< 10%", "< 2%", "< 20%"], correct: 0, explanation: "Coefficient of variation." },
+    { id: 88, q: "Spinning top test (Single Phase Half Wave) dots for 0.1s:", options: ["6 dots", "12 dots", "60 dots", "1 dot"], correct: 0, explanation: "60 pulses/sec. 0.1 x 60 = 6." },
+    { id: 89, q: "Wire Mesh test checks:", options: ["Screen-Film Contact", "Focal Spot", "kVp", "Timer"], correct: 0, explanation: "Blurry areas indicate poor contact." },
+    { id: 90, q: "Metformin must be withheld for:", options: ["48 hrs post-contrast", "24 hrs pre-contrast", "1 week", "Not required"], correct: 0, explanation: "To prevent Lactic Acidosis." },
+    { id: 91, q: "Adrenaline dose for Anaphylaxis (Adult, IM):", options: ["0.5 mg (1:1000)", "1 mg (1:10000)", "10 mg", "0.1 mg"], correct: 0, explanation: "0.5ml of 1:1000 solution IM." },
+    { id: 92, q: "Osmolality of Non-Ionic contrast:", options: ["600-800 mOsm/kg", "290 mOsm/kg", "2000 mOsm/kg", "100 mOsm/kg"], correct: 0, explanation: "Low Osmolar (LOCM) is still hyperosmolar compared to blood (290)." },
+    { id: 93, q: "USG artifact 'Acoustic Shadowing' is seen behind:", options: ["Stones/Bone", "Fluid", "Liver", "Muscle"], correct: 0, explanation: "High attenuation blocks sound." },
+    { id: 94, q: "Piezoelectric material usually used:", options: ["PZT (Lead Zirconate Titanate)", "Quartz", "Copper", "Silicon"], correct: 0, explanation: "Synthetic ceramic PZT." },
+    { id: 95, q: "Doppler shift is max at angle:", options: ["0 degrees", "90 degrees", "60 degrees", "45 degrees"], correct: 0, explanation: "Cosine 0 = 1." },
+    { id: 96, q: "Best view for pneumothorax:", options: ["PA Expiration", "AP Supine", "Lateral", "Lordotic"], correct: 0, explanation: "Lung volume decreases, making air more visible." },
+    { id: 97, q: "Grashey view visualizes:", options: ["Glenohumeral joint space", "AC joint", "Scapula", "Clavicle"], correct: 0, explanation: "True AP of shoulder." },
+    { id: 98, q: "Inlet view angle:", options: ["40 deg Caudal", "40 deg Cephalad", "Perpendicular", "Lateral"], correct: 0, explanation: "Looking down into the pelvis." },
+    { id: 99, q: "Commonest site for Spondylolisthesis:", options: ["L5-S1", "L1-L2", "C7-T1", "T12-L1"], correct: 0, explanation: "L5 slipping over S1." },
+    { id: 100, q: "A 'Tripod Fracture' involves:", options: ["Zygoma", "Mandible", "Orbit", "Nose"], correct: 0, explanation: "Zygomaticomaxillary complex fracture." }
+];
+
+
+let userAnswers = JSON.parse(localStorage.getItem('aiims_paper4_answers')) || {};
+let submitted = false;
+let reviewMode = false;
+
+/* ---------------- TIMER (90 MINUTES) ---------------- */
+let totalSeconds = 90 * 60; // 90 minutes
+let timerInterval = setInterval(()=>{
+  if(submitted) return;
+
+  totalSeconds--;
+  updateTimer();
+
+  if(totalSeconds <= 0){
+    clearInterval(timerInterval);
+    submitExam(true); // auto-submit
+  }
+},1000);
+
+function updateTimer(){
+  const h = String(Math.floor(totalSeconds/3600)).padStart(2,'0');
+  const m = String(Math.floor((totalSeconds%3600)/60)).padStart(2,'0');
+  const s = String(totalSeconds%60).padStart(2,'0');
+  document.getElementById('timer').innerText = `${h}:${m}:${s}`;
+}
+
+/* ---------------- RENDER ---------------- */
+const quiz = document.getElementById('quiz');
+const attemptedSpan = document.getElementById('attempted');
+
+function renderQuiz(){
+  quiz.innerHTML = '';
+
+  questionsDB.forEach((q,i)=>{
+    const card=document.createElement('div');
+    card.className='question-card';
+    card.innerHTML=`<div class="question-text">Q${i+1}. ${q.q}</div>`;
+
+    const optDiv=document.createElement('div');
+    optDiv.className='options-grid';
+
+    const ua=userAnswers[q.id];
+
+    q.options.forEach((opt,idx)=>{
+      const label=document.createElement('label');
+      label.className='option-label';
+
+      if(!reviewMode && ua===idx) label.classList.add('selected');
+      if(reviewMode){
+        if(idx===q.correct) label.classList.add('correct');
+        if(ua===idx && ua!==q.correct) label.classList.add('wrong');
+      }
+
+      label.innerHTML=`
+        <input type="radio" ${ua===idx?'checked':''} ${submitted?'disabled':''}>
+        <span>${opt}</span>
+      `;
+
+      if(!submitted){
+        label.onclick=()=>{
+          userAnswers[q.id]=idx;
+          localStorage.setItem('aiims_paper4_answers',JSON.stringify(userAnswers));
+          renderQuiz();
+        };
+      }
+
+      optDiv.appendChild(label);
+    });
+
+    card.appendChild(optDiv);
+
+    if(reviewMode){
+      const exp=document.createElement('div');
+      exp.className='explanation';
+      exp.innerHTML=`<b>Explanation:</b> ${q.explanation}`;
+      card.appendChild(exp);
+    }
+
+    quiz.appendChild(card);
+  });
+
+  attemptedSpan.innerText = Object.keys(userAnswers).length;
+}
+
+/* ---------------- SUBMIT ---------------- */
+function submitExam(auto=false){
+  if(submitted) return;
+  if(!auto && !confirm("Submit the paper?")) return;
+
+  submitted=true;
+  clearInterval(timerInterval);
+
+  let c=0,w=0,s=0;
+  questionsDB.forEach(q=>{
+    const a=userAnswers[q.id];
+    if(a==null) s++;
+    else if(a===q.correct) c++;
+    else w++;
+  });
+
+  document.getElementById('score').innerText=c*4-w;
+  document.getElementById('c').innerText=c;
+  document.getElementById('w').innerText=w;
+  document.getElementById('s').innerText=s;
+  document.getElementById('acc').innerText=((c/(c+w||1))*100).toFixed(0);
+
+  document.getElementById('result-modal').style.display='flex';
+  renderQuiz();
+}
+
+/* ---------------- REVIEW ---------------- */
+function startReview(){
+  document.getElementById('result-modal').style.display='none';
+  reviewMode=true;
+  renderQuiz();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---------------- RESET ---------------- */
+function resetExam(){
+  if(!confirm("Reset Paper 4?")) return;
+  localStorage.removeItem('aiims_paper4_answers');
+  location.reload();
+}
+
+updateTimer();
+renderQuiz();
+</script>
+</body>
+</html>

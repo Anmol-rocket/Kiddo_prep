@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIIMS CRE Mock Test - SET 5</title>
+<style>
+    :root {
+        --brand: #00897b; /* Teal Theme */
+        --brand-dark: #004d40;
+        --bg-color: #f0f2f5;
+        --card-bg: #ffffff;
+        --text-main: #2d3436;
+        --correct-green: #00b894;
+        --wrong-red: #d63031;
+    }
+    body {
+        font-family: 'Roboto', 'Segoe UI', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        margin: 0;
+        padding: 20px;
+    }
+    .wrapper {
+        max-width: 960px;
+        margin: 0 auto;
+        background: var(--card-bg);
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+    
+    /* Header */
+    header {
+        background: var(--brand);
+        color: white;
+        padding: 30px 20px;
+        text-align: center;
+    }
+    h1 { margin: 0; font-size: 2rem; letter-spacing: 1px; }
+    .exam-meta {
+        margin-top: 15px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        font-size: 0.95rem;
+        flex-wrap: wrap;
+    }
+    .tag {
+        background: rgba(255,255,255,0.2);
+        padding: 5px 15px;
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    /* Questions */
+    .section-label {
+        background: var(--brand-dark);
+        color: #fff;
+        padding: 10px 25px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .q-box {
+        padding: 25px;
+        border-bottom: 1px solid #eee;
+        transition: background 0.2s;
+    }
+    .q-box:hover { background: #fafafa; }
+    .q-stem {
+        font-size: 1.15rem;
+        font-weight: 500;
+        margin-bottom: 15px;
+        line-height: 1.5;
+    }
+    .opt-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+    @media(max-width: 600px) { .opt-grid { grid-template-columns: 1fr; } }
+    
+    .opt-btn {
+        display: block;
+        padding: 12px 15px;
+        background: #f8f9fa;
+        border: 2px solid #e9ecef;
+        border-radius: 6px;
+        cursor: pointer;
+        text-align: left;
+        font-size: 1rem;
+        transition: all 0.2s;
+        position: relative;
+    }
+    .opt-btn:hover { border-color: var(--brand); background: #e0f2f1; }
+    
+    /* Input Logic Hidden */
+    input[type="radio"] { display: none; }
+    input[type="radio"]:checked + .opt-btn {
+        background: var(--brand);
+        color: white;
+        border-color: var(--brand);
+    }
+
+    /* Results */
+    .exp-panel {
+        display: none;
+        margin-top: 15px;
+        padding: 15px;
+        background: #e8f5e9;
+        border-left: 4px solid var(--correct-green);
+        border-radius: 4px;
+        font-size: 0.95rem;
+        color: #2d3436;
+    }
+    
+    /* Result States */
+    .state-correct { background-color: var(--correct-green) !important; color: white !important; border-color: var(--correct-green) !important; }
+    .state-wrong { background-color: var(--wrong-red) !important; color: white !important; border-color: var(--wrong-red) !important; opacity: 0.8; }
+    .state-missed { border: 2px dashed var(--correct-green) !important; background: #e8f5e9; color: var(--text-main); }
+
+    .action-area { padding: 40px; text-align: center; background: #fafafa; }
+    .submit-btn {
+        background: var(--brand-dark);
+        color: white;
+        border: none;
+        padding: 15px 50px;
+        font-size: 1.2rem;
+        border-radius: 30px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,77,64,0.3);
+        transition: transform 0.2s;
+    }
+    .submit-btn:hover { transform: translateY(-2px); }
+
+    /* Modal */
+    .modal-backdrop {
+        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.85); z-index: 100; justify-content: center; align-items: center;
+    }
+    .modal-card {
+        background: white; width: 90%; max-width: 450px; border-radius: 15px; padding: 30px; text-align: center;
+    }
+    .score-big { font-size: 3.5rem; font-weight: 800; color: var(--brand); margin: 10px 0; }
+    .stat-row { display: flex; justify-content: space-between; margin: 10px 0; font-weight: bold; padding: 10px; background: #f1f1f1; border-radius: 8px; }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+    <header>
+        <h1>AIIMS CRE MOCK TEST 05</h1>
+        <div class="exam-meta">
+            <span class="tag">Pattern: AIIMS/CRE</span>
+            <span class="tag">Total Qs: 100</span>
+            <span class="tag">Marking: +4 / -1</span>
+            <span class="tag">Time: Self-Paced</span>
+        </div>
+    </header>
+
+    <div id="quiz-content"></div>
+
+    <div class="action-area">
+        <button class="submit-btn" onclick="evaluateQuiz()">SUBMIT EXAM</button>
+    </div>
+</div>
+
+<div id="result-modal" class="modal-backdrop">
+    <div class="modal-card">
+        <h2>Performance Report</h2>
+        <div class="score-big" id="final-score">0</div>
+        <p>Total Marks (Out of 400)</p>
+        
+        <div style="margin: 20px 0;">
+            <div class="stat-row"><span style="color:var(--correct-green)">Correct (+4)</span> <span id="r-corr">0</span></div>
+            <div class="stat-row"><span style="color:var(--wrong-red)">Incorrect (-1)</span> <span id="r-wrong">0</span></div>
+            <div class="stat-row"><span>Unattempted</span> <span id="r-skip">0</span></div>
+            <div class="stat-row"><span>Accuracy</span> <span id="r-acc">0%</span></div>
+        </div>
+        
+        <button class="submit-btn" style="font-size:1rem; padding: 10px 30px;" onclick="closeModal()">Review Answers</button>
+    </div>
+</div>
+
+<script>
+// DATABASE OF 100 FRESH QUESTIONS
+const qData = [
+    // --- PART A: NON-CORE (1-20) ---
+    { q: "The 'Satyameva Jayate' slogan is taken from which Upanishad?", o: ["Mundaka Upanishad", "Prasna Upanishad", "Kena Upanishad", "Katha Upanishad"], a: 0, e: "It is taken from Mundaka Upanishad." },
+    { q: "Which gas is used in the manufacturing of Vanaspati Ghee from vegetable oil?", o: ["Nitrogen", "Hydrogen", "Oxygen", "Carbon Dioxide"], a: 1, e: "Hydrogenation process uses Hydrogen gas." },
+    { q: "The 'Silent Valley' National Park is located in:", o: ["Karnataka", "Kerala", "Tamil Nadu", "Uttarakhand"], a: 1, e: "Located in the Palakkad district of Kerala." },
+    { q: "Who was the first Indian woman to become President of the Indian National Congress?", o: ["Sarojini Naidu", "Annie Besant", "Indira Gandhi", "Sucheta Kripalani"], a: 0, e: "Sarojini Naidu (1925 Kanpur Session). Annie Besant was the first woman, but not Indian." },
+    { q: "If South-East becomes North, North-East becomes West, and so on, what will West become?", o: ["North-East", "North-West", "South-East", "South-West"], a: 2, e: "The rotation is 135 degrees clockwise. West + 135 deg clockwise = South-East." },
+    { q: "Look at this series: 7, 10, 8, 11, 9, 12, ... What number should come next?", o: ["7", "10", "12", "13"], a: 1, e: "Alternating series: 7(+1)=8(+1)=9 -> 10. (10(+1)=11(+1)=12)." },
+    { q: "A man buys a cycle for Rs. 1400 and sells it at a loss of 15%. What is the selling price?", o: ["Rs. 1090", "Rs. 1160", "Rs. 1190", "Rs. 1202"], a: 2, e: "15% of 1400 = 210. SP = 1400 - 210 = 1190." },
+    { q: "The average of first 50 natural numbers is:", o: ["25", "25.5", "26", "12.25"], a: 1, e: "Sum = n(n+1)/2. Avg = (n+1)/2 = 51/2 = 25.5." },
+    { q: "The study of maps is called:", o: ["Calligraphy", "Geography", "Cartography", "Geology"], a: 2, e: "Cartography is the art and science of making maps." },
+    { q: "Which Article of the Constitution deals with the 'Right to Education'?", o: ["Article 21A", "Article 19", "Article 32", "Article 51A"], a: 0, e: "Article 21A guarantees free and compulsory education for 6-14 years." },
+    { q: "RAM in a computer stands for:", o: ["Read Access Memory", "Random Access Memory", "Read Automated Memory", "Random Applied Memory"], a: 1, e: "Random Access Memory." },
+    { q: "The term 'Bully' is associated with which sport?", o: ["Cricket", "Football", "Hockey", "Tennis"], a: 2, e: "Used to restart play in Field Hockey." },
+    { q: "Which planet is known as the 'Morning Star'?", o: ["Mars", "Jupiter", "Venus", "Mercury"], a: 2, e: "Venus is the Morning/Evening star." },
+    { q: "If A:B = 5:7 and B:C = 6:11, then A:B:C is:", o: ["55:77:66", "30:42:77", "35:49:42", "None"], a: 1, e: "Multiply A:B by 6 (30:42) and B:C by 7 (42:77). Result 30:42:77." },
+    { q: "Statement: 'All mangoes are golden'. 'No golden things are cheap'. Conclusion: 'Mangoes are cheap'.", o: ["True", "False", "Probably True", "Cannot determine"], a: 1, e: "If no golden things are cheap, and mangoes are golden, mangoes cannot be cheap." },
+    { q: "The chemical symbol for Gold is:", o: ["Go", "Gd", "Au", "Ag"], a: 2, e: "Au (Aurum)." },
+    { q: "Who invented the telephone?", o: ["Thomas Edison", "Alexander Graham Bell", "Marconi", "Newton"], a: 1, e: "Alexander Graham Bell." },
+    { q: "In a class of 40 students, Rahul's rank is 12th from the top. What is his rank from the bottom?", o: ["28", "29", "30", "27"], a: 1, e: "Formula: Total = Top + Bottom - 1. 40 = 12 + B - 1. B = 29." },
+    { q: "Which is the largest gland in the human body?", o: ["Thyroid", "Liver", "Pancreas", "Pituitary"], a: 1, e: "The Liver is the largest gland." },
+    { q: "Simplify: 12 + 12 / 4 * 3", o: ["18", "21", "13", "15"], a: 1, e: "BODMAS: Division first (12/4=3), then Multiply (3*3=9), then Add (12+9=21)." },
+
+    // --- PART B: CORE RADIOGRAPHY (21-100) ---
+    // PHYSICS
+    { q: "The phenomenon where an electron passes near the nucleus and slows down, emitting a photon is:", o: ["Characteristic Radiation", "Bremsstrahlung", "Compton Scatter", "Photoelectric Effect"], a: 1, e: "Bremsstrahlung means 'Braking Radiation'." },
+    { q: "The precise voltage required to maintain a constant current in the filament circuit is provided by a:", o: ["Step-up transformer", "Step-down transformer", "Autotransformer", "Rectifier"], a: 1, e: "Step-down transformer reduces voltage to 6-12V but increases current (Amps) to heat the filament." },
+    { q: "Off-focus radiation is produced when electrons hit:", o: ["The focal spot", "The glass envelope", "The anode target outside the focal spot", "The cathode"], a: 2, e: "Radiation produced at the anode but outside the designated focal track." },
+    { q: "Which type of interaction results in the total absorption of the incident photon?", o: ["Compton", "Coherent", "Photoelectric", "Pair Production"], a: 2, e: "The photon disappears and an electron is ejected." },
+    { q: "What is the minimum energy required for Pair Production to occur?", o: ["0.51 MeV", "1.02 MeV", "10 MeV", "1.02 keV"], a: 1, e: "The photon must have energy at least equal to the rest mass of two electrons (1.02 MeV)." },
+    { q: "In a CR system, the 'latent image' will lose about 25% of its energy in:", o: ["1 hour", "8 hours", "24 hours", "10 mins"], a: 1, e: "Latent image fading occurs approx 25% in 8 hours." },
+    { q: "The device used to ensure the X-ray beam is perpendicular to the film is:", o: ["Spinning top", "Penetrometer", "Alignment grid", "Beam alignment tool / Coin test"], a: 3, e: "Used to check beam perpendicularity." },
+    
+    // DIGITAL & CT
+    { q: "In Digital Radiography, 'Shuttering' is a post-processing technique used to:", o: ["Reduce dose", "Blacken out the white collimated borders", "Increase contrast", "Remove artifacts"], a: 1, e: "It creates a black mask around the image to reduce veil glare for the viewer." },
+    { q: "The 'Nyquist Theorem' states that sampling frequency must be:", o: ["Equal to the signal bandwidth", "Twice the signal bandwidth", "Half the signal bandwidth", "Four times the signal"], a: 1, e: "To avoid aliasing, sampling must be at least 2x the highest frequency." },
+    { q: "The CT Number (HU) for fat is typically:", o: ["-1000", "-50 to -100", "0", "+40"], a: 1, e: "Fat is less dense than water (-50 to -100 HU)." },
+    { q: "High Spatial Resolution in CT is achieved by using:", o: ["Thicker slices", "Small detector size and small FOV", "Lower mA", "Softer reconstruction filter"], a: 1, e: "Small detectors and small FOV increase spatial resolution." },
+    { q: "The 'Cupping artifact' in CT is generally caused by:", o: ["Beam Hardening", "Patient motion", "Bad detector", "Metal"], a: 0, e: "The center of the object appears darker than the edges due to beam hardening." },
+    { q: "In Multislice CT, 'Overbeaming' refers to:", o: ["Using too much mA", "Opening collimators slightly wider than detectors (penumbra)", "Scanning past the anatomy", "Repeating a scan"], a: 1, e: "Ensures all detectors receive uniform intensity, but increases dose slightly." },
+    
+    // MRI
+    { q: "The 'Time of Flight' (TOF) effect in MRI is related to:", o: ["Spin echo generation", "Flowing blood", "Fat suppression", "Chemical shift"], a: 1, e: "Used in MRA to visualize vessels without contrast." },
+    { q: "The 'Zipper Artifact' in MRI is typically caused by:", o: ["RF leak/interference", "Patient motion", "Metal implant", "Flow"], a: 0, e: "External RF noise entering the room (e.g., door open) causes a zipper-like band." },
+    { q: "Which sequence is 'Fluid Sensitive' but suppresses pure water (CSF)?", o: ["T1", "T2", "FLAIR", "STIR"], a: 2, e: "FLAIR (Fluid Attenuated Inversion Recovery) suppresses CSF to see periventricular lesions." },
+    { q: "The acoustical noise (loud banging) in MRI is caused by:", o: ["Main magnet", "RF coils", "Lorentz forces on Gradient coils", "Helium pump"], a: 2, e: "Rapid switching of current in gradient coils causes vibration." },
+    { q: "In MRI, 'Quench' results in the rapid release of:", o: ["Nitrogen", "Oxygen", "Helium gas", "Hydrogen"], a: 2, e: "Liquid helium boils off to gas, expanding rapidly." },
+
+    // ANATOMY & POSITIONING
+    { q: "The 'Inlet and Outlet' views are specific for imaging the:", o: ["Skull", "Pelvis", "Thoracic inlet", "Knee"], a: 1, e: "Used to assess pelvic ring fractures/disruptions." },
+    { q: "The 'Mortise view' is a specialized projection for the:", o: ["Wrist", "Elbow", "Ankle", "Hip"], a: 2, e: "15-20 degree internal rotation of ankle to show the joint space open." },
+    { q: "Which bone contains the 'Sella Turcica'?", o: ["Frontal", "Ethmoid", "Sphenoid", "Temporal"], a: 2, e: "The pituitary gland sits in the sella turcica of the sphenoid bone." },
+    { q: "The suture between the parietal bones and the occipital bone is the:", o: ["Coronal", "Sagittal", "Lambdoidal", "Squamosal"], a: 2, e: "Lambdoidal suture." },
+    { q: "A 'Boxer's Fracture' typically occurs at the:", o: ["Neck of 5th metacarpal", "Distal radius", "Scaphoid", "Proximal ulna"], a: 0, e: "Fracture of the 5th metacarpal neck." },
+    { q: "To visualize the 'Pars Interarticularis' of the lumbar spine, you need a:", o: ["AP view", "Lateral view", "Oblique view", "Spot view"], a: 2, e: "The Scottie Dog sign (pars) is seen on 45-degree obliques." },
+    { q: "The 'Val Salva maneuver' is sometimes used during:", o: ["IVP", "Barium Swallow (Esophagram)", "Knee X-ray", "Skull X-ray"], a: 1, e: "To check for esophageal varices or reflux." },
+    { q: "Which carpal bone has a 'Hook'?", o: ["Scaphoid", "Hamate", "Pisiform", "Capitate"], a: 1, e: "The Hamate has a hook (hamulus)." },
+    { q: "The 'Common Bile Duct' is formed by the union of:", o: ["Cystic duct and Common Hepatic duct", "Right and Left Hepatic ducts", "Pancreatic duct and Cystic duct", "Hepatic duct and Duodenum"], a: 0, e: "Cystic + Common Hepatic = CBD." },
+    { q: "The term 'Spondylolisthesis' refers to:", o: ["Inflammation of vertebrae", "Forward slipping of one vertebra over another", "Fusion of vertebrae", "Fracture of spinous process"], a: 1, e: "Slippage, usually L4-L5 or L5-S1." },
+
+    // PROCEDURES & CONTRAST
+    { q: "For a 'Small Bowel Enema' (Enteroclysis), the catheter is placed at the:", o: ["Pylorus", "Duodenojejunal (DJ) flexure", "Ileocecal valve", "Stomach"], a: 1, e: "Contrast is infused directly into the small bowel at the DJ flexure." },
+    { q: "During Sialography, lemon juice is sometimes given to:", o: ["Relax the patient", "Stimulate salivary secretion", "Anesthetize the mouth", "Reduce contrast viscosity"], a: 1, e: "Opens the ducts by stimulating secretion." },
+    { q: "The 'Trendelenburg' position is helpful in Myelography to:", o: ["Mix the contrast", "Move contrast towards the cervical region", "Keep contrast in the lumbar region", "Reduce headache"], a: 1, e: "Gravity moves the contrast column cephalad (towards head)." },
+    { q: "Absolute contraindication for MRI includes:", o: ["Titanium plate", "Cochlear implants (older types)", "Pregnancy 3rd trimester", "Dental fillings"], a: 1, e: "Ferromagnetic implants like older cochlear implants are absolute contraindications." },
+    { q: "Gadolinium contrast is classified as:", o: ["Paramagnetic", "Diamagnetic", "Ferromagnetic", "Radioactive"], a: 0, e: "Paramagnetic (has unpaired electrons)." },
+    { q: "A 'T-Tube' is associated with surgery of the:", o: ["Trachea", "Esophagus", "Biliary tract (Gallbladder)", "Ureter"], a: 2, e: "Placed in the Common Bile Duct after cholecystectomy." },
+    
+    // RADIATION BIOLOGY & SAFETY
+    { q: "The 'Prodromal Stage' of Acute Radiation Syndrome consists of:", o: ["Nausea, vomiting, diarrhea", "Hair loss", "Internal bleeding", "Coma"], a: 0, e: "The initial reaction (N-V-D) occurring shortly after exposure." },
+    { q: "The 'LD 50/60' for humans is estimated to be:", o: ["1-2 Gy", "3-4 Gy", "8-10 Gy", "10-12 Gy"], a: 1, e: "3-4 Gray (without medical intervention)." },
+    { q: "Which radiation survey meter is most sensitive for detecting low-level contamination?", o: ["Ionization chamber", "Geiger-Muller (GM) counter", "TLD", "Film badge"], a: 1, e: "GM counters are very sensitive to detecting the presence of radiation." },
+    { q: "The '10-Day Rule' is regarding:", o: ["Scheduling X-rays for fertile women", "Developing films", "Changing chemistry", "Radiation monitoring"], a: 0, e: "Exams should be done in the first 10 days of the menstrual cycle." },
+    { q: "Gonadal shielding should be used when the gonads are within ___ of the primary beam.", o: ["1 cm", "2.5 cm", "5 cm", "10 cm"], a: 2, e: "Standard guideline is 5 cm." },
+    { q: "The Oxygen Enhancement Ratio (OER) states that cells are:", o: ["More radiosensitive when oxygenated", "Less radiosensitive when oxygenated", "Same sensitivity", "Resistant when oxygenated"], a: 0, e: "Oxygen fixes radiation damage, making it permanent (more sensitive)." },
+    
+    // ULTRASOUND
+    { q: "The frequency of ultrasound is:", o: ["< 20 Hz", "20 Hz - 20 kHz", "> 20 kHz", "Unknown"], a: 2, e: "Above the range of human hearing (>20,000 Hz)." },
+    { q: "Piezoelectric effect is the conversion of:", o: ["Heat to sound", "Electrical energy to mechanical energy (and vice versa)", "Light to sound", "Magnetism to sound"], a: 1, e: "Crystals deform when voltage is applied, creating sound." },
+    { q: "In Ultrasound, 'Acoustic Enhancement' occurs:", o: ["Behind a stone", "Behind a fluid-filled structure", "At a bone interface", "Due to air"], a: 1, e: "Fluid attenuates sound less than surrounding tissue, causing brightness behind it." },
+
+    // FILLERS TO 100
+    { q: "Which grid ratio offers the highest contrast improvement?", o: ["5:1", "8:1", "12:1", "16:1"], a: 3, e: "Higher ratio cleans up more scatter." },
+    { q: "An 'Air-Gap' technique functions similar to a:", o: ["Filter", "Grid", "Screen", "Intensifier"], a: 1, e: "Reduces scatter reaching the film." },
+    { q: "The standard SID for a Lateral Cervical Spine is:", o: ["100 cm", "120 cm", "150 cm", "180 cm (72 inches)"], a: 3, e: "72 inches to reduce OID magnification (shoulder width)." },
+    { q: "Phlebitis is inflammation of a:", o: ["Artery", "Vein", "Nerve", "Muscle"], a: 1, e: "Vein inflammation." },
+    { q: "Which contrast agent is Isosmolar to blood?", o: ["Iohexol", "Iopamidol", "Iodixanol (Visipaque)", "Diatrizoate"], a: 2, e: "Iodixanol is a non-ionic dimer, iso-osmolar." },
+    { q: "The 'Anode Heel Effect' is most visible with:", o: ["Large field, Short SID", "Small field, Long SID", "Large field, Long SID", "Small field, Short SID"], a: 0, e: "Short SID and wide field utilize the extreme edges of the beam." },
+    { q: "Rectification converts:", o: ["AC to DC", "DC to AC", "High voltage to Low", "Low voltage to High"], a: 0, e: "X-ray tubes require DC." },
+    { q: "A 'Blowout fracture' involves the:", o: ["Skull base", "Orbit floor", "Nose", "Mandible"], a: 1, e: "Floor of the orbit." },
+    { q: "The 'Psoas muscle' shadow is a quality check for:", o: ["Chest X-ray", "Abdomen (KUB)", "Skull", "Spine"], a: 1, e: "Visible psoas margins indicate good contrast on KUB." },
+    { q: "Dysphagia means:", o: ["Difficulty breathing", "Difficulty swallowing", "Difficulty speaking", "Painful walking"], a: 1, e: "Difficulty swallowing." },
+    { q: "Which view shows the 'Olecranon process' in profile?", o: ["AP Elbow", "Lateral Elbow", "Oblique Elbow", "Axial"], a: 1, e: "Lateral view." },
+    { q: "The 'Greater Trochanter' is on the:", o: ["Proximal Femur", "Distal Femur", "Proximal Humerus", "Tibia"], a: 0, e: "Lateral proximal femur." },
+    { q: "Total filtration for a machine >70 kVp must be:", o: ["1.5 mm Al", "2.5 mm Al", "0.5 mm Al", "4 mm Al"], a: 1, e: "NCRP regulation." },
+    { q: "Geometric Unsharpness is reduced by:", o: ["Large Focal Spot", "Small Focal Spot", "Short SID", "Long OID"], a: 1, e: "Small focal spot reduces penumbra." },
+    { q: "Quantum Mottle is most likely when using:", o: ["High mAs", "Low mAs / High speed system", "Low kVp", "Grid"], a: 1, e: "Photon starvation." },
+    { q: "The 'Active Matrix Array' of a DR detector consists of:", o: ["Pixels with TFTs", "PMT tubes", "CCD chips", "Intensifying screens"], a: 0, e: "Thin Film Transistors (TFT)." },
+    { q: "DICOM Service Class User (SCU) refers to the device that:", o: ["Sends the image", "Receives the image", "Stores the image", "Prints the image"], a: 0, e: "The scanner (Sender) is usually the SCU." },
+    { q: "Window Level controls:", o: ["Contrast", "Brightness", "Resolution", "Size"], a: 1, e: "Level = Brightness (Center density)." },
+    { q: "In MRI, TR (Repetition Time) determines:", o: ["T1 weighting", "T2 weighting", "Proton density", "Flow"], a: 0, e: "Short TR = T1 weighted." },
+    { q: "In MRI, TE (Echo Time) determines:", o: ["T1 weighting", "T2 weighting", "PD", "SNR"], a: 1, e: "Long TE = T2 weighted." },
+    { q: "Identify the retroperitoneal organ:", o: ["Spleen", "Kidney", "Stomach", "Liver"], a: 1, e: "Kidneys are retroperitoneal." },
+    { q: "The 'C-arm' is mostly used in:", o: ["CT suite", "MRI suite", "Operation Theatre (OT)", "Darkroom"], a: 2, e: "Mobile Fluoroscopy." },
+    { q: "Lead apron integrity is checked via:", o: ["Visual inspection", "Fluoroscopy/X-ray", "Weighing", "Cleaning"], a: 1, e: "To find internal cracks." },
+    { q: "The SI unit for Radioactivity is:", o: ["Curie", "Becquerel", "Rad", "Rem"], a: 1, e: "Becquerel (Bq)." },
+    { q: "DAP stands for:", o: ["Dose Area Product", "Digital Access Point", "Direct Anode Power", "Data Acquisition Protocol"], a: 0, e: "Measure of total radiation energy." },
+    { q: "Which material is used for the input phosphor of an Image Intensifier?", o: ["Cesium Iodide", "Zinc Cadmium Sulfide", "Calcium Tungstate", "Lead"], a: 0, e: "CsI (Cesium Iodide)." },
+    { q: "Minification Gain relates to:", o: ["Input diameter vs Output diameter", "Flux gain", "Voltage gain", "Electronic gain"], a: 0, e: "(Input/Output)^2." },
+    { q: "A 'Hysterosalpingogram' requires the patient to be in:", o: ["Lithotomy position", "Prone", "Trendelenburg", "Erect"], a: 0, e: "Gynecological position." },
+    { q: "The 'Waters view' is best for:", o: ["Frontal sinus", "Maxillary sinus", "Ethmoid sinus", "Sphenoid sinus"], a: 1, e: "Maxillary sinuses." },
+    { q: "The 'Stenvers view' shows the:", o: ["Petrous bone", "Optic foramen", "Zygoma", "Mandible"], a: 0, e: "Petrous temporal bone." },
+    { q: "Contrast resolution is best in:", o: ["X-ray", "CT", "MRI", "Fluoro"], a: 2, e: "MRI has superior soft tissue contrast." },
+    { q: "Spatial resolution is best in:", o: ["Film/Screen X-ray (Analog)", "CT", "MRI", "Nuclear Med"], a: 0, e: "Analog film still holds the highest spatial resolution." },
+    { q: "Which generation of CT introduced the 'Slip Ring'?", o: ["1st", "2nd", "3rd (Helical)", "4th"], a: 2, e: "Slip rings allowed continuous rotation (Helical/Spiral)." },
+    { q: "Pitch > 1 in CT implies:", o: ["Gap in helix (lower dose)", "Overlap (higher dose)", "High resolution", "Slow scan"], a: 0, e: "Extended imaging, table moves faster than beam width." },
+    { q: "MIP stands for:", o: ["Maximum Intensity Projection", "Minimum Intensity Projection", "Mean Intensity", "Magnetic Image"], a: 0, e: "Post-processing for vessels." },
+    { q: "Which drug is used for anaphylactic shock?", o: ["Adrenaline (Epinephrine)", "Aspirin", "Insulin", "Paracetamol"], a: 0, e: "Adrenaline." },
+    { q: "Barium Sulfate is a:", o: ["Solution", "Suspension", "Gas", "Liquid"], a: 1, e: "Suspension (does not dissolve)." },
+    { q: "Positive contrast agents appear:", o: ["Black", "White/Bright", "Grey", "Invisible"], a: 1, e: "Radiopaque." },
+    { q: "Which is a 'Negative' contrast agent?", o: ["Iodine", "Barium", "Air/CO2", "Gadolinium"], a: 2, e: "Radiolucent (appears black)." }
+];
+
+function initQuiz() {
+    const container = document.getElementById('quiz-content');
+    
+    // Split into sections visually
+    let html = `<div class="section-label">PART A: NON-CORE (20 Qs)</div>`;
+    
+    qData.forEach((item, idx) => {
+        if(idx === 20) html += `<div class="section-label" style="margin-top:30px;">PART B: CORE TECHNICAL (80 Qs)</div>`;
+        
+        // Options generation
+        let opts = '';
+        item.o.forEach((optText, optIdx) => {
+            opts += `
+            <label>
+                <input type="radio" name="q${idx}" value="${optIdx}">
+                <span class="opt-btn" id="lbl-${idx}-${optIdx}">${optText}</span>
+            </label>`;
+        });
+
+        html += `
+        <div class="q-box" id="qbox-${idx}">
+            <div class="q-stem">Q${idx+1}. ${item.q}</div>
+            <div class="opt-grid">${opts}</div>
+            <div class="exp-panel" id="exp-${idx}">
+                <strong>Answer: ${item.o[item.a]}</strong><br>
+                ${item.e}
+            </div>
+        </div>`;
+    });
+    
+    container.innerHTML = html;
+}
+
+function evaluateQuiz() {
+    let score = 0;
+    let correct = 0;
+    let wrong = 0;
+    let skipped = 0;
+
+    qData.forEach((item, idx) => {
+        const userSel = document.querySelector(`input[name="q${idx}"]:checked`);
+        const expDiv = document.getElementById(`exp-${idx}`);
+        const allBtns = document.querySelectorAll(`[id^="lbl-${idx}-"]`);
+        
+        // Reset styles
+        allBtns.forEach(btn => {
+            btn.classList.remove('state-correct', 'state-wrong', 'state-missed');
+        });
+
+        if (!userSel) {
+            skipped++;
+            document.getElementById(`lbl-${idx}-${item.a}`).classList.add('state-missed');
+        } else {
+            const val = parseInt(userSel.value);
+            if (val === item.a) {
+                score += 4;
+                correct++;
+                document.getElementById(`lbl-${idx}-${val}`).classList.add('state-correct');
+            } else {
+                score -= 1;
+                wrong++;
+                document.getElementById(`lbl-${idx}-${val}`).classList.add('state-wrong');
+                document.getElementById(`lbl-${idx}-${item.a}`).classList.add('state-correct');
+            }
+        }
+        expDiv.style.display = 'block';
+    });
+
+    // Populate Modal
+    document.getElementById('final-score').innerText = score;
+    document.getElementById('r-corr').innerText = correct;
+    document.getElementById('r-wrong').innerText = wrong;
+    document.getElementById('r-skip').innerText = skipped;
+    
+    const acc = (correct + wrong) > 0 ? Math.round((correct / (correct + wrong)) * 100) : 0;
+    document.getElementById('r-acc').innerText = acc + "%";
+
+    document.getElementById('result-modal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('result-modal').style.display = 'none';
+    window.scrollTo(0,0);
+}
+
+// Run
+initQuiz();
+</script>
+
+</body>
+</html>

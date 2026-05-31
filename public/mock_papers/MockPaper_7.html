@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>AIIMS CRE Full Mock (Real Pattern)</title>
+<style>
+    :root {
+        --primary: #2c3e50;
+        --secondary: #34495e;
+        --accent: #3498db;
+        --light: #ecf0f1;
+        --success: #27ae60;
+        --danger: #c0392b;
+        --warning: #f1c40f;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
+    body {
+        font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+        background-color: #f4f7f6;
+        color: #333;
+        margin: 0;
+        padding-bottom: 80px; /* Space for sticky footer */
+    }
+    
+    .container {
+        max-width: 900px;
+        margin: 20px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    /* Header */
+    header {
+        text-align: center;
+        border-bottom: 3px solid var(--accent);
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+        position: relative;
+    }
+    h1 { margin: 0 0 10px 0; font-size: 1.5rem; color: var(--primary); }
+    
+    .exam-info {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        font-size: 0.9em;
+        font-weight: bold;
+        color: var(--secondary);
+    }
+    .tag { background: #e0e0e0; padding: 4px 8px; border-radius: 4px; }
+    .reset-link { 
+        color: var(--danger); text-decoration: underline; cursor: pointer; font-size: 0.8em; margin-top: 10px; display: inline-block;
+    }
+
+    /* Questions */
+    .question-block {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background: #fff;
+    }
+    .q-meta { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85em; color: #777; }
+    .category-label { color: var(--accent); font-weight: bold; text-transform: uppercase; }
+    
+    .q-text { font-size: 1.1em; font-weight: 600; margin-bottom: 15px; color: var(--primary); line-height: 1.4; }
+    
+    .options-grid { 
+        display: grid; 
+        grid-template-columns: 1fr 1fr; 
+        gap: 10px; 
+    }
+    
+    /* Mobile Layout for Options */
+    @media (max-width: 600px) { 
+        .options-grid { grid-template-columns: 1fr; } 
+        .container { margin: 0; border-radius: 0; padding: 15px; }
+    }
+
+    .opt-label {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        background: var(--light);
+        border: 1px solid transparent;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s;
+        font-size: 0.95em;
+    }
+    .opt-label:hover { background: #d6eaf8; }
+    .opt-label input { margin-right: 12px; transform: scale(1.2); flex-shrink: 0; }
+
+    /* Review Logic Colors */
+    .submitted .opt-label { cursor: default; pointer-events: none; }
+    
+    /* Correct Answer (Green) */
+    .actual-correct { 
+        background-color: #d4edda !important; 
+        border-color: var(--success) !important; 
+        color: #155724; 
+        font-weight: bold;
+    }
+    .actual-correct::after { content: ' ✓'; float: right; }
+
+    /* User Selected Wrong (Red) */
+    .user-wrong { 
+        background-color: #f8d7da !important; 
+        border-color: var(--danger) !important; 
+        color: #721c24; 
+    }
+    .user-wrong::after { content: ' ✗'; float: right; }
+
+    /* Explanations */
+    .explanation {
+        display: none;
+        margin-top: 15px;
+        padding: 15px;
+        background: #e8f5e9;
+        border-left: 4px solid var(--success);
+        color: #2c3e50;
+        font-size: 0.9em;
+    }
+
+    /* Sticky Footer */
+    .sticky-footer {
+        position: fixed; bottom: 0; left: 0; width: 100%;
+        background: white; border-top: 1px solid #ccc;
+        padding: 10px 20px;
+        display: flex; justify-content: center;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        z-index: 100;
+    }
+    .submit-btn {
+        width: 100%; max-width: 600px;
+        padding: 15px; background-color: var(--accent);
+        color: white; border: none; border-radius: 6px;
+        font-size: 1.1em; font-weight: bold; cursor: pointer;
+    }
+    .submit-btn:hover { background-color: #2980b9; }
+
+    /* Modal */
+    #resultModal {
+        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.9); z-index: 200; justify-content: center; align-items: center;
+    }
+    .modal-content {
+        background: white; padding: 30px; border-radius: 8px; text-align: center; width: 90%; max-width: 400px;
+    }
+    .score-display { font-size: 3em; font-weight: bold; color: var(--accent); margin: 10px 0; }
+    .modal-btn { padding: 10px 20px; background: var(--success); color: white; border:none; border-radius:4px; font-size:1rem; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>AIIMS CRE Full Mock</h1>
+        <div class="exam-info">
+            <span class="tag">Part A: Non-Core (25 Qs)</span>
+            <span class="tag">Part B: Core (75 Qs)</span>
+            <span class="tag">Max Marks: 400</span>
+        </div>
+        <div class="reset-link" onclick="resetExam()">⚠ Reset Progress & Start Fresh</div>
+    </header>
+
+    <div id="quiz-container"></div>
+</div>
+
+<div class="sticky-footer">
+    <button id="mainBtn" class="submit-btn" onclick="submitTest()">Submit Test</button>
+</div>
+
+<div id="resultModal">
+    <div class="modal-content">
+        <h2>Result Summary</h2>
+        <div class="score-display" id="finalScore">0</div>
+        <p>Marks out of 400</p>
+        <div style="text-align:left; margin: 20px 0; font-size:0.95rem;">
+            <div style="display:flex; justify-content:space-between; padding:5px; border-bottom:1px solid #eee;">
+                <span>✅ Correct (+4):</span> <span id="res-corr" style="font-weight:bold; color:var(--success)">0</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:5px; border-bottom:1px solid #eee;">
+                <span>❌ Incorrect (-1):</span> <span id="res-wrong" style="font-weight:bold; color:var(--danger)">0</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:5px;">
+                <span>⚪ Skipped:</span> <span id="res-skip">0</span>
+            </div>
+        </div>
+        <button class="modal-btn" onclick="closeModal()">Review Answers</button>
+    </div>
+</div>
+
+<script>
+// =========================================
+// QUESTION DATABASE (100 Qs: 25 Non-Core, 75 Core)
+// =========================================
+const questions = [
+    // =============================================
+    // PART A: NON-CORE (1-25)
+    // =============================================
+    { c: "Part A: GK", q: "Which city is known as the 'Pink City' of India?", o: ["Udaipur", "Jaipur", "Jodhpur", "Bhopal"], a: 1, e: "Jaipur, Rajasthan." },
+    { c: "Part A: GK", q: "The 'Ranji Trophy' is associated with which sport?", o: ["Hockey", "Football", "Cricket", "Badminton"], a: 2, e: "Domestic first-class cricket championship." },
+    { c: "Part A: GK", q: "Who wrote 'Vande Mataram'?", o: ["Rabindranath Tagore", "Bankim Chandra Chatterjee", "Sarojini Naidu", "Premchand"], a: 1, e: "From the novel Anandamath." },
+    { c: "Part A: GK", q: "The chemical symbol 'Au' stands for:", o: ["Silver", "Copper", "Gold", "Aluminum"], a: 2, e: "Aurum (Latin for Gold)." },
+    { c: "Part A: GK", q: "Which is the longest river in the world?", o: ["Amazon", "Nile", "Ganga", "Yangtze"], a: 1, e: "The Nile River." },
+    { c: "Part A: Science", q: "Deficiency of Vitamin C causes:", o: ["Rickets", "Beriberi", "Scurvy", "Night Blindness"], a: 2, e: "Scurvy (bleeding gums)." },
+    { c: "Part A: Science", q: "The unit of Force is:", o: ["Joule", "Newton", "Watt", "Pascal"], a: 1, e: "Newton (N)." },
+    { c: "Part A: Science", q: "Which gas is evolved during photosynthesis?", o: ["Carbon Dioxide", "Nitrogen", "Oxygen", "Hydrogen"], a: 2, e: "Plants release Oxygen." },
+    { c: "Part A: Science", q: "The hardest natural substance is:", o: ["Iron", "Graphite", "Diamond", "Platinum"], a: 2, e: "Diamond." },
+    { c: "Part A: Science", q: "What is the pH of pure water?", o: ["0", "7", "14", "1"], a: 1, e: "Neutral pH is 7." },
+    { c: "Part A: Quant", q: "If the side of a square is doubled, its area becomes:", o: ["2 times", "3 times", "4 times", "8 times"], a: 2, e: "(2x)² = 4x²." },
+    { c: "Part A: Quant", q: "A man buys a toy for Rs 25 and sells it for Rs 30. Profit %?", o: ["10%", "20%", "15%", "25%"], a: 1, e: "Profit=5. (5/25)*100 = 20%." },
+    { c: "Part A: Quant", q: "Find the average of 10, 20, 30, 40, 50.", o: ["25", "30", "35", "40"], a: 1, e: "Sum=150. 150/5 = 30." },
+    { c: "Part A: Quant", q: "What is 15% of 300?", o: ["30", "40", "45", "50"], a: 2, e: "15*3 = 45." },
+    { c: "Part A: Quant", q: "A car travels 120 km in 2 hours. Speed?", o: ["50 km/h", "60 km/h", "70 km/h", "80 km/h"], a: 1, e: "120 / 2 = 60." },
+    { c: "Part A: Reasoning", q: "Series: 1, 8, 27, 64, ?", o: ["100", "121", "125", "144"], a: 2, e: "Cubes: 1³, 2³, 3³, 4³, 5³ (125)." },
+    { c: "Part A: Reasoning", q: "Which word does not belong? Apple, Banana, Carrot, Mango", o: ["Apple", "Banana", "Carrot", "Mango"], a: 2, e: "Carrot is a vegetable; others are fruits." },
+    { c: "Part A: Reasoning", q: "If FISH is written as EHRG, how is BIRD written?", o: ["AHQC", "AHRC", "AIQC", "BJSE"], a: 0, e: "-1 letter code. B->A, I->H, R->Q, D->C." },
+    { c: "Part A: Reasoning", q: "Pointing to a boy, Meena said 'He is the son of my grandfather's only son'. How is the boy related to Meena?", o: ["Uncle", "Cousin", "Brother", "Father"], a: 2, e: "Grandfather's only son is Meena's father. His son is her brother." },
+    { c: "Part A: Reasoning", q: "Analogy -> Day:Night :: Truth:?", o: ["Falsehood", "Honesty", "Light", "Right"], a: 0, e: "Antonyms." },
+    { c: "Part A: English", q: "Synonym of 'Huge':", o: ["Tiny", "Gigantic", "Weak", "Soft"], a: 1, e: "Gigantic." },
+    { c: "Part A: English", q: "Antonym of 'Brave':", o: ["Courageous", "Bold", "Cowardly", "Strong"], a: 2, e: "Cowardly." },
+    { c: "Part A: English", q: "Plural of 'Mouse':", o: ["Mouses", "Mice", "Mouse", "Mices"], a: 1, e: "Mice." },
+    { c: "Part A: English", q: "Choose the correct spelling:", o: ["Recieve", "Receive", "Riceive", "Receve"], a: 1, e: "Receive." },
+    { c: "Part A: English", q: "He is good ___ Mathematics.", o: ["in", "at", "on", "with"], a: 1, e: "Good at." },
+
+    // =============================================
+    // PART B: CORE TECHNICAL (26-100)
+    // =============================================
+    
+    // --- PHYSICS (26-35) ---
+    { c: "Part B: Physics", q: "The 'Space Charge Effect' limits the:", o: ["kVp", "mA", "Time", "Focal spot"], a: 1, e: "Prevents further emission of electrons at the filament." },
+    { c: "Part B: Physics", q: "Which transformer loss is reduced by lamination?", o: ["Copper loss", "Eddy current loss", "Hysteresis loss", "Heat loss"], a: 1, e: "Laminating the core reduces eddy currents." },
+    { c: "Part B: Physics", q: "The process of converting AC to DC is called:", o: ["Amplification", "Rectification", "Induction", "Transformation"], a: 1, e: "X-ray tubes require DC." },
+    { c: "Part B: Physics", q: "To double the optical density (film), we should:", o: ["Double the kVp", "Double the mAs", "Halve the mAs", "Double the SID"], a: 1, e: "mAs is directly proportional to density." },
+    { c: "Part B: Physics", q: "The '15% Rule' states that increasing kVp by 15% is equivalent to:", o: ["Halving the mAs", "Doubling the mAs", "Tripling the mAs", "No change"], a: 1, e: "Doubling the density/exposure." },
+    { c: "Part B: Physics", q: "Heat Units (HU) formula for 3-phase 6-pulse:", o: ["kVp x mA x s", "kVp x mA x s x 1.35", "kVp x mA x s x 1.41", "kVp x mA x s x 2"], a: 1, e: "Factor is 1.35." },
+    { c: "Part B: Physics", q: "Which interaction is responsible for operator dose (scatter)?", o: ["Photoelectric", "Compton", "Coherent", "Pair Production"], a: 1, e: "Compton scatter." },
+    { c: "Part B: Physics", q: "Grid frequency refers to:", o: ["Height of strips", "Number of lead strips per inch/cm", "Ratio of height to distance", "Thickness of interspace"], a: 1, e: "Lines per inch/cm." },
+    { c: "Part B: Physics", q: "An air-gap technique acts as a:", o: ["Filter", "Grid", "Screen", "Booster"], a: 1, e: "Reduces scatter reaching the film." },
+    { c: "Part B: Physics", q: "The SI unit of Magnetic Field Strength is:", o: ["Gauss", "Tesla", "Weber", "Hertz"], a: 1, e: "Tesla." },
+
+    // --- DIGITAL & EQUIPMENT (36-45) ---
+    { c: "Part B: Digital", q: "In DR, the 'Fill Factor' applies to:", o: ["CR Cassette", "TFT Array (Pixel)", "Laser", "Monitor"], a: 1, e: "Percentage of pixel area sensitive to x-rays." },
+    { c: "Part B: Digital", q: "Aliasing artifact (Moire pattern) occurs when:", o: ["Grid lines run parallel to scan lines", "kVp is too high", "mAs is too low", "Patient moves"], a: 0, e: "Frequency mismatch." },
+    { c: "Part B: Digital", q: "Which post-processing technique makes image sharper?", o: ["Smoothing", "Edge Enhancement", "Inversion", "Windowing"], a: 1, e: "High-pass filtering." },
+    { c: "Part B: Digital", q: "Exposure Index (EI) reflects:", o: ["Patient Dose", "Detector Exposure", "kVp accuracy", "Scatter"], a: 1, e: "Amount of radiation reaching the detector." },
+    { c: "Part B: Digital", q: "A 'Histogram' in radiography represents:", o: ["Pixel value distribution", "Dose report", "Time curve", "Patient history"], a: 0, e: "Frequency of gray values." },
+    { c: "Part B: Digital", q: "The erasure of a CR plate is done by:", o: ["Red Laser", "Bright White Light", "Chemicals", "Heat"], a: 1, e: "To remove trapped electrons/ghosting." },
+    { c: "Part B: Digital", q: "DICOM Store SCU is the:", o: ["Sender", "Receiver", "Server", "Printer"], a: 0, e: "Service Class User (Sender)." },
+    { c: "Part B: Digital", q: "Pixel Size = ?", o: ["FOV / Matrix", "Matrix / FOV", "FOV x Matrix", "Bit Depth"], a: 0, e: "Field of View divided by Matrix." },
+    { c: "Part B: Digital", q: "Window Level determines:", o: ["Contrast", "Brightness (Density)", "Resolution", "Noise"], a: 1, e: "Center of the gray scale." },
+    { c: "Part B: Digital", q: "The PSP plate in CR is made of:", o: ["Barium Fluorohalide", "Amorphous Silicon", "Tungsten", "Lead"], a: 0, e: "Europium doped." },
+
+    // --- ANATOMY (46-65) ---
+    { c: "Part B: Anatomy", q: "The 'Pterion' is a junction of Frontal, Parietal, Temporal and:", o: ["Occipital", "Sphenoid", "Ethmoid", "Zygoma"], a: 1, e: "Sphenoid (Great Wing)." },
+    { c: "Part B: Anatomy", q: "Which sinus is not present at birth?", o: ["Maxillary", "Ethmoid", "Frontal", "None"], a: 2, e: "Frontal sinuses develop around age 6-7." },
+    { c: "Part B: Anatomy", q: "The 'Dens' is held in place by which ligament?", o: ["Transverse Ligament", "Nuchal Ligament", "ALL", "PLL"], a: 0, e: "Crucial for C1-C2 stability." },
+    { c: "Part B: Anatomy", q: "The 'Vertebra Prominens' is:", o: ["C1", "C2", "C7", "T1"], a: 2, e: "Long spinous process." },
+    { c: "Part B: Anatomy", q: "How many carpal bones are there in one hand?", o: ["7", "8", "9", "5"], a: 1, e: "8 bones." },
+    { c: "Part B: Anatomy", q: "The 'Acetabulum' is formed by:", o: ["Ilium, Ischium, Pubis", "Ilium, Sacrum", "Femur, Tibia", "Scapula"], a: 0, e: "Fusion of 3 pelvic bones." },
+    { c: "Part B: Anatomy", q: "The 'Lateral Malleolus' is part of the:", o: ["Tibia", "Fibula", "Femur", "Talus"], a: 1, e: "Distal Fibula." },
+    { c: "Part B: Anatomy", q: "The 'Patella' is what type of bone?", o: ["Long", "Short", "Flat", "Sesamoid"], a: 3, e: "Embedded in tendon." },
+    { c: "Part B: Anatomy", q: "Which organ lies in the Left Hypochondrium?", o: ["Liver", "Spleen", "Appendix", "Gallbladder"], a: 1, e: "Spleen." },
+    { c: "Part B: Anatomy", q: "The 'Pylorus' connects Stomach to:", o: ["Esophagus", "Jejunum", "Duodenum", "Ileum"], a: 2, e: "First part of small intestine." },
+    { c: "Part B: Anatomy", q: "The 'Cystic Duct' drains the:", o: ["Liver", "Pancreas", "Gallbladder", "Spleen"], a: 2, e: "Joins common hepatic to form CBD." },
+    { c: "Part B: Anatomy", q: "The 'Circle of Willis' supplies the:", o: ["Heart", "Lungs", "Brain", "Kidneys"], a: 2, e: "Cerebral circulation." },
+    { c: "Part B: Anatomy", q: "The 'Mitral Valve' is located between:", o: ["RA and RV", "LA and LV", "RV and PA", "LV and Aorta"], a: 1, e: "Left Atrium and Left Ventricle." },
+    { c: "Part B: Anatomy", q: "The 'Phrenic Nerve' controls the:", o: ["Heart", "Stomach", "Diaphragm", "Tongue"], a: 2, e: "Breathing muscle." },
+    { c: "Part B: Anatomy", q: "How many lobes in the Right Lung?", o: ["2", "3", "4", "1"], a: 1, e: "Superior, Middle, Inferior." },
+    { c: "Part B: Anatomy", q: "The 'Cauda Equina' begins at level:", o: ["C1", "T12/L1", "L5", "S1"], a: 1, e: "End of spinal cord." },
+    { c: "Part B: Anatomy", q: "Which artery is palpable at the wrist?", o: ["Brachial", "Radial", "Carotid", "Femoral"], a: 1, e: "Radial artery." },
+    { c: "Part B: Anatomy", q: "The 'Xiphoid Process' is part of the:", o: ["Scapula", "Sternum", "Pelvis", "Skull"], a: 1, e: "Distal sternum." },
+    { c: "Part B: Anatomy", q: "The 'Olecranon Fossa' is on the:", o: ["Ulna", "Radius", "Humerus", "Scapula"], a: 2, e: "Posterior distal humerus." },
+    { c: "Part B: Anatomy", q: "Which is a facial bone?", o: ["Frontal", "Temporal", "Zygoma", "Sphenoid"], a: 2, e: "Others are cranial bones." },
+
+    // --- POSITIONING & VIEWS (66-75) ---
+    { c: "Part B: Positioning", q: "For a 'Lateral C-Spine', the SID is usually:", o: ["100cm", "120cm", "180cm", "90cm"], a: 2, e: "72 inches to reduce magnification (Air gap)." },
+    { c: "Part B: Positioning", q: "The 'Waters View' demonstrates:", o: ["Frontal Sinus", "Maxillary Sinus", "Sphenoid", "Ethmoid"], a: 1, e: "Petrous ridges below maxillary floor." },
+    { c: "Part B: Positioning", q: "The 'Y-View' of the shoulder is for:", o: ["Fracture", "Dislocation", "AC Joint", "Clavicle"], a: 1, e: "Anterior/Posterior dislocation." },
+    { c: "Part B: Positioning", q: "To see the 'Intercondylar Fossa', use:", o: ["Tunnel View", "Sunrise View", "Lateral", "AP"], a: 0, e: "Camp Coventry or Holmblad." },
+    { c: "Part B: Positioning", q: "The 'Mortise View' of ankle requires leg rotation:", o: ["15-20 deg Internal", "45 deg Internal", "External", "None"], a: 0, e: "To open the joint space." },
+    { c: "Part B: Positioning", q: "A 'Decubitus' view is essential for:", o: ["Fractures", "Air-Fluid levels", "Bone age", "Spine alignment"], a: 1, e: "When patient cannot stand." },
+    { c: "Part B: Positioning", q: "For 'Ribs above diaphragm', exposure is on:", o: ["Inspiration", "Expiration", "Shallow breathing", "Valsalva"], a: 0, e: "Diaphragm moves down." },
+    { c: "Part B: Positioning", q: "The 'Towne View' angle is:", o: ["15 deg Caudal", "30 deg Caudal", "30 deg Cephalad", "45 deg Cephalad"], a: 1, e: "To see Dorsum Sellae." },
+    { c: "Part B: Positioning", q: "The 'Judet' view assesses:", o: ["Acetabulum", "Sacrum", "Skull", "Knee"], a: 0, e: "Pelvic fractures." },
+    { c: "Part B: Positioning", q: "The 'Sunrise' view shows the:", o: ["Patella-Femoral joint", "Tibial plateau", "Hip", "Ankle"], a: 0, e: "Tangential patella." },
+
+    // --- CT/MRI & SAFETY (76-90) ---
+    { c: "Part B: CT/MRI", q: "CT Number for Fat is approx:", o: ["0", "+50", "-100", "-1000"], a: 2, e: "Fat is less dense than water." },
+    { c: "Part B: CT/MRI", q: "Beam Hardening artifact looks like:", o: ["Rings", "Streaks/Dark bands", "Blur", "Dots"], a: 1, e: "Between dense objects." },
+    { c: "Part B: CT/MRI", q: "In MRI, 'Quench' refers to:", o: ["Loss of superconductivity (Helium boil-off)", "Patient motion", "Power failure", "Fire"], a: 0, e: "Emergency shutdown." },
+    { c: "Part B: CT/MRI", q: "Which Zone in MRI is strictly restricted?", o: ["Zone I", "Zone II", "Zone III", "Zone IV"], a: 3, e: "Magnet room." },
+    { c: "Part B: CT/MRI", q: "STIR sequence suppresses:", o: ["Fat", "Water", "Bone", "Air"], a: 0, e: "Short Tau Inversion Recovery." },
+    { c: "Part B: Safety", q: "The 'Inverse Square Law' relates to:", o: ["Distance and Intensity", "Time and Dose", "kVp and Contrast", "Grid and Dose"], a: 0, e: "Double distance = 1/4 intensity." },
+    { c: "Part B: Safety", q: "Dose Limit for Pregnant Worker (Fetus) per month:", o: ["5 mSv", "0.5 mSv", "1 mSv", "10 mSv"], a: 1, e: "0.5 mSv/month." },
+    { c: "Part B: Safety", q: "The '10-Day Rule' avoids irradiation during:", o: ["Early pregnancy", "Menstruation", "Ovulation", "Menopause"], a: 0, e: "Exam done 10 days from onset of menses." },
+    { c: "Part B: Safety", q: "Which dosimeter can be read instantly?", o: ["TLD", "OSL", "Pocket Ion Chamber", "Film Badge"], a: 2, e: "Pocket dosimeter." },
+    { c: "Part B: Safety", q: "Gonadal shielding should be used if gonads are within:", o: ["2 cm", "5 cm", "10 cm", "20 cm"], a: 1, e: "Of the primary beam." },
+    { c: "Part B: Procedures", q: "HSG checks for:", o: ["Tubal patency", "Kidney stones", "Gallstones", "Fractures"], a: 0, e: "Infertility check." },
+    { c: "Part B: Procedures", q: "IVU compression is applied to:", o: ["Stop flow", "Distend pelvicalyceal system", "Reduce motion", "Comfort"], a: 1, e: "Better visualization." },
+    { c: "Part B: Procedures", q: "Adrenaline is used for:", o: ["Contrast reaction (Anaphylaxis)", "Sedation", "Pain", "Vomiting"], a: 0, e: "Life saving drug." },
+    { c: "Part B: Procedures", q: "Barium Swallow examines:", o: ["Esophagus", "Stomach", "Colon", "Lungs"], a: 0, e: "Dysphagia." },
+    { c: "Part B: Procedures", q: "Non-Ionic contrast has:", o: ["High Osmolality", "Low Osmolality", "No Iodine", "High Toxicity"], a: 1, e: "Safer than Ionic." },
+
+    // --- FILLERS (91-100) ---
+    { c: "Part B: Misc", q: "Medical term for 'Nose bleed':", o: ["Epistaxis", "Hemoptysis", "Hematemesis", "Hematuria"], a: 0, e: "Epistaxis." },
+    { c: "Part B: Misc", q: "Nosocomial infection is acquired in:", o: ["Home", "Hospital", "School", "Park"], a: 1, e: "Hospital-acquired." },
+    { c: "Part B: Misc", q: "Systolic pressure refers to:", o: ["Heart contraction", "Heart relaxation", "Lung pressure", "Brain pressure"], a: 0, e: "Top number." },
+    { c: "Part B: Misc", q: "Universal Donor Blood Group:", o: ["A", "B", "AB", "O-"], a: 3, e: "O Negative." },
+    { c: "Part B: Misc", q: "Colles fracture involves:", o: ["Radius", "Ulna", "Humerus", "Femur"], a: 0, e: "Distal radius." },
+    { c: "Part B: Misc", q: "A 'Greenstick' fracture is common in:", o: ["Elderly", "Children", "Athletes", "Women"], a: 1, e: "Incomplete fracture." },
+    { c: "Part B: Misc", q: "Dyspnea means:", o: ["Difficulty swallowing", "Difficulty breathing", "Pain", "Fever"], a: 1, e: "Shortness of breath." },
+    { c: "Part B: Misc", q: "Asepsis means:", o: ["Free from infection", "Infected", "Dirty", "Clean but not sterile"], a: 0, e: "Sterile condition." },
+    { c: "Part B: Misc", q: "Normal pulse rate adult:", o: ["40-50", "60-100", "100-120", "120+"], a: 1, e: "60-100 bpm." },
+    { c: "Part B: Misc", q: "Which cannula size is largest diameter?", o: ["18G", "20G", "22G", "24G"], a: 0, e: "Lower gauge = Larger needle." }
+];
+// =========================================
+// APP LOGIC (Persistence & Interaction)
+// =========================================
+const STORAGE_KEY = 'cre_full_mock_v2'; // Unique key
+let userState = {
+    answers: {}, // { index: optionIndex }
+    submitted: false
+};
+
+function init() {
+    // 1. Load State
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if(saved) {
+        userState = JSON.parse(saved);
+    }
+
+    // 2. Render Questions
+    const container = document.getElementById('quiz-container');
+    let html = '';
+    
+    questions.forEach((item, idx) => {
+        let optionsHtml = '';
+        item.o.forEach((opt, optIdx) => {
+            const isChecked = userState.answers[idx] === optIdx ? 'checked' : '';
+            optionsHtml += `
+            <label class="opt-label" id="label-${idx}-${optIdx}">
+                <input type="radio" name="q${idx}" value="${optIdx}" 
+                    ${isChecked} 
+                    onchange="handleInput(${idx}, ${optIdx})">
+                ${opt}
+            </label>`;
+        });
+
+        html += `
+        <div class="question-block" id="q-block-${idx}">
+            <div class="q-meta">
+                <span class="category-label">${item.c}</span>
+                <span>Question ${idx + 1} of ${questions.length}</span>
+            </div>
+            <div class="q-text">${item.q}</div>
+            <div class="options-grid">${optionsHtml}</div>
+            <div class="explanation" id="exp-${idx}">
+                <strong>Answer: ${item.o[item.a]}</strong><br>
+                <em>${item.e}</em>
+            </div>
+        </div>`;
+    });
+    
+    container.innerHTML = html;
+
+    // 3. Check if already submitted
+    if(userState.submitted) {
+        enableReviewMode();
+    }
+}
+
+function handleInput(qIndex, optIndex) {
+    if(userState.submitted) return; // Prevent changing after submit
+    userState.answers[qIndex] = optIndex;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(userState));
+}
+
+function submitTest() {
+    if(!confirm("Are you sure you want to submit? This will lock your answers.")) return;
+    
+    userState.submitted = true;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(userState));
+    calculateScore();
+}
+
+function calculateScore() {
+    let score = 0, correct = 0, wrong = 0, skip = 0;
+    
+    questions.forEach((q, idx) => {
+        const userAns = userState.answers[idx];
+        if(userAns === undefined) {
+            skip++;
+        } else if (userAns === q.a) {
+            score += 4;
+            correct++;
+        } else {
+            score -= 1;
+            wrong++;
+        }
+    });
+
+    document.getElementById('finalScore').innerText = score;
+    document.getElementById('res-corr').innerText = correct;
+    document.getElementById('res-wrong').innerText = wrong;
+    document.getElementById('res-skip').innerText = skip;
+    
+    document.getElementById('resultModal').style.display = 'flex';
+    enableReviewMode();
+}
+
+function enableReviewMode() {
+    document.body.classList.add('submitted');
+    document.getElementById('mainBtn').style.display = 'none'; // Hide submit button
+
+    questions.forEach((q, idx) => {
+        const userAns = userState.answers[idx];
+        const expDiv = document.getElementById(`exp-${idx}`);
+        expDiv.style.display = 'block'; // Show explanations
+
+        // Styles
+        if(userAns !== undefined) {
+            const userLabel = document.getElementById(`label-${idx}-${userAns}`);
+            if(userAns === q.a) {
+                userLabel.classList.add('actual-correct');
+            } else {
+                userLabel.classList.add('user-wrong');
+                document.getElementById(`label-${idx}-${q.a}`).classList.add('actual-correct');
+            }
+        } else {
+            // If skipped, just show correct
+            document.getElementById(`label-${idx}-${q.a}`).classList.add('actual-correct');
+        }
+        
+        // Disable inputs
+        const inputs = document.getElementsByName(`q${idx}`);
+        inputs.forEach(i => i.disabled = true);
+    });
+}
+
+function closeModal() {
+    document.getElementById('resultModal').style.display = 'none';
+    window.scrollTo(0,0);
+}
+
+function resetExam() {
+    if(confirm("Clear all progress and start fresh?")) {
+        localStorage.removeItem(STORAGE_KEY);
+        location.reload();
+    }
+}
+
+// Start App
+init();
+
+</script>
+</body>
+</html>

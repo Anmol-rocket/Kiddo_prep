@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>AIIMS CRE Full Mock (Real Pattern)</title>
+<style>
+    :root {
+        --primary: #2c3e50;
+        --secondary: #34495e;
+        --accent: #3498db;
+        --light: #ecf0f1;
+        --success: #27ae60;
+        --danger: #c0392b;
+        --warning: #f1c40f;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
+    body {
+        font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+        background-color: #f4f7f6;
+        color: #333;
+        margin: 0;
+        padding-bottom: 80px; /* Space for sticky footer */
+    }
+    
+    .container {
+        max-width: 900px;
+        margin: 20px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    /* Header */
+    header {
+        text-align: center;
+        border-bottom: 3px solid var(--accent);
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+        position: relative;
+    }
+    h1 { margin: 0 0 10px 0; font-size: 1.5rem; color: var(--primary); }
+    
+    .exam-info {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        font-size: 0.9em;
+        font-weight: bold;
+        color: var(--secondary);
+    }
+    .tag { background: #e0e0e0; padding: 4px 8px; border-radius: 4px; }
+    .reset-link { 
+        color: var(--danger); text-decoration: underline; cursor: pointer; font-size: 0.8em; margin-top: 10px; display: inline-block;
+    }
+
+    /* Questions */
+    .question-block {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background: #fff;
+    }
+    .q-meta { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85em; color: #777; }
+    .category-label { color: var(--accent); font-weight: bold; text-transform: uppercase; }
+    
+    .q-text { font-size: 1.1em; font-weight: 600; margin-bottom: 15px; color: var(--primary); line-height: 1.4; }
+    
+    .options-grid { 
+        display: grid; 
+        grid-template-columns: 1fr 1fr; 
+        gap: 10px; 
+    }
+    
+    /* Mobile Layout for Options */
+    @media (max-width: 600px) { 
+        .options-grid { grid-template-columns: 1fr; } 
+        .container { margin: 0; border-radius: 0; padding: 15px; }
+    }
+
+    .opt-label {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        background: var(--light);
+        border: 1px solid transparent;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.2s;
+        font-size: 0.95em;
+    }
+    .opt-label:hover { background: #d6eaf8; }
+    .opt-label input { margin-right: 12px; transform: scale(1.2); flex-shrink: 0; }
+
+    /* Review Logic Colors */
+    .submitted .opt-label { cursor: default; pointer-events: none; }
+    
+    /* Correct Answer (Green) */
+    .actual-correct { 
+        background-color: #d4edda !important; 
+        border-color: var(--success) !important; 
+        color: #155724; 
+        font-weight: bold;
+    }
+    .actual-correct::after { content: ' ✓'; float: right; }
+
+    /* User Selected Wrong (Red) */
+    .user-wrong { 
+        background-color: #f8d7da !important; 
+        border-color: var(--danger) !important; 
+        color: #721c24; 
+    }
+    .user-wrong::after { content: ' ✗'; float: right; }
+
+    /* Explanations */
+    .explanation {
+        display: none;
+        margin-top: 15px;
+        padding: 15px;
+        background: #e8f5e9;
+        border-left: 4px solid var(--success);
+        color: #2c3e50;
+        font-size: 0.9em;
+    }
+
+    /* Sticky Footer */
+    .sticky-footer {
+        position: fixed; bottom: 0; left: 0; width: 100%;
+        background: white; border-top: 1px solid #ccc;
+        padding: 10px 20px;
+        display: flex; justify-content: center;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        z-index: 100;
+    }
+    .submit-btn {
+        width: 100%; max-width: 600px;
+        padding: 15px; background-color: var(--accent);
+        color: white; border: none; border-radius: 6px;
+        font-size: 1.1em; font-weight: bold; cursor: pointer;
+    }
+    .submit-btn:hover { background-color: #2980b9; }
+
+    /* Modal */
+    #resultModal {
+        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.9); z-index: 200; justify-content: center; align-items: center;
+    }
+    .modal-content {
+        background: white; padding: 30px; border-radius: 8px; text-align: center; width: 90%; max-width: 400px;
+    }
+    .score-display { font-size: 3em; font-weight: bold; color: var(--accent); margin: 10px 0; }
+    .modal-btn { padding: 10px 20px; background: var(--success); color: white; border:none; border-radius:4px; font-size:1rem; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>AIIMS CRE Full Mock</h1>
+        <div class="exam-info">
+            <span class="tag">Part A: Non-Core (25 Qs)</span>
+            <span class="tag">Part B: Core (75 Qs)</span>
+            <span class="tag">Max Marks: 400</span>
+        </div>
+        <div class="reset-link" onclick="resetExam()">⚠ Reset Progress & Start Fresh</div>
+    </header>
+
+    <div id="quiz-container"></div>
+</div>
+
+<div class="sticky-footer">
+    <button id="mainBtn" class="submit-btn" onclick="submitTest()">Submit Test</button>
+</div>
+
+<div id="resultModal">
+    <div class="modal-content">
+        <h2>Result Summary</h2>
+        <div class="score-display" id="finalScore">0</div>
+        <p>Marks out of 400</p>
+        <div style="text-align:left; margin: 20px 0; font-size:0.95rem;">
+            <div style="display:flex; justify-content:space-between; padding:5px; border-bottom:1px solid #eee;">
+                <span>✅ Correct (+4):</span> <span id="res-corr" style="font-weight:bold; color:var(--success)">0</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:5px; border-bottom:1px solid #eee;">
+                <span>❌ Incorrect (-1):</span> <span id="res-wrong" style="font-weight:bold; color:var(--danger)">0</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:5px;">
+                <span>⚪ Skipped:</span> <span id="res-skip">0</span>
+            </div>
+        </div>
+        <button class="modal-btn" onclick="closeModal()">Review Answers</button>
+    </div>
+</div>
+
+<script>
+// =========================================
+// QUESTION DATABASE (100 Qs: 25 Non-Core, 75 Core)
+// =========================================
+const questions = [
+    // =============================================
+    // PART A: NON-CORE (1-25) - GK, Quant, Reasoning
+    // =============================================
+    { c: "Part A: GK", q: "The 'Dadasaheb Phalke Award' is associated with which field?", o: ["Literature", "Sports", "Cinema", "Journalism"], a: 2, e: "India's highest award in cinema." },
+    { c: "Part A: GK", q: "Which gas is used in fire extinguishers?", o: ["Carbon Dioxide", "Nitrogen", "Oxygen", "Argon"], a: 0, e: "CO2 displaces oxygen to starve the fire." },
+    { c: "Part A: Reasoning", q: "Calendar: If today is Monday, what day will it be after 61 days?", o: ["Tuesday", "Wednesday", "Saturday", "Sunday"], a: 2, e: "61 / 7 = 8 weeks + 5 odd days. Mon + 5 = Saturday." },
+    { c: "Part A: Quant", q: "A and B together can do a work in 15 days. B alone in 20 days. A alone?", o: ["30 days", "45 days", "60 days", "40 days"], a: 2, e: "1/A = 1/15 - 1/20 = (4-3)/60 = 1/60. So, 60 days." },
+    { c: "Part A: GK", q: "The term 'Bull and Bear' is associated with:", o: ["Zoo", "Agriculture", "Stock Market", "Politics"], a: 2, e: "Stock market trends." },
+    { c: "Part A: Science", q: "Which vitamin helps in blood clotting?", o: ["Vitamin A", "Vitamin C", "Vitamin K", "Vitamin E"], a: 2, e: "Vitamin K is essential for synthesis of clotting factors." },
+    { c: "Part A: English", q: "Idiom: 'To break the ice' means:", o: ["To start a conflict", "To start a conversation", "To cool down", "To make a drink"], a: 1, e: "To initiate social interaction." },
+    { c: "Part A: Quant", q: "The average of first 5 multiples of 3 is:", o: ["3", "9", "12", "15"], a: 1, e: "3, 6, 9, 12, 15. Average is the middle term: 9." },
+    { c: "Part A: Reasoning", q: "Venn Diagram: Which best represents 'Table, Chair, Furniture'?", o: ["Two separate circles inside one big circle", "Three separate circles", "Three intersecting circles", "One circle inside another inside another"], a: 0, e: "Table and Chair are separate items, both are Furniture." },
+    { c: "Part A: GK", q: "Who designed the Indian National Flag?", o: ["Rabindranath Tagore", "Pingali Venkayya", "Bankim Chandra", "Gandhi"], a: 1, e: "Pingali Venkayya." },
+    { c: "Part A: Science", q: "The chemical formula for Common Salt is:", o: ["Na2CO3", "NaHCO3", "NaCl", "KCl"], a: 2, e: "Sodium Chloride (NaCl)." },
+    { c: "Part A: Quant", q: "Volume of a cylinder is:", o: ["πr²h", "2πrh", "1/3 πr²h", "4/3 πr³"], a: 0, e: "Area of base × height (πr²h)." },
+    { c: "Part A: Reasoning", q: "Complete the series: AZ, CX, EV, GT, ?", o: ["IR", "HS", "KP", "JQ"], a: 0, e: "A(+2)C(+2)E... -> I. Z(-2)X(-2)V... -> R. Answer IR." },
+    { c: "Part A: English", q: "One word substitution: 'One who knows everything'.", o: ["Omnipresent", "Omnipotent", "Omniscient", "Optimist"], a: 2, e: "Omniscient." },
+    { c: "Part A: GK", q: "Which state is known as the 'Spice Garden of India'?", o: ["Karnataka", "Kerala", "Assam", "Andhra Pradesh"], a: 1, e: "Kerala." },
+    { c: "Part A: Science", q: "Which acid is found in Ant stings?", o: ["Acetic Acid", "Formic Acid (Methanoic)", "Citric Acid", "Lactic Acid"], a: 1, e: "Formic Acid causes the stinging pain." },
+    { c: "Part A: Quant", q: "If x% of y is 50 and y% of z is 50, then relation between x and z is:", o: ["x=z", "x=2z", "z=2x", "None"], a: 0, e: "xy/100=50 and yz/100=50. So xy=yz => x=z." },
+    { c: "Part A: Reasoning", q: "Dice: If 1 is opposite 6, 2 opposite 5, then 3 is opposite?", o: ["4", "5", "6", "1"], a: 0, e: "Standard dice sum of opposites is 7. 7-3=4." },
+    { c: "Part A: GK", q: "World Environment Day is celebrated on:", o: ["April 22", "June 5", "March 8", "May 1"], a: 1, e: "June 5." },
+    { c: "Part A: English", q: "Correct spelling:", o: ["Pneumonia", "Neumonia", "Pnumonia", "Numonia"], a: 0, e: "Pneumonia." },
+    { c: "Part A: Science", q: "The speed of light in vacuum is approx:", o: ["3 x 10^8 m/s", "3 x 10^6 m/s", "3 x 10^10 m/s", "330 m/s"], a: 0, e: "300,000 km/s." },
+    { c: "Part A: Quant", q: "Perimeter of a rectangle with length 10 and breadth 5 is:", o: ["15", "30", "50", "25"], a: 1, e: "2(L+B) = 2(15) = 30." },
+    { c: "Part A: GK", q: "Which organ filters blood in the human body?", o: ["Heart", "Liver", "Kidney", "Lung"], a: 2, e: "Kidney." },
+    { c: "Part A: Reasoning", q: "Coding: If BOOK = 43, PEN = ?", o: ["35", "32", "30", "40"], a: 0, e: "B(2)+O(15)+O(15)+K(11)=43. P(16)+E(5)+N(14)=35." },
+    { c: "Part A: GK", q: "The largest continent by area is:", o: ["Africa", "North America", "Asia", "Europe"], a: 2, e: "Asia." },
+
+    // =============================================
+    // PART B: CORE TECHNICAL (26-100)
+    // =============================================
+    
+    // --- PHYSICS & CIRCUITRY ---
+    { c: "Part B: Physics", q: "The negative charge of the focusing cup helps to:", o: ["Attract electrons", "Repel electrons (Space Charge)", "Cool the filament", "Spin the anode"], a: 1, e: "It compresses the electron cloud (Space charge effect)." },
+    { c: "Part B: Physics", q: "Voltage Ripple for a High Frequency Generator is:", o: ["100%", "14%", "4%", "< 1%"], a: 3, e: "High frequency has negligible ripple (<1%)." },
+    { c: "Part B: Physics", q: "Which interaction dominates at high kVp (diagnostic range) in soft tissue?", o: ["Photoelectric", "Compton Scatter", "Coherent", "Pair Production"], a: 1, e: "Compton scatter becomes dominant as kVp increases." },
+    { c: "Part B: Physics", q: "The 'Binding Energy' of the K-shell in Tungsten is:", o: ["69.5 keV", "12 keV", "100 keV", "30 keV"], a: 0, e: "Essential for characteristic radiation production." },
+    { c: "Part B: Physics", q: "Automatic Exposure Control (AEC) chambers are located:", o: ["Between Patient and Grid", "Between Grid and Cassette", "Behind the Cassette", "Inside the Tube"], a: 1, e: "Ionization chambers are usually between the grid and the detector/cassette." },
+    { c: "Part B: Physics", q: "Flux Gain in an II tube is due to:", o: ["Electron acceleration (High Voltage)", "Minification", "Focusing lenses", "Input phosphor size"], a: 0, e: "Acceleration of electrons by 25kV potential difference." },
+    { c: "Part B: Physics", q: "MTF (Modulation Transfer Function) curve plots:", o: ["Contrast vs Spatial Frequency", "Dose vs Time", "Density vs Log Exposure", "Noise vs mA"], a: 0, e: "Measures resolution ability." },
+    { c: "Part B: Physics", q: "The unit of Inductance is:", o: ["Farad", "Henry", "Ohm", "Tesla"], a: 1, e: "Henry (H)." },
+    
+    // --- DIGITAL RADIOGRAPHY ---
+    { c: "Part B: Digital", q: "A 'Bit Depth' of 12 produces how many shades of gray?", o: ["256", "1024", "4096", "16384"], a: 2, e: "2^12 = 4096." },
+    { c: "Part B: Digital", q: "In Indirect DR, which scintillator is structured as needles?", o: ["Gadolinium Oxysulfide (Gd2O2S)", "Cesium Iodide (CsI)", "Amorphous Selenium", "Barium Fluorohalide"], a: 1, e: "CsI needles reduce light spread, improving resolution." },
+    { c: "Part B: Digital", q: "HL7 (Health Level 7) is a standard for:", o: ["Image compression", "Text/Patient Data exchange", "Radiation safety", "Monitor calibration"], a: 1, e: "Communication of textual data between HIS/RIS." },
+    { c: "Part B: Digital", q: "Ghosting artifact in CR is caused by:", o: ["Incomplete Erasure", "Double exposure", "Backscatter", "Grid cutoff"], a: 0, e: "Previous image signal remains on plate." },
+    { c: "Part B: Digital", q: "The 'Look Up Table' (LUT) primarily controls:", o: ["Spatial Resolution", "Contrast", "Distortion", "Dose"], a: 1, e: "It maps raw data to desired contrast curves." },
+
+    // --- ANATOMY: SKULL & SPINE ---
+    { c: "Part B: Anatomy", q: "The 'Crista Galli' is a part of which bone?", o: ["Sphenoid", "Ethmoid", "Frontal", "Temporal"], a: 1, e: "Attachment for Falx Cerebri." },
+    { c: "Part B: Anatomy", q: "The 'Foramen Spinosum' transmits the:", o: ["Middle Meningeal Artery", "Internal Carotid", "Jugular Vein", "Optic Nerve"], a: 0, e: "Located in Sphenoid bone." },
+    { c: "Part B: Anatomy", q: "Which facial bone is unpaired?", o: ["Maxilla", "Zygoma", "Lacrimal", "Vomer"], a: 3, e: "Vomer and Mandible are unpaired facial bones." },
+    { c: "Part B: Anatomy", q: "The 'Pars Interarticularis' lies between:", o: ["Superior and Inferior Articular Processes", "Body and Pedicle", "Lamina and Spinous Process", "Transverse process and Body"], a: 0, e: "Fracture here causes Spondylolysis." },
+    { c: "Part B: Anatomy", q: "C1 (Atlas) lacks a:", o: ["Transverse Foramen", "Vertebral Body", "Posterior Arch", "Lateral Mass"], a: 1, e: "It has no body or spinous process." },
+
+    // --- ANATOMY: EXTREMITIES & JOINTS ---
+    { c: "Part B: Anatomy", q: "The 'Sustentaculum Tali' is a shelf on the:", o: ["Talus", "Calcaneus", "Navicular", "Cuboid"], a: 1, e: "Medial side of calcaneus." },
+    { c: "Part B: Anatomy", q: "The 'Coracoid Process' is found on the:", o: ["Ulna", "Clavicle", "Scapula", "Humerus"], a: 2, e: "Anterior projection of scapula." },
+    { c: "Part B: Anatomy", q: "Which carpal bone articulates with the 1st Metacarpal?", o: ["Scaphoid", "Trapezium", "Trapezoid", "Capitate"], a: 1, e: "Saddle joint of thumb." },
+    { c: "Part B: Anatomy", q: "The 'Fovea Capitis' is located on the:", o: ["Head of Humerus", "Head of Radius", "Head of Femur", "Acetabulum"], a: 2, e: "Attachment for Ligamentum Teres." },
+    { c: "Part B: Anatomy", q: "The 'Linea Aspera' is on the:", o: ["Anterior Femur", "Posterior Femur", "Tibia", "Humerus"], a: 1, e: "Ridge for muscle attachment." },
+
+    // --- ANATOMY: VISCERAL & VASCULAR ---
+    { c: "Part B: Anatomy", q: "The 'Portal Vein' is formed by the union of:", o: ["Hepatic Vein + IVC", "Splenic Vein + SMV", "Renal Vein + IVC", "IMV + SMV"], a: 1, e: "Superior Mesenteric Vein + Splenic Vein." },
+    { c: "Part B: Anatomy", q: "The 'Trigone' is an area inside the:", o: ["Kidney", "Gallbladder", "Bladder", "Stomach"], a: 2, e: "Triangular area between ureteric orifices and urethra." },
+    { c: "Part B: Anatomy", q: "The Right Common Carotid Artery arises from:", o: ["Aortic Arch", "Brachiocephalic Trunk", "Subclavian Artery", "Descending Aorta"], a: 1, e: "Left Common Carotid arises directly from Arch." },
+    { c: "Part B: Anatomy", q: "Which duct connects the Gallbladder to the Common Bile Duct?", o: ["Hepatic Duct", "Cystic Duct", "Pancreatic Duct", "Stensen's Duct"], a: 1, e: "Cystic Duct." },
+    { c: "Part B: Anatomy", q: "The 'Phrenic Nerve' supplies the:", o: ["Heart", "Lungs", "Diaphragm", "Stomach"], a: 2, e: "Motor supply to diaphragm." },
+
+    // --- POSITIONING & VIEWS ---
+    { c: "Part B: Pos", q: "Which baseline is perpendicular to IR for a True Lateral Skull?", o: ["OML", "IOML", "IPL (Interpupillary Line)", "AML"], a: 2, e: "IPL must be perpendicular." },
+    { c: "Part B: Pos", q: "The 'Rhese Method' is used to visualize:", o: ["Optic Foramen", "TMJ", "Mastoids", "Sella"], a: 0, e: "Parieto-orbital oblique." },
+    { c: "Part B: Pos", q: "To demonstrate the 'Intercondylar Fossa' (Tunnel View), the patient is:", o: ["Supine leg extended", "Prone knee flexed 40 deg (Camp Coventry)", "Lateral", "Standing straight"], a: 1, e: "Camp Coventry or Holmblad method." },
+    { c: "Part B: Pos", q: "The 'Judet Views' are used for:", o: ["Acetabulum fractures", "Shoulder dislocation", "Ankle mortise", "C-Spine pillars"], a: 0, e: "Internal and External Oblique Pelvis." },
+    { c: "Part B: Pos", q: "A 'Cross-Table Lateral Hip' is known as the:", o: ["Frog Leg", "Danelius-Miller", "Clements-Nakayama", "Teufel"], a: 1, e: "Standard trauma view." },
+    { c: "Part B: Pos", q: "The 'Gaynor-Hart' method demonstrates:", o: ["Carpal Tunnel", "Radial Head", "Tarsal Sinus", "Patella"], a: 0, e: "Tangential wrist." },
+    
+    // --- CT & MRI PHYSICS ---
+    { c: "Part B: CT/MRI", q: "Hounsfield Unit (HU) for acute blood is approx:", o: ["0", "40-60", "-100", "+1000"], a: 1, e: "Fresh blood is hyperdense." },
+    { c: "Part B: CT/MRI", q: "Which artifact appears as dark bands between dense objects in CT?", o: ["Ring Artifact", "Beam Hardening (Streak)", "Motion", "Aliasing"], a: 1, e: "Beam hardening (Inter-petrous streak)." },
+    { c: "Part B: CT/MRI", q: "The 'Larmor Frequency' of Hydrogen at 1.5T is:", o: ["21 MHz", "42.58 MHz", "63.87 MHz", "127 MHz"], a: 2, e: "42.58 x 1.5 = ~64 MHz." },
+    { c: "Part B: CT/MRI", q: "In MRI, 'TR' (Repetition Time) controls:", o: ["T1 Weighting", "T2 Weighting", "Proton Density", "Spatial Resolution"], a: 0, e: "Short TR maximizes T1 contrast." },
+    { c: "Part B: CT/MRI", q: "Fluid Attenuated Inversion Recovery (FLAIR) suppresses:", o: ["Fat", "CSF (Water)", "Blood", "Muscle"], a: 1, e: "Makes CSF dark to see edema." },
+    { c: "Part B: CT/MRI", q: "CTDI (Vol) represents:", o: ["Dose at a single point", "Average dose over the scan volume", "Total energy absorbed", "Skin dose"], a: 1, e: "Weighted dose index per slice volume." },
+
+    // --- CONTRAST & PROCEDURES ---
+    { c: "Part B: Proc", q: "Osmolality of Non-Ionic Dimer (e.g. Visipaque) is:", o: ["Hyperosmolar", "Iso-osmolar to blood", "Hypo-osmolar", "High"], a: 1, e: "Matches blood (~290 mOsm/kg)." },
+    { c: "Part B: Proc", q: "Which drug must be withheld 48hrs post-contrast in renal patients?", o: ["Aspirin", "Metformin", "Warfarin", "Insulin"], a: 1, e: "Risk of Lactic Acidosis." },
+    { c: "Part B: Proc", q: "The 'Seldinger Technique' involves:", o: ["Cut-down", "Needle-Wire-Catheter", "Direct Trocar", "Oral administration"], a: 1, e: "Standard vascular access." },
+    { c: "Part B: Proc", q: "T-Tube Cholangiogram is performed:", o: ["Pre-op", "Intra-op", "Post-op (approx 7-10 days)", "During ERCP"], a: 2, e: "Through drain left after cholecystectomy." },
+    { c: "Part B: Proc", q: "What is 'Enteroclysis'?", o: ["Small Bowel *****", "Large Bowel *****", "Stomach study", "Gallbladder study"], a: 0, e: "Tube passed to DJ flexure." },
+    { c: "Part B: Proc", q: "Absolute contraindication for Lymphangiography:", o: ["Contrast allergy", "Pulmonary insufficiency", "Leg edema", "Recent surgery"], a: 0, e: "Also pulmonary disease (oil embolism risk)." },
+
+    // --- RADIATION BIOLOGY & SAFETY ---
+    { c: "Part B: Safety", q: "The 'Latent Period' in Acute Radiation Syndrome follows:", o: ["Prodromal stage", "Manifest illness", "Recovery", "Death"], a: 0, e: "Prodromal -> Latent -> Manifest." },
+    { c: "Part B: Safety", q: "RBE stands for:", o: ["Radiation Beam Energy", "Relative Biological Effectiveness", "Rapid Bio Effect", "Roentgen Beam Equivalent"], a: 1, e: "Compares damage of different radiation types." },
+    { c: "Part B: Safety", q: "Dose Limit for the Lens of the Eye (Occupational):", o: ["150 mSv", "20 mSv", "500 mSv", "50 mSv"], a: 1, e: "Reduced to 20 mSv/yr (avg) by ICRP." },
+    { c: "Part B: Safety", q: "Which effect has NO threshold dose?", o: ["Cataract", "Skin Erythema", "Stochastic (Cancer/Genetic)", "Sterility"], a: 2, e: "Probability increases with dose, but no safe threshold." },
+    { c: "Part B: Safety", q: "The Oxygen Enhancement Ratio (OER) for X-rays is approx:", o: ["1", "2-3", "10", "20"], a: 1, e: "Oxygen makes cells more sensitive." },
+    { c: "Part B: Safety", q: "Half Value Layer (HVL) measures beam:", o: ["Quantity", "Quality (Penetrability)", "Field Size", "Scatter"], a: 1, e: "Quality." },
+
+    // --- ULTRASOUND ---
+    { c: "Part B: USG", q: "Acoustic Shadowing is seen behind:", o: ["Cyst", "Gallstone/Bone", "Liver", "Aorta"], a: 1, e: "High attenuation objects." },
+    { c: "Part B: USG", q: "Frequency of diagnostic ultrasound is:", o: ["20-20k Hz", "2-15 MHz", "1 GHz", "500 kHz"], a: 1, e: "Megahertz range." },
+    { c: "Part B: USG", q: "Which mode shows motion over time (Cardiac)?", o: ["A-Mode", "B-Mode", "M-Mode", "Doppler"], a: 2, e: "Motion Mode." },
+
+    // --- FILLER/MISC (76-100) ---
+    { c: "Part B: Misc", q: "Pneumothorax is best seen on:", o: ["Inspiration", "Expiration", "Supine", "Lateral"], a: 1, e: "Expiration increases lung density, air stands out." },
+    { c: "Part B: Misc", q: "The 'Apple Core' lesion indicates:", o: ["Diverticulitis", "Colon Cancer", "Polyp", "Volvulus"], a: 1, e: "Annular carcinoma." },
+    { c: "Part B: Misc", q: "Phleboliths are calcifications in:", o: ["Arteries", "Veins", "Kidneys", "Gallbladder"], a: 1, e: "Vein stones (pelvis)." },
+    { c: "Part B: Misc", q: "A 'Boxer's Fracture' involves:", o: ["1st Metacarpal", "5th Metacarpal", "Radius", "Ulna"], a: 1, e: "Neck of 5th MC." },
+    { c: "Part B: Misc", q: "Colles Fracture involves:", o: ["Distal Radius (Dorsal tilt)", "Distal Radius (Volar tilt)", "Scaphoid", "Humerus"], a: 0, e: "Dinner fork deformity." },
+    { c: "Part B: Misc", q: "Jefferson Fracture involves:", o: ["C1 (Atlas) burst", "C2 (Hangman)", "C7", "T1"], a: 0, e: "Burst fracture of Atlas ring." },
+    { c: "Part B: Misc", q: "Spondylolisthesis is:", o: ["Fusion of spine", "Forward slipping of vertebra", "Fracture of pars", "Infection"], a: 1, e: "Slippage." },
+    { c: "Part B: Misc", q: "Osgood-Schlatter disease affects:", o: ["Tibial Tuberosity", "Femoral Head", "Calcaneus", "Patella"], a: 0, e: "Pediatric tibial tubercle apophysitis." },
+    { c: "Part B: Misc", q: "Normal Creatinine level:", o: ["0.6-1.2 mg/dL", "5-10 mg/dL", "100 mg/dL", "0.1 mg/dL"], a: 0, e: "Kidney function marker." },
+    { c: "Part B: Misc", q: "Normal Platelet count:", o: ["1.5 - 4.5 Lakhs", "5000 - 10000", "10 - 12", "1 Million"], a: 0, e: "150,000 to 450,000." },
+    { c: "Part B: Misc", q: "Nosocomial infection is:", o: ["Community acquired", "Hospital acquired", "Vector borne", "Genetic"], a: 1, e: "Acquired >48hr after admission." },
+    { c: "Part B: Misc", q: "Sterilization by Autoclave uses:", o: ["Dry Heat", "Moist Heat (Steam under pressure)", "Gas", "Radiation"], a: 1, e: "121°C at 15psi." },
+    { c: "Part B: Misc", q: "Which color cannula is 18G?", o: ["Pink", "Green", "Blue", "Yellow"], a: 1, e: "Green (18G), Pink (20G), Blue (22G)." },
+    { c: "Part B: Misc", q: "ABC in CPR stands for:", o: ["Airway, Breathing, Circulation", "Airway, Bone, Cardiac", "Assess, Breathe, Call", "None"], a: 0, e: "Basic Life Support." },
+    { c: "Part B: Misc", q: "Shock position:", o: ["Head up", "Feet elevated (Trendelenburg mod)", "Prone", "Sitting"], a: 1, e: "Increases venous return." },
+    { c: "Part B: Misc", q: "Dysphagia is difficulty in:", o: ["Breathing", "Swallowing", "Speaking", "Walking"], a: 1, e: "Swallowing." },
+    { c: "Part B: Misc", q: "Hematuria means:", o: ["Blood in stool", "Blood in urine", "Vomiting blood", "Nose bleed"], a: 1, e: "Urine." },
+    { c: "Part B: Misc", q: "Grid Cutoff results in:", o: ["Dark bands / Loss of density", "Increased density", "Blur", "Magnification"], a: 0, e: "Primary beam absorbed by lead strips." },
+    { c: "Part B: Misc", q: "DQE (Detective Quantum Efficiency) measures:", o: ["System efficiency", "Dose only", "Tube heat", "Monitor brightness"], a: 0, e: "How well system converts input signal to output." },
+    { c: "Part B: Misc", q: "Bit depth of 10 bits = ?", o: ["256", "512", "1024", "2048"], a: 2, e: "1024 shades." },
+    { c: "Part B: Misc", q: "PACS uses which network protocol?", o: ["TCP/IP", "DICOM", "HL7", "HTML"], a: 1, e: "Digital Imaging and Communications in Medicine." },
+    { c: "Part B: Misc", q: "Window Level controls:", o: ["Contrast", "Brightness", "Zoom", "Rotation"], a: 1, e: "Image brightness." },
+    { c: "Part B: Misc", q: "Specific Gravity of water:", o: ["1.0", "0.5", "2.0", "10"], a: 0, e: "Reference point." },
+    { c: "Part B: Misc", q: "Lead equivalence of Thyroid Shield:", o: ["0.25 mm", "0.5 mm", "1.0 mm", "0.1 mm"], a: 1, e: "0.5 mm Pb." },
+    { c: "Part B: Misc", q: "The unit of Frequency:", o: ["Hertz", "Watt", "Joule", "Volt"], a: 0, e: "Hz." }
+];
+
+// =========================================
+// APP LOGIC (Persistence & Interaction)
+// =========================================
+const STORAGE_KEY = 'cre_full_mock_v2'; // Unique key
+let userState = {
+    answers: {}, // { index: optionIndex }
+    submitted: false
+};
+
+function init() {
+    // 1. Load State
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if(saved) {
+        userState = JSON.parse(saved);
+    }
+
+    // 2. Render Questions
+    const container = document.getElementById('quiz-container');
+    let html = '';
+    
+    questions.forEach((item, idx) => {
+        let optionsHtml = '';
+        item.o.forEach((opt, optIdx) => {
+            const isChecked = userState.answers[idx] === optIdx ? 'checked' : '';
+            optionsHtml += `
+            <label class="opt-label" id="label-${idx}-${optIdx}">
+                <input type="radio" name="q${idx}" value="${optIdx}" 
+                    ${isChecked} 
+                    onchange="handleInput(${idx}, ${optIdx})">
+                ${opt}
+            </label>`;
+        });
+
+        html += `
+        <div class="question-block" id="q-block-${idx}">
+            <div class="q-meta">
+                <span class="category-label">${item.c}</span>
+                <span>Question ${idx + 1} of ${questions.length}</span>
+            </div>
+            <div class="q-text">${item.q}</div>
+            <div class="options-grid">${optionsHtml}</div>
+            <div class="explanation" id="exp-${idx}">
+                <strong>Answer: ${item.o[item.a]}</strong><br>
+                <em>${item.e}</em>
+            </div>
+        </div>`;
+    });
+    
+    container.innerHTML = html;
+
+    // 3. Check if already submitted
+    if(userState.submitted) {
+        enableReviewMode();
+    }
+}
+
+function handleInput(qIndex, optIndex) {
+    if(userState.submitted) return; // Prevent changing after submit
+    userState.answers[qIndex] = optIndex;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(userState));
+}
+
+function submitTest() {
+    if(!confirm("Are you sure you want to submit? This will lock your answers.")) return;
+    
+    userState.submitted = true;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(userState));
+    calculateScore();
+}
+
+function calculateScore() {
+    let score = 0, correct = 0, wrong = 0, skip = 0;
+    
+    questions.forEach((q, idx) => {
+        const userAns = userState.answers[idx];
+        if(userAns === undefined) {
+            skip++;
+        } else if (userAns === q.a) {
+            score += 4;
+            correct++;
+        } else {
+            score -= 1;
+            wrong++;
+        }
+    });
+
+    document.getElementById('finalScore').innerText = score;
+    document.getElementById('res-corr').innerText = correct;
+    document.getElementById('res-wrong').innerText = wrong;
+    document.getElementById('res-skip').innerText = skip;
+    
+    document.getElementById('resultModal').style.display = 'flex';
+    enableReviewMode();
+}
+
+function enableReviewMode() {
+    document.body.classList.add('submitted');
+    document.getElementById('mainBtn').style.display = 'none'; // Hide submit button
+
+    questions.forEach((q, idx) => {
+        const userAns = userState.answers[idx];
+        const expDiv = document.getElementById(`exp-${idx}`);
+        expDiv.style.display = 'block'; // Show explanations
+
+        // Styles
+        if(userAns !== undefined) {
+            const userLabel = document.getElementById(`label-${idx}-${userAns}`);
+            if(userAns === q.a) {
+                userLabel.classList.add('actual-correct');
+            } else {
+                userLabel.classList.add('user-wrong');
+                document.getElementById(`label-${idx}-${q.a}`).classList.add('actual-correct');
+            }
+        } else {
+            // If skipped, just show correct
+            document.getElementById(`label-${idx}-${q.a}`).classList.add('actual-correct');
+        }
+        
+        // Disable inputs
+        const inputs = document.getElementsByName(`q${idx}`);
+        inputs.forEach(i => i.disabled = true);
+    });
+}
+
+function closeModal() {
+    document.getElementById('resultModal').style.display = 'none';
+    window.scrollTo(0,0);
+}
+
+function resetExam() {
+    if(confirm("Clear all progress and start fresh?")) {
+        localStorage.removeItem(STORAGE_KEY);
+        location.reload();
+    }
+}
+
+// Start App
+init();
+
+</script>
+</body>
+</html>

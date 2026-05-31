@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFL X-Ray Technician Exam 2024</title>
+    <style>
+        :root {
+            --primary: #16a34a; /* NFL Green theme */
+            --primary-dark: #15803d;
+            --selected: #dcfce7;
+            --selected-border: #16a34a;
+            --success-bg: #d1fae5;
+            --success-text: #065f46;
+            --error-bg: #fee2e2;
+            --error-text: #991b1b;
+            --bg: #f0fdf4;
+            --card: #ffffff;
+            --text: #1f2937;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            padding-bottom: 80px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timer {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        /* Question Cards */
+        .question-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+            position: relative;
+        }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .section-tag {
+            background: #dcfce7;
+            color: #166534;
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .q-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #111827;
+        }
+
+        /* Options */
+        .options-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid #e5e7eb;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text);
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        /* Exam Mode Styles */
+        body.exam-mode .option-btn:hover {
+            background: #f9fafb;
+            border-color: #d1d5db;
+        }
+
+        body.exam-mode .option-btn.selected {
+            background: var(--selected);
+            border-color: var(--selected-border);
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        /* Review Mode Styles */
+        body.review-mode .option-btn {
+            cursor: default;
+        }
+
+        body.review-mode .option-btn.correct-answer {
+            background: var(--success-bg);
+            border-color: #22c55e;
+            color: var(--success-text);
+        }
+
+        body.review-mode .option-btn.wrong-choice {
+            background: var(--error-bg);
+            border-color: #ef4444;
+            color: var(--error-text);
+            text-decoration: line-through;
+        }
+
+        /* Clear Selection Button */
+        .clear-btn {
+            background: transparent;
+            border: none;
+            color: #6b7280;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 5px 0;
+        }
+        .clear-btn:hover { color: var(--error-text); }
+
+        /* Explanation Box */
+        .explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0fdf4;
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+            font-size: 0.95rem;
+            display: none;
+        }
+        body.review-mode .explanation { display: block; }
+
+        /* Result Panel */
+        .result-panel {
+            display: none;
+            background: #064e3b;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border: 6px solid #4ade80;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px auto;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .score-circle span { font-size: 0.9rem; font-weight: normal; opacity: 0.8; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .stat-box {
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .stat-val { font-size: 1.2rem; font-weight: bold; }
+        .stat-label { font-size: 0.8rem; opacity: 0.8; }
+
+        /* Fixed Footer */
+        .footer-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 15px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(22, 163, 74, 0.3);
+            width: 100%;
+            max-width: 400px;
+        }
+        .submit-btn:hover { background: var(--primary-dark); }
+
+        .retry-btn {
+            display: none;
+            background: white;
+            color: #064e3b;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        @media(max-width: 600px) {
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body class="exam-mode">
+
+    <div class="header">
+        <h3 style="margin:0">NFL Radiographer Exam</h3>
+        <div class="timer" id="status-text">150 Mins</div>
+    </div>
+
+    <div class="result-panel" id="result-panel">
+        <div class="score-circle">
+            <div id="final-score">0</div>
+            <span>/ 150</span>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-val" id="stat-correct" style="color:#4ade80">0</div>
+                <div class="stat-label">Correct</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="stat-wrong" style="color:#f87171">0</div>
+                <div class="stat-label">Wrong</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="stat-skip">0</div>
+                <div class="stat-label">Skipped</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val" id="stat-acc">0%</div>
+                <div class="stat-label">Accuracy</div>
+            </div>
+        </div>
+        <button class="retry-btn" onclick="location.reload()" style="display:inline-block">Retake Exam</button>
+    </div>
+
+    <div class="container" id="questions-container">
+        </div>
+
+    <div class="footer-bar" id="footer-bar">
+        <button class="submit-btn" onclick="submitExam()">Submit Exam</button>
+    </div>
+
+<script>
+    // --- Data Source (NFL Exam 2024 - MXT02) ---
+    // Note: Mapped based on Answer Key Series C
+    // Scoring: 1 Mark per question, No Negative Marking (As per PDF Instruction 11)
+    
+    const quizData = [
+        // PART 1: General (English, GK, Quant, Reasoning)
+        { id: 1, section: "English", q: "Choose the option that has all the three words spelt correctly.", options: ["Firebrend, Formal, Forgotten", "Forethought, Theif, Forlorn", "Formalty, Glitter, Galaxy", "Gamble, Ghost, Gregarious"], correct: 3, explain: "Option D contains all correctly spelled words. A: Firebrand, B: Thief, C: Formality." },
+        { id: 2, section: "English", q: "Correct option: Meera is one of the most hardworking students in my class.", options: ["Only few students are working hard as Meera...", "Few students are hardworking as Meera...", "Few students work as hard as Meera in class", "Only few students are as hardworking Meera..."], correct: 2, explain: "Grammatically correct transformation." },
+        { id: 3, section: "English", q: "Opposite meaning for 'WISTFUL'.", options: ["Conversant", "Esoteric", "Forlorn", "Cheerful"], correct: 3, explain: "Wistful means having a feeling of vague or regretful longing (sad). Cheerful is the opposite." },
+        { id: 4, section: "English", q: "Her insurance claim was ___ since he had not paid her premium.", options: ["disallowed", "unallowed", "misallowed", "preallowed"], correct: 0, explain: "Disallowed is the correct term for rejecting a claim." },
+        { id: 5, section: "English", q: "Choose the correctly punctuated sentence.", options: ["Only ten percent... passport; the majority...", "Only ten percent... passport: but the majority...", "Only, ten percent... passport, the majority...", "Only ten percent... passport - the majority..."], correct: 1, explain: "Option B uses the colon/conjunction correctly to contrast clauses." },
+        { id: 6, section: "English", q: "Idiom: 'Bite the bullet'", options: ["Avoid getting into something", "Get something over with because it is inevitable", "Keep the past hanging", "Not get over with anything"], correct: 1, explain: "Bite the bullet means to face a difficult situation with courage." },
+        { id: 7, section: "English", q: "Which one is correct?", options: ["Adverbs of Manner: Happily, Neatly", "Adverbs of Place: Daily, Monthly", "Adverbs of Time: Everywhere, Here", "Adverbs of Degree: Again, Always"], correct: 0, explain: "Happily and Neatly describe *how* something is done (Manner)." },
+        { id: 8, section: "English", q: "One-word: A script/handwriting that is not clear enough to read.", options: ["Legible", "Legalise", "Readable", "Illegible"], correct: 3, explain: "Illegible means impossible to read." },
+        { id: 9, section: "English", q: "Mrs. Smith asked her husband ___ to help her in the kitchen.", options: ["if he would have some time", "for sometime", "when has he sometime", "will he have some time"], correct: 0, explain: "Indirect speech structure." },
+        { id: 10, section: "English", q: "Articles: When we visited _ zoo in Delhi, we saw _ elephant and _ rhino playing in _ pond.", options: ["no article, the, a, a", "the, an, a, the", "a, the, a, the", "the, no article, the, the"], correct: 1, explain: "The zoo (specific), an elephant (vowel), a rhino (consonant), the pond (specific)." },
+        
+        { id: 11, section: "GK", q: "___ is considered as Magna-Carta of the Indian Constitution.", options: ["Fundamental Duties", "Directive Principles", "Fundamental Rights", "Welfare State"], correct: 2, explain: "Part III (Fundamental Rights) is called the Magna Carta of India." },
+        { id: 12, section: "GK", q: "In Demand Curve, the variable ___ is measured along the horizontal axis.", options: ["Price", "Quality", "Quantity", "Sales"], correct: 2, explain: "Quantity is on the X-axis (horizontal), Price is on the Y-axis." },
+        { id: 13, section: "GK", q: "The Arjuna Award is given for:", options: ["Politics", "Peace", "Literature", "Sports"], correct: 3, explain: "Arjuna Award recognizes outstanding achievement in Sports." },
+        { id: 14, section: "GK", q: "First Asian Games (1951) was held in:", options: ["New Delhi", "Bangkok", "Manila", "Jakarta"], correct: 0, explain: "Held in New Delhi, India." },
+        { id: 15, section: "GK", q: "Jhulta Minara (Shaking Minarets) is located in:", options: ["Rajkot", "Surendranagar", "Ahmedabad", "Porbandar"], correct: 2, explain: "Located in Ahmedabad, Gujarat." },
+        { id: 16, section: "GK", q: "Birth name of Munshi Premchand:", options: ["Dhanpat Rai Srivastava", "Vyankatesh Madgulkar", "Govind Karandikar", "V. V. Shirwadkar"], correct: 0, explain: "Dhanpat Rai Srivastava." },
+        { id: 17, section: "GK", q: "Where was Mahavir Swami born?", options: ["Kundagram", "Pataliputra", "Magadh", "Vaishali"], correct: 0, explain: "Kundagram (near Vaishali)." },
+        { id: 18, section: "GK", q: "Essential Commodities Act was passed in:", options: ["1950", "1952", "1955", "1960"], correct: 2, explain: "Passed in 1955." },
+        { id: 19, section: "GK", q: "Belan Caves (UP) belong to which age?", options: ["Palaeolithic", "Mesolithic", "Neolithic", "Iron Age"], correct: 0, explain: "Belan valley shows evidence from Paleolithic to Neolithic, but is famous for Paleolithic findings." },
+        { id: 20, section: "GK", q: "Ideals of Liberty, Equality, Fraternity borrowed from:", options: ["USA", "Canada", "Australia", "France"], correct: 3, explain: "Borrowed from the French Constitution." },
+
+        { id: 21, section: "Quant", q: "Find value: 6 ÷ 2 + 7 × 4", options: ["25", "27", "31", "30"], correct: 2, explain: "BODMAS: 3 + 28 = 31." },
+        { id: 22, section: "Quant", q: "Missing number: 0, 1, 1, 2, 3, 5, 8, 13, ?", options: ["17", "21", "23", "19"], correct: 1, explain: "Fibonacci series: 8 + 13 = 21." },
+        { id: 23, section: "Quant", q: "Glass half filled. Spilled 1/3 part. Amount left?", options: ["1/6", "1/3", "2/3", "4/3"], correct: 1, explain: "Initial: 1/2. Spilled 1/3 of the water: (1/3)*(1/2) = 1/6. Remaining: 1/2 - 1/6 = 2/6 = 1/3." },
+        { id: 24, section: "Quant", q: "Wrong number: 2, 4, 8, 16, 30, 64, 128", options: ["8", "128", "30", "4"], correct: 2, explain: "Powers of 2. Should be 32, not 30." },
+        { id: 25, section: "Quant", q: "Simplify: [72 - 12 ÷ 3 - 2] + (18 - 6) ÷ 4", options: ["62", "65", "69", "67"], correct: 2, explain: "[72 - 4 - 2] + 12/4 = [66] + 3 = 69." },
+        { id: 26, section: "Quant", q: "Avg of 6 consecutive even numbers is 85. Highest number?", options: ["90", "92", "88", "80"], correct: 0, explain: "Numbers are x, x+2... x+10. Avg = x+5 = 85. x=80. Highest = x+10 = 90." },
+        { id: 27, section: "Quant", q: "Avg number of days in a month for year 2020?", options: ["30", "31", "30.5", "30.4166"], correct: 2, explain: "2020 is a leap year (366 days). 366 / 12 = 30.5." },
+        { id: 28, section: "Quant", q: "6 Jan 2001 is Wednesday. Exactly one month ago Ajay got admission. What day?", options: ["Wednesday", "Monday", "Saturday", "Sunday"], correct: 3, explain: "1 month ago is Dec 6, 2000. Dec has 31 days. 31 days back. 31%7 = 3 rem. Wed - 3 = Sunday." },
+        { id: 29, section: "Quant", q: "Smallest 6-digit number using 3,7,5,2,9,0 only once.", options: ["203579", "235790", "230579", "302579"], correct: 0, explain: "Start with smallest non-zero (2), then 0, then ascending order: 203579." },
+        { id: 30, section: "Reasoning", q: "Zoo Meeting Circle: Mongoose opp Lion. Zebra between Lion/Frog. Tiger between Dog/Mongoose. Who is opp Dog?", options: ["Dog", "Tiger", "Frog", "Zebra"], correct: 2, explain: "Arrangement: Lion - Zebra - Frog - Dog - Tiger - Mongoose. Opposite Dog is Frog." },
+        
+        { id: 31, section: "Reasoning", q: "Missing letters: MW?MWWMWMWW??WMWW", options: ["WWMW", "MMWM", "WMMM", "MWWW"], correct: 0, explain: "Pattern completion: WWMW fits the sequence." },
+        { id: 32, section: "Reasoning", q: "Bus starts Fri 28 Feb 2004, 10pm. Takes 53 hours. Arrival?", options: ["1st March", "3rd March", "2nd March", "30th Feb"], correct: 2, explain: "2004 is leap year (Feb 29 days). 53h = 2 days + 5h. Fri 10pm + 2d = Sun 10pm (Feb 29 + Mar 1). Wait. 28 Feb + 24h = 29 Feb. +24h = 1 Mar. +5h = 2 Mar 3am. Key C (2nd March)." },
+        { id: 33, section: "Reasoning", q: "Row A,B,C,D,E. A right of B. E left of C and right of A. B right of D. Middle?", options: ["A", "B", "C", "D"], correct: 0, explain: "Order: D - B - A - E - C. Middle is A." },
+        { id: 34, section: "Quant", q: "Avg of 3 papers is 60. 4th paper is 40. New Average?", options: ["50", "60", "55", "70"], correct: 2, explain: "Total = 180 + 40 = 220. Avg = 220/4 = 55." },
+        { id: 35, section: "Reasoning", q: "Wrong number: 2, 4, 12, 24, 72, 142, 432", options: ["432", "12", "142", "72"], correct: 2, explain: "Pattern: x2, x3 alternating? 2x2=4, 4x3=12, 12x2=24, 24x3=72, 72x2=144 (Not 142)." },
+        
+        { id: 36, section: "Ethics", q: "You see students misbehaving with a girl. You are late. Action?", options: ["Ignore", "Join them", "Call help/Police", "Tell girl to tolerate"], correct: 2, explain: "Ethical action is to intervene safely/call authorities." },
+        { id: 37, section: "Ethics", q: "Friend broke your expensive phone. Action?", options: ["Ask him to buy new", "Break friendship", "Break his phone", "Tell him to be careful"], correct: 3, explain: "Constructive response is advising caution." },
+        { id: 38, section: "Reasoning", q: "Odd one out: Mango, Orange, Banana, Papaya, Almond", options: ["Mango", "Orange", "Banana", "Almond"], correct: 3, explain: "Almond is a dry fruit/nut; others are fleshy fruits." },
+        { id: 39, section: "Reasoning", q: "Paw : Cat :: Hoof : ?", options: ["Horse", "Lion", "Lamb", "Elephant"], correct: 0, explain: "Horses have hooves." },
+        { id: 40, section: "Reasoning", q: "Odd one out: Guitar, Violin, Viola, Drum, Santuri", options: ["Viola", "Guitar", "Drum", "Santuri"], correct: 2, explain: "Drum is percussion; others are string instruments." },
+        
+        { id: 41, section: "Reasoning", q: "Woman to man: 'His brother's father is the only son of my grandfather'. Relation?", options: ["Mother", "Aunt", "Sister", "Daughter"], correct: 2, explain: "Only son of grandfather = Father. Man's father is Woman's father. They are Siblings (Sister)." },
+        { id: 42, section: "Reasoning", q: "POND = RSTL. HEAR = ?", options: ["GHIJ", "GHIZ", "JIGZ", "JCLZ"], correct: 2, explain: "P(+2)R, O(+4)S... Pattern leads to JIGZ." },
+        { id: 43, section: "Reasoning", q: "Sam 2 less than Rio. Rio 4 more than Jeni. Jeni 14. Sam?", options: ["16", "24", "8", "10"], correct: 0, explain: "Jeni=14. Rio=18. Sam=16." },
+        { id: 44, section: "Reasoning", q: "WATER = VZSDQ. AIR = ?", options: ["ZHQ", "BJS", "NVE", "CKT"], correct: 0, explain: "Previous letter code (W->V, A->Z). A->Z, I->H, R->Q." },
+        { id: 45, section: "Quant", q: "Car 60km/h. 1.5 hours between tolls. Distance?", options: ["60 km", "75 km", "90 km", "120 km"], correct: 2, explain: "60 * 1.5 = 90 km." },
+        { id: 46, section: "Quant", q: "Shilpa has 300. Buys 3 milk (20ea) + 8 choc (5ea). Remaining?", options: ["180", "120", "200", "240"], correct: 2, explain: "Cost = 60 + 40 = 100. Rem = 300 - 100 = 200." },
+        { id: 47, section: "Reasoning", q: "First word in dictionary: Nature, Native, Narrate, Nascent", options: ["Narrate", "Native", "Nascent", "Nature"], correct: 0, explain: "Narrate (Nar) comes before Nas, Nat." },
+        { id: 48, section: "Reasoning", q: "First word in dictionary: Praise, Practical, Prank, Prayer", options: ["Prank", "Praise", "Practical", "Prayer"], correct: 2, explain: "Practical (Prac) comes before Prai, Pran, Pray." },
+        { id: 49, section: "Reasoning", q: "Muslim : Mosque :: Sikh : ?", options: ["Golden Temple", "Madina", "Gurudwara", "Fire Temple"], correct: 2, explain: "Place of worship." },
+        { id: 50, section: "Reasoning", q: "Man to Lady: 'Your mother's husband's sister is my Aunt'. Relation?", options: ["Daughter", "Grand Daughter", "Mother", "Sister"], correct: 3, explain: "Mother's Husband = Father. Father's sister = Aunt. Man's aunt is Lady's aunt. They are likely siblings (Sister)." },
+
+        // PART 2: Technical
+        { id: 51, section: "Anatomy", q: "Which part of the body is responsible for production of RBC?", options: ["Liver", "Spleen", "Bone Marrow", "Kidney"], correct: 2, explain: "Red Bone Marrow (Hematopoiesis)." },
+        { id: 52, section: "Anatomy", q: "What structures make up most of the male urethral length?", options: ["Prostatic Urethra", "Membranous Urethra", "Glans Penis", "Spongy Urethra"], correct: 3, explain: "Spongy (Penile) urethra is the longest segment." },
+        { id: 53, section: "Anatomy", q: "Which gland is known as the Master Gland?", options: ["Pineal", "Thyroid", "Adrenal", "Pituitary"], correct: 3, explain: "Pituitary gland controls other endocrine glands." },
+        { id: 54, section: "Physics", q: "In Doppler ultrasound, what does Doppler shift represent?", options: ["Difference between transmitted/received frequencies due to motion", "Reflection from bone", "Time to target", "Velocity of transducer"], correct: 0, explain: "Change in frequency due to motion of blood cells." },
+        { id: 55, section: "Anatomy", q: "Normal fasting plasma glucose levels?", options: ["0.70-1.1 mg/dl", "0.70-1.1 g/dl", "7-11 mg/dl", "70-100 mg/dl"], correct: 3, explain: "70-100 mg/dL is the normal fasting range." },
+        { id: 56, section: "Anatomy", q: "Structure behind nose connecting to throat?", options: ["Cartilage", "Bone", "Nasopharynx", "Hard Palate"], correct: 2, explain: "Nasopharynx." },
+        { id: 57, section: "Anatomy", q: "Correct sequence of bone healing?", options: ["Hematoma -> Soft callus -> Bony callus -> Remodelling", "Bony callus -> Hematoma...", "Soft callus -> Remodelling...", "Hematoma -> Bony callus..."], correct: 0, explain: "Hematoma -> Soft Callus -> Hard Callus -> Remodeling." },
+        { id: 58, section: "Anatomy", q: "Largest sesamoid bone in quadriceps tendon?", options: ["Patella", "Humerus", "Femur", "Carpel Bones"], correct: 0, explain: "Patella (Kneecap)." },
+        { id: 59, section: "Physics", q: "Unit of radiation exposure in air?", options: ["Sievert", "Gray", "Roentgen", "Becquerel"], correct: 2, explain: "Roentgen (R) measures exposure in air." },
+        { id: 60, section: "Dark Room", q: "Purpose of a darkroom?", options: ["Safely develop X-ray images", "Expose film", "Store machine", "Control beam"], correct: 0, explain: "Processing of light-sensitive films." },
+        
+        { id: 61, section: "Procedures", q: "Correct position for Lateral Chest X-ray?", options: ["Patient facing tube", "Supine", "Left side against IR", "Seated arms crossed"], correct: 2, explain: "Side against the detector (Left lateral usually to reduce heart mag)." },
+        { id: 62, section: "Dark Room", q: "Chemical in fixer to remove unexposed silver halide?", options: ["Hydroquinone", "Ammonium thiosulfate", "Potassium bromide", "Glutaraldehyde"], correct: 1, explain: "Ammonium thiosulfate (Hypo) is the clearing agent." },
+        { id: 63, section: "Procedures", q: "Primary goal of Endovenous Laser Treatment (EVLT)?", options: ["Dissolve clots", "Seal off varicose veins", "Diagnose DVT", "Place stents"], correct: 1, explain: "Treats varicose veins by closing them with heat." },
+        { id: 64, section: "Physics", q: "What is Mechanical Index (MI) in ultrasound?", options: ["Tissue heating", "Ratio of power to absorption", "Likelihood of cavitation", "Resolution index"], correct: 2, explain: "MI indicates risk of mechanical bioeffects (cavitation)." },
+        { id: 65, section: "Dark Room", q: "How should X-ray films be handled?", options: ["Wet hands", "Clean and dry hands", "Gloves only", "Bright light"], correct: 1, explain: "To prevent artifacts." },
+        { id: 66, section: "Procedures", q: "Apple-green birefringence indicates amyloidosis under which stain?", options: ["Thioflavin T", "Immunofluorescence", "Immunohistochemistry", "Congo Red Stain"], correct: 3, explain: "Classic sign under polarized light with Congo Red." },
+        { id: 67, section: "Dark Room", q: "In processing, developer will:", options: ["Make image visible", "Reduce exposure time", "Clean film", "Protect form light"], correct: 0, explain: "Converts latent image to visible image." },
+        { id: 68, section: "Physics", q: "As mAs increases, X-ray image becomes:", options: ["Blurry", "Darker", "Lighter", "Less sharp"], correct: 1, explain: "mAs controls density. More mAs = Darker image." },
+        { id: 69, section: "Anatomy", q: "Bad Cholesterol and Good Cholesterol?", options: ["HDL; LDL", "LDL; VLDL", "HDL; VLDL", "LDL; HDL"], correct: 3, explain: "LDL (Bad), HDL (Good)." },
+        { id: 70, section: "Anatomy", q: "Primary function of RBC?", options: ["Immune Response", "Oxygen Transport", "Clotting", "Nutrient Absorption"], correct: 1, explain: "Transport O2 via Hemoglobin." },
+        
+        { id: 71, section: "Physics", q: "ICRP 103 dose limit for radiation workers per year?", options: ["10 mSv", "20 mSv", "50 mSv", "100 mSv"], correct: 1, explain: "20 mSv per year (averaged over 5 years)." },
+        { id: 72, section: "Procedures", q: "Thrombolysis means:", options: ["Blocking vessels", "Dissolving clots", "Removing fluid", "Breaking stones"], correct: 1, explain: "Lysis (breaking down) of Thrombus (clot)." },
+        { id: 73, section: "Anatomy", q: "Part between external vagina and internal uterus?", options: ["Uterosacral Ligament", "Round Ligament", "Cervical Canal", "Mesometrium"], correct: 2, explain: "The Cervix/Cervical Canal." },
+        { id: 74, section: "Physics", q: "Aim of collimator?", options: ["Reduce patient exposure", "Focus X-rays", "Prevent scatter", "All of these"], correct: 3, explain: "All options describe benefits of collimation." },
+        { id: 75, section: "Physics", q: "Purpose of TGC in ultrasound?", options: ["Control overall gain", "Compensate for attenuation with depth", "Adjust velocity", "Enhance Doppler"], correct: 1, explain: "Time Gain Compensation balances signal loss due to depth." },
+        { id: 76, section: "Anatomy", q: "Largest segment of movable vertebral column?", options: ["Sacral", "Coccygeal", "Cervical", "Lumbar"], correct: 3, explain: "Lumbar vertebrae are the largest/strongest." },
+        { id: 77, section: "Physics", q: "Lead apron lead equivalence?", options: ["2.0 mm", "1.0 mm", "0.5 mm", "0.25 mm"], correct: 2, explain: "Standard is 0.5 mm Pb equivalent." },
+        { id: 78, section: "Physics", q: "M-mode ultrasound displays?", options: ["Real-time 2D", "Velocity", "Motion over time", "3D structures"], correct: 2, explain: "Motion mode (Time-Motion)." },
+        { id: 79, section: "Procedures", q: "Mammography view for lateral aspect?", options: ["Tangential", "MLO", "CC", "Axillary"], correct: 1, explain: "Mediolateral Oblique (MLO) visualizes the tail of Spence." },
+        { id: 80, section: "Procedures", q: "Chest X-ray positioning for lung expansion?", options: ["Lateral", "Oblique", "PA", "AP"], correct: 2, explain: "PA Erect allows best expansion and least heart magnification." },
+        
+        { id: 81, section: "Procedures", q: "Van den Bergh test detects:", options: ["Proteins", "Ketone Bodies", "Glucose", "Bilirubin"], correct: 3, explain: "Test for Bilirubin in blood." },
+        { id: 82, section: "Anatomy", q: "Membrane surrounding lungs?", options: ["Pericardium", "Pleura", "Peritoneum", "Meninges"], correct: 1, explain: "Pleura (Visceral and Parietal)." },
+        { id: 83, section: "Procedures", q: "Hand position for PA projection?", options: ["Palm up, curled", "Lateral, spread", "Palm down, fist", "Palm down, fingers extended"], correct: 3, explain: "Flat palm down spreads bones for clear view." },
+        { id: 84, section: "Anatomy", q: "Powerhouse of the cell?", options: ["Lysosomes", "Golgi", "ER", "Mitochondria"], correct: 3, explain: "Mitochondria produce ATP." },
+        { id: 85, section: "Procedures", q: "Ideal position for AP Abdomen?", options: ["Erect", "Supine", "Lateral decubitus", "Prone"], correct: 1, explain: "Supine (KUB)." },
+        { id: 86, section: "Dark Room", q: "Why store film in lead-lined box?", options: ["Protect from radiation", "Moisture", "Heat", "Light"], correct: 0, explain: "To prevent fogging from stray radiation." },
+        { id: 87, section: "Dark Room", q: "Automatic processor temp?", options: ["35 C", "50 C", "120 C", "67 C"], correct: 0, explain: "Approx 35°C (95°F)." },
+        { id: 88, section: "Physics", q: "How to minimize patient dose?", options: ["Decrease SID", "Increase focal spot", "High kVp / Low mAs", "Increase time"], correct: 2, explain: "High kVp allows for lower mAs, reducing dose." },
+        { id: 89, section: "Anatomy", q: "Increases reaction rate but doesn't alter equilibrium?", options: ["Enzymes", "Catalyst", "Hormones", "Co-enzymes"], correct: 1, explain: "Catalyst (Enzymes are biological catalysts)." },
+        { id: 90, section: "Procedures", q: "View for femoral head and neck?", options: ["Frog leg", "Lateral Hip", "AP Pelvis", "Lateral Femur"], correct: 0, explain: "Frog-leg lateral opens the hip joint." },
+        
+        { id: 91, section: "Procedures", q: "Benzene exposure increases risk of:", options: ["Breast Cancer", "Prostate Cancer", "Leukemia", "Colon Cancer"], correct: 2, explain: "Benzene affects bone marrow." },
+        { id: 92, section: "Anatomy", q: "Vitamin for DNA synthesis/RBC production?", options: ["B1", "B9 (Folic Acid)", "B12", "C"], correct: 1, explain: "Vitamin B9." },
+        { id: 93, section: "Physics", q: "Does NOT affect X-ray image quality?", options: ["kVp", "mA", "Exposure time", "Room temperature"], correct: 3, explain: "Room temp has no effect on the beam." },
+        { id: 94, section: "Procedures", q: "Transmission of measles?", options: ["Blood", "Water", "Respiratory droplets", "Vector"], correct: 2, explain: "Airborne/Droplet." },
+        { id: 95, section: "Procedures", q: "PA Skull central ray perpendicular to:", options: ["Acanthion", "Nasion", "Mentum", "EAM"], correct: 1, explain: "Exits at Nasion." },
+        { id: 96, section: "Procedures", q: "Position for Lateral Lumbar Spine?", options: ["Prone", "Left side, knees flexed", "Upright", "Supine"], correct: 1, explain: "Lateral recumbent with knees flexed for stability." },
+        { id: 97, section: "Anatomy", q: "Wernicke-Korsakoff syndrome deficiency?", options: ["Riboflavin", "Niacin", "Pyridoxine", "Thiamine (B1)"], correct: 3, explain: "Thiamine deficiency (often in alcoholics)." },
+        { id: 98, section: "Physics", q: "Used to sterilize medical equipment?", options: ["Neutrons", "Alpha", "Beta", "Gamma rays"], correct: 3, explain: "Gamma irradiation (Cobalt-60)." },
+        { id: 99, section: "Physics", q: "Most hazardous radiation to humans?", options: ["Beta", "Alpha", "Gamma", "X-ray"], correct: 2, explain: "Gamma (highly penetrating). Note: Alpha is dangerous internally, but generally Gamma/X-ray are cited for external hazard." },
+        { id: 100, section: "Anatomy", q: "Plane dividing body into Left/Right halves?", options: ["Frankfurt", "Median (Midsagittal)", "Coronal", "Horizontal"], correct: 1, explain: "Median plane." },
+        
+        { id: 101, section: "Anatomy", q: "Organ secreting pepsin?", options: ["Liver", "Kidney", "Stomach", "Pancreas"], correct: 2, explain: "Stomach (Chief cells)." },
+        { id: 102, section: "Anatomy", q: "Longest bone in human body?", options: ["Femur", "Tibia", "Pelvis", "Ulna"], correct: 0, explain: "Femur (Thigh bone)." },
+        { id: 103, section: "Dark Room", q: "Ideal temp for manual developing?", options: ["20 C", "30 C", "10 C", "15 C"], correct: 0, explain: "20°C (68°F)." },
+        { id: 104, section: "Anatomy", q: "Joint between teeth and socket?", options: ["Sutures", "Gomphosis", "Synchondrosis", "Symphysis"], correct: 1, explain: "Gomphosis (Peg-in-socket)." },
+        { id: 105, section: "Anatomy", q: "Energy production in cells?", options: ["Mitochondria", "Nucleus", "Golgi", "ER"], correct: 0, explain: "Mitochondria." },
+        { id: 106, section: "Procedures", q: "'Cottage cheese' appearance necrosis?", options: ["Fat", "Coagulative", "Caseous", "Fibrinoid"], correct: 2, explain: "Caseous necrosis (TB)." },
+        { id: 107, section: "Physics", q: "Reduces scatter radiation?", options: ["Intensifying screen", "Grid", "Lead marker", "Cassette"], correct: 1, explain: "Grid absorbs scatter before it hits film." },
+        { id: 108, section: "Physics", q: "Material for shielding?", options: ["Lead", "Glass", "Aluminum", "Concrete"], correct: 0, explain: "Lead." },
+        { id: 109, section: "Anatomy", q: "Most abundant protein in mammals?", options: ["Keratin", "Elastin", "Gelatin", "Collagen"], correct: 3, explain: "Collagen." },
+        { id: 110, section: "Procedures", q: "Why arms raised in Lateral Chest X-ray?", options: ["Prevent covering lungs", "Reduce motion", "Visualize angles", "Improve diaphragm view"], correct: 0, explain: "To unsuperimpose arms from lung field." },
+        
+        { id: 111, section: "Dark Room", q: "Prevent light affecting film?", options: ["Blue Filter", "Lead Apron", "Fluorescent", "Red Safelight"], correct: 3, explain: "Safelight." },
+        { id: 112, section: "Anatomy", q: "Brain part for vital functions?", options: ["Cerebrum", "Cerebellum", "Thalamus", "Brainstem"], correct: 3, explain: "Brainstem (breathing, heart rate)." },
+        { id: 113, section: "Anatomy", q: "Pain over lateral epicondyle?", options: ["Radial tear", "Cramp", "Sprain", "Tennis Elbow"], correct: 3, explain: "Lateral Epicondylitis." },
+        { id: 114, section: "Anatomy", q: "Term 'cell' NOT used for?", options: ["Fungi", "Virus", "Bacteria", "Algae"], correct: 1, explain: "Viruses are acellular." },
+        { id: 115, section: "Anatomy", q: "TCA cycle location?", options: ["Cytosol", "Golgi", "ER", "Mitochondria"], correct: 3, explain: "Mitochondria." },
+        { id: 116, section: "Procedures", q: "Vertebrae in Lateral C-Spine?", options: ["C3-T3", "C1-C4", "C2-C5", "C1-T1"], correct: 3, explain: "Must show C1 to T1." },
+        { id: 117, section: "Physics", q: "Lead apron use?", options: ["Shield patient/staff", "Focus beam", "Reduce noise", "Prevent overexposure"], correct: 0, explain: "Radiation protection." },
+        { id: 118, section: "Procedures", q: "Percutaneous biopsy guided by?", options: ["Ultrasound/CT", "Fluoroscopy", "PET", "MRI"], correct: 0, explain: "US or CT guidance." },
+        { id: 119, section: "Physics", q: "ALARA stands for?", options: ["As Low As Reasonably Achievable", "As Large...", "As Low Radiologically...", "As Late..."], correct: 0, explain: "Safety principle." },
+        { id: 120, section: "Procedures", q: "Embolization used to:", options: ["Open vessels", "Close vessels/stop bleed", "Dilate airways", "Remove clots"], correct: 1, explain: "Occlude vessels." },
+        
+        { id: 121, section: "Procedures", q: "Nottingham Grading System used for:", options: ["Breast cancer", "Lung", "Prostate", "Colon"], correct: 0, explain: "Breast cancer histology." },
+        { id: 122, section: "Procedures", q: "Eklund technique used for:", options: ["Small breasts", "Fibroadenoma", "Dense tissue", "Breast implants"], correct: 3, explain: "Push-back technique for implants." },
+        { id: 123, section: "Dark Room", q: "Used to develop X-ray film?", options: ["Fixer", "Developer", "Alcohol", "Water"], correct: 1, explain: "Developer." },
+        { id: 124, section: "Anatomy", q: "Condition of low oxygen in cells?", options: ["Hypercapnia", "Hypoxia", "Anoxia", "Hyperoxia"], correct: 1, explain: "Hypoxia." },
+        { id: 125, section: "Procedures", q: "TNM 'T' stands for:", options: ["Tumour", "Tissue", "Target", "Treatment"], correct: 0, explain: "Tumour size/extent." },
+        { id: 126, section: "Physics", q: "Controls amount of X-rays reaching patient?", options: ["Collimator", "Cassette", "Developer", "Grid"], correct: 0, explain: "Collimator restricts the beam." },
+        { id: 127, section: "Procedures", q: "Most appropriate Chest X-ray position?", options: ["Supine", "Prone", "Lateral Decubitus", "Erect PA"], correct: 3, explain: "Erect PA is standard." },
+        { id: 128, section: "Anatomy", q: "Site of urea synthesis?", options: ["Liver", "Kidney", "Brain", "Adrenal"], correct: 0, explain: "Urea cycle occurs in Liver." },
+        { id: 129, section: "Procedures", q: "Function of guidewire in IR?", options: ["Deliver meds", "Monitor flow", "Path for catheter", "Biopsy"], correct: 2, explain: "Rail for catheter insertion." },
+        { id: 130, section: "Anatomy", q: "Cause of denervation atrophy?", options: ["Lack activity", "Blood supply", "Hormones", "Loss of nerve supply"], correct: 3, explain: "Loss of innervation." },
+        
+        { id: 131, section: "Physics", q: "Grid is useful when?", options: ["Chest no contrast", "Imaging high thickness/scatter", "Paediatric", "Low contrast parts"], correct: 1, explain: "Thick parts creating scatter." },
+        { id: 132, section: "Anatomy", q: "Two types of bone tissue?", options: ["Compact & Cancellous", "Cancellous & Non-compact", "Compact & Non-compact", "Non-compact..."], correct: 0, explain: "Compact (Cortical) and Cancellous (Spongy)." },
+        { id: 133, section: "Physics", q: "Use of dosimeter?", options: ["Enhance resolution", "Measure beam intensity", "Monitor staff exposure", "Calibrate"], correct: 2, explain: "Personal monitoring." },
+        { id: 134, section: "Procedures", q: "Breast compression in mammography?", options: ["Protect patient", "Reduce discomfort", "Increase contrast/reduce scatter", "Shorten time"], correct: 2, explain: "Improves image quality." },
+        { id: 135, section: "Procedures", q: "Erythema characterized by?", options: ["Scaly skin", "Swelling", "Redness", "Pain"], correct: 2, explain: "Redness of skin." },
+        { id: 136, section: "Dark Room", q: "Store films safely in darkroom?", options: ["Cassette", "Safelight", "Apron", "Film bin"], correct: 3, explain: "Film Bin (Hopper)." },
+        { id: 137, section: "Physics", q: "kVp controls:", options: ["Energy (Quality)", "Brightness", "Size", "Contrast (Film)"], correct: 0, explain: "Beam Energy/Penetrability." },
+        { id: 138, section: "Physics", q: "X-ray tube distance (SID) aim?", options: ["Minimize size", "Ensure stillness", "Reduce scatter effect", "Increase radiation?"], correct: 2, explain: "Actually reduces magnification and penumbra (Geometric unsharpness). Option C closest in context of image quality?" },
+        { id: 139, section: "Anatomy", q: "Organelle involved in apoptosis?", options: ["Golgi", "Mitochondria", "ER", "Lysosome"], correct: 1, explain: "Mitochondria release cytochrome c." },
+        { id: 140, section: "Physics", q: "SI unit of equivalent dose?", options: ["Gray", "Roentgen", "Curie", "Sievert"], correct: 3, explain: "Sievert (Sv)." },
+        
+        { id: 141, section: "Anatomy", q: "Pigment determining skin colour?", options: ["Hemosiderin", "Melanin", "Bilin", "Hemoglobin"], correct: 1, explain: "Melanin." },
+        { id: 142, section: "Anatomy", q: "Function of Vitamin D?", options: ["Glucose reg", "RBC", "Calcium/Phosphate metabolism", "Protein"], correct: 2, explain: "Bone health." },
+        { id: 143, section: "Anatomy", q: "Cell secreting bone matrix?", options: ["Osteon", "Osteoclastoma", "Osteoblasts", "Mesoblasts"], correct: 2, explain: "Osteoblasts build bone." },
+        { id: 144, section: "Physics", q: "Function of mAs?", options: ["Color", "Sharpness", "Size", "Amount (Quantity)"], correct: 3, explain: "Quantity of X-rays." },
+        { id: 145, section: "Procedures", q: "TIPS procedure used to:", options: ["Treat coronary", "Reduce portal hypertension", "Liver biopsy", "Kidney stones"], correct: 1, explain: "Shunt for portal hypertension." },
+        { id: 146, section: "Anatomy", q: "Joint between Atlas and Axis?", options: ["Hinge", "Ball and Socket", "Saddle", "Pivot"], correct: 3, explain: "Pivot joint (Rotation)." },
+        { id: 147, section: "Procedures", q: "Best visualized in MLO view?", options: ["Pectoral muscle", "Inframammary fold", "Axillary tail", "Medial tissue"], correct: 2, explain: "Axillary tail." },
+        { id: 148, section: "Procedures", q: "Enzyme NOT used for liver diagnosis?", options: ["ALT", "GGT", "ACP", "AST"], correct: 2, explain: "ACP (Acid Phosphatase) is for Prostate." },
+        { id: 149, section: "Procedures", q: "Cytotoxic hypersensitivity type?", options: ["Type I", "Type II", "Type III", "Type IV"], correct: 1, explain: "Type II." },
+        { id: 150, section: "Procedures", q: "Artifact if breast not compressed?", options: ["Increased contrast", "Shadowing/Overlap (Blur)", "Improved sharpness", "Magnification"], correct: 1, explain: "Motion blur and superimposition." }
+    ];
+
+    // --- State Management ---
+    let userAnswers = new Array(quizData.length).fill(null); // null = skipped
+    let isExamActive = true;
+
+    // --- DOM Elements ---
+    const container = document.getElementById("questions-container");
+    const resultPanel = document.getElementById("result-panel");
+    const footerBar = document.getElementById("footer-bar");
+    const statusText = document.getElementById("status-text");
+
+    // --- Initialization ---
+    function initQuiz() {
+        container.innerHTML = "";
+        
+        quizData.forEach((item, index) => {
+            const card = document.createElement("div");
+            card.className = "question-card";
+            card.id = `q-card-${index}`;
+
+            // Options HTML
+            let optionsHTML = "";
+            item.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <button class="option-btn" 
+                            id="btn-${index}-${optIndex}" 
+                            onclick="selectOption(${index}, ${optIndex})">
+                        <span style="font-weight:bold; margin-right:10px;">${String.fromCharCode(65+optIndex)}.</span> ${opt}
+                    </button>`;
+            });
+
+            card.innerHTML = `
+                <div class="q-header">
+                    <span class="section-tag">${item.section}</span>
+                    <span style="color:#6b7280; font-size:0.9rem;">Q${index + 1}</span>
+                </div>
+                <div class="q-text">${item.q}</div>
+                <div class="options-grid">
+                    ${optionsHTML}
+                </div>
+                <button class="clear-btn" id="clear-${index}" onclick="clearSelection(${index})" style="visibility:hidden">Clear Selection</button>
+                <div class="explanation" id="explain-${index}">
+                    <strong>Correct Answer:</strong> ${item.options[item.correct]}<br><br>
+                    <strong>Explanation:</strong> ${item.explain}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // --- Interactions ---
+    window.selectOption = function(qIndex, optIndex) {
+        if (!isExamActive) return;
+
+        // Update State
+        userAnswers[qIndex] = optIndex;
+
+        // Update UI
+        const btns = document.querySelectorAll(`#q-card-${qIndex} .option-btn`);
+        btns.forEach(btn => btn.classList.remove("selected"));
+        
+        const selectedBtn = document.getElementById(`btn-${qIndex}-${optIndex}`);
+        selectedBtn.classList.add("selected");
+
+        // Show Clear Button
+        document.getElementById(`clear-${qIndex}`).style.visibility = "visible";
+    };
+
+    window.clearSelection = function(qIndex) {
+        if (!isExamActive) return;
+        userAnswers[qIndex] = null;
+        const btns = document.querySelectorAll(`#q-card-${qIndex} .option-btn`);
+        btns.forEach(btn => btn.classList.remove("selected"));
+        document.getElementById(`clear-${qIndex}`).style.visibility = "hidden";
+    };
+
+    // --- Submission Logic ---
+    window.submitExam = function() {
+        if (!confirm("Are you sure you want to submit? This will end the exam.")) return;
+
+        isExamActive = false;
+        document.body.classList.remove("exam-mode");
+        document.body.classList.add("review-mode");
+        
+        let correctCount = 0;
+        let wrongCount = 0;
+        let skippedCount = 0;
+        let totalScore = 0;
+
+        // Calculate Score & Update UI for Review
+        // SCORING: 1 Mark per correct, 0 Negative (As per PDF instructions)
+        quizData.forEach((item, index) => {
+            const userChoice = userAnswers[index];
+            const explanationDiv = document.getElementById(`explain-${index}`);
+            const clearBtn = document.getElementById(`clear-${index}`);
+            
+            // Hide clear button
+            clearBtn.style.display = "none";
+            // Show explanation
+            explanationDiv.style.display = "block";
+
+            // Visual marking
+            const correctBtn = document.getElementById(`btn-${index}-${item.correct}`);
+            correctBtn.classList.add("correct-answer");
+
+            if (userChoice === null) {
+                // Skipped
+                skippedCount++;
+            } else if (userChoice === item.correct) {
+                // Correct
+                correctCount++;
+                totalScore += 1; // 1 Mark
+            } else {
+                // Wrong
+                wrongCount++;
+                // 0 Negative marking as per rules
+                const wrongBtn = document.getElementById(`btn-${index}-${userChoice}`);
+                wrongBtn.classList.add("wrong-choice");
+            }
+        });
+
+        // Calculate Accuracy (Correct / Attempted * 100)
+        const attempted = correctCount + wrongCount;
+        const accuracy = attempted === 0 ? 0 : Math.round((correctCount / attempted) * 100);
+
+        // Update Result Panel
+        document.getElementById("final-score").innerText = totalScore;
+        document.getElementById("stat-correct").innerText = correctCount;
+        document.getElementById("stat-wrong").innerText = wrongCount;
+        document.getElementById("stat-skip").innerText = skippedCount;
+        document.getElementById("stat-acc").innerText = accuracy + "%";
+
+        // UI Changes
+        resultPanel.style.display = "block";
+        footerBar.style.display = "none";
+        statusText.innerText = "Exam Completed";
+        statusText.style.color = "#ef4444";
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // Run on Load
+    initQuiz();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIIMS CRE Radiographer - Review Mode</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --success: #16a34a;
+            --success-bg: #dcfce7;
+            --danger: #dc2626;
+            --danger-bg: #fee2e2;
+            --bg: #f1f5f9;
+            --card: #ffffff;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            padding-bottom: 100px;
+        }
+
+        /* Header */
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Question Palette (New Feature) */
+        .review-palette {
+            display: none; /* Hidden until submit */
+            background: white;
+            padding: 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            border-bottom: 1px solid #ddd;
+            gap: 8px;
+        }
+        .palette-item {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #555;
+            background: #eee;
+            margin-right: 5px;
+            text-decoration: none;
+        }
+        .pal-correct { background: var(--success); color: white; }
+        .pal-wrong { background: var(--danger); color: white; }
+        .pal-na { background: #94a3b8; color: white; }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Question Card */
+        .question-card {
+            background: var(--card);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 2px solid transparent; /* Prepare for border color change */
+            transition: border-color 0.3s;
+        }
+
+        /* Review Mode Card Styles */
+        .card-correct { border-color: var(--success); background-color: #f0fdf4; }
+        .card-wrong { border-color: var(--danger); background-color: #fef2f2; }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: #64748b;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge {
+            font-weight: bold;
+            display: none; /* Hidden until submit */
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .status-correct { color: var(--success); background: var(--success-bg); display: inline-block; }
+        .status-wrong { color: var(--danger); background: var(--danger-bg); display: inline-block; }
+        .status-na { color: #64748b; background: #e2e8f0; display: inline-block; }
+
+        .q-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+        }
+
+        /* Options */
+        .options { display: flex; flex-direction: column; gap: 0.8rem; }
+        
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            cursor: pointer;
+            background: white;
+            transition: all 0.2s;
+        }
+
+        .option-label:hover { background-color: #f8fafc; }
+        
+        input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.3);
+            accent-color: var(--primary);
+        }
+
+        /* Answer highlighting */
+        .opt-correct {
+            background-color: var(--success-bg) !important;
+            border-color: var(--success) !important;
+            color: var(--success) !important;
+            font-weight: bold;
+        }
+
+        .opt-wrong {
+            background-color: var(--danger-bg) !important;
+            border-color: var(--danger) !important;
+            color: var(--danger) !important;
+        }
+
+        /* Explanation Box */
+        .explanation-box {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e0f2fe;
+            border-left: 5px solid var(--primary);
+            border-radius: 4px;
+            display: none;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer-controls {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: white;
+            padding: 1rem;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            z-index: 90;
+        }
+
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        button:active { transform: scale(0.98); }
+
+        .btn-submit { background-color: var(--primary); color: white; }
+        .btn-reset { background-color: #334155; color: white; }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(2px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0 auto 1.5rem auto;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+        .stat-box {
+            padding: 10px;
+            border-radius: 8px;
+            background: #f8fafc;
+        }
+        .stat-val { font-size: 1.2rem; font-weight: bold; display: block; }
+        .stat-label { font-size: 0.8rem; color: #64748b; }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div>
+        <h1 style="margin:0; font-size:1.1rem;">AIIMS Radiographer Mock</h1>
+    </div>
+    <div style="text-align:right; font-size:0.9rem;">
+        <div id="timer">90:00</div>
+    </div>
+</header>
+
+<div class="review-palette" id="reviewPalette">
+    </div>
+
+<div class="container" id="quiz-container">
+    </div>
+
+<div class="footer-controls">
+    <button class="btn-submit" onclick="submitQuiz()" id="submitBtn">Submit Test</button>
+    <button class="btn-reset" onclick="resetQuiz()" id="resetBtn" style="display:none;">Reset / Retake</button>
+</div>
+
+<div class="modal-overlay" id="resultModal">
+    <div class="modal-content">
+        <h2 style="margin-top:0;">Test Complete</h2>
+        <div class="score-circle" id="finalScore">0</div>
+        
+        <div class="stat-grid">
+            <div class="stat-box" style="color: var(--success)">
+                <span class="stat-val" id="correctCount">0</span>
+                <span class="stat-label">Correct</span>
+            </div>
+            <div class="stat-box" style="color: var(--danger)">
+                <span class="stat-val" id="wrongCount">0</span>
+                <span class="stat-label">Wrong</span>
+            </div>
+            <div class="stat-box" style="color: #64748b">
+                <span class="stat-val" id="naCount">0</span>
+                <span class="stat-label">Skipped</span>
+            </div>
+        </div>
+
+        <button class="btn-submit" onclick="closeModal()">Review Answers</button>
+    </div>
+</div>
+
+<script>
+const questions = [
+    {
+        id: 1,
+        text: "A pregnant female (1st Trimester) is prescribed a CT Scan of the Abdomen for suspected appendicitis. Only a standard lead apron (0.5mm Pb) is available. What is the most appropriate immediate action?",
+        options: ["Proceed with the scan using the lead apron to cover the pelvis.", "Perform the scan with low mAs technique immediately.", "Refuse the scan and send the patient home.", "Hold the scan, consult the Radiologist to confirm justification or suggest MRI/Ultrasound."],
+        correct: 3,
+        explanation: "CT in 1st trimester is teratogenic. Lead aprons don't stop internal scatter. Justification and alternative modalities (USG/MRI) are priority."
+    },
+    {
+        id: 2,
+        text: "During an IV contrast injection for a CECT, the patient starts coughing and develops hives (urticaria). What is your immediate first step?",
+        options: ["Stop the injection immediately.", "Increase flow rate to finish quickly.", "Ask patient to deep breathe and continue.", "Administer adrenaline immediately."],
+        correct: 0,
+        explanation: "Stop the injection immediately upon any sign of reaction to prevent further allergen load."
+    },
+    {
+        id: 3,
+        text: "You are performing a bedside chest X-ray in the ICU on a ventilated patient. How do you time the exposure?",
+        options: ["At peak inspiration, watching the ventilator bellows/display.", "At peak expiration.", "Anytime.", "Disconnect ventilator."],
+        correct: 0,
+        explanation: "Watch the ventilator display/chest rise and expose at peak inspiration for lung aeration."
+    },
+    {
+        id: 4,
+        text: "Trauma patient with cervical collar. Lateral C-spine X-ray doesn't show C7-T1. What is the next best view?",
+        options: ["Remove collar and repeat.", "AP Axial.", "Swimmer’s view (Lateral).", "Oblique view."],
+        correct: 2,
+        explanation: "Swimmer’s view projects the humeral head away from the spine to visualize C7-T1."
+    },
+    {
+        id: 5,
+        text: "Patient has a 'nicotine patch' on their arm before an MRI. What should you do?",
+        options: ["Scan as usual.", "Cover with gauze.", "Remove the patch.", "Apply ice pack."],
+        correct: 2,
+        explanation: "Transdermal patches often contain foil backings that can heat up and burn skin during MRI."
+    },
+    {
+        id: 6,
+        text: "Digital image shows 'Quantum Mottle' (grainy). What is the likely cause?",
+        options: ["Excessive mAs.", "Insufficient mAs (underexposure).", "Grid cutoff.", "Large focal spot."],
+        correct: 1,
+        explanation: "Quantum mottle indicates photon starvation (insufficient signal/mAs)."
+    },
+    {
+        id: 7,
+        text: "Ideal timing for Hysterosalpingography (HSG)?",
+        options: ["Day 1-5 (Bleeding phase).", "Day 7-10 (Post-bleeding, Pre-ovulation).", "Day 21-28.", "Any day."],
+        correct: 1,
+        explanation: "To avoid infection (menstruation) and pregnancy (ovulation)."
+    },
+    {
+        id: 8,
+        text: "PPE mandatory for portable X-ray of a Tuberculosis (Airborne) patient?",
+        options: ["Surgical Mask.", "N95 Respirator.", "Sterile gloves.", "Lead apron only."],
+        correct: 1,
+        explanation: "N95 is required for airborne pathogens like TB."
+    },
+    {
+        id: 9,
+        text: "Patient creatinine is 2.5 mg/dL. What is the primary risk of CECT?",
+        options: ["Contrast Induced Nephropathy (CIN).", "Anaphylaxis.", "Extravasation.", "Hypoglycemia."],
+        correct: 0,
+        explanation: "High creatinine indicates poor kidney function; contrast can cause CIN."
+    },
+    {
+        id: 10,
+        text: "Patient complains of pain during Mammogram compression. Best response?",
+        options: ["Stop compression immediately.", "Explain necessity and proceed gently.", "Compress faster.", "Cancel exam."],
+        correct: 1,
+        explanation: "Explain that compression is needed for image quality/dose reduction, but remain empathetic."
+    },
+    {
+        id: 11,
+        text: "Most radiosensitive stage of pregnancy?",
+        options: ["Pre-implantation.", "Organogenesis (2-8 weeks).", "Fetal period.", "3rd Trimester."],
+        correct: 1,
+        explanation: "Organogenesis involves major organ formation and is most sensitive to malformations."
+    },
+    {
+        id: 12,
+        text: "Terrified 5-year-old for X-ray. Best immobilization?",
+        options: ["You hold the child.", "Parent (wearing lead) holds child.", "Sedate immediately.", "Sandbags."],
+        correct: 1,
+        explanation: "Parents (non-radiation workers) should hold children if mechanical restraints fail."
+    },
+    {
+        id: 13,
+        text: "Accidental needlestick injury. First step?",
+        options: ["Incident report.", "Squeeze wound to bleed and wash with soap/water.", "Check patient HIV status.", "Check Hep B status."],
+        correct: 1,
+        explanation: "Immediate first aid (washing/bleeding) reduces viral load before reporting."
+    },
+    {
+        id: 14,
+        text: "Lateral Lumbar spine on a patient with wide hips (sagging spine). Tube angle?",
+        options: ["5-8 deg Caudal.", "5-8 deg Cephalad.", "Perpendicular.", "15 deg Caudal."],
+        correct: 0,
+        explanation: "Caudal angle aligns the beam with the intervertebral spaces if the spine isn't parallel."
+    },
+    {
+        id: 15,
+        text: "Purpose of 'Time Out' in Interventional Radiology?",
+        options: ["Rest equipment.", "Verify patient, procedure, and site.", "Warm contrast.", "Check insurance."],
+        correct: 1,
+        explanation: "Safety protocol to prevent wrong-site/wrong-patient errors."
+    },
+    {
+        id: 16,
+        text: "A patient enters the MRI room with a ferromagnetic oxygen cylinder. What happens?",
+        options: ["Nothing.", "The cylinder becomes a projectile (Missile Effect).", "Image artifacts only.", "The magnet quenches."],
+        correct: 1,
+        explanation: "Ferromagnetic objects are pulled violently into the bore (Missile Effect)."
+    },
+    {
+        id: 17,
+        text: "You suspect a patient has a perforated ulcer (free air). Which projection is best if the patient cannot stand?",
+        options: ["Supine Abdomen.", "Left Lateral Decubitus.", "Right Lateral Decubitus.", "Prone Abdomen."],
+        correct: 1,
+        explanation: "Left Lateral Decubitus allows free air to rise over the liver shadow, making it visible."
+    },
+    {
+        id: 18,
+        text: "An unexposed radiographic film comes out black after processing. The likely cause?",
+        options: ["Safe light fog.", "Light leak in the darkroom/cassette.", "Old developer.", "Fixer retention."],
+        correct: 1,
+        explanation: "Complete blackening of unexposed film usually indicates massive light exposure (light leak)."
+    },
+    {
+        id: 19,
+        text: "During a barium swallow, the patient begins to aspirate. What is the immediate action?",
+        options: ["Tell them to swallow harder.", "Stop the procedure and encourage coughing.", "Give water.", "Tilt the table head down."],
+        correct: 1,
+        explanation: "Aspiration risks pneumonia. Stop contrast administration immediately."
+    },
+    {
+        id: 20,
+        text: "Which grid ratio requires the highest technical factors (dose)?",
+        options: ["5:1", "8:1", "12:1", "16:1"],
+        correct: 3,
+        explanation: "Higher grid ratios (16:1) absorb more scatter but also more primary beam, requiring higher mAs."
+    },
+    {
+        id: 21,
+        text: "In CT, a 'Beam Hardening' artifact typically appears as:",
+        options: ["Ring artifacts.", "Dark streaks between dense objects (e.g., bone).", "Blurring.", "Zebra pattern."],
+        correct: 1,
+        explanation: "Beam hardening causes dark streaks (cupping) typically between petrous bones or hip implants."
+    },
+    {
+        id: 22,
+        text: "Patient has a cardiac pacemaker. Can they undergo an MRI?",
+        options: ["Yes, always.", "No, it is an absolute contraindication unless the device is 'MRI Conditional'.", "Yes, if the magnet is 0.5T.", "Yes, if lead shielding is used."],
+        correct: 1,
+        explanation: "Standard pacemakers can malfunction or heat up. Only 'MRI Conditional' devices are safe under specific settings."
+    },
+    {
+        id: 23,
+        text: "Recommended rate of chest compressions in CPR for an adult?",
+        options: ["60-80/min", "100-120/min", "140/min", "80-100/min"],
+        correct: 1,
+        explanation: "AHA guidelines recommend 100-120 compressions per minute."
+    },
+    {
+        id: 24,
+        text: "Which Hounsfield Unit (HU) range represents water?",
+        options: ["-1000", "-100 to -50", "0 (approx)", "40 to 60"],
+        correct: 2,
+        explanation: "Water is calibrated to 0 HU. Air is -1000, Bone is >400."
+    },
+    {
+        id: 25,
+        text: "The 'Anode Heel Effect' is most noticeable when using:",
+        options: ["Long SID and Small Film size.", "Short SID and Large Film size.", "High kVp.", "Small Focal Spot."],
+        correct: 1,
+        explanation: "Heel effect (intensity drop on anode side) is worse at short distances (SID) with large field coverage."
+    },
+    {
+        id: 26,
+        text: "A patient with a hip prosthesis needs an MRI. What is the main concern regarding the image?",
+        options: ["The prosthesis will melt.", "Susceptibility artifact (metal distortion).", "Patient will get shocked.", "Contrast cannot be used."],
+        correct: 1,
+        explanation: "Metal causes large signal voids and geometric distortion (susceptibility artifact) in MRI."
+    },
+    {
+        id: 27,
+        text: "Best projection to visualize the scaphoid bone and detect fractures?",
+        options: ["PA Wrist.", "Lateral Wrist.", "PA Ulnar Deviation.", "PA Radial Deviation."],
+        correct: 2,
+        explanation: "Ulnar deviation stretches the scaphoid, preventing overlapping and showing fractures best."
+    },
+    {
+        id: 28,
+        text: "What is the minimum lead equivalent thickness for a lead apron used in fluoroscopy (at 100kV)?",
+        options: ["0.1 mm Pb", "0.25 mm Pb", "0.5 mm Pb", "1.0 mm Pb"],
+        correct: 1,
+        explanation: "Standard regulatory requirement is usually 0.25mm Pb minimum, though 0.5mm is common practice for better protection."
+    },
+    {
+        id: 29,
+        text: "In C-arm fluoroscopy, where is the highest scatter radiation zone?",
+        options: ["On the Image Intensifier side.", "On the X-ray tube side.", "At the head of the patient.", "2 meters away."],
+        correct: 1,
+        explanation: "Scatter is highest on the tube side (entry surface). The operator should stand on the Image Intensifier side if possible."
+    },
+    {
+        id: 30,
+        text: "A patient collapses in the waiting room. You find no pulse. What is your action?",
+        options: ["Call for help and start Chest Compressions.", "Run to find a doctor.", "Give water.", "Check blood pressure."],
+        correct: 0,
+        explanation: "Chain of survival: Early access (call help) + Early CPR (compressions)."
+    },
+    {
+        id: 31,
+        text: "How should you store a lead apron to prevent damage?",
+        options: ["Fold it tightly in a drawer.", "Hang it on a rack without folds.", "Lay it on the floor.", "Crumple it."],
+        correct: 1,
+        explanation: "Folding cracks the lead lining, reducing protection. Always hang on racks."
+    },
+    {
+        id: 32,
+        text: "For a Towne's view (Skull), the central ray is angled:",
+        options: ["15 deg Cephalad.", "30 deg Caudal.", "30 deg Cephalad.", "Perpendicular."],
+        correct: 1,
+        explanation: "Towne's view requires a 30-degree Caudal angle to visualize the occipital bone/foramen magnum."
+    },
+    {
+        id: 33,
+        text: "Contrast extravasation occurs (50ml). The arm swells. Immediate action?",
+        options: ["Massage vigorously.", "Apply warm compress immediately.", "Elevate the limb and apply cold compress.", "Bandage tight."],
+        correct: 2,
+        explanation: "Elevate to reduce edema. Cold compress initially (constrict vessels/pain). Warm compress may be used later."
+    },
+    {
+        id: 34,
+        text: "In MRI, what is a 'Quench'?",
+        options: ["Rapid loss of liquid helium/superconductivity.", "System reboot.", "Coil failure.", "Patient panic attack."],
+        correct: 0,
+        explanation: "Quench is the rapid boiling off of liquid helium, shutting down the magnetic field. Only done in life-threatening emergencies."
+    },
+    {
+        id: 35,
+        text: "A skyline view (Merchant/Sunrise) is used for:",
+        options: ["Glenoid cavity.", "Patella-Femoral joint.", "Acromioclavicular joint.", "Calcaneus."],
+        correct: 1,
+        explanation: "Skyline views visualize the Patella and its relation to the femoral groove."
+    },
+    {
+        id: 36,
+        text: "The 'ALARA' principle stands for:",
+        options: ["As Low As Reasonably Achievable.", "As Long As Rays Allow.", "Always Leave A Record Archived.", "As Low As Radiation Allows."],
+        correct: 0,
+        explanation: "Standard radiation safety principle."
+    },
+    {
+        id: 37,
+        text: "Which blood test is essential before an MRI with Gadolinium in a kidney patient?",
+        options: ["Hemoglobin.", "eGFR / Creatinine.", "Platelets.", "Blood Sugar."],
+        correct: 1,
+        explanation: "Gadolinium can cause Nephrogenic Systemic Fibrosis (NSF) in patients with severe renal failure (low eGFR)."
+    },
+    {
+        id: 38,
+        text: "To blur out the ribs during a lateral T-spine X-ray, you should:",
+        options: ["Use high kVp.", "Use a breathing technique (autotomography).", "Have the patient hold breath in inspiration.", "Use a high grid ratio."],
+        correct: 1,
+        explanation: "Long exposure with shallow breathing blurs ribs/lung markings but keeps the spine sharp."
+    },
+    {
+        id: 39,
+        text: "A patient with suspected spinal injury requires a transfer from trolley to X-ray table. Method?",
+        options: ["2-person lift.", "Log-roll / Slide board with spinal alignment.", "Ask patient to hop over.", "Pull patient by the arms."],
+        correct: 1,
+        explanation: "Log-roll or slide board ensures the spine remains aligned and prevents further injury."
+    },
+    {
+        id: 40,
+        text: "What is the primary function of the filtration (aluminum) in the X-ray tube?",
+        options: ["Focus the beam.", "Remove low-energy (soft) X-rays to reduce skin dose.", "Increase contrast.", "Cool the tube."],
+        correct: 1,
+        explanation: "Filtration absorbs soft X-rays that contribute to patient dose but not image quality."
+    },
+    {
+        id: 41,
+        text: "In a PA Chest X-ray, why are shoulders rolled forward?",
+        options: ["To expand lungs.", "To move scapulae out of lung fields.", "To reduce heart size.", "For patient comfort."],
+        correct: 1,
+        explanation: "Rolling shoulders forward pulls the scapulae laterally, clearing the lung fields."
+    },
+    {
+        id: 42,
+        text: "Biomedical waste: A used syringe with a needle should be disposed of in:",
+        options: ["Yellow bag.", "Red bag.", "White translucent (Puncture proof) container.", "Blue bag."],
+        correct: 2,
+        explanation: "Sharps/Needles go in the White Puncture Proof Container."
+    },
+    {
+        id: 43,
+        text: "A radiograph shows 'Elongation' of the anatomy. Cause?",
+        options: ["Tube angled against the object.", "Object not parallel to film.", "SID too short.", "Grid cutoff."],
+        correct: 0,
+        explanation: "Elongation occurs when the tube is angled improperly relative to the object/film."
+    },
+    {
+        id: 44,
+        text: "Normal range for adult resting heart rate?",
+        options: ["40-60 bpm", "60-100 bpm", "100-120 bpm", "120-140 bpm"],
+        correct: 1,
+        explanation: "60-100 bpm is the standard normal range."
+    },
+    {
+        id: 45,
+        text: "Which projection best demonstrates the Paranasal Sinuses (fluid levels)?",
+        options: ["Supine Caldwell.", "Erect Water's View.", "Lateral supine.", "Towne's view."],
+        correct: 1,
+        explanation: "Erect position is necessary to see air-fluid levels. Water's view shows maxillary sinuses best."
+    },
+    {
+        id: 46,
+        text: "The main advantage of High Frequency Generators over Single Phase?",
+        options: ["More ripple.", "Constant potential, less patient dose, shorter exposure times.", "Cheaper.", "Produces more scatter."],
+        correct: 1,
+        explanation: "High frequency generators have <1% ripple, providing efficient X-ray production and lower dose."
+    },
+    {
+        id: 47,
+        text: "When performing an X-ray on a casted limb (Plaster of Paris), how do you adjust technique?",
+        options: ["Decrease kVp.", "Increase mAs/kVp.", "No change.", "Remove cast."],
+        correct: 1,
+        explanation: "Wet or thick casts require increased penetration (kVp) and mAs."
+    },
+    {
+        id: 48,
+        text: "CT Pitch > 1.0 implies:",
+        options: ["Table moves slower than beam width (Overlap).", "Table moves faster than beam width (Gaps/Extended coverage).", "High dose.", "Better resolution."],
+        correct: 1,
+        explanation: "Pitch > 1 means the table speed is fast, stretching the helix. It lowers dose but reduces z-axis resolution."
+    },
+    {
+        id: 49,
+        text: "Metallic taste in mouth after contrast injection is:",
+        options: ["A sign of anaphylaxis.", "A common, non-allergic side effect.", "A sign of renal failure.", "A sign of air embolism."],
+        correct: 1,
+        explanation: "Metallic taste and hot flush are common physiological sensations, not allergic reactions."
+    },
+    {
+        id: 50,
+        text: "Which X-ray interaction with matter is responsible for patient dose?",
+        options: ["Photoelectric Effect.", "Compton Scatter.", "Coherent Scatter.", "Pair Production."],
+        correct: 0,
+        explanation: "Photoelectric effect involves total absorption of the photon by the patient, contributing most to dose."
+    },
+    {
+        id: 51,
+        text: "Which X-ray interaction is responsible for Occupational Exposure (Scatter)?",
+        options: ["Photoelectric Effect.", "Compton Scatter.", "Transmission.", "Pair Production."],
+        correct: 1,
+        explanation: "Compton scatter redirects photons towards the radiographer."
+    },
+    {
+        id: 52,
+        text: "T-Score in DEXA scan is used to diagnose:",
+        options: ["Fractures.", "Osteoporosis.", "Muscle mass.", "Bone cancer."],
+        correct: 1,
+        explanation: "T-score compares bone density to a healthy young adult to diagnose Osteoporosis."
+    },
+    {
+        id: 53,
+        text: "A patient with a suspected perforated bowel requires a contrast study. Which contrast is used?",
+        options: ["Barium Sulfate.", "Water-soluble iodinated contrast (Gastrografin).", "Gadolinium.", "Air only."],
+        correct: 1,
+        explanation: "Barium can cause peritonitis if it leaks into the peritoneum. Water-soluble contrast is absorbed safely."
+    },
+    {
+        id: 54,
+        text: "Correct placement of the cathode end of the tube for a generic AP Thoracic Spine?",
+        options: ["Over the head (thinner part).", "Over the abdomen (thicker part).", "Doesn't matter.", "Over the feet."],
+        correct: 1,
+        explanation: "Anode Heel Effect: Put the Cathode (higher intensity) over the thicker body part (Abdomen) for uniform density."
+    },
+    {
+        id: 55,
+        text: "Nosocomial infection means:",
+        options: ["Infection acquired in the community.", "Infection acquired in the hospital.", "Infection from animals.", "Infection from food."],
+        correct: 1,
+        explanation: "Hospital-acquired infection (HAI)."
+    },
+    {
+        id: 56,
+        text: "Maximum annual effective dose limit for a radiation worker?",
+        options: ["1 mSv", "5 mSv", "20 mSv (averaged over 5 years).", "500 mSv"],
+        correct: 2,
+        explanation: "ICRP guidelines: 20 mSv/year averaged over 5 years, with no single year >50 mSv."
+    },
+    {
+        id: 57,
+        text: "To visualize the Intercondylar Fossa (Tunnel View) of the knee, use:",
+        options: ["Camp-Coventry or Holmblad method.", "Merchant method.", "Lateral view.", "AP view."],
+        correct: 0,
+        explanation: "These PA Axial projections visualize the intercondylar notch/loose bodies."
+    },
+    {
+        id: 58,
+        text: "A patient cannot extend their arm for an elbow X-ray. How do you proceed?",
+        options: ["Force it straight.", "Take 2 views: one forearm parallel, one humerus parallel (Jones view concepts).", "Skip the view.", "Do a lateral only."],
+        correct: 1,
+        explanation: "Never force. Take two APs: one with humerus on IR, one with forearm on IR (Trauma AP)."
+    },
+    {
+        id: 59,
+        text: "In CR (Computed Radiography), the latent image is stored on:",
+        options: ["Film.", "Photostimulable Phosphor (PSP) Plate.", "TFT Array.", "CCD."],
+        correct: 1,
+        explanation: "CR uses PSP plates (Barium Fluorohalide)."
+    },
+    {
+        id: 60,
+        text: "What does the 'S number' or 'Exposure Index' indicate in Digital Radiography?",
+        options: ["Patient size.", "Amount of exposure reached the receptor.", "kVp used.", "Processing speed."],
+        correct: 1,
+        explanation: "It is a feedback mechanism to tell the radiographer if the image was underexposed or overexposed."
+    },
+    {
+        id: 61,
+        text: "The 'Judet View' of the pelvis is used to visualize:",
+        options: ["Sacroiliac joints.", "Acetabulum.", "Pubic symphysis.", "Iliac crest."],
+        correct: 1,
+        explanation: "Judet (Oblique) views assess acetabular fractures."
+    },
+    {
+        id: 62,
+        text: "For a lateral chest X-ray, which side is placed against the IR typically?",
+        options: ["Right side.", "Left side.", "Either side.", "Posterior."],
+        correct: 1,
+        explanation: "Left lateral is standard to place the heart closer to the film, reducing magnification."
+    },
+    {
+        id: 63,
+        text: "What is the primary purpose of the 'Grid'?",
+        options: ["Reduce patient dose.", "Improve image contrast by absorbing scatter.", "Cool the tube.", "Focus electrons."],
+        correct: 1,
+        explanation: "Grids absorb scatter radiation before it hits the film, improving contrast."
+    },
+    {
+        id: 64,
+        text: "Symptoms: Slurred speech, facial droop, arm weakness. Suspected?",
+        options: ["Cardiac arrest.", "Stroke (CVA).", "Diabetic shock.", "Panic attack."],
+        correct: 1,
+        explanation: "FAST (Face, Arm, Speech, Time) signs indicate Stroke. Immediate CT Brain is usually needed."
+    },
+    {
+        id: 65,
+        text: "In MRI, T1 weighted images show fluid (water/CSF) as:",
+        options: ["Bright (Hyperintense).", "Dark (Hypointense).", "Grey.", "Variable."],
+        correct: 1,
+        explanation: "T1: Fluid is Dark. Fat is Bright. (T2: Fluid is Bright)."
+    },
+    {
+        id: 66,
+        text: "The zygomatic arches are best demonstrated by:",
+        options: ["SMV (Submentovertex) / Jug Handle view.", "Towne's view.", "Lateral skull.", "PA skull."],
+        correct: 0,
+        explanation: "SMV projects the arches free of the cranial bones."
+    },
+    {
+        id: 67,
+        text: "Stenvers view was historically used for:",
+        options: ["Mastoids / Petrous Temporal Bone.", "Orbits.", "Mandible.", "Nasal bones."],
+        correct: 0,
+        explanation: "Visualizes the petrous pyramid and internal acoustic meatus."
+    },
+    {
+        id: 68,
+        text: "CT Window Width (WW) controls:",
+        options: ["Image Density/Brightness.", "Image Contrast.", "Spatial Resolution.", "Magnification."],
+        correct: 1,
+        explanation: "Window Width controls contrast (range of greys). Window Level (WL) controls brightness."
+    },
+    {
+        id: 69,
+        text: "A 'Greenstick fracture' is common in:",
+        options: ["Elderly.", "Children.", "Athletes.", "Post-menopausal women."],
+        correct: 1,
+        explanation: "Incomplete fracture due to soft/pliable bones in children."
+    },
+    {
+        id: 70,
+        text: "Before entering the MRI room, the most critical question is:",
+        options: ["Did you eat breakfast?", "Do you have any metal implants/pacemaker?", "Are you claustrophobic?", "Do you have insurance?"],
+        correct: 1,
+        explanation: "Safety first. Metal implants can be fatal."
+    },
+    {
+        id: 71,
+        text: "Which view demonstrates the Greater Tubercle of the Humerus in profile laterally?",
+        options: ["AP External Rotation.", "AP Internal Rotation.", "Transthoracic.", "Axial."],
+        correct: 0,
+        explanation: "External rotation puts the Greater Tubercle in profile laterally."
+    },
+    {
+        id: 72,
+        text: "Collimation (reducing field size) results in:",
+        options: ["Increased scatter, lower contrast.", "Decreased scatter, higher contrast, lower dose.", "Higher patient dose.", "More blurring."],
+        correct: 1,
+        explanation: "Tight collimation reduces the volume of tissue irradiated, reducing scatter production and dose."
+    },
+    {
+        id: 73,
+        text: "For an RGU (Retrograde Urethrogram), the patient position is:",
+        options: ["Supine.", "RPO / LPO (Oblique).", "Prone.", "Lateral."],
+        correct: 1,
+        explanation: "Oblique position opens up the urethra for visualization."
+    },
+    {
+        id: 74,
+        text: "Disposal of liquid chemical waste (developer/fixer):",
+        options: ["Drain into sink.", "Collect in authorized chemical waste containers.", "Throw in red bag.", "Throw in yellow bag."],
+        correct: 1,
+        explanation: "Chemicals (especially Fixer containing Silver) are hazardous and cannot go down the drain."
+    },
+    {
+        id: 75,
+        text: "Which dosimeter is most commonly used for personnel monitoring?",
+        options: ["Geiger Muller Counter.", "TLD (Thermoluminescent Dosimeter) or OSL.", "Ionization chamber.", "Scintillation detector."],
+        correct: 1,
+        explanation: "TLD or OSL badges are used for recording cumulative monthly/quarterly dose."
+    },
+    {
+        id: 76,
+        text: "The 'Line Focus Principle' allows for:",
+        options: ["Larger actual focal spot (heat) and smaller effective focal spot (resolution).", "Smaller actual spot.", "No heat capacity.", "Less voltage."],
+        correct: 0,
+        explanation: "Angling the target allows high heat loading (large area) while projecting a small source (better detail)."
+    },
+    {
+        id: 77,
+        text: "A patient on Metformin needs a contrast CT. Guidelines?",
+        options: ["Stop Metformin 48hrs after scan if renal function is abnormal.", "Stop Metformin 1 week before.", "No precaution needed.", "Double the dose."],
+        correct: 0,
+        explanation: "Metformin + Contrast induced renal failure can cause Lactic Acidosis. Stop 48h post-scan until renal function checks out."
+    },
+    {
+        id: 78,
+        text: "The Y-View of the shoulder is useful for:",
+        options: ["Fractures.", "Dislocations (Anterior/Posterior).", "Rotator cuff tear.", "Arthritis."],
+        correct: 1,
+        explanation: "Shows the humeral head relation to the glenoid (Y shape of scapula) to confirm dislocation."
+    },
+    {
+        id: 79,
+        text: "Inverse Square Law: If distance (SID) is doubled, the intensity becomes:",
+        options: ["Double.", "Half.", "One-fourth.", "Four times."],
+        correct: 2,
+        explanation: "Intensity is inversely proportional to the square of the distance. 2 squared is 4 (1/4th)."
+    },
+    {
+        id: 80,
+        text: "What is 'Pixel'?",
+        options: ["Volume element.", "Picture element (2D).", "Matrix size.", "Bit depth."],
+        correct: 1,
+        explanation: "Pixel = Picture Element. Voxel = Volume Element."
+    },
+    {
+        id: 81,
+        text: "During a code blue, you are asked to bring the 'Crash Cart'. What is it?",
+        options: ["A trolley for transporting patients.", "A trolley with emergency meds and defibrillator.", "The MRI table.", "X-ray machine."],
+        correct: 1,
+        explanation: "Emergency resuscitation cart."
+    },
+    {
+        id: 82,
+        text: "Which structure is located at the level of T4-T5?",
+        options: ["Xiphoid tip.", "Sternal Angle (Angle of Louis).", "Thyroid cartilage.", "Iliac Crest."],
+        correct: 1,
+        explanation: "Sternal Angle marks T4/T5 and the Carina."
+    },
+    {
+        id: 83,
+        text: "For a lateral knee, how much is the knee flexed?",
+        options: ["90 degrees.", "20-30 degrees.", "Fully extended.", "45 degrees."],
+        correct: 1,
+        explanation: "20-30 degrees flexion relaxes muscles and prevents the patella from being drawn into the groove, showing joint space best."
+    },
+    {
+        id: 84,
+        text: "Why is a chest X-ray taken at 72 inches (180cm) SID?",
+        options: ["To reduce heart magnification.", "To increase dose.", "To reduce kVp.", "Comfort."],
+        correct: 0,
+        explanation: "Longer SID reduces beam divergence and magnification of the heart."
+    },
+    {
+        id: 85,
+        text: "Hand hygiene: How long should you rub hands with alcohol sanitizer?",
+        options: ["5 seconds.", "20 seconds / until dry.", "1 minute.", "Not needed if wearing gloves."],
+        correct: 1,
+        explanation: "20 seconds is standard."
+    },
+    {
+        id: 86,
+        text: "A 'Bennett's Fracture' involves:",
+        options: ["Base of 1st Metacarpal.", "Distal Radius.", "Ulna.", "Scaphoid."],
+        correct: 0,
+        explanation: "Intra-articular fracture at the base of the thumb."
+    },
+    {
+        id: 87,
+        text: "In Mammography, the MLO view muscle angle should be:",
+        options: ["Parallel to chest wall.", "Convex.", "Concave.", "Absent."],
+        correct: 1,
+        explanation: "The Pectoralis muscle should appear convex and extend to the nipple line."
+    },
+    {
+        id: 88,
+        text: "Lead apron thickness for CT scan attendants?",
+        options: ["0.25mm", "0.5mm", "1.0mm", "No apron needed."],
+        correct: 1,
+        explanation: "0.5mm is standard for high scatter environments."
+    },
+    {
+        id: 89,
+        text: "Which anatomical landmark corresponds to the Iliac Crest?",
+        options: ["L2-L3", "L4-L5", "T10", "S1"],
+        correct: 1,
+        explanation: "L4-L5 interspace is at the level of the iliac crest."
+    },
+    {
+        id: 90,
+        text: "Post-myelogram care includes:",
+        options: ["Lay flat for 24 hours.", "Head elevated 30-45 degrees.", "Walk immediately.", "NPO for 24 hours."],
+        correct: 1,
+        explanation: "Head elevated prevents contrast from moving into the brain (seizures)."
+    },
+    {
+        id: 91,
+        text: "CT 'Scout' or 'Topogram' is used for:",
+        options: ["Diagnosis.", "Planning the scan range.", "High res imaging.", "Checking contrast."],
+        correct: 1,
+        explanation: "Low dose planning image."
+    },
+    {
+        id: 92,
+        text: "Molybdenum target is used in Mammography because:",
+        options: ["High heat capacity.", "Produces characteristic X-rays ideal for soft tissue.", "Cheaper.", "Higher energy."],
+        correct: 1,
+        explanation: "Produces low energy (17-20keV) X-rays for high contrast in soft tissue."
+    },
+    {
+        id: 93,
+        text: "If a patient is Hypovolemic (shock), their position should be:",
+        options: ["Trendelenburg (Feet up).", "Fowler's (Head up).", "Prone.", "Lateral."],
+        correct: 0,
+        explanation: "Trendelenburg helps blood flow to the brain/heart."
+    },
+    {
+        id: 94,
+        text: "DICOM stands for:",
+        options: ["Digital Imaging and Communications in Medicine.", "Direct Image Computer Mode.", "Digital Input Computer Output.", "Doctor Image Computer Method."],
+        correct: 0,
+        explanation: "Standard format for medical imaging."
+    },
+    {
+        id: 95,
+        text: "What is the 'ball catcher’s' view?",
+        options: ["Norgaard method (Both hands oblique).", "PA Hands.", "Lateral Hands.", "Wrist flexion."],
+        correct: 0,
+        explanation: "Used to detect early Rheumatoid Arthritis."
+    },
+    {
+        id: 96,
+        text: "Effect of decreasing kVp on image:",
+        options: ["High Contrast (Short scale).", "Low Contrast (Long scale).", "Darker image.", "No change."],
+        correct: 0,
+        explanation: "Low kVp = High Contrast (Black and White)."
+    },
+    {
+        id: 97,
+        text: "A patient with hearing aids comes for MRI. Action?",
+        options: ["Leave them in.", "Remove them.", "Cover with tape.", "Turn them off."],
+        correct: 1,
+        explanation: "Hearing aids contain metal/electronics and will be damaged or cause artifacts."
+    },
+    {
+        id: 98,
+        text: "Which vein is most commonly used for IV contrast injection?",
+        options: ["Antecubital fossa vein.", "Jugular vein.", "Femoral vein.", "Popliteal vein."],
+        correct: 0,
+        explanation: "Median cubital vein in the elbow is preferred."
+    },
+    {
+        id: 99,
+        text: "When imaging the Atlas and Axis (C1-C2), which view is used?",
+        options: ["Open Mouth (Odontoid) view.", "Lateral C-spine.", "Swimmer's.", "Oblique."],
+        correct: 0,
+        explanation: "Open mouth moves the mandible out of the way to see the Dens."
+    },
+    {
+        id: 100,
+        text: "Final check before pressing exposure button:",
+        options: ["Check patient positioning and ensure no motion.", "Check phone.", "Turn off lights.", "Close door."],
+        correct: 0,
+        explanation: "Verify the patient hasn't moved and is following breathing instructions."
+    }
+];
+
+
+    let userAnswers = new Array(questions.length).fill(null);
+    let isSubmitted = false;
+
+    window.onload = function() {
+        renderQuestions();
+        startTimer();
+    };
+
+    function renderQuestions() {
+        const container = document.getElementById('quiz-container');
+        container.innerHTML = '';
+
+        questions.forEach((q, index) => {
+            // Options HTML
+            let optionsHtml = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHtml += `
+                    <label class="option-label" id="lbl-${index}-${optIndex}">
+                        <input type="radio" name="q${index}" value="${optIndex}" onclick="selectAnswer(${index}, ${optIndex})" ${isSubmitted ? 'disabled' : ''}>
+                        <span>${opt}</span>
+                    </label>
+                `;
+            });
+
+            // Card HTML
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${index}`;
+            card.innerHTML = `
+                <div class="q-header">
+                    <span>Question ${index + 1}</span>
+                    <span id="status-${index}" class="status-badge"></span>
+                </div>
+                <div class="q-text">${q.text}</div>
+                <div class="options">${optionsHtml}</div>
+                <div class="explanation-box" id="exp-${index}">
+                    <strong>💡 Explanation:</strong><br> ${q.explanation}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function selectAnswer(qIndex, optIndex) {
+        if(isSubmitted) return;
+        userAnswers[qIndex] = optIndex;
+    }
+
+    function submitQuiz() {
+        if(isSubmitted) return;
+        
+        let score = 0;
+        let correct = 0;
+        let wrong = 0;
+        let na = 0;
+
+        const palette = document.getElementById('reviewPalette');
+        palette.innerHTML = '';
+        palette.style.display = 'flex';
+
+        questions.forEach((q, index) => {
+            const userChoice = userAnswers[index];
+            const card = document.getElementById(`q-card-${index}`);
+            const statusBadge = document.getElementById(`status-${index}`);
+            const expBox = document.getElementById(`exp-${index}`);
+            
+            // Palette Link
+            const pItem = document.createElement('a');
+            pItem.href = `#q-card-${index}`;
+            pItem.className = 'palette-item';
+            pItem.innerText = index + 1;
+
+            if (userChoice === null) {
+                // Not Attempted
+                na++;
+                statusBadge.innerText = "Not Attempted (0)";
+                statusBadge.classList.add('status-na');
+                pItem.classList.add('pal-na');
+            } else if (userChoice === q.correct) {
+                // Correct
+                score += 4;
+                correct++;
+                card.classList.add('card-correct');
+                statusBadge.innerText = "Correct (+4)";
+                statusBadge.classList.add('status-correct');
+                document.getElementById(`lbl-${index}-${userChoice}`).classList.add('opt-correct');
+                pItem.classList.add('pal-correct');
+            } else {
+                // Wrong
+                score -= 1;
+                wrong++;
+                card.classList.add('card-wrong');
+                statusBadge.innerText = "Incorrect (-1)";
+                statusBadge.classList.add('status-wrong');
+                document.getElementById(`lbl-${index}-${userChoice}`).classList.add('opt-wrong');
+                document.getElementById(`lbl-${index}-${q.correct}`).classList.add('opt-correct');
+                pItem.classList.add('pal-wrong');
+            }
+
+            palette.appendChild(pItem);
+            expBox.style.display = 'block';
+        });
+
+        isSubmitted = true;
+        
+        // Update Stats
+        document.getElementById('finalScore').innerText = score;
+        document.getElementById('correctCount').innerText = correct;
+        document.getElementById('wrongCount').innerText = wrong;
+        document.getElementById('naCount').innerText = na;
+        
+        // Toggle Buttons
+        document.getElementById('submitBtn').style.display = 'none';
+        document.getElementById('resetBtn').style.display = 'block';
+        
+        // Show Modal
+        document.getElementById('resultModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('resultModal').style.display = 'none';
+        window.scrollTo(0,0);
+    }
+
+    function resetQuiz() {
+        if(confirm("Start a fresh test?")) location.reload();
+    }
+
+    function startTimer() {
+        let duration = 90 * 60;
+        const display = document.getElementById('timer');
+        const timerInterval = setInterval(function () {
+            if(isSubmitted) { clearInterval(timerInterval); return; }
+            let m = parseInt(duration / 60, 10);
+            let s = parseInt(duration % 60, 10);
+            display.textContent = (m < 10 ? "0"+m : m) + ":" + (s < 10 ? "0"+s : s);
+            if (--duration < 0) {
+                clearInterval(timerInterval);
+                submitQuiz();
+            }
+        }, 1000);
+    }
+</script>
+
+</body>
+</html>
