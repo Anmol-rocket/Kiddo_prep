@@ -7,6 +7,28 @@ export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
 export const revalidate = 0
 
+/**
+ * Classify a file into a category based on its filename and source directory.
+ */
+function classifyFile(filename: string, group: string): string {
+  if (group === "materials") {
+    return "study_materials"
+  }
+
+  // CBT papers: filenames like CBT1.html, CBT22.html
+  if (/^CBT\d+/i.test(filename)) {
+    return "cbt"
+  }
+
+  // Mock papers: filenames like MOCK_PAPER1.html, MOCKPAPER8.html, MockPaper_6.html
+  if (/^MOCK[_\s]?PAPER/i.test(filename)) {
+    return "mock_papers"
+  }
+
+  // Everything else in the mock_papers directory is "other materials"
+  return "other_materials"
+}
+
 export async function GET() {
   try {
     const base = process.cwd()
@@ -15,7 +37,15 @@ export async function GET() {
       { name: "mock_papers", dir: path.join(base, "public", "mock_papers") },
     ]
 
-    const items: Array<{ name: string; group: string; url: string; ext: string; size: number; type: string }> = []
+    const items: Array<{
+      name: string
+      group: string
+      category: string
+      url: string
+      ext: string
+      size: number
+      type: string
+    }> = []
 
     for (const d of dirs) {
       if (!fs.existsSync(d.dir)) continue
@@ -27,7 +57,8 @@ export async function GET() {
         const ext = path.extname(f).toLowerCase()
         const url = `/${d.name}/${encodeURIComponent(f)}`
         const type = ext === ".pdf" ? "pdf" : ext === ".html" || ext === ".htm" ? "html" : "other"
-        items.push({ name: f, group: d.name, url, ext, size: stat.size, type })
+        const category = classifyFile(f, d.name)
+        items.push({ name: f, group: d.name, category, url, ext, size: stat.size, type })
       }
     }
 
