@@ -88,27 +88,7 @@ Installation note: after updating icons or manifest, uninstall any previously in
 
 ---
 
-## Development notes & troubleshooting
 
-- Lockfiles: this repo uses `pnpm` and contains `pnpm-lock.yaml`. Netlify/CI may detect multiple lockfiles in the workspace — remove extraneous lockfiles (e.g., `package-lock.json`) or set `outputFileTracingRoot` in `next.config.mjs` to silence warnings.
-
-- Build on Netlify / CI:
-  - Set the build command to `pnpm run build` and the publish directory to `.next` (Netlify plugin for Next.js is used).
-  - If a production build fails with a webpack parse error like:
-
-```
-Module parse failed: The keyword 'interface' is reserved (..)
-```
-
-  it's usually caused by a file being treated as plain JavaScript instead of TypeScript (e.g. a `.tsx` file missing its extension in the repository or exported via an index file without proper extension). Quick checks:
-
-  - Ensure files under `components/dashboard/` use the `.tsx` extension (e.g. `progress-ring.tsx`).
-  - Ensure barrel/index files export using the correct paths. If your CI complains about `./components/dashboard/progress-ring` (no extension), try using explicit exports in `components/dashboard/index.ts` (e.g. `export { ProgressRing } from './progress-ring.tsx'`).
-
-- Favicon generation script issues:
-  - `scripts/generate-favicons.js` depends on `jimp` and `@jimp/plugin-print`. Some environments or package versions can throw `TypeError` in Jimp bitmap font parsing. If you encounter this, either run the script locally in Node.js 18+ and fix Jimp versions, or use an external tool to generate PNG/ICO variants.
-
----
 
 ## Component highlights
 
@@ -121,13 +101,7 @@ When inspecting or changing dashboard components, prefer small, isolated changes
 
 ---
 
-## Deployment tips (Netlify)
 
-- Use Node 18+ and `pnpm` in your build environment.
-- In Netlify UI, set build command: `pnpm run build` and publish directory: `.next`.
-- If Netlify shows warnings about workspace root or multiple lockfiles, remove unrelated lockfiles or configure `outputFileTracingRoot` in `next.config.mjs`.
-
----
 
 ## Contributing
 
@@ -144,11 +118,5 @@ This repository currently does not include a license file. Add `LICENSE` if you 
 
 ---
 
-Built with care for exam preparation. If you want, I can also:
-
-- add a CONTRIBUTING.md with coding standards
-- add a small deploy checklist for Netlify
-- add CI scripts to build and validate the manifest/favicons
-
-If you want any of the above, tell me which and I will add it.
+Built with care for exam preparation. 
 
