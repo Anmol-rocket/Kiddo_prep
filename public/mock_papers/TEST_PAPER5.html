@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIIMS CRE Radiographer - Test Paper 5</title>
+    <style>
+        :root {
+            --header-bg: #3f51b5;
+            --header-text: #fff;
+            --panel-bg: #f5f5f5;
+            --pallet-answered: #4caf50;
+            --pallet-not-answered: #f44336;
+            --pallet-review: #9c27b0;
+            --pallet-not-visited: #e0e0e0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #fff; }
+
+        /* --- Header --- */
+        header {
+            background: var(--header-bg); color: var(--header-text);
+            padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+            height: 60px; flex-shrink: 0;
+        }
+        .timer { font-size: 1.2rem; font-weight: bold; background: #fff; color: #d32f2f; padding: 5px 15px; border-radius: 4px; border: 2px solid #d32f2f; }
+
+        /* --- Main Layout --- */
+        .main-container { display: flex; flex: 1; overflow: hidden; }
+        
+        .question-area { flex: 1; display: flex; flex-direction: column; padding: 20px; overflow-y: auto; }
+        .q-header { display: flex; justify-content: space-between; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.5; }
+        
+        .options-container { display: flex; flex-direction: column; gap: 10px; }
+        .option-label { 
+            display: flex; align-items: center; padding: 10px; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; transition: 0.2s; 
+        }
+        .option-label:hover { background: #f0f8ff; }
+        .option-label input { margin-right: 15px; transform: scale(1.2); }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px; background: var(--panel-bg); border-left: 1px solid #ccc;
+            display: flex; flex-direction: column; flex-shrink: 0;
+        }
+        .user-info { padding: 10px; background: #e8eaf6; border-bottom: 1px solid #ccc; }
+        
+        .palette-legend { padding: 10px; font-size: 0.8rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: #fff; }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+        .question-grid { 
+            padding: 10px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; 
+            overflow-y: auto; flex: 1; align-content: start;
+        }
+        .q-btn {
+            height: 35px; width: 35px; border: 1px solid #ccc; background: #fff; 
+            border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .q-btn.answered { background: var(--pallet-answered); color: white; border-color: var(--pallet-answered); }
+        .q-btn.not-answered { background: var(--pallet-not-answered); color: white; border-color: var(--pallet-not-answered); }
+        .q-btn.review { background: var(--pallet-review); color: white; border-radius: 50%; }
+        .q-btn.current { border: 2px solid blue; box-shadow: 0 0 5px blue; }
+        .q-btn.locked { opacity: 0.4; cursor: not-allowed; background: #444 !important; color: #888; border: 1px solid #000; }
+
+        /* Footer */
+        .footer-controls {
+            height: 60px; background: #fff; border-top: 1px solid #ccc;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+        }
+        .btn { padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+        .btn-primary { background: #2196f3; color: white; }
+        .btn-success { background: #4caf50; color: white; }
+        .btn-warn { background: #ff9800; color: white; }
+        .btn-danger { background: #f44336; color: white; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* Mobile */
+        .mobile-toggle { display: none; background: none; border: none; color: white; font-size: 1.5rem; }
+        @media (max-width: 768px) {
+            .mobile-toggle { display: block; }
+            .sidebar { 
+                position: absolute; right: 0; top: 60px; bottom: 60px; z-index: 100;
+                transform: translateX(100%); transition: transform 0.3s; width: 85%;
+            }
+            .sidebar.active { transform: translateX(0); }
+            .question-grid { grid-template-columns: repeat(6, 1fr); }
+            .footer-controls { flex-wrap: wrap; gap: 5px; height: auto; padding: 10px; }
+            .btn { flex: 1; padding: 8px; font-size: 0.8rem; }
+        }
+
+        /* Overlay */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .hidden { display: none !important; }
+        
+        .review-panel { display: none; padding: 20px; height: 100%; overflow-y: auto; background:#f9f9f9;}
+        .review-item { margin-bottom: 20px; border: 1px solid #ddd; padding: 15px; border-radius: 5px; background:white; }
+        .explanation { background: #fff3cd; padding: 10px; margin-top: 10px; font-size: 0.9rem; border-left: 4px solid #ffc107; }
+
+    </style>
+</head>
+<body>
+
+    <div id="landingPage" class="overlay">
+        <h1>AIIMS CRE - Test Paper 5</h1>
+        <div style="width: 80%; max-width: 600px; text-align: left; margin: 20px 0;">
+            <h3>Exam Rules:</h3>
+            <ul>
+                <li><strong>Questions:</strong> 100 (5 Sections of 20 questions each).</li>
+                <li><strong>Timing:</strong> 18 Minutes per section (Strictly Dedicated).</li>
+                <li><strong>Total Time:</strong> 90 Minutes.</li>
+                <li><strong>Locking:</strong> Once 18 mins are up, or if you manually proceed to the next section, you <u>cannot</u> return to the previous section.</li>
+                <li><strong>Marking:</strong> +4 Correct, -1 Incorrect.</li>
+            </ul>
+        </div>
+        <button class="btn btn-success" style="font-size: 1.2rem;" onclick="startExam()">START EXAM</button>
+    </div>
+
+    <header id="examHeader" class="hidden">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <h3>AIIMS Radiographer</h3>
+            <span style="font-size:0.8rem; background:#eee; padding:2px 6px; border-radius:4px; color:#333;" id="sectionLabel">Section 1</span>
+        </div>
+        <div class="timer" id="timerDisplay">18:00</div>
+        <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+    </header>
+
+    <div class="main-container hidden" id="examBody">
+        <div class="question-area">
+            <div class="q-header">
+                <span id="qNumDisplay">Question No. 1</span>
+                <span style="color: #666;">Marks: +4, -1</span>
+            </div>
+            <div id="questionText" class="q-text">Loading...</div>
+            <div id="optionsBox" class="options-container"></div>
+        </div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="user-info">
+                <strong>Candidate Name</strong><br><small>Roll No: 123456</small>
+            </div>
+            <div class="palette-legend">
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-answered)"></span> Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-not-answered)"></span> Not Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-review)"></span> Review</div>
+                <div class="legend-item"><span class="dot" style="background:#444"></span> Locked</div>
+            </div>
+            <div class="question-grid" id="questionPalette"></div>
+            <div style="padding:10px; margin-top:auto;">
+                <button class="btn btn-primary" style="width:100%" onclick="submitExam()">FINISH EXAM</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-controls hidden" id="examFooter">
+        <div style="display:flex; gap:10px;">
+            <button class="btn btn-danger" onclick="clearResponse()">Clear</button>
+            <button class="btn btn-warn" onclick="markForReview()">Review</button>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <button class="btn" onclick="prevQuestion()" id="btnPrev">Previous</button>
+            <button class="btn btn-success" onclick="saveAndNext()">Save & Next</button>
+        </div>
+    </div>
+
+    <div id="resultPage" class="overlay hidden" style="display:block; overflow-y:auto; justify-content:start; padding-top:40px;">
+        <h2 style="text-align:center;">Exam Summary</h2>
+        <div id="scoreCard" style="margin: 20px auto; width:90%; max-width:600px; padding: 20px; border: 1px solid #ccc; text-align: center; background:#fff;"></div>
+        <div style="display:flex; justify-content:center; gap:20px; margin-bottom:20px;">
+            <button class="btn btn-primary" onclick="showDetailedReview()">Review Solutions</button>
+            <button class="btn btn-danger" onclick="location.reload()">Exit</button>
+        </div>
+        <div id="detailedReview" class="review-panel" style="width: 90%; max-width: 800px; margin:0 auto;"></div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const TOTAL_QUESTIONS = 100;
+        const SECTION_SIZE = 20; // 20 questions per section
+        const SECTION_TIME_LIMIT = 18 * 60; // 18 minutes in seconds
+        
+        let questions = [];
+
+function generateQuestions() {
+        const createQ = (id, type, text, opts, ans, exp) => ({ id, type, text, opts, ans, exp });
+        questions = []; // Reset array
+
+        // --- SECTION A: NON-CORE (1-20) ---
+        // Topics: Syllogism, Venn Diagram, Indian Economy/Banking, One Word Substitution, Cyber Security
+
+        const nonCoreData = [
+            // Reasoning - Syllogism & Venn Diagram (Q1-5)
+            ["Statements: Some dogs are cats. All cats are birds. Conclusions: I. Some dogs are birds. II. All birds are dogs.", ["Only I follows", "Only II follows", "Both follow", "Neither follows"], 0, "Since some dogs are cats and all cats are birds, some dogs are definitely birds (I follows). But we cannot conclude all birds are dogs (II does not follow)."],
+            ["Statements: No pen is a chair. Some chairs are tables. Conclusions: I. Some tables are not pens. II. No table is a pen.", ["Only I follows", "Only II follows", "Either I or II follows", "Both follow"], 0, "From 'No pen is a chair' and 'Some chairs are tables', we can conclude some tables are not pens (I follows). But we cannot definitively say no table is a pen (II does not follow)."],
+            ["In a Venn diagram, if circle A (Teachers) is entirely inside circle B (Graduates), which statement is TRUE?", ["All teachers are graduates", "All graduates are teachers", "No teacher is a graduate", "Some graduates are not teachers is impossible"], 0, "When A is entirely inside B, every element of A is also in B, meaning all teachers are graduates."],
+            ["Statements: All roses are flowers. All flowers are beautiful. Conclusions: I. All roses are beautiful. II. Some beautiful things are roses.", ["Only I follows", "Only II follows", "Both I and II follow", "Neither follows"], 2, "All roses are flowers and all flowers are beautiful, so all roses are beautiful (I). Since some beautiful things are roses, II also follows. Both follow."],
+            ["Which Venn diagram best represents the relationship: Doctors, Females, Mothers?", ["All three circles partially overlapping", "Mothers inside Females, Doctors overlapping both", "All separate circles", "Doctors inside Mothers"], 1, "All mothers are females, so Mothers circle is inside Females circle. Some doctors can be female and some can be mothers, so Doctors circle overlaps with both."],
+
+            // Indian Economy & Banking (Q6-10)
+            ["The Reserve Bank of India (RBI) was established in which year?", ["1935", "1947", "1950", "1929"], 0, "The RBI was established on April 1, 1935 under the Reserve Bank of India Act, 1934."],
+            ["What is the full form of 'NEFT' in Indian banking?", ["National Electronic Funds Transfer", "New Electronic Financial Transaction", "National Emergency Fund Transfer", "Net Electronic Fiscal Transfer"], 0, "NEFT stands for National Electronic Funds Transfer, an electronic payment system maintained by RBI."],
+            ["The 'Fiscal Deficit' of the government refers to:", ["Total expenditure minus total revenue excluding borrowings", "Total income minus total expenditure", "Revenue deficit plus capital deficit", "GDP minus total expenditure"], 0, "Fiscal deficit = Total expenditure − Total receipts excluding borrowings. It shows how much the government needs to borrow."],
+            ["Which body regulates the securities market in India?", ["SEBI", "RBI", "NABARD", "SIDBI"], 0, "Securities and Exchange Board of India (SEBI) regulates the securities and capital markets in India."],
+            ["'Repo Rate' is the rate at which:", ["RBI lends short-term money to commercial banks", "Commercial banks lend to customers", "Government borrows from RBI", "Banks lend to each other"], 0, "Repo rate is the rate at which the Reserve Bank of India lends money to commercial banks for short-term needs against government securities."],
+
+            // English - One Word Substitution (Q11-15)
+            ["One who can speak two languages fluently:", ["Bilingual", "Linguist", "Polyglot", "Interpreter"], 0, "Bilingual refers to a person who speaks two languages fluently. A polyglot speaks many languages."],
+            ["A person who looks at the bright side of things:", ["Optimist", "Pessimist", "Egoist", "Altruist"], 0, "An optimist is someone who tends to be hopeful and sees the positive side of situations."],
+            ["Killing of one's own brother:", ["Fratricide", "Homicide", "Regicide", "Genocide"], 0, "Fratricide specifically means the killing of one's own brother. Regicide is killing a king, genocide is killing a race."],
+            ["A government run by a dictator:", ["Autocracy", "Democracy", "Theocracy", "Oligarchy"], 0, "Autocracy is a system of government where one person has absolute power, i.e., a dictator."],
+            ["A speech delivered without prior preparation:", ["Extempore", "Epilogue", "Soliloquy", "Monologue"], 0, "Extempore means spoken or done without preparation, an impromptu speech."],
+
+            // Cyber Security Basics (Q16-20)
+            ["What does 'Phishing' mean in cyber security?", ["Fraudulent attempt to obtain sensitive information by pretending to be trustworthy", "Hacking into government servers", "Installing antivirus software", "Encrypting user data for protection"], 0, "Phishing is a type of social engineering attack where attackers send fraudulent messages designed to trick a person into revealing sensitive information."],
+            ["A 'Firewall' in computer security is used to:", ["Monitor and control incoming and outgoing network traffic", "Store backup data", "Speed up internet connection", "Compress large files"], 0, "A firewall is a network security device that monitors and filters incoming and outgoing network traffic based on security rules."],
+            ["What does 'Malware' stand for?", ["Malicious Software", "Manual Software", "Managed Software", "Maintenance Software"], 0, "Malware is short for malicious software — any software intentionally designed to cause damage to a computer, server, or network."],
+            ["'Two-Factor Authentication' (2FA) adds security by requiring:", ["Something you know and something you have", "Two passwords", "Two usernames", "Two email addresses"], 0, "2FA requires two different types of identification: typically something you know (password) and something you have (OTP on phone, hardware token)."],
+            ["Which of the following is an example of 'Ransomware'?", ["WannaCry", "Google Chrome", "Microsoft Word", "Linux"], 0, "WannaCry was a major ransomware attack in 2017 that encrypted user files and demanded Bitcoin payment for decryption."]
+        ];
+        nonCoreData.forEach((d, i) => questions.push(createQ(i + 1, "Non-Core", d[0], d[1], d[2], d[3])));
+
+
+        // --- SECTION B & C: CORE (21-100) ---
+        
+        // Physics: Radiation quality vs quantity, beam hardening, photon attenuation, mass attenuation coefficient, scatter-to-primary ratio (Q21-30)
+        const physicsData = [
+            ["Radiation 'quality' refers to:", ["Penetrating ability of the X-ray beam", "Number of photons produced", "Exposure time", "Filament current"], 0, "Quality refers to the penetrating power (energy) of the beam, primarily controlled by kVp. Quantity refers to the number of photons."],
+            ["Which factor primarily controls X-ray beam quantity?", ["mAs (milliampere-seconds)", "kVp", "Filtration", "Focal spot size"], 0, "mAs controls the number of electrons flowing from cathode to anode, directly determining the number of X-ray photons (quantity) produced."],
+            ["Beam hardening occurs because:", ["Lower energy photons are preferentially absorbed by filtration or the patient", "Higher energy photons are absorbed first", "The X-ray tube overheats", "The anode rotates too fast"], 0, "As the beam passes through material, softer (lower energy) photons are absorbed more readily, leaving a harder (higher average energy) beam."],
+            ["The 'Half Value Layer' (HVL) is a measure of:", ["Beam quality (penetrating ability)", "Beam quantity", "Patient dose", "Image contrast"], 0, "HVL is the thickness of a specified material that reduces the beam intensity to half its original value, and is an indicator of beam quality."],
+            ["The 'Mass Attenuation Coefficient' (μ/ρ) is independent of:", ["Physical state (density) of the material", "Atomic number", "Photon energy", "Electron density"], 0, "Mass attenuation coefficient divides the linear attenuation coefficient by density, making it independent of the physical state or density of the absorber."],
+            ["In the diagnostic energy range (30-150 keV), which interaction predominates in soft tissue at higher kVp?", ["Compton scattering", "Photoelectric absorption", "Pair production", "Photodisintegration"], 0, "At higher kVp in soft tissue, Compton scattering predominates because photoelectric effect decreases rapidly with increasing energy."],
+            ["The 'Scatter-to-Primary Ratio' (SPR) increases with:", ["Increasing field size and patient thickness", "Decreasing field size", "Using a grid", "Decreasing kVp only"], 0, "SPR increases with larger field sizes (more tissue irradiated) and thicker body parts (more scatter production opportunities)."],
+            ["Increasing kVp by 15% has what effect on X-ray beam intensity?", ["Approximately doubles the beam intensity", "Halves the beam intensity", "No change", "Triples the beam intensity"], 1, "The 15% rule states: increasing kVp by 15% approximately doubles the exposure (intensity). This is used for the kVp-mAs relationship. Note: the question asks about intensity increasing, the correct answer is that it doubles."],
+            ["The 'Linear Attenuation Coefficient' (μ) depends on:", ["Photon energy, atomic number, and density of the material", "Only photon energy", "Only atomic number", "Only density"], 0, "The linear attenuation coefficient depends on the energy of the photon beam, the atomic number of the absorber, and the density of the absorber material."],
+            ["What is the effect of adding filtration to the X-ray beam?", ["Increases average beam energy and reduces patient skin dose", "Decreases beam energy", "Increases the number of photons", "Has no effect on beam quality"], 0, "Added filtration removes low-energy photons that would only contribute to patient skin dose without reaching the image receptor, thus increasing average energy (hardening the beam) and reducing skin dose."]
+        ];
+        physicsData.forEach((d, i) => questions.push(createQ(21 + i, "Physics", d[0], d[1], d[2], d[3])));
+
+        // Positioning: Nuclear medicine basics, interventional radiology positioning, portable/mobile radiography, neonatal imaging, geriatric considerations (Q31-50)
+        const positioningData = [
+            ["In nuclear medicine, the most commonly used radionuclide is:", ["Technetium-99m (Tc-99m)", "Iodine-131", "Thallium-201", "Gallium-67"], 0, "Tc-99m is the most widely used radionuclide due to its ideal 140 keV gamma energy, 6-hour half-life, and availability from Mo-99 generators."],
+            ["A 'gamma camera' in nuclear medicine detects:", ["Gamma rays emitted from the patient's body", "X-rays transmitted through the patient", "Ultrasound echoes", "Magnetic resonance signals"], 0, "The gamma camera (Anger camera) detects gamma photons emitted by radiopharmaceuticals administered to the patient."],
+            ["In interventional radiology, 'DSA' stands for:", ["Digital Subtraction Angiography", "Direct Signal Amplification", "Dual Source Acquisition", "Digital Scan Analysis"], 0, "DSA is Digital Subtraction Angiography, where a pre-contrast mask image is subtracted from post-contrast images to visualize vessels clearly."],
+            ["During fluoroscopy-guided interventional procedures, the radiographer should ensure:", ["Maximum distance from the X-ray tube and use of lead protection", "Standing as close to the patient as possible", "Removing all lead shielding for better mobility", "Increasing the fluoroscopy time for better images"], 0, "ALARA principles apply — maximize distance from the radiation source, use appropriate lead shielding (apron, thyroid shield, glasses), and minimize fluoroscopy time."],
+            ["For a portable (mobile) chest radiograph, the standard SID (Source-to-Image Distance) used is:", ["40 inches (100 cm)", "72 inches (180 cm)", "30 inches (75 cm)", "60 inches (150 cm)"], 0, "For portable/mobile chest radiographs, a 40-inch (100 cm) SID is standard, compared to 72 inches for upright PA chest in the department."],
+            ["A key challenge in portable radiography compared to fixed unit imaging is:", ["Higher scatter radiation and magnification due to shorter SID", "Better image quality", "Lower patient dose", "Faster processing time"], 0, "Portable radiography uses shorter SID, leading to more magnification and geometric unsharpness. Scatter control is also more challenging without a Bucky grid."],
+            ["In neonatal chest radiography, the exposure factors are typically:", ["Low kVp (60-65) and very low mAs (1-2 mAs)", "High kVp (120) and high mAs (50 mAs)", "Medium kVp (80) and medium mAs (20 mAs)", "Very high kVp (140) and minimal mAs"], 0, "Neonates require very low exposure factors due to their small body size. Typical values are 60-65 kVp and 1-2 mAs with short exposure times."],
+            ["When imaging a neonate in an incubator, the radiographer should:", ["Not remove the baby from the incubator; image through the incubator wall", "Always remove the baby for better positioning", "Use adult exposure techniques", "Avoid using any shielding"], 0, "Neonates should not be removed from incubators. The image receptor is placed under the mattress and exposure is made through the incubator wall, with appropriate technique adjustment."],
+            ["In geriatric radiography, a common consideration is:", ["Reduced bone density requiring lower contrast techniques", "Patients can always hold their breath easily", "Immobilization is never needed", "Higher doses should always be used"], 0, "Elderly patients often have osteoporosis (reduced bone density), may have difficulty holding their breath, and may need immobilization aids and gentler handling."],
+            ["For geriatric patients with kyphosis, the PA chest radiograph may need to be modified by:", ["Performing AP projection if the patient cannot stand erect for PA", "Using the same positioning as for young adults", "Increasing SID to 120 inches", "Removing the grid entirely"], 0, "Severe kyphosis may prevent proper PA positioning. An AP projection (seated or supine) may be necessary, with appropriate CR angulation to compensate for the curved spine."],
+            ["In PET (Positron Emission Tomography), the most common radiotracer used is:", ["F-18 FDG (Fluorodeoxyglucose)", "Tc-99m MDP", "I-131 Sodium Iodide", "Ga-67 Citrate"], 0, "F-18 FDG is a glucose analog that accumulates in metabolically active cells, making it the most widely used PET radiotracer, especially for oncology."],
+            ["The principle of PET imaging is based on detection of:", ["Annihilation photons (511 keV pair traveling 180° apart)", "Single gamma photons", "Reflected ultrasound waves", "Radiofrequency signals"], 0, "When a positron meets an electron, annihilation occurs producing two 511 keV photons traveling in opposite directions (180° apart). PET detectors identify these coincidence events."],
+            ["During angiographic procedures, the C-arm is commonly positioned with the image intensifier:", ["As close to the patient as possible to reduce magnification and dose", "As far from the patient as possible", "At a fixed distance regardless of patient size", "Below the table only"], 0, "The image intensifier (or flat panel detector) should be as close to the patient as possible to reduce geometric magnification, improve image quality, and reduce patient dose."],
+            ["In ERCP (Endoscopic Retrograde Cholangiopancreatography), the patient is typically positioned:", ["Prone or left lateral decubitus on the fluoroscopy table", "Supine with arms at sides", "Standing upright", "Right lateral decubitus"], 0, "ERCP is performed with the patient prone or in left lateral decubitus position to allow endoscopic access to the duodenum and the ampulla of Vater."],
+            ["A 'babygram' refers to:", ["A single AP radiograph of the entire neonate", "An ultrasound of the baby", "A CT scan of the infant", "An MRI of the newborn"], 0, "A babygram is a single AP radiograph capturing the entire body of a neonate, used to assess tubes, lines, and overall anatomy in critically ill newborns."],
+            ["When performing mobile radiography in the ICU, the radiographer should:", ["Announce the exposure and ensure all non-essential personnel are at a safe distance", "Not inform anyone before making the exposure", "Use maximum technique to ensure good images", "Never use a grid"], 0, "The radiographer must announce the exposure, clear the area of non-essential personnel, and use appropriate shielding to protect staff and other patients."],
+            ["In nuclear medicine bone scan, the radiopharmaceutical used is:", ["Tc-99m MDP (Methylene Diphosphonate)", "Tc-99m DTPA", "Tc-99m Sestamibi", "I-123 MIBG"], 0, "Tc-99m MDP is the standard bone scanning agent. It accumulates in areas of increased osteoblastic activity, useful for detecting metastases, fractures, and infections."],
+            ["The 'pinhole collimator' in nuclear medicine is used for:", ["Magnified imaging of small organs like thyroid", "Whole body imaging", "Cardiac gating", "Lung perfusion studies"], 0, "The pinhole collimator provides magnified images of small structures and is commonly used for thyroid imaging and small joint imaging."],
+            ["In portable abdominal radiography for a patient who cannot sit upright, to detect free air, the preferred projection is:", ["Left lateral decubitus (right side up)", "Supine AP", "Right lateral decubitus", "Prone"], 0, "Left lateral decubitus (with right side up) allows free intraperitoneal air to rise and be visible against the liver, which provides good contrast for detection."],
+            ["For geriatric patients with hip fractures, the initial radiographic examination typically includes:", ["AP pelvis and cross-table (horizontal beam) lateral of the affected hip", "Only an AP pelvis view", "Only a lateral view", "CT scan as first line"], 0, "AP pelvis shows both hips for comparison, and a cross-table lateral avoids moving the injured leg. This is standard trauma hip protocol for elderly patients."]
+        ];
+        positioningData.forEach((d, i) => questions.push(createQ(31 + i, "Positioning", d[0], d[1], d[2], d[3])));
+
+        // CT: Photon counting CT, spectral CT, AI in CT, low-dose CT screening, CT perfusion (Q51-65)
+        const ctData = [
+            ["Photon-counting CT detectors differ from conventional energy-integrating detectors by:", ["Counting individual photons and measuring their energy", "Measuring total energy deposited without distinguishing photons", "Using scintillator crystals only", "Requiring higher radiation dose"], 0, "Photon-counting detectors count each photon individually and assign it to energy bins, unlike conventional detectors that integrate all photon energies together."],
+            ["A major advantage of photon-counting CT is:", ["Improved spatial resolution and reduced electronic noise", "Lower cost than conventional CT", "Faster rotation speed only", "Inability to do multi-energy imaging"], 0, "Photon-counting CT offers higher spatial resolution, reduced electronic noise (no dark current), and intrinsic spectral/multi-energy imaging capability."],
+            ["In spectral (dual-energy) CT, two different energy datasets are acquired to:", ["Differentiate materials based on their energy-dependent attenuation", "Simply increase image noise", "Reduce spatial resolution", "Eliminate the need for contrast agents entirely"], 0, "Spectral CT acquires data at two or more energy levels, exploiting the energy-dependent attenuation properties of different materials for tissue characterization."],
+            ["Virtual non-contrast (VNC) images in dual-energy CT are generated by:", ["Mathematically removing iodine from contrast-enhanced images", "Performing a separate non-contrast scan", "Increasing the window width", "Reducing the mAs to zero"], 0, "VNC images are created using material decomposition algorithms that subtract iodine contribution from contrast-enhanced dual-energy data, simulating a non-contrast scan."],
+            ["In dual-energy CT, iodine maps are useful for:", ["Assessing tissue perfusion and differentiating enhancing from non-enhancing lesions", "Measuring bone density only", "Removing motion artifacts", "Increasing image noise"], 0, "Iodine maps quantify iodine distribution in tissues, helping assess perfusion, detect subtle enhancement in lesions, and characterize incidental findings."],
+            ["AI (Artificial Intelligence) in CT is currently being used for:", ["Dose reduction through image denoising and automated lesion detection", "Replacing radiologists entirely", "Only research purposes with no clinical use", "Hardware maintenance only"], 0, "AI algorithms are used clinically for iterative/deep learning reconstruction (reducing dose while maintaining quality), automated measurements, and computer-aided detection."],
+            ["Deep learning reconstruction (DLR) in CT aims to:", ["Reduce image noise while preserving spatial resolution at lower doses", "Increase radiation dose for better images", "Replace filtered back projection completely", "Only work on cardiac CT"], 0, "DLR uses trained neural networks to remove noise from images, allowing significant dose reduction while maintaining or improving image quality compared to traditional reconstruction."],
+            ["Low-dose CT (LDCT) screening for lung cancer is recommended by USPSTF for:", ["Adults aged 50-80 with a 20 pack-year smoking history", "All adults over age 30", "Only symptomatic patients", "Children with family history of cancer"], 0, "USPSTF recommends annual LDCT screening for adults 50-80 years old with at least 20 pack-year smoking history who currently smoke or have quit within the past 15 years."],
+            ["The typical radiation dose for a low-dose CT chest screening is approximately:", ["1-2 mSv", "10-15 mSv", "20-25 mSv", "0.01 mSv"], 0, "LDCT screening protocols use approximately 1-2 mSv, which is significantly lower than a standard diagnostic chest CT (approximately 7-8 mSv)."],
+            ["CT perfusion imaging measures:", ["Blood flow characteristics through tissue using dynamic contrast-enhanced scanning", "Bone mineral density", "Lung volumes", "Disc herniation"], 0, "CT perfusion involves rapid sequential scanning after contrast injection to measure hemodynamic parameters like cerebral blood flow (CBF), cerebral blood volume (CBV), and mean transit time (MTT)."],
+            ["In CT perfusion for acute stroke, the 'penumbra' represents:", ["Ischemic but potentially salvageable brain tissue", "Infarcted core tissue", "Normal brain tissue", "Hemorrhagic tissue"], 0, "The penumbra is tissue that is ischemic but not yet infarcted — it has reduced blood flow but may be saved with timely revascularization (thrombectomy or thrombolysis)."],
+            ["The 'Lung-RADS' classification system is used for:", ["Standardized reporting of lung cancer screening CT findings", "Reporting liver lesions on MRI", "Classifying breast density", "Staging colon cancer"], 0, "Lung-RADS (Lung Imaging Reporting and Data System) was developed by the ACR to standardize reporting and management of lung cancer screening CT findings."],
+            ["In spectral CT, the 'Z-effective' (effective atomic number) map helps in:", ["Material characterization by identifying the effective atomic number of tissues", "Measuring slice thickness", "Adjusting tube current", "Calibrating the detector"], 0, "Z-effective maps display the effective atomic number of each voxel, aiding in differentiating materials like calcium, uric acid, and iodine based on their atomic composition."],
+            ["A limitation of CT perfusion imaging is:", ["High radiation dose due to repeated scanning of the same area", "Inability to detect any blood flow changes", "No need for contrast injection", "It can only image the heart"], 0, "CT perfusion requires multiple repeated scans of the same region during contrast passage, resulting in relatively high radiation doses to that area."],
+            ["Automated tube current modulation (ATCM) in CT:", ["Adjusts mA based on patient size and attenuation to optimize dose", "Keeps mA constant regardless of patient size", "Only works on pediatric patients", "Increases dose to all patients equally"], 0, "ATCM automatically adjusts the tube current (mA) based on the patient's size and tissue attenuation in real-time, reducing dose in thinner regions while maintaining image quality in thicker regions."]
+        ];
+        ctData.forEach((d, i) => questions.push(createQ(51 + i, "CT", d[0], d[1], d[2], d[3])));
+
+        // MRI: Ultra-high field MRI, compressed sensing, MR fingerprinting, chemical shift imaging, Dixon technique (Q66-75)
+        const mriData = [
+            ["Ultra-high field MRI (7T and above) offers the primary advantage of:", ["Higher signal-to-noise ratio (SNR) and improved spatial resolution", "Lower cost than 1.5T systems", "No SAR concerns", "Wider bore for claustrophobic patients"], 0, "Higher magnetic field strength provides proportionally higher SNR, enabling finer spatial resolution for detailed anatomical and functional imaging."],
+            ["A significant challenge of ultra-high field (7T) MRI is:", ["Increased B1 field inhomogeneity and higher SAR", "Lower SNR than 1.5T", "Inability to image the brain", "No susceptibility artifacts"], 0, "At 7T, the RF wavelength becomes comparable to body dimensions, causing B1 inhomogeneity (non-uniform flip angles). SAR also increases with field strength squared."],
+            ["Compressed sensing in MRI allows:", ["Faster acquisition by undersampling k-space and using mathematical reconstruction", "Slower but higher quality scans", "Only cardiac imaging", "Elimination of all artifacts"], 0, "Compressed sensing exploits the sparsity of MR images to reconstruct high-quality images from significantly undersampled k-space data, enabling faster scan times."],
+            ["MR Fingerprinting (MRF) is a technique that:", ["Simultaneously quantifies multiple tissue properties (T1, T2, proton density) in a single acquisition", "Only measures T1 relaxation", "Requires contrast injection always", "Is limited to musculoskeletal imaging"], 0, "MRF uses a pseudo-random acquisition scheme and pattern matching to a dictionary of simulated signal evolutions to simultaneously quantify T1, T2, and proton density."],
+            ["Chemical shift artifact occurs at:", ["Fat-water interfaces along the frequency-encoding direction", "Air-bone interfaces", "Only in the phase-encoding direction", "Randomly throughout the image"], 0, "Chemical shift artifact of the first kind occurs at fat-water boundaries along the frequency-encoding direction due to the ~3.5 ppm difference in resonant frequency between fat and water protons."],
+            ["The Dixon technique in MRI is used for:", ["Robust fat-water separation by acquiring in-phase and opposed-phase images", "Only measuring T2* decay", "Cardiac gating", "Diffusion-weighted imaging"], 0, "The Dixon technique acquires images at different echo times when fat and water signals are in-phase and opposed-phase, enabling reliable separation and suppression of fat or water signal."],
+            ["In a 2-point Dixon technique, the two echo times are chosen when fat and water are:", ["In-phase and opposed-phase (out-of-phase)", "Both in-phase", "Both opposed-phase", "At random times"], 0, "The 2-point Dixon acquires one echo when fat and water signals add (in-phase) and one when they subtract (opposed-phase), allowing mathematical separation."],
+            ["At 1.5T, fat and water protons are first opposed-phase at an echo time of approximately:", ["2.3 ms", "4.6 ms", "6.9 ms", "1.1 ms"], 0, "At 1.5T, the chemical shift between fat and water is ~220 Hz. The first opposed-phase occurs at TE ≈ 1/(2 × 220) ≈ 2.3 ms, and first in-phase at ~4.6 ms."],
+            ["Compressed sensing requires the MR image to have the property of:", ["Sparsity in some transform domain", "Maximum noise", "No signal variation", "Only low spatial frequencies"], 0, "Compressed sensing theory requires that the image is sparse (or compressible) in some transform domain (e.g., wavelet), so it can be accurately reconstructed from fewer samples."],
+            ["Chemical shift imaging (CSI) / MR spectroscopic imaging provides information about:", ["Metabolite concentrations in tissues", "Blood flow velocity only", "Bone density", "Lung ventilation only"], 0, "CSI maps the spatial distribution of metabolites (such as NAA, choline, creatine, lactate) in tissues, useful in brain tumor grading, prostate cancer detection, and metabolic disorders."]
+        ];
+        mriData.forEach((d, i) => questions.push(createQ(66 + i, "MRI", d[0], d[1], d[2], d[3])));
+
+        // Ultrasound: Shear wave elastography, point-of-care US, artifacts in Doppler (Q76-80)
+        const usData = [
+            ["Shear Wave Elastography (SWE) measures:", ["Tissue stiffness by tracking the speed of shear waves through tissue", "Blood flow velocity", "Sound wave frequency only", "Bone density"], 0, "SWE generates shear waves using acoustic radiation force and measures their propagation speed. Stiffer tissues transmit shear waves faster, allowing quantitative stiffness measurement (in kPa or m/s)."],
+            ["Point-of-care ultrasound (POCUS) is commonly used in emergency departments for:", ["FAST exam (Focused Assessment with Sonography for Trauma) to detect free fluid", "Detailed echocardiography only", "Replacing all CT scans", "Measuring bone fractures exclusively"], 0, "POCUS is used at the bedside for rapid clinical decision-making. The FAST exam detects free fluid in trauma patients in the perihepatic, perisplenic, pelvic, and pericardial spaces."],
+            ["'Aliasing' artifact in pulsed-wave Doppler occurs when:", ["The Doppler shift frequency exceeds the Nyquist limit (half the PRF)", "The transducer frequency is too high", "The patient moves during scanning", "The gel is insufficient"], 0, "Aliasing occurs when the velocity of blood flow produces a Doppler shift exceeding half the pulse repetition frequency (Nyquist limit), causing the signal to wrap around the baseline."],
+            ["To correct aliasing in pulsed-wave Doppler, the sonographer can:", ["Increase the PRF (scale), use a lower frequency transducer, or shift the baseline", "Decrease the PRF", "Use a higher frequency transducer", "Increase the wall filter only"], 0, "Increasing PRF raises the Nyquist limit. Using a lower frequency probe reduces the Doppler shift. Shifting the baseline allows more display range. All help correct aliasing."],
+            ["'Twinkle artifact' in color Doppler is seen posterior to:", ["Strongly reflecting rough surfaces like calculi (kidney stones)", "Fluid collections", "Soft tissue masses", "Normal blood vessels"], 0, "The twinkle artifact produces a rapidly alternating color Doppler signal behind rough, highly reflective interfaces such as urinary calculi, making them more conspicuous."]
+        ];
+        usData.forEach((d, i) => questions.push(createQ(76 + i, "Ultrasound", d[0], d[1], d[2], d[3])));
+
+        // Anatomy: Neuroanatomy basics, facial bones, paranasal sinuses, ear anatomy, reproductive system (Q81-90)
+        const anatomyData = [
+            ["The largest part of the human brain is the:", ["Cerebrum", "Cerebellum", "Brainstem", "Thalamus"], 0, "The cerebrum is the largest part of the brain, divided into two hemispheres, responsible for higher functions like thinking, learning, and consciousness."],
+            ["The 'Circle of Willis' is an arterial anastomosis located at the:", ["Base of the brain around the sella turcica", "Top of the skull", "Spinal cord", "Neck region"], 0, "The Circle of Willis is a ring of arteries at the base of the brain connecting the anterior and posterior circulations, providing collateral blood supply."],
+            ["The zygomatic bone forms the:", ["Prominence of the cheek", "Bridge of the nose", "Lower jaw", "Roof of the mouth"], 0, "The zygomatic bone (malar bone) forms the cheekbone prominence and articulates with the maxilla, temporal, frontal, and sphenoid bones."],
+            ["The maxillary sinus is the:", ["Largest paranasal sinus located in the body of the maxilla", "Smallest paranasal sinus in the ethmoid bone", "Sinus in the frontal bone", "Sinus in the sphenoid bone"], 0, "The maxillary sinus (antrum of Highmore) is the largest paranasal sinus, located within the body of the maxilla, draining into the middle meatus."],
+            ["The three bones of the middle ear (ossicles) are:", ["Malleus, Incus, and Stapes", "Hammer, Stirrup, and Cochlea", "Semicircular canals, Vestibule, and Cochlea", "Temporal, Parietal, and Occipital"], 0, "The three ossicles — malleus (hammer), incus (anvil), and stapes (stirrup) — form a chain that transmits vibrations from the tympanic membrane to the oval window."],
+            ["The 'Cochlea' is responsible for:", ["Hearing (converting sound vibrations to nerve impulses)", "Balance and equilibrium", "Equalizing air pressure", "Producing cerumen (earwax)"], 0, "The cochlea is a spiral-shaped organ in the inner ear that contains the organ of Corti, which converts mechanical sound vibrations into electrical nerve impulses for the auditory nerve."],
+            ["The nasal septum is formed primarily by:", ["Vomer and perpendicular plate of the ethmoid bone", "Nasal bones and maxilla", "Lacrimal bones and palatine bones", "Zygomatic and temporal bones"], 0, "The nasal septum divides the nasal cavity into two halves and is formed by the vomer bone (inferior-posterior), the perpendicular plate of the ethmoid (superior), and septal cartilage (anterior)."],
+            ["In the female reproductive system, the 'fallopian tubes' connect the:", ["Ovaries to the uterus", "Uterus to the vagina", "Bladder to the urethra", "Kidneys to the bladder"], 0, "The fallopian tubes (uterine tubes/oviducts) extend from the uterine cornua toward the ovaries, providing a pathway for the ovum to travel from ovary to uterus."],
+            ["The prostate gland in males is located:", ["Inferior to the urinary bladder, surrounding the proximal urethra", "Superior to the kidneys", "Within the scrotum", "Behind the rectum only"], 0, "The prostate gland sits just below the bladder and surrounds the prostatic urethra. It can be palpated through the anterior rectal wall during DRE."],
+            ["The 'Corpus Callosum' in the brain connects:", ["The left and right cerebral hemispheres", "The cerebrum to the cerebellum", "The brainstem to the spinal cord", "The frontal lobe to the occipital lobe on the same side"], 0, "The corpus callosum is the largest white matter commissure in the brain, connecting corresponding regions of the left and right cerebral hemispheres for interhemispheric communication."]
+        ];
+        anatomyData.forEach((d, i) => questions.push(createQ(81 + i, "Anatomy", d[0], d[1], d[2], d[3])));
+
+        // Safety/DR: Radiation emergency management, accidental exposure protocols, digital image management, PACS/RIS workflow, teleradiology (Q91-100)
+        const safetyData = [
+            ["In a radiation emergency (accidental overexposure), the first priority is:", ["Remove the individual from the radiation source and provide medical care", "Fill out paperwork first", "Continue the examination", "Ignore and repeat the exposure"], 0, "The immediate priority is to remove the person from the radiation source, assess their condition, provide necessary medical care, and then report the incident to the radiation safety officer."],
+            ["An 'accidental exposure' in radiology must be reported to:", ["The Radiation Safety Officer (RSO) and regulatory authority (AERB in India)", "Only the patient", "No one if the dose is low", "Only the hospital administrator"], 0, "Accidental exposures must be reported to the RSO, documented, investigated, and reported to the regulatory authority (AERB in India) as per regulatory requirements."],
+            ["PACS stands for:", ["Picture Archiving and Communication System", "Patient Access and Care System", "Portable Automated Computer System", "Photographic Archive and Collection System"], 0, "PACS is a medical imaging technology for storage, retrieval, distribution, and display of medical images. It eliminates the need for physical film storage."],
+            ["RIS (Radiology Information System) primarily manages:", ["Patient scheduling, tracking, and reporting workflow in radiology", "Image storage and display", "X-ray tube maintenance", "Hospital pharmacy inventory"], 0, "RIS handles administrative and workflow functions including patient registration, scheduling, examination tracking, result distribution, and billing in radiology departments."],
+            ["The DICOM standard in medical imaging ensures:", ["Interoperability between different imaging equipment and PACS from various vendors", "Images can only be viewed on one specific computer", "Patient data is automatically deleted after 24 hours", "Only MRI images are standardized"], 0, "DICOM (Digital Imaging and Communications in Medicine) is the international standard for transmitting, storing, and sharing medical images, ensuring equipment from different manufacturers can communicate."],
+            ["In teleradiology, images are transmitted for interpretation:", ["To a remote radiologist via secure network connections", "Only within the same room", "By physical courier of film", "Through unsecured public email"], 0, "Teleradiology involves electronic transmission of medical images from one location to another for remote interpretation, requiring secure HIPAA/data protection-compliant networks."],
+            ["A key requirement for teleradiology workstations is:", ["Medical-grade display monitors meeting ACR standards for luminance and resolution", "Any consumer-grade laptop screen", "Black and white printers only", "No internet connection needed"], 0, "Teleradiology workstations must have medical-grade monitors with adequate luminance (calibrated), resolution, and contrast ratio as per ACR/professional standards for diagnostic interpretation."],
+            ["In digital image management, 'lossless compression' means:", ["Image data is compressed without any loss of information", "Some image data is permanently lost to reduce file size", "Images are stored at maximum file size always", "Only JPEG format is used"], 0, "Lossless compression reduces file size while preserving all original data exactly — the original image can be perfectly reconstructed. DICOM uses lossless compression for diagnostic images."],
+            ["The purpose of a 'radiation incident investigation' is to:", ["Determine the cause, assess dose received, prevent recurrence, and document findings", "Punish the technologist", "Cover up the incident", "Only assess equipment damage"], 0, "Radiation incident investigations aim to determine what happened, estimate doses received, identify root causes, implement corrective actions to prevent recurrence, and properly document everything."],
+            ["HL7 (Health Level Seven) standard in healthcare IT is used for:", ["Exchange of clinical and administrative data between healthcare systems", "X-ray image storage only", "CT scanner calibration", "MRI coil selection"], 0, "HL7 is a set of international standards for the transfer of clinical and administrative data between software applications used by various healthcare providers, enabling system interoperability."]
+        ];
+        safetyData.forEach((d, i) => questions.push(createQ(91 + i, "Safety/DR", d[0], d[1], d[2], d[3])));
+
+        // Verify we have exactly 100 questions
+        // Fill gap between positioning (Q31-50 = 20 questions) and CT (Q51-65 = 15 questions) — total so far: 20+10+20+15+10+5+10+10 = 100. Good.
+    }
+
+        // --- STATE MANAGEMENT ---
+        let state = {
+            currentQ: 0,
+            answers: new Array(TOTAL_QUESTIONS).fill(null),
+            status: new Array(TOTAL_QUESTIONS).fill('not-visited'),
+            currentSection: 1,      // 1 to 5
+            sectionTimeLeft: SECTION_TIME_LIMIT,
+            maxSetReached: 1,       // Tracks highest section unlocked
+            isFinished: false
+        };
+
+        const els = {
+            landing: document.getElementById('landingPage'),
+            header: document.getElementById('examHeader'),
+            body: document.getElementById('examBody'),
+            footer: document.getElementById('examFooter'),
+            result: document.getElementById('resultPage'),
+            qText: document.getElementById('questionText'),
+            optsBox: document.getElementById('optionsBox'),
+            qNum: document.getElementById('qNumDisplay'),
+            sectionLabel: document.getElementById('sectionLabel'),
+            palette: document.getElementById('questionPalette'),
+            timer: document.getElementById('timerDisplay'),
+            btnPrev: document.getElementById('btnPrev'),
+            sidebar: document.getElementById('sidebar')
+        };
+
+        let timerInterval;
+
+        function init() {
+            generateQuestions(); // Load data
+            // Persistence check could go here, but for strict timing, fresh start is safer
+            els.landing.classList.remove('hidden');
+            els.result.classList.add('hidden');
+        }
+
+        function startExam() {
+            els.landing.classList.add('hidden');
+            renderExamInterface();
+            startSectionTimer();
+        }
+
+        function startSectionTimer() {
+            if(timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                state.sectionTimeLeft--;
+                
+                // Format Time
+                const m = Math.floor(state.sectionTimeLeft / 60);
+                const s = state.sectionTimeLeft % 60;
+                els.timer.innerText = `${m}:${s < 10 ? '0'+s : s}`;
+                
+                // Visual Warning
+                if(state.sectionTimeLeft < 60) els.timer.style.backgroundColor = "#ffcdd2";
+                else els.timer.style.backgroundColor = "#fff";
+
+                // Time Up Logic
+                if (state.sectionTimeLeft <= 0) {
+                    handleSectionTimeout();
+                }
+            }, 1000);
+        }
+
+        function handleSectionTimeout() {
+            clearInterval(timerInterval);
+            
+            if (state.currentSection < 5) {
+                alert(`Time is up for Section ${state.currentSection}! Moving to Section ${state.currentSection + 1}.`);
+                forceNextSection();
+            } else {
+                alert("Time is up for the final section! Submitting Exam.");
+                finishExam();
+            }
+        }
+
+        function forceNextSection() {
+            state.currentSection++;
+            state.maxSetReached = state.currentSection;
+            state.sectionTimeLeft = SECTION_TIME_LIMIT;
+            
+            // Move to first question of next section
+            const firstQofNextSection = (state.currentSection - 1) * SECTION_SIZE;
+            loadQuestion(firstQofNextSection);
+            startSectionTimer();
+        }
+
+        function renderExamInterface() {
+            els.header.classList.remove('hidden');
+            els.body.classList.remove('hidden');
+            els.footer.classList.remove('hidden');
+            renderPalette();
+            loadQuestion(state.currentQ);
+        }
+
+        function loadQuestion(index) {
+            state.currentQ = index;
+            if(state.status[index] === 'not-visited') state.status[index] = 'not-answered';
+
+            // Update Section Label
+            const secNum = Math.floor(index / SECTION_SIZE) + 1;
+            els.sectionLabel.innerText = `Section ${secNum} (Q${(secNum-1)*20 + 1}-${secNum*20})`;
+
+            // Render Text
+            els.qNum.innerText = `Question ${index + 1}`;
+            els.qText.innerText = questions[index].text;
+            
+            // Render Options
+            els.optsBox.innerHTML = '';
+            questions[index].opts.forEach((opt, i) => {
+                const isChecked = state.answers[index] === i ? 'checked' : '';
+                els.optsBox.innerHTML += `
+                    <label class="option-label">
+                        <input type="radio" name="opt" value="${i}" ${isChecked} onchange="selectOption(${i})">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            // Update Palette UI
+            document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('current'));
+            const currentBtn = document.getElementById(`qbtn-${index}`);
+            if(currentBtn) currentBtn.classList.add('current');
+
+            // Handle Prev Button State (Cannot go back to previous locked section)
+            const startOfCurrentSection = (state.currentSection - 1) * SECTION_SIZE;
+            els.btnPrev.disabled = (index <= startOfCurrentSection);
+        }
+
+        function selectOption(optIndex) {
+            state.answers[state.currentQ] = optIndex;
+        }
+
+        function saveAndNext() {
+            const index = state.currentQ;
+            // Update status
+            state.status[index] = (state.answers[index] !== null) ? 'answered' : 'not-answered';
+            
+            moveToNextQuestion();
+        }
+
+        function markForReview() {
+            const index = state.currentQ;
+            state.status[index] = (state.answers[index] !== null) ? 'marked-answered' : 'review'; // Simplified
+            moveToNextQuestion();
+        }
+
+        function clearResponse() {
+            state.answers[state.currentQ] = null;
+            state.status[state.currentQ] = 'not-answered';
+            loadQuestion(state.currentQ);
+            renderPalette();
+        }
+
+        function moveToNextQuestion() {
+            const nextIndex = state.currentQ + 1;
+            const currentSecBound = state.currentSection * SECTION_SIZE;
+
+            // Check if next question crosses section boundary
+            if (nextIndex >= currentSecBound) {
+                // End of section reached
+                if (state.currentSection < 5) {
+                    if (confirm(`You have reached the end of Section ${state.currentSection}.\nDo you want to submit this section and move to Section ${state.currentSection+1}?\n\nWARNING: You cannot return to this section.`)) {
+                        forceNextSection();
+                    }
+                } else {
+                    if(confirm("This was the last question. Submit Exam?")) {
+                        finishExam();
+                    }
+                }
+            } else {
+                // Normal movement within section
+                renderPalette();
+                loadQuestion(nextIndex);
+            }
+        }
+
+        function prevQuestion() {
+            // Logic handled in loadQuestion to disable button if at start of section
+            if (state.currentQ > 0) {
+                loadQuestion(state.currentQ - 1);
+            }
+        }
+
+        function renderPalette() {
+            els.palette.innerHTML = '';
+            for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+                let statusClass = state.status[i];
+                if(statusClass === 'marked-answered') statusClass = 'review';
+                
+                // Check if question belongs to a locked (previous) section
+                // A question is locked if its section index is < current active section
+                const qSection = Math.floor(i / SECTION_SIZE) + 1;
+                const isLocked = qSection < state.currentSection;
+                const lockedClass = isLocked ? ' locked' : '';
+                
+                // Gray out future sections
+                const isFuture = qSection > state.currentSection;
+                const futureStyle = isFuture ? 'opacity:0.3; pointer-events:none;' : '';
+
+                els.palette.innerHTML += `
+                    <div id="qbtn-${i}" 
+                         class="q-btn ${statusClass}${lockedClass}" 
+                         style="${futureStyle}"
+                         onclick="jumpToQuestion(${i})">
+                        ${i + 1}
+                    </div>
+                `;
+            }
+        }
+
+        function jumpToQuestion(index) {
+            const qSection = Math.floor(index / SECTION_SIZE) + 1;
+            
+            if (qSection < state.currentSection) {
+                alert("This section is locked.");
+                return;
+            }
+            if (qSection > state.currentSection) {
+                alert("You cannot jump to a future section yet.");
+                return;
+            }
+            
+            loadQuestion(index);
+        }
+
+        function submitExam() {
+            if(confirm("Are you sure you want to finish the exam? Unanswered questions in future sections will be marked zero.")) {
+                finishExam();
+            }
+        }
+
+        function finishExam() {
+            clearInterval(timerInterval);
+            state.isFinished = true;
+            
+            els.header.classList.add('hidden');
+            els.body.classList.add('hidden');
+            els.footer.classList.add('hidden');
+            els.result.classList.remove('hidden');
+            
+            calculateResult();
+        }
+
+        function calculateResult() {
+            let correct = 0, wrong = 0, unattempted = 0, score = 0;
+
+            state.answers.forEach((ans, i) => {
+                if (ans === null) {
+                    unattempted++;
+                } else if (questions[i] && ans === questions[i].ans) {
+                    correct++;
+                    score += 4;
+                } else {
+                    wrong++;
+                    score -= 1;
+                }
+            });
+
+            document.getElementById('scoreCard').innerHTML = `
+                <h1 style="color:#3f51b5; font-size:3rem;">${score} / 400</h1>
+                <p><strong>Correct:</strong> ${correct} (+${correct*4})</p>
+                <p><strong>Incorrect:</strong> ${wrong} (-${wrong})</p>
+                <p><strong>Unattempted:</strong> ${unattempted}</p>
+            `;
+        }
+
+        function showDetailedReview() {
+            const container = document.getElementById('detailedReview');
+            container.style.display = 'block';
+            container.innerHTML = '<h3>Detailed Solutions</h3>';
+            
+            questions.forEach((q, i) => {
+                const userAns = state.answers[i];
+                const isCorrect = userAns === q.ans;
+                const statusColor = userAns === null ? 'gray' : (isCorrect ? 'green' : 'red');
+                const statusText = userAns === null ? 'Skipped' : (isCorrect ? 'Correct' : 'Incorrect');
+
+                let optsHtml = '';
+                q.opts.forEach((opt, oi) => {
+                    let style = '';
+                    if (oi === q.ans) style = 'font-weight:bold; color:green;'; 
+                    if (oi === userAns && !isCorrect) style = 'font-weight:bold; color:red;'; 
+                    optsHtml += `<div style="${style}">${oi+1}. ${opt}</div>`;
+                });
+
+                container.innerHTML += `
+                    <div class="review-item">
+                        <div style="color:${statusColor}; font-weight:bold; margin-bottom:5px;">Q${i+1}: ${statusText}</div>
+                        <div>${q.text}</div>
+                        <div style="margin:10px 0; padding-left:15px; border-left:3px solid #ddd;">${optsHtml}</div>
+                        <div class="explanation"><strong>Explanation:</strong> ${q.exp}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleSidebar() {
+            els.sidebar.classList.toggle('active');
+        }
+
+        // Initialize
+        init();
+
+    </script>
+</body>
+</html>

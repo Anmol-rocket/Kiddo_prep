@@ -20,6 +20,11 @@ function classifyFile(filename: string, group: string): string {
     return "cbt"
   }
 
+  // Test papers: filenames like TEST_PAPER1.html, TEST_PAPER5.html
+  if (/^TEST[_\s]?PAPER/i.test(filename)) {
+    return "test_papers"
+  }
+
   // Mock papers: filenames like MOCK_PAPER1.html, MOCKPAPER8.html, MockPaper_6.html
   if (/^MOCK[_\s]?PAPER/i.test(filename)) {
     return "mock_papers"

@@ -65,6 +65,16 @@ const CATEGORY_META: Record<
     badgeBg: "bg-cyan-500/15",
     badgeText: "text-cyan-400",
   },
+  test_papers: {
+    label: "Test Papers",
+    icon: <ClipboardList className="w-4 h-4" />,
+    color: "text-violet-400",
+    gradient: "from-violet-500 to-purple-500",
+    bgGlow: "bg-violet-500/10",
+    borderActive: "border-violet-500/60",
+    badgeBg: "bg-violet-500/15",
+    badgeText: "text-violet-400",
+  },
   mock_papers: {
     label: "Mock Papers",
     icon: <ClipboardList className="w-4 h-4" />,
@@ -98,7 +108,7 @@ const CATEGORY_META: Record<
 }
 
 /** Preferred order for categories */
-const CATEGORY_ORDER = ["all", "cbt", "mock_papers", "study_materials", "other_materials"]
+const CATEGORY_ORDER = ["all", "cbt", "test_papers", "mock_papers", "study_materials", "other_materials"]
 
 export default function MaterialsSection() {
   const [items, setItems] = useState<Item[] | null>(null)
@@ -524,7 +534,7 @@ export default function MaterialsSection() {
                       </div>
 
                       {/* Mock Paper / CBT Actions (score tracking) */}
-                      {(it.group === "mock_papers") && (
+                      {(it.group === "mock_papers" || it.category === "test_papers") && (
                         <div className="flex gap-2 mt-2 pl-2">
                           <Button
                             type="button"
