@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIIMS CRE Radiographer - Test Paper 14</title>
+    <style>
+        :root {
+            --header-bg: #3f51b5;
+            --header-text: #fff;
+            --panel-bg: #f5f5f5;
+            --pallet-answered: #4caf50;
+            --pallet-not-answered: #f44336;
+            --pallet-review: #9c27b0;
+            --pallet-not-visited: #e0e0e0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #fff; }
+
+        /* --- Header --- */
+        header {
+            background: var(--header-bg); color: var(--header-text);
+            padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+            height: 60px; flex-shrink: 0;
+        }
+        .timer { font-size: 1.2rem; font-weight: bold; background: #fff; color: #d32f2f; padding: 5px 15px; border-radius: 4px; border: 2px solid #d32f2f; }
+
+        /* --- Main Layout --- */
+        .main-container { display: flex; flex: 1; overflow: hidden; }
+        
+        .question-area { flex: 1; display: flex; flex-direction: column; padding: 20px; overflow-y: auto; }
+        .q-header { display: flex; justify-content: space-between; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.5; }
+        
+        .options-container { display: flex; flex-direction: column; gap: 10px; }
+        .option-label { 
+            display: flex; align-items: center; padding: 10px; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; transition: 0.2s; 
+        }
+        .option-label:hover { background: #f0f8ff; }
+        .option-label input { margin-right: 15px; transform: scale(1.2); }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px; background: var(--panel-bg); border-left: 1px solid #ccc;
+            display: flex; flex-direction: column; flex-shrink: 0;
+        }
+        .user-info { padding: 10px; background: #e8eaf6; border-bottom: 1px solid #ccc; }
+        
+        .palette-legend { padding: 10px; font-size: 0.8rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: #fff; }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+        .question-grid { 
+            padding: 10px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; 
+            overflow-y: auto; flex: 1; align-content: start;
+        }
+        .q-btn {
+            height: 35px; width: 35px; border: 1px solid #ccc; background: #fff; 
+            border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .q-btn.answered { background: var(--pallet-answered); color: white; border-color: var(--pallet-answered); }
+        .q-btn.not-answered { background: var(--pallet-not-answered); color: white; border-color: var(--pallet-not-answered); }
+        .q-btn.review { background: var(--pallet-review); color: white; border-radius: 50%; }
+        .q-btn.current { border: 2px solid blue; box-shadow: 0 0 5px blue; }
+        .q-btn.locked { opacity: 0.4; cursor: not-allowed; background: #444 !important; color: #888; border: 1px solid #000; }
+
+        /* Footer */
+        .footer-controls {
+            height: 60px; background: #fff; border-top: 1px solid #ccc;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+        }
+        .btn { padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+        .btn-primary { background: #2196f3; color: white; }
+        .btn-success { background: #4caf50; color: white; }
+        .btn-warn { background: #ff9800; color: white; }
+        .btn-danger { background: #f44336; color: white; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* Mobile */
+        .mobile-toggle { display: none; background: none; border: none; color: white; font-size: 1.5rem; }
+        @media (max-width: 768px) {
+            .mobile-toggle { display: block; }
+            .sidebar { 
+                position: absolute; right: 0; top: 60px; bottom: 60px; z-index: 100;
+                transform: translateX(100%); transition: transform 0.3s; width: 85%;
+            }
+            .sidebar.active { transform: translateX(0); }
+            .question-grid { grid-template-columns: repeat(6, 1fr); }
+            .footer-controls { flex-wrap: wrap; gap: 5px; height: auto; padding: 10px; }
+            .btn { flex: 1; padding: 8px; font-size: 0.8rem; }
+        }
+
+        /* Overlay */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .hidden { display: none !important; }
+        
+        .review-panel { display: none; padding: 20px; height: 100%; overflow-y: auto; background:#f9f9f9;}
+        .review-item { margin-bottom: 20px; border: 1px solid #ddd; padding: 15px; border-radius: 5px; background:white; }
+        .explanation { background: #fff3cd; padding: 10px; margin-top: 10px; font-size: 0.9rem; border-left: 4px solid #ffc107; }
+
+    </style>
+</head>
+<body>
+
+    <div id="landingPage" class="overlay">
+        <h1>AIIMS CRE - Test Paper 14</h1>
+        <div style="width: 80%; max-width: 600px; text-align: left; margin: 20px 0;">
+            <h3>Exam Rules:</h3>
+            <ul>
+                <li><strong>Questions:</strong> 100 (5 Sections of 20 questions each).</li>
+                <li><strong>Timing:</strong> 18 Minutes per section (Strictly Dedicated).</li>
+                <li><strong>Total Time:</strong> 90 Minutes.</li>
+                <li><strong>Locking:</strong> Once 18 mins are up, or if you manually proceed to the next section, you <u>cannot</u> return to the previous section.</li>
+                <li><strong>Marking:</strong> +4 Correct, -1 Incorrect.</li>
+            </ul>
+        </div>
+        <button class="btn btn-success" style="font-size: 1.2rem;" onclick="startExam()">START EXAM</button>
+    </div>
+
+    <header id="examHeader" class="hidden">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <h3>AIIMS Radiographer</h3>
+            <span style="font-size:0.8rem; background:#eee; padding:2px 6px; border-radius:4px; color:#333;" id="sectionLabel">Section 1</span>
+        </div>
+        <div class="timer" id="timerDisplay">18:00</div>
+        <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+    </header>
+
+    <div class="main-container hidden" id="examBody">
+        <div class="question-area">
+            <div class="q-header">
+                <span id="qNumDisplay">Question No. 1</span>
+                <span style="color: #666;">Marks: +4, -1</span>
+            </div>
+            <div id="questionText" class="q-text">Loading...</div>
+            <div id="optionsBox" class="options-container"></div>
+        </div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="user-info">
+                <strong>Candidate Name</strong><br><small>Roll No: 123456</small>
+            </div>
+            <div class="palette-legend">
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-answered)"></span> Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-not-answered)"></span> Not Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-review)"></span> Review</div>
+                <div class="legend-item"><span class="dot" style="background:#444"></span> Locked</div>
+            </div>
+            <div class="question-grid" id="questionPalette"></div>
+            <div style="padding:10px; margin-top:auto;">
+                <button class="btn btn-primary" style="width:100%" onclick="submitExam()">FINISH EXAM</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-controls hidden" id="examFooter">
+        <div style="display:flex; gap:10px;">
+            <button class="btn btn-danger" onclick="clearResponse()">Clear</button>
+            <button class="btn btn-warn" onclick="markForReview()">Review</button>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <button class="btn" onclick="prevQuestion()" id="btnPrev">Previous</button>
+            <button class="btn btn-success" onclick="saveAndNext()">Save & Next</button>
+        </div>
+    </div>
+
+    <div id="resultPage" class="overlay hidden" style="display:block; overflow-y:auto; justify-content:start; padding-top:40px;">
+        <h2 style="text-align:center;">Exam Summary</h2>
+        <div id="scoreCard" style="margin: 20px auto; width:90%; max-width:600px; padding: 20px; border: 1px solid #ccc; text-align: center; background:#fff;"></div>
+        <div style="display:flex; justify-content:center; gap:20px; margin-bottom:20px;">
+            <button class="btn btn-primary" onclick="showDetailedReview()">Review Solutions</button>
+            <button class="btn btn-danger" onclick="location.reload()">Exit</button>
+        </div>
+        <div id="detailedReview" class="review-panel" style="width: 90%; max-width: 800px; margin:0 auto;"></div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const TOTAL_QUESTIONS = 100;
+        const SECTION_SIZE = 20; // 20 questions per section
+        const SECTION_TIME_LIMIT = 18 * 60; // 18 minutes in seconds
+        
+        let questions = [];
+
+        function generateQuestions() {
+            const createQ = (id, type, text, opts, ans, exp) => ({ id, type, text, opts, ans, exp });
+            questions = []; // Reset array
+
+            const raw_data = [
+                // Non-Core: GK
+                { "type": "Non-Core", "text": "Which of the following days is celebrated as National Sports Day in India?", "opts": ["August 29", "September 5", "October 2", "January 12"], "ans": 0, "exp": "National Sports Day is celebrated on August 29 to mark the birth anniversary of hockey legend Major Dhyan Chand." },
+                { "type": "Non-Core", "text": "Who won the ICC Men's Cricket World Cup in 2023?", "opts": ["India", "Australia", "England", "New Zealand"], "ans": 1, "exp": "Australia won the 2023 ICC Men's Cricket World Cup by defeating India in the final." },
+                { "type": "Non-Core", "text": "The G20 Summit in 2023 was hosted by which country?", "opts": ["Indonesia", "Brazil", "India", "Japan"], "ans": 2, "exp": "India hosted the G20 Summit in September 2023 in New Delhi." },
+                { "type": "Non-Core", "text": "World Health Day is observed globally on which date?", "opts": ["May 1", "June 5", "December 1", "April 7"], "ans": 3, "exp": "World Health Day is celebrated annually on April 7, marking the founding of the WHO in 1948." },
+                { "type": "Non-Core", "text": "Which Indian athlete is known as the 'Golden Boy' for his achievements in javelin throw?", "opts": ["Neeraj Chopra", "Abhinav Bindra", "Milkha Singh", "Bajrang Punia"], "ans": 0, "exp": "Neeraj Chopra is widely referred to as the Golden Boy of Indian athletics for his Olympic and World Championship gold medals in javelin throw." },
+
+                // Non-Core: Quant
+                { "type": "Non-Core", "text": "Which of the following numbers is a prime number?", "opts": ["91", "97", "87", "93"], "ans": 1, "exp": "97 is a prime number. 91 is 7x13, 87 is 3x29, 93 is 3x31." },
+                { "type": "Non-Core", "text": "If 15% of a number is 60, what is the number?", "opts": ["300", "450", "400", "600"], "ans": 2, "exp": "Let the number be x. 0.15 * x = 60 => x = 60 / 0.15 = 400." },
+                { "type": "Non-Core", "text": "Simplify: 3/4 + 1/6.", "opts": ["4/10", "5/12", "13/12", "11/12"], "ans": 3, "exp": "LCM of 4 and 6 is 12. (9 + 2)/12 = 11/12." },
+                { "type": "Non-Core", "text": "What is the square root of 1024?", "opts": ["32", "34", "28", "24"], "ans": 0, "exp": "32 * 32 = 1024." },
+                { "type": "Non-Core", "text": "If the price of an item increases from Rs. 40 to Rs. 50, what is the percentage increase?", "opts": ["20%", "25%", "30%", "10%"], "ans": 1, "exp": "Increase = 10. Percentage increase = (10 / 40) * 100 = 25%." },
+
+                // Non-Core: Computer Basics
+                { "type": "Non-Core", "text": "Which hardware component is considered the 'brain' of the computer?", "opts": ["RAM", "Motherboard", "CPU (Central Processing Unit)", "Hard Drive"], "ans": 2, "exp": "The CPU is responsible for executing instructions and is known as the brain of the computer." },
+                { "type": "Non-Core", "text": "Which of the following is considered non-volatile memory?", "opts": ["SRAM", "DRAM", "Cache Memory", "ROM"], "ans": 3, "exp": "ROM (Read-Only Memory) retains its data even when power is turned off, making it non-volatile." },
+                { "type": "Non-Core", "text": "An SSD (Solid State Drive) stores data using:", "opts": ["Flash memory chips", "Magnetic platters", "Optical lasers", "Magnetic tape"], "ans": 0, "exp": "SSDs use NAND-based flash memory chips to store data persistently." },
+                { "type": "Non-Core", "text": "What is the purpose of the Motherboard in a computer?", "opts": ["It cools the CPU.", "It connects and allows communication between all hardware components.", "It provides power to the house.", "It displays images on the screen."], "ans": 1, "exp": "The motherboard is the main printed circuit board that connects all the components of a computer together." },
+                { "type": "Non-Core", "text": "Which port is commonly used to connect high-definition displays?", "opts": ["VGA", "PS/2", "HDMI", "Ethernet"], "ans": 2, "exp": "HDMI (High-Definition Multimedia Interface) transmits both high-definition video and audio." },
+
+                // Non-Core: English & Intelligence
+                { "type": "Non-Core", "text": "Choose the correct synonym for 'Meticulous'.", "opts": ["Sloppy", "Quick", "Loud", "Careful"], "ans": 3, "exp": "Meticulous means showing great attention to detail; very careful and precise." },
+                { "type": "Non-Core", "text": "Complete the series: 2, 6, 12, 20, 30, ?", "opts": ["42", "40", "36", "48"], "ans": 0, "exp": "The differences are 4, 6, 8, 10... Next difference is 12. 30 + 12 = 42." },
+                { "type": "Non-Core", "text": "Find the odd one out:", "opts": ["Earth", "Moon", "Mars", "Jupiter"], "ans": 1, "exp": "Moon is a satellite, while the others are planets." },
+                { "type": "Non-Core", "text": "If A is the brother of B, and B is the sister of C, how is A related to C?", "opts": ["Uncle", "Cousin", "Brother", "Father"], "ans": 2, "exp": "A, B, and C are siblings. Since A is male (brother of B), A is the brother of C." },
+                { "type": "Non-Core", "text": "Fill in the blank: The doctor advised him to abstain ___ smoking.", "opts": ["of", "to", "in", "from"], "ans": 3, "exp": "'Abstain from' is the correct prepositional phrase." },
+
+                // Core: Radiotherapy & Brachytherapy (20)
+                { "type": "Core", "text": "Which isotope is commonly used in external beam teletherapy machines?", "opts": ["Cobalt-60", "Iridium-192", "Iodine-131", "Technetium-99m"], "ans": 0, "exp": "Cobalt-60 emits high-energy gamma rays (1.17 and 1.33 MeV) and has been a staple in external beam radiation therapy." },
+                { "type": "Core", "text": "What is the half-life of Cobalt-60?", "opts": ["74.2 days", "5.26 years", "8 days", "30 years"], "ans": 1, "exp": "Cobalt-60 has a half-life of 5.26 years, decaying by beta emission to Nickel-60." },
+                { "type": "Core", "text": "Which component of a linear accelerator generates high-frequency microwave power?", "opts": ["Electron gun", "Bending magnet", "Magnetron or Klystron", "Target"], "ans": 2, "exp": "Magnetrons and Klystrons generate or amplify the microwave power used to accelerate electrons in a LINAC." },
+                { "type": "Core", "text": "In Brachytherapy, radiation sources are placed:", "opts": ["At a distance of 100 cm from the patient", "Only given orally as liquid", "Intravenously exclusively", "Inside or directly next to the tumor"], "ans": 3, "exp": "Brachytherapy involves placing sealed radioactive sources within or in close proximity to the treatment volume." },
+                { "type": "Core", "text": "High Dose Rate (HDR) Brachytherapy most commonly utilizes which radioisotope?", "opts": ["Iridium-192", "Strontium-90", "Radium-226", "Fluorine-18"], "ans": 0, "exp": "Iridium-192 is the most common isotope used in HDR brachytherapy afterloaders due to its high specific activity and 73.8-day half-life." },
+                { "type": "Core", "text": "What does the term 'Isocenter' refer to in radiation therapy?", "opts": ["The central position of the tumor", "The point in space where the gantry, collimator, and couch axes intersect", "The surface of the patient's skin", "The exit point of the beam"], "ans": 1, "exp": "The isocenter is the fixed point of intersection of the three axes of rotation of the treatment unit, usually placed inside the tumor volume." },
+                { "type": "Core", "text": "Which modifying device is used in radiotherapy to compensate for irregular patient contours?", "opts": ["Grid", "Intensifying screen", "Wedges / Compensators", "Lead apron"], "ans": 2, "exp": "Wedges and compensators alter the beam intensity profile to account for missing tissue or irregular contours." },
+                { "type": "Core", "text": "A multileaf collimator (MLC) is primarily used for:", "opts": ["Increasing the beam energy", "Filtering out low energy x-rays", "Cooling the target", "Conformal shaping of the radiation beam"], "ans": 3, "exp": "MLCs allow custom beam shaping for each treatment field, essential for 3D-CRT and IMRT." },
+                { "type": "Core", "text": "Electron beams in radiotherapy are typically used to treat:", "opts": ["Superficial tumors (e.g., skin, breast boost)", "Deep-seated pelvic tumors", "Brain metastases", "Lung tumors centrally located"], "ans": 0, "exp": "Electrons have a rapid dose fall-off, making them ideal for superficial lesions while sparing deeper healthy tissues." },
+                { "type": "Core", "text": "What is the typical average energy of the two gamma rays emitted by Cobalt-60?", "opts": ["0.66 MeV", "1.25 MeV", "6.0 MeV", "140 keV"], "ans": 1, "exp": "Cobalt-60 emits gamma rays of 1.17 MeV and 1.33 MeV, averaging 1.25 MeV." },
+                { "type": "Core", "text": "Permanent prostate brachytherapy seed implants commonly use which isotopes?", "opts": ["Cobalt-60", "Iridium-192", "Iodine-125 or Palladium-103", "Cesium-137"], "ans": 2, "exp": "I-125 and Pd-103 have low photon energies and short half-lives suitable for permanent LDR seed implants." },
+                { "type": "Core", "text": "In a linear accelerator, what directs the electron beam toward the X-ray target after acceleration?", "opts": ["Thyratron", "Waveguide", "Scattering foil", "Bending magnet"], "ans": 3, "exp": "The bending magnet steers the accelerated electron beam (often by 90 or 270 degrees) to hit the target for x-ray production or scattering foil for electron therapy." },
+                { "type": "Core", "text": "The depth of maximum dose (Dmax) for a 6 MV photon beam is approximately:", "opts": ["1.5 cm", "0.5 cm", "3.0 cm", "Skin surface"], "ans": 0, "exp": "For 6 MV photons, Dmax occurs at about 1.5 cm depth in tissue. For Co-60 it is 0.5 cm." },
+                { "type": "Core", "text": "A scattering foil in a LINAC is used when treating with:", "opts": ["Photon beams", "Electron beams", "Proton beams", "Neutron beams"], "ans": 1, "exp": "A scattering foil broadens a narrow pencil electron beam into a uniform clinical electron field. A target is used for photons." },
+                { "type": "Core", "text": "Which brachytherapy applicator is classically used for cervical cancer treatment?", "opts": ["Cylinders", "Prostate seeds", "Fletcher-Suit applicator (Tandem and Ovoids)", "Eye plaque"], "ans": 2, "exp": "Tandem and Ovoids (Fletcher-Suit) are widely used in intracavitary brachytherapy for cervical cancer." },
+                { "type": "Core", "text": "Radium-226 is historically important in brachytherapy but is largely replaced due to:", "opts": ["Inability to penetrate tissue", "Short half-life requiring frequent replacement", "Lack of gamma emission", "High risk of radon gas leakage and long half-life"], "ans": 3, "exp": "Radium-226 has a 1622-year half-life and decays to Radon gas, posing significant radiation safety hazards if the source capsule leaks." },
+                { "type": "Core", "text": "IMRT stands for:", "opts": ["Intensity Modulated Radiation Therapy", "Internal Magnetic Resonance Therapy", "Image Monitored Radiation Technique", "Intravenous Molecular Radioactive Treatment"], "ans": 0, "exp": "IMRT uses computer-controlled linear accelerators to deliver precise radiation doses by modulating the intensity of the beam." },
+                { "type": "Core", "text": "In brachytherapy, HDR means the dose rate is typically greater than:", "opts": ["2 Gy/hour", "12 Gy/hour", "0.5 Gy/hour", "100 Gy/hour"], "ans": 1, "exp": "HDR brachytherapy is defined as dose rates >12 Gy/hour, typically delivered in minutes." },
+                { "type": "Core", "text": "What is the physical principle behind the flattening filter in a LINAC?", "opts": ["It removes neutrons", "It cools the target", "It creates a uniform dose distribution across the photon beam", "It accelerates electrons"], "ans": 2, "exp": "The flattening filter is thickest in the center to attenuate the forward-peaked photon beam and make it uniform (flat) across the field." },
+                { "type": "Core", "text": "Total Body Irradiation (TBI) is most frequently used as a conditioning regimen for:", "opts": ["Skin cancer", "Prostate cancer", "Brain tumors", "Bone marrow / stem cell transplantation"], "ans": 3, "exp": "TBI is used to immunosuppress the patient and eradicate malignant cells prior to bone marrow transplant, often for leukemia." },
+
+                // Core: Anatomy of Thorax & Respiratory System (15)
+                { "type": "Core", "text": "Which structure is known as the windpipe?", "opts": ["Trachea", "Esophagus", "Pharynx", "Bronchiole"], "ans": 0, "exp": "The trachea is the cartilaginous tube that connects the larynx to the bronchi, serving as the windpipe." },
+                { "type": "Core", "text": "The carina is the point where the trachea bifurcates into the left and right main stem bronchi. At what vertebral level does it typically occur?", "opts": ["C6-C7", "T4-T5", "T1-T2", "T8-T9"], "ans": 1, "exp": "The carina is located at the sternal angle anteriorly and the T4-T5 intervertebral disc level posteriorly." },
+                { "type": "Core", "text": "Which primary bronchus is wider, shorter, and more vertical?", "opts": ["Left primary bronchus", "They are identical", "Right primary bronchus", "Neither"], "ans": 2, "exp": "The right main bronchus is wider, shorter, and more vertical, making aspirated foreign bodies more likely to enter the right lung." },
+                { "type": "Core", "text": "How many lobes does the right lung have?", "opts": ["2", "4", "1", "3"], "ans": 3, "exp": "The right lung has three lobes (superior, middle, inferior) separated by the oblique and horizontal fissures." },
+                { "type": "Core", "text": "The primary site of gas exchange in the lungs is the:", "opts": ["Alveoli", "Terminal bronchioles", "Trachea", "Pleura"], "ans": 0, "exp": "Alveoli are tiny air sacs where oxygen and carbon dioxide are exchanged with blood in capillaries." },
+                { "type": "Core", "text": "What is the name of the double-layered serous membrane that surrounds each lung?", "opts": ["Pericardium", "Pleura", "Peritoneum", "Meninges"], "ans": 1, "exp": "The pleura consists of a visceral layer covering the lung and a parietal layer lining the thoracic cavity." },
+                { "type": "Core", "text": "The space in the thoracic cavity between the lungs containing the heart, great vessels, and esophagus is the:", "opts": ["Pleural cavity", "Pericardial cavity", "Mediastinum", "Diaphragm"], "ans": 2, "exp": "The mediastinum is the central compartment of the thoracic cavity." },
+                { "type": "Core", "text": "Which of the following structures passes through the diaphragm at the T10 level?", "opts": ["Aorta", "Inferior Vena Cava", "Trachea", "Esophagus"], "ans": 3, "exp": "The IVC passes at T8, Esophagus at T10, and Aorta at T12 (remember: I 8 10 Eggs At 12)." },
+                { "type": "Core", "text": "The cardiac notch is a feature of which organ?", "opts": ["Left lung", "Right lung", "Heart", "Liver"], "ans": 0, "exp": "The cardiac notch is an indentation on the anterior border of the left lung to accommodate the heart." },
+                { "type": "Core", "text": "Which muscle is the primary muscle of inspiration?", "opts": ["Internal intercostals", "Diaphragm", "Pectoralis major", "Rectus abdominis"], "ans": 1, "exp": "The diaphragm contracts and flattens during inspiration, increasing the thoracic cavity volume." },
+                { "type": "Core", "text": "The hilum of the lung is the region where:", "opts": ["Gas exchange occurs", "The lung attaches to the diaphragm", "Bronchi, pulmonary blood vessels, and nerves enter and exit the lung", "Pleural fluid is produced"], "ans": 2, "exp": "The hilum is the 'root' of the lung located on the mediastinal surface." },
+                { "type": "Core", "text": "What is the function of surfactant in the alveoli?", "opts": ["Increases blood flow to the lungs", "Fights respiratory infections", "Traps dust and debris", "Reduces surface tension to prevent alveolar collapse"], "ans": 3, "exp": "Surfactant lowers the surface tension of fluid in the alveoli, preventing them from collapsing during exhalation." },
+                { "type": "Core", "text": "A pneumothorax refers to the presence of ___ in the pleural space.", "opts": ["Air", "Blood", "Pus", "Lymph"], "ans": 0, "exp": "Pneumothorax is the accumulation of air in the pleural cavity causing lung collapse." },
+                { "type": "Core", "text": "On a normal PA chest radiograph, the right hemidiaphragm is usually:", "opts": ["Lower than the left", "Slightly higher than the left", "At the exact same level as the left", "Not visible"], "ans": 1, "exp": "The right hemidiaphragm is typically 1.5 to 2.5 cm higher than the left due to the liver pushing it up." },
+                { "type": "Core", "text": "The lingula is a tongue-like projection found on the:", "opts": ["Right lung middle lobe", "Left lung inferior lobe", "Left lung superior lobe", "Right lung inferior lobe"], "ans": 2, "exp": "The lingula is part of the left superior lobe and is considered the anatomical equivalent of the right middle lobe." },
+
+                // Core: Hospital Practice, Ethics, Consent & Records (20)
+                { "type": "Core", "text": "Which principle of biomedical ethics refers to 'Do no harm'?", "opts": ["Beneficence", "Autonomy", "Justice", "Non-maleficence"], "ans": 3, "exp": "Non-maleficence requires that medical practitioners avoid causing harm to the patient." },
+                { "type": "Core", "text": "Informed consent for a contrast-enhanced CT scan must ideally be obtained by:", "opts": ["A physician/radiologist explaining risks and benefits", "The receptionist at the front desk", "The ward nurse only", "The hospital security guard"], "ans": 0, "exp": "Informed consent requires a knowledgeable medical professional to explain the procedure, risks, benefits, and alternatives." },
+                { "type": "Core", "text": "A patient's medical record, including radiological images, is the physical property of:", "opts": ["The patient", "The hospital or imaging facility", "The referring doctor", "The radiographer"], "ans": 1, "exp": "The physical records belong to the facility, while the information within them belongs to the patient." },
+                { "type": "Core", "text": "HIPAA in the context of medical records stands for:", "opts": ["Hospital Information Privacy and Access Act", "Health Information Protection and Agreement Act", "Health Insurance Portability and Accountability Act", "Healthcare Insurance Protection and Administration Act"], "ans": 2, "exp": "HIPAA sets the standard for sensitive patient data protection." },
+                { "type": "Core", "text": "Which of the following describes the ethical principle of 'Autonomy'?", "opts": ["Treating all patients fairly", "Acting in the best interest of the patient", "Telling the absolute truth", "Respecting the patient's right to make their own medical decisions"], "ans": 3, "exp": "Autonomy is the right of competent adults to make informed decisions about their own medical care." },
+                { "type": "Core", "text": "If a patient refuses to proceed with a radiologic exam after arriving in the room, the technologist should:", "opts": ["Respect their decision, stop the exam, and inform the physician", "Restrain the patient and perform the exam", "Proceed with the exam and ignore the patient", "Tell the patient they have no choice"], "ans": 0, "exp": "A patient can withdraw consent at any time. The technologist must stop and inform the referring doctor." },
+                { "type": "Core", "text": "The standard retention period for adult radiological images/records in a hospital (medico-legal requirement) is generally at least:", "opts": ["1 year", "5 to 10 years", "30 days", "6 months"], "ans": 1, "exp": "Record retention laws vary, but it is typically 5 to 10 years for adults." },
+                { "type": "Core", "text": "What is 'Respondeat Superior'?", "opts": ["The thing speaks for itself", "Do no harm", "Let the master answer (employer is liable for employee actions)", "A breach of duty"], "ans": 2, "exp": "Respondeat superior is a legal doctrine where an employer is legally responsible for the wrongful acts of an employee." },
+                { "type": "Core", "text": "What does 'Res ipsa loquitur' mean in medical malpractice?", "opts": ["Patient autonomy", "Informed consent", "Standard of care", "The thing speaks for itself (negligence is obvious)"], "ans": 3, "exp": "Used in cases where the injury could not have occurred without negligence (e.g., surgical instrument left in a patient)." },
+                { "type": "Core", "text": "Administering wrong medication or contrast media to a patient falls under:", "opts": ["Malpractice / Negligence", "Assault", "Battery", "Libel"], "ans": 0, "exp": "Negligence involves failing to provide the standard of care, causing harm." },
+                { "type": "Core", "text": "Performing an X-ray on a patient against their will can be legally considered:", "opts": ["Slander", "Battery", "Fraud", "Malpractice"], "ans": 1, "exp": "Battery is intentional and unconsented touching. Assault is the threat of touching." },
+                { "type": "Core", "text": "Which condition must be met for a consent to be considered 'valid'?", "opts": ["The patient must sign it within 5 minutes", "The patient must have a family member present", "The patient must be mentally competent and act voluntarily", "The patient must be over 65 years old"], "ans": 2, "exp": "Valid consent requires competence, voluntariness, and adequate information." },
+                { "type": "Core", "text": "Sharing a patient's diagnosis with unauthorized personnel is a breach of:", "opts": ["Veracity", "Justice", "Fidelity", "Confidentiality"], "ans": 3, "exp": "Confidentiality mandates keeping patient information private unless authorized." },
+                { "type": "Core", "text": "Which is an example of an objective sign in a patient's medical assessment?", "opts": ["Blood pressure reading of 120/80", "Patient complaining of a headache", "Patient feeling nauseous", "Patient expressing anxiety"], "ans": 0, "exp": "Objective signs are measurable and observable by the clinician. Subjective symptoms are felt by the patient." },
+                { "type": "Core", "text": "Proper hand hygiene in a radiology department is an essential component of:", "opts": ["Radiation Protection", "Standard Precautions", "Quality Assurance", "HIPAA"], "ans": 1, "exp": "Standard precautions are basic infection control practices used for all patient care." },
+                { "type": "Core", "text": "What does 'Veracity' mean in medical ethics?", "opts": ["Keeping promises", "Doing good", "Telling the truth to the patient", "Being fair"], "ans": 2, "exp": "Veracity refers to the ethical obligation to be honest and truthful." },
+                { "type": "Core", "text": "A radiographer discussing a patient's condition loudly in an elevator is a violation of:", "opts": ["Autonomy", "Non-maleficence", "Battery", "Patient Privacy / Confidentiality"], "ans": 3, "exp": "Discussing PHI (Protected Health Information) in public areas is a breach of privacy." },
+                { "type": "Core", "text": "Which of the following describes 'Fidelity'?", "opts": ["Keeping promises and maintaining loyalty to the patient", "Treating everyone equally", "Telling the truth", "Preventing harm"], "ans": 0, "exp": "Fidelity is the duty to keep commitments and act in the patient's best interest." },
+                { "type": "Core", "text": "A written defamatory statement about a patient in their medical record is called:", "opts": ["Slander", "Libel", "Assault", "Fraud"], "ans": 1, "exp": "Libel is written defamation. Slander is spoken defamation." },
+                { "type": "Core", "text": "When should an incident report be filed?", "opts": ["At the end of the month", "Only if the patient sues", "Immediately after any unusual event or injury occurs", "Never, to avoid liability"], "ans": 2, "exp": "Incident reports should be completed promptly after any adverse event or deviation from normal procedure." },
+
+                // Core: Basic Radiation Physics (15)
+                { "type": "Core", "text": "The atomic number (Z) of an element represents the number of:", "opts": ["Neutrons in the nucleus", "Protons plus neutrons", "Electrons in the outermost shell", "Protons in the nucleus"], "ans": 3, "exp": "Atomic number (Z) is the number of protons, which determines the chemical identity of the element." },
+                { "type": "Core", "text": "Isotopes of an element have the same number of protons but different numbers of:", "opts": ["Neutrons", "Electrons", "Photons", "Orbitals"], "ans": 0, "exp": "Isotopes have the same Z (protons) but different A (mass number) due to different numbers of neutrons." },
+                { "type": "Core", "text": "Electromagnetic radiation travels in a vacuum at:", "opts": ["The speed of sound", "The speed of light (3 x 10^8 m/s)", "Variable speeds depending on energy", "1.5 x 10^8 m/s"], "ans": 1, "exp": "All electromagnetic waves travel at the speed of light in a vacuum." },
+                { "type": "Core", "text": "As the wavelength of an electromagnetic wave decreases, its frequency:", "opts": ["Decreases", "Remains the same", "Increases", "Becomes zero"], "ans": 2, "exp": "Wavelength and frequency are inversely proportional (c = lambda x nu)." },
+                { "type": "Core", "text": "Which of the following is NOT a form of electromagnetic radiation?", "opts": ["Gamma rays", "Microwaves", "X-rays", "Beta particles"], "ans": 3, "exp": "Beta particles are high-speed electrons (particulate radiation), not electromagnetic waves." },
+                { "type": "Core", "text": "The energy of a photon is directly proportional to its:", "opts": ["Frequency", "Wavelength", "Amplitude", "Mass"], "ans": 0, "exp": "E = hf (Energy = Planck's constant x frequency). Higher frequency means higher energy." },
+                { "type": "Core", "text": "What type of bond is formed when atoms share electrons?", "opts": ["Ionic bond", "Covalent bond", "Metallic bond", "Hydrogen bond"], "ans": 1, "exp": "Covalent bonds involve the sharing of electron pairs between atoms." },
+                { "type": "Core", "text": "The process of removing an electron from an atom is called:", "opts": ["Excitation", "Annihilation", "Ionization", "Radioactivity"], "ans": 2, "exp": "Ionization creates an ion pair by ejecting an electron, leaving the atom positively charged." },
+                { "type": "Core", "text": "Which subatomic particle has the smallest mass?", "opts": ["Proton", "Neutron", "Alpha particle", "Electron"], "ans": 3, "exp": "Electrons are much lighter than protons and neutrons (mass is approx 1/1836 of a proton)." },
+                { "type": "Core", "text": "Alpha particles consist of:", "opts": ["Two protons and two neutrons", "One electron", "Two neutrons only", "High energy photons"], "ans": 0, "exp": "An alpha particle is identical to a helium nucleus (2 protons, 2 neutrons)." },
+                { "type": "Core", "text": "The primary difference between X-rays and Gamma rays is their:", "opts": ["Mass", "Origin", "Velocity", "Charge"], "ans": 1, "exp": "X-rays originate from electron cloud interactions, while gamma rays originate from the atomic nucleus." },
+                { "type": "Core", "text": "Thermionic emission is the process of releasing electrons from a metal surface by applying:", "opts": ["Light", "Magnetic fields", "Heat", "Chemicals"], "ans": 2, "exp": "Thermionic emission occurs in the X-ray tube filament when heated." },
+                { "type": "Core", "text": "Bremsstrahlung radiation is produced when an incident electron:", "opts": ["Knocks out an inner-shell electron", "Absorbs a photon", "Collides with another electron", "Slows down and changes direction near a nucleus"], "ans": 3, "exp": "Bremsstrahlung (braking radiation) occurs when high-speed electrons are decelerated by the electric field of a nucleus." },
+                { "type": "Core", "text": "The mass number (A) represents:", "opts": ["Sum of protons and neutrons", "Number of protons only", "Number of electrons", "Atomic weight in grams"], "ans": 0, "exp": "Mass number A is the total number of nucleons (protons + neutrons) in a nucleus." },
+                { "type": "Core", "text": "Half-Value Layer (HVL) is an indirect measure of:", "opts": ["Beam quantity (mAs)", "Beam quality or penetrability", "Focal spot size", "Tube current"], "ans": 1, "exp": "HVL measures the thickness of absorber required to halve the beam intensity, indicating its penetrating power or quality." },
+
+                // Core: General Radiography/Positioning/Other (10)
+                { "type": "Core", "text": "The 'Water's View' (Parietoacanthial projection) is primarily used to evaluate:", "opts": ["Foramen magnum", "Mastoid air cells", "Maxillary sinuses", "Cervical spine"], "ans": 2, "exp": "Water's view demonstrates the maxillary sinuses well, projecting the petrous ridges below them." },
+                { "type": "Core", "text": "For a lateral view of the cervical spine, the SID (Source to Image Distance) used is typically:", "opts": ["40 inches (100 cm)", "30 inches", "100 inches", "72 inches (180 cm)"], "ans": 3, "exp": "A 72-inch SID is used to reduce magnification caused by the increased OID of the shoulder width." },
+                { "type": "Core", "text": "Which contrast medium is radio-lucent (negative contrast)?", "opts": ["Room Air", "Barium Sulfate", "Iodine", "Gadolinium"], "ans": 0, "exp": "Air and carbon dioxide appear dark (radiolucent) on X-rays, making them negative contrast agents." },
+                { "type": "Core", "text": "What is the purpose of a Bucky grid?", "opts": ["To increase X-ray production", "To absorb scatter radiation before it reaches the image receptor", "To hold the patient steady", "To filter the primary beam"], "ans": 1, "exp": "Grids absorb scatter radiation emitted from the patient, improving image contrast." },
+                { "type": "Core", "text": "In digital radiography, the term 'Window Level' controls:", "opts": ["Image contrast", "Matrix size", "Image brightness", "Spatial resolution"], "ans": 2, "exp": "Window Level adjusts the brightness (density), while Window Width controls the contrast." },
+                { "type": "Core", "text": "What is the primary advantage of Computed Radiography (CR) over conventional film-screen radiography?", "opts": ["Higher spatial resolution", "Does not use X-rays", "Requires no reader device", "Wider dynamic range"], "ans": 3, "exp": "CR and DR have a wide dynamic range, allowing correction of exposure errors and reducing repeats." },
+                { "type": "Core", "text": "Which technical factor primarily controls the penetrating power (quality) of the X-ray beam?", "opts": ["kVp", "mA", "Time (seconds)", "SID"], "ans": 0, "exp": "kVp (kilovoltage peak) determines the maximum energy and thus the penetrating power of the beam." },
+                { "type": "Core", "text": "An AP projection of the pelvis requires the lower limbs to be:", "opts": ["Externally rotated 15 degrees", "Internally rotated 15-20 degrees", "Parallel in anatomical position", "Flexed at the knees"], "ans": 1, "exp": "Internal rotation of 15-20 degrees places the femoral necks parallel to the IR, showing them in true profile." },
+                { "type": "Core", "text": "Which exam involves introducing barium through a catheter into the large intestine?", "opts": ["Barium Swallow", "Barium Meal", "Barium Enema", "IVU"], "ans": 2, "exp": "A barium enema is a lower GI series to visualize the colon and rectum." },
+                { "type": "Core", "text": "The term 'Dysphagia' means:", "opts": ["Difficulty breathing", "Painful urination", "Loss of speech", "Difficulty swallowing"], "ans": 3, "exp": "Dysphagia is difficulty swallowing, an indication for a barium swallow study." }
+            ];
+            
+            raw_data.forEach((d, i) => questions.push(createQ(i + 1, d.type, d.text, d.opts, d.ans, d.exp)));
+        }
+
+        // --- STATE MANAGEMENT ---
+        let state = {
+            currentQ: 0,
+            answers: new Array(TOTAL_QUESTIONS).fill(null),
+            status: new Array(TOTAL_QUESTIONS).fill('not-visited'),
+            currentSection: 1,      // 1 to 5
+            sectionTimeLeft: SECTION_TIME_LIMIT,
+            maxSetReached: 1,       // Tracks highest section unlocked
+            isFinished: false
+        };
+
+        const els = {
+            landing: document.getElementById('landingPage'),
+            header: document.getElementById('examHeader'),
+            body: document.getElementById('examBody'),
+            footer: document.getElementById('examFooter'),
+            result: document.getElementById('resultPage'),
+            qText: document.getElementById('questionText'),
+            optsBox: document.getElementById('optionsBox'),
+            qNum: document.getElementById('qNumDisplay'),
+            sectionLabel: document.getElementById('sectionLabel'),
+            palette: document.getElementById('questionPalette'),
+            timer: document.getElementById('timerDisplay'),
+            btnPrev: document.getElementById('btnPrev'),
+            sidebar: document.getElementById('sidebar')
+        };
+
+        let timerInterval;
+
+        function saveState() {
+            localStorage.setItem('test_paper_14_state', JSON.stringify(state));
+        }
+
+        function loadState() {
+            const saved = localStorage.getItem('test_paper_14_state');
+            if (saved) {
+                try {
+                    const parsedState = JSON.parse(saved);
+                    // Minimal validation to avoid corruption
+                    if (parsedState && Array.isArray(parsedState.answers) && parsedState.answers.length === TOTAL_QUESTIONS) {
+                        state = parsedState;
+                        return true;
+                    }
+                } catch(e) {
+                    console.error("Failed to load state", e);
+                }
+            }
+            return false;
+        }
+
+        function init() {
+            generateQuestions(); // Load data
+            els.landing.classList.remove('hidden');
+            els.result.classList.add('hidden');
+            
+            if (loadState()) {
+                if (state.isFinished) {
+                    els.landing.classList.add('hidden');
+                    finishExam(true);
+                } else {
+                    if (confirm("You have an unfinished test. Do you want to resume it?")) {
+                        els.landing.classList.add('hidden');
+                        renderExamInterface();
+                        startSectionTimer();
+                    } else {
+                        // Reset state for new attempt
+                        localStorage.removeItem('test_paper_14_state');
+                        location.reload();
+                    }
+                }
+            }
+        }
+
+        function startExam() {
+            els.landing.classList.add('hidden');
+            renderExamInterface();
+            startSectionTimer();
+            saveState();
+        }
+
+        function startSectionTimer() {
+            if(timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                state.sectionTimeLeft--;
+                
+                // Format Time
+                const m = Math.floor(state.sectionTimeLeft / 60);
+                const s = state.sectionTimeLeft % 60;
+                els.timer.innerText = `${m}:${s < 10 ? '0'+s : s}`;
+                
+                // Visual Warning
+                if(state.sectionTimeLeft < 60) els.timer.style.backgroundColor = "#ffcdd2";
+                else els.timer.style.backgroundColor = "#fff";
+
+                // Time Up Logic
+                if (state.sectionTimeLeft <= 0) {
+                    handleSectionTimeout();
+                }
+            }, 1000);
+        }
+
+        function handleSectionTimeout() {
+            clearInterval(timerInterval);
+            
+            if (state.currentSection < 5) {
+                alert(`Time is up for Section ${state.currentSection}! Moving to Section ${state.currentSection + 1}.`);
+                forceNextSection();
+            } else {
+                alert("Time is up for the final section! Submitting Exam.");
+                finishExam();
+            }
+        }
+
+        function forceNextSection() {
+            state.currentSection++;
+            state.maxSetReached = state.currentSection;
+            state.sectionTimeLeft = SECTION_TIME_LIMIT;
+            
+            // Move to first question of next section
+            const firstQofNextSection = (state.currentSection - 1) * SECTION_SIZE;
+            loadQuestion(firstQofNextSection);
+            startSectionTimer();
+            saveState();
+        }
+
+        function renderExamInterface() {
+            els.header.classList.remove('hidden');
+            els.body.classList.remove('hidden');
+            els.footer.classList.remove('hidden');
+            renderPalette();
+            loadQuestion(state.currentQ);
+        }
+
+        function loadQuestion(index) {
+            state.currentQ = index;
+            if(state.status[index] === 'not-visited') state.status[index] = 'not-answered';
+
+            // Update Section Label
+            const secNum = Math.floor(index / SECTION_SIZE) + 1;
+            els.sectionLabel.innerText = `Section ${secNum} (Q${(secNum-1)*20 + 1}-${secNum*20})`;
+
+            // Render Text
+            els.qNum.innerText = `Question ${index + 1}`;
+            els.qText.innerText = questions[index].text;
+            
+            // Render Options
+            els.optsBox.innerHTML = '';
+            questions[index].opts.forEach((opt, i) => {
+                const isChecked = state.answers[index] === i ? 'checked' : '';
+                els.optsBox.innerHTML += `
+                    <label class="option-label">
+                        <input type="radio" name="opt" value="${i}" ${isChecked} onchange="selectOption(${i})">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            // Update Palette UI
+            document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('current'));
+            const currentBtn = document.getElementById(`qbtn-${index}`);
+            if(currentBtn) currentBtn.classList.add('current');
+
+            // Handle Prev Button State (Cannot go back to previous locked section)
+            const startOfCurrentSection = (state.currentSection - 1) * SECTION_SIZE;
+            els.btnPrev.disabled = (index <= startOfCurrentSection);
+            
+            saveState();
+        }
+
+        function selectOption(optIndex) {
+            state.answers[state.currentQ] = optIndex;
+            saveState();
+        }
+
+        function saveAndNext() {
+            const index = state.currentQ;
+            // Update status
+            state.status[index] = (state.answers[index] !== null) ? 'answered' : 'not-answered';
+            
+            moveToNextQuestion();
+        }
+
+        function markForReview() {
+            const index = state.currentQ;
+            state.status[index] = (state.answers[index] !== null) ? 'marked-answered' : 'review';
+            moveToNextQuestion();
+        }
+
+        function clearResponse() {
+            state.answers[state.currentQ] = null;
+            state.status[state.currentQ] = 'not-answered';
+            loadQuestion(state.currentQ);
+            renderPalette();
+            saveState();
+        }
+
+        function moveToNextQuestion() {
+            const nextIndex = state.currentQ + 1;
+            const currentSecBound = state.currentSection * SECTION_SIZE;
+
+            // Check if next question crosses section boundary
+            if (nextIndex >= currentSecBound) {
+                // End of section reached
+                if (state.currentSection < 5) {
+                    if (confirm(`You have reached the end of Section ${state.currentSection}.\nDo you want to submit this section and move to Section ${state.currentSection+1}?\n\nWARNING: You cannot return to this section.`)) {
+                        forceNextSection();
+                    }
+                } else {
+                    if(confirm("This was the last question. Submit Exam?")) {
+                        finishExam();
+                    }
+                }
+            } else {
+                // Normal movement within section
+                renderPalette();
+                loadQuestion(nextIndex);
+            }
+        }
+
+        function prevQuestion() {
+            if (state.currentQ > 0) {
+                loadQuestion(state.currentQ - 1);
+            }
+        }
+
+        function renderPalette() {
+            els.palette.innerHTML = '';
+            for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+                let statusClass = state.status[i];
+                if(statusClass === 'marked-answered') statusClass = 'review';
+                
+                // Check if question belongs to a locked (previous) section
+                const qSection = Math.floor(i / SECTION_SIZE) + 1;
+                const isLocked = qSection < state.currentSection;
+                const lockedClass = isLocked ? ' locked' : '';
+                
+                // Gray out future sections
+                const isFuture = qSection > state.currentSection;
+                const futureStyle = isFuture ? 'opacity:0.3; pointer-events:none;' : '';
+
+                els.palette.innerHTML += `
+                    <div id="qbtn-${i}" 
+                         class="q-btn ${statusClass}${lockedClass}" 
+                         style="${futureStyle}"
+                         onclick="jumpToQuestion(${i})">
+                        ${i + 1}
+                    </div>
+                `;
+            }
+        }
+
+        function jumpToQuestion(index) {
+            const qSection = Math.floor(index / SECTION_SIZE) + 1;
+            
+            if (qSection < state.currentSection) {
+                alert("This section is locked.");
+                return;
+            }
+            if (qSection > state.currentSection) {
+                alert("You cannot jump to a future section yet.");
+                return;
+            }
+            
+            loadQuestion(index);
+        }
+
+        function submitExam() {
+            if(confirm("Are you sure you want to finish the exam? Unanswered questions in future sections will be marked zero.")) {
+                finishExam();
+            }
+        }
+
+        function finishExam(skipSave = false) {
+            clearInterval(timerInterval);
+            state.isFinished = true;
+            if (!skipSave) saveState();
+            
+            els.header.classList.add('hidden');
+            els.body.classList.add('hidden');
+            els.footer.classList.add('hidden');
+            els.result.classList.remove('hidden');
+            
+            calculateResult();
+        }
+
+        function calculateResult() {
+            let correct = 0, wrong = 0, unattempted = 0, score = 0;
+
+            state.answers.forEach((ans, i) => {
+                if (ans === null) {
+                    unattempted++;
+                } else if (questions[i] && ans === questions[i].ans) {
+                    correct++;
+                    score += 4;
+                } else {
+                    wrong++;
+                    score -= 1;
+                }
+            });
+
+            document.getElementById('scoreCard').innerHTML = `
+                <h1 style="color:#3f51b5; font-size:3rem;">${score} / 400</h1>
+                <p><strong>Correct:</strong> ${correct} (+${correct*4})</p>
+                <p><strong>Incorrect:</strong> ${wrong} (-${wrong})</p>
+                <p><strong>Unattempted:</strong> ${unattempted}</p>
+            `;
+        }
+
+        function showDetailedReview() {
+            const container = document.getElementById('detailedReview');
+            container.style.display = 'block';
+            container.innerHTML = '<h3>Detailed Solutions</h3>';
+            
+            questions.forEach((q, i) => {
+                const userAns = state.answers[i];
+                const isCorrect = userAns === q.ans;
+                const statusColor = userAns === null ? 'gray' : (isCorrect ? 'green' : 'red');
+                const statusText = userAns === null ? 'Skipped' : (isCorrect ? 'Correct' : 'Incorrect');
+
+                let optsHtml = '';
+                q.opts.forEach((opt, oi) => {
+                    let style = '';
+                    if (oi === q.ans) style = 'font-weight:bold; color:green;'; 
+                    if (oi === userAns && !isCorrect) style = 'font-weight:bold; color:red;'; 
+                    optsHtml += `<div style="${style}">${oi+1}. ${opt}</div>`;
+                });
+
+                container.innerHTML += `
+                    <div class="review-item">
+                        <div style="color:${statusColor}; font-weight:bold; margin-bottom:5px;">Q${i+1}: ${statusText}</div>
+                        <div>${q.text}</div>
+                        <div style="margin:10px 0; padding-left:15px; border-left:3px solid #ddd;">${optsHtml}</div>
+                        <div class="explanation"><strong>Explanation:</strong> ${q.exp}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleSidebar() {
+            els.sidebar.classList.toggle('active');
+        }
+
+        // Initialize
+        init();
+
+    </script>
+</body>
+</html>

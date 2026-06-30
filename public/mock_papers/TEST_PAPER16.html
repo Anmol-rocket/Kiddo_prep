@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIIMS CRE Radiographer - Test Paper 16</title>
+    <style>
+        :root {
+            --header-bg: #3f51b5;
+            --header-text: #fff;
+            --panel-bg: #f5f5f5;
+            --pallet-answered: #4caf50;
+            --pallet-not-answered: #f44336;
+            --pallet-review: #9c27b0;
+            --pallet-not-visited: #e0e0e0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #fff; }
+
+        /* --- Header --- */
+        header {
+            background: var(--header-bg); color: var(--header-text);
+            padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+            height: 60px; flex-shrink: 0;
+        }
+        .timer { font-size: 1.2rem; font-weight: bold; background: #fff; color: #d32f2f; padding: 5px 15px; border-radius: 4px; border: 2px solid #d32f2f; }
+
+        /* --- Main Layout --- */
+        .main-container { display: flex; flex: 1; overflow: hidden; }
+        
+        .question-area { flex: 1; display: flex; flex-direction: column; padding: 20px; overflow-y: auto; }
+        .q-header { display: flex; justify-content: space-between; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.5; }
+        
+        .options-container { display: flex; flex-direction: column; gap: 10px; }
+        .option-label { 
+            display: flex; align-items: center; padding: 10px; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; transition: 0.2s; 
+        }
+        .option-label:hover { background: #f0f8ff; }
+        .option-label input { margin-right: 15px; transform: scale(1.2); }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px; background: var(--panel-bg); border-left: 1px solid #ccc;
+            display: flex; flex-direction: column; flex-shrink: 0;
+        }
+        .user-info { padding: 10px; background: #e8eaf6; border-bottom: 1px solid #ccc; }
+        
+        .palette-legend { padding: 10px; font-size: 0.8rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: #fff; }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+        .question-grid { 
+            padding: 10px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; 
+            overflow-y: auto; flex: 1; align-content: start;
+        }
+        .q-btn {
+            height: 35px; width: 35px; border: 1px solid #ccc; background: #fff; 
+            border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .q-btn.answered { background: var(--pallet-answered); color: white; border-color: var(--pallet-answered); }
+        .q-btn.not-answered { background: var(--pallet-not-answered); color: white; border-color: var(--pallet-not-answered); }
+        .q-btn.review { background: var(--pallet-review); color: white; border-radius: 50%; }
+        .q-btn.current { border: 2px solid blue; box-shadow: 0 0 5px blue; }
+        .q-btn.locked { opacity: 0.4; cursor: not-allowed; background: #444 !important; color: #888; border: 1px solid #000; }
+
+        /* Footer */
+        .footer-controls {
+            height: 60px; background: #fff; border-top: 1px solid #ccc;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+        }
+        .btn { padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+        .btn-primary { background: #2196f3; color: white; }
+        .btn-success { background: #4caf50; color: white; }
+        .btn-warn { background: #ff9800; color: white; }
+        .btn-danger { background: #f44336; color: white; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* Mobile */
+        .mobile-toggle { display: none; background: none; border: none; color: white; font-size: 1.5rem; }
+        @media (max-width: 768px) {
+            .mobile-toggle { display: block; }
+            .sidebar { 
+                position: absolute; right: 0; top: 60px; bottom: 60px; z-index: 100;
+                transform: translateX(100%); transition: transform 0.3s; width: 85%;
+            }
+            .sidebar.active { transform: translateX(0); }
+            .question-grid { grid-template-columns: repeat(6, 1fr); }
+            .footer-controls { flex-wrap: wrap; gap: 5px; height: auto; padding: 10px; }
+            .btn { flex: 1; padding: 8px; font-size: 0.8rem; }
+        }
+
+        /* Overlay */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .hidden { display: none !important; }
+        
+        .review-panel { display: none; padding: 20px; height: 100%; overflow-y: auto; background:#f9f9f9;}
+        .review-item { margin-bottom: 20px; border: 1px solid #ddd; padding: 15px; border-radius: 5px; background:white; }
+        .explanation { background: #fff3cd; padding: 10px; margin-top: 10px; font-size: 0.9rem; border-left: 4px solid #ffc107; }
+
+    </style>
+</head>
+<body>
+
+    <div id="landingPage" class="overlay">
+        <h1>AIIMS CRE - Test Paper 16</h1>
+        <div style="width: 80%; max-width: 600px; text-align: left; margin: 20px 0;">
+            <h3>Exam Rules:</h3>
+            <ul>
+                <li><strong>Questions:</strong> 100 (5 Sections of 20 questions each).</li>
+                <li><strong>Timing:</strong> 18 Minutes per section (Strictly Dedicated).</li>
+                <li><strong>Total Time:</strong> 90 Minutes.</li>
+                <li><strong>Locking:</strong> Once 18 mins are up, or if you manually proceed to the next section, you <u>cannot</u> return to the previous section.</li>
+                <li><strong>Marking:</strong> +4 Correct, -1 Incorrect.</li>
+            </ul>
+        </div>
+        <button class="btn btn-success" style="font-size: 1.2rem;" onclick="startExam()">START EXAM</button>
+    </div>
+
+    <header id="examHeader" class="hidden">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <h3>AIIMS Radiographer</h3>
+            <span style="font-size:0.8rem; background:#eee; padding:2px 6px; border-radius:4px; color:#333;" id="sectionLabel">Section 1</span>
+        </div>
+        <div class="timer" id="timerDisplay">18:00</div>
+        <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+    </header>
+
+    <div class="main-container hidden" id="examBody">
+        <div class="question-area">
+            <div class="q-header">
+                <span id="qNumDisplay">Question No. 1</span>
+                <span style="color: #666;">Marks: +4, -1</span>
+            </div>
+            <div id="questionText" class="q-text">Loading...</div>
+            <div id="optionsBox" class="options-container"></div>
+        </div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="user-info">
+                <strong>Candidate Name</strong><br><small>Roll No: 123456</small>
+            </div>
+            <div class="palette-legend">
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-answered)"></span> Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-not-answered)"></span> Not Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-review)"></span> Review</div>
+                <div class="legend-item"><span class="dot" style="background:#444"></span> Locked</div>
+            </div>
+            <div class="question-grid" id="questionPalette"></div>
+            <div style="padding:10px; margin-top:auto;">
+                <button class="btn btn-primary" style="width:100%" onclick="submitExam()">FINISH EXAM</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-controls hidden" id="examFooter">
+        <div style="display:flex; gap:10px;">
+            <button class="btn btn-danger" onclick="clearResponse()">Clear</button>
+            <button class="btn btn-warn" onclick="markForReview()">Review</button>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <button class="btn" onclick="prevQuestion()" id="btnPrev">Previous</button>
+            <button class="btn btn-success" onclick="saveAndNext()">Save & Next</button>
+        </div>
+    </div>
+
+    <div id="resultPage" class="overlay hidden" style="display:block; overflow-y:auto; justify-content:start; padding-top:40px;">
+        <h2 style="text-align:center;">Exam Summary</h2>
+        <div id="scoreCard" style="margin: 20px auto; width:90%; max-width:600px; padding: 20px; border: 1px solid #ccc; text-align: center; background:#fff;"></div>
+        <div style="display:flex; justify-content:center; gap:20px; margin-bottom:20px;">
+            <button class="btn btn-primary" onclick="showDetailedReview()">Review Solutions</button>
+            <button class="btn btn-danger" onclick="location.reload()">Exit</button>
+        </div>
+        <div id="detailedReview" class="review-panel" style="width: 90%; max-width: 800px; margin:0 auto;"></div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const TOTAL_QUESTIONS = 100;
+        const SECTION_SIZE = 20; // 20 questions per section
+        const SECTION_TIME_LIMIT = 18 * 60; // 18 minutes in seconds
+        
+        let questions = [];
+
+function generateQuestions() {
+        const createQ = (id, type, text, opts, ans, exp) => ({ id, type, text, opts, ans, exp });
+        questions = []; // Reset array
+
+        const raw_data = [
+        {
+                "type": "Non-Core",
+                "text": "Which of the following is the highest civilian award in India?",
+                "opts": [
+                        "Padma Vibhushan",
+                        "Padma Shri",
+                        "Bharat Ratna",
+                        "Param Vir Chakra"
+                ],
+                "ans": 2,
+                "exp": "Bharat Ratna is the highest civilian award of the Republic of India."
+        },
+        {
+                "type": "Non-Core",
+                "text": "What is the capital of the Indian state of Chhattisgarh?",
+                "opts": [
+                        "Bhopal",
+                        "Raipur",
+                        "Dehradun",
+                        "Ranchi"
+                ],
+                "ans": 1,
+                "exp": "Raipur is the capital of Chhattisgarh."
+        },
+        {
+                "type": "Non-Core",
+                "text": "Which sector is considered the backbone of the Indian economy?",
+                "opts": [
+                        "Agriculture",
+                        "Information Technology",
+                        "Tourism",
+                        "Manufacturing"
+                ],
+                "ans": 0,
+                "exp": "Agriculture and its allied sectors are considered the backbone of the Indian economy."
+        },
+        {
+                "type": "Non-Core",
+                "text": "The Dronacharya Award is given to:",
+                "opts": [
+                        "Film directors",
+                        "Sports coaches",
+                        "Scientists",
+                        "Outstanding athletes"
+                ],
+                "ans": 1,
+                "exp": "Dronacharya Award is an award presented by the Government of India for excellence in sports coaching."
+        },
+        {
+                "type": "Non-Core",
+                "text": "Which of the following determines the Repo Rate in India?",
+                "opts": [
+                        "NITI Aayog",
+                        "Ministry of Finance",
+                        "State Bank of India",
+                        "Reserve Bank of India (RBI)"
+                ],
+                "ans": 3,
+                "exp": "The Reserve Bank of India decides the repo rate to regulate liquidity and inflation."
+        },
+        {
+                "type": "Non-Core",
+                "text": "Find the area of a circle whose radius is 7 cm. (Take pi = 22/7)",
+                "opts": [
+                        "154 sq cm",
+                        "44 sq cm",
+                        "308 sq cm",
+                        "144 sq cm"
+                ],
+                "ans": 0,
+                "exp": "Area = pi * r^2 = (22/7) * 7 * 7 = 154 sq cm."
+        },
+        {
+                "type": "Non-Core",
+                "text": "The volume of a cube is 512 cm^3. What is the length of its edge?",
+                "opts": [
+                        "12 cm",
+                        "10 cm",
+                        "8 cm",
+                        "6 cm"
+                ],
+                "ans": 2,
+                "exp": "Volume of a cube = a^3. 8^3 = 512, so the edge length is 8 cm."
+        },
+        {
+                "type": "Non-Core",
+                "text": "A train moving at a speed of 90 km/hr crosses a pole in 10 seconds. What is the length of the train?",
+                "opts": [
+                        "150 m",
+                        "250 m",
+                        "200 m",
+                        "300 m"
+                ],
+                "ans": 1,
+                "exp": "Speed = 90 * (5/18) = 25 m/s. Distance (length) = Speed * Time = 25 * 10 = 250 m."
+        },
+        {
+                "type": "Non-Core",
+                "text": "A car covers a distance of 150 km in 3 hours. What is its average speed?",
+                "opts": [
+                        "40 km/hr",
+                        "60 km/hr",
+                        "70 km/hr",
+                        "50 km/hr"
+                ],
+                "ans": 3,
+                "exp": "Speed = Distance / Time = 150 / 3 = 50 km/hr."
+        },
+        {
+                "type": "Non-Core",
+                "text": "The surface area of a sphere of radius r is given by the formula:",
+                "opts": [
+                        "4 * pi * r^2",
+                        "(4/3) * pi * r^3",
+                        "2 * pi * r",
+                        "pi * r^2"
+                ],
+                "ans": 0,
+                "exp": "The surface area of a sphere is 4 * pi * r^2."
+        },
+        {
+                "type": "Non-Core",
+                "text": "Select the synonym of Abundant:",
+                "opts": [
+                        "Limited",
+                        "Rare",
+                        "Plentiful",
+                        "Scarce"
+                ],
+                "ans": 2,
+                "exp": "Abundant means available in large quantities; plentiful."
+        },
+        {
+                "type": "Non-Core",
+                "text": "Choose the correctly spelled word:",
+                "opts": [
+                        "Accomodation",
+                        "Accommodation",
+                        "Acommodation",
+                        "Acomodation"
+                ],
+                "ans": 1,
+                "exp": "The correct spelling is Accommodation (two Cs, two Ms)."
+        },
+        {
+                "type": "Non-Core",
+                "text": "If RED is coded as 27, how is CAT coded? (A=1, B=2...)",
+                "opts": [
+                        "24",
+                        "22",
+                        "26",
+                        "20"
+                ],
+                "ans": 0,
+                "exp": "C(3) + A(1) + T(20) = 24."
+        },
+        {
+                "type": "Non-Core",
+                "text": "Pointing to a man, a woman said, \"He is the son of my mothers only daughter.\" How is the man related to the woman?",
+                "opts": [
+                        "Uncle",
+                        "Son",
+                        "Brother",
+                        "Nephew"
+                ],
+                "ans": 1,
+                "exp": "The womans mothers only daughter is the woman herself. Her son is the man."
+        },
+        {
+                "type": "Non-Core",
+                "text": "Find the odd one out:",
+                "opts": [
+                        "Rectangle",
+                        "Cube",
+                        "Circle",
+                        "Square"
+                ],
+                "ans": 1,
+                "exp": "A cube is a 3D shape, while the others are 2D shapes."
+        },
+        {
+                "type": "Non-Core",
+                "text": "In MS Excel, which symbol is used to start a formula?",
+                "opts": [
+                        "$",
+                        "=",
+                        "@",
+                        "#"
+                ],
+                "ans": 1,
+                "exp": "All formulas in MS Excel must begin with an equal sign (=)."
+        },
+        {
+                "type": "Non-Core",
+                "text": "What is the file extension of a Microsoft Excel 2007 and newer workbook?",
+                "opts": [
+                        ".xls",
+                        ".xltx",
+                        ".xlsx",
+                        ".xlsm"
+                ],
+                "ans": 2,
+                "exp": ".xlsx is the default XML-based file extension for Excel 2007 and later."
+        },
+        {
+                "type": "Non-Core",
+                "text": "Which software is primarily used for creating presentations?",
+                "opts": [
+                        "MS Word",
+                        "MS PowerPoint",
+                        "MS Excel",
+                        "MS Access"
+                ],
+                "ans": 1,
+                "exp": "Microsoft PowerPoint is a presentation program."
+        },
+        {
+                "type": "Non-Core",
+                "text": "The VLOOKUP function in Excel is used to:",
+                "opts": [
+                        "Change text to uppercase",
+                        "Count the number of cells",
+                        "Find a value vertically in a table",
+                        "Add up values in a column"
+                ],
+                "ans": 2,
+                "exp": "VLOOKUP (Vertical Lookup) searches for a value in the first column of a table array."
+        },
+        {
+                "type": "Non-Core",
+                "text": "Which of the following is an example of an Operating System?",
+                "opts": [
+                        "Adobe Photoshop",
+                        "Microsoft Office",
+                        "Microsoft Windows",
+                        "Google Chrome"
+                ],
+                "ans": 2,
+                "exp": "Microsoft Windows is an operating system."
+        },
+        {
+                "type": "Core",
+                "text": "Which contrast medium is primarily used for a Barium Swallow study?",
+                "opts": [
+                        "Gadolinium",
+                        "Iodinated contrast",
+                        "Air only",
+                        "Barium sulfate suspension"
+                ],
+                "ans": 3,
+                "exp": "Barium sulfate is the contrast of choice for demonstrating the gastrointestinal tract, including the esophagus."
+        },
+        {
+                "type": "Core",
+                "text": "What is the primary indication for an Intravenous Urogram (IVU)?",
+                "opts": [
+                        "Peptic ulcer",
+                        "Gallstones",
+                        "Spinal cord lesions",
+                        "Renal calculi"
+                ],
+                "ans": 3,
+                "exp": "IVU (or IVP) is performed to evaluate the urinary tract for calculi, tumors, or strictures."
+        },
+        {
+                "type": "Core",
+                "text": "During an ERCP procedure, the contrast is injected into the:",
+                "opts": [
+                        "Joint space",
+                        "Spinal canal",
+                        "Common bile duct and pancreatic duct",
+                        "Renal pelvis"
+                ],
+                "ans": 2,
+                "exp": "Endoscopic Retrograde Cholangiopancreatography evaluates the biliary and pancreatic ducts."
+        },
+        {
+                "type": "Core",
+                "text": "Micturating Cystourethrography (MCU) is most commonly performed to diagnose:",
+                "opts": [
+                        "Renal artery stenosis",
+                        "Esophageal stricture",
+                        "Vesicoureteral reflux",
+                        "Gallbladder polyps"
+                ],
+                "ans": 2,
+                "exp": "MCU evaluates the bladder and urethra during urination and is the gold standard for diagnosing VUR in children."
+        },
+        {
+                "type": "Core",
+                "text": "In a double-contrast barium enema, what is used as the negative contrast agent?",
+                "opts": [
+                        "Air",
+                        "Water",
+                        "Barium sulfate",
+                        "Iodine"
+                ],
+                "ans": 0,
+                "exp": "Air (or CO2) provides negative contrast to distend the bowel lumen and coat the mucosa with barium."
+        },
+        {
+                "type": "Core",
+                "text": "A T-tube cholangiogram is performed:",
+                "opts": [
+                        "Post-operatively",
+                        "During an IVU",
+                        "Pre-operatively",
+                        "For esophageal assessment"
+                ],
+                "ans": 0,
+                "exp": "It is done post-operatively after cholecystectomy to evaluate the patency of the common bile duct via an indwelling T-tube."
+        },
+        {
+                "type": "Core",
+                "text": "Which procedure involves radiographic examination of the uterus and fallopian tubes?",
+                "opts": [
+                        "Myelography",
+                        "Hysterosalpingography (HSG)",
+                        "Sialography",
+                        "Cystography"
+                ],
+                "ans": 1,
+                "exp": "HSG uses contrast to assess the patency of fallopian tubes and uterine cavity anatomy."
+        },
+        {
+                "type": "Core",
+                "text": "Sialography is the radiographic examination of the:",
+                "opts": [
+                        "Salivary glands and ducts",
+                        "Spinal cord",
+                        "Synovial joints",
+                        "Lymph nodes"
+                ],
+                "ans": 0,
+                "exp": "It involves injecting contrast into the ducts of the salivary glands (parotid or submandibular)."
+        },
+        {
+                "type": "Core",
+                "text": "Myelography involves the injection of contrast into the:",
+                "opts": [
+                        "Epidural space",
+                        "Intra-articular space",
+                        "Subdural space",
+                        "Subarachnoid space"
+                ],
+                "ans": 3,
+                "exp": "Contrast is injected into the subarachnoid space to visualize the spinal cord and nerve roots."
+        },
+        {
+                "type": "Core",
+                "text": "Which contrast agent is safe for intrathecal injection (Myelography)?",
+                "opts": [
+                        "Lipiodol",
+                        "Barium sulfate",
+                        "Non-ionic water-soluble contrast",
+                        "High osmolar ionic contrast"
+                ],
+                "ans": 2,
+                "exp": "Only non-ionic, low-osmolar water-soluble contrasts (like Iohexol) are safe for intrathecal use to prevent neurotoxicity."
+        },
+        {
+                "type": "Core",
+                "text": "What is the preparation required for an Upper GI Tract (Barium Meal) study?",
+                "opts": [
+                        "Full bladder",
+                        "NPO for 6-8 hours",
+                        "No preparation needed",
+                        "Bowel preparation with laxatives"
+                ],
+                "ans": 1,
+                "exp": "Fasting (NPO) ensures the stomach is empty of food and fluid for proper mucosal coating."
+        },
+        {
+                "type": "Core",
+                "text": "In a Barium Swallow, to evaluate esophageal varices, the patient may be asked to:",
+                "opts": [
+                        "Drink water rapidly",
+                        "Cough forcefully",
+                        "Hold their breath in deep inspiration",
+                        "Perform the Valsalva maneuver"
+                ],
+                "ans": 3,
+                "exp": "The Valsalva maneuver increases intrathoracic pressure, distending the esophageal veins (varices)."
+        },
+        {
+                "type": "Core",
+                "text": "Percutaneous Transhepatic Cholangiography (PTC) is performed by inserting a needle through the:",
+                "opts": [
+                        "Through the mouth and stomach",
+                        "Through the femoral artery",
+                        "Through the urethra",
+                        "Abdominal wall into the liver"
+                ],
+                "ans": 3,
+                "exp": "A Chiba needle is passed percutaneously into the liver to access the biliary tree directly."
+        },
+        {
+                "type": "Core",
+                "text": "Arthrography is the study of:",
+                "opts": [
+                        "Spinal cord",
+                        "Synovial joints",
+                        "Salivary glands",
+                        "Arteries"
+                ],
+                "ans": 1,
+                "exp": "Arthrography involves injecting contrast into a joint capsule to assess structures like menisci or ligaments."
+        },
+        {
+                "type": "Core",
+                "text": "Which radiographic procedure is used to evaluate the patency of the male urethra?",
+                "opts": [
+                        "Micturating Cystourethrography",
+                        "Retrograde Urethrography (RGU)",
+                        "Nephrostomy",
+                        "Intravenous Urogram"
+                ],
+                "ans": 1,
+                "exp": "RGU involves injecting contrast retrogradely to assess urethral strictures or trauma in males."
+        },
+        {
+                "type": "Core",
+                "text": "The string sign on a barium meal follow-through is classically associated with:",
+                "opts": [
+                        "Appendicitis",
+                        "Ulcerative colitis",
+                        "Crohns disease",
+                        "Diverticulitis"
+                ],
+                "ans": 2,
+                "exp": "The string sign indicates severe narrowing of a bowel loop, characteristic of terminal ileitis in Crohns disease."
+        },
+        {
+                "type": "Core",
+                "text": "Fistulography is performed to:",
+                "opts": [
+                        "Evaluate the fallopian tubes",
+                        "Examine salivary ducts",
+                        "Determine the origin and extent of a sinus or fistula",
+                        "Assess joint spaces"
+                ],
+                "ans": 2,
+                "exp": "Contrast is injected into the external opening of a tract to map its internal communication."
+        },
+        {
+                "type": "Core",
+                "text": "During an IVU, compression bands are applied over the distal ureters to:",
+                "opts": [
+                        "Prevent patient movement",
+                        "Push the bowels away",
+                        "Increase renal blood flow",
+                        "Retain contrast in the pelvicalyceal system"
+                ],
+                "ans": 3,
+                "exp": "Ureteric compression delays contrast emptying to better fill and distend the renal pelvis and calyces."
+        },
+        {
+                "type": "Core",
+                "text": "Which phase of an IVU best demonstrates the renal parenchyma?",
+                "opts": [
+                        "Ureteric phase (15 minutes)",
+                        "Nephrogram phase (1-3 minutes)",
+                        "Calyceal phase (5-10 minutes)",
+                        "Cystogram phase"
+                ],
+                "ans": 1,
+                "exp": "The nephrogram phase occurs immediately after injection when contrast is in the nephrons, blushing the parenchyma."
+        },
+        {
+                "type": "Core",
+                "text": "For a Barium Enema, Buscopan or Glucagon may be administered to:",
+                "opts": [
+                        "Induce bowel hypotonia/relaxation",
+                        "Prevent contrast allergy",
+                        "Act as a local anesthetic",
+                        "Stimulate bowel peristalsis"
+                ],
+                "ans": 0,
+                "exp": "These drugs are antispasmodics used to paralyze bowel movements temporarily for better visualization."
+        },
+        {
+                "type": "Core",
+                "text": "The Seldinger technique is most commonly used for:",
+                "opts": [
+                        "Intubation",
+                        "Percutaneous vascular access",
+                        "Needle biopsy",
+                        "Lumbar puncture"
+                ],
+                "ans": 1,
+                "exp": "The Seldinger technique uses a needle, guidewire, and catheter for safe access to blood vessels."
+        },
+        {
+                "type": "Core",
+                "text": "Which of the following is a non-ionic contrast medium?",
+                "opts": [
+                        "Iothalamate",
+                        "Iohexol",
+                        "Diatrizoate",
+                        "Metrizoate"
+                ],
+                "ans": 1,
+                "exp": "Iohexol (Omnipaque) is a low-osmolar non-ionic contrast medium. The others are high-osmolar ionic agents."
+        },
+        {
+                "type": "Core",
+                "text": "The osmolality of blood is approximately:",
+                "opts": [
+                        "600 mOsm/kg",
+                        "100 mOsm/kg",
+                        "1000 mOsm/kg",
+                        "290 mOsm/kg"
+                ],
+                "ans": 3,
+                "exp": "Normal plasma osmolality is around 285-295 mOsm/kg."
+        },
+        {
+                "type": "Core",
+                "text": "High-osmolar contrast media (HOCM) have an osmolality roughly:",
+                "opts": [
+                        "Half of blood",
+                        "Twice that of blood",
+                        "Equal to blood",
+                        "5 to 8 times that of blood"
+                ],
+                "ans": 3,
+                "exp": "HOCM typically has an osmolality of 1500-2000 mOsm/kg, causing more adverse reactions than low-osmolar agents."
+        },
+        {
+                "type": "Core",
+                "text": "In transcatheter arterial chemoembolization (TACE) for liver tumors, the embolic agent is delivered to the:",
+                "opts": [
+                        "Portal vein",
+                        "Hepatic artery",
+                        "Hepatic vein",
+                        "Superior mesenteric artery"
+                ],
+                "ans": 1,
+                "exp": "Hepatocellular carcinomas derive their primary blood supply from the hepatic artery."
+        },
+        {
+                "type": "Core",
+                "text": "Which drug is considered the first-line treatment for an anaphylactic contrast reaction?",
+                "opts": [
+                        "Epinephrine (Adrenaline)",
+                        "Atropine",
+                        "Diphenhydramine",
+                        "Hydrocortisone"
+                ],
+                "ans": 0,
+                "exp": "Epinephrine (1:1000 IM) is the primary treatment for severe anaphylaxis to stabilize blood pressure and airways."
+        },
+        {
+                "type": "Core",
+                "text": "What is the primary action of Atropine in a radiology emergency?",
+                "opts": [
+                        "Treat hypoglycemia",
+                        "Reduce seizures",
+                        "Treat anaphylaxis",
+                        "Treat bradycardia (increase heart rate)"
+                ],
+                "ans": 3,
+                "exp": "Atropine is an anticholinergic drug used to treat hemodynamically significant bradycardia."
+        },
+        {
+                "type": "Core",
+                "text": "Which patient condition poses the highest risk for contrast-induced nephropathy (CIN)?",
+                "opts": [
+                        "Peptic ulcer disease",
+                        "Asthma",
+                        "Pre-existing renal failure",
+                        "Hyperthyroidism"
+                ],
+                "ans": 2,
+                "exp": "Pre-existing renal dysfunction, often compounded by diabetes, is the biggest risk factor for CIN."
+        },
+        {
+                "type": "Core",
+                "text": "Metformin should be withheld after administration of iodinated contrast for:",
+                "opts": [
+                        "No need to withhold",
+                        "12 hours",
+                        "48 hours",
+                        "1 week"
+                ],
+                "ans": 2,
+                "exp": "Metformin is withheld for 48 hours post-contrast to prevent lactic acidosis in case contrast-induced renal dysfunction occurs."
+        },
+        {
+                "type": "Core",
+                "text": "Which imaging modality provides real-time guidance during endovascular procedures?",
+                "opts": [
+                        "PET scan",
+                        "MRI",
+                        "Static radiography",
+                        "Fluoroscopy"
+                ],
+                "ans": 3,
+                "exp": "Fluoroscopy provides continuous real-time X-ray imaging essential for tracking catheters and guidewires."
+        },
+        {
+                "type": "Core",
+                "text": "What is the purpose of an IVC filter?",
+                "opts": [
+                        "To prevent pulmonary embolism",
+                        "To monitor central venous pressure",
+                        "To treat deep vein thrombosis directly",
+                        "To dilate the vena cava"
+                ],
+                "ans": 0,
+                "exp": "Inferior Vena Cava filters trap emboli from the lower extremities, preventing them from reaching the lungs."
+        },
+        {
+                "type": "Core",
+                "text": "Iodine is used as an X-ray contrast agent because it:",
+                "opts": [
+                        "Has a very low atomic number",
+                        "Has a high atomic number (Z=53)",
+                        "Is highly radioactive",
+                        "Is a low-density gas"
+                ],
+                "ans": 1,
+                "exp": "Iodines high atomic number increases the photoelectric absorption of X-rays, making vessels radio-opaque."
+        },
+        {
+                "type": "Core",
+                "text": "A patient develops hives (urticaria) after contrast injection. This is classified as a:",
+                "opts": [
+                        "Moderate reaction",
+                        "Severe reaction",
+                        "Mild reaction",
+                        "Vasovagal reaction"
+                ],
+                "ans": 2,
+                "exp": "Urticaria and nausea are mild idiosyncratic reactions and generally require observation or an antihistamine."
+        },
+        {
+                "type": "Core",
+                "text": "Hydrocortisone in a contrast reaction is used primarily because it:",
+                "opts": [
+                        "Reduces inflammation and late-phase allergic response",
+                        "Increases heart rate rapidly",
+                        "Reverses contrast nephropathy",
+                        "Provides immediate bronchodilation"
+                ],
+                "ans": 0,
+                "exp": "Steroids like hydrocortisone take hours to act fully and are used to prevent secondary/delayed allergic cascades."
+        },
+        {
+                "type": "Core",
+                "text": "Which device is used to expand a narrowed artery and keep it open?",
+                "opts": [
+                        "Stent",
+                        "Catheter",
+                        "Embolization coil",
+                        "Guidewire"
+                ],
+                "ans": 0,
+                "exp": "A stent is a wire-mesh tube placed within an artery to provide structural support after angioplasty."
+        },
+        {
+                "type": "Core",
+                "text": "A vagal reaction during a procedure is typically characterized by:",
+                "opts": [
+                        "Tachycardia and hypertension",
+                        "Hives and bronchospasm",
+                        "Seizures and apnea",
+                        "Bradycardia and hypotension"
+                ],
+                "ans": 3,
+                "exp": "Vasovagal syncope presents with a slow heart rate (bradycardia) and low blood pressure."
+        },
+        {
+                "type": "Core",
+                "text": "Contrast agents used in MRI are primarily based on which element?",
+                "opts": [
+                        "Technetium",
+                        "Barium",
+                        "Iodine",
+                        "Gadolinium"
+                ],
+                "ans": 3,
+                "exp": "Gadolinium is a paramagnetic element that shortens the T1 relaxation time in MRI."
+        },
+        {
+                "type": "Core",
+                "text": "Which antihistamine is commonly administered for mild allergic contrast reactions?",
+                "opts": [
+                        "Amiodarone",
+                        "Naloxone",
+                        "Epinephrine",
+                        "Diphenhydramine"
+                ],
+                "ans": 3,
+                "exp": "H1 receptor antagonists like diphenhydramine are given for hives and itching."
+        },
+        {
+                "type": "Core",
+                "text": "Which of the following is an anti-emetic drug?",
+                "opts": [
+                        "Hydrocortisone",
+                        "Diazepam",
+                        "Ondansetron",
+                        "Atropine"
+                ],
+                "ans": 2,
+                "exp": "Ondansetron (Zofran) is used to prevent or treat nausea and vomiting."
+        },
+        {
+                "type": "Core",
+                "text": "What is PTCA?",
+                "opts": [
+                        "Prothrombin Time Clotting Assay",
+                        "Peripheral Transluminal Carotid Angiography",
+                        "Percutaneous Transluminal Coronary Angioplasty",
+                        "Percutaneous Transhepatic Cholangiography"
+                ],
+                "ans": 2,
+                "exp": "PTCA is a minimally invasive procedure to open blocked coronary arteries."
+        },
+        {
+                "type": "Core",
+                "text": "Which enzyme is a primary marker for myocardial infarction and skeletal muscle damage?",
+                "opts": [
+                        "Lipase",
+                        "Creatine Kinase (CK)",
+                        "Alkaline Phosphatase (ALP)",
+                        "Amylase"
+                ],
+                "ans": 1,
+                "exp": "CK (especially CK-MB) is a key enzyme marker for muscle damage, including the myocardium."
+        },
+        {
+                "type": "Core",
+                "text": "Elevated levels of SGOT (AST) and SGPT (ALT) in the blood most specifically indicate:",
+                "opts": [
+                        "Kidney failure",
+                        "Pancreatitis",
+                        "Liver damage",
+                        "Bone disease"
+                ],
+                "ans": 2,
+                "exp": "Transaminases (ALT and AST) are intracellular liver enzymes released during hepatocellular injury."
+        },
+        {
+                "type": "Core",
+                "text": "Which blood test is the most reliable indicator of renal function and glomerular filtration rate?",
+                "opts": [
+                        "Serum Uric Acid",
+                        "Blood Glucose",
+                        "Serum Creatinine",
+                        "Serum Bilirubin"
+                ],
+                "ans": 2,
+                "exp": "Creatinine is a waste product of muscle metabolism filtered almost entirely by the kidneys."
+        },
+        {
+                "type": "Core",
+                "text": "Jaundice is clinically visible when serum levels of which substance are elevated?",
+                "opts": [
+                        "Bilirubin",
+                        "Calcium",
+                        "Cholesterol",
+                        "Urea"
+                ],
+                "ans": 0,
+                "exp": "Hyperbilirubinemia causes the yellowish discoloration of skin and sclera known as jaundice."
+        },
+        {
+                "type": "Core",
+                "text": "Which enzymes are classically elevated in acute pancreatitis?",
+                "opts": [
+                        "ALP and GGT",
+                        "ALT and AST",
+                        "Amylase and Lipase",
+                        "Troponin and Myoglobin"
+                ],
+                "ans": 2,
+                "exp": "Pancreatic enzymes amylase and lipase spill into the blood during pancreatic inflammation."
+        },
+        {
+                "type": "Core",
+                "text": "The normal fasting blood glucose level in a healthy adult is approximately:",
+                "opts": [
+                        "70-100 mg/dL",
+                        "40-60 mg/dL",
+                        "120-150 mg/dL",
+                        "150-200 mg/dL"
+                ],
+                "ans": 0,
+                "exp": "A normal fasting blood sugar is generally between 70 and 99 mg/dL."
+        },
+        {
+                "type": "Core",
+                "text": "An elevated Alkaline Phosphatase (ALP) with an elevated Gamma-Glutamyl Transferase (GGT) suggests pathology in the:",
+                "opts": [
+                        "Lungs",
+                        "Skeletal muscle",
+                        "Heart muscle",
+                        "Biliary tract (Cholestasis)"
+                ],
+                "ans": 3,
+                "exp": "ALP is found in bone and biliary tract. Concurrent GGT elevation confirms a biliary source."
+        },
+        {
+                "type": "Core",
+                "text": "Which is the good cholesterol?",
+                "opts": [
+                        "VLDL",
+                        "LDL",
+                        "Triglycerides",
+                        "HDL"
+                ],
+                "ans": 3,
+                "exp": "High-Density Lipoprotein (HDL) carries cholesterol back to the liver to be flushed from the body."
+        },
+        {
+                "type": "Core",
+                "text": "The HbA1c test measures:",
+                "opts": [
+                        "Instantaneous blood sugar level",
+                        "Average blood sugar over the past 2-3 months",
+                        "Insulin production",
+                        "Kidney filtration rate"
+                ],
+                "ans": 1,
+                "exp": "HbA1c reflects glycated hemoglobin, indicating long-term glucose control."
+        },
+        {
+                "type": "Core",
+                "text": "Uric acid is the end product of the metabolism of:",
+                "opts": [
+                        "Proteins",
+                        "Carbohydrates",
+                        "Fats",
+                        "Purines"
+                ],
+                "ans": 3,
+                "exp": "Uric acid is produced from the breakdown of purine nucleotides and can cause gout if elevated."
+        },
+        {
+                "type": "Core",
+                "text": "The Hounsfield Unit (HU) for pure water in CT imaging is:",
+                "opts": [
+                        "-100",
+                        "+1000",
+                        "-1000",
+                        "0"
+                ],
+                "ans": 3,
+                "exp": "Water is the reference point for the CT numbers scale and is assigned 0 HU."
+        },
+        {
+                "type": "Core",
+                "text": "Which CT artifact is caused by patient motion?",
+                "opts": [
+                        "Ring artifact",
+                        "Blurring/Ghosting",
+                        "Partial volume effect",
+                        "Beam hardening"
+                ],
+                "ans": 1,
+                "exp": "Patient movement causes misregistration of data, leading to blurring or ghosting."
+        },
+        {
+                "type": "Core",
+                "text": "In Helical CT, Pitch is defined as:",
+                "opts": [
+                        "kVp / mA",
+                        "Gantry speed * table feed",
+                        "Scan time / slice thickness",
+                        "Table travel per rotation / beam collimation width"
+                ],
+                "ans": 3,
+                "exp": "Pitch indicates the overlap or gap between helices. Pitch = 1 means contiguous spirals."
+        },
+        {
+                "type": "Core",
+                "text": "Which component of an MRI scanner is responsible for spatial encoding of the signal?",
+                "opts": [
+                        "Shim coils",
+                        "Main magnet",
+                        "Gradient coils",
+                        "RF transmitter"
+                ],
+                "ans": 2,
+                "exp": "Gradient coils create linear variations in the magnetic field to locate the signal source."
+        },
+        {
+                "type": "Core",
+                "text": "Which MRI safety zone is the restricted area specifically for the MRI scanner room itself?",
+                "opts": [
+                        "Zone II",
+                        "Zone III",
+                        "Zone I",
+                        "Zone IV"
+                ],
+                "ans": 3,
+                "exp": "Zone IV is the magnet room itself, which poses the highest magnetic hazard."
+        },
+        {
+                "type": "Core",
+                "text": "The phenomenon where MR signal from fat is intentionally nullified is called:",
+                "opts": [
+                        "Fat Suppression (e.g., STIR)",
+                        "Inversion Recovery",
+                        "Spin Echo",
+                        "Gradient Echo"
+                ],
+                "ans": 0,
+                "exp": "Sequences like STIR use specific inversion times to null the signal from fat tissue."
+        },
+        {
+                "type": "Core",
+                "text": "Which property of ultrasound waves determines the depth of tissue penetration?",
+                "opts": [
+                        "Frequency",
+                        "Phase",
+                        "Amplitude",
+                        "Velocity"
+                ],
+                "ans": 0,
+                "exp": "Lower frequency waves penetrate deeper, while higher frequency waves provide better resolution at superficial depths."
+        },
+        {
+                "type": "Core",
+                "text": "The piezoelectric effect is responsible for:",
+                "opts": [
+                        "Magnetizing protons",
+                        "Converting electrical energy to sound waves and vice versa",
+                        "Creating X-ray photons",
+                        "Producing radiofrequency pulses"
+                ],
+                "ans": 1,
+                "exp": "Transducer crystals use the piezoelectric effect to generate and detect ultrasound waves."
+        },
+        {
+                "type": "Core",
+                "text": "The half-value layer (HVL) of an X-ray beam is an indicator of:",
+                "opts": [
+                        "Focal spot size",
+                        "Grid ratio",
+                        "Beam quality (penetrability)",
+                        "Beam quantity (intensity)"
+                ],
+                "ans": 2,
+                "exp": "HVL measures the thickness of material needed to halve the beam intensity, reflecting its average energy."
+        },
+        {
+                "type": "Core",
+                "text": "Which interaction of X-rays with matter predominates at low diagnostic energies (e.g., Mammography)?",
+                "opts": [
+                        "Photoelectric effect",
+                        "Pair production",
+                        "Photodisintegration",
+                        "Compton scatter"
+                ],
+                "ans": 0,
+                "exp": "The photoelectric effect is highly dependent on atomic number and dominates at low photon energies, yielding high contrast."
+        },
+        {
+                "type": "Core",
+                "text": "What is the primary purpose of the focusing cup in an X-ray tube?",
+                "opts": [
+                        "To direct electrons towards the focal spot on the anode",
+                        "To increase the voltage",
+                        "To cool the anode",
+                        "To filter low-energy X-rays"
+                ],
+                "ans": 0,
+                "exp": "The negatively charged focusing cup compresses the electron cloud into a tight beam."
+        },
+        {
+                "type": "Core",
+                "text": "In Computed Radiography (CR), the latent image is stored in:",
+                "opts": [
+                        "Photostimulable phosphor (PSP)",
+                        "Thin-film transistor (TFT)",
+                        "Silver halide crystals",
+                        "Amorphous selenium"
+                ],
+                "ans": 0,
+                "exp": "CR imaging plates contain Barium Fluorohalide PSP crystals that trap electrons to form the latent image."
+        },
+        {
+                "type": "Core",
+                "text": "What laser is commonly used in a CR reader to stimulate the imaging plate?",
+                "opts": [
+                        "Helium-Neon or solid-state laser",
+                        "CO2 laser",
+                        "Nd:YAG laser",
+                        "Argon laser"
+                ],
+                "ans": 0,
+                "exp": "A red laser (He-Ne or diode) scans the plate, causing it to emit blue/purple light via photostimulated luminescence."
+        },
+        {
+                "type": "Core",
+                "text": "In direct digital radiography (DR), amorphous selenium acts as a:",
+                "opts": [
+                        "Phosphor",
+                        "Photoconductor",
+                        "Scintillator",
+                        "Laser"
+                ],
+                "ans": 1,
+                "exp": "Amorphous selenium directly converts X-ray photons into electrical charges without an intermediate light step."
+        },
+        {
+                "type": "Core",
+                "text": "Which chemical acts as the developing agent in an X-ray film processor?",
+                "opts": [
+                        "Glutaraldehyde",
+                        "Ammonium thiosulfate",
+                        "Phenidone and Hydroquinone",
+                        "Potassium bromide"
+                ],
+                "ans": 2,
+                "exp": "These are the reducing agents that convert exposed silver halide crystals into black metallic silver."
+        },
+        {
+                "type": "Core",
+                "text": "The function of the fixer solution is to:",
+                "opts": [
+                        "Increase image contrast",
+                        "Remove unexposed silver halide crystals",
+                        "Harden the film emulsion only",
+                        "Convert latent image to visible image"
+                ],
+                "ans": 1,
+                "exp": "Fixing clears the unexposed crystals from the emulsion, making the image permanent and transparent in clear areas."
+        },
+        {
+                "type": "Core",
+                "text": "The Circle of Willis provides blood supply to the:",
+                "opts": [
+                        "Kidneys",
+                        "Heart",
+                        "Liver",
+                        "Brain"
+                ],
+                "ans": 3,
+                "exp": "It is an arterial polygon at the base of the brain connecting the anterior and posterior circulations."
+        },
+        {
+                "type": "Core",
+                "text": "Which bone houses the pituitary gland in the sella turcica?",
+                "opts": [
+                        "Occipital",
+                        "Sphenoid",
+                        "Temporal",
+                        "Ethmoid"
+                ],
+                "ans": 1,
+                "exp": "The sella turcica is a saddle-like depression in the body of the sphenoid bone."
+        },
+        {
+                "type": "Core",
+                "text": "The common bile duct is formed by the union of the:",
+                "opts": [
+                        "Pancreatic duct and cystic duct",
+                        "Right and left hepatic ducts",
+                        "Common hepatic duct and cystic duct",
+                        "Hepatic duct and pancreatic duct"
+                ],
+                "ans": 2,
+                "exp": "The gallbladders cystic duct joins the common hepatic duct to form the CBD."
+        },
+        {
+                "type": "Core",
+                "text": "Which spinal nerve root passes through the intervertebral foramen between L4 and L5?",
+                "opts": [
+                        "L3 nerve root",
+                        "L5 nerve root",
+                        "S1 nerve root",
+                        "L4 nerve root"
+                ],
+                "ans": 3,
+                "exp": "In the lumbar spine, the exiting nerve root takes the name of the vertebra above it."
+        },
+        {
+                "type": "Core",
+                "text": "According to ICRP recommendations, the annual effective dose limit for a radiation worker is:",
+                "opts": [
+                        "150 mSv",
+                        "20 mSv averaged over 5 years",
+                        "1 mSv",
+                        "50 mSv every year"
+                ],
+                "ans": 1,
+                "exp": "The occupational limit is 20 mSv/year averaged over defined 5-year periods (max 50 mSv in any single year)."
+        },
+        {
+                "type": "Core",
+                "text": "Which dosimeter provides an immediate, direct reading of radiation dose?",
+                "opts": [
+                        "TLD Badge",
+                        "Film Badge",
+                        "OSL Dosimeter",
+                        "Pocket Dosimeter"
+                ],
+                "ans": 3,
+                "exp": "A pocket ionization chamber can be read immediately, unlike TLDs or film badges which require processing."
+        },
+        {
+                "type": "Core",
+                "text": "What is the principle of ALARA?",
+                "opts": [
+                        "As Low As Reasonably Achievable",
+                        "As Little As Radiographers Allow",
+                        "Always Leave A Restricted Area",
+                        "All Low And Right Angled"
+                ],
+                "ans": 0,
+                "exp": "ALARA is the guiding philosophy of radiation protection to minimize exposure."
+        },
+        {
+                "type": "Core",
+                "text": "The Inverse Square Law states that if the distance from the source is doubled, the intensity is:",
+                "opts": [
+                        "Reduced to 1/4th",
+                        "Halved",
+                        "Doubled",
+                        "Reduced to 1/8th"
+                ],
+                "ans": 0,
+                "exp": "Radiation intensity is inversely proportional to the square of the distance."
+        },
+        {
+                "type": "Core",
+                "text": "For a lateral projection of the cervical spine, the SID (Source-to-Image Distance) should be:",
+                "opts": [
+                        "48 inches (120 cm)",
+                        "60 inches (150 cm)",
+                        "72 inches (180 cm)",
+                        "40 inches (100 cm)"
+                ],
+                "ans": 2,
+                "exp": "A larger SID is used to overcome the magnification caused by the increased Object-to-Image Distance (OID) from the shoulder."
+        },
+        {
+                "type": "Core",
+                "text": "The Waters View is primarily used to evaluate the:",
+                "opts": [
+                        "Mastoid air cells",
+                        "Maxillary sinuses",
+                        "Mandibular symphysis",
+                        "Frontal sinuses"
+                ],
+                "ans": 1,
+                "exp": "Parietoacanthial (Waters) projection projects the petrous ridges below the maxillary sinuses."
+        },
+        {
+                "type": "Core",
+                "text": "For an AP projection of the knee, the central ray is directed to:",
+                "opts": [
+                        "1/2 inch distal to the patellar apex",
+                        "The tibial tuberosity",
+                        "The center of the patella",
+                        "1 inch proximal to the patella"
+                ],
+                "ans": 0,
+                "exp": "This centers the beam directly on the knee joint space."
+        },
+        {
+                "type": "Core",
+                "text": "The Swimmers view is utilized to visualize the:",
+                "opts": [
+                        "Cervicothoracic junction (C7-T1)",
+                        "Odontoid process",
+                        "Sacroiliac joints",
+                        "Lumbar spine"
+                ],
+                "ans": 0,
+                "exp": "It separates the shoulders to clearly visualize the lower cervical and upper thoracic vertebrae."
+        },
+        {
+                "type": "Core",
+                "text": "The partial volume averaging artifact can be reduced by:",
+                "opts": [
+                        "Increasing the pitch",
+                        "Using thinner slices",
+                        "Increasing FOV",
+                        "Lowering kVp"
+                ],
+                "ans": 1,
+                "exp": "Thinner slices reduce the chance of multiple tissue densities being averaged into a single voxel."
+        },
+        {
+                "type": "Core",
+                "text": "A Skyline or Sunrise view is taken to assess the:",
+                "opts": [
+                        "Talocrural joint",
+                        "Patellofemoral joint",
+                        "Glenohumeral joint",
+                        "Radioulnar joint"
+                ],
+                "ans": 1,
+                "exp": "It offers an axial view of the patella and its articulation with the femur."
+        }
+];
+        
+        raw_data.forEach((d, i) => questions.push(createQ(i + 1, d.type, d.text, d.opts, d.ans, d.exp)));
+    }
+
+        // --- STATE MANAGEMENT ---
+        let state = {
+            currentQ: 0,
+            answers: new Array(TOTAL_QUESTIONS).fill(null),
+            status: new Array(TOTAL_QUESTIONS).fill('not-visited'),
+            currentSection: 1,      // 1 to 5
+            sectionTimeLeft: SECTION_TIME_LIMIT,
+            maxSetReached: 1,       // Tracks highest section unlocked
+            isFinished: false
+        };
+
+        const els = {
+            landing: document.getElementById('landingPage'),
+            header: document.getElementById('examHeader'),
+            body: document.getElementById('examBody'),
+            footer: document.getElementById('examFooter'),
+            result: document.getElementById('resultPage'),
+            qText: document.getElementById('questionText'),
+            optsBox: document.getElementById('optionsBox'),
+            qNum: document.getElementById('qNumDisplay'),
+            sectionLabel: document.getElementById('sectionLabel'),
+            palette: document.getElementById('questionPalette'),
+            timer: document.getElementById('timerDisplay'),
+            btnPrev: document.getElementById('btnPrev'),
+            sidebar: document.getElementById('sidebar')
+        };
+
+        let timerInterval;
+
+        const STORAGE_KEY = 'test_paper_16_state';
+        
+        function saveState() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+        
+        function init() {
+            generateQuestions(); // Load data
+            const savedState = localStorage.getItem(STORAGE_KEY);
+            if (savedState) {
+                try {
+                    const parsed = JSON.parse(savedState);
+                    if (parsed && parsed.answers && parsed.answers.length === TOTAL_QUESTIONS) {
+                        state = parsed;
+                        if (state.isFinished) {
+                            finishExam();
+                            return;
+                        } else {
+                            els.landing.classList.add('hidden');
+                            renderExamInterface();
+                            startSectionTimer();
+                            return;
+                        }
+                    }
+                } catch(e) {}
+            }
+            els.landing.classList.remove('hidden');
+            els.result.classList.add('hidden');
+        }
+
+        function startExam() {
+            els.landing.classList.add('hidden');
+            renderExamInterface();
+            startSectionTimer();
+        }
+
+        function startSectionTimer() {
+            if(timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                state.sectionTimeLeft--;
+                if (state.sectionTimeLeft % 10 === 0) saveState();
+                
+                // Format Time
+                const m = Math.floor(state.sectionTimeLeft / 60);
+                const s = state.sectionTimeLeft % 60;
+                els.timer.innerText = `${m}:${s < 10 ? '0'+s : s}`;
+                
+                // Visual Warning
+                if(state.sectionTimeLeft < 60) els.timer.style.backgroundColor = "#ffcdd2";
+                else els.timer.style.backgroundColor = "#fff";
+
+                // Time Up Logic
+                if (state.sectionTimeLeft <= 0) {
+                    handleSectionTimeout();
+                }
+            }, 1000);
+        }
+
+        function handleSectionTimeout() {
+            clearInterval(timerInterval);
+            
+            if (state.currentSection < 5) {
+                alert(`Time is up for Section ${state.currentSection}! Moving to Section ${state.currentSection + 1}.`);
+                forceNextSection();
+            } else {
+                alert("Time is up for the final section! Submitting Exam.");
+                finishExam();
+            }
+        }
+
+        function forceNextSection() {
+            state.currentSection++;
+            state.maxSetReached = state.currentSection;
+            state.sectionTimeLeft = SECTION_TIME_LIMIT;
+            saveState();
+            
+            // Move to first question of next section
+            const firstQofNextSection = (state.currentSection - 1) * SECTION_SIZE;
+            loadQuestion(firstQofNextSection);
+            startSectionTimer();
+        }
+
+        function renderExamInterface() {
+            els.header.classList.remove('hidden');
+            els.body.classList.remove('hidden');
+            els.footer.classList.remove('hidden');
+            renderPalette();
+            loadQuestion(state.currentQ);
+        }
+
+        function loadQuestion(index) {
+            state.currentQ = index;
+            if(state.status[index] === 'not-visited') state.status[index] = 'not-answered';
+
+            // Update Section Label
+            const secNum = Math.floor(index / SECTION_SIZE) + 1;
+            els.sectionLabel.innerText = `Section ${secNum} (Q${(secNum-1)*20 + 1}-${secNum*20})`;
+
+            // Render Text
+            els.qNum.innerText = `Question ${index + 1}`;
+            els.qText.innerText = questions[index].text;
+            
+            // Render Options
+            els.optsBox.innerHTML = '';
+            questions[index].opts.forEach((opt, i) => {
+                const isChecked = state.answers[index] === i ? 'checked' : '';
+                els.optsBox.innerHTML += `
+                    <label class="option-label">
+                        <input type="radio" name="opt" value="${i}" ${isChecked} onchange="selectOption(${i})">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            // Update Palette UI
+            document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('current'));
+            const currentBtn = document.getElementById(`qbtn-${index}`);
+            if(currentBtn) currentBtn.classList.add('current');
+
+            // Handle Prev Button State (Cannot go back to previous locked section)
+            const startOfCurrentSection = (state.currentSection - 1) * SECTION_SIZE;
+            els.btnPrev.disabled = (index <= startOfCurrentSection);
+        }
+
+        function selectOption(optIndex) {
+            state.answers[state.currentQ] = optIndex;
+            saveState();
+        }
+
+        function saveAndNext() {
+            const index = state.currentQ;
+            // Update status
+            state.status[index] = (state.answers[index] !== null) ? 'answered' : 'not-answered';
+            saveState();
+            
+            moveToNextQuestion();
+        }
+
+        function markForReview() {
+            const index = state.currentQ;
+            state.status[index] = (state.answers[index] !== null) ? 'marked-answered' : 'review'; // Simplified
+            saveState();
+            moveToNextQuestion();
+        }
+
+        function clearResponse() {
+            state.answers[state.currentQ] = null;
+            state.status[state.currentQ] = 'not-answered';
+            saveState();
+            loadQuestion(state.currentQ);
+            renderPalette();
+        }
+
+        function moveToNextQuestion() {
+            const nextIndex = state.currentQ + 1;
+            const currentSecBound = state.currentSection * SECTION_SIZE;
+
+            // Check if next question crosses section boundary
+            if (nextIndex >= currentSecBound) {
+                // End of section reached
+                if (state.currentSection < 5) {
+                    if (confirm(`You have reached the end of Section ${state.currentSection}.\nDo you want to submit this section and move to Section ${state.currentSection+1}?\n\nWARNING: You cannot return to this section.`)) {
+                        forceNextSection();
+                    }
+                } else {
+                    if(confirm("This was the last question. Submit Exam?")) {
+                        finishExam();
+                    }
+                }
+            } else {
+                // Normal movement within section
+                renderPalette();
+                loadQuestion(nextIndex);
+            }
+        }
+
+        function prevQuestion() {
+            // Logic handled in loadQuestion to disable button if at start of section
+            if (state.currentQ > 0) {
+                loadQuestion(state.currentQ - 1);
+            }
+        }
+
+        function renderPalette() {
+            els.palette.innerHTML = '';
+            for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+                let statusClass = state.status[i];
+                if(statusClass === 'marked-answered') statusClass = 'review';
+                
+                // Check if question belongs to a locked (previous) section
+                // A question is locked if its section index is < current active section
+                const qSection = Math.floor(i / SECTION_SIZE) + 1;
+                const isLocked = qSection < state.currentSection;
+                const lockedClass = isLocked ? ' locked' : '';
+                
+                // Gray out future sections
+                const isFuture = qSection > state.currentSection;
+                const futureStyle = isFuture ? 'opacity:0.3; pointer-events:none;' : '';
+
+                els.palette.innerHTML += `
+                    <div id="qbtn-${i}" 
+                         class="q-btn ${statusClass}${lockedClass}" 
+                         style="${futureStyle}"
+                         onclick="jumpToQuestion(${i})">
+                        ${i + 1}
+                    </div>
+                `;
+            }
+        }
+
+        function jumpToQuestion(index) {
+            const qSection = Math.floor(index / SECTION_SIZE) + 1;
+            
+            if (qSection < state.currentSection) {
+                alert("This section is locked.");
+                return;
+            }
+            if (qSection > state.currentSection) {
+                alert("You cannot jump to a future section yet.");
+                return;
+            }
+            
+            loadQuestion(index);
+        }
+
+        function submitExam() {
+            if(confirm("Are you sure you want to finish the exam? Unanswered questions in future sections will be marked zero.")) {
+                finishExam();
+            }
+        }
+
+        function finishExam() {
+            clearInterval(timerInterval);
+            state.isFinished = true;
+            saveState();
+            
+            els.header.classList.add('hidden');
+            els.body.classList.add('hidden');
+            els.footer.classList.add('hidden');
+            els.result.classList.remove('hidden');
+            
+            calculateResult();
+        }
+
+        function calculateResult() {
+            let correct = 0, wrong = 0, unattempted = 0, score = 0;
+
+            state.answers.forEach((ans, i) => {
+                if (ans === null) {
+                    unattempted++;
+                } else if (questions[i] && ans === questions[i].ans) {
+                    correct++;
+                    score += 4;
+                } else {
+                    wrong++;
+                    score -= 1;
+                }
+            });
+
+            document.getElementById('scoreCard').innerHTML = `
+                <h1 style="color:#3f51b5; font-size:3rem;">${score} / 400</h1>
+                <p><strong>Correct:</strong> ${correct} (+${correct*4})</p>
+                <p><strong>Incorrect:</strong> ${wrong} (-${wrong})</p>
+                <p><strong>Unattempted:</strong> ${unattempted}</p>
+            `;
+        }
+
+        function showDetailedReview() {
+            const container = document.getElementById('detailedReview');
+            container.style.display = 'block';
+            container.innerHTML = '<h3>Detailed Solutions</h3>';
+            
+            questions.forEach((q, i) => {
+                const userAns = state.answers[i];
+                const isCorrect = userAns === q.ans;
+                const statusColor = userAns === null ? 'gray' : (isCorrect ? 'green' : 'red');
+                const statusText = userAns === null ? 'Skipped' : (isCorrect ? 'Correct' : 'Incorrect');
+
+                let optsHtml = '';
+                q.opts.forEach((opt, oi) => {
+                    let style = '';
+                    if (oi === q.ans) style = 'font-weight:bold; color:green;'; 
+                    if (oi === userAns && !isCorrect) style = 'font-weight:bold; color:red;'; 
+                    optsHtml += `<div style="${style}">${oi+1}. ${opt}</div>`;
+                });
+
+                container.innerHTML += `
+                    <div class="review-item">
+                        <div style="color:${statusColor}; font-weight:bold; margin-bottom:5px;">Q${i+1}: ${statusText}</div>
+                        <div>${q.text}</div>
+                        <div style="margin:10px 0; padding-left:15px; border-left:3px solid #ddd;">${optsHtml}</div>
+                        <div class="explanation"><strong>Explanation:</strong> ${q.exp}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleSidebar() {
+            els.sidebar.classList.toggle('active');
+        }
+
+        // Initialize
+        init();
+
+    </script>
+</body>
+</html>
