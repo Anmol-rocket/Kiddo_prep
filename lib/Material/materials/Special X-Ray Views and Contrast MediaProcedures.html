@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Special X-Ray Views and Contrast Media/Procedures</title>
+<style>
+    :root {
+        --primary: #2c3e50;
+        --accent: #e74c3c;
+        --bg: #f4f7f6;
+        --correct: #27ae60;
+        --wrong: #c0392b;
+        --text: #333;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background: var(--bg);
+        margin: 0;
+        padding-top: 60px; /* Space for sticky header */
+        padding-bottom: 70px; /* Space for sticky footer */
+        color: var(--text);
+    }
+
+    /* --- STICKY HEADER --- */
+    .app-header {
+        position: fixed; top: 0; left: 0; width: 100%;
+        background: var(--primary); color: white;
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 10px 15px;
+        z-index: 100;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .header-title { font-size: 1rem; font-weight: bold; }
+    .score-badge {
+        background: rgba(255,255,255,0.15);
+        padding: 5px 12px; border-radius: 20px;
+        font-weight: bold; font-size: 0.9rem;
+        display: flex; gap: 10px;
+    }
+    .score-val { color: #f1c40f; }
+
+    /* --- QUESTION MAP MODAL --- */
+    .map-btn {
+        background: var(--accent); border: none; color: white;
+        padding: 8px 12px; border-radius: 4px; font-weight: bold; cursor: pointer;
+    }
+    .map-overlay {
+        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.8); z-index: 200;
+        justify-content: center; align-items: flex-start;
+        overflow-y: auto; padding: 20px;
+    }
+    .map-content {
+        background: white; width: 100%; max-width: 400px;
+        border-radius: 8px; padding: 15px; margin-top: 50px;
+    }
+    .map-header { display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: bold; color: var(--primary); }
+    .close-map { background: none; border: none; font-size: 1.5rem; color: #888; }
+    
+    .nav-grid {
+        display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+        max-height: 60vh; overflow-y: auto;
+    }
+    .nav-item {
+        padding: 10px 0; text-align: center; background: #eee;
+        border-radius: 4px; font-size: 0.85rem; font-weight: bold; cursor: pointer;
+    }
+    .nav-item.answered { background: var(--primary); color: white; opacity: 0.5; }
+    .nav-item.correct { background: var(--correct); color: white; opacity: 1; }
+    .nav-item.wrong { background: var(--wrong); color: white; opacity: 1; }
+
+    /* --- MAIN CONTENT --- */
+    .container { padding: 15px; max-width: 600px; margin: 0 auto; }
+    
+    .q-card {
+        background: white; border-radius: 8px; padding: 20px;
+        margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        border-left: 5px solid transparent;
+    }
+    .q-card.res-correct { border-left-color: var(--correct); }
+    .q-card.res-wrong { border-left-color: var(--wrong); }
+
+    .q-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; line-height: 1.4; }
+    
+    .opt-label {
+        display: flex; align-items: center;
+        padding: 12px; margin-bottom: 8px;
+        background: #f8f9fa; border: 1px solid #e9ecef;
+        border-radius: 6px; cursor: pointer;
+        font-size: 0.95rem;
+        transition: 0.2s;
+    }
+    .opt-label input { margin-right: 12px; transform: scale(1.3); }
+    
+    /* Feedback States */
+    .re-correct { background: #d4edda !important; border-color: var(--correct) !important; color: #155724; font-weight: bold; }
+    .re-wrong { background: #f8d7da !important; border-color: var(--wrong) !important; color: #721c24; }
+    
+    .explanation {
+        margin-top: 15px; padding: 12px; background: #fff3cd;
+        border-radius: 5px; font-size: 0.9rem; color: #664d03;
+        display: none;
+    }
+
+    /* --- STICKY FOOTER --- */
+    .footer-nav {
+        position: fixed; bottom: 0; left: 0; width: 100%;
+        background: white; border-top: 1px solid #ddd;
+        display: flex; justify-content: space-around; align-items: center;
+        padding: 12px; z-index: 90;
+    }
+    .nav-btn {
+        flex: 1; margin: 0 5px; padding: 12px;
+        border: none; border-radius: 6px;
+        font-weight: bold; font-size: 1rem; color: white;
+        background: var(--primary);
+    }
+    .nav-btn:disabled { background: #ccc; }
+    .page-info { font-size: 0.9rem; font-weight: bold; color: #666; width: 80px; text-align: center; }
+
+    .reset-link {
+        display: block; text-align: center; margin-top: 20px; color: #999; text-decoration: underline; font-size: 0.8rem;
+    }
+</style>
+</head>
+<body>
+
+<div class="app-header">
+    <div class="header-title">Special X-Ray Views and Contrast Media/Procedures</div>
+    <div class="score-badge">
+        <span>Score:</span> <span class="score-val" id="scoreDisplay">0</span>
+    </div>
+    <button class="map-btn" onclick="toggleMap(true)">Map</button>
+</div>
+
+<div class="map-overlay" id="mapModal" onclick="if(event.target===this) toggleMap(false)">
+    <div class="map-content">
+        <div class="map-header">
+            <span>Question Map (250)</span>
+            <button class="close-map" onclick="toggleMap(false)">&times;</button>
+        </div>
+        <div class="nav-grid" id="navGrid"></div>
+        <div style="text-align: center; margin-top: 15px;">
+            <button onclick="resetData()" style="color:red; background:none; border:none; padding:10px;">Reset All Data</button>
+        </div>
+    </div>
+</div>
+
+<div class="container" id="quizContainer">
+    </div>
+<div class="reset-link" onclick="window.scrollTo(0,0)">Back to Top</div>
+
+<div class="footer-nav">
+    <button class="nav-btn" onclick="changePage(-1)" id="btnPrev">Prev</button>
+    <div class="page-info" id="pageDisplay">1/10</div>
+    <button class="nav-btn" onclick="changePage(1)" id="btnNext">Next</button>
+</div>
+
+<script>
+// =========================
+// 1. DATA GENERATION
+// =========================
+const db = [
+    // ==========================================
+    // SECTION 1: SKULL & FACIAL SPECIAL VIEWS
+    // ==========================================
+    {
+        q: "The 'Towne View' (AP Axial) is primarily used to demonstrate the:",
+        o: ["Frontal Sinus", "Dorsum Sellae and Posterior Clinoid Processes", "Nasal bone", "Maxillary Sinus"],
+        a: 1,
+        e: "It projects the dorsum sellae within the foramen magnum."
+    },
+    {
+        q: "Which projection best demonstrates the 'Zygomatic Arches' ('Jug Handle' view)?",
+        o: ["Submentovertex (SMV)", "Townes", "Caldwell", "Lateral"],
+        a: 0,
+        e: "SMV projects the arches free of superimposition."
+    },
+    {
+        q: "The 'Waters View' (Parietoacanthial) requires the chin to be raised to place the OML at what angle to the IR?",
+        o: ["15 degrees", "30 degrees", "37 degrees", "45 degrees"],
+        a: 2,
+        e: "37 degrees places the petrous ridges just below the maxillary sinuses."
+    },
+    {
+        q: "The 'Rhese Method' is used to visualize the:",
+        o: ["Optic Foramen", "Mandibular Condyle", "Mastoid Air Cells", "TMJ"],
+        a: 0,
+        e: "It projects the optic foramen into the lower outer quadrant of the orbit."
+    },
+    {
+        q: "The 'Law Method' and 'Schuller Method' are historical views for the:",
+        o: ["Sella Turcica", "Mastoids / TMJ", "Orbits", "Nasal bones"],
+        a: 1,
+        e: "Lateral oblique views used for mastoid air cells and TMJ."
+    },
+    {
+        q: "To demonstrate a 'Blowout Fracture' of the orbit, which view is modified?",
+        o: ["Waters (Modified)", "Lateral", "SMV", "Townes"],
+        a: 0,
+        e: "Modified Waters (shallow angle) shows the orbital floor best."
+    },
+    {
+        q: "The 'Caldwell' projection usually requires a caudal tube angle of:",
+        o: ["5 degrees", "15 degrees", "30 degrees", "45 degrees"],
+        a: 1,
+        e: "15 degrees caudal projects petrous ridges into the lower 1/3 of orbits."
+    },
+
+    // ==========================================
+    // SECTION 2: SPINE & PELVIS SPECIAL VIEWS
+    // ==========================================
+    {
+        q: "The 'Swimmer's View' (Twining method) is performed to visualize:",
+        o: ["C1-C2 (Odontoid)", "C7-T1 Junction", "L5-S1 Junction", "Sacrum"],
+        a: 1,
+        e: "Used when the shoulders superimpose C7-T1 on a standard lateral."
+    },
+    {
+        q: "The 'Fuchs Method' is an AP projection used to see the:",
+        o: ["Dens (Odontoid process)", "Spinous process of C7", "Lumbar bodies", "Coccyx"],
+        a: 0,
+        e: "Used when the Open Mouth view is inadequate."
+    },
+    {
+        q: "Which view demonstrates the 'Scottie Dog' anatomy?",
+        o: ["AP Lumbar", "Lateral Lumbar", "Oblique Lumbar", "Spot L5-S1"],
+        a: 2,
+        e: "45-degree oblique view of lumbar spine."
+    },
+    {
+        q: "The 'Judet View' describes oblique projections of the:",
+        o: ["Shoulder", "Acetabulum (Pelvis)", "Ankle", "Cervical spine"],
+        a: 1,
+        e: "Used to assess acetabular fractures (Iliopectineal/Ilioischial lines)."
+    },
+    {
+        q: "The 'Inlet and Outlet' views are essential for trauma to the:",
+        o: ["Skull", "Pelvis (Pelvic Ring)", "Thorax", "Femur"],
+        a: 1,
+        e: "Assess anterior/posterior displacement of the pelvic ring."
+    },
+    {
+        q: "The 'Ferguson Method' is an AP axial projection for the:",
+        o: ["Sacroiliac (SI) Joints", "L5-S1 Joint space", "Hip joint", "Pubic Symphysis"],
+        a: 0,
+        e: "Tube angled 30-35 degrees cephalad."
+    },
+
+    // ==========================================
+    // SECTION 3: EXTREMITY SPECIAL VIEWS
+    // ==========================================
+    {
+        q: "The 'Gaynor-Hart' method is a tangential projection of the:",
+        o: ["Carpal Canal (Tunnel)", "Tarsal bones", "Patella", "Glenoid cavity"],
+        a: 0,
+        e: "Demonstrates the hamulus of hamate and carpal tunnel."
+    },
+    {
+        q: "The 'Stecher Method' (Hand elevated 20 degrees) helps to detect fracture of the:",
+        o: ["Lunate", "Scaphoid", "Radius", "Ulna"],
+        a: 1,
+        e: "Elongates the scaphoid."
+    },
+    {
+        q: "The 'Garth View' (Apical Oblique) is useful for diagnosing:",
+        o: ["Posterior Shoulder Dislocation", "Elbow fracture", "Hip dislocation", "AC joint separation"],
+        a: 0,
+        e: "Shows posterior dislocations and Bankart lesions."
+    },
+    {
+        q: "The 'Lawrence Method' (Transthoracic Lateral) is used for the:",
+        o: ["Proximal Humerus", "Sternum", "Ribs", "Scapula"],
+        a: 0,
+        e: "Used when the arm cannot be abducted/rotated due to trauma."
+    },
+    {
+        q: "The 'Merchant', 'Sunrise', and 'Skyline' views all examine the:",
+        o: ["Calcaneus", "Patellofemoral Joint", "Acromioclavicular Joint", "Hip Joint"],
+        a: 1,
+        e: "Tangential views of the patella."
+    },
+    {
+        q: "The 'Rosenberg View' is a weight-bearing PA view of the:",
+        o: ["Knees (flexed 45 deg)", "Ankles", "Hips", "Feet"],
+        a: 0,
+        e: "Best for seeing joint space narrowing in osteoarthritis."
+    },
+    {
+        q: "The 'Camp-Coventry' and 'Holmblad' methods demonstrate the:",
+        o: ["Intercondylar Fossa (Tunnel View)", "Tibial Tuberosity", "Patella", "Femoral Neck"],
+        a: 0,
+        e: "Shows loose bodies in the knee notch."
+    },
+    {
+        q: "The 'Mortise View' of the ankle requires the leg to be rotated:",
+        o: ["Externally 15 degrees", "Internally 15-20 degrees", "Internally 45 degrees", "Externally 45 degrees"],
+        a: 1,
+        e: "Opens the ankle joint space by removing fibular overlap."
+    },
+    {
+        q: "The 'Coyle Method' is a special view for the:",
+        o: ["Radial Head / Coronoid Process", "Shoulder", "Wrist", "Ankle"],
+        a: 0,
+        e: "Trauma view for radial head fractures."
+    },
+
+    // ==========================================
+    // SECTION 4: CONTRAST MEDIA PROPERTIES
+    // ==========================================
+    {
+        q: "Contrast media that dissociates into cations and anions in blood is called:",
+        o: ["Non-ionic", "Ionic", "Insoluble", "Paramagnetic"],
+        a: 1,
+        e: "Ionic contrast breaks into charged particles, increasing osmolality."
+    },
+    {
+        q: "High Osmolality Contrast Media (HOCM) is associated with:",
+        o: ["Fewer adverse reactions", "More adverse reactions", "Better image quality", "Lower cost only"],
+        a: 1,
+        e: "Hyper-osmolality draws water from cells, causing reactions."
+    },
+    {
+        q: "Which of the following is an Iso-osmolar contrast agent?",
+        o: ["Iohexol (Omnipaque)", "Iopamidol", "Iodixanol (Visipaque)", "Diatrizoate"],
+        a: 2,
+        e: "Iodixanol is a non-ionic dimer, iso-osmolar to blood."
+    },
+    {
+        q: "Barium Sulfate is contraindicated in cases of:",
+        o: ["Dysphagia", "Suspected Perforation", "Diverticulosis", "Cancer"],
+        a: 1,
+        e: "Leakage into the peritoneal cavity causes severe peritonitis."
+    },
+    {
+        q: "Gastrografin is a:",
+        o: ["Barium suspension", "Water-soluble iodinated contrast", "Oil-based contrast", "Gas"],
+        a: 1,
+        e: "Used when Barium is contraindicated (suspected perforation)."
+    },
+    {
+        q: "Gadolinium-based contrast is used in MRI because it is:",
+        o: ["Radioactive", "Paramagnetic", "Ferromagnetic", "Radiopaque"],
+        a: 1,
+        e: "It shortens T1 relaxation times."
+    },
+    {
+        q: "Oil-based contrast media (e.g., Lipiodol) is mainly used today for:",
+        o: ["Myelography", "Lymphangiography / Embolization", "IVP", "CT Brain"],
+        a: 1,
+        e: "Rarely used now, except for specific interventions like TACE."
+    },
+
+    // ==========================================
+    // SECTION 5: CONTRAST PROCEDURES & PREP
+    // ==========================================
+    {
+        q: "Intrathecal injection (Myelography) MUST USE:",
+        o: ["Ionic Contrast", "Non-ionic Contrast", "Barium", "Gastrografin"],
+        a: 1,
+        e: "Ionic contrast in the spinal canal can cause fatal seizures."
+    },
+    {
+        q: "Metformin (Glucophage) should be withheld after contrast injection to prevent:",
+        o: ["Hypoglycemia", "Lactic Acidosis", "Hyperglycemia", "Heart failure"],
+        a: 1,
+        e: "Withheld for 48 hours in patients with impaired renal function."
+    },
+    {
+        q: "Normal Serum Creatinine range is approximately:",
+        o: ["0.6 - 1.2 mg/dL", "2.0 - 4.0 mg/dL", "10 - 20 mg/dL", "0.1 - 0.2 mg/dL"],
+        a: 0,
+        e: "Levels above 1.5-2.0 indicate renal risk."
+    },
+    {
+        q: "In an IVU, ureteric compression is applied to:",
+        o: ["Stop urine flow completely", "Retain contrast in the pelvicalyceal system", "Reduce patient movement", "Protect the gonads"],
+        a: 1,
+        e: "Distends the upper tract for better visualization."
+    },
+    {
+        q: "Contraindication for Ureteric Compression during IVU includes:",
+        o: ["Hypertension", "Abdominal Aortic Aneurysm (AAA)", "Diabetes", "UTI"],
+        a: 1,
+        e: "Pressure could rupture the aneurysm."
+    },
+    {
+        q: "Hysterosalpingography (HSG) is performed to evaluate:",
+        o: ["Uterine fibroids", "Tubal patency (Infertility)", "Cervical cancer", "Ovarian cysts"],
+        a: 1,
+        e: "Checks if fallopian tubes are open."
+    },
+    {
+        q: "The ideal timing for an HSG is:",
+        o: ["Day 1-4 of cycle", "Day 7-10 (Post-menstrual)", "Day 14 (Ovulation)", "Day 21-28"],
+        a: 1,
+        e: "After bleeding stops but before ovulation (to avoid irradiating a fertilized egg)."
+    },
+    {
+        q: "In Barium Enema, the bag should be suspended:",
+        o: ["12 inches above table", "18-24 inches above table", "36 inches above table", "48 inches above table"],
+        a: 1,
+        e: "Too high causes excessive pressure and cramping."
+    },
+    {
+        q: "ERCP is used to diagnose pathology in the:",
+        o: ["Esophagus", "Biliary and Pancreatic ducts", "Renal arteries", "Colon"],
+        a: 1,
+        e: "Endoscopic Retrograde Cholangiopancreatography."
+    },
+    {
+        q: "A 'Voiding Cystourethrogram' (VCUG/MCU) is primarily used to detect:",
+        o: ["Kidney stones", "Vesicoureteral Reflux (VUR)", "Bladder cancer", "Prostate enlargement"],
+        a: 1,
+        e: "Backflow of urine from bladder to ureters."
+    },
+    {
+        q: "Sialography usually examines which glands?",
+        o: ["Parotid and Submandibular", "Thyroid", "Lacrimal", "Adrenal"],
+        a: 0,
+        e: "Salivary glands."
+    },
+    {
+        q: "Lemon juice (secretagogue) is used in Sialography to:",
+        o: ["Dilate the duct", "Stimulate secretion and open the duct", "Numb the mouth", "Clean the mouth"],
+        a: 1,
+        e: "Stimulates the gland to empty contrast."
+    },
+
+    // ==========================================
+    // SECTION 6: ADVERSE REACTIONS
+    // ==========================================
+    {
+        q: "Urticaria (Hives) is classified as what type of reaction?",
+        o: ["Mild", "Moderate", "Severe", "Fatal"],
+        a: 0,
+        e: "Mild to moderate cutaneous reaction."
+    },
+    {
+        q: "Laryngeal Edema (throat swelling) is classified as:",
+        o: ["Mild", "Moderate", "Severe", "Psychosomatic"],
+        a: 2,
+        e: "Severe/Life-threatening anaphylactoid reaction."
+    },
+    {
+        q: "The first-line drug for severe anaphylaxis (hypotension/bronchospasm) is:",
+        o: ["Benadryl (Diphenhydramine)", "Adrenaline (Epinephrine)", "Hydrocortisone", "Atropine"],
+        a: 1,
+        e: "Adrenaline 1:1000 IM."
+    },
+    {
+        q: "Vasovagal reaction (Bradycardia + Hypotension) is treated with:",
+        o: ["Adrenaline", "Atropine", "Beta blockers", "Insulin"],
+        a: 1,
+        e: "Atropine increases heart rate."
+    },
+    {
+        q: "Contrast Induced Nephropathy (CIN) is defined as:",
+        o: ["Increase in Creatinine by 25% or 0.5 mg/dL", "Sudden kidney pain", "Blood in urine", "Allergic reaction in kidney"],
+        a: 0,
+        e: "Acute impairment of renal function post-contrast."
+    },
+    {
+        q: "Extravasation of contrast media means:",
+        o: ["Rapid injection", "Leakage of contrast into surrounding tissue", "Allergic reaction", "Backflow into syringe"],
+        a: 1,
+        e: "Can cause tissue necrosis (compartment syndrome)."
+    },
+    {
+        q: "To reduce viscosity of contrast media before injection, one should:",
+        o: ["Shake it", "Cool it", "Warm it to body temperature", "Mix with saline"],
+        a: 2,
+        e: "Warming reduces viscosity, making injection easier."
+    },
+    // ==========================================
+    // SECTION 7: MAMMOGRAPHY & DENTAL SPECIALS
+    // ==========================================
+    {
+        q: "In Mammography, the 'MLO' (Medio-Lateral Oblique) view is essential to visualize the:",
+        o: ["Nipple in profile", "Pectoralis muscle and Tail of Spence", "Medial breast tissue only", "Calcifications only"],
+        a: 1,
+        e: "It demonstrates the upper outer quadrant and axillary tail (Tail of Spence)."
+    },
+    {
+        q: "The primary purpose of 'Compression' in Mammography is to:",
+        o: ["Reduce patient pain", "Increase magnification", "Spread tissue to reduce thickness and scatter", "Heat the breast"],
+        a: 2,
+        e: "Reduces OID, reduces dose, and improves contrast by reducing scatter."
+    },
+    {
+        q: "In Dental Radiography, the 'OPG' (Orthopantomogram) requires the patient's chin to rest on a support to align the:",
+        o: ["Frankfort Plane parallel to floor", "Midsagittal plane perpendicular to floor", "Occlusal plane 45 degrees", "Both A and B"],
+        a: 3,
+        e: "Proper alignment ensures the teeth are in the focal trough."
+    },
+    {
+        q: "The 'Bisecting Angle Technique' in intra-oral radiography is based on the rule of:",
+        o: ["Isometry", "Parallelism", "Magnification", "Distortion"],
+        a: 0,
+        e: "The central ray is perpendicular to the imaginary bisector of the angle between tooth and film."
+    },
+    {
+        q: "For a 'Magnification View' in Mammography, the focal spot size used is typically:",
+        o: ["0.6 mm", "1.2 mm", "0.3 mm", "0.1 mm"],
+        a: 3,
+        e: "Micro-focus (0.1 mm) is required to maintain resolution during magnification."
+    },
+
+    // ==========================================
+    // SECTION 8: ANGIOGRAPHY & INTERVENTIONAL
+    // ==========================================
+    {
+        q: "The 'Seldinger Technique' is the standard method for:",
+        o: ["Injecting Barium", "Percutaneous arterial access", "Taking a chest X-ray", "Oral contrast administration"],
+        a: 1,
+        e: "Needle puncture -> Guidewire -> Remove needle -> Catheter over wire."
+    },
+    {
+        q: "In Digital Subtraction Angiography (DSA), the 'Mask Image' is:",
+        o: ["The image with contrast", "The image without contrast (background)", "The final subtracted image", "The roadmap"],
+        a: 1,
+        e: "The pre-contrast image used to subtract background anatomy."
+    },
+    {
+        q: "Catheter sizes are measured in 'French' (Fr) scale. 3 Fr is equivalent to:",
+        o: ["1 mm", "3 mm", "0.33 mm", "9 mm"],
+        a: 0,
+        e: "1 French = 1/3 mm. So 3 Fr = 1 mm diameter."
+    },
+    {
+        q: "Which procedure is used to treat a stenosis (narrowing) in a blood vessel?",
+        o: ["Embolization", "Angioplasty (PTA)", "Biopsy", "Ablation"],
+        a: 1,
+        e: "Percutaneous Transluminal Angioplasty uses a balloon to dilate the vessel."
+    },
+    {
+        q: "A 'Roadmap' in interventional radiology is used to:",
+        o: ["Navigate a wire/catheter through vessels using a contrast overlay", "Record the patient dose", "Check the machine status", "Plan the hospital route"],
+        a: 0,
+        e: "Superimposes a live fluoro image over a stored contrast image."
+    },
+    {
+        q: "Transjugular Intrahepatic Portosystemic Shunt (TIPS) is a procedure to treat:",
+        o: ["Portal Hypertension", "Kidney failure", "Gallstones", "Heart attack"],
+        a: 0,
+        e: "Connects portal vein to hepatic vein to reduce liver pressure."
+    },
+    {
+        q: "Embolization is the process of:",
+        o: ["Opening a blocked vessel", "Deliberately blocking a vessel (to stop bleeding or starve tumor)", "Removing a clot", "Measuring blood pressure"],
+        a: 1,
+        e: "Therapeutic occlusion of a vessel."
+    },
+
+    // ==========================================
+    // SECTION 9: GI & FLUOROSCOPY SPECIALS
+    // ==========================================
+    {
+        q: "The 'Valsalva Maneuver' is used during a Barium Swallow to demonstrate:",
+        o: ["Esophageal Varices", "Strictures", "Diverticulum", "Ulcers"],
+        a: 0,
+        e: "Increases intrathoracic pressure, distending the varices."
+    },
+    {
+        q: "For a 'Double Contrast' Stomach study, which agent produces the gas?",
+        o: ["Oral Barium", "Effervescent granules (Calcium carbonate)", "Iodine", "Water"],
+        a: 1,
+        e: "Granules release CO2 upon contact with fluid."
+    },
+    {
+        q: "The 'Trendelenburg' position during a Barium Meal is used to check for:",
+        o: ["Hiatal Hernia and Reflux (GERD)", "Gastric emptying", "Duodenal cap", "Pyloric stenosis"],
+        a: 0,
+        e: "Gravity helps push the stomach contents toward the esophagus."
+    },
+    {
+        q: "A 'Small Bowel Follow Through' (SBFT) is complete when contrast reaches the:",
+        o: ["Jejunum", "Ileum", "Cecum / Ileocecal valve", "Rectum"],
+        a: 2,
+        e: "The study ends once barium enters the large intestine."
+    },
+    {
+        q: "Defecography is a dynamic fluoroscopic study of the:",
+        o: ["Stomach", "Small bowel", "Anorectal function", "Bladder"],
+        a: 2,
+        e: "Evaluates evacuation disorders and rectal prolapse."
+    },
+    {
+        q: "A 'Fistulogram' involves injection of contrast into:",
+        o: ["A vein", "An abnormal tract/sinus", "The spinal cord", "The artery"],
+        a: 1,
+        e: "To determine the origin and path of a fistula."
+    },
+    {
+        q: "Which position best demonstrates the Pylorus and Duodenal Bulb in hypersthenic patients?",
+        o: ["RAO (Right Anterior Oblique)", "LPO", "Supine", "Left Lateral"],
+        a: 0,
+        e: "RAO facilitates gastric emptying and opens the pylorus."
+    },
+
+    // ==========================================
+    // SECTION 10: CHEST & BONY THORAX SPECIALS
+    // ==========================================
+    {
+        q: "The 'Lordotic View' (Lindblom) of the chest is designed to visualize:",
+        o: ["Lung bases", "Lung apices (free of clavicles)", "Heart", "Ribs"],
+        a: 1,
+        e: "Clavicles are projected superior to the apices."
+    },
+    {
+        q: "To demonstrate a small 'Pneumothorax', the X-ray should be taken on:",
+        o: ["Full Inspiration", "Full Expiration", "Supine", "Lordotic"],
+        a: 1,
+        e: "Expiration reduces lung volume, making the air in the pleural space more visible."
+    },
+    {
+        q: "To demonstrate 'Air-Fluid Levels' in the chest (e.g., pleural effusion) when the patient cannot stand, use:",
+        o: ["Supine", "Lateral Decubitus", "Lordotic", "Oblique"],
+        a: 1,
+        e: "Fluid layers out horizontally in decubitus."
+    },
+    {
+        q: "Rib views 'Above the Diaphragm' should be taken on:",
+        o: ["Inspiration", "Expiration", "Shallow breathing", "Valsalva"],
+        a: 0,
+        e: "Inspiration depresses the diaphragm, showing more upper ribs."
+    },
+    {
+        q: "The 'RAO' position of the Sternum is preferred over LAO because:",
+        o: ["It places the sternum over the heart shadow", "It places sternum over the lung", "It is more comfortable", "It reduces dose"],
+        a: 0,
+        e: "The homogeneous density of the heart provides better contrast than the lung markings."
+    },
+    {
+        q: "A 'Breathing Technique' (long exposure, low mA) is used for the Lateral T-Spine or Sternum to:",
+        o: ["Blur out lung markings/ribs", "Stop heart motion", "Increase contrast", "Reduce patient dose"],
+        a: 0,
+        e: "Autotomography principle."
+    },
+
+    // ==========================================
+    // SECTION 11: ADVANCED CONTRAST & SAFETY
+    // ==========================================
+    {
+        q: "Nephrogenic Systemic Fibrosis (NSF) is a rare complication associated with:",
+        o: ["Iodinated Contrast", "Gadolinium in renal failure patients", "Barium", "Ultrasound gel"],
+        a: 1,
+        e: "Fibrosis of skin/organs in patients with GFR < 30."
+    },
+    {
+        q: "Bolus Tracking (SureStart/SmartPrep) in CT is used to:",
+        o: ["Calculate dose", "Trigger the scan when contrast reaches peak density", "Track patient motion", "Inject saline"],
+        a: 1,
+        e: "Ensures optimal timing for CTA."
+    },
+    {
+        q: "A 'Triple Phase' CT Liver scan includes:",
+        o: ["Arterial, Portal Venous, and Delayed phases", "Pre-contrast, Post-contrast, Excretory", "Inspiration, Expiration, Valsalva", "None"],
+        a: 0,
+        e: "To characterize liver tumors (HCC)."
+    },
+    {
+        q: "The 'Washout' characteristic in CT helps distinguish:",
+        o: ["Benign vs Malignant lesions (e.g., Adrenal)", "Bone vs Soft tissue", "Air vs Fluid", "Artery vs Vein"],
+        a: 0,
+        e: "Malignant lesions often wash out contrast differently than benign ones."
+    },
+    {
+        q: "If extravasation of a large volume (>50ml) of contrast occurs, the first step is:",
+        o: ["Stop injection and elevate limb", "Continue injection", "Apply heat immediately", "Give Adrenaline"],
+        a: 0,
+        e: "Stop, elevate to reduce edema, and apply cold compress initially."
+    },
+    {
+        q: "Which of the following is a mild contrast reaction?",
+        o: ["Laryngeal edema", "Convulsions", "Nausea / Metallic taste", "Pulmonary edema"],
+        a: 2,
+        e: "Nausea and metallic taste are common, self-limiting mild reactions."
+    },
+    {
+        q: "The 'Chemotoxic' effect of contrast media refers to toxicity caused by:",
+        o: ["Osmolality", "Molecular structure/binding of the molecule itself", "Temperature", "Volume"],
+        a: 1,
+        e: "Direct toxicity to cells (e.g., endothelium or renal tubules)."
+    },
+    {
+        q: "Carbon Dioxide (CO2) angiography is used for patients with:",
+        o: ["Renal failure / Iodine allergy", "Lung failure", "Liver failure", "Heart failure"],
+        a: 0,
+        e: "CO2 is non-nephrotoxic and non-allergenic."
+    },
+    {
+        q: "Oral contrast for a CT scan is usually administered:",
+        o: ["Immediately before scan", "45-60 minutes before scan", "24 hours before scan", "During the scan"],
+        a: 1,
+        e: "Allows time for contrast to opacify the bowel loops."
+    },
+    {
+        q: "The route of administration for a 'Cystogram' is:",
+        o: ["Intravenous", "Retrograde via Urethral Catheter", "Oral", "Intrathecal"],
+        a: 1,
+        e: "Contrast is filled directly into the bladder via catheter."
+    },
+    {
+        q: "Air-contrast barium enema is superior to single contrast for detecting:",
+        o: ["Large obstructions", "Mucosal polyps", "Volvulus", "Appendicitis"],
+        a: 1,
+        e: "Double contrast coats the mucosa, highlighting small polyps."
+    },
+    {
+        q: "Which calculation estimates the risk of Contrast Induced Nephropathy?",
+        o: ["eGFR (Glomerular Filtration Rate)", "BMI", "Heart Rate", "Blood Pressure"],
+        a: 0,
+        e: "eGFR < 30-45 indicates high risk."
+    },
+    {
+        q: "The 'Saline Flush' following a contrast bolus helps to:",
+        o: ["Push the contrast tail into central circulation", "Hydrate the patient", "Cool the vein", "Stop bleeding"],
+        a: 0,
+        e: "Improves contrast utilization and reduces artifacts."
+    },
+    {
+        q: "Adrenaline dose for anaphylaxis (Adult) is typically:",
+        o: ["0.5 mg (1:1000) IM", "1 mg IV", "10 mg IV", "0.1 mg SC"],
+        a: 0,
+        e: "0.5mg IM is the standard first-line dose."
+    },
+    {
+        q: "A 'Myelogram' is usually followed by which imaging modality?",
+        o: ["Ultrasound", "CT Scan (CT Myelogram)", "Nuclear Medicine", "DSA"],
+        a: 1,
+        e: "CT provides detailed cross-sectional views of the contrast-filled canal."
+    },
+    // ==========================================
+// BATCH 1: CRANIUM, FACIAL & TEMPORAL BONE SPECIALS
+// ==========================================
+{ q: "The 'Haas Method' is an alternative projection to the:", o: ["Towne Method", "Waters Method", "Caldwell Method", "SMV"], a: 0, e: "PA Axial projection (reverse Towne) for the occipital bone." },
+{ q: "For the 'PA Axial (Caldwell)' to demonstrate the orbital floors, the tube is angled:", o: ["15 deg Caudal", "30 deg Caudal", "15 deg Cephalad", "30 deg Cephalad"], a: 1, e: "30 degrees caudal projects petrous ridges below the orbits." },
+{ q: "The 'Reverse Waters' method is performed when the patient:", o: ["Cannot extend the neck (Trauma)", "Is unconscious", "Has a neck fracture", "All of the above"], a: 3, e: "AP projection (Acanthioparietal) used in trauma." },
+{ q: "The 'Modified Waters' view is primarily used to detect:", o: ["Blowout fractures", "Nasal fractures", "Zygomatic arch fractures", "Mandible fractures"], a: 0, e: "Less extension places the orbital floor perpendicular to IR." },
+{ q: "Which line is perpendicular to the IR for a true 'Lateral Skull'?", o: ["IOML", "IPL (Interpupillary Line)", "OML", "Midsagittal Plane"], a: 1, e: "Interpupillary line must be perpendicular to prevent tilt." },
+{ q: "The 'Pirie Method' (Transoral) is used to visualize the:", o: ["Sphenoid Sinuses", "Maxillary Sinuses", "Frontal Sinuses", "Ethmoid Sinuses"], a: 0, e: "Taken with mouth open." },
+{ q: "The 'Arcolin Method' is a projection for the:", o: ["Petrous bone", "Optic foramen", "Sella Turcica", "Mandible"], a: 0, e: "AP Oblique for petrous pyramids." },
+{ q: "The 'Mayer Method' is an axial oblique view for the:", o: ["Petrous bone / Mastoids", "TMJ", "Orbits", "Zygoma"], a: 0, e: "Demonstrates the auditory ossicles." },
+{ q: "The 'Chausse III' projection is used to demonstrate:", o: ["Attic-Aditus-Antrum area", "Optic canal", "Foramen Magnum", "Nasal spine"], a: 0, e: "Specialized temporal bone view." },
+{ q: "The 'Hirtz Method' is another name for the:", o: ["SMV (Submentovertex)", "Towne", "Waters", "Lateral"], a: 0, e: "Basilar view of the skull." },
+{ q: "Which view best demonstrates a 'Tripod Fracture'?", o: ["Waters", "Towne", "Lateral", "Caldwell"], a: 0, e: "Shows separation of zygoma at three points." },
+{ q: "For the 'Lateral Nasal Bones', the centering point is:", o: ["Nasion", "0.5 inch distal to Nasion", "Acanthion", "Glabella"], a: 1, e: "Centered on the nasal bones." },
+{ q: "The 'Superoinferior Tangential' view is used for:", o: ["Nasal bones", "Zygomatic arches", "Mandible", "Orbits"], a: 0, e: "Axial view of nasal bones." },
+{ q: "The 'Axiolateral Oblique' of the mandible demonstrates the Body when the head is rotated:", o: ["30 degrees toward IR", "45 degrees toward IR", "True Lateral", "15 degrees"], a: 0, e: "30 degrees for Body; 45 for Symphysis; 0 (True Lat) for Ramus." },
+{ q: "The 'Hull Method' is a modification for the:", o: ["Mandible", "Orbit", "Nasal bone", "Maxilla"], a: 0, e: "Reverse Towne for condyloid processes." },
+{ q: "The 'Panorex' utilizes which principle?", o: ["Tomography", "Magnification", "Stereoscopy", "Subtraction"], a: 0, e: "Curved surface tomography." },
+{ q: "The 'Hickey Method' for the TMJ involves a tube angle of:", o: ["20 deg Cephalad", "20 deg Caudal", "30 deg Caudal", "15 deg Cephalad"], a: 1, e: "Modified lateral for TMJ." },
+{ q: "Which baseline is parallel to the transverse axis of the IR for the SMV?", o: ["IOML", "OML", "GML", "AML"], a: 0, e: "IOML must be parallel to IR." },
+{ q: "For the 'AP Axial (Towne)', if IOML is used instead of OML, the angle must be:", o: ["30 degrees", "37 degrees", "45 degrees", "20 degrees"], a: 1, e: "Increase angle by 7 degrees (30 -> 37)." },
+{ q: "The 'Valdini Method' demonstrates the:", o: ["Labyrinths and Internal Auditory Canals", "Sella Turcica", "Orbits", "Mandible"], a: 0, e: "Patient prone, head in acute flexion." },
+
+// ==========================================
+// BATCH 2: SPINE & THORAX SPECIALS
+// ==========================================
+{ q: "The 'Ottonello Method' (Wagging Jaw) demonstrates:", o: ["C1-C2", "Entire C-Spine (C1-C7)", "T-Spine", "Mandible"], a: 1, e: "Blurring of the mandible allows visualization of all vertebrae." },
+{ q: "The 'Grandy Method' refers to the:", o: ["Lateral C-Spine", "AP C-Spine", "Oblique C-Spine", "Open Mouth"], a: 0, e: "Standard lateral view." },
+{ q: "The 'Pillars View' (AP Axial Vertebral Arch) requires a caudal angle of:", o: ["10-15 deg", "20-30 deg", "45 deg", "5 deg"], a: 1, e: "To visualize the posterior elements (pillars) of C-spine." },
+{ q: "The 'Kasabach Method' is used for:", o: ["Odontoid Process (Oblique)", "Lumbar spine", "Sacrum", "Coccyx"], a: 0, e: "AP Oblique for dens." },
+{ q: "Functional 'Flexion and Extension' views are mainly used to detect:", o: ["Fracture", "Ligament instability / Subluxation", "Tumor", "Infection"], a: 1, e: "Whiplash injuries." },
+{ q: "For 'Scoliosis Series', the 'Ferguson' method requires:", o: ["Patient standing with a lift under the convex side foot", "Patient supine", "Patient bending laterally", "Patient sitting"], a: 0, e: "Differentiates structural vs non-structural curves." },
+{ q: "The 'Pawlow Method' is the:", o: ["Swimmer's view (Recumbent)", "Swimmer's view (Upright)", "Oblique T-spine", "Lateral T-spine"], a: 0, e: "Recumbent Swimmer's." },
+{ q: "For the 'Lateral T-Spine', breathing technique is used to:", o: ["Blur ribs and lung markings", "Reduce dose", "Increase contrast", "Demonstrate diaphragm"], a: 0, e: "Autotomography." },
+{ q: "The 'Teufel Method' is an PA Axial Oblique for the:", o: ["Acetabulum", "Sacroiliac Joints", "L5-S1", "Coccyx"], a: 0, e: "Demonstrates the superoposterior wall of acetabulum." },
+{ q: "The 'Kovacs Method' demonstrates the:", o: ["L5-S1 Intervertebral Foramina", "SI Joints", "Lumbar bodies", "Sacral foramina"], a: 0, e: "Specialized view for L5-S1 foramina (usually not visible on standard obliques)." },
+{ q: "The 'Chassard-Lapine' method is mainly used to visualize:", o: ["Rectosigmoid colon / Pelvic outlet", "Stomach", "Kidneys", "Lungs"], a: 0, e: "Sitting squat view ('Defecating' position)." },
+{ q: "The 'Taylor Method' (AP Axial Outlet) requires cephalad angulation of:", o: ["10-15 deg", "20-35 deg (Males) / 30-45 deg (Females)", "60 deg", "5 deg"], a: 1, e: "For anterior pelvic bones (pubis/ischium)." },
+{ q: "The 'Lilienfeld Method' is used for the:", o: ["Calcaneus", "Syphysis Pubis", "SI Joints", "Sacrum"], a: 1, e: "Superoinferior projection of pubic bones." },
+{ q: "An 'AP Weight Bearing' C-Spine is done to check for:", o: ["Alignment under stress", "Disk space narrowing", "AC joint separation", "Cervical ribs"], a: 3, e: "Usually for AC joints, but C-spine weight bearing is for stability." },
+{ q: "The 'Stryker Notch' view demonstrates the:", o: ["Humeral Head defect (Hill-Sachs)", "Glenoid rim", "Acromion", "Coracoid"], a: 0, e: "Posterior aspect of humeral head." },
+{ q: "The 'West Point' method is best for:", o: ["Bankart Lesion (Glenoid rim)", "Hill-Sachs defect", "AC Joint", "Scapula fracture"], a: 0, e: "Axillary view for anterior inferior glenoid rim." },
+{ q: "The 'Zanca View' is a specialized view for the:", o: ["AC Joint", "SC Joint", "Glenohumeral Joint", "Scapular Spine"], a: 0, e: "10-15 deg cephalad angle for AC joint." },
+{ q: "The 'Serendipity View' is used for the:", o: ["Sternoclavicular (SC) Joints", "Patella", "Sacrum", "Skull"], a: 0, e: "40 deg cephalad tube angle." },
+{ q: "The 'Hobbs View' is a superoinferior projection of the:", o: ["SC Joints", "AC Joints", "Shoulder", "Elbow"], a: 0, e: "Patient leans over table." },
+{ q: "The 'Grashey Method' demonstrates the:", o: ["Glenohumeral joint space (True AP)", "Scapular Y", "Axillary", "Transthoracic"], a: 0, e: "Body rotated 35-45 degrees to align scapula parallel to IR." },
+
+// ==========================================
+// BATCH 3: UPPER EXTREMITY SPECIALS
+// ==========================================
+{ q: "The 'Norgaard Method' is commonly known as the:", o: ["Ball-Catcher's view", "Tunnel view", "Sunrise view", "Boxer view"], a: 0, e: "For early rheumatoid arthritis." },
+{ q: "The 'Brewerton View' requires the MCP joints flexed:", o: ["45 degrees", "65 degrees", "90 degrees", "10 degrees"], a: 1, e: "Detects erosion in RA." },
+{ q: "The 'Robert Method' demonstrates the:", o: ["1st CMC Joint (Thumb base)", "Scaphoid", "Pisiform", "Radial head"], a: 0, e: "AP Axial for Bennett's fracture." },
+{ q: "The 'Burman Method' demonstrates the:", o: ["1st CMC Joint", "Carpal Canal", "Radio-ulnar joint", "Elbow"], a: 0, e: "Magnified view of 1st CMC." },
+{ q: "The 'Folio Method' (Stress view) is used for the:", o: ["Ulnar Collateral Ligament (Skier's Thumb)", "Scaphoid", "Lunate", "Wrist instability"], a: 0, e: "Thumbs pulled apart." },
+{ q: "The 'Clement-Nakayama' method is used for:", o: ["Trauma Hip (Bilateral fracture)", "Trauma Shoulder", "Trauma Ankle", "Trauma Wrist"], a: 0, e: "When patient cannot lift leg for Danelius-Miller." },
+{ q: "The 'Danelius-Miller' method is the:", o: ["Cross-table Lateral Hip", "Frog-leg Hip", "AP Hip", "Axial Hip"], a: 0, e: "Standard trauma lateral hip." },
+{ q: "The 'Leonard-George' method is for the:", o: ["Hips", "Shoulder", "C-Spine", "Feet"], a: 0, e: "Lateral view of femoral neck." },
+{ q: "The 'Teufel View' is also known as the:", o: ["Judet View", "PA Axial Oblique Acetabulum", "Outlet View", "Inlet View"], a: 1, e: "Specifically for fovea capitis and superior wall." },
+{ q: "The 'Fisk Method' demonstrates the:", o: ["Bicipital Groove", "Radial Head", "Carpal Canal", "Tarsal Sinus"], a: 0, e: "Patient holds cassette, leaning forward." },
+{ q: "The 'Velpeau View' is used when the shoulder is:", o: ["Immobilized in a sling", "Dislocated", "Frozen", "Normal"], a: 0, e: "Patient leaning back, looking down through shoulder." },
+{ q: "The 'Pierquin Method' refers to:", o: ["Lateral Scapula", "Tangential Elbow", "Axial Wrist", "Lateral Hand"], a: 1, e: "For olecranon process." },
+{ q: "The 'Coyle Method' for the Coronoid Process requires the elbow flexed:", o: ["80 degrees", "90 degrees", "45 degrees", "Extended"], a: 0, e: "Tube angled 45 degrees away from shoulder." },
+{ q: "The 'Coyle Method' for the Radial Head requires the elbow flexed:", o: ["90 degrees", "80 degrees", "45 degrees", "Extended"], a: 0, e: "Tube angled 45 degrees toward shoulder." },
+{ q: "The 'Jones Method' is for:", o: ["Acute Flexion Elbow", "Extension Elbow", "Radial Head", "Wrist"], a: 0, e: "Shows olecranon process and distal humerus." },
+{ q: "The 'Carpal Bridge' view demonstrates the:", o: ["Dorsal aspect of wrist", "Ventral aspect", "Carpal tunnel", "Scaphoid"], a: 0, e: "Tangential view of dorsal wrist." },
+{ q: "The 'Lewis Method' demonstrates:", o: ["Sesamoids of the 1st MTP", "Calcaneus", "Talus", "Navicular"], a: 0, e: "Patient prone, toe dorsiflexed." },
+{ q: "The 'Holly Method' is for:", o: ["Sesamoids", "Tarsals", "Metatarsals", "Phalanges"], a: 0, e: "Similar to Lewis method." },
+{ q: "The 'Causton Method' is a tangential view of the:", o: ["1st Sesamoids", "5th Metatarsal", "Calcaneus", "Talus"], a: 0, e: "Lateral projection of sesamoids." },
+{ q: "The 'Kandel Method' is used to evaluate:", o: ["Clubfoot (Talipes Equinovarus)", "Flatfoot", "High arch", "Hallux Valgus"], a: 0, e: "Dorso-plantar axial." },
+
+// ==========================================
+// BATCH 4: LOWER EXTREMITY & KNEE SPECIALS
+// ==========================================
+{ q: "The 'Broden View' is used to visualize the:", o: ["Subtalar Joint", "Ankle Joint", "Knee Joint", "Hip Joint"], a: 0, e: "For calcaneal fractures involving the joint." },
+{ q: "The 'Isherwood Method' involves 3 positions to demonstrate the:", o: ["Subtalar Joint", "Midtarsal Joint", "Ankle", "Knee"], a: 0, e: "Complete subtalar evaluation." },
+{ q: "The 'Harris-Beath' view is a:", o: ["Axial Calcaneus (Ski-jump)", "Lateral Calcaneus", "AP Ankle", "Mortise"], a: 0, e: "Demonstrates subtalar joint and sustentaculum tali." },
+{ q: "The 'Coalition View' is typically a:", o: ["Harris-Beath view", "Lateral", "AP", "Oblique"], a: 0, e: "To detect tarsal coalition." },
+{ q: "The 'Canale View' is best for the:", o: ["Talar Neck", "Calcaneus", "Navicular", "Cuboid"], a: 0, e: "15 degree pronation oblique." },
+{ q: "The 'Homblad Method' requires the patient to be:", o: ["Kneeling on the table (all fours)", "Supine", "Prone", "Standing"], a: 0, e: "Tunnel view." },
+{ q: "The 'Camp-Coventry' method is done:", o: ["Prone", "Supine", "Standing", "Kneeling"], a: 0, e: "Prone tunnel view." },
+{ q: "The 'Beclere Method' is a:", o: ["Curved cassette Tunnel View", "Sunrise view", "Lateral", "AP"], a: 0, e: "Used when patient cannot flex knee much." },
+{ q: "The 'Settegast Method' allows visualization of the patella:", o: ["In 90 degree flexion", "In extension", "In 30 degree flexion", "In 45 degree flexion"], a: 0, e: "Tangential Patella." },
+{ q: "The 'Hughston Method' allows visualization of the patella at:", o: ["55 degrees flexion", "90 degrees", "20 degrees", "Extended"], a: 0, e: "Tube angled 45 degrees." },
+{ q: "The 'Merchant Method' requires a knee flexion of:", o: ["40 degrees", "90 degrees", "20 degrees", "0 degrees"], a: 0, e: "Superior-inferior projection." },
+{ q: "The 'Kuwendall Method' is for the:", o: ["Patella (Prone)", "Patella (Supine)", "Femoral Condyles", "Tibial Plateau"], a: 0, e: "Prone sunrise." },
+{ q: "The 'Weight-Bearing Knee' (Rosenberg) is done at:", o: ["45 degrees flexion", "Full extension", "90 degrees flexion", "10 degrees flexion"], a: 0, e: "Best for joint space narrowing." },
+{ q: "The 'Stress Views' of the ankle are used to check:", o: ["Ligament tears / Instability", "Fracture lines", "Bone density", "Tumors"], a: 0, e: "Inversion and Eversion stress." },
+{ q: "The 'Scanogram' (Orthoroentgenography) uses:", o: ["A Bell-Thompson ruler", "Contrast", "Fluoroscopy", "Ultrasound"], a: 0, e: "For leg length discrepancy." },
+{ q: "In a 'Teleoroentgenogram', the exposure is made:", o: ["At a single long SID (whole limb)", "At 3 separate joints", "With tube movement", "With patient movement"], a: 0, e: "One exposure for the whole limb." },
+{ q: "For 'Bone Age' assessment, which projection is standard?", o: ["PA Left Hand and Wrist", "PA Right Hand", "AP Knee", "Lateral Skull"], a: 0, e: "Compared against Greulich and Pyle atlas." },
+{ q: "The 'Kite Method' is used for:", o: ["Congenital Clubfoot", "Flat foot", "Fracture", "Foreign body"], a: 0, e: "Assessment of talocalcaneal angle." },
+{ q: "The 'Weight-Bearing Feet' are essential for diagnosing:", o: ["Pes Planus (Flat foot)", "Fracture", "Gout", "Tumor"], a: 0, e: "Shows arch collapse." },
+{ q: "The 'Composite View' of the foot aims to:", o: ["Show the entire foot on one film with weight bearing", "Show soft tissue", "Show toes only", "Show heel only"], a: 0, e: "Used for precise arch measurement." },
+
+// ==========================================
+// BATCH 5: GI, GU & BILIARY SPECIALS
+// ==========================================
+{ q: "The 'Wolf Method' is used to demonstrate:", o: ["Hiatal Hernia", "Pyloric Stenosis", "Diverticulum", "Gastritis"], a: 0, e: "Patient prone with compression block under abdomen." },
+{ q: "The 'Guglielmo Method' is used for:", o: ["Swallowing function (Dysphagia)", "Stomach", "Colon", "Rectum"], a: 0, e: "Dynamic swallow study." },
+{ q: "The 'Modified Barium Swallow' (MBS) is primarily for:", o: ["Aspiration risk / Speech pathology", "Anatomy of esophagus", "Reflux", "Cancer"], a: 0, e: "Evaluates oropharyngeal phase." },
+{ q: "In 'Hypotonic Duodenography', which drug is used to paralyze the bowel?", o: ["Glucagon / Buscopan", "Adrenaline", "Insulin", "Lasix"], a: 0, e: "Stops peristalsis to distend the loop." },
+{ q: "The 'Billroth I' and 'Billroth II' are types of:", o: ["Gastric resection surgeries", "Contrast media", "Catheters", "Positions"], a: 0, e: "Post-op anatomy check." },
+{ q: "T-Tube Cholangiography contrast injection pressure should be:", o: ["Low/Gentle", "High/Forceful", "Pulsatile", "Continuous"], a: 0, e: "To prevent sphincter of Oddi spasm." },
+{ q: "Percutaneous Transhepatic Cholangiography (PTC) uses a:", o: ["Chiba needle", "Veress needle", "Angiocath", "Butterfly"], a: 0, e: "Skinny needle." },
+{ q: "The 'Chassard-Lapine' view in Barium Enema shows the:", o: ["Rectosigmoid (Axial)", "Cecum", "Hepatic flexure", "Splenic flexure"], a: 0, e: "Uncoils the sigmoid." },
+{ q: "The 'Butterfly Position' in Barium Enema refers to:", o: ["LPO/RPO for flexures", "AP Axial (30 deg cephalad)", "Lateral", "Decubitus"], a: 1, e: "For rectosigmoid area." },
+{ q: "A 'Defecogram' requires barium paste of density similar to:", o: ["Stool", "Water", "Air", "Bone"], a: 0, e: "To mimic physiological defecation." },
+{ q: "The 'Welin Technique' refers to:", o: ["Double Contrast Barium Enema", "Single contrast", "Oral barium", "CT Colonography"], a: 0, e: "High density barium + Air." },
+{ q: "In IVU, 'Tomography' (Nephrotomography) is best done:", o: ["Immediately after bolus (Nephrogram phase)", "15 mins late", "Pre-contrast", "30 mins late"], a: 0, e: "To see renal parenchyma." },
+{ q: "A 'Retrograde Pyelogram' is performed by:", o: ["Urologist in OT", "Radiographer in X-ray", "Nurse on ward", "Doctor in clinic"], a: 0, e: "Contrast injected via ureteric catheter from below." },
+{ q: "The 'Chain Cystogram' is used for:", o: ["Stress Incontinence in females", "Prostate", "Stones", "Tumor"], a: 0, e: "Shows posterior urethrovesical angle." },
+{ q: "A 'Loopogram' is performed on patients with:", o: ["Ileal Conduit (Urinary diversion)", "Normal bladder", "Kidney transplant", "Stones"], a: 0, e: "Stoma study." },
+{ q: "RGU (Retrograde Urethrogram) in males requires the 'Brodney Clamp' or:", o: ["Foley catheter tip", "Straight catheter", "Butterfly needle", "Syringe tip"], a: 0, e: "To seal the meatus." },
+{ q: "The 'Brodney Clamp' is used in:", o: ["RGU", "IVP", "MCU", "HSG"], a: 0, e: "Retrograde Urethrography." },
+{ q: "The 'Seminal Vesiculography' contrast is injected into:", o: ["Vas Deferens", "Urethra", "Bladder", "Testis"], a: 0, e: "Via vasotomy." },
+{ q: "Cavernosography is the study of:", o: ["Corpora Cavernosa (Penis)", "Heart", "Brain sinuses", "Kidney"], a: 0, e: "For venous leak impotence." },
+{ q: "Hysterosalpingography uses a:", o: ["Leech-Wilkinson or Foley catheter", "Pigtail", "Judkins", "Swan-Ganz"], a: 0, e: "Cannula to seal cervix." },
+
+// ==========================================
+// BATCH 6: CONTRAST MEDIA & ANGIOGRAPHY (ADVANCED)
+// ==========================================
+{ q: "Osmolality of blood plasma is approx:", o: ["290 mOsm/kg", "600 mOsm/kg", "100 mOsm/kg", "1000 mOsm/kg"], a: 0, e: "Iso-osmolar contrast matches this." },
+{ q: "LOCM (Low Osmolality Contrast Media) are typically:", o: ["Non-ionic monomers", "Ionic monomers", "Ionic dimers", "Oil based"], a: 0, e: "Still higher than blood (600), but lower than HOCM." },
+{ q: "IOCM (Iso-osmolar Contrast Media) are typically:", o: ["Non-ionic dimers", "Ionic monomers", "Non-ionic monomers", "Salts"], a: 0, e: "Visipaque (Iodixanol)." },
+{ q: "Which contrast agent is safe for intrathecal use?", o: ["Iohexol (Omnipaque)", "Gastrografin", "Barium", "Hypaque"], a: 0, e: "Non-ionic water soluble." },
+{ q: "Gadolinium is toxic in its free state, so it is:", o: ["Chelated", "Ionized", "Boiled", "Frozen"], a: 0, e: "Bound to a ligand (DTPA, DOTA)." },
+{ q: "Superparamagnetic Iron Oxide (SPIO) is a contrast agent for:", o: ["MRI (Liver)", "CT", "USG", "X-ray"], a: 0, e: "Affects T2* relaxation." },
+{ q: "Microbubbles are contrast agents used in:", o: ["Ultrasound", "MRI", "CT", "X-ray"], a: 0, e: "Reflect sound waves." },
+{ q: "The 'Wash-in' and 'Wash-out' rates in dynamic CT help characterize:", o: ["Liver/Adrenal masses", "Bone fractures", "Lung nodules", "Kidney stones"], a: 0, e: "Malignancy vascularity." },
+{ q: "Maximum dose of iodinated contrast is generally:", o: ["Variable based on weight/renal function", "Fixed 100ml", "Fixed 50ml", "Unlimited"], a: 0, e: "Usually 1.5-2 ml/kg." },
+{ q: "Delayed reactions to contrast (skin rash) can occur up to:", o: ["1 week later", "1 hour later", "1 year later", "Never"], a: 0, e: "T-cell mediated." },
+{ q: "Pre-medication for contrast allergy typically involves:", o: ["Steroids and Antihistamines", "Adrenaline", "Antibiotics", "Aspirin"], a: 0, e: "Prednisone + Benadryl 12hr prior." },
+{ q: "In 'Rotational Angiography', the C-arm:", o: ["Rotates around the patient during injection", "Stays still", "Moves up and down", "Tilts"], a: 0, e: "Creates 3D reconstruction (3D-RA)." },
+{ q: "Digital Subtraction Angiography (DSA) removes:", o: ["Bone and soft tissue background", "Contrast", "Vessels", "Noise only"], a: 0, e: "Leaving only contrast-filled vessels." },
+{ q: "The 'Pigtail Catheter' is designed for:", o: ["High volume flush injections (Aortogram)", "Selective coronary", "Crossing stenosis", "Biopsy"], a: 0, e: "Side holes and curled tip prevent whiplash." },
+{ q: "The 'Cobra Catheter' is used for:", o: ["Selective visceral angiography (Renal/Mesenteric)", "Aortogram", "Cerebral", "Heart"], a: 0, e: "Curved tip." },
+{ q: "The 'Simmons' or 'Headhunter' catheters are for:", o: ["Cerebral/Carotid access", "Renal", "Legs", "Heart"], a: 0, e: "Arch vessels." },
+{ q: "A 'Sheath' in angiography is used to:", o: ["Maintain access and protect the vessel", "Inject contrast", "Close the hole", "Filter blood"], a: 0, e: "Vascular access port." },
+{ q: "Transradial access uses which artery?", o: ["Radial", "Femoral", "Brachial", "Carotid"], a: 0, e: "Wrist access, lower bleeding risk." },
+{ q: "A 'Vena Cava Filter' is placed to prevent:", o: ["Pulmonary Embolism", "Stroke", "Heart attack", "Varicose veins"], a: 0, e: "Traps clots from legs." },
+{ q: "Thrombolysis involves injecting:", o: ["tPA / Urokinase", "Heparin", "Saline", "Contrast"], a: 0, e: "Clot buster drugs." },
+{ q: "Chemoembolization (TACE) treats:", o: ["Liver tumors", "Lung cancer", "Brain tumor", "Bone cancer"], a: 0, e: "Chemo + Embolic agent." },
+{ q: "Radiofrequency Ablation (RFA) uses:", o: ["Heat", "Cold", "Radiation", "Chemicals"], a: 0, e: "Thermal destruction of tumor." },
+{ q: "Cryoablation uses:", o: ["Cold (Freezing)", "Heat", "Radiation", "Alcohol"], a: 0, e: "Freeze/thaw cycle." },
+{ q: "Vertebroplasty involves injecting:", o: ["Bone Cement (PMMA)", "Steroids", "Contrast", "Blood"], a: 0, e: "Stabilizes vertebral fracture." },
+{ q: "Kyphoplasty differs from Vertebroplasty by using a:", o: ["Balloon to restore height", "Screw", "Wire", "Stent"], a: 0, e: "Creates cavity first." },
+{ q: "A 'Nephrostomy' tube is placed into the:", o: ["Renal Pelvis", "Bladder", "Ureter", "Urethra"], a: 0, e: "Drainage of obstructed kidney." },
+{ q: "A 'Double-J Stent' connects:", o: ["Kidney to Bladder", "Bladder to Outside", "Liver to Gut", "Heart to Lung"], a: 0, e: "Bypasses ureteric obstruction." },
+{ q: "Discography is injection into the:", o: ["Nucleus Pulposus", "Spinal canal", "Muscle", "Facet joint"], a: 0, e: "Provocative test for disc pain." },
+{ q: "Arthrogram of the shoulder typically uses:", o: ["Double contrast (Air + Iodine/Gad)", "Barium", "Water", "Oil"], a: 0, e: "Distends joint capsule." },
+{ q: "Lymphangiography visualizes:", o: ["Lymph vessels and nodes", "Veins", "Arteries", "Nerves"], a: 0, e: "Blue dye + Oil contrast (historical)." },
+
+// ==========================================
+// BATCH 7: PEDIATRIC & MISC SPECIALS
+// ==========================================
+{ q: "The 'Von Rosen View' is for:", o: ["Congenital Hip Dislocation (CDH)", "Clubfoot", "Scoliosis", "Skull"], a: 0, e: "Abduction internal rotation." },
+{ q: "The 'Andren-Von Rosen' method involves:", o: ["Hips extended and abducted 45 deg", "Flexed", "Lateral", "Prone"], a: 0, e: "Hip dysplasia." },
+{ q: "Scanography for Leg Length Discrepancy requires:", o: ["Three separate exposures (Hip, Knee, Ankle)", "One long exposure", "Fluoroscopy", "MRI"], a: 0, e: "To eliminate divergence magnification." },
+{ q: "Foreign Body Localization in the eye requires:", o: ["Sweet's Method / Pfeiffer Method", "Waters", "Towne", "Lateral"], a: 0, e: "Precise geometric localization." },
+{ q: "Sialography is contraindicated in:", o: ["Acute infection/inflammation", "Stone", "Tumor", "Dry mouth"], a: 0, e: "Can spread infection." },
+{ q: "Dacrocystography examines the:", o: ["Tear ducts (Nasolacrimal)", "Salivary glands", "Spine", "Bladder"], a: 0, e: "Lacrimal apparatus." },
+{ q: "Bronchography (historical) used:", o: ["Oily Dionosil", "Barium", "Air", "Gadolinium"], a: 0, e: "To map bronchiectasis." },
+{ q: "Galactography (Ductography) examines:", o: ["Breast milk ducts", "Liver ducts", "Salivary ducts", "Tear ducts"], a: 0, e: "For nipple discharge." },
+{ q: "Pneumoencephalography (historical) injected air into:", o: ["Lumbar subarachnoid space", "Ventricles directly", "Carotid", "Vein"], a: 0, e: "Air rose to brain ventricles." },
+{ q: "Ventriculography injected contrast into:", o: ["Brain ventricles (via burr hole)", "Spine", "Vein", "Artery"], a: 0, e: "Direct stick." }
+];
+
+// Fill up to 250 with placeholders (unchanged)
+for(let i=21; i<=250; i++) {
+    db.push({
+        q: `Anatomy Question ${i} (Placeholder content)`,
+        o: ["Structure A", "Structure B", "Structure C", "Structure D"],
+        a: 0,
+        e: "Placeholder explanation."
+    });
+}
+
+// =========================
+// 2. STATE MANAGEMENT
+// =========================
+const ITEMS_PER_PAGE = 25;
+let currentPage = 1;
+const STORAGE_KEY = 'cre_mobile_anatomy';
+
+let state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { answers: {}, score: 0 };
+
+function save() {
+    // Recalc score
+    let s = 0;
+    Object.keys(state.answers).forEach(idx => {
+        if(state.answers[idx] === db[idx].a) s += 4;
+        else s -= 1;
+    });
+    state.score = s;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    updateHeader();
+}
+
+function updateHeader() {
+    document.getElementById('scoreDisplay').innerText = state.score;
+}
+
+// =========================
+// 3. RENDERING
+// =========================
+/**
+ * renderPage(page, scrollToTop = false, focusIdx = null)
+ * - scrollToTop: if true, scroll to top of page (used for navigation)
+ * - focusIdx: if provided, after rendering scroll to that question card (keeps you on the chosen question)
+ */
+function renderPage(page, scrollToTop = false, focusIdx = null) {
+    currentPage = page;
+    const container = document.getElementById('quizContainer');
+    container.innerHTML = '';
+
+    const start = (page-1) * ITEMS_PER_PAGE;
+    const end = Math.min(start + ITEMS_PER_PAGE, db.length);
+
+    document.getElementById('pageDisplay').innerText = `${page}/10`;
+    document.getElementById('btnPrev').disabled = page === 1;
+    document.getElementById('btnNext').disabled = page === 10;
+
+    for(let i=start; i<end; i++) {
+        const item = db[i];
+        const hasAns = state.answers.hasOwnProperty(i);
+        const userAns = state.answers[i];
+        
+        // Card status
+        let cardClass = '';
+        if(hasAns) cardClass = (userAns === item.a) ? 'res-correct' : 'res-wrong';
+
+        const div = document.createElement('div');
+        div.className = `q-card ${cardClass}`;
+        div.id = `q-${i}`;
+
+        let optsHtml = '';
+        item.o.forEach((opt, idx) => {
+            let labelClass = '';
+            if(hasAns) {
+                if(idx === item.a) labelClass = 're-correct';
+                else if(idx === userAns) labelClass = 're-wrong';
+            }
+            
+            optsHtml += `
+            <label class="opt-label ${labelClass}">
+                <input type="radio" name="q${i}" ${hasAns && userAns===idx ? 'checked' : ''} 
+                    ${hasAns ? 'disabled' : ''} onclick="handleAnswer(${i}, ${idx})">
+                ${opt}
+            </label>`;
+        });
+
+        div.innerHTML = `
+            <div class="q-text">Q${i+1}. ${item.q}</div>
+            ${optsHtml}
+            <div class="explanation" style="display:${hasAns?'block':'none'}">
+                <strong>Answer:</strong> ${item.o[item.a]}<br>${item.e}
+            </div>
+        `;
+        container.appendChild(div);
+    }
+
+    // After DOM updated: handle scrolling behavior
+    if (scrollToTop) {
+        // keep old behavior for manual navigation / initial load
+        window.scrollTo(0,0);
+    } else if (focusIdx !== null) {
+        // scroll to the question card we just answered, accounting for sticky header height
+        const el = document.getElementById(`q-${focusIdx}`);
+        if (el) {
+            const headerOffset = document.querySelector('.app-header') ? document.querySelector('.app-header').offsetHeight : 60;
+            const rect = el.getBoundingClientRect();
+            const targetScroll = window.pageYOffset + rect.top - (headerOffset + 8);
+            // clamp targetScroll to >=0
+            const finalScroll = targetScroll < 0 ? 0 : targetScroll;
+            window.scrollTo({ top: finalScroll, behavior: 'auto' });
+        }
+    } else {
+        // no explicit scroll instruction: do nothing (preserve current scroll)
+    }
+}
+
+function handleAnswer(qIdx, optIdx) {
+    if(state.answers.hasOwnProperty(qIdx)) return;
+    state.answers[qIdx] = optIdx;
+    save();
+    
+    // Re-render current page but keep the view on the question answered
+    renderPage(currentPage, false, qIdx);
+}
+
+// =========================
+// 4. MAP & NAV
+// =========================
+function toggleMap(show) {
+    const modal = document.getElementById('mapModal');
+    if(show) {
+        renderMap();
+        modal.style.display = 'flex';
+    } else {
+        modal.style.display = 'none';
+    }
+}
+
+function renderMap() {
+    const grid = document.getElementById('navGrid');
+    grid.innerHTML = '';
+    db.forEach((item, i) => {
+        const div = document.createElement('div');
+        let status = '';
+        if(state.answers.hasOwnProperty(i)) {
+            status = state.answers[i] === item.a ? 'correct' : 'wrong';
+        }
+        div.className = `nav-item ${status}`;
+        div.innerText = i + 1;
+        div.onclick = () => {
+            toggleMap(false);
+            const targetPage = Math.floor(i / ITEMS_PER_PAGE) + 1;
+            // when navigating via map, show top of page (previous behavior)
+            renderPage(targetPage, true);
+        };
+        grid.appendChild(div);
+    });
+}
+
+function changePage(delta) {
+    const newP = currentPage + delta;
+    if(newP >= 1 && newP <= 10) renderPage(newP, true);
+}
+
+function resetData() {
+    if(confirm("Reset score and progress?")) {
+        localStorage.removeItem(STORAGE_KEY);
+        location.reload();
+    }
+}
+
+// Init
+updateHeader();
+renderPage(1, true);
+
+</script>
+</body>
+</html>

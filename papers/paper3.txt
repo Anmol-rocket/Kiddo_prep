@@ -1,0 +1,828 @@
+Paper-3
+
+ISRO
+
+(Radiographer)
+
+Depression between the two tuberosities of 9. humerus is known as
+
+(a) Capitulam
+
+(c) Bicipital groove
+
+(b) Epicondyles
+
+(d) Trochlea
+
+Transverse plane is also called as 2.
+
+(a) Sagittal
+
+(b) Coronal
+
+(c) Axial
+
+(d) Median sagittal
+
+3. DEXA is used for
+
+(a) CT scan
+
+(b) MRI
+
+(c) Bone mineral densitometry
+
+(d) Cardiac catheterisation
+
+4. In IVP, the first film after contrast injection is
+
+(a) Nephrogram
+
+(b) Pyelogram
+
+(c) Ureterogram
+
+Dental formula for permanent teeth is 5.
+
+(d) Venogram
+
+(a) 21222122
+
+(b) 20232023
+
+(c) 21032123
+
+(d) 21232123
+
+6. IOPA is
+
+(a) Intraoral paraapex
+
+(b) Intraoral periapical
+
+(c) Interoral para align
+
+(d) Interoral periapical
+
+7. the level of The common carotid artery usually bifurcates at cervical vertebrae.
+
+(a) 4th
+
+(b) 5th
+
+(c) 3rd
+
+(d) 2nd
+
+(b) Bronchi
+
+8. The functional tissue of lung is
+
+(a) Alveoli
+
+(c) Respiratory bronchiole
+
+(d) Terminal bronchiole
+
+Elevation of the scapula is caused by all except
+
+(a) Trapezius
+
+(b) Levator scapulae
+
+(c) Latissimus dorsi
+
+(d) Rhomboids major
+
+10. The number of cervical vertebrae
+
+(a) 5
+
+(b) 12
+
+(c) 7
+
+(d) 8
+
+11. Protons are charged particles.
+
+(a) Positive
+
+(b) Negative
+
+(c) Neutral
+
+(d) None
+
+to travel. 12. Ultrasound waves require
+
+(a) Medium (jelly, oil etc.)
+
+(b) Air
+
+(c) Vacuum
+
+(d) Gas
+
+13. Isotopes are those elements that have
+
+(a) Same atomic number but different mass number
+
+(b) Different atomic number but same mass number
+
+(c) Equal number of protons and electrons
+
+(d) None of the above
+
+14. When X-ray beam falls on the body, they are
+
+(a) Reflected
+
+(b) Absorbed
+
+(c) Transmitted
+
+(d) All of the above
+
+15. In modern X-ray tube, a vacuum is maintained equal to
+
+(a) 10^-3 mm of Hg
+
+(b) 10^-2 mm of Hg
+
+(c) 10 mm of Hg
+
+(d) None
+
+16. Heat is dissipated in most of the X-ray tubes by
+
+(a) Conduction, convection and radiation
+
+(b) Conduction and convection
+
+(c) Conduction and radiation
+
+(d) Convection and radiation
+
+[14]
+
+17. Penetration of the X-ray is directly related to
+
+(a) KVP
+
+(b) mA
+
+(c) Exposure time
+
+(d) Focus film distance
+
+18. The unit used to record the radiation received by radiation worker
+
+(a) Roentgen
+
+(b) Rad
+
+(c) Curie
+
+(d) Milli Sievert
+
+19. The normal frequency of ultrasound waves used in medical diagnostics range from
+
+(a) 20000-50000 Hz
+
+(b) 500001 MHz
+
+(c) IMHz-20 MHz
+
+(d) 20 MHz
+
+20. Anode in rotating anode X-ray tube is made of
+
+(a) Tungsten Nickel alloy
+
+(b) Tungsten Rhenium alloy
+
+(c) Nickel-Tin alloy
+
+(d) Tungsten-Aluminium alloy
+
+21. Compression in Mammography is important due to
+
+(a) Improved spatial resolution
+
+(b) Improved contrast resolution
+
+(c) Reduced patient dose
+
+(d) All of the above
+
+22. Moseley's law relates to
+
+(a) Wavelength and angle of scattering
+
+(b) Wavelength and intensity of X-ray
+
+(c) Frequency and atomic number
+
+(d) Frequency and applied voltage
+
+3. The usual thickness of the radiographic film is
+
+(a) 0.05 mm
+
+(b) 0.25 mm
+
+(c) 0.75 mm
+
+(d) 1 mm
+
+4. Which is not true about intensifying screen
+
+(a) Reduces patient dose
+
+(b) Decreases spatial resolution
+
+(c) Reduces blurring
+
+(d) Increases loading of X-ray tube
+
+5. Ideal temperature of the dark room is
+
+(a) 10 - 15 deg  C
+
+(b) 23 - 27 deg  C
+
+(c) 16 - 22 deg  C
+
+(d) 28 - 32 deg  C
+
+Intensifying screens are not used in
+
+(a) Mammography
+
+(b) Ultrasound
+
+(c) Both
+
+(d) None
+
+27. Filter in the dark room used for the blue sensitive film is
+
+(a) Amber
+
+(c) Green
+
+(b) Gray
+
+(d) White
+
+28. The most commonly used photo sensitive agent
+
+(a) Silver Chloride
+
+(b) Silver Bromide
+
+(c) Silver lodide
+
+(d) None of the above
+
+29. Fixing solutions used in radiography are
+
+(a) Alkaline
+
+(c) Neutral
+
+(b) Acidic
+
+(d) None of the above
+
+30. In automatic processor, developer temperatun is
+
+(a) 35 - 40 deg  C
+
+(b) 50 - 55 deg  C
+
+(c) 18 - 20 deg  C
+
+(d) 25 - 30 deg  C
+
+31. The fracture of Scaphoid is best seen in
+
+(a) PA view
+
+(b) Lateral view
+
+(c) PA view with ulnar deviation
+
+(d) PA view with radial deviation
+
+32. The bicipital groove of Humerus can be demonstrated in
+
+(a) Axial view of shoulder
+
+(b) Tangential projection
+
+(c) PA view of shoulder
+
+(d) Lateral view
+
+33. The Launstein's projection view is basically done for
+
+(a) Pelvis
+
+(b) Sacro Iliac joint
+
+(c) Hip joint and upper third of Femur
+
+(d) Chest region
+
+34. The specialised radiological examination of lungs and bronchial tree using an opaque contrast medium is called
+
+(a) Bronchoscopy
+
+(b) Bronchography
+
+(c) Cystography
+
+(d) Urography
+
+35. To decrease the magnification of the heart in PA view of chest the film focal distance is kept al
+
+(a) 40 inches
+
+(b) 60 inches
+
+(c) 72 inches
+
+(d) 36 inches
+
+Paper 3
+
+36. The radiological examination of salivary glands and its ducts by means of contrast medium is termed as
+
+(a) Ductography
+
+(b) Sialography
+
+(c) Sinography
+
+(d) Fistulogram
+
+37. Stenver projection view is basically done for
+
+(a) Base of skull
+
+(b) Petrous portion of temporal bone
+
+(c) Oblique view of mandible
+
+(d) Orbit
+
+38. Patella is a
+
+(a) Flat bone
+
+(b) Long bone
+
+(c) Irregular bone
+
+(d) Sesamoid bone
+
+39. Which view of the nasal bone shows bony nasal septum best
+
+(a) Lateral projection
+
+(b) AP projection
+
+(c) Water's projection
+
+(d) None of the above
+
+40. Skyline view is used for
+
+(a) Talus
+
+(b) Scapula
+
+(c) Patella
+
+(d) Hip joint
+
+41. What position of the elbow best demonstrates the Olecranon process
+
+(a) AP view
+
+(b) True lateral view
+
+(c) Axial view
+
+(d) Oblique view
+
+42. What is the proper breathing instruction for an AP abdomen
+
+(a) Full inspiration
+
+(b) Rapid breathing
+
+(c) Shallow breathing
+
+(d) Full expiration
+
+43. Which of the following would best demonstrate fluid in the right pleural cavity
+
+(a) Left lateral decubitus
+
+(b) Right lateral decubitus
+
+(c) Ventral decubitus
+
+(d) Dorsal decubitus
+
+44. The patient's chin should be elevated during chest radiography to
+
+(a) Avoid superimposition on the apices
+
+(b) Keep mid sagittal plane parallel
+
+(c) Reduce patient motion
+
+(d) Reduce patient dose
+
+[15]
+
+45. The 10 days rule is applicable to
+
+(a) The first 10 days following the cessation of menstruation
+
+(b) The first 10 days following the onset of menstruation
+
+(c) The 10 days preceding the onset of menstruation
+
+(d) 14 days before menstruation
+
+46. In India which of the following is the most significant in the development of radiation protection standard
+
+(a) AERB
+
+(b) BARC
+
+(c) NCRP
+
+(d) ICRP
+
+47. TLD is based on the phenomenon of
+
+(a) Induction
+
+(b) Thermionic emission
+
+(c) Thermoluminescence
+
+(d) Photographic
+
+effect
+
+48. MCU is
+
+(a) Micturating Cysto Ureterography
+
+(b) Modified Cysto Urethrogram
+
+(c) Micturating Cysto Urethrography
+
+(d) Micturating Cysto Urinography
+
+49. The primary factor that limits the maximum MA that can be used during a radiographic exposure is
+
+(a) Anode angle
+
+(b) Focal spot size
+
+(c) Cathode temperature
+
+(d) Exposure time
+
+50. All the following are potential advantages of using a higher kV (90 rather than 70) in radiography except
+
+(a) Increased patient exposure
+
+(b) Reduced X-ray tube heating
+
+(c) Shorter exposure times
+
+(d) Decreased area contrast
+
+51. In the adult, the spinal cord usually ends at the level of which vertebra
+
+(a) Ll
+
+(b) S1
+
+(c) L5
+
+(d) S3
+
+52. The cochlea is located within the bone.
+
+(a) Frontal bone
+
+(b) Occipital bone
+
+(c) Temporal bone
+
+(d) Sphenoid bone
+
+[16]
+
+Paper 3
+
+53. X-ray generators produce radiation through
+
+(a) Bremsstrahlung processes
+
+(b) K-shell emission processes
+
+(c) Both (a) and (b)
+
+(d) Neither (a) or (b)
+
+54. Increasing the magnetic field in MRI
+
+(a) Produces less susceptibility artifacts.
+
+(b) Reduces the risk of tissue heating.
+
+(c) Increases the signal to noise.
+
+(d) Reduces the danger from metallic projectiles.
+
+55. Newton's Inverse Square Law is useful in radiography because it indicates how the radiation intensity is affected by
+
+(a) Radioactive decay
+
+(b) Distance from the source
+
+(c) The size of the source
+
+(d) None of the above
+
+56. As an ultrasound pulse moves through tissue in a patient's body it will undergo a change of all the following except
+
+(a) Frequency.
+
+(b) Amplitude (energy).
+
+(c) Physical size.
+
+(d) Intensity.
+
+57. The spatial resolution of an imaging system is most directly related to
+
+(a) Visibility of large, low contrast objects.
+
+(b) Visibility of noisy images.
+
+(c) Visibility of soft tissues.
+
+(d) Visibility of anatomical detail.
+
+58. The radio frequency energy used in MRI and X-ray have essentially the same
+
+(a) Velocity.
+
+(b) Photon energy.
+
+(c) Wavelength.
+
+(d) Frequency.
+
+59. The most appropriate instrument for measuring the scattered X-ray exposure from a patient is
+
+(a) Geiger counter
+
+(b) Large ionization chamber
+
+(c) Small ionization chamber
+
+(d) Scintillation detector
+
+60. The main component of radiographic noise is
+
+(a) Structure mottle
+
+(b) Quantum mottle
+
+(c) Random mottle
+
+(d) Graininess
+
+(a) 5 mSv
+
+(b) 50mSv
+
+(c) 2mSv
+
+(d) 20mSv
+
+62. Absorbed dose is measured in
+
+(a) Sieverts
+
+(b) Man Sieverts
+
+(c) Coulombs
+
+(d) Grays
+
+63. One rad is equal to the absorption of
+
+(a) 1 jouleskg
+
+(b) 0.01 Gy
+
+(c) 100 jouleskg
+
+(d) 0.1 Gy
+
+64. In the Photoelectric effect
+
+(a) the gamma ray is scattered
+
+(b) all the gamma ray energy is transferred to the photoelectron
+
+(d) none of the above
+
+(c) fluorescent X-ray emission never results
+
+65. The intensity of the X-ray beam that leaves the X-ray tube is not uniform throughout all portions of the beam. This is called
+
+(a) Heel effect
+
+(b) Thermionic emission
+
+(c) Stray radiation
+
+(d) Tube rating
+
+66. Why copper is used as an anode stem
+
+(a) High thermal conductivity
+
+(b) Very hard
+
+(c) Poor heat dissipation
+
+(d) None of the above
+
+67. Which is not a method for radiation protection
+
+(a) Dosimeter
+
+(c) Distance
+
+(b) Time
+
+(d) Shielding
+
+68. Which device is used to improve radiographic quality by reducing scattered radiation
+
+(a) X- ray table
+
+(b) Grids
+
+(c) Film cassette
+
+(d) All of these
+
+69. The X-ray tube is made up of
+
+(a) Boro glass
+
+(b) Aluminium
+
+(c) Pyrex glass
+
+(d) Beryllium
+
+70. Fogging of film is caused by
+
+(a) Pair production
+
+(b) Pair annihilation
+
+(c) Compton scattering
+
+(d) Photo electric effect
+
+71. The radiation warning symbol is a black
+
+on a yellow background
+
+(a) Trifoil
+
+(b) Dual foil
+
+(c) Quad foil
+
+(d) Single foil
+
+61. Under the ionising radiation regulation, the annual dose limit for an adult worker is
+       A) 5 mSv
+
+      (b) 50mSv
+
+      (c) 2mSv
+
+       (d) 20mSv
+
+Paper 3
+
+72. The most damaging type of radiation is
+
+(a) Beta rays
+
+(b) X-rays
+
+(c) Alpha rays
+
+(d) Gamma rays
+
+73. TLD should be worn at
+
+(a) The back side at the shoulder position
+
+(b) Outside the lead apron stomach position
+
+(c) Inside the lead apron the chest level
+
+(d) Outside the lead apron collar position
+
+74. Who invented the cyclotron
+
+(a) Lawrence
+
+(b) Roentgen
+
+(c) Bergonie
+
+(d) Kerst
+
+75. The appropriate test to determine if an X-ray machine has adequate filtration is to measure the
+
+(a) Exposure output
+
+(b) HVL
+
+(c) kV
+
+(d) Patient exposure
+
+76. The value of a CT number (in Hounsfield units) is determined primarily by
+
+(a) Matrix size
+
+(b) Slice thickness
+
+(c) kV
+
+(d) Tissue density
+
+77. The efficiency of X-ray production (exposureheat unit) can generally be increased by increasing the
+
+(a) Focal spot size
+
+(b) kV
+
+(c) mA
+
+(d) Exposure time
+
+78. Positron emission involves the ejection of
+
+(a) an alpha particle
+
+(b) a beta minus particle
+
+(c) a beta plus particle
+
+(d) a proton and a neutron
+
+79. In order to better visualize joint space in AP view of knee joint the tube is angled 5 to 7 degrees
+
+(a) Cranially
+
+(b) Caudally
+
+(c) Towards medial side
+
+(d) Towards lateral side
+
+80. For AP view of coccyx the central ray is directed
+
+(a) 25° towards head
+
+(b) 10° towards head
+
+(c) 25° towards feet
+
+(d) 10° towards feet

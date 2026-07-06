@@ -19,7 +19,8 @@ import {
   BarChart3,
   Flame,
   BookOpen,
-  GraduationCap
+  GraduationCap,
+  Brain
 } from "lucide-react"
 
 interface DashboardProps {
@@ -58,6 +59,14 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
     incorrect: number
   }>({ attempted: 0, correct: 0, incorrect: 0 })
 
+  // Dohrav stats
+  const [dohravStats, setDohravStats] = useState<{
+    totalAttempted: number
+    totalCorrect: number
+    totalIncorrect: number
+    papersCompleted: number
+  }>({ totalAttempted: 0, totalCorrect: 0, totalIncorrect: 0, papersCompleted: 0 })
+
   useEffect(() => {
     // Load stats from localStorage
     const savedStats = localStorage.getItem("kiddoprep_stats")
@@ -86,6 +95,28 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
       } catch (e) {
         console.error("Error loading weightage stats:", e)
       }
+    }
+
+    // Load Dohrav stats
+    try {
+      const progressRaw = localStorage.getItem("kiddoprep_dohrav_test_progress")
+      if (progressRaw) {
+        const progress = JSON.parse(progressRaw)
+        const completedPapers: number[] = progress.completedPapers || []
+        let totalAttempted = 0, totalCorrect = 0, totalIncorrect = 0
+        completedPapers.forEach((pid: number) => {
+          const resultRaw = localStorage.getItem(`kiddoprep_dohrav_test_results_${pid}`)
+          if (resultRaw) {
+            const result = JSON.parse(resultRaw)
+            totalAttempted += result.totalQuestions || 0
+            totalCorrect += result.correct || 0
+            totalIncorrect += result.incorrect || 0
+          }
+        })
+        setDohravStats({ totalAttempted, totalCorrect, totalIncorrect, papersCompleted: completedPapers.length })
+      }
+    } catch (e) {
+      console.error("Error loading dohrav stats:", e)
     }
   }, [])
 
@@ -326,6 +357,22 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
                   <span className="text-green-500">{weightageStats.correct} correct</span>
                   <span className="text-red-500">{weightageStats.incorrect} wrong</span>
                   <span className="text-muted-foreground">{weightageStats.attempted} total</span>
+                </div>
+              ) : undefined}
+            />
+            <FeatureCard
+              href="/dohrav"
+              icon={<Brain />}
+              title="Dohrav (दोहराव)"
+              description="Smart revision system — test papers with personal weak-question bank & mastery tracking"
+              gradient="bg-gradient-to-br from-purple-500/10 via-violet-500/5 to-transparent"
+              borderColor="border-purple-500/30 hover:border-purple-500/50"
+              iconColor="text-purple-500"
+              stats={dohravStats.totalAttempted > 0 ? (
+                <div className="flex gap-3 text-xs">
+                  <span className="text-green-500">{dohravStats.totalCorrect} correct</span>
+                  <span className="text-red-500">{dohravStats.totalIncorrect} wrong</span>
+                  <span className="text-muted-foreground">{dohravStats.papersCompleted}/3 papers</span>
                 </div>
               ) : undefined}
             />

@@ -1,0 +1,793 @@
+Paper-2
+
+NCL
+
+(Radiographer)
+
+1. Which part of body is X-rayed in "Frog position"? 7.
+
+(a) Pelvis
+
+(c) Knee joint
+
+(b) Hip joint
+
+(d) Elbow joint
+
+2. Which of the following will help in reducing radiation exposure to patients?
+
+High KV, low (Milli ampere-seconds) mAs
+
+Collimation
+
+Filtration
+
+(a) 1 and 2 only
+
+(c) 1 and 3 only
+
+(b) 2 and 3 only
+
+(d) 1, 2 and 3
+
+3. The unit of dose equivalent used to express radiation dose in living tissue:-
+
+(a) Roentgen
+
+(b) Rem
+
+(c) Rad
+
+(d) Erg
+
+4. TLD badge should be worn at:-
+
+(a) Outside the lead apron stomach position
+
+(b) Inside the lead apron chest level
+
+(c) The back side at the shoulder position
+
+(d) Outside the lead apron collar position
+
+(a) Medial wall of the first part of duodenum
+
+(b) Medial wall of the second part of duodenum
+
+(c) Lateral wall of the second part of duodenum
+
+6. The stomach is located primarily within the :-
+
+(d) Medial wall of the third part of duodenum
+
+(a) Right lower quadrant
+
+(b) Right upper quadrant
+
+(c) Left upper quadrant
+
+(d) Left lower quadrant
+
+Normally a patient is asked to inhale deepl when having the lungs x-raved. Which of th following is the BEST reason for that?
+
+(a) More uniform density
+
+(b) Increased contrast
+
+(c) Greater magnification
+
+(d) Greater area of lung structures shown
+
+8. Compression is used during excretory urography in order to accomplish which of the following
+
+(a) Aiding in the excretion process
+
+(b) Immobilizing the patient
+
+(c) Preventing the patient from breathing during the exposure
+
+(d) Retaining the contrast medium in the collectin system
+
+9. Which of the following is a radiographic study the urinary bladder that involves the direc injection of a contrast media through a catheter
+
+(a) Intravenous pyelogram
+
+5. The common bile duct opens into the:-
+
+(b) Intravenous urogram
+
+(c) Retrograde pyelogram
+
+(d) Cystogram
+
+10. The frequencies of Ultrasound used in medic imaging are in the range of:
+
+(a) 1-20 Hz
+
+(b) 1-20 MHz
+
+(c) 10-20 MHz
+
+(d) 10-20 KHz
+
+11. What form of energy is used in MRI?
+
+(a) Radio waves
+
+(b) Sound waves
+
+(c) X-rays
+
+(d) **Ultraviolet**
+
+Paper 2
+
+[7]
+
+12. The abdominal aorta bifurcates into Left and Right:
+
+(a) Common iliac arteries
+
+(b) Popliteal arteries
+
+(c) Femoral arteries
+
+(d) Tibial arteries
+
+13. Which of the following radiological procedures outlines the Spinal cord?
+
+(a) KUB Radiography
+
+(b) Thermography
+
+(c) Myelography
+
+(d) Xeroradiography
+
+14. Unexposed X-ray film is comprised of a transparent polyester base coated with an emulsion containing radiation-sensitive particle known as:
+
+(a) Silver bromide
+
+(b) Silver iodide
+
+(c) Both A and B
+
+(d) Neither A or B
+
+15. Swimmer's view is used for taking X-Rays of:
+
+(a) Lumbo-sacral spine
+
+(b) Cervico-thoracic junction
+
+(c) Humerus
+
+(d) Coccyx
+
+16. Waters' view is used for taking X-Rays of:
+
+(a) Base of skull
+
+(c) Orbits
+
+(b) Mastoid bones
+
+(d) Paranasal sinuses
+
+17. Apicogram is used for taking X-Rays of:
+
+(a) Base of lung
+
+(c) Mediastinum
+
+(b) Apices of lung
+
+(d) Diaphragm
+
+18. Which procedure uses non-ionizing radiation?
+
+(a) Nuclear medical imaging
+
+(b) X-Ray
+
+(c) CT
+
+(d) MRI
+
+19. To detect gas-fluid level in the abdomen, following X-ray views of abdomen are taken:
+
+(a) AP view
+
+(b) Lateral decubitus view
+
+(c) Erect view
+
+(d) Both B and C
+
+20. The most damaging type of radiation is:
+
+(a) Beta rays
+
+(b) X-rays
+
+21. The following bones participate in the formation of the knee joint:
+
+Femur
+
+Tibia
+
+Patella
+
+(a) 1 and 2 only
+
+(b) 1 and 3 only
+
+(c) 2 and 3 only
+
+(d) 1. 2. and 3
+
+22. A patient is usually required to drink barium sulphate suspension in order to demonstrate which of the following structures?
+
+Pylorus
+
+Sigmoid
+
+Duodenum
+
+(a) 1 and 2 only
+
+(b) 1 and 3 only
+
+(c) 2 and 3 only
+
+(d) 3 only
+
+23. The image intensifier's input phosphor is generally composed of:
+
+(a) Cesium iodide
+
+(b) Zinc cadmium sulphide
+
+(c) Gadolinium oxysulphide
+
+(d) Calcium tungstate
+
+24. The following statement(s) is (are) accurate with respect to the differences between the male and female bony pelvis:
+
+The female pelvic outlet is wider
+
+The pubic angle is 90 degrees or fewer in the
+
+male
+
+The male pelvis is more shallow
+
+(a) 1 only
+
+(b) 1 and 2 only
+
+(c) 2 and 3 only
+
+(d) 1, 2, and 3
+
+25. With the patient positioned as for a parietoacanthial projection (Waters method), and the central ray directed through the patient's open mouth, which of the following sinus groups is demonstrated through the open mouth?
+
+(a) Frontal
+
+(b) Ethmoid
+
+(c) Maxillary
+
+(d) Sphenoid
+
+26. In which body position would a patient suffering from orthopnea experience the least discomfort?
+
+(a) Fowler
+
+(b) Trendelenburg
+
+(c) Alpha rays
+
+(d) Gamma rays
+
+(c) Recumbent
+
+(d) Erect
+
+[8]
+
+27. The four major arteries supplying the brain include the:
+
+Brachiocephalic artery
+
+Common carotid arteries
+
+Vertebral arteries
+
+(a) 1 and 2 only
+
+(b) and 3 only
+
+(c) 2 and 3 only
+
+(d) 1, 2, and 3
+
+28. Which of the following is (are) demonstrated in the lateral projection of the thoracic spine?
+
+Intervertebral joints
+
+Apophyseal joints
+
+Intervertebral foramina
+
+(a) 1 only
+
+(b) 1 and 2 only
+
+(c) 1 and 3 only
+
+(d) 2 and 3 only
+
+29. Which of the following conditions is characterized by widening of the intercostal spaces?
+
+(a) Emphysema
+
+(b) Empyema
+
+(c) Atelectasis
+
+(d) Pneumonia
+
+30. For AP view of the coccyx, the central ray is directed:
+
+(a) 25 degrees towards the head
+
+(b) 10 degrees towards the head
+
+(c) 25 degrees towards the feet
+
+(d) 10 degrees towards the feet
+
+31. Typical examples of digital imaging include:
+
+Magnetic Resonance Imaging (MRI)
+
+Computed Tomography (CT)
+
+Pluridirectional Tomography
+
+(a) 1 only
+
+(b) 1 and 2 only
+
+(c) 1 and 3 only
+
+(d) 1, 2, and 3
+
+32. Of the following groups of technical factors, which will produce the greatest radiographic density?
+
+(a) 10 mAs, 74 kV, 44-inches SID
+
+(b) 10 mAs, 74 kV, 36-inches SID
+
+(c) 5 mAs, 85 kV, 48-inches SID
+
+(d) 5 mAs, 85 kV, 40-inches SID
+
+33. The energy of ionizing electromagnetic radiations is measured in:
+
+(a) mA
+
+(b) mAs
+
+(c) keV
+
+(d) kV
+
+34. A wire mesh is used to test:
+
+(a) Focal spot size
+
+(b) For screen lag
+
+(c) Film-screen contact
+
+(d) Screen speed
+
+Pape
+
+35. Which of the following has an effect distortion?
+
+Source-image distance
+
+Angulation of the x-ray tube
+
+Angulation of the part
+
+(a) 1 only
+
+(b) 1 and 2 only
+
+(c) 2 and 3 only
+
+(d) 1, 2, and 3
+
+36. The term used to digital imaging is: describe image density
+
+(a) Blackening
+
+(b) Brightness
+
+(c) Gray scale
+
+(d) Resolution
+
+37. Compared to a low-ratio grid, a higher-ratio could have:
+
+Taller lead strips
+
+More distance between the lead strips
+
+Thicker lead strips
+
+(a) 1 only
+
+(b) 1 and 2 only
+
+(c) 2 and 3 only
+
+(d) 1, 2, and 3
+
+38. Which of the following pathologic condition would require an increase in exposure factors
+
+(a) Pneumoperitoneum
+
+(b) Obstructed bowel
+
+(c) Renal colic
+
+(d) Ascites
+
+39. Grid ratio is defined as the relationship betwe the height of the lead strip and the:
+
+(a) Width of the lead strip
+
+(b) Distance between the lead strips
+
+(c) Number of lead strips per inch
+
+(d) Angle of the lead strip
+
+40. Patient dose can be decreased by using:
+
+High ratio grids
+
+High-speed screen and film combination
+
+Air-gap technique
+
+(a) 1 only
+
+(b) 1 and 2 only
+
+(c) 3 only
+
+(d) 2, and 3
+
+Paper 2
+
+[9]
+
+41. In order to better visualize joint space in AP view of knee joint the tube is angled 5 to 7 degrees:
+
+(a) Cranially
+
+(b) Caudally
+
+(c) Towards the medial side
+
+(d) Towards the lateral side
+
+42. MCU is:
+
+(a) Micturating Cysto Ureterography
+
+(b) Modified Cysto Urethrogram
+
+(c) Micturating Cysto Urethrography
+
+(d) Micturating Cysto Urinography
+
+43. The term effective dose refers to:
+
+(a) Whole-body dose
+
+(b) Localized organ dose
+
+(c) Genetic effects
+
+(d) Somatic and genetic effects
+
+44. Examples of primary radiation barriers include:
+
+X-ray room walls
+
+Control booth
+
+Lead aprons
+
+(a) 1 only
+
+(b) 1 and 2 only
+
+(c) 2 and 3 only
+
+(d) 1, 2, and 3
+
+45. When reviewing patient blood chemistry levels, what is considered the normal creatinine range?
+
+(a) 0.6-1.5 mg/100 ml
+
+(b) 4.5-6 mg/100 ml
+
+(c) 8-25 mg/100 ml
+
+(d) Up to 50 mg/100 ml
+
+46. In IVP, the first film after contrast injection is:
+
+(a) Nephrogram
+
+(b) Pyelogram
+
+(c) Ureterogram
+
+47. The number of cervical vertebrae:
+
+(d) Venogram
+
+(a) 5
+
+(b) 12
+
+(c) 7
+
+(d) 8
+
+48. When X-ray beam falls on the body, they are:
+
+(a) Reflected
+
+(a) Tungsten-Nickel alloy
+
+(b) Absorbed
+
+(c) Transmitted
+
+(d) All of the above happens
+
+49. The value of CT number (in Hounsfield units) is determined primarily by:
+
+(a) Matrix size
+
+(b) Slice thickness
+
+(c) KV
+
+(d) Tissue density
+
+50. Anode in rotating anode X-ray tube is made of:
+
+(b) Tungsten-Rhenium alloy
+
+(c) Nickel-Tin alloy
+
+(d) Tungsten-Aluminum alloy
+
+51. Which is not true about intensifying screen?
+
+(a) Reduces patient dose
+
+(b) Decreases spatial resolution
+
+(c) Reduces blurring
+
+(d) Increases loading of X-ray tube
+
+52. Ideal temperature of the dark room is:
+
+(a) 10-15 degree C
+
+(b) 23-27 degree C
+
+(c) 16-22 degree C
+
+(d) 28-32 degree C
+
+53. The most commonly used photo sensitive agent?
+
+(a) Silver Chloride
+
+(b) Silver Bromide
+
+(c) Silver lodide
+
+(d) None of the above
+
+54. The specialized radiological examination of lungs and bronchial tree using an opaque contrast medium is called:
+
+(a) Bonchoscopy
+
+(b) Bronchography
+
+(c) Cystography
+
+(d) Urography
+
+55. To decrease the magnification of the heart in PA view of chest the fiim focal distance is kept at:
+
+(a) 40 inches
+
+(b) 60 inches
+
+(c) 70 inches
+
+(d) 36 inches
+
+56. Radiological examination of salivary glands and its ducts by means of contrast medium is termed as:
+
+(a) Ductography
+
+(b) Sialography
+
+(c) Sinography
+
+(d) Fistulogram
+
+57. Stenver projection view is basically done for:
+
+(a) Base of skull
+
+(b) Petrous portion of temporal bone
+
+(c) Oblique view of mandible
+
+(d) Orbit
+
+58. Which view of the nasal bone shows bony nasal septum best?
+
+(a) Lateral projection
+
+(b) AP projection
+
+(c) Water's projection
+
+(d) None of the above
+
+59. Skyline view is used for:
+
+(a) Talus
+
+(b) Scapula
+
+(c) Patella
+
+(d) Hip joint
+
+[10]
+
+Paper 2
+
+60. What position of the elbow best demonstrates the olecranon process?
+
+(a) AP view
+
+(c) Axial view
+
+(b) True lateral view
+
+(d) Oblique view
+
+61. The patient's chin should be elevated during chest radiography to:
+
+(a) Avoid superimposition on the apices of lung
+
+(b) Keep mid sagittal plane parallel
+
+(c) Reduce patient motion
+
+(d) Reduce patient dose
+
+62. The 10 days rule for X-ray examination of female patients is applicable to:
+
+(a) The first 10 days following the cessation of menstruation
+
+(b) The first 10 days following the onset of menstruation
+
+(c) The 10 days preceding the menstruation
+
+(d) 14 days before menstruation
+
+63. In India which of the following is the most significant in the development of radiation protection standard?
+
+(a) AERB
+
+(c) NCRP
+
+(b) BARC
+
+(d) ICRP
+
+64. The radiation warning symbol is a black on a yellow background
+
+(a) Tri foil
+
+(c) Quad foil
+
+(b) Dual foil
+
+(d) Single foil
+
+65. All of the following are potential advantages of using higher KV in radiography except:
+
+(a) Increased patient exposure
+
+(b) Reduced X-ray tube heating
+
+(c) Shorter exposure time
+
+(d) Decreased image exposure
+
+66. In an adult, the spinal cord usually ends at the level of which vertebra?
+
+(a) S1
+
+(b) L1
+
+(c) L5
+
+(d) S3
+
+67. Newton's Inverse Square Law is useful in radiography because it indicates how the radiation intensity is affected by:
+
+(a) Radioactive decay
+
+(b) Distance from the source
+
+(c) The size of the source
+
+(d) None of the above
+
+1
+
+2
+
+68. Fixing solutions used in Radiography are:
+
+(a) Alkaline
+
+(c) Neutral
+
+(b) Acidic
+
+(d) None of the above
+
+69. One rad is equal to the absorption of:
+
+(a) 1 joules/kg
+
+(b) 0.01 Gy
+
+(c) 100 joules/kg
+
+(d) 0.1 Gy
+
+70. The intensity of the X-ray beam that leaves the X-ray tube is not uniform throughout all portions of the beam. This is called:
+
+(a) Heel effect
+
+(b) Thermionic emission
+
+(c) Stray radiation
+
+(d) Tube rating
