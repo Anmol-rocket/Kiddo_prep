@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Grammar Practice (50 Questions)</title>
+    <style>
+        :root {
+            --primary: #059669;
+            --secondary: #10b981;
+            --light: #d1fae5;
+            --white: #ffffff;
+            --gray: #f9fafb;
+            --correct-bg: #dcfce7;
+            --correct-border: #22c55e;
+            --wrong-bg: #fee2e2;
+            --wrong-border: #ef4444;
+            --text: #1f2937;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--gray);
+            margin: 0;
+            padding: 0;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 1rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        h1 { margin: 0; font-size: 1.2rem; }
+        .subtitle { font-size: 0.8rem; opacity: 0.9; }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+            padding-bottom: 80px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+            max-width: 300px;
+            margin: 10px auto;
+            display: block;
+        }
+
+        button:hover { background-color: var(--primary); }
+
+        .question-category {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.2rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            white-space: pre-wrap;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: var(--light);
+            border-color: var(--secondary);
+        }
+
+        .option-label input { margin-right: 12px; }
+
+        .correct {
+            background-color: var(--correct-bg);
+            border-color: var(--correct-border);
+        }
+
+        .wrong {
+            background-color: var(--wrong-bg);
+            border-color: var(--wrong-border);
+        }
+
+        #score-container {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: var(--white);
+            border-radius: 8px;
+            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .score-text {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>English Grammar Practice Mock Paper</h1>
+        <div class="subtitle">50 Questions • Tenses, Prepositions, Nouns, Pronouns, Verbs, Adjectives, Adverbs</div>
+    </header>
+
+    <div class="container">
+        <div id="quiz-container">
+            <!-- Questions will be injected here -->
+        </div>
+
+        <button id="submit-btn" onclick="submitQuiz()">Submit Test</button>
+
+        <div id="score-container">
+            <h2>Your Score</h2>
+            <div class="score-text"><span id="score">0</span> / 50</div>
+            <p id="feedback-msg"></p>
+            <button onclick="location.reload()">Retry Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [{"id": 1, "question": "Identify the tense: 'She will have finished her work by tomorrow.'", "options": ["Simple Future", "Future Perfect", "Future Continuous", "Present Perfect"], "answer": 1, "category": "General Grammar"}, {"id": 2, "question": "Identify the tense: 'They are playing football in the field.'", "options": ["Present Continuous", "Simple Present", "Present Perfect", "Past Continuous"], "answer": 0, "category": "General Grammar"}, {"id": 3, "question": "Fill in the blank with correct tense: 'By the time we arrived, the train _______.'", "options": ["has left", "had left", "left", "will leave"], "answer": 1, "category": "General Grammar"}, {"id": 4, "question": "Fill in the blank: 'I _______ English for five years.'", "options": ["have been studying", "am studying", "was studying", "study"], "answer": 0, "category": "General Grammar"}, {"id": 5, "question": "Identify the tense: 'He had been sleeping for two hours when I called.'", "options": ["Past Perfect Continuous", "Past Perfect", "Present Perfect Continuous", "Past Continuous"], "answer": 0, "category": "General Grammar"}, {"id": 6, "question": "Fill in the blank: 'If it rains, we _______ the match.'", "options": ["cancelled", "will cancel", "cancel", "would cancel"], "answer": 1, "category": "General Grammar"}, {"id": 7, "question": "Identify the tense: 'She writes a letter to her mother every week.'", "options": ["Present Continuous", "Simple Past", "Simple Present", "Present Perfect"], "answer": 2, "category": "General Grammar"}, {"id": 8, "question": "Fill in the blank: 'The cat is hiding _______ the bed.'", "options": ["in", "over", "under", "above"], "answer": 2, "category": "General Grammar"}, {"id": 9, "question": "Fill in the blank: 'He is good _______ mathematics.'", "options": ["at", "on", "with", "in"], "answer": 0, "category": "General Grammar"}, {"id": 10, "question": "Fill in the blank: 'She has been waiting here _______ morning.'", "options": ["until", "from", "since", "for"], "answer": 2, "category": "General Grammar"}, {"id": 11, "question": "Fill in the blank: 'They travelled to Paris _______ train.'", "options": ["with", "in", "on", "by"], "answer": 3, "category": "General Grammar"}, {"id": 12, "question": "Fill in the blank: 'He prefers tea _______ coffee.'", "options": ["to", "than", "over", "from"], "answer": 0, "category": "General Grammar"}, {"id": 13, "question": "Fill in the blank: 'The book was written _______ a famous author.'", "options": ["from", "with", "in", "by"], "answer": 3, "category": "General Grammar"}, {"id": 14, "question": "Fill in the blank: 'She is afraid _______ spiders.'", "options": ["with", "from", "of", "about"], "answer": 2, "category": "General Grammar"}, {"id": 15, "question": "What is the plural of 'Child'?", "options": ["Childrens", "Childes", "Childs", "Children"], "answer": 3, "category": "General Grammar"}, {"id": 16, "question": "Identify the noun in the sentence: 'The quick brown fox jumps over the lazy dog.'", "options": ["jumps", "quick", "over", "fox"], "answer": 3, "category": "General Grammar"}, {"id": 17, "question": "What is the abstract noun for 'Brave'?", "options": ["Braveness", "Bravery", "Bravely", "Brave"], "answer": 1, "category": "General Grammar"}, {"id": 18, "question": "Which of the following is an uncountable noun?", "options": ["Information", "Apple", "Chair", "Car"], "answer": 0, "category": "General Grammar"}, {"id": 19, "question": "What is the feminine gender of 'Horse'?", "options": ["Vixen", "Doe", "Mare", "Cow"], "answer": 2, "category": "General Grammar"}, {"id": 20, "question": "Identify the collective noun: 'A _______ of wolves.'", "options": ["pack", "flock", "swarm", "herd"], "answer": 0, "category": "General Grammar"}, {"id": 21, "question": "Identify the proper noun: 'My brother John lives in London.'", "options": ["John", "brother", "My", "lives"], "answer": 0, "category": "General Grammar"}, {"id": 22, "question": "Identify the pronoun: 'She went to the market with them.'", "options": ["went", "with", "them", "market"], "answer": 2, "category": "General Grammar"}, {"id": 23, "question": "Fill in the blank: 'This is the boy _______ broke the window.'", "options": ["whose", "whom", "who", "which"], "answer": 2, "category": "General Grammar"}, {"id": 24, "question": "Fill in the blank: 'Between you and _______, I don't trust him.'", "options": ["I", "myself", "mine", "me"], "answer": 3, "category": "General Grammar"}, {"id": 25, "question": "Identify the reflexive pronoun: 'I hurt myself while cooking.'", "options": ["myself", "hurt", "cooking", "I"], "answer": 0, "category": "General Grammar"}, {"id": 26, "question": "Fill in the blank: 'Each of the students must bring _______ own lunch.'", "options": ["their", "theirs", "his or her", "there"], "answer": 2, "category": "General Grammar"}, {"id": 27, "question": "Fill in the blank: '_______ is knocking at the door?'", "options": ["Whom", "Which", "Who", "Whose"], "answer": 2, "category": "General Grammar"}, {"id": 28, "question": "Identify the relative pronoun: 'The book that you gave me is interesting.'", "options": ["The", "that", "me", "you"], "answer": 1, "category": "General Grammar"}, {"id": 29, "question": "Identify the main verb: 'She is reading a fascinating book.'", "options": ["is", "fascinating", "book", "reading"], "answer": 3, "category": "General Grammar"}, {"id": 30, "question": "What is the past participle of the verb 'Go'?", "options": ["going", "gone", "went", "goes"], "answer": 1, "category": "General Grammar"}, {"id": 31, "question": "Identify the auxiliary (helping) verb: 'They have finished the project.'", "options": ["have", "finished", "They", "project"], "answer": 0, "category": "General Grammar"}, {"id": 32, "question": "Fill in the blank: 'The sun _______ in the east.'", "options": ["raises", "rises", "raise", "arises"], "answer": 1, "category": "General Grammar"}, {"id": 33, "question": "Identify the transitive verb: 'The boy kicked the ball.'", "options": ["boy", "kicked", "ball", "The"], "answer": 1, "category": "General Grammar"}, {"id": 34, "question": "What is the past tense of 'Catch'?", "options": ["catch", "catched", "caught", "catching"], "answer": 2, "category": "General Grammar"}, {"id": 35, "question": "Identify the modal verb: 'You should listen to your parents.'", "options": ["should", "listen", "to", "parents"], "answer": 0, "category": "General Grammar"}, {"id": 36, "question": "Identify the adjective: 'She wore a beautiful dress to the party.'", "options": ["party", "beautiful", "dress", "wore"], "answer": 1, "category": "General Grammar"}, {"id": 37, "question": "What is the comparative degree of 'Good'?", "options": ["Best", "Gooder", "Better", "More good"], "answer": 2, "category": "General Grammar"}, {"id": 38, "question": "What is the superlative degree of 'Far' (referring to distance)?", "options": ["Furthest", "Farthest", "Farther", "Further"], "answer": 1, "category": "General Grammar"}, {"id": 39, "question": "Fill in the blank: 'He is the _______ boy in the class.'", "options": ["smarter", "smartest", "smart", "most smart"], "answer": 1, "category": "General Grammar"}, {"id": 40, "question": "Identify the adjective: 'I have three apples.'", "options": ["I", "have", "three", "apples"], "answer": 2, "category": "General Grammar"}, {"id": 41, "question": "Fill in the blank: 'This task is _______ than the previous one.'", "options": ["difficult", "most difficult", "more difficult", "difficulter"], "answer": 2, "category": "General Grammar"}, {"id": 42, "question": "Identify the demonstrative adjective: 'This book belongs to me.'", "options": ["book", "me", "belongs", "This"], "answer": 3, "category": "General Grammar"}, {"id": 43, "question": "Identify the adverb: 'She sings beautifully.'", "options": ["sings", "beautifully", "She", "is"], "answer": 1, "category": "General Grammar"}, {"id": 44, "question": "Fill in the blank: 'He ran _______ to catch the bus.'", "options": ["quicker", "quick", "quickly", "quickest"], "answer": 2, "category": "General Grammar"}, {"id": 45, "question": "Identify the adverb of frequency: 'They always visit us on Sundays.'", "options": ["always", "us", "visit", "Sundays"], "answer": 0, "category": "General Grammar"}, {"id": 46, "question": "Fill in the blank: 'She spoke _______ so everyone could hear.'", "options": ["louder", "loud", "loudest", "loudly"], "answer": 3, "category": "General Grammar"}, {"id": 47, "question": "Identify the adverb: 'We are going there tomorrow.'", "options": ["We", "tomorrow", "going", "there"], "answer": 1, "category": "General Grammar"}, {"id": 48, "question": "Fill in the blank: 'He works _______ than his brother.'", "options": ["hardly", "hardest", "hard", "harder"], "answer": 3, "category": "General Grammar"}, {"id": 49, "question": "Identify the adverb of degree: 'I am extremely tired today.'", "options": ["extremely", "tired", "today", "am"], "answer": 0, "category": "General Grammar"}, {"id": 50, "question": "Fill in the blank with appropriate article: 'He is _______ European.'", "options": ["the", "a", "an", "no article"], "answer": 1, "category": "General Grammar"}];
+
+        const quizContainer = document.getElementById('quiz-container');
+
+        function renderQuestions() {
+            let html = '';
+            questions.forEach((q, index) => {
+                html += `
+                    <div class="card" id="q-card-${index}">
+                        <div class="question-category">Q${index + 1}. ${q.category}</div>
+                        <div class="question-text">${q.question}</div>
+                        <div class="options-grid">
+                            ${q.options.map((opt, optIndex) => `
+                                <label class="option-label" id="label-${index}-${optIndex}">
+                                    <input type="radio" name="q${index}" value="${optIndex}">
+                                    ${opt}
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            quizContainer.innerHTML = html;
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let answered = 0;
+
+            questions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                
+                // Reset styling
+                q.options.forEach((_, optIndex) => {
+                    const label = document.getElementById(`label-${index}-${optIndex}`);
+                    label.classList.remove('correct', 'wrong');
+                    label.style.pointerEvents = 'none'; // disable changing answer
+                });
+
+                if (selected) {
+                    answered++;
+                    const selectedVal = parseInt(selected.value);
+                    if (selectedVal === q.answer) {
+                        score++;
+                        document.getElementById(`label-${index}-${selectedVal}`).classList.add('correct');
+                    } else {
+                        document.getElementById(`label-${index}-${selectedVal}`).classList.add('wrong');
+                        document.getElementById(`label-${index}-${q.answer}`).classList.add('correct');
+                    }
+                } else {
+                    document.getElementById(`label-${index}-${q.answer}`).classList.add('correct');
+                }
+            });
+
+            document.getElementById('submit-btn').style.display = 'none';
+            const scoreContainer = document.getElementById('score-container');
+            scoreContainer.style.display = 'block';
+            document.getElementById('score').innerText = score;
+
+            const feedback = document.getElementById('feedback-msg');
+            if(score > 40) feedback.innerText = "Excellent grammar skills!";
+            else if(score > 30) feedback.innerText = "Good job! A little more practice and you'll be perfect.";
+            else feedback.innerText = "Keep practicing. Focus on your weak areas!";
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Initialize
+        renderQuestions();
+    </script>
+</body>
+</html>
