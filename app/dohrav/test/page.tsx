@@ -11,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { ChevronLeft, ChevronRight, CheckCircle, XCircle, AlertCircle, Clock } from "lucide-react"
+import { ChevronLeft, ChevronRight, CheckCircle, XCircle, AlertCircle, Clock, Brain } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { dohravPapers, DohravQuestion } from "@/lib/dohrav-papers"
 import { recordTestResult, TestResult } from "@/lib/dohrav-revision"
