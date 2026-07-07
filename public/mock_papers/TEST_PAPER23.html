@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIIMS CRE Radiographer - Test Paper 23</title>
+    <style>
+        :root {
+            --header-bg: #3f51b5;
+            --header-text: #fff;
+            --panel-bg: #f5f5f5;
+            --pallet-answered: #4caf50;
+            --pallet-not-answered: #f44336;
+            --pallet-review: #9c27b0;
+            --pallet-not-visited: #e0e0e0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #fff; }
+
+        /* --- Header --- */
+        header {
+            background: var(--header-bg); color: var(--header-text);
+            padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+            height: 60px; flex-shrink: 0;
+        }
+        .timer { font-size: 1.2rem; font-weight: bold; background: #fff; color: #d32f2f; padding: 5px 15px; border-radius: 4px; border: 2px solid #d32f2f; }
+
+        /* --- Main Layout --- */
+        .main-container { display: flex; flex: 1; overflow: hidden; }
+        
+        .question-area { flex: 1; display: flex; flex-direction: column; padding: 20px; overflow-y: auto; }
+        .q-header { display: flex; justify-content: space-between; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.5; }
+        
+        .options-container { display: flex; flex-direction: column; gap: 10px; }
+        .option-label { 
+            display: flex; align-items: center; padding: 10px; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; transition: 0.2s; 
+        }
+        .option-label:hover { background: #f0f8ff; }
+        .option-label input { margin-right: 15px; transform: scale(1.2); }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px; background: var(--panel-bg); border-left: 1px solid #ccc;
+            display: flex; flex-direction: column; flex-shrink: 0;
+        }
+        .user-info { padding: 10px; background: #e8eaf6; border-bottom: 1px solid #ccc; }
+        
+        .palette-legend { padding: 10px; font-size: 0.8rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: #fff; }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+        .question-grid { 
+            padding: 10px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; 
+            overflow-y: auto; flex: 1; align-content: start;
+        }
+        .q-btn {
+            height: 35px; width: 35px; border: 1px solid #ccc; background: #fff; 
+            border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .q-btn.answered { background: var(--pallet-answered); color: white; border-color: var(--pallet-answered); }
+        .q-btn.not-answered { background: var(--pallet-not-answered); color: white; border-color: var(--pallet-not-answered); }
+        .q-btn.review { background: var(--pallet-review); color: white; border-radius: 50%; }
+        .q-btn.current { border: 2px solid blue; box-shadow: 0 0 5px blue; }
+        .q-btn.locked { opacity: 0.4; cursor: not-allowed; background: #444 !important; color: #888; border: 1px solid #000; }
+
+        /* Footer */
+        .footer-controls {
+            height: 60px; background: #fff; border-top: 1px solid #ccc;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+        }
+        .btn { padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+        .btn-primary { background: #2196f3; color: white; }
+        .btn-success { background: #4caf50; color: white; }
+        .btn-warn { background: #ff9800; color: white; }
+        .btn-danger { background: #f44336; color: white; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* Mobile */
+        .mobile-toggle { display: none; background: none; border: none; color: white; font-size: 1.5rem; }
+        @media (max-width: 768px) {
+            .mobile-toggle { display: block; }
+            .sidebar { 
+                position: absolute; right: 0; top: 60px; bottom: 60px; z-index: 100;
+                transform: translateX(100%); transition: transform 0.3s; width: 85%;
+            }
+            .sidebar.active { transform: translateX(0); }
+            .question-grid { grid-template-columns: repeat(6, 1fr); }
+            .footer-controls { flex-wrap: wrap; gap: 5px; height: auto; padding: 10px; }
+            .btn { flex: 1; padding: 8px; font-size: 0.8rem; }
+        }
+
+        /* Overlay */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .hidden { display: none !important; }
+        
+        .review-panel { display: none; padding: 20px; height: 100%; overflow-y: auto; background:#f9f9f9;}
+        .review-item { margin-bottom: 20px; border: 1px solid #ddd; padding: 15px; border-radius: 5px; background:white; }
+        .explanation { background: #fff3cd; padding: 10px; margin-top: 10px; font-size: 0.9rem; border-left: 4px solid #ffc107; }
+
+    </style>
+</head>
+<body>
+
+    <div id="landingPage" class="overlay">
+        <h1>AIIMS CRE - Test Paper 23</h1>
+        <div style="width: 80%; max-width: 600px; text-align: left; margin: 20px 0;">
+            <h3>Exam Rules:</h3>
+            <ul>
+                <li><strong>Questions:</strong> 100 (5 Sections of 20 questions each).</li>
+                <li><strong>Timing:</strong> 18 Minutes per section (Strictly Dedicated).</li>
+                <li><strong>Total Time:</strong> 90 Minutes.</li>
+                <li><strong>Locking:</strong> Once 18 mins are up, or if you manually proceed to the next section, you <u>cannot</u> return to the previous section.</li>
+                <li><strong>Marking:</strong> +4 Correct, -1 Incorrect.</li>
+            </ul>
+        </div>
+        <button class="btn btn-success" style="font-size: 1.2rem;" onclick="startExam()">START EXAM</button>
+    </div>
+
+    <header id="examHeader" class="hidden">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <h3>AIIMS Radiographer</h3>
+            <span style="font-size:0.8rem; background:#eee; padding:2px 6px; border-radius:4px; color:#333;" id="sectionLabel">Section 1</span>
+        </div>
+        <div class="timer" id="timerDisplay">18:00</div>
+        <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+    </header>
+
+    <div class="main-container hidden" id="examBody">
+        <div class="question-area">
+            <div class="q-header">
+                <span id="qNumDisplay">Question No. 1</span>
+                <span style="color: #666;">Marks: +4, -1</span>
+            </div>
+            <div id="questionText" class="q-text">Loading...</div>
+            <div id="optionsBox" class="options-container"></div>
+        </div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="user-info">
+                <strong>Candidate Name</strong><br><small>Roll No: 123456</small>
+            </div>
+            <div class="palette-legend">
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-answered)"></span> Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-not-answered)"></span> Not Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-review)"></span> Review</div>
+                <div class="legend-item"><span class="dot" style="background:#444"></span> Locked</div>
+            </div>
+            <div class="question-grid" id="questionPalette"></div>
+            <div style="padding:10px; margin-top:auto;">
+                <button class="btn btn-primary" style="width:100%" onclick="submitExam()">FINISH EXAM</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-controls hidden" id="examFooter">
+        <div style="display:flex; gap:10px;">
+            <button class="btn btn-danger" onclick="clearResponse()">Clear</button>
+            <button class="btn btn-warn" onclick="markForReview()">Review</button>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <button class="btn" onclick="prevQuestion()" id="btnPrev">Previous</button>
+            <button class="btn btn-success" onclick="saveAndNext()">Save & Next</button>
+        </div>
+    </div>
+
+    <div id="resultPage" class="overlay hidden" style="display:block; overflow-y:auto; justify-content:start; padding-top:40px;">
+        <h2 style="text-align:center;">Exam Summary</h2>
+        <div id="scoreCard" style="margin: 20px auto; width:90%; max-width:600px; padding: 20px; border: 1px solid #ccc; text-align: center; background:#fff;"></div>
+        <div style="display:flex; justify-content:center; gap:20px; margin-bottom:20px;">
+            <button class="btn btn-primary" onclick="showDetailedReview()">Review Solutions</button>
+            <button class="btn btn-danger" onclick="location.reload()">Exit</button>
+        </div>
+        <div id="detailedReview" class="review-panel" style="width: 90%; max-width: 800px; margin:0 auto;"></div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const TOTAL_QUESTIONS = 100;
+        const SECTION_SIZE = 20; // 20 questions per section
+        const SECTION_TIME_LIMIT = 18 * 60; // 18 minutes in seconds
+        const LOCAL_STORAGE_KEY = 'test_paper_23_state';
+        
+        let questions = [];
+
+        function generateQuestions() {
+            const createQ = (id, type, text, opts, ans, exp) => ({ id, type, text, opts, ans, exp });
+            questions = []; // Reset array
+
+            const raw_data = [
+                // Q1-20: Non-Core (GK, Quant, Reasoning, Computer)
+                { "type": "Non-Core", "text": "What is the capital of Chhattisgarh?", "opts": ["Ranchi", "Bhopal", "Raipur", "Dehradun"], "ans": 2, "exp": "Raipur is the capital of Chhattisgarh." },
+                { "type": "Non-Core", "text": "NITI Aayog replaced which of the following institutions?", "opts": ["Planning Commission", "Finance Commission", "Election Commission", "National Development Council"], "ans": 0, "exp": "NITI Aayog was formed on January 1, 2015, replacing the Planning Commission." },
+                { "type": "Non-Core", "text": "Which Indian city is known as the 'Silicon Valley of India'?", "opts": ["Hyderabad", "Pune", "Chennai", "Bengaluru"], "ans": 3, "exp": "Bengaluru is called the Silicon Valley of India due to its role as the nation's leading IT exporter." },
+                { "type": "Non-Core", "text": "The Reserve Bank of India (RBI) was established in which year?", "opts": ["1947", "1935", "1950", "1969"], "ans": 1, "exp": "The RBI was established on April 1, 1935, in accordance with the RBI Act, 1934." },
+                { "type": "Non-Core", "text": "Which sector contributes the most to India's GDP?", "opts": ["Agriculture Sector", "Manufacturing Sector", "Services Sector", "Mining Sector"], "ans": 2, "exp": "The Services sector (tertiary sector) is the largest contributor to India's Gross Domestic Product." },
+                { "type": "Non-Core", "text": "What is the area of a circle with a radius of 7 cm? (Take π = 22/7)", "opts": ["154 sq cm", "144 sq cm", "44 sq cm", "121 sq cm"], "ans": 0, "exp": "Area = π * r^2 = (22/7) * 7 * 7 = 154 sq cm." },
+                { "type": "Non-Core", "text": "Calculate the volume of a right circular cylinder with radius 3 cm and height 7 cm.", "opts": ["154 cu cm", "66 cu cm", "198 cu cm", "231 cu cm"], "ans": 2, "exp": "Volume = π * r^2 * h = (22/7) * 3 * 3 * 7 = 198 cubic cm." },
+                { "type": "Non-Core", "text": "A 100-meter long train completely passes a pole in 10 seconds. What is the speed of the train in km/hr?", "opts": ["10 km/hr", "36 km/hr", "18 km/hr", "54 km/hr"], "ans": 1, "exp": "Speed in m/s = Distance/Time = 100/10 = 10 m/s. In km/hr = 10 * (18/5) = 36 km/hr." },
+                { "type": "Non-Core", "text": "A car travels 200 km in 4 hours. What is its approximate speed in meters per second (m/s)?", "opts": ["10.5 m/s", "11.2 m/s", "12.5 m/s", "13.9 m/s"], "ans": 3, "exp": "Speed = 200/4 = 50 km/hr. In m/s = 50 * (5/18) = 250/18 ≈ 13.88 m/s." },
+                { "type": "Non-Core", "text": "What is the total surface area of a cube having a side length of 5 cm?", "opts": ["150 sq cm", "100 sq cm", "125 sq cm", "250 sq cm"], "ans": 0, "exp": "Total Surface Area of a cube = 6 * a^2 = 6 * 5^2 = 6 * 25 = 150 sq cm." },
+                { "type": "Non-Core", "text": "If A is the sister of B, and C is the mother of B, what is the relation of A to C?", "opts": ["Sister", "Niece", "Daughter", "Granddaughter"], "ans": 2, "exp": "If A and B are siblings, and C is B's mother, C must also be A's mother. Therefore, A is the daughter of C." },
+                { "type": "Non-Core", "text": "What comes next in the series: 2, 6, 12, 20, 30, ?", "opts": ["42", "38", "40", "44"], "ans": 0, "exp": "The differences are consecutive even numbers: +4, +6, +8, +10. Next difference is +12, so 30 + 12 = 42." },
+                { "type": "Non-Core", "text": "Find the odd one out from the following list.", "opts": ["Circle", "Square", "Triangle", "Sphere"], "ans": 3, "exp": "A sphere is a 3-dimensional shape, while the others are 2-dimensional figures." },
+                { "type": "Non-Core", "text": "If the word 'DOG' is coded as 26, how will 'CAT' be coded?", "opts": ["22", "24", "26", "28"], "ans": 1, "exp": "Sum of alphabetical positions: D(4) + O(15) + G(7) = 26. For CAT: C(3) + A(1) + T(20) = 24." },
+                { "type": "Non-Core", "text": "Pointing to a photograph, a man says, 'She is the daughter of my grandfather's only son.' How is the woman in the photograph related to the man?", "opts": ["Aunt", "Mother", "Sister", "Cousin"], "ans": 2, "exp": "The grandfather's only son is the man's father. The daughter of his father is his sister." },
+                { "type": "Non-Core", "text": "What is the keyboard shortcut to make text bold in Microsoft Word?", "opts": ["Ctrl + N", "Ctrl + B", "Ctrl + U", "Ctrl + I"], "ans": 1, "exp": "Ctrl + B is the standard shortcut to toggle bold formatting in MS Word." },
+                { "type": "Non-Core", "text": "In Microsoft Excel, every formula must begin with which symbol?", "opts": ["=", "@", "#", "+"], "ans": 0, "exp": "All formulas and functions in MS Excel must begin with an equal sign (=)." },
+                { "type": "Non-Core", "text": "Which feature in MS Word helps you find synonyms for a selected word?", "opts": ["Spell Check", "Word Count", "Thesaurus", "Find and Replace"], "ans": 2, "exp": "The Thesaurus tool provides synonyms and sometimes antonyms for selected words." },
+                { "type": "Non-Core", "text": "The intersection of a row and a column in an MS Excel worksheet is called a:", "opts": ["Table", "Grid", "Box", "Cell"], "ans": 3, "exp": "A cell is the basic unit of a worksheet where data is entered, identified by a column letter and row number." },
+                { "type": "Non-Core", "text": "What is the keyboard shortcut to center-align text in MS Word?", "opts": ["Ctrl + C", "Ctrl + E", "Ctrl + M", "Ctrl + R"], "ans": 1, "exp": "Ctrl + E is used for center alignment, as Ctrl + C is for copy." },
+
+                // Q21-35: Radiation Standards & Regulations
+                { "type": "Core", "text": "The International Commission on Radiological Protection (ICRP) was established in which year?", "opts": ["1928", "1945", "1954", "1972"], "ans": 0, "exp": "The ICRP was established in 1928 at the second International Congress of Radiology." },
+                { "type": "Core", "text": "The Atomic Energy Regulatory Board (AERB) of India was constituted under the provisions of which act?", "opts": ["Atomic Energy Act, 1948", "Atomic Energy Act, 1962", "Radiation Protection Act, 1971", "Environmental Protection Act, 1986"], "ans": 1, "exp": "AERB was constituted in 1983 under the provisions of the Atomic Energy Act, 1962." },
+                { "type": "Core", "text": "According to AERB/ICRP guidelines, what is the annual effective dose limit for a member of the general public?", "opts": ["10 mSv", "5 mSv", "1 mSv", "20 mSv"], "ans": 2, "exp": "The annual effective dose limit for the general public is 1 mSv." },
+                { "type": "Core", "text": "What is the annual equivalent dose limit for the skin of an occupational radiation worker?", "opts": ["150 mSv", "20 mSv", "100 mSv", "500 mSv"], "ans": 3, "exp": "The annual equivalent dose limit for the skin and extremities (hands and feet) for occupational workers is 500 mSv." },
+                { "type": "Core", "text": "Where is the headquarters of the Atomic Energy Regulatory Board (AERB) located?", "opts": ["New Delhi", "Mumbai", "Chennai", "Kolkata"], "ans": 1, "exp": "AERB is headquartered in Mumbai, Maharashtra." },
+                { "type": "Core", "text": "Which of the following is NOT a primary principle of radiation protection recommended by ICRP?", "opts": ["Justification", "Optimization", "Magnification", "Dose Limitation"], "ans": 2, "exp": "The three core principles of radiation protection are Justification, Optimization (ALARA), and Dose Limitation." },
+                { "type": "Core", "text": "The ALARA principle in radiation protection stands for:", "opts": ["As Low As Rationally Acceptable", "As Light As Reasonably Achievable", "As Low As Reasonably Achievable", "As Low As Required by AERB"], "ans": 2, "exp": "ALARA stands for As Low As Reasonably Achievable, focusing on minimizing radiation dose." },
+                { "type": "Core", "text": "For a pregnant radiation worker, the equivalent dose limit to the surface of the woman's abdomen for the remainder of the pregnancy is:", "opts": ["1 mSv", "5 mSv", "2 mSv", "0.5 mSv"], "ans": 0, "exp": "Once pregnancy is declared, the dose to the fetus should not exceed 1 mSv for the remainder of the pregnancy." },
+                { "type": "Core", "text": "Which device is most commonly used in India for personnel radiation monitoring by occupational workers?", "opts": ["Pocket Dosimeter", "TLD Badge", "Geiger-Muller Counter", "Film Badge"], "ans": 1, "exp": "Thermoluminescent Dosimeter (TLD) badges are the standard personnel monitoring devices supplied by BARC/Avanttec in India." },
+                { "type": "Core", "text": "In the context of personnel monitoring, TLD stands for:", "opts": ["Thermal Light Dosimeter", "Thermoluminescent Dosimeter", "Tissue Level Dosemeter", "Total Log Dosimetry"], "ans": 1, "exp": "TLD stands for Thermoluminescent Dosimeter, typically using Calcium Sulfate (CaSO4:Dy) crystals." },
+                { "type": "Core", "text": "According to current ICRP recommendations, the occupational effective dose limit is 20 mSv per year, averaged over a period of:", "opts": ["5 years", "2 years", "10 years", "3 years"], "ans": 0, "exp": "It is limited to 100 mSv over 5 years, with a maximum of 50 mSv in any single year, averaging 20 mSv/year." },
+                { "type": "Core", "text": "Which international agency promotes the peaceful use of nuclear energy and serves as the global focal point for nuclear cooperation?", "opts": ["WHO", "IAEA", "ICRP", "UNSCEAR"], "ans": 1, "exp": "The International Atomic Energy Agency (IAEA) is the world's central intergovernmental forum for scientific and technical co-operation in the nuclear field." },
+                { "type": "Core", "text": "During a fluoroscopic procedure wearing a lead apron, where should the personnel dosimeter (TLD badge) generally be worn to monitor whole-body dose?", "opts": ["Outside the apron at collar level", "Inside the apron at waist level", "Underneath the apron at chest level", "On the wrist"], "ans": 2, "exp": "In India, AERB recommends wearing the primary TLD badge under the lead apron at the chest level." },
+                { "type": "Core", "text": "Which ICRP publication introduced the 2007 Recommendations on radiological protection?", "opts": ["Publication 103", "Publication 60", "Publication 26", "Publication 118"], "ans": 0, "exp": "ICRP Publication 103 contains the 2007 recommendations, replacing the 1990 recommendations (Publication 60)." },
+                { "type": "Core", "text": "What is the SI unit for equivalent and effective dose?", "opts": ["Gray", "Rad", "Roentgen", "Sievert"], "ans": 3, "exp": "The Sievert (Sv) is the SI unit for equivalent and effective dose, accounting for radiation type and tissue sensitivity." },
+
+                // Q36-50: Anatomy
+                { "type": "Core", "text": "How many bones are there in the standard adult human skeleton?", "opts": ["206", "210", "196", "256"], "ans": 0, "exp": "The adult human skeleton consists of 206 bones." },
+                { "type": "Core", "text": "Which is the longest and heaviest bone in the human body?", "opts": ["Tibia", "Femur", "Humerus", "Fibula"], "ans": 1, "exp": "The femur, or thigh bone, is the longest, heaviest, and strongest bone in the human body." },
+                { "type": "Core", "text": "The anatomical term for the collarbone is the:", "opts": ["Scapula", "Sternum", "Clavicle", "Radius"], "ans": 2, "exp": "The clavicle is commonly known as the collarbone." },
+                { "type": "Core", "text": "How many cervical vertebrae are present in the normal human spine?", "opts": ["5", "7", "12", "4"], "ans": 1, "exp": "There are 7 cervical vertebrae, 12 thoracic, and 5 lumbar vertebrae." },
+                { "type": "Core", "text": "The glenoid cavity is an anatomical feature of which bone?", "opts": ["Humerus", "Pelvis", "Clavicle", "Scapula"], "ans": 3, "exp": "The glenoid cavity is a shallow depression on the scapula that articulates with the head of the humerus to form the shoulder joint." },
+                { "type": "Core", "text": "Which ribs are considered 'true ribs' because they attach directly to the sternum?", "opts": ["Pairs 1 to 7", "Pairs 8 to 10", "Pairs 11 and 12", "All 12 pairs"], "ans": 0, "exp": "Ribs 1-7 attach directly to the sternum via costal cartilage and are called true ribs." },
+                { "type": "Core", "text": "The acetabulum is a socket that forms part of the:", "opts": ["Shoulder joint", "Knee joint", "Hip joint", "Elbow joint"], "ans": 2, "exp": "The acetabulum is the cup-shaped cavity on the pelvis that articulates with the femoral head to form the hip joint." },
+                { "type": "Core", "text": "The eight small bones that make up the wrist are collectively called the:", "opts": ["Tarsals", "Carpals", "Metacarpals", "Phalanges"], "ans": 1, "exp": "The wrist contains 8 carpal bones." },
+                { "type": "Core", "text": "The patella is classified anatomically as what type of bone?", "opts": ["Flat bone", "Long bone", "Irregular bone", "Sesamoid bone"], "ans": 3, "exp": "The patella (kneecap) is the largest sesamoid bone in the body, embedded within a tendon." },
+                { "type": "Core", "text": "The 'sella turcica', which houses the pituitary gland, is a depression located in which skull bone?", "opts": ["Sphenoid", "Ethmoid", "Temporal", "Occipital"], "ans": 0, "exp": "The sella turcica is a saddle-shaped depression in the sphenoid bone." },
+                { "type": "Core", "text": "In terms of joint classification, a freely movable joint is termed a:", "opts": ["Synarthrosis", "Diarthrosis", "Amphiarthrosis", "Fibrous joint"], "ans": 1, "exp": "Diarthroses (synovial joints) are freely movable joints." },
+                { "type": "Core", "text": "The lateral malleolus is a bony prominence found on the distal end of the:", "opts": ["Tibia", "Radius", "Fibula", "Ulna"], "ans": 2, "exp": "The distal end of the fibula forms the lateral malleolus of the ankle." },
+                { "type": "Core", "text": "How many phalanges are there in a normal human hand?", "opts": ["12", "14", "15", "10"], "ans": 1, "exp": "There are 14 phalanges in each hand (2 in the thumb, 3 in each of the other four fingers)." },
+                { "type": "Core", "text": "The odontoid process (or dens) is a distinct feature of which vertebra?", "opts": ["Axis (C2)", "Atlas (C1)", "Vertebra Prominens (C7)", "First Thoracic (T1)"], "ans": 0, "exp": "The dens extends superiorly from the body of the Axis (C2) to allow head rotation." },
+                { "type": "Core", "text": "Which specialized bone cells are responsible for synthesizing new bone matrix?", "opts": ["Osteoclasts", "Chondrocytes", "Osteocytes", "Osteoblasts"], "ans": 3, "exp": "Osteoblasts are bone-forming cells." },
+
+                // Q51-65: Orientation in Para-clinical Sciences
+                { "type": "Core", "text": "Which rare earth metal is the basis for most MRI contrast agents?", "opts": ["Iodine", "Gadolinium", "Barium", "Technetium"], "ans": 1, "exp": "Gadolinium-based contrast agents (GBCAs) are the most common in MRI due to gadolinium's paramagnetic properties." },
+                { "type": "Core", "text": "Barium sulfate administration is strictly contraindicated in patients with:", "opts": ["Suspected bowel perforation", "Diarrhea", "Gastritis", "Difficulty swallowing"], "ans": 0, "exp": "If a perforation is suspected, barium can leak into the peritoneal cavity causing severe peritonitis. Water-soluble contrast is preferred." },
+                { "type": "Core", "text": "Infections acquired during a hospital stay are officially termed:", "opts": ["Idiopathic infections", "Congenital infections", "Nosocomial infections", "Zoonotic infections"], "ans": 2, "exp": "Nosocomial infections are healthcare-associated infections." },
+                { "type": "Core", "text": "What is considered the most common mode of pathogen transmission in healthcare settings?", "opts": ["Airborne droplets", "Contaminated instruments", "Contaminated food", "Hands of healthcare workers"], "ans": 3, "exp": "Direct contact via the hands of healthcare workers is the most common transmission route, making hand hygiene vital." },
+                { "type": "Core", "text": "In pathology, the term 'benign' describes a tumor that:", "opts": ["Does not invade surrounding tissue or metastasize", "Is highly aggressive and fast-growing", "Spreads to distant organs", "Always requires chemotherapy"], "ans": 0, "exp": "Benign tumors are non-cancerous and do not spread (metastasize)." },
+                { "type": "Core", "text": "Standard Precautions require the use of Personal Protective Equipment (PPE) when:", "opts": ["Examining any patient", "Anticipating contact with blood, body fluids, or non-intact skin", "Working only in the ICU", "Taking a patient's medical history"], "ans": 1, "exp": "Standard Precautions are based on the risk of exposure to blood or body fluids." },
+                { "type": "Core", "text": "An anaphylactic reaction to contrast media is an example of a:", "opts": ["Mild side effect", "Psychosomatic response", "Severe, life-threatening allergic reaction", "Expected pharmacological effect"], "ans": 2, "exp": "Anaphylaxis is an acute, severe, life-threatening allergic reaction." },
+                { "type": "Core", "text": "Which medication is the primary emergency treatment for anaphylactic shock in a radiology department?", "opts": ["Aspirin", "Nitroglycerin", "Epinephrine (Adrenaline)", "Diazepam"], "ans": 2, "exp": "Epinephrine is the drug of choice for treating severe anaphylactic reactions." },
+                { "type": "Core", "text": "Autoclaving destroys microorganisms using:", "opts": ["Dry heat at high temperature", "Pressurized steam (moist heat)", "Ultraviolet radiation", "Ethylene oxide gas"], "ans": 1, "exp": "Autoclaving uses pressurized steam to achieve sterilization." },
+                { "type": "Core", "text": "The infectious agent that causes Tuberculosis belongs to which genus?", "opts": ["Staphylococcus", "Mycobacterium", "Streptococcus", "Pseudomonas"], "ans": 1, "exp": "Mycobacterium tuberculosis is the causative bacterium for TB." },
+                { "type": "Core", "text": "What is the single most effective way to prevent the spread of MRSA in a clinical setting?", "opts": ["Using N95 masks", "Sterilizing all imaging tables", "Hand hygiene", "Prophylactic antibiotics"], "ans": 2, "exp": "Hand hygiene is universally recognized as the most effective method for preventing healthcare-associated infections like MRSA." },
+                { "type": "Core", "text": "The medical term 'Hepatitis' refers to the inflammation of which organ?", "opts": ["Liver", "Kidney", "Stomach", "Lungs"], "ans": 0, "exp": "Hepa- refers to the liver, and -itis means inflammation." },
+                { "type": "Core", "text": "Extravasation of intravenous contrast media occurs when:", "opts": ["Contrast leaks from the vein into surrounding subcutaneous tissues", "Contrast is injected too slowly", "Contrast rapidly reaches the heart", "Contrast is exhaled through the lungs"], "ans": 0, "exp": "Extravasation is the accidental leakage of IV fluids or medication into the tissue surrounding a vein." },
+                { "type": "Core", "text": "Phlebitis is a medical condition defined by the inflammation of a:", "opts": ["Nerve", "Artery", "Muscle", "Vein"], "ans": 3, "exp": "Phlebo- refers to veins. Phlebitis is inflammation of a vein." },
+                { "type": "Core", "text": "If a patient experiences severe nausea and vomiting after contrast administration, which class of drug might be prescribed?", "opts": ["Analgesic", "Antipyretic", "Antiemetic", "Antibiotic"], "ans": 2, "exp": "Antiemetics are drugs used to treat nausea and vomiting." },
+
+                // Q66-80: Radiotherapy & Brachytherapy
+                { "type": "Core", "text": "Cobalt-60 machines, historically used in teletherapy, emit mostly which type of radiation?", "opts": ["Gamma rays", "Alpha particles", "Beta particles", "X-rays"], "ans": 0, "exp": "Cobalt-60 decays by emitting beta particles and two high-energy gamma rays (1.17 and 1.33 MeV) used for therapy." },
+                { "type": "Core", "text": "What is the physical half-life of Cobalt-60?", "opts": ["30 years", "5.27 years", "74 days", "1.25 years"], "ans": 1, "exp": "The half-life of Cobalt-60 is approximately 5.26 to 5.27 years." },
+                { "type": "Core", "text": "Which statement best describes Brachytherapy?", "opts": ["Using lasers to vaporize tumors", "Delivering radiation from a machine 100 cm away", "Placing sealed radioactive sources inside or immediately next to the tumor", "Injecting radioactive liquid directly into the bloodstream"], "ans": 2, "exp": "Brachy (short) therapy involves placing the radiation source close to or inside the target tissue." },
+                { "type": "Core", "text": "A Medical Linear Accelerator (LINAC) is primarily used to produce:", "opts": ["Only low-energy diagnostic X-rays", "Radioactive isotopes", "Alpha particles", "High-energy X-rays and electrons for treatment"], "ans": 3, "exp": "LINACs accelerate electrons to produce high-energy x-rays or electron beams for cancer treatment." },
+                { "type": "Core", "text": "Which radioisotope is most commonly used as the source in modern High Dose Rate (HDR) brachytherapy?", "opts": ["Radium-226", "Iridium-192", "Phosphorus-32", "Uranium-235"], "ans": 1, "exp": "Iridium-192 is the standard source for HDR brachytherapy due to its high specific activity and suitable gamma energy." },
+                { "type": "Core", "text": "The SI unit of absorbed dose in radiotherapy is the:", "opts": ["Gray (Gy)", "Sievert (Sv)", "Becquerel (Bq)", "Roentgen (R)"], "ans": 0, "exp": "The Gray (Gy) measures absorbed dose (1 Gy = 1 Joule/kg)." },
+                { "type": "Core", "text": "In radiotherapy, what is the primary purpose of dose 'fractionation'?", "opts": ["To increase the severity of skin reactions", "To reduce the overall treatment time to a single day", "To spare normal healthy tissues while effectively killing cancer cells", "To decrease the energy of the photon beam"], "ans": 2, "exp": "Fractionation allows normal tissues to repair themselves between daily doses while tumor cells, which repair poorly, are killed." },
+                { "type": "Core", "text": "Teletherapy is another term for:", "opts": ["Intracavitary brachytherapy", "External beam radiation therapy (EBRT)", "Systemic radioisotope therapy", "Proton therapy only"], "ans": 1, "exp": "Tele (distance) therapy refers to external beam radiation delivered from a distance." },
+                { "type": "Core", "text": "Which unsealed radioactive isotope is systemically administered for the treatment of thyroid cancer?", "opts": ["Iodine-131", "Strontium-89", "Yttrium-90", "Technetium-99m"], "ans": 0, "exp": "Iodine-131 is taken up actively by the thyroid gland and emits beta radiation to destroy thyroid tissue." },
+                { "type": "Core", "text": "Palliative radiotherapy is primarily administered to:", "opts": ["Completely cure the cancer", "Relieve symptoms and improve the patient's quality of life", "Determine the exact size of the tumor", "Replace chemotherapy entirely"], "ans": 1, "exp": "Palliation aims to alleviate pain and symptoms rather than cure the disease." },
+                { "type": "Core", "text": "In modern LINACs, the isocenter is typically located at what distance from the radiation source?", "opts": ["80 cm", "150 cm", "100 cm", "60 cm"], "ans": 2, "exp": "The Source-to-Axis Distance (SAD) or isocenter distance is standardly 100 cm for LINACs." },
+                { "type": "Core", "text": "High Dose Rate (HDR) brachytherapy delivers radiation at a dose rate of:", "opts": ["Less than 2 Gy/hour", "2 to 12 Gy/hour", "Exactly 5 Gy/hour", "Greater than 12 Gy/hour"], "ans": 3, "exp": "ICRU defines HDR as a dose rate greater than 12 Gy/hr (>0.2 Gy/min)." },
+                { "type": "Core", "text": "In radiotherapy treatment planning, 'PTV' stands for:", "opts": ["Primary Tumor Volume", "Planning Target Volume", "Patient Treatment Value", "Photon Transmission Volume"], "ans": 1, "exp": "PTV (Planning Target Volume) accounts for set-up uncertainties and internal organ motion around the Clinical Target Volume (CTV)." },
+                { "type": "Core", "text": "Tissue equivalent material known as 'Bolus' is placed on the skin during radiotherapy to:", "opts": ["Decrease the dose to the skin surface", "Increase the dose to the skin surface (reduce skin sparing)", "Filter out high energy photons", "Immobilize the patient"], "ans": 1, "exp": "Bolus brings the maximum dose region (Dmax) closer to the skin surface for treating superficial lesions." },
+                { "type": "Core", "text": "Radioactive sources in brachytherapy are usually stored in heavily shielded containers made of:", "opts": ["Aluminum or Copper", "Wood or Plastic", "Lead or Tungsten", "Glass or Acrylic"], "ans": 2, "exp": "High atomic number materials like lead or tungsten are required to shield gamma radiation from sources." },
+
+                // Q81-100: Physics, CT, MRI, USG, Positioning
+                { "type": "Core", "text": "The introduction of slip-ring technology in CT scanners made which of the following possible?", "opts": ["Spiral/Helical scanning", "Single slice step-and-shoot scanning", "Increased tube cooling times", "Use of film as a detector"], "ans": 0, "exp": "Slip rings eliminated winding cables, allowing continuous gantry rotation necessary for helical/spiral CT." },
+                { "type": "Core", "text": "On the Hounsfield scale, what is the assigned CT number for distilled water?", "opts": ["-1000 HU", "0 HU", "+1000 HU", "+50 HU"], "ans": 1, "exp": "The Hounsfield scale is calibrated with water at 0 HU and air at -1000 HU." },
+                { "type": "Core", "text": "Which standard MRI sequence typically demonstrates stationary fluids (like CSF) as bright (hyperintense)?", "opts": ["T1-weighted", "Proton Density (PD)", "T2-weighted", "Diffusion Weighted (DWI)"], "ans": 2, "exp": "In T2-weighted images, fluid is bright and fat is generally darker compared to T1." },
+                { "type": "Core", "text": "In radiography, what is the primary consequence of 'grid cutoff'?", "opts": ["Decreased density on the image, often more pronounced at the edges", "Increased scatter reaching the detector", "Magnification of the anatomy", "Focal spot blurring"], "ans": 0, "exp": "Grid cutoff is the undesirable absorption of primary x-rays, leading to reduced image receptor exposure." },
+                { "type": "Core", "text": "The Anode Heel Effect is most pronounced and visible on a radiograph when using:", "opts": ["Long SID and small field size", "Short SID and large field size", "High kVp and low mA", "Small focal spot and long SID"], "ans": 1, "exp": "At a short SID and large field size, the edges of the beam are used more, making the intensity difference obvious." },
+                { "type": "Core", "text": "For diagnostic x-ray tubes operating above 70 kVp, what is the minimum required total filtration?", "opts": ["1.0 mm Al equivalent", "2.5 mm Al equivalent", "0.5 mm Al equivalent", "5.0 mm Al equivalent"], "ans": 1, "exp": "Government regulations (AERB/FDA) require 2.5 mm Al equivalent for tubes operating over 70 kVp." },
+                { "type": "Core", "text": "In a traditional darkroom, a safelight should be installed at a minimum distance of _____ from the workbench to prevent film fogging.", "opts": ["0.5 meters (1.5 feet)", "1.2 meters (4 feet)", "2.5 meters (8 feet)", "Directly above touching the film"], "ans": 1, "exp": "The standard safe distance for a darkroom safelight is at least 1.2 meters (approx 4 feet)." },
+                { "type": "Core", "text": "What is the proper Central Ray (CR) angulation for an AP axial projection of the clavicle?", "opts": ["15-30 degrees caudal", "15-30 degrees cephalad", "Perpendicular to the IR", "45 degrees medial"], "ans": 1, "exp": "A 15-30 degree cephalad angle projects the clavicle above the ribs and scapula." },
+                { "type": "Core", "text": "When positioning a patient for a standard lateral projection of the knee, the knee joint should ideally be flexed:", "opts": ["0 degrees (fully extended)", "20-30 degrees", "45-60 degrees", "90 degrees"], "ans": 1, "exp": "Flexing 20-30 degrees relaxes muscles and shows the maximum volume of the joint cavity." },
+                { "type": "Core", "text": "In traditional film processing, the primary chemical function of the developer is to:", "opts": ["Wash away unexposed silver halides", "Harden the emulsion", "Reduce exposed silver halide crystals into black metallic silver", "Neutralize the fixer"], "ans": 2, "exp": "The developer acts as a reducing agent converting exposed silver halide into visible black metallic silver." },
+                { "type": "Core", "text": "Which chemical acts as the primary clearing agent in the fixer solution?", "opts": ["Hydroquinone", "Phenidone", "Ammonium thiosulfate", "Sodium carbonate"], "ans": 2, "exp": "Ammonium thiosulfate (or sodium thiosulfate) dissolves and removes the unexposed silver halide." },
+                { "type": "Core", "text": "In medical ultrasound, the Doppler effect is primarily utilized to evaluate:", "opts": ["Bone density", "Blood flow velocity and direction", "Gallstone size", "Fluid buildup in the lungs"], "ans": 1, "exp": "Doppler US detects frequency shifts caused by moving red blood cells to assess blood flow." },
+                { "type": "Core", "text": "In ultrasound imaging, the acoustic impedance of a tissue determines:", "opts": ["The amount of sound wave reflection at tissue interfaces", "The frequency of the transducer required", "The color map used on the display", "The patient's radiation dose"], "ans": 0, "exp": "Differences in acoustic impedance between two tissues dictate how much sound is reflected back as an echo." },
+                { "type": "Core", "text": "The size of the actual and effective focal spot heavily influences which aspect of the radiographic image?", "opts": ["Receptor exposure (Density)", "Image contrast", "Spatial resolution (Image sharpness)", "Magnification"], "ans": 2, "exp": "A smaller focal spot reduces geometric unsharpness (penumbra), improving spatial resolution." },
+                { "type": "Core", "text": "Quantum mottle (noise) on a digital radiograph is most often the direct result of:", "opts": ["Excessive kVp", "Insufficient mAs (photon starvation)", "Patient motion", "Too much collimation"], "ans": 1, "exp": "Quantum mottle occurs when not enough x-ray photons reach the detector, creating a grainy image." },
+                { "type": "Core", "text": "Historically, the primary purpose of using intensifying screens inside a film cassette was to:", "opts": ["Increase image contrast", "Reduce the required patient radiation dose", "Eliminate scattered radiation", "Improve spatial resolution"], "ans": 1, "exp": "Screens convert x-rays to visible light, which exposes the film, drastically reducing the required mAs and patient dose." },
+                { "type": "Core", "text": "Using a high kVp technique typically produces a radiographic image with:", "opts": ["Short scale contrast (high contrast, few shades of gray)", "Long scale contrast (low contrast, many shades of gray)", "Zero scatter radiation", "Maximum patient skin dose"], "ans": 1, "exp": "High kVp increases penetration, producing more varying shades of gray (long scale, low contrast)." },
+                { "type": "Core", "text": "The Parietoacanthial projection (Waters method) is primarily performed to evaluate the:", "opts": ["Frontal bone", "Occipital bone", "Maxillary sinuses", "Mandibular condyles"], "ans": 2, "exp": "The Waters view projects the petrous ridges below the maxillary sinuses, providing an unobstructed view." },
+                { "type": "Core", "text": "In modern radiology departments, a PACS system is utilized for:", "opts": ["Producing high-energy x-rays", "Archiving, retrieving, and viewing digital images", "Controlling the MRI magnetic field", "Billing patients"], "ans": 1, "exp": "PACS stands for Picture Archiving and Communication System." },
+                { "type": "Core", "text": "What does the acronym DICOM stand for in medical imaging?", "opts": ["Digital Image Contrast and Observation Method", "Direct Input Computed Output Module", "Digital Imaging and Communications in Medicine", "Diagnostic Image Conversion of Medicine"], "ans": 2, "exp": "DICOM is the universal standard for storing and transmitting medical images." }
+            ];
+
+            raw_data.forEach((d, i) => questions.push(createQ(i + 1, d.type, d.text, d.opts, d.ans, d.exp)));
+        }
+
+        // --- STATE MANAGEMENT ---
+        let state = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {
+            currentQ: 0,
+            answers: new Array(TOTAL_QUESTIONS).fill(null),
+            status: new Array(TOTAL_QUESTIONS).fill('not-visited'),
+            currentSection: 1,      // 1 to 5
+            sectionTimeLeft: SECTION_TIME_LIMIT,
+            maxSetReached: 1,       // Tracks highest section unlocked
+            isFinished: false
+        };
+
+        function saveState() {
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
+        }
+
+        const els = {
+            landing: document.getElementById('landingPage'),
+            header: document.getElementById('examHeader'),
+            body: document.getElementById('examBody'),
+            footer: document.getElementById('examFooter'),
+            result: document.getElementById('resultPage'),
+            qText: document.getElementById('questionText'),
+            optsBox: document.getElementById('optionsBox'),
+            qNum: document.getElementById('qNumDisplay'),
+            sectionLabel: document.getElementById('sectionLabel'),
+            palette: document.getElementById('questionPalette'),
+            timer: document.getElementById('timerDisplay'),
+            btnPrev: document.getElementById('btnPrev'),
+            sidebar: document.getElementById('sidebar')
+        };
+
+        let timerInterval;
+
+        function init() {
+            generateQuestions(); // Load data
+            
+            if (state.isFinished) {
+                els.landing.classList.add('hidden');
+                els.header.classList.add('hidden');
+                els.body.classList.add('hidden');
+                els.footer.classList.add('hidden');
+                els.result.classList.remove('hidden');
+                calculateResult();
+            } else if (state.currentQ > 0 || state.currentSection > 1 || state.answers.some(a => a !== null) || state.sectionTimeLeft < SECTION_TIME_LIMIT) {
+                // Resume ongoing session
+                els.landing.classList.add('hidden');
+                renderExamInterface();
+                startSectionTimer();
+            } else {
+                // New session
+                els.landing.classList.remove('hidden');
+                els.result.classList.add('hidden');
+            }
+        }
+
+        function startExam() {
+            els.landing.classList.add('hidden');
+            renderExamInterface();
+            startSectionTimer();
+            saveState();
+        }
+
+        function startSectionTimer() {
+            if(timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                state.sectionTimeLeft--;
+                saveState();
+                
+                // Format Time
+                const m = Math.floor(state.sectionTimeLeft / 60);
+                const s = state.sectionTimeLeft % 60;
+                els.timer.innerText = `${m}:${s < 10 ? '0'+s : s}`;
+                
+                // Visual Warning
+                if(state.sectionTimeLeft < 60) els.timer.style.backgroundColor = "#ffcdd2";
+                else els.timer.style.backgroundColor = "#fff";
+
+                // Time Up Logic
+                if (state.sectionTimeLeft <= 0) {
+                    handleSectionTimeout();
+                }
+            }, 1000);
+        }
+
+        function handleSectionTimeout() {
+            clearInterval(timerInterval);
+            
+            if (state.currentSection < 5) {
+                alert(`Time is up for Section ${state.currentSection}! Moving to Section ${state.currentSection + 1}.`);
+                forceNextSection();
+            } else {
+                alert("Time is up for the final section! Submitting Exam.");
+                finishExam();
+            }
+        }
+
+        function forceNextSection() {
+            state.currentSection++;
+            state.maxSetReached = state.currentSection;
+            state.sectionTimeLeft = SECTION_TIME_LIMIT;
+            
+            // Move to first question of next section
+            const firstQofNextSection = (state.currentSection - 1) * SECTION_SIZE;
+            saveState();
+            loadQuestion(firstQofNextSection);
+            startSectionTimer();
+        }
+
+        function renderExamInterface() {
+            els.header.classList.remove('hidden');
+            els.body.classList.remove('hidden');
+            els.footer.classList.remove('hidden');
+            renderPalette();
+            loadQuestion(state.currentQ);
+        }
+
+        function loadQuestion(index) {
+            state.currentQ = index;
+            if(state.status[index] === 'not-visited') state.status[index] = 'not-answered';
+
+            // Update Section Label
+            const secNum = Math.floor(index / SECTION_SIZE) + 1;
+            els.sectionLabel.innerText = `Section ${secNum} (Q${(secNum-1)*20 + 1}-${secNum*20})`;
+
+            // Render Text
+            els.qNum.innerText = `Question ${index + 1}`;
+            els.qText.innerText = questions[index].text;
+            
+            // Render Options
+            els.optsBox.innerHTML = '';
+            questions[index].opts.forEach((opt, i) => {
+                const isChecked = state.answers[index] === i ? 'checked' : '';
+                els.optsBox.innerHTML += `
+                    <label class="option-label">
+                        <input type="radio" name="opt" value="${i}" ${isChecked} onchange="selectOption(${i})">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            // Update Palette UI
+            document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('current'));
+            const currentBtn = document.getElementById(`qbtn-${index}`);
+            if(currentBtn) currentBtn.classList.add('current');
+
+            // Handle Prev Button State (Cannot go back to previous locked section)
+            const startOfCurrentSection = (state.currentSection - 1) * SECTION_SIZE;
+            els.btnPrev.disabled = (index <= startOfCurrentSection);
+            
+            saveState();
+        }
+
+        function selectOption(optIndex) {
+            state.answers[state.currentQ] = optIndex;
+            saveState();
+        }
+
+        function saveAndNext() {
+            const index = state.currentQ;
+            // Update status
+            state.status[index] = (state.answers[index] !== null) ? 'answered' : 'not-answered';
+            saveState();
+            moveToNextQuestion();
+        }
+
+        function markForReview() {
+            const index = state.currentQ;
+            state.status[index] = (state.answers[index] !== null) ? 'marked-answered' : 'review'; // Simplified
+            saveState();
+            moveToNextQuestion();
+        }
+
+        function clearResponse() {
+            state.answers[state.currentQ] = null;
+            state.status[state.currentQ] = 'not-answered';
+            saveState();
+            loadQuestion(state.currentQ);
+            renderPalette();
+        }
+
+        function moveToNextQuestion() {
+            const nextIndex = state.currentQ + 1;
+            const currentSecBound = state.currentSection * SECTION_SIZE;
+
+            // Check if next question crosses section boundary
+            if (nextIndex >= currentSecBound) {
+                // End of section reached
+                if (state.currentSection < 5) {
+                    if (confirm(`You have reached the end of Section ${state.currentSection}.\nDo you want to submit this section and move to Section ${state.currentSection+1}?\n\nWARNING: You cannot return to this section.`)) {
+                        forceNextSection();
+                    }
+                } else {
+                    if(confirm("This was the last question. Submit Exam?")) {
+                        finishExam();
+                    }
+                }
+            } else {
+                // Normal movement within section
+                renderPalette();
+                loadQuestion(nextIndex);
+            }
+        }
+
+        function prevQuestion() {
+            // Logic handled in loadQuestion to disable button if at start of section
+            if (state.currentQ > 0) {
+                loadQuestion(state.currentQ - 1);
+            }
+        }
+
+        function renderPalette() {
+            els.palette.innerHTML = '';
+            for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+                let statusClass = state.status[i];
+                if(statusClass === 'marked-answered') statusClass = 'review';
+                
+                // Check if question belongs to a locked (previous) section
+                // A question is locked if its section index is < current active section
+                const qSection = Math.floor(i / SECTION_SIZE) + 1;
+                const isLocked = qSection < state.currentSection;
+                const lockedClass = isLocked ? ' locked' : '';
+                
+                // Gray out future sections
+                const isFuture = qSection > state.currentSection;
+                const futureStyle = isFuture ? 'opacity:0.3; pointer-events:none;' : '';
+
+                els.palette.innerHTML += `
+                    <div id="qbtn-${i}" 
+                         class="q-btn ${statusClass}${lockedClass}" 
+                         style="${futureStyle}"
+                         onclick="jumpToQuestion(${i})">
+                        ${i + 1}
+                    </div>
+                `;
+            }
+        }
+
+        function jumpToQuestion(index) {
+            const qSection = Math.floor(index / SECTION_SIZE) + 1;
+            
+            if (qSection < state.currentSection) {
+                alert("This section is locked.");
+                return;
+            }
+            if (qSection > state.currentSection) {
+                alert("You cannot jump to a future section yet.");
+                return;
+            }
+            
+            loadQuestion(index);
+        }
+
+        function submitExam() {
+            if(confirm("Are you sure you want to finish the exam? Unanswered questions in future sections will be marked zero.")) {
+                finishExam();
+            }
+        }
+
+        function finishExam() {
+            clearInterval(timerInterval);
+            state.isFinished = true;
+            saveState();
+            
+            els.header.classList.add('hidden');
+            els.body.classList.add('hidden');
+            els.footer.classList.add('hidden');
+            els.result.classList.remove('hidden');
+            
+            calculateResult();
+        }
+
+        function calculateResult() {
+            let correct = 0, wrong = 0, unattempted = 0, score = 0;
+
+            state.answers.forEach((ans, i) => {
+                if (ans === null) {
+                    unattempted++;
+                } else if (questions[i] && ans === questions[i].ans) {
+                    correct++;
+                    score += 4;
+                } else {
+                    wrong++;
+                    score -= 1;
+                }
+            });
+
+            document.getElementById('scoreCard').innerHTML = `
+                <h1 style="color:#3f51b5; font-size:3rem;">${score} / 400</h1>
+                <p><strong>Correct:</strong> ${correct} (+${correct*4})</p>
+                <p><strong>Incorrect:</strong> ${wrong} (-${wrong})</p>
+                <p><strong>Unattempted:</strong> ${unattempted}</p>
+            `;
+        }
+
+        function showDetailedReview() {
+            const container = document.getElementById('detailedReview');
+            container.style.display = 'block';
+            container.innerHTML = '<h3>Detailed Solutions</h3>';
+            
+            questions.forEach((q, i) => {
+                const userAns = state.answers[i];
+                const isCorrect = userAns === q.ans;
+                const statusColor = userAns === null ? 'gray' : (isCorrect ? 'green' : 'red');
+                const statusText = userAns === null ? 'Skipped' : (isCorrect ? 'Correct' : 'Incorrect');
+
+                let optsHtml = '';
+                q.opts.forEach((opt, oi) => {
+                    let style = '';
+                    if (oi === q.ans) style = 'font-weight:bold; color:green;'; 
+                    if (oi === userAns && !isCorrect) style = 'font-weight:bold; color:red;'; 
+                    optsHtml += `<div style="${style}">${oi+1}. ${opt}</div>`;
+                });
+
+                container.innerHTML += `
+                    <div class="review-item">
+                        <div style="color:${statusColor}; font-weight:bold; margin-bottom:5px;">Q${i+1}: ${statusText}</div>
+                        <div>${q.text}</div>
+                        <div style="margin:10px 0; padding-left:15px; border-left:3px solid #ddd;">${optsHtml}</div>
+                        <div class="explanation"><strong>Explanation:</strong> ${q.exp}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleSidebar() {
+            els.sidebar.classList.toggle('active');
+        }
+
+        // Initialize
+        init();
+
+    </script>
+</body>
+</html>

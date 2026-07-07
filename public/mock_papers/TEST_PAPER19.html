@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIIMS CRE Radiographer - Test Paper 19</title>
+    <style>
+        :root {
+            --header-bg: #3f51b5;
+            --header-text: #fff;
+            --panel-bg: #f5f5f5;
+            --pallet-answered: #4caf50;
+            --pallet-not-answered: #f44336;
+            --pallet-review: #9c27b0;
+            --pallet-not-visited: #e0e0e0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #fff; }
+
+        /* --- Header --- */
+        header {
+            background: var(--header-bg); color: var(--header-text);
+            padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+            height: 60px; flex-shrink: 0;
+        }
+        .timer { font-size: 1.2rem; font-weight: bold; background: #fff; color: #d32f2f; padding: 5px 15px; border-radius: 4px; border: 2px solid #d32f2f; }
+
+        /* --- Main Layout --- */
+        .main-container { display: flex; flex: 1; overflow: hidden; }
+        
+        .question-area { flex: 1; display: flex; flex-direction: column; padding: 20px; overflow-y: auto; }
+        .q-header { display: flex; justify-content: space-between; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.5; }
+        
+        .options-container { display: flex; flex-direction: column; gap: 10px; }
+        .option-label { 
+            display: flex; align-items: center; padding: 10px; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; transition: 0.2s; 
+        }
+        .option-label:hover { background: #f0f8ff; }
+        .option-label input { margin-right: 15px; transform: scale(1.2); }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px; background: var(--panel-bg); border-left: 1px solid #ccc;
+            display: flex; flex-direction: column; flex-shrink: 0;
+        }
+        .user-info { padding: 10px; background: #e8eaf6; border-bottom: 1px solid #ccc; }
+        
+        .palette-legend { padding: 10px; font-size: 0.8rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: #fff; }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+        .question-grid { 
+            padding: 10px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; 
+            overflow-y: auto; flex: 1; align-content: start;
+        }
+        .q-btn {
+            height: 35px; width: 35px; border: 1px solid #ccc; background: #fff; 
+            border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .q-btn.answered { background: var(--pallet-answered); color: white; border-color: var(--pallet-answered); }
+        .q-btn.not-answered { background: var(--pallet-not-answered); color: white; border-color: var(--pallet-not-answered); }
+        .q-btn.review { background: var(--pallet-review); color: white; border-radius: 50%; }
+        .q-btn.current { border: 2px solid blue; box-shadow: 0 0 5px blue; }
+        .q-btn.locked { opacity: 0.4; cursor: not-allowed; background: #444 !important; color: #888; border: 1px solid #000; }
+
+        /* Footer */
+        .footer-controls {
+            height: 60px; background: #fff; border-top: 1px solid #ccc;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+        }
+        .btn { padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+        .btn-primary { background: #2196f3; color: white; }
+        .btn-success { background: #4caf50; color: white; }
+        .btn-warn { background: #ff9800; color: white; }
+        .btn-danger { background: #f44336; color: white; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* Mobile */
+        .mobile-toggle { display: none; background: none; border: none; color: white; font-size: 1.5rem; }
+        @media (max-width: 768px) {
+            .mobile-toggle { display: block; }
+            .sidebar { 
+                position: absolute; right: 0; top: 60px; bottom: 60px; z-index: 100;
+                transform: translateX(100%); transition: transform 0.3s; width: 85%;
+            }
+            .sidebar.active { transform: translateX(0); }
+            .question-grid { grid-template-columns: repeat(6, 1fr); }
+            .footer-controls { flex-wrap: wrap; gap: 5px; height: auto; padding: 10px; }
+            .btn { flex: 1; padding: 8px; font-size: 0.8rem; }
+        }
+
+        /* Overlay */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .hidden { display: none !important; }
+        
+        .review-panel { display: none; padding: 20px; height: 100%; overflow-y: auto; background:#f9f9f9;}
+        .review-item { margin-bottom: 20px; border: 1px solid #ddd; padding: 15px; border-radius: 5px; background:white; }
+        .explanation { background: #fff3cd; padding: 10px; margin-top: 10px; font-size: 0.9rem; border-left: 4px solid #ffc107; }
+
+    </style>
+</head>
+<body>
+
+    <div id="landingPage" class="overlay">
+        <h1>AIIMS CRE - Test Paper 19</h1>
+        <div style="width: 80%; max-width: 600px; text-align: left; margin: 20px 0;">
+            <h3>Exam Rules:</h3>
+            <ul>
+                <li><strong>Questions:</strong> 100 (5 Sections of 20 questions each).</li>
+                <li><strong>Timing:</strong> 18 Minutes per section (Strictly Dedicated).</li>
+                <li><strong>Total Time:</strong> 90 Minutes.</li>
+                <li><strong>Locking:</strong> Once 18 mins are up, or if you manually proceed to the next section, you <u>cannot</u> return to the previous section.</li>
+                <li><strong>Marking:</strong> +4 Correct, -1 Incorrect.</li>
+            </ul>
+        </div>
+        <button class="btn btn-success" style="font-size: 1.2rem;" onclick="startExam()">START EXAM</button>
+    </div>
+
+    <header id="examHeader" class="hidden">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <h3>AIIMS Radiographer</h3>
+            <span style="font-size:0.8rem; background:#eee; padding:2px 6px; border-radius:4px; color:#333;" id="sectionLabel">Section 1</span>
+        </div>
+        <div class="timer" id="timerDisplay">18:00</div>
+        <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+    </header>
+
+    <div class="main-container hidden" id="examBody">
+        <div class="question-area">
+            <div class="q-header">
+                <span id="qNumDisplay">Question No. 1</span>
+                <span style="color: #666;">Marks: +4, -1</span>
+            </div>
+            <div id="questionText" class="q-text">Loading...</div>
+            <div id="optionsBox" class="options-container"></div>
+        </div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="user-info">
+                <strong>Candidate Name</strong><br><small>Roll No: 123456</small>
+            </div>
+            <div class="palette-legend">
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-answered)"></span> Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-not-answered)"></span> Not Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-review)"></span> Review</div>
+                <div class="legend-item"><span class="dot" style="background:#444"></span> Locked</div>
+            </div>
+            <div class="question-grid" id="questionPalette"></div>
+            <div style="padding:10px; margin-top:auto;">
+                <button class="btn btn-primary" style="width:100%" onclick="submitExam()">FINISH EXAM</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-controls hidden" id="examFooter">
+        <div style="display:flex; gap:10px;">
+            <button class="btn btn-danger" onclick="clearResponse()">Clear</button>
+            <button class="btn btn-warn" onclick="markForReview()">Review</button>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <button class="btn" onclick="prevQuestion()" id="btnPrev">Previous</button>
+            <button class="btn btn-success" onclick="saveAndNext()">Save & Next</button>
+        </div>
+    </div>
+
+    <div id="resultPage" class="overlay hidden" style="display:block; overflow-y:auto; justify-content:start; padding-top:40px;">
+        <h2 style="text-align:center;">Exam Summary</h2>
+        <div id="scoreCard" style="margin: 20px auto; width:90%; max-width:600px; padding: 20px; border: 1px solid #ccc; text-align: center; background:#fff;"></div>
+        <div style="display:flex; justify-content:center; gap:20px; margin-bottom:20px;">
+            <button class="btn btn-primary" onclick="showDetailedReview()">Review Solutions</button>
+            <button class="btn btn-danger" onclick="location.reload()">Exit</button>
+        </div>
+        <div id="detailedReview" class="review-panel" style="width: 90%; max-width: 800px; margin:0 auto;"></div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const TOTAL_QUESTIONS = 100;
+        const SECTION_SIZE = 20; // 20 questions per section
+        const SECTION_TIME_LIMIT = 18 * 60; // 18 minutes in seconds
+        
+        let questions = [];
+
+function generateQuestions() {
+        const createQ = (id, type, text, opts, ans, exp) => ({ id, type, text, opts, ans, exp });
+        questions = [];
+        const raw_data = [
+    {
+        "type": "Non-Core",
+        "text": "Which of the following bodies is responsible for the monetary policy in India?",
+        "opts": [
+            "State Bank of India",
+            "Finance Ministry",
+            "Reserve Bank of India (RBI)",
+            "NITI Aayog"
+        ],
+        "ans": 2,
+        "exp": "The Reserve Bank of India (RBI) is the central bank of the country and is responsible for formulating and implementing the monetary policy."
+    },
+    {
+        "type": "Non-Core",
+        "text": "What does 'G20' stand for?",
+        "opts": [
+            "Group of 20",
+            "Government 20",
+            "Global 20",
+            "Great 20"
+        ],
+        "ans": 0,
+        "exp": "The G20 or Group of 20 is an intergovernmental forum comprising 19 sovereign countries, the European Union, and the African Union."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Which of the following fundamental rights is guaranteed under Article 21 of the Indian Constitution?",
+        "opts": [
+            "Right to Freedom of Speech",
+            "Right to Equality",
+            "Right against Exploitation",
+            "Right to Life and Personal Liberty"
+        ],
+        "ans": 3,
+        "exp": "Article 21 guarantees the Right to Life and Personal Liberty."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Who was the chief guest at India's Republic Day parade in 2024?",
+        "opts": [
+            "Joe Biden",
+            "Rishi Sunak",
+            "Emmanuel Macron",
+            "Abdel Fattah el-Sisi"
+        ],
+        "ans": 2,
+        "exp": "French President Emmanuel Macron was the chief guest for India's 75th Republic Day in 2024."
+    },
+    {
+        "type": "Non-Core",
+        "text": "The 'Make in India' initiative was launched in which year?",
+        "opts": [
+            "2016",
+            "2018",
+            "2012",
+            "2014"
+        ],
+        "ans": 3,
+        "exp": "The 'Make in India' initiative was launched by Prime Minister Narendra Modi in September 2014."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Which Indian state has the longest coastline?",
+        "opts": [
+            "Maharashtra",
+            "Andhra Pradesh",
+            "Tamil Nadu",
+            "Gujarat"
+        ],
+        "ans": 3,
+        "exp": "Gujarat has the longest coastline in India, extending for about 1,600 km."
+    },
+    {
+        "type": "Non-Core",
+        "text": "The term 'Sustainable Development Goals' (SDGs) was adopted by which organization?",
+        "opts": [
+            "United Nations",
+            "World Bank",
+            "World Health Organization",
+            "International Monetary Fund"
+        ],
+        "ans": 0,
+        "exp": "The United Nations adopted the 17 Sustainable Development Goals (SDGs) in 2015 as a universal call to action."
+    },
+    {
+        "type": "Non-Core",
+        "text": "What is the decimal equivalent of the binary number 1011?",
+        "opts": [
+            "11",
+            "9",
+            "10",
+            "12"
+        ],
+        "ans": 0,
+        "exp": "1011 in binary = 1*2^3 + 0*2^2 + 1*2^1 + 1*2^0 = 8 + 0 + 2 + 1 = 11."
+    },
+    {
+        "type": "Non-Core",
+        "text": "The sum of the first 10 prime numbers is:",
+        "opts": [
+            "129",
+            "142",
+            "100",
+            "150"
+        ],
+        "ans": 0,
+        "exp": "First 10 prime numbers are 2, 3, 5, 7, 11, 13, 17, 19, 23, 29. Their sum is 129."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Convert 0.375 into a fraction in its simplest form:",
+        "opts": [
+            "1/3",
+            "3/8",
+            "3/4",
+            "5/8"
+        ],
+        "ans": 1,
+        "exp": "0.375 = 375/1000. Dividing numerator and denominator by 125 yields 3/8."
+    },
+    {
+        "type": "Non-Core",
+        "text": "If a number is divisible by 9 and 4, it must necessarily be divisible by:",
+        "opts": [
+            "13",
+            "18",
+            "72",
+            "36"
+        ],
+        "ans": 3,
+        "exp": "If a number is divisible by two coprime numbers (like 9 and 4), it is divisible by their product (36)."
+    },
+    {
+        "type": "Non-Core",
+        "text": "What is the least common multiple (LCM) of 12, 15, and 20?",
+        "opts": [
+            "240",
+            "40",
+            "60",
+            "120"
+        ],
+        "ans": 2,
+        "exp": "The LCM of 12, 15, and 20 is 60. 60 is the smallest number divisible by all three."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Which of the following is an irrational number?",
+        "opts": [
+            "1/3",
+            "2.5",
+            "Square root of 16",
+            "Pi"
+        ],
+        "ans": 3,
+        "exp": "Pi is an irrational number because it cannot be expressed as a simple fraction and its decimal representation never ends and never repeats."
+    },
+    {
+        "type": "Non-Core",
+        "text": "What is the value of (0.2 x 0.2 x 0.2) + (0.3 x 0.3 x 0.3) + 0.1?",
+        "opts": [
+            "0.108",
+            "0.235",
+            "0.035",
+            "0.135"
+        ],
+        "ans": 3,
+        "exp": "0.008 + 0.027 + 0.1 = 0.135."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Which of the following is considered the 'brain' of the computer?",
+        "opts": [
+            "Hard Drive",
+            "RAM",
+            "Motherboard",
+            "CPU"
+        ],
+        "ans": 3,
+        "exp": "The Central Processing Unit (CPU) is considered the brain of the computer."
+    },
+    {
+        "type": "Non-Core",
+        "text": "What does 'GUI' stand for in computer science?",
+        "opts": [
+            "Global User Interaction",
+            "Graphical User Interface",
+            "General User Integration",
+            "Graphical Unit Interconnect"
+        ],
+        "ans": 1,
+        "exp": "GUI stands for Graphical User Interface."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Which type of memory is non-volatile?",
+        "opts": [
+            "ROM",
+            "Cache",
+            "RAM",
+            "Registers"
+        ],
+        "ans": 0,
+        "exp": "Read-Only Memory (ROM) retains its contents even when the computer is powered off, making it non-volatile."
+    },
+    {
+        "type": "Non-Core",
+        "text": "What is the primary function of an Operating System?",
+        "opts": [
+            "Word processing",
+            "Web browsing",
+            "Database creation",
+            "Resource management"
+        ],
+        "ans": 3,
+        "exp": "The primary function of an OS is to manage computer hardware and software resources and provide common services for computer programs."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Which of the following is an output device?",
+        "opts": [
+            "Scanner",
+            "Keyboard",
+            "Mouse",
+            "Monitor"
+        ],
+        "ans": 3,
+        "exp": "A monitor displays visual output from the computer, making it an output device."
+    },
+    {
+        "type": "Non-Core",
+        "text": "The shortcut 'Ctrl + Z' is used to:",
+        "opts": [
+            "Paste",
+            "Undo",
+            "Copy",
+            "Redo"
+        ],
+        "ans": 1,
+        "exp": "'Ctrl + Z' is the universal shortcut command to undo the previous action."
+    },
+    {
+        "type": "Core",
+        "text": "Which part of the brain is primarily responsible for regulating balance and coordination?",
+        "opts": [
+            "Hypothalamus",
+            "Medulla oblongata",
+            "Cerebellum",
+            "Cerebrum"
+        ],
+        "ans": 2,
+        "exp": "The cerebellum, located at the back of the brain, plays a major role in motor control, balance, and coordination."
+    },
+    {
+        "type": "Core",
+        "text": "The hormone insulin is secreted by which cells of the pancreas?",
+        "opts": [
+            "Beta cells",
+            "Acinar cells",
+            "Alpha cells",
+            "Delta cells"
+        ],
+        "ans": 0,
+        "exp": "Insulin is secreted by the beta cells of the Islets of Langerhans in the pancreas to lower blood glucose levels."
+    },
+    {
+        "type": "Core",
+        "text": "Which cranial nerve is responsible for the sense of smell?",
+        "opts": [
+            "Olfactory nerve",
+            "Vagus nerve",
+            "Trigeminal nerve",
+            "Optic nerve"
+        ],
+        "ans": 0,
+        "exp": "Cranial Nerve I, the olfactory nerve, is responsible for the sense of smell."
+    },
+    {
+        "type": "Core",
+        "text": "The 'master gland' of the endocrine system is the:",
+        "opts": [
+            "Adrenal gland",
+            "Pineal gland",
+            "Thyroid gland",
+            "Pituitary gland"
+        ],
+        "ans": 3,
+        "exp": "The pituitary gland is often called the 'master gland' because it controls the functions of many other endocrine glands."
+    },
+    {
+        "type": "Core",
+        "text": "Which structure connects the two hemispheres of the brain?",
+        "opts": [
+            "Pons",
+            "Corpus callosum",
+            "Thalamus",
+            "Medulla"
+        ],
+        "ans": 1,
+        "exp": "The corpus callosum is a broad band of nerve fibers joining the two hemispheres of the brain."
+    },
+    {
+        "type": "Core",
+        "text": "Adrenaline (epinephrine) is produced by the:",
+        "opts": [
+            "Adrenal medulla",
+            "Thyroid",
+            "Adrenal cortex",
+            "Parathyroid"
+        ],
+        "ans": 0,
+        "exp": "The adrenal medulla secretes epinephrine (adrenaline) and norepinephrine, which mediate the fight-or-flight response."
+    },
+    {
+        "type": "Core",
+        "text": "The basic structural and functional unit of the nervous system is the:",
+        "opts": [
+            "Nephron",
+            "Glial cell",
+            "Neuron",
+            "Synapse"
+        ],
+        "ans": 2,
+        "exp": "The neuron is the fundamental unit of the nervous system, specialized to transmit information throughout the body."
+    },
+    {
+        "type": "Core",
+        "text": "Which hormone regulates the sleep-wake cycle?",
+        "opts": [
+            "Thyroxine",
+            "Melatonin",
+            "Oxytocin",
+            "Cortisol"
+        ],
+        "ans": 1,
+        "exp": "Melatonin, produced by the pineal gland, helps regulate sleep-wake cycles (circadian rhythms)."
+    },
+    {
+        "type": "Core",
+        "text": "The gap between two neurons is called a:",
+        "opts": [
+            "Dendrite",
+            "Axon",
+            "Synapse",
+            "Myelin sheath"
+        ],
+        "ans": 2,
+        "exp": "The synapse is the small gap at the end of a neuron that allows a signal to pass from one neuron to the next."
+    },
+    {
+        "type": "Core",
+        "text": "Which part of the nervous system controls involuntary actions such as heart rate and digestion?",
+        "opts": [
+            "Motor nervous system",
+            "Somatic nervous system",
+            "Autonomic nervous system",
+            "Central nervous system"
+        ],
+        "ans": 2,
+        "exp": "The autonomic nervous system regulates involuntary physiological processes including heart rate, blood pressure, respiration, and digestion."
+    },
+    {
+        "type": "Core",
+        "text": "Parathyroid hormone (PTH) primarily regulates the metabolism of:",
+        "opts": [
+            "Calcium and Phosphorus",
+            "Iodine",
+            "Sodium and Potassium",
+            "Iron and Zinc"
+        ],
+        "ans": 0,
+        "exp": "PTH increases blood calcium levels and decreases blood phosphorus levels."
+    },
+    {
+        "type": "Core",
+        "text": "The outer layer of the cerebrum is called the:",
+        "opts": [
+            "Basal ganglia",
+            "Meninges",
+            "Cerebral medulla",
+            "Cerebral cortex"
+        ],
+        "ans": 3,
+        "exp": "The cerebral cortex is the outer layer of neural tissue of the cerebrum of the brain in humans."
+    },
+    {
+        "type": "Core",
+        "text": "Which of the following is a steroid hormone?",
+        "opts": [
+            "Cortisol",
+            "Growth hormone",
+            "Glucagon",
+            "Insulin"
+        ],
+        "ans": 0,
+        "exp": "Cortisol is a steroid hormone produced by the adrenal cortex."
+    },
+    {
+        "type": "Core",
+        "text": "The reflex arc typically bypasses the:",
+        "opts": [
+            "Brain",
+            "Spinal cord",
+            "Motor neurons",
+            "Sensory neurons"
+        ],
+        "ans": 0,
+        "exp": "Most reflex arcs in humans process information in the spinal cord, allowing for faster responses by bypassing the brain."
+    },
+    {
+        "type": "Core",
+        "text": "What is the primary function of the myelin sheath?",
+        "opts": [
+            "To produce neurotransmitters",
+            "To increase the speed of impulse transmission",
+            "To receive signals from other neurons",
+            "To nourish the neuron"
+        ],
+        "ans": 1,
+        "exp": "The myelin sheath acts as an insulator, significantly increasing the speed of electrical signal propagation down the axon."
+    },
+    {
+        "type": "Core",
+        "text": "Which gland requires iodine to produce its hormones?",
+        "opts": [
+            "Thymus",
+            "Adrenal gland",
+            "Thyroid gland",
+            "Pancreas"
+        ],
+        "ans": 2,
+        "exp": "The thyroid gland requires iodine from the diet to synthesize thyroid hormones (T3 and T4)."
+    },
+    {
+        "type": "Core",
+        "text": "The fight-or-flight response is mediated by the:",
+        "opts": [
+            "Parasympathetic nervous system",
+            "Somatic nervous system",
+            "Enteric nervous system",
+            "Sympathetic nervous system"
+        ],
+        "ans": 3,
+        "exp": "The sympathetic division of the autonomic nervous system prepares the body for stressful or emergency situations."
+    },
+    {
+        "type": "Core",
+        "text": "Which hormone is associated with the stimulation of uterine contractions during labor?",
+        "opts": [
+            "Estrogen",
+            "Oxytocin",
+            "Prolactin",
+            "Progesterone"
+        ],
+        "ans": 1,
+        "exp": "Oxytocin stimulates uterine contractions during childbirth and milk ejection during breastfeeding."
+    },
+    {
+        "type": "Core",
+        "text": "The fluid that surrounds and protects the brain and spinal cord is:",
+        "opts": [
+            "Cerebrospinal fluid",
+            "Lymph",
+            "Blood plasma",
+            "Synovial fluid"
+        ],
+        "ans": 0,
+        "exp": "Cerebrospinal fluid (CSF) acts as a cushion or buffer for the brain's cortex, providing basic mechanical and immunological protection."
+    },
+    {
+        "type": "Core",
+        "text": "Damage to the occipital lobe of the brain would most likely affect:",
+        "opts": [
+            "Memory",
+            "Vision",
+            "Hearing",
+            "Motor control"
+        ],
+        "ans": 1,
+        "exp": "The occipital lobe is the visual processing center of the mammalian brain."
+    },
+    {
+        "type": "Core",
+        "text": "Which radiotherapy technique modulates the intensity of the radiation beam during treatment?",
+        "opts": [
+            "SBRT",
+            "IMRT",
+            "3D-CRT",
+            "TBI"
+        ],
+        "ans": 1,
+        "exp": "Intensity-Modulated Radiation Therapy (IMRT) varies the intensity of the radiation beam to conform more precisely to the tumor shape."
+    },
+    {
+        "type": "Core",
+        "text": "In Stereotactic Body Radiotherapy (SBRT), the typical number of fractions is:",
+        "opts": [
+            "1 to 5",
+            "35 to 40",
+            "15 to 20",
+            "25 to 30"
+        ],
+        "ans": 0,
+        "exp": "SBRT delivers a very high dose of radiation over a short course, typically 1 to 5 fractions."
+    },
+    {
+        "type": "Core",
+        "text": "Which imaging modality is most commonly integrated into the linear accelerator for Image-Guided Radiation Therapy (IGRT)?",
+        "opts": [
+            "MRI",
+            "Cone-beam CT (CBCT)",
+            "PET scan",
+            "Ultrasound"
+        ],
+        "ans": 1,
+        "exp": "Cone-beam CT (CBCT) is widely used in IGRT to provide 3D imaging of the patient immediately prior to treatment."
+    },
+    {
+        "type": "Core",
+        "text": "What is the primary advantage of Proton Therapy over conventional photon therapy?",
+        "opts": [
+            "Lower cost",
+            "Steep dose fall-off beyond the tumor",
+            "Lack of Bragg peak",
+            "Higher skin dose"
+        ],
+        "ans": 1,
+        "exp": "Protons deposit most of their energy at a specific depth (Bragg peak) with almost zero dose beyond the tumor."
+    },
+    {
+        "type": "Core",
+        "text": "Brachytherapy involves placing the radiation source:",
+        "opts": [
+            "Outside the patient's body",
+            "In the bloodstream only",
+            "Inside or directly adjacent to the tumor",
+            "On the skin surface only"
+        ],
+        "ans": 2,
+        "exp": "Brachytherapy is internal radiation therapy where a sealed radiation source is placed inside or next to the area requiring treatment."
+    },
+    {
+        "type": "Core",
+        "text": "Volumetric Modulated Arc Therapy (VMAT) delivers radiation while:",
+        "opts": [
+            "The gantry rotates continuously",
+            "The collimator is stationary",
+            "The patient table rotates",
+            "The couch moves linearly"
+        ],
+        "ans": 0,
+        "exp": "VMAT delivers IMRT-like dose distributions in a single or multiple continuous gantry arcs, varying dose rate and multileaf collimator (MLC) positions."
+    },
+    {
+        "type": "Core",
+        "text": "Which radioactive isotope is commonly used in High-Dose-Rate (HDR) brachytherapy?",
+        "opts": [
+            "Iridium-192",
+            "Strontium-90",
+            "Iodine-125",
+            "Cobalt-60"
+        ],
+        "ans": 0,
+        "exp": "Iridium-192 is the most widely used isotope for HDR brachytherapy due to its high specific activity."
+    },
+    {
+        "type": "Core",
+        "text": "The term 'Gross Tumor Volume' (GTV) refers to:",
+        "opts": [
+            "The total irradiated volume",
+            "The area accounting for patient setup error",
+            "The tumor plus microscopic spread",
+            "The visible or demonstrable extent of the tumor"
+        ],
+        "ans": 3,
+        "exp": "GTV is the demonstrable extent and location of the malignant growth."
+    },
+    {
+        "type": "Core",
+        "text": "What is the primary function of a Multileaf Collimator (MLC)?",
+        "opts": [
+            "To filter the beam",
+            "To produce x-rays",
+            "To shape the radiation beam to match the tumor profile",
+            "To measure the radiation dose"
+        ],
+        "ans": 2,
+        "exp": "MLCs are used in linacs to provide conformal shaping of radiotherapy beams."
+    },
+    {
+        "type": "Core",
+        "text": "Which of the following is a key component of a linear accelerator that produces high-energy x-rays?",
+        "opts": [
+            "Magnetron / Klystron",
+            "Geiger-Muller tube",
+            "Scintillation crystal",
+            "Photomultiplier tube"
+        ],
+        "ans": 0,
+        "exp": "Magnetrons and klystrons generate the high-frequency microwaves needed to accelerate electrons in a linac."
+    },
+    {
+        "type": "Core",
+        "text": "The planning target volume (PTV) encompasses:",
+        "opts": [
+            "GTV plus microscopic disease only",
+            "CTV plus margins for setup uncertainties and organ motion",
+            "Irradiated volume only",
+            "GTV only"
+        ],
+        "ans": 1,
+        "exp": "PTV includes the Clinical Target Volume (CTV) plus margins for geometric uncertainties and organ motion."
+    },
+    {
+        "type": "Core",
+        "text": "In Total Body Irradiation (TBI) used prior to bone marrow transplant, the primary goal is to:",
+        "opts": [
+            "Stimulate blood cell production",
+            "Destroy the patient's immune system and remaining cancer cells",
+            "Eradicate localized tumors",
+            "Treat skin cancers only"
+        ],
+        "ans": 1,
+        "exp": "TBI is used to suppress the immune system (preventing rejection of donor marrow) and kill residual malignant cells."
+    },
+    {
+        "type": "Core",
+        "text": "Respiratory gating in radiotherapy is primarily used to manage:",
+        "opts": [
+            "Machine output variations",
+            "Skin toxicity",
+            "Patient setup error",
+            "Organ motion due to breathing"
+        ],
+        "ans": 3,
+        "exp": "Respiratory gating turns the beam on and off in sync with the patient's breathing cycle to account for organ motion, particularly in lung or breast cancer."
+    },
+    {
+        "type": "Core",
+        "text": "Gamma Knife radiosurgery typically uses sources of which isotope?",
+        "opts": [
+            "Cesium-137",
+            "Iodine-131",
+            "Cobalt-60",
+            "Iridium-192"
+        ],
+        "ans": 2,
+        "exp": "Gamma Knife uses typically 192 Cobalt-60 sources focused on a precise point in the brain."
+    },
+    {
+        "type": "Core",
+        "text": "Which factor is critical in evaluating a dose-volume histogram (DVH)?",
+        "opts": [
+            "Radiation dose to organs at risk (OAR)",
+            "Treatment time",
+            "Patient weight",
+            "Room temperature"
+        ],
+        "ans": 0,
+        "exp": "A DVH summarizes 3D dose distributions, showing the dose received by the target volume and critical organs at risk (OARs)."
+    },
+    {
+        "type": "Core",
+        "text": "CyberKnife is a robotic radiosurgery system that primarily uses:",
+        "opts": [
+            "Proton beams",
+            "Carbon ions",
+            "Cobalt-60",
+            "A miniature linear accelerator"
+        ],
+        "ans": 3,
+        "exp": "CyberKnife uses a compact linear accelerator mounted on a robotic arm."
+    },
+    {
+        "type": "Core",
+        "text": "The Bragg peak is a characteristic of:",
+        "opts": [
+            "Electrons",
+            "Neutrons",
+            "Photons",
+            "Protons and heavy ions"
+        ],
+        "ans": 3,
+        "exp": "Heavy charged particles like protons deposit most of their energy right before they stop, creating the Bragg peak."
+    },
+    {
+        "type": "Core",
+        "text": "Palliative radiotherapy is primarily aimed at:",
+        "opts": [
+            "Relieving symptoms and improving quality of life",
+            "Preventing cancer from starting",
+            "Curing the cancer",
+            "Diagnosing the extent of disease"
+        ],
+        "ans": 0,
+        "exp": "Palliative treatment aims to relieve symptoms (like pain) caused by advanced cancer."
+    },
+    {
+        "type": "Core",
+        "text": "Surface Guided Radiation Therapy (SGRT) uses what technology to track patient positioning?",
+        "opts": [
+            "Optical cameras and 3D surface scanning",
+            "MRI",
+            "Ultrasound",
+            "X-ray fluoroscopy"
+        ],
+        "ans": 0,
+        "exp": "SGRT uses non-ionizing optical light systems to map the patient's external surface in 3D."
+    },
+    {
+        "type": "Core",
+        "text": "In radiotherapy, the 'fractionation' of dose is done to:",
+        "opts": [
+            "Save time",
+            "Allow normal tissues to recover while killing cancer cells",
+            "Increase the total energy of the beam",
+            "Reduce the cost of treatment"
+        ],
+        "ans": 1,
+        "exp": "Fractionation exploits the difference in repair capabilities between normal tissues and tumor cells."
+    },
+    {
+        "type": "Core",
+        "text": "In Mammography, the target material typically used in the x-ray tube is:",
+        "opts": [
+            "Molybdenum or Rhodium",
+            "Aluminum",
+            "Copper",
+            "Tungsten"
+        ],
+        "ans": 0,
+        "exp": "Molybdenum and Rhodium produce the low-energy characteristic x-rays (around 17-19 keV) optimal for breast imaging."
+    },
+    {
+        "type": "Core",
+        "text": "The typical kVp range used in standard film/screen or digital mammography is:",
+        "opts": [
+            "50-70 kVp",
+            "120-140 kVp",
+            "25-35 kVp",
+            "80-100 kVp"
+        ],
+        "ans": 2,
+        "exp": "Low kVp (25-35) provides high contrast needed to distinguish microcalcifications and soft tissue in the breast."
+    },
+    {
+        "type": "Core",
+        "text": "Why is breast compression applied during mammography?",
+        "opts": [
+            "To increase patient dose",
+            "To reduce overlapping of tissue and scatter radiation",
+            "To decrease image contrast",
+            "To increase geometric unsharpness"
+        ],
+        "ans": 1,
+        "exp": "Compression separates tissues, immobilizes the breast, reduces thickness, reduces scatter, and lowers patient dose."
+    },
+    {
+        "type": "Core",
+        "text": "DEXA (Dual-Energy X-ray Absorptiometry) is primarily used to evaluate:",
+        "opts": [
+            "Bone mineral density",
+            "Lung capacity",
+            "Cardiac output",
+            "Brain tumors"
+        ],
+        "ans": 0,
+        "exp": "DEXA measures bone mineral density (BMD) and is the standard for diagnosing osteoporosis."
+    },
+    {
+        "type": "Core",
+        "text": "In a DEXA scan, 'T-score' compares the patient's bone density to:",
+        "opts": [
+            "A healthy 30-year-old adult of the same sex",
+            "A child of the same height",
+            "An age-matched peer",
+            "The patient's own previous scan"
+        ],
+        "ans": 0,
+        "exp": "The T-score compares BMD to that of a healthy young adult. (Z-score compares to age-matched peers)."
+    },
+    {
+        "type": "Core",
+        "text": "A T-score of -2.5 or lower in a DEXA scan indicates:",
+        "opts": [
+            "Normal bone density",
+            "Osteopenia",
+            "Hyperparathyroidism",
+            "Osteoporosis"
+        ],
+        "ans": 3,
+        "exp": "A T-score <= -2.5 is the World Health Organization's diagnostic criterion for osteoporosis."
+    },
+    {
+        "type": "Core",
+        "text": "The heel effect is utilized in mammography by positioning the cathode towards the:",
+        "opts": [
+            "Lateral side",
+            "Chest wall",
+            "Nipple",
+            "Medial side"
+        ],
+        "ans": 1,
+        "exp": "The cathode (stronger x-ray intensity) is placed near the chest wall where the breast tissue is thickest."
+    },
+    {
+        "type": "Core",
+        "text": "Which imaging modality uses high-frequency sound waves to produce images?",
+        "opts": [
+            "Ultrasonography",
+            "CT",
+            "Mammography",
+            "MRI"
+        ],
+        "ans": 0,
+        "exp": "Ultrasound uses high-frequency sound waves (1-20 MHz) instead of ionizing radiation."
+    },
+    {
+        "type": "Core",
+        "text": "The piezoelectric effect is the operating principle of which equipment?",
+        "opts": [
+            "Mammography x-ray tube",
+            "Ultrasound transducer",
+            "DEXA scanner",
+            "MRI coil"
+        ],
+        "ans": 1,
+        "exp": "Ultrasound transducer crystals generate sound waves via the piezoelectric effect."
+    },
+    {
+        "type": "Core",
+        "text": "Digital Breast Tomosynthesis (DBT) provides:",
+        "opts": [
+            "Color Doppler images",
+            "Bone density scores",
+            "3D slices of the breast",
+            "2D images only"
+        ],
+        "ans": 2,
+        "exp": "DBT acquires multiple low-dose images from different angles to reconstruct 3D slices, reducing tissue overlap."
+    },
+    {
+        "type": "Core",
+        "text": "Which filter material is typically paired with a Molybdenum target in mammography?",
+        "opts": [
+            "Lead",
+            "Molybdenum",
+            "Tungsten",
+            "Aluminum"
+        ],
+        "ans": 1,
+        "exp": "A Mo target is typically used with a Mo filter to remove high-energy bremsstrahlung x-rays that degrade contrast."
+    },
+    {
+        "type": "Core",
+        "text": "In an MRI system, the primary static magnetic field is denoted as:",
+        "opts": [
+            "RF",
+            "Gz",
+            "B1",
+            "B0"
+        ],
+        "ans": 3,
+        "exp": "B0 represents the main, strong, static magnetic field of the MRI scanner."
+    },
+    {
+        "type": "Core",
+        "text": "What is the unit of magnetic field strength used in MRI?",
+        "opts": [
+            "Roentgen",
+            "Tesla",
+            "Becquerel",
+            "Sievert"
+        ],
+        "ans": 1,
+        "exp": "Tesla (T) is the SI unit of magnetic field strength. Most clinical MRIs are 1.5T or 3.0T."
+    },
+    {
+        "type": "Core",
+        "text": "The CT number (Hounsfield Unit) for water is calibrated to be:",
+        "opts": [
+            "-1000",
+            "1000",
+            "100",
+            "0"
+        ],
+        "ans": 3,
+        "exp": "Water is the reference point for Hounsfield Units, set at 0 HU."
+    },
+    {
+        "type": "Core",
+        "text": "In a spiral/helical CT scanner, which component allows the continuous rotation of the x-ray tube without cables tangling?",
+        "opts": [
+            "Slip rings",
+            "Collimator",
+            "High-tension cables",
+            "Stator"
+        ],
+        "ans": 0,
+        "exp": "Slip ring technology enables continuous gantry rotation, which is essential for helical CT."
+    },
+    {
+        "type": "Core",
+        "text": "Fluoroscopy is primarily used for:",
+        "opts": [
+            "Measuring bone density",
+            "Real-time, dynamic imaging",
+            "Static imaging of bones",
+            "Detailed mapping of the brain's white matter"
+        ],
+        "ans": 1,
+        "exp": "Fluoroscopy provides continuous, real-time x-ray imaging to view dynamic processes."
+    },
+    {
+        "type": "Core",
+        "text": "The input phosphor of an image intensifier in fluoroscopy is typically made of:",
+        "opts": [
+            "Cesium Iodide",
+            "Zinc Cadmium Sulfide",
+            "Barium Fluorochloride",
+            "Calcium Tungstate"
+        ],
+        "ans": 0,
+        "exp": "The input phosphor is made of Cesium Iodide (CsI), which converts x-rays into light."
+    },
+    {
+        "type": "Core",
+        "text": "The grid ratio in mammography is generally:",
+        "opts": [
+            "Grids are never used in mammography",
+            "The same as general radiography",
+            "Much higher than in general radiography",
+            "Lower than in general radiography"
+        ],
+        "ans": 3,
+        "exp": "Mammography uses lower grid ratios (usually 4:1 or 5:1) to balance contrast improvement with acceptable patient dose increases."
+    },
+    {
+        "type": "Core",
+        "text": "Which of the following is a limitation of ultrasound imaging?",
+        "opts": [
+            "It cannot penetrate bone or gas well",
+            "It uses ionizing radiation",
+            "It is extremely expensive",
+            "It cannot evaluate blood flow"
+        ],
+        "ans": 0,
+        "exp": "Sound waves are heavily reflected by gas and bone, making ultrasound poor for imaging lungs or deep bone structures."
+    },
+    {
+        "type": "Core",
+        "text": "In DEXA imaging, why are two different x-ray energies used?",
+        "opts": [
+            "To increase the total radiation dose",
+            "To subtract soft tissue from bone mathematically",
+            "To scan both the spine and femur simultaneously",
+            "To measure both fat and water content only"
+        ],
+        "ans": 1,
+        "exp": "Dual energies allow the software to differentiate and subtract soft tissue attenuation, isolating the bone mineral density."
+    },
+    {
+        "type": "Core",
+        "text": "The ALARA principle stands for:",
+        "opts": [
+            "As Long As Radiation Allows",
+            "All Levels Are Radiation Accessible",
+            "Always Leave Area Radiated",
+            "As Low As Reasonably Achievable"
+        ],
+        "ans": 3,
+        "exp": "ALARA is the fundamental principle of radiation protection aiming to minimize dose."
+    },
+    {
+        "type": "Core",
+        "text": "Which of the following is a unit of effective dose?",
+        "opts": [
+            "Coulomb/kg",
+            "Sievert",
+            "Becquerel",
+            "Gray"
+        ],
+        "ans": 1,
+        "exp": "Sievert (Sv) is the SI unit for equivalent and effective dose, accounting for radiation type and tissue sensitivity."
+    },
+    {
+        "type": "Core",
+        "text": "A pregnant radiographer should wear her fetal dosimeter:",
+        "opts": [
+            "Outside the lead apron at the collar level",
+            "On the back of the lead apron",
+            "On the sleeve",
+            "Inside the lead apron at waist level"
+        ],
+        "ans": 3,
+        "exp": "The fetal monitor should be worn under the lead apron at waist level to estimate dose to the fetus."
+    },
+    {
+        "type": "Core",
+        "text": "According to AERB/ICRP guidelines, the annual occupational whole-body dose limit for a radiation worker is:",
+        "opts": [
+            "500 mSv",
+            "50 mSv",
+            "20 mSv",
+            "1 mSv"
+        ],
+        "ans": 2,
+        "exp": "The current recommended limit is 20 mSv per year, averaged over 5 years (100 mSv in 5 years)."
+    },
+    {
+        "type": "Core",
+        "text": "The most effective method of personal protection from external radiation is:",
+        "opts": [
+            "Holding your breath during exposure",
+            "Eating antioxidants",
+            "Time, Distance, Shielding",
+            "Wearing sterile gowns"
+        ],
+        "ans": 2,
+        "exp": "Decreasing time, increasing distance, and using shielding are the cardinal principles of radiation protection."
+    },
+    {
+        "type": "Core",
+        "text": "Inverse square law states that if the distance from a radiation source is doubled, the intensity of radiation is:",
+        "opts": [
+            "Halved",
+            "Doubled",
+            "Reduced to one-fourth",
+            "Reduced to one-third"
+        ],
+        "ans": 2,
+        "exp": "Intensity is inversely proportional to the square of the distance."
+    },
+    {
+        "type": "Core",
+        "text": "Thermoluminescent Dosimeters (TLDs) commonly use which crystalline material?",
+        "opts": [
+            "Silver bromide",
+            "Barium sulfate",
+            "Sodium iodide",
+            "Lithium fluoride"
+        ],
+        "ans": 3,
+        "exp": "Lithium fluoride (LiF) is commonly used in TLDs because its effective atomic number is similar to that of human tissue."
+    },
+    {
+        "type": "Core",
+        "text": "A lead apron designed for fluoroscopy must have a minimum lead equivalent thickness of:",
+        "opts": [
+            "0.1 mm",
+            "0.5 mm",
+            "0.25 mm",
+            "1.0 mm"
+        ],
+        "ans": 1,
+        "exp": "Standard recommendation for fluoroscopy lead aprons is 0.5 mm lead equivalence."
+    },
+    {
+        "type": "Core",
+        "text": "Stochastic effects of radiation:",
+        "opts": [
+            "Severity depends on the dose",
+            "Probability of occurrence increases with dose",
+            "Include radiation burns",
+            "Have a threshold dose"
+        ],
+        "ans": 1,
+        "exp": "Stochastic effects (like cancer and genetic mutations) have no threshold, and their probability, not severity, increases with dose."
+    },
+    {
+        "type": "Core",
+        "text": "Which of the following is a deterministic (tissue) effect of radiation?",
+        "opts": [
+            "Leukemia",
+            "Solid tumors",
+            "Cataract formation",
+            "Genetic mutations"
+        ],
+        "ans": 2,
+        "exp": "Deterministic effects (e.g., cataracts, skin erythema) have a threshold dose and their severity increases with dose."
+    },
+    {
+        "type": "Core",
+        "text": "What is the primary source of scatter radiation to the technologist during a fluoroscopy procedure?",
+        "opts": [
+            "The patient",
+            "The image intensifier",
+            "The table",
+            "The x-ray tube"
+        ],
+        "ans": 0,
+        "exp": "The patient is the principal source of scatter radiation (Compton scatter) in the fluoroscopy room."
+    },
+    {
+        "type": "Core",
+        "text": "Filtration in an x-ray tube is used primarily to:",
+        "opts": [
+            "Cool the anode",
+            "Remove low-energy x-rays",
+            "Focus the electron stream",
+            "Increase the intensity of the beam"
+        ],
+        "ans": 1,
+        "exp": "Filtration removes low-energy 'soft' x-rays that would only contribute to patient skin dose without penetrating to form an image."
+    },
+    {
+        "type": "Core",
+        "text": "The annual dose limit for the general public from artificial radiation sources is:",
+        "opts": [
+            "50 mSv",
+            "5 mSv",
+            "1 mSv",
+            "20 mSv"
+        ],
+        "ans": 2,
+        "exp": "The public limit is 1 mSv per year."
+    },
+    {
+        "type": "Core",
+        "text": "Half-Value Layer (HVL) is the best measurement of the x-ray beam's:",
+        "opts": [
+            "Quantity",
+            "Intensity",
+            "Current",
+            "Quality (penetrability)"
+        ],
+        "ans": 3,
+        "exp": "HVL measures beam quality; it is the thickness of absorbing material necessary to reduce x-ray intensity to half its original value."
+    },
+    {
+        "type": "Core",
+        "text": "Which interaction of radiation with matter is primarily responsible for radiographic contrast?",
+        "opts": [
+            "Pair production",
+            "Compton effect",
+            "Photoelectric effect",
+            "Photodisintegration"
+        ],
+        "ans": 2,
+        "exp": "The photoelectric effect depends heavily on atomic number, leading to differential absorption (contrast) between bone and soft tissue."
+    },
+    {
+        "type": "Core",
+        "text": "The genetically significant dose (GSD) is a measure of radiation dose to the:",
+        "opts": [
+            "Thyroid",
+            "Lens of the eye",
+            "Bone marrow",
+            "Gonads"
+        ],
+        "ans": 3,
+        "exp": "GSD is an index of the presumed genetic impact of radiation exposure on a population's gonads."
+    },
+    {
+        "type": "Core",
+        "text": "What does a dead-man switch do in fluoroscopy equipment?",
+        "opts": [
+            "Saves the last image on screen",
+            "Automatically calculates the dose",
+            "Turns off the x-ray beam if the operator releases pressure on the switch",
+            "Triggers the alarm for high dose"
+        ],
+        "ans": 2,
+        "exp": "A dead-man switch requires continuous pressure to produce x-rays, ensuring exposure stops if the operator is incapacitated or steps away."
+    },
+    {
+        "type": "Core",
+        "text": "Which of the following monitoring devices provides an immediate reading of radiation exposure?",
+        "opts": [
+            "Pocket ionization chamber",
+            "Film badge",
+            "OSL dosimeter",
+            "TLD"
+        ],
+        "ans": 0,
+        "exp": "Pocket dosimeters can be read directly and immediately, unlike badges which must be processed."
+    },
+    {
+        "type": "Core",
+        "text": "The process by which an atom gains or loses an electron is called:",
+        "opts": [
+            "Scattering",
+            "Excitation",
+            "Attenuation",
+            "Ionization"
+        ],
+        "ans": 3,
+        "exp": "Ionization occurs when an incident particle or photon removes an electron from an atom, creating an ion pair."
+    },
+    {
+        "type": "Core",
+        "text": "In an x-ray circuit, the AEC (Automatic Exposure Control) measures:",
+        "opts": [
+            "Radiation reaching the image receptor",
+            "Anode temperature",
+            "Current reaching the filament",
+            "Voltage ripple"
+        ],
+        "ans": 0,
+        "exp": "AEC terminates the exposure once a predetermined amount of radiation has reached the image receptor, ensuring consistent image density."
+    }
+];
+        raw_data.forEach((d, i) => questions.push(createQ(i + 1, d.type, d.text, d.opts, d.ans, d.exp)));
+}
+
+        
+        // --- STATE MANAGEMENT ---
+        const STORAGE_KEY = 'test_paper_19_state';
+        let state = {
+            currentQ: 0,
+            answers: new Array(TOTAL_QUESTIONS).fill(null),
+            status: new Array(TOTAL_QUESTIONS).fill('not-visited'),
+            currentSection: 1,      // 1 to 5
+            sectionTimeLeft: SECTION_TIME_LIMIT,
+            maxSetReached: 1,       // Tracks highest section unlocked
+            isFinished: false
+        };
+
+        function saveState() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+
+        function loadState() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                state = JSON.parse(saved);
+                return true;
+            }
+            return false;
+        }
+
+        const els = {
+            landing: document.getElementById('landingPage'),
+            header: document.getElementById('examHeader'),
+            body: document.getElementById('examBody'),
+            footer: document.getElementById('examFooter'),
+            result: document.getElementById('resultPage'),
+            qText: document.getElementById('questionText'),
+            optsBox: document.getElementById('optionsBox'),
+            qNum: document.getElementById('qNumDisplay'),
+            sectionLabel: document.getElementById('sectionLabel'),
+            palette: document.getElementById('questionPalette'),
+            timer: document.getElementById('timerDisplay'),
+            btnPrev: document.getElementById('btnPrev'),
+            sidebar: document.getElementById('sidebar')
+        };
+
+        let timerInterval;
+
+                function init() {
+            generateQuestions();
+            if (loadState()) {
+                if (state.isFinished) {
+                    finishExam();
+                } else {
+                    renderExamInterface();
+                    startSectionTimer();
+                }
+            } else {
+                els.landing.classList.remove('hidden');
+                els.result.classList.add('hidden');
+            }
+        }
+
+        function startExam() {
+            els.landing.classList.add('hidden');
+            renderExamInterface();
+            startSectionTimer();
+        }
+
+        function startSectionTimer() {
+            if(timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                state.sectionTimeLeft--;
+                if(state.sectionTimeLeft % 5 === 0) saveState();
+                
+                // Format Time
+                const m = Math.floor(state.sectionTimeLeft / 60);
+                const s = state.sectionTimeLeft % 60;
+                els.timer.innerText = `${m}:${s < 10 ? '0'+s : s}`;
+                
+                // Visual Warning
+                if(state.sectionTimeLeft < 60) els.timer.style.backgroundColor = "#ffcdd2";
+                else els.timer.style.backgroundColor = "#fff";
+
+                // Time Up Logic
+                if (state.sectionTimeLeft <= 0) {
+                    handleSectionTimeout();
+                }
+            }, 1000);
+        }
+
+        function handleSectionTimeout() {
+            clearInterval(timerInterval);
+            
+            if (state.currentSection < 5) {
+                alert(`Time is up for Section ${state.currentSection}! Moving to Section ${state.currentSection + 1}.`);
+                forceNextSection();
+            } else {
+                alert("Time is up for the final section! Submitting Exam.");
+                finishExam();
+            }
+        }
+
+        function forceNextSection() {
+            state.currentSection++;
+            state.maxSetReached = state.currentSection;
+            saveState();
+            state.sectionTimeLeft = SECTION_TIME_LIMIT;
+            
+            // Move to first question of next section
+            const firstQofNextSection = (state.currentSection - 1) * SECTION_SIZE;
+            loadQuestion(firstQofNextSection);
+            startSectionTimer();
+        }
+
+        function renderExamInterface() {
+            els.header.classList.remove('hidden');
+            els.body.classList.remove('hidden');
+            els.footer.classList.remove('hidden');
+            renderPalette();
+            loadQuestion(state.currentQ);
+        }
+
+        function loadQuestion(index) {
+            state.currentQ = index;
+            if(state.status[index] === 'not-visited') state.status[index] = 'not-answered';
+
+            // Update Section Label
+            const secNum = Math.floor(index / SECTION_SIZE) + 1;
+            els.sectionLabel.innerText = `Section ${secNum} (Q${(secNum-1)*20 + 1}-${secNum*20})`;
+
+            // Render Text
+            els.qNum.innerText = `Question ${index + 1}`;
+            els.qText.innerText = questions[index].text;
+            
+            // Render Options
+            els.optsBox.innerHTML = '';
+            questions[index].opts.forEach((opt, i) => {
+                const isChecked = state.answers[index] === i ? 'checked' : '';
+                els.optsBox.innerHTML += `
+                    <label class="option-label">
+                        <input type="radio" name="opt" value="${i}" ${isChecked} onchange="selectOption(${i})">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            // Update Palette UI
+            document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('current'));
+            const currentBtn = document.getElementById(`qbtn-${index}`);
+            if(currentBtn) currentBtn.classList.add('current');
+
+            // Handle Prev Button State (Cannot go back to previous locked section)
+            const startOfCurrentSection = (state.currentSection - 1) * SECTION_SIZE;
+            els.btnPrev.disabled = (index <= startOfCurrentSection);
+        }
+
+        function selectOption(optIndex) {
+            state.answers[state.currentQ] = optIndex;
+            saveState();
+        }
+
+        function saveAndNext() {
+            const index = state.currentQ;
+            // Update status
+            state.status[index] = (state.answers[index] !== null) ? 'answered' : 'not-answered';
+            saveState();
+            
+            moveToNextQuestion();
+        }
+
+        function markForReview() {
+            const index = state.currentQ;
+            state.status[index] = (state.answers[index] !== null) ? 'marked-answered' : 'review';
+            saveState(); // Simplified
+            moveToNextQuestion();
+        }
+
+        function clearResponse() {
+            state.answers[state.currentQ] = null;
+            saveState();
+            state.status[state.currentQ] = 'not-answered';
+            loadQuestion(state.currentQ);
+            renderPalette();
+        }
+
+        function moveToNextQuestion() {
+            const nextIndex = state.currentQ + 1;
+            const currentSecBound = state.currentSection * SECTION_SIZE;
+
+            // Check if next question crosses section boundary
+            if (nextIndex >= currentSecBound) {
+                // End of section reached
+                if (state.currentSection < 5) {
+                    if (confirm(`You have reached the end of Section ${state.currentSection}.\nDo you want to submit this section and move to Section ${state.currentSection+1}?\n\nWARNING: You cannot return to this section.`)) {
+                        forceNextSection();
+                    }
+                } else {
+                    if(confirm("This was the last question. Submit Exam?")) {
+                        finishExam();
+                    }
+                }
+            } else {
+                // Normal movement within section
+                renderPalette();
+                loadQuestion(nextIndex);
+            }
+        }
+
+        function prevQuestion() {
+            // Logic handled in loadQuestion to disable button if at start of section
+            if (state.currentQ > 0) {
+                loadQuestion(state.currentQ - 1);
+            }
+        }
+
+        function renderPalette() {
+            els.palette.innerHTML = '';
+            for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+                let statusClass = state.status[i];
+                if(statusClass === 'marked-answered') statusClass = 'review';
+                
+                // Check if question belongs to a locked (previous) section
+                // A question is locked if its section index is < current active section
+                const qSection = Math.floor(i / SECTION_SIZE) + 1;
+                const isLocked = qSection < state.currentSection;
+                const lockedClass = isLocked ? ' locked' : '';
+                
+                // Gray out future sections
+                const isFuture = qSection > state.currentSection;
+                const futureStyle = isFuture ? 'opacity:0.3; pointer-events:none;' : '';
+
+                els.palette.innerHTML += `
+                    <div id="qbtn-${i}" 
+                         class="q-btn ${statusClass}${lockedClass}" 
+                         style="${futureStyle}"
+                         onclick="jumpToQuestion(${i})">
+                        ${i + 1}
+                    </div>
+                `;
+            }
+        }
+
+        function jumpToQuestion(index) {
+            const qSection = Math.floor(index / SECTION_SIZE) + 1;
+            
+            if (qSection < state.currentSection) {
+                alert("This section is locked.");
+                return;
+            }
+            if (qSection > state.currentSection) {
+                alert("You cannot jump to a future section yet.");
+                return;
+            }
+            
+            loadQuestion(index);
+        }
+
+        function submitExam() {
+            if(confirm("Are you sure you want to finish the exam? Unanswered questions in future sections will be marked zero.")) {
+                finishExam();
+            }
+        }
+
+        function finishExam() {
+            clearInterval(timerInterval);
+            state.isFinished = true;
+            saveState();
+            
+            els.header.classList.add('hidden');
+            els.body.classList.add('hidden');
+            els.footer.classList.add('hidden');
+            els.result.classList.remove('hidden');
+            
+            calculateResult();
+        }
+
+        function calculateResult() {
+            let correct = 0, wrong = 0, unattempted = 0, score = 0;
+
+            state.answers.forEach((ans, i) => {
+                if (ans === null) {
+                    unattempted++;
+                } else if (questions[i] && ans === questions[i].ans) {
+                    correct++;
+                    score += 4;
+                } else {
+                    wrong++;
+                    score -= 1;
+                }
+            });
+
+            document.getElementById('scoreCard').innerHTML = `
+                <h1 style="color:#3f51b5; font-size:3rem;">${score} / 400</h1>
+                <p><strong>Correct:</strong> ${correct} (+${correct*4})</p>
+                <p><strong>Incorrect:</strong> ${wrong} (-${wrong})</p>
+                <p><strong>Unattempted:</strong> ${unattempted}</p>
+            `;
+        }
+
+        function showDetailedReview() {
+            const container = document.getElementById('detailedReview');
+            container.style.display = 'block';
+            container.innerHTML = '<h3>Detailed Solutions</h3>';
+            
+            questions.forEach((q, i) => {
+                const userAns = state.answers[i];
+                const isCorrect = userAns === q.ans;
+                const statusColor = userAns === null ? 'gray' : (isCorrect ? 'green' : 'red');
+                const statusText = userAns === null ? 'Skipped' : (isCorrect ? 'Correct' : 'Incorrect');
+
+                let optsHtml = '';
+                q.opts.forEach((opt, oi) => {
+                    let style = '';
+                    if (oi === q.ans) style = 'font-weight:bold; color:green;'; 
+                    if (oi === userAns && !isCorrect) style = 'font-weight:bold; color:red;'; 
+                    optsHtml += `<div style="${style}">${oi+1}. ${opt}</div>`;
+                });
+
+                container.innerHTML += `
+                    <div class="review-item">
+                        <div style="color:${statusColor}; font-weight:bold; margin-bottom:5px;">Q${i+1}: ${statusText}</div>
+                        <div>${q.text}</div>
+                        <div style="margin:10px 0; padding-left:15px; border-left:3px solid #ddd;">${optsHtml}</div>
+                        <div class="explanation"><strong>Explanation:</strong> ${q.exp}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleSidebar() {
+            els.sidebar.classList.toggle('active');
+        }
+
+        // Initialize
+        init();
+
+    </script>
+</body>
+</html>

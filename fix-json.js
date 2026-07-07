@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const dir = path.join(__dirname, 'public', 'mock_papers');
-const filesToProcess = ['TEST_PAPER12.html', 'TEST_PAPER13.html'];
+const filesToProcess = ['TEST_PAPER19.html', 'TEST_PAPER20.html', 'TEST_PAPER21.html', 'TEST_PAPER22.html', 'TEST_PAPER23.html'];
 
 function shuffleArrayWithIndexTracking(arr, correctIndex) {
     let items = arr.map((val, index) => ({ val, isCorrect: index === correctIndex }));
