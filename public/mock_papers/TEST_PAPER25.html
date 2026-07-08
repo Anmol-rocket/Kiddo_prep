@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIIMS CRE Radiographer - Test Paper 25</title>
+    <style>
+        :root {
+            --header-bg: #3f51b5;
+            --header-text: #fff;
+            --panel-bg: #f5f5f5;
+            --pallet-answered: #4caf50;
+            --pallet-not-answered: #f44336;
+            --pallet-review: #9c27b0;
+            --pallet-not-visited: #e0e0e0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #fff; }
+
+        /* --- Header --- */
+        header {
+            background: var(--header-bg); color: var(--header-text);
+            padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+            height: 60px; flex-shrink: 0;
+        }
+        .timer { font-size: 1.2rem; font-weight: bold; background: #fff; color: #d32f2f; padding: 5px 15px; border-radius: 4px; border: 2px solid #d32f2f; }
+
+        /* --- Main Layout --- */
+        .main-container { display: flex; flex: 1; overflow: hidden; }
+        
+        .question-area { flex: 1; display: flex; flex-direction: column; padding: 20px; overflow-y: auto; }
+        .q-header { display: flex; justify-content: space-between; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.5; }
+        
+        .options-container { display: flex; flex-direction: column; gap: 10px; }
+        .option-label { 
+            display: flex; align-items: center; padding: 10px; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; transition: 0.2s; 
+        }
+        .option-label:hover { background: #f0f8ff; }
+        .option-label input { margin-right: 15px; transform: scale(1.2); }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px; background: var(--panel-bg); border-left: 1px solid #ccc;
+            display: flex; flex-direction: column; flex-shrink: 0;
+        }
+        .user-info { padding: 10px; background: #e8eaf6; border-bottom: 1px solid #ccc; }
+        
+        .palette-legend { padding: 10px; font-size: 0.8rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: #fff; }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+        .question-grid { 
+            padding: 10px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; 
+            overflow-y: auto; flex: 1; align-content: start;
+        }
+        .q-btn {
+            height: 35px; width: 35px; border: 1px solid #ccc; background: #fff; 
+            border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .q-btn.answered { background: var(--pallet-answered); color: white; border-color: var(--pallet-answered); }
+        .q-btn.not-answered { background: var(--pallet-not-answered); color: white; border-color: var(--pallet-not-answered); }
+        .q-btn.review { background: var(--pallet-review); color: white; border-radius: 50%; }
+        .q-btn.current { border: 2px solid blue; box-shadow: 0 0 5px blue; }
+        .q-btn.locked { opacity: 0.4; cursor: not-allowed; background: #444 !important; color: #888; border: 1px solid #000; }
+
+        /* Footer */
+        .footer-controls {
+            height: 60px; background: #fff; border-top: 1px solid #ccc;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+        }
+        .btn { padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+        .btn-primary { background: #2196f3; color: white; }
+        .btn-success { background: #4caf50; color: white; }
+        .btn-warn { background: #ff9800; color: white; }
+        .btn-danger { background: #f44336; color: white; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* Mobile */
+        .mobile-toggle { display: none; background: none; border: none; color: white; font-size: 1.5rem; }
+        @media (max-width: 768px) {
+            .mobile-toggle { display: block; }
+            .sidebar { 
+                position: absolute; right: 0; top: 60px; bottom: 60px; z-index: 100;
+                transform: translateX(100%); transition: transform 0.3s; width: 85%;
+            }
+            .sidebar.active { transform: translateX(0); }
+            .question-grid { grid-template-columns: repeat(6, 1fr); }
+            .footer-controls { flex-wrap: wrap; gap: 5px; height: auto; padding: 10px; }
+            .btn { flex: 1; padding: 8px; font-size: 0.8rem; }
+        }
+
+        /* Overlay */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .hidden { display: none !important; }
+        
+        .review-panel { display: none; padding: 20px; height: 100%; overflow-y: auto; background:#f9f9f9;}
+        .review-item { margin-bottom: 20px; border: 1px solid #ddd; padding: 15px; border-radius: 5px; background:white; }
+        .explanation { background: #fff3cd; padding: 10px; margin-top: 10px; font-size: 0.9rem; border-left: 4px solid #ffc107; }
+
+    </style>
+</head>
+<body>
+
+    <div id="landingPage" class="overlay">
+        <h1>AIIMS CRE - Test Paper 25</h1>
+        <div style="width: 80%; max-width: 600px; text-align: left; margin: 20px 0;">
+            <h3>Exam Rules:</h3>
+            <ul>
+                <li><strong>Questions:</strong> 100 (5 Sections of 20 questions each).</li>
+                <li><strong>Timing:</strong> 18 Minutes per section (Strictly Dedicated).</li>
+                <li><strong>Total Time:</strong> 90 Minutes.</li>
+                <li><strong>Locking:</strong> Once 18 mins are up, or if you manually proceed to the next section, you <u>cannot</u> return to the previous section.</li>
+                <li><strong>Marking:</strong> +4 Correct, -1 Incorrect.</li>
+            </ul>
+        </div>
+        <button class="btn btn-success" style="font-size: 1.2rem;" onclick="startExam()">START EXAM</button>
+        <button class="btn btn-danger" style="font-size: 1.2rem; margin-top:10px;" onclick="resetExam()">RESET EXAM</button>
+    </div>
+
+    <header id="examHeader" class="hidden">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <h3>AIIMS Radiographer</h3>
+            <span style="font-size:0.8rem; background:#eee; padding:2px 6px; border-radius:4px; color:#333;" id="sectionLabel">Section 1</span>
+        </div>
+        <div class="timer" id="timerDisplay">18:00</div>
+        <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+    </header>
+
+    <div class="main-container hidden" id="examBody">
+        <div class="question-area">
+            <div class="q-header">
+                <span id="qNumDisplay">Question No. 1</span>
+                <span style="color: #666;">Marks: +4, -1</span>
+            </div>
+            <div id="questionText" class="q-text">Loading...</div>
+            <div id="optionsBox" class="options-container"></div>
+        </div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="user-info">
+                <strong>Candidate Name</strong><br><small>Roll No: 123456</small>
+            </div>
+            <div class="palette-legend">
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-answered)"></span> Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-not-answered)"></span> Not Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-review)"></span> Review</div>
+                <div class="legend-item"><span class="dot" style="background:#444"></span> Locked</div>
+            </div>
+            <div class="question-grid" id="questionPalette"></div>
+            <div style="padding:10px; margin-top:auto;">
+                <button class="btn btn-primary" style="width:100%" onclick="submitExam()">FINISH EXAM</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-controls hidden" id="examFooter">
+        <div style="display:flex; gap:10px;">
+            <button class="btn btn-danger" onclick="clearResponse()">Clear</button>
+            <button class="btn btn-warn" onclick="markForReview()">Review</button>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <button class="btn" onclick="prevQuestion()" id="btnPrev">Previous</button>
+            <button class="btn btn-success" onclick="saveAndNext()">Save & Next</button>
+        </div>
+    </div>
+
+    <div id="resultPage" class="overlay hidden" style="display:block; overflow-y:auto; justify-content:start; padding-top:40px;">
+        <h2 style="text-align:center;">Exam Summary</h2>
+        <div id="scoreCard" style="margin: 20px auto; width:90%; max-width:600px; padding: 20px; border: 1px solid #ccc; text-align: center; background:#fff;"></div>
+        <div style="display:flex; justify-content:center; gap:20px; margin-bottom:20px;">
+            <button class="btn btn-primary" onclick="showDetailedReview()">Review Solutions</button>
+            <button class="btn btn-danger" onclick="location.reload()">Exit</button>
+        </div>
+        <div id="detailedReview" class="review-panel" style="width: 90%; max-width: 800px; margin:0 auto;"></div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const TOTAL_QUESTIONS = 100;
+        const SECTION_SIZE = 20; // 20 questions per section
+        const SECTION_TIME_LIMIT = 18 * 60; // 18 minutes in seconds
+        
+        let questions = [];
+
+        function generateQuestions() {
+            const createQ = (id, type, text, opts, ans, exp) => ({ id, type, text, opts, ans, exp });
+            let baseQuestions = [];
+
+            // --- SECTION A: NON-CORE (1-20) ---
+            const nonCoreData = [
+                ["A can do a piece of work in 10 days and B in 15 days. If they work together, how long will they take?", ["6 days", "5 days", "8 days", "12 days"], 0, "1/10 + 1/15 = 3/30 + 2/30 = 5/30 = 1/6. So 6 days."],
+                ["The ratio of boys to girls in a class is 5:3. If there are 40 students, how many are girls?", ["15", "25", "20", "10"], 0, "Total parts = 8. Girls = 3/8 of 40 = 15."],
+                ["A sum of money doubles itself in 5 years at simple interest. What is the rate of interest?", ["20%", "15%", "10%", "25%"], 0, "SI = P, so P = P * R * 5 / 100 => R = 20%."],
+                ["If 5 men can complete a job in 12 days, how many days will 6 men take?", ["10", "8", "12", "14"], 0, "M1D1 = M2D2 => 5*12 = 6*x => x = 10 days."],
+                ["What is the fourth proportional to 4, 8, 12?", ["24", "16", "20", "32"], 0, "4:8 :: 12:x => 4/8 = 12/x => x = 24."],
+                ["Who was the first Governor-General of independent India?", ["Lord Mountbatten", "C. Rajagopalachari", "Rajendra Prasad", "Jawaharlal Nehru"], 0, "Lord Mountbatten was the first; Rajagopalachari was the first Indian."],
+                ["The Indian National Congress was founded in which year?", ["1885", "1857", "1905", "1947"], 0, "Founded in December 1885 by A.O. Hume."],
+                ["The Non-Cooperation Movement was launched by Mahatma Gandhi in:", ["1920", "1919", "1930", "1942"], 0, "Launched in 1920."],
+                ["Who is known as the 'Iron Man of India'?", ["Sardar Vallabhbhai Patel", "Subhas Chandra Bose", "Bhagat Singh", "B. R. Ambedkar"], 0, "Sardar Patel, for his role in integrating the princely states."],
+                ["The partition of Bengal took place in the year:", ["1905", "1901", "1911", "1919"], 0, "Partitioned by Lord Curzon in 1905."],
+                ["Synonym of 'Abundant':", ["Plentiful", "Scarce", "Rare", "Empty"], 0, "Abundant means available in large quantities (Plentiful)."],
+                ["Antonym of 'Obscure':", ["Clear", "Hidden", "Dark", "Vague"], 0, "Obscure means unclear, so the antonym is Clear."],
+                ["Synonym of 'Diligent':", ["Hardworking", "Lazy", "Ignorant", "Careless"], 0, "Diligent means showing care and conscientiousness in one's work."],
+                ["Antonym of 'Arrogant':", ["Humble", "Proud", "Conceited", "Haughty"], 0, "Arrogant means having an exaggerated sense of one's own importance; antonym is Humble."],
+                ["Synonym of 'Mitigate':", ["Alleviate", "Worsen", "Increase", "Aggravate"], 0, "Mitigate means to make less severe, serious, or painful (Alleviate)."],
+                ["What does 'LAN' stand for?", ["Local Area Network", "Large Area Network", "Logical Area Network", "Linked Area Network"], 0, "Local Area Network connects computers in a limited area."],
+                ["Which protocol is used to browse websites?", ["HTTP", "FTP", "SMTP", "POP3"], 0, "HyperText Transfer Protocol."],
+                ["What is the function of a router in a network?", ["To connect multiple networks and route traffic", "To scan for viruses", "To store web pages", "To display images"], 0, "Routers forward data packets between computer networks."],
+                ["Which IP address format uses 128 bits?", ["IPv6", "IPv4", "MAC", "DNS"], 0, "IPv6 uses 128-bit addresses (IPv4 uses 32-bit)."],
+                ["In a network, what does 'DNS' translate?", ["Domain names to IP addresses", "IP addresses to MAC addresses", "HTML to text", "Private to Public IP"], 0, "Domain Name System acts as the phonebook of the internet."]
+            ];
+            nonCoreData.forEach((d, i) => baseQuestions.push(createQ(i + 1, "Non-Core", d[0], d[1], d[2], d[3])));
+
+            // --- SECTION B: CORE (21-100) ---
+            const coreData = [
+                // Physics & Nuclear
+                ["In a Gamma Camera, what crystal is most commonly used for detecting gamma rays?", ["Sodium Iodide doped with Thallium", "Cesium Iodide", "Barium Fluoride", "Cadmium Telluride"], 0, "NaI(Tl) is the standard scintillation crystal used in Gamma Cameras."],
+                ["Which radionuclide is used in PET imaging primarily to measure glucose metabolism?", ["Fluorine-18 (FDG)", "Technetium-99m", "Iodine-131", "Gallium-67"], 0, "F-18 FDG is a glucose analog used extensively in PET."],
+                ["What is the physical half-life of Technetium-99m?", ["6 hours", "8 days", "110 minutes", "60 days"], 0, "Tc-99m has a short half-life of 6 hours."],
+                ["A Mo-99/Tc-99m generator operates on the principle of:", ["Transient equilibrium", "Secular equilibrium", "Isomeric transition", "Alpha decay"], 0, "Because Mo-99 half-life (66h) is about 10 times Tc-99m (6h), transient equilibrium is reached."],
+                ["The component of a Gamma Camera that limits the angle of incoming gamma rays is the:", ["Collimator", "Photomultiplier tube", "PHA", "Scintillation crystal"], 0, "The collimator allows only parallel or specifically angled rays to hit the crystal."],
+                ["In Nuclear Medicine, a 'Thyroid uptake scan' typically uses which isotope?", ["Iodine-123 or I-131", "Technetium-99m MDP", "Thallium-201", "Fluorine-18"], 0, "Radioiodine is taken up by the thyroid gland."],
+                ["Annihilation radiation in PET scanning produces two gamma photons moving in opposite directions with an energy of:", ["511 keV", "140 keV", "364 keV", "1.02 MeV"], 0, "The mass of an electron/positron converts to 511 keV each."],
+                ["Which device is used to measure the radioactivity of doses in a nuclear medicine department before administration?", ["Dose calibrator", "Geiger-Muller counter", "TLD badge", "Survey meter"], 0, "A dose calibrator (well-type ionization chamber) measures the exact dose."],
+                ["The most common radioisotope used for myocardial perfusion imaging (SPECT) is:", ["Tc-99m Sestamibi", "I-131", "Ga-67", "F-18 FDG"], 0, "Tc-99m Sestamibi (or Tetrofosmin) is standard for cardiac SPECT."],
+                ["What type of collimator is typically used in a gamma camera to magnify small organs like the thyroid?", ["Pinhole collimator", "Parallel-hole collimator", "Converging collimator", "Diverging collimator"], 0, "Pinhole collimators provide magnification and high resolution for small organs."],
+                ["The primary purpose of the Pulse Height Analyzer (PHA) in a gamma camera is to:", ["Reject scatter photons by selecting a specific energy window", "Amplify the electrical signal", "Convert light into electrons", "Produce the radiopharmaceutical"], 0, "PHA discriminates based on photon energy to reject scatter."],
+                ["What is the main mode of decay for Technetium-99m?", ["Isomeric transition", "Beta minus decay", "Alpha decay", "Electron capture"], 0, "Tc-99m decays to Tc-99 via isomeric transition emitting a 140 keV gamma."],
+                ["Half-life of Fluorine-18 is approximately:", ["110 minutes", "6 hours", "2.8 days", "8 days"], 0, "F-18 half-life is 109.8 (approx 110) minutes."],
+                ["In SPECT imaging, what does the system do that planar imaging cannot?", ["Create 3D tomographic slices of the radiotracer distribution", "Provide better spatial resolution than MRI", "Eliminate patient dose", "Avoid the use of a collimator"], 0, "SPECT rotates around the patient to create 3D tomographic images."],
+                ["The biological half-life refers to:", ["The time required for the body to eliminate half of the administered substance", "The physical decay time", "The time it takes for a cell to divide", "The duration of the scan"], 0, "Biological half-life is based on the body's metabolism and excretion."],
+
+                // Positioning & Fluoro & DSA
+                ["In Digital Subtraction Angiography (DSA), what is the purpose of the 'mask' image?", ["To be subtracted from the contrast-filled image to remove bone and soft tissue", "To enhance the brightness of the vessels", "To correct for patient motion", "To reduce radiation dose"], 0, "The mask (pre-contrast) is subtracted to leave only the contrast-filled vessels."],
+                ["A common artifact in DSA caused by voluntary or involuntary patient movement between the mask and the contrast image is called:", ["Misregistration artifact", "Aliasing artifact", "Beam hardening", "Ring artifact"], 0, "Misregistration occurs when the mask and live image do not align properly."],
+                ["Which technique is used in DSA to correct for slight patient motion artifacts?", ["Pixel shifting (re-registration)", "Smoothing", "Edge enhancement", "Windowing"], 0, "Pixel shifting realigns the mask image with the contrast image."],
+                ["The 'Roadmapping' feature in fluoroscopy is primarily used for:", ["Guiding catheters and guidewires through complex vascular anatomy", "Planning radiation therapy", "Enhancing bone detail", "Measuring blood flow velocity"], 0, "Roadmapping overlays a static contrast image to guide real-time wire navigation."],
+                ["In an Image Intensifier, the input phosphor is typically made of:", ["Cesium Iodide", "Zinc Cadmium Sulfide", "Calcium Tungstate", "Amorphous Selenium"], 0, "Cesium Iodide (CsI) crystals are used as the input phosphor."],
+                ["What is the function of the photocathode in an Image Intensifier?", ["Converts light photons into electrons", "Converts x-rays into light", "Focuses the electron beam", "Converts electrons back into light"], 0, "The photocathode emits electrons when struck by light from the input phosphor."],
+                ["An artifact in image intensified fluoroscopy where the image is brighter in the center and darker at the edges is called:", ["Vignetting", "Pincushion distortion", "S-distortion", "Lag"], 0, "Vignetting is a decrease in brightness at the periphery."],
+                ["'Pincushion distortion' in an Image Intensifier is caused by:", ["The curved input phosphor projecting onto a flat output phosphor", "External magnetic fields", "Excessive radiation dose", "Slow response of the camera tube"], 0, "The curvature causes magnification differences at the edges."],
+                ["The gain in brightness achieved by the Image Intensifier due to the acceleration of electrons and reduction in image size is known as:", ["Total brightness gain", "Minification gain", "Flux gain", "Conversion factor"], 0, "Total brightness gain = Minification gain × Flux gain."],
+                ["In modern fluoroscopy, Flat Panel Detectors (FPD) are preferred over Image Intensifiers because they:", ["Do not suffer from vignetting or pincushion distortion", "Have higher radiation requirements", "Produce a circular field of view", "Are cheaper to manufacture"], 0, "FPDs are flat and do not cause geometric distortion like curved II tubes."],
+                ["Automatic Brightness Control (ABC) in fluoroscopy maintains image quality by adjusting:", ["kVp and/or mA automatically during the procedure", "The collimator shutters", "The contrast injection rate", "The grid ratio"], 0, "ABC compensates for patient thickness to maintain constant brightness."],
+                ["For a transcranial view of the TMJ (Schuller method), the central ray is directed:", ["25-30 degrees caudad", "Perpendicular", "15 degrees cephalad", "45 degrees caudad"], 0, "The CR is angled 25-30 degrees caudad to project the TMJ of interest."],
+                ["In an AP projection of the pelvis, how should the patient's lower limbs be positioned to show the femoral necks in profile?", ["Internally rotated 15-20 degrees", "Externally rotated 45 degrees", "Neutral position", "Flexed 90 degrees"], 0, "Internal rotation places the femoral necks parallel to the IR."],
+                ["The 'Water's View' (Parietoacanthial projection) is best for evaluating which sinuses?", ["Maxillary sinuses", "Frontal sinuses", "Sphenoid sinuses", "Ethmoid sinuses"], 0, "Projects the petrous ridges below the maxillary sinuses."],
+                ["For the lateral projection of the nasal bones, the central ray is directed:", ["Perpendicular to the bridge of the nose (nasion)", "Parallel to the IOML", "15 degrees cephalad", "30 degrees caudad"], 0, "CR is perpendicular to the nasion."],
+                ["When performing an ERCP (Endoscopic Retrograde Cholangiopancreatography), fluoroscopy is used to visualize the:", ["Biliary and pancreatic ducts", "Gastric mucosa", "Small intestine villi", "Renal pelvis"], 0, "ERCP visualizes the biliary tree and pancreatic duct."],
+                ["Which contrast medium is primarily used for GI tract fluoroscopy (e.g., Barium Swallow)?", ["Barium sulfate suspension", "Water-soluble iodinated contrast", "Gadolinium", "Air only"], 0, "Barium is standard unless there is a suspected perforation."],
+                ["'Double-contrast' studies of the stomach use:", ["Barium sulfate and air (or effervescent granules)", "Barium and iodine", "Iodine and water", "Two different concentrations of barium"], 0, "Air expands the stomach, and barium coats the mucosa."],
+                ["The Hysterosalpingogram (HSG) procedure uses fluoroscopy to examine the:", ["Uterus and fallopian tubes", "Urinary bladder", "Salivary glands", "Spinal canal"], 0, "HSG checks patency of fallopian tubes and uterine shape."],
+                ["In an Upper GI series, placing the patient in a Right Anterior Oblique (RAO) position helps to best visualize the:", ["Duodenal bulb and C-loop in profile", "Splenic flexure", "Fundus of the stomach", "Esophagus"], 0, "RAO promotes emptying and visualizes the duodenal bulb."],
+
+                // CT & MRI
+                ["The Hounsfield Unit (HU) for water in CT is exactly:", ["0", "-1000", "+1000", "+50"], 0, "Water is the reference point (0 HU). Air is -1000, Bone is >+1000."],
+                ["In CT, 'Pitch' is defined as:", ["Table travel per rotation divided by collimation width", "kVp divided by mA", "Slice thickness divided by FOV", "Rotation time divided by table speed"], 0, "Pitch = Table movement per rotation / Beam width."],
+                ["A CT artifact characterized by dark bands or streaks between two dense objects (like the petrous bones) is called:", ["Beam hardening artifact", "Ring artifact", "Partial volume artifact", "Motion artifact"], 0, "Lower energy photons are absorbed, leaving a hardened beam that causes dark streaks."],
+                ["In CT imaging, a smaller slice thickness will result in:", ["Improved spatial resolution but decreased signal-to-noise ratio", "Decreased spatial resolution", "Lower patient dose", "Increased partial volume averaging"], 0, "Thinner slices improve detail but reduce photons per voxel, increasing noise."],
+                ["Which CT reconstruction algorithm is most commonly used in modern scanners to reduce dose and improve image quality?", ["Iterative Reconstruction", "Filtered Back Projection", "Fourier Transform", "Simple Back Projection"], 0, "IR reduces noise, allowing for lower dose scans."],
+                ["In MRI, the time between two successive 90-degree RF pulses is called:", ["TR (Time of Repetition)", "TE (Time of Echo)", "TI (Time of Inversion)", "Flip angle"], 0, "TR controls T1 weighting."],
+                ["Which MRI sequence produces images where fluid (CSF, edema) appears bright, making it excellent for pathology detection?", ["T2-weighted", "T1-weighted", "Proton Density", "TOF Angiography"], 0, "T2 highlights water/fluid as bright."],
+                ["What is the primary purpose of shimming in an MRI system?", ["To improve the homogeneity of the main magnetic field (B0)", "To generate the RF pulses", "To provide spatial encoding", "To cool the superconducting magnet"], 0, "Shimming ensures the B0 field is uniform."],
+                ["An MRI artifact caused by the difference in resonance frequency between fat and water protons is called:", ["Chemical shift artifact", "Aliasing (wrap-around)", "Zipper artifact", "Susceptibility artifact"], 0, "Chemical shift occurs because fat and water precess at slightly different frequencies."],
+                ["In an MRI scanner, spatial encoding is achieved using:", ["Gradient coils", "The main magnet (B0)", "RF coils", "Surface coils"], 0, "Gradients linearly vary the magnetic field to encode position."],
+                ["The loud knocking noise during an MRI scan is caused by:", ["Rapid switching of the gradient coils", "The liquid helium boiling", "The spinning RF coils", "The patient table moving"], 0, "Lorentz forces act on the gradient coils causing them to vibrate."],
+                ["In CT Angiography (CTA), the timing of the scan is crucial and is often determined using:", ["Bolus tracking or a test bolus", "Heart rate monitor", "Pre-scan breathing exercises", "Constant infusion pumps"], 0, "Bolus tracking ensures the scan starts when contrast reaches the ROI."],
+                ["'Ring artifacts' in third-generation CT scanners are typically caused by:", ["A faulty or miscalibrated detector element", "Patient motion", "High-density metal implants", "Beam hardening"], 0, "A bad detector creates a ring as the tube/detector rotate around the patient."],
+                ["The principle of Phase Contrast MRA (Magnetic Resonance Angiography) relies on:", ["Phase shifts of moving spins (blood flow)", "Short TR and high flip angles", "Administration of gadolinium", "Inflow of unsaturated spins"], 0, "Velocity-induced phase shifts distinguish moving blood from stationary tissue."],
+                ["Which hardware component in an MRI system is responsible for exciting the protons and detecting the MR signal?", ["RF coils", "Gradient coils", "Superconducting magnet", "Shim coils"], 0, "Radiofrequency (RF) coils transmit energy and receive the signal."],
+
+                // Anatomy
+                ["The 'Circle of Willis' is an arterial anastomosis located in the:", ["Base of the brain", "Heart", "Liver", "Kidney"], 0, "It supplies blood to the brain and surrounding structures."],
+                ["Which of the following bones is NOT part of the cranial vault?", ["Zygomatic", "Frontal", "Parietal", "Occipital"], 0, "Zygomatic is a facial bone."],
+                ["The largest and strongest bone of the human face is the:", ["Mandible", "Maxilla", "Zygomatic", "Vomer"], 0, "The mandible (lower jaw)."],
+                ["The common bile duct is formed by the union of the:", ["Common hepatic duct and cystic duct", "Right and left hepatic ducts", "Pancreatic duct and cystic duct", "Gastric duct and hepatic duct"], 0, "The cystic duct (from gallbladder) joins the common hepatic duct."],
+                ["The first cervical vertebra (C1) is also known as the:", ["Atlas", "Axis", "Prominens", "Odontoid"], 0, "C1 is the Atlas, C2 is the Axis."],
+                ["In which quadrant of the abdomen is the gallbladder located?", ["Right Upper Quadrant (RUQ)", "Left Upper Quadrant (LUQ)", "Right Lower Quadrant (RLQ)", "Left Lower Quadrant (LLQ)"], 0, "Gallbladder is under the liver in the RUQ."],
+                ["The 'Sella Turcica', which houses the pituitary gland, is a depression in which bone?", ["Sphenoid", "Ethmoid", "Temporal", "Occipital"], 0, "Located in the sphenoid bone."],
+                ["The valve located between the right atrium and right ventricle of the heart is the:", ["Tricuspid valve", "Mitral valve", "Aortic valve", "Pulmonary valve"], 0, "Tricuspid on the right, Mitral (Bicuspid) on the left."],
+                ["The functional unit of the kidney responsible for filtering blood is the:", ["Nephron", "Alveolus", "Hepatocyte", "Glomerulus only"], 0, "The nephron is the functional unit."],
+                ["Which vessel carries oxygenated blood from the lungs to the left atrium?", ["Pulmonary vein", "Pulmonary artery", "Aorta", "Superior Vena Cava"], 0, "Pulmonary veins are the only veins carrying oxygenated blood."],
+                ["The bone that articulates with the glenoid cavity to form the shoulder joint is the:", ["Humerus", "Clavicle", "Scapula", "Radius"], 0, "The head of the humerus articulates with the glenoid cavity."],
+                ["The 'carpal tunnel' contains the tendons of the flexor muscles and the:", ["Median nerve", "Ulnar nerve", "Radial nerve", "Brachial artery"], 0, "Compression of the median nerve causes carpal tunnel syndrome."],
+                ["The longest and strongest bone in the human body is the:", ["Femur", "Tibia", "Humerus", "Fibula"], 0, "The femur (thigh bone)."],
+                ["The trachea bifurcates into the right and left main bronchi at the level of the:", ["Carina", "Larynx", "Epiglottis", "Hilum"], 0, "The carina is the ridge at the bifurcation of the trachea."],
+                ["The outer layer of the brain is called the:", ["Cerebral cortex", "Medulla oblongata", "Corpus callosum", "Pia mater"], 0, "The cortex is the outer grey matter layer."],
+
+                // Safety, DR & Artifacts
+                ["In Digital Radiography (DR), 'ghosting' or 'image lag' artifacts occur when:", ["Charge from a previous exposure is not completely erased from the detector", "Patient moves during exposure", "Grid lines run parallel to the laser", "X-ray beam is misaligned"], 0, "Incomplete erasure leads to ghost images on the next scan."],
+                ["A dead pixel on a flat-panel detector will typically appear as a:", ["White or black spot/line that is corrected by software calibration", "Blurry area on the image", "Constant fluctuation in density", "Repeating pattern of grid lines"], 0, "Interpolation algorithms fill in the missing data for dead pixels."],
+                ["The 'Exposure Indicator' (EI) or 'S-value' in digital radiography indicates:", ["The amount of radiation absorbed by the imaging plate/detector", "The patient's exact radiation dose", "The thickness of the patient", "The mAs used"], 0, "EI reflects the radiation dose reaching the detector, not the patient dose directly."],
+                ["In CR (Computed Radiography), the imaging plate is coated with:", ["Photostimulable phosphor (e.g., Barium Fluorohalide)", "Amorphous selenium", "Cesium iodide", "Silver bromide"], 0, "PSP traps electrons to store the latent image."],
+                ["The process of removing the latent image from a CR imaging plate involves exposing it to:", ["Intense white light", "A red laser beam", "Heat", "Chemical developers"], 0, "Bright light floods the plate, returning all electrons to the ground state."],
+                ["Which of the following digital artifacts is caused by sampling a high-frequency grid at a lower frequency than required by the Nyquist theorem?", ["Moire effect (Aliasing)", "Quantum mottle", "Ghosting", "Halo artifact"], 0, "Aliasing creates a Moire pattern when grid line frequency and sampling frequency clash."],
+                ["When switching from film-screen to digital radiography, what is 'Dose Creep'?", ["The gradual increase in patient dose by technologists because digital systems can correct for overexposure", "A malfunction in the x-ray tube", "The increase in scatter radiation", "The loss of image resolution over time"], 0, "Digital systems 'fix' overexposed images, leading technologists to use higher mAs safely (for image quality) but risking higher patient dose."],
+                ["The best way to reduce Quantum Mottle in a digital image is to:", ["Increase the mAs (signal)", "Decrease the kVp", "Use a higher ratio grid", "Use edge enhancement software"], 0, "Mottle is noise from too few photons; increasing mAs increases signal."],
+                ["Under AERB regulations, what is the annual effective dose limit for an occupational radiation worker?", ["20 mSv averaged over 5 years (100 mSv total), with max 30 mSv in a single year", "50 mSv", "5 mSv", "150 mSv"], 0, "Standard is 20 mSv/year (often max 30 in India AERB rules, or 50 by older limits)."],
+                ["During mobile radiography, the radiographer should stand at least how far from the patient/x-ray tube?", ["2 meters (approx 6 feet)", "1 meter", "3 meters", "0.5 meters"], 0, "A 2-meter distance utilizes the inverse square law for safety."],
+                ["The ALARA principle primarily focuses on:", ["Minimizing radiation exposure by optimizing Time, Distance, and Shielding", "Achieving the highest possible image contrast", "Reducing the cost of procedures", "Elimating all background radiation"], 0, "As Low As Reasonably Achievable."],
+                ["Lead aprons used in fluoroscopy must have a minimum lead equivalent thickness of:", ["0.5 mm", "0.25 mm", "1.0 mm", "2.0 mm"], 0, "Fluoroscopy generally requires 0.5 mm Pb equivalent."],
+                ["Which of the following dosimeters provides an immediate readout of radiation exposure?", ["Pocket ionization chamber", "TLD badge", "OSL dosimeter", "Film badge"], 0, "Pocket dosimeters can be read directly by the user immediately."],
+                ["The 'Inverse Square Law' states that if the distance from the source is doubled, the intensity is:", ["Reduced to one-fourth (1/4)", "Reduced to half", "Doubled", "Increased by four times"], 0, "Intensity is inversely proportional to the square of the distance."],
+                ["In female patients of childbearing age, the '10-day rule' suggests scheduling non-urgent pelvic x-rays during:", ["The first 10 days after the onset of menstruation", "The 10 days before menstruation", "Any 10 consecutive days", "The middle 10 days of the cycle"], 0, "This time minimizes the chance of irradiating an early pregnancy."]
+            ];
+            coreData.forEach((d, i) => baseQuestions.push(createQ(21 + i, "Core", d[0], d[1], d[2], d[3])));
+
+            // Client-side shuffle and localStorage save for questions
+            let savedQuestions = localStorage.getItem('test_paper_25_questions');
+            if (savedQuestions) {
+                questions = JSON.parse(savedQuestions);
+            } else {
+                questions = baseQuestions.map(q => {
+                    let optionsWithIndex = q.opts.map((opt, i) => ({ text: opt, isCorrect: i === q.ans }));
+                    // Client-side shuffle function
+                    for (let i = optionsWithIndex.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [optionsWithIndex[i], optionsWithIndex[j]] = [optionsWithIndex[j], optionsWithIndex[i]];
+                    }
+                    let shuffledOpts = optionsWithIndex.map(o => o.text);
+                    let newAns = optionsWithIndex.findIndex(o => o.isCorrect);
+                    return { id: q.id, type: q.type, text: q.text, opts: shuffledOpts, ans: newAns, exp: q.exp };
+                });
+                localStorage.setItem('test_paper_25_questions', JSON.stringify(questions));
+            }
+        }
+
+        // --- STATE MANAGEMENT ---
+        const lsKey = 'test_paper_25_state';
+        let state = JSON.parse(localStorage.getItem(lsKey)) || {
+            currentQ: 0,
+            answers: new Array(TOTAL_QUESTIONS).fill(null),
+            status: new Array(TOTAL_QUESTIONS).fill('not-visited'),
+            currentSection: 1,      // 1 to 5
+            sectionTimeLeft: SECTION_TIME_LIMIT,
+            maxSetReached: 1,       // Tracks highest section unlocked
+            isFinished: false
+        };
+
+        function saveState() {
+            localStorage.setItem(lsKey, JSON.stringify(state));
+        }
+
+        function resetExam() {
+            if(confirm("Are you sure you want to reset the exam? All progress will be lost.")) {
+                localStorage.removeItem(lsKey);
+                localStorage.removeItem('test_paper_25_questions');
+                location.reload();
+            }
+        }
+
+        const els = {
+            landing: document.getElementById('landingPage'),
+            header: document.getElementById('examHeader'),
+            body: document.getElementById('examBody'),
+            footer: document.getElementById('examFooter'),
+            result: document.getElementById('resultPage'),
+            qText: document.getElementById('questionText'),
+            optsBox: document.getElementById('optionsBox'),
+            qNum: document.getElementById('qNumDisplay'),
+            sectionLabel: document.getElementById('sectionLabel'),
+            palette: document.getElementById('questionPalette'),
+            timer: document.getElementById('timerDisplay'),
+            btnPrev: document.getElementById('btnPrev'),
+            sidebar: document.getElementById('sidebar')
+        };
+
+        let timerInterval;
+
+        function init() {
+            generateQuestions(); 
+            
+            if(state.isFinished) {
+                els.landing.classList.add('hidden');
+                finishExam(true);
+            } else {
+                els.landing.classList.remove('hidden');
+                if(state.currentSection > 1 || state.sectionTimeLeft < SECTION_TIME_LIMIT || state.currentQ > 0) {
+                    document.querySelector('#landingPage .btn-success').innerText = "RESUME EXAM";
+                }
+            }
+        }
+
+        function startExam() {
+            els.landing.classList.add('hidden');
+            renderExamInterface();
+            startSectionTimer();
+        }
+
+        function startSectionTimer() {
+            if(timerInterval) clearInterval(timerInterval);
+            
+            // Format immediately
+            updateTimerDisplay();
+
+            timerInterval = setInterval(() => {
+                state.sectionTimeLeft--;
+                saveState();
+                
+                updateTimerDisplay();
+
+                // Time Up Logic
+                if (state.sectionTimeLeft <= 0) {
+                    handleSectionTimeout();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(state.sectionTimeLeft / 60);
+            const s = state.sectionTimeLeft % 60;
+            els.timer.innerText = `${m}:${s < 10 ? '0'+s : s}`;
+            
+            // Visual Warning
+            if(state.sectionTimeLeft < 60) els.timer.style.backgroundColor = "#ffcdd2";
+            else els.timer.style.backgroundColor = "#fff";
+        }
+
+        function handleSectionTimeout() {
+            clearInterval(timerInterval);
+            
+            if (state.currentSection < 5) {
+                alert(`Time is up for Section ${state.currentSection}! Moving to Section ${state.currentSection + 1}.`);
+                forceNextSection();
+            } else {
+                alert("Time is up for the final section! Submitting Exam.");
+                finishExam();
+            }
+        }
+
+        function forceNextSection() {
+            state.currentSection++;
+            state.maxSetReached = state.currentSection;
+            state.sectionTimeLeft = SECTION_TIME_LIMIT;
+            saveState();
+            
+            // Move to first question of next section
+            const firstQofNextSection = (state.currentSection - 1) * SECTION_SIZE;
+            loadQuestion(firstQofNextSection);
+            startSectionTimer();
+        }
+
+        function renderExamInterface() {
+            els.header.classList.remove('hidden');
+            els.body.classList.remove('hidden');
+            els.footer.classList.remove('hidden');
+            renderPalette();
+            loadQuestion(state.currentQ);
+        }
+
+        function loadQuestion(index) {
+            state.currentQ = index;
+            if(state.status[index] === 'not-visited') {
+                state.status[index] = 'not-answered';
+            }
+            saveState();
+
+            // Update Section Label
+            const secNum = Math.floor(index / SECTION_SIZE) + 1;
+            els.sectionLabel.innerText = `Section ${secNum} (Q${(secNum-1)*20 + 1}-${secNum*20})`;
+
+            // Render Text
+            els.qNum.innerText = `Question ${index + 1}`;
+            els.qText.innerText = questions[index].text;
+            
+            // Render Options
+            els.optsBox.innerHTML = '';
+            questions[index].opts.forEach((opt, i) => {
+                const isChecked = state.answers[index] === i ? 'checked' : '';
+                els.optsBox.innerHTML += `
+                    <label class="option-label">
+                        <input type="radio" name="opt" value="${i}" ${isChecked} onchange="selectOption(${i})">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            // Update Palette UI
+            document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('current'));
+            const currentBtn = document.getElementById(`qbtn-${index}`);
+            if(currentBtn) currentBtn.classList.add('current');
+
+            // Handle Prev Button State
+            const startOfCurrentSection = (state.currentSection - 1) * SECTION_SIZE;
+            els.btnPrev.disabled = (index <= startOfCurrentSection);
+        }
+
+        function selectOption(optIndex) {
+            state.answers[state.currentQ] = optIndex;
+            saveState();
+        }
+
+        function saveAndNext() {
+            const index = state.currentQ;
+            state.status[index] = (state.answers[index] !== null) ? 'answered' : 'not-answered';
+            saveState();
+            moveToNextQuestion();
+        }
+
+        function markForReview() {
+            const index = state.currentQ;
+            state.status[index] = (state.answers[index] !== null) ? 'marked-answered' : 'review'; 
+            saveState();
+            moveToNextQuestion();
+        }
+
+        function clearResponse() {
+            state.answers[state.currentQ] = null;
+            state.status[state.currentQ] = 'not-answered';
+            saveState();
+            loadQuestion(state.currentQ);
+            renderPalette();
+        }
+
+        function moveToNextQuestion() {
+            const nextIndex = state.currentQ + 1;
+            const currentSecBound = state.currentSection * SECTION_SIZE;
+
+            if (nextIndex >= currentSecBound) {
+                if (state.currentSection < 5) {
+                    if (confirm(`You have reached the end of Section ${state.currentSection}.\nDo you want to submit this section and move to Section ${state.currentSection+1}?\n\nWARNING: You cannot return to this section.`)) {
+                        forceNextSection();
+                    }
+                } else {
+                    if(confirm("This was the last question. Submit Exam?")) {
+                        finishExam();
+                    }
+                }
+            } else {
+                renderPalette();
+                loadQuestion(nextIndex);
+            }
+        }
+
+        function prevQuestion() {
+            if (state.currentQ > 0) {
+                loadQuestion(state.currentQ - 1);
+            }
+        }
+
+        function renderPalette() {
+            els.palette.innerHTML = '';
+            for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+                let statusClass = state.status[i];
+                if(statusClass === 'marked-answered') statusClass = 'review';
+                
+                const qSection = Math.floor(i / SECTION_SIZE) + 1;
+                const isLocked = qSection < state.currentSection;
+                const lockedClass = isLocked ? ' locked' : '';
+                
+                const isFuture = qSection > state.currentSection;
+                const futureStyle = isFuture ? 'opacity:0.3; pointer-events:none;' : '';
+
+                els.palette.innerHTML += `
+                    <div id="qbtn-${i}" 
+                         class="q-btn ${statusClass}${lockedClass}" 
+                         style="${futureStyle}"
+                         onclick="jumpToQuestion(${i})">
+                        ${i + 1}
+                    </div>
+                `;
+            }
+        }
+
+        function jumpToQuestion(index) {
+            const qSection = Math.floor(index / SECTION_SIZE) + 1;
+            
+            if (qSection < state.currentSection) {
+                alert("This section is locked.");
+                return;
+            }
+            if (qSection > state.currentSection) {
+                alert("You cannot jump to a future section yet.");
+                return;
+            }
+            
+            loadQuestion(index);
+        }
+
+        function submitExam() {
+            if(confirm("Are you sure you want to finish the exam? Unanswered questions in future sections will be marked zero.")) {
+                finishExam();
+            }
+        }
+
+        function finishExam(isResume = false) {
+            if(timerInterval) clearInterval(timerInterval);
+            state.isFinished = true;
+            if(!isResume) saveState();
+            
+            els.header.classList.add('hidden');
+            els.body.classList.add('hidden');
+            els.footer.classList.add('hidden');
+            els.result.classList.remove('hidden');
+            
+            calculateResult();
+        }
+
+        function calculateResult() {
+            let correct = 0, wrong = 0, unattempted = 0, score = 0;
+
+            state.answers.forEach((ans, i) => {
+                if (ans === null) {
+                    unattempted++;
+                } else if (questions[i] && ans === questions[i].ans) {
+                    correct++;
+                    score += 4;
+                } else {
+                    wrong++;
+                    score -= 1;
+                }
+            });
+
+            document.getElementById('scoreCard').innerHTML = `
+                <h1 style="color:#3f51b5; font-size:3rem;">${score} / 400</h1>
+                <p><strong>Correct:</strong> ${correct} (+${correct*4})</p>
+                <p><strong>Incorrect:</strong> ${wrong} (-${wrong})</p>
+                <p><strong>Unattempted:</strong> ${unattempted}</p>
+            `;
+        }
+
+        function showDetailedReview() {
+            const container = document.getElementById('detailedReview');
+            container.style.display = 'block';
+            container.innerHTML = '<h3>Detailed Solutions</h3>';
+            
+            questions.forEach((q, i) => {
+                const userAns = state.answers[i];
+                const isCorrect = userAns === q.ans;
+                const statusColor = userAns === null ? 'gray' : (isCorrect ? 'green' : 'red');
+                const statusText = userAns === null ? 'Skipped' : (isCorrect ? 'Correct' : 'Incorrect');
+
+                let optsHtml = '';
+                q.opts.forEach((opt, oi) => {
+                    let style = '';
+                    if (oi === q.ans) style = 'font-weight:bold; color:green;'; 
+                    if (oi === userAns && !isCorrect) style = 'font-weight:bold; color:red;'; 
+                    optsHtml += `<div style="${style}">${oi+1}. ${opt}</div>`;
+                });
+
+                container.innerHTML += `
+                    <div class="review-item">
+                        <div style="color:${statusColor}; font-weight:bold; margin-bottom:5px;">Q${i+1}: ${statusText}</div>
+                        <div>${q.text}</div>
+                        <div style="margin:10px 0; padding-left:15px; border-left:3px solid #ddd;">${optsHtml}</div>
+                        <div class="explanation"><strong>Explanation:</strong> ${q.exp}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleSidebar() {
+            els.sidebar.classList.toggle('active');
+        }
+
+        // Initialize
+        init();
+
+    </script>
+</body>
+</html>
