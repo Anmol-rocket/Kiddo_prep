@@ -2442,4 +2442,2351 @@ export const dohravPapers: DohravPaper[] = [
       }
     ]
   }
+,
+  // ==================== PAPER 4 & 5 ====================
+  {
+    "id": 4,
+    "name": "Paper 4",
+    "subtitle": "BFUHS Radiographer",
+    "totalQuestions": 98,
+    "questions": [
+      {
+        "id": "p4_q1",
+        "question": "Wavelength of X-rays ranges from",
+        "options": [
+          "5-10 A",
+          "0.1-0.5 A",
+          "6-7 A",
+          "15-20 A"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Diagnostic X-rays typically have a wavelength ranging from 0.1 to 0.5 Angstroms."
+      },
+      {
+        "id": "p4_q2",
+        "question": "X-rays are electrically charged",
+        "options": [
+          "protons",
+          "neutral",
+          "electrons",
+          "neutrons"
+        ],
+        "correctAnswer": 1,
+        "explanation": "X-rays are electromagnetic waves and carry no electrical charge."
+      },
+      {
+        "id": "p4_q3",
+        "question": "Radioactive substances emit all except",
+        "options": [
+          "beta",
+          "alpha",
+          "gamma",
+          "epsilon"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Radioactive decay primarily involves the emission of alpha particles, beta particles, and gamma rays."
+      },
+      {
+        "id": "p4_q4",
+        "question": "Most hazardous internally located isotopes are",
+        "options": [
+          "delta particles",
+          "alpha particles",
+          "gamma particles",
+          "beta particles"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Alpha particles have high linear energy transfer (LET), causing massive localized tissue damage if ingested or inhaled."
+      },
+      {
+        "id": "p4_q5",
+        "question": "Radiation exposure can measured by",
+        "options": [
+          "GM Counter",
+          "Scintillation detector",
+          "All the above",
+          "Ionization Chamber"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Various types of detectors, including ionization chambers, scintillation detectors, and Geiger-Muller counters, are used to measure radiation."
+      },
+      {
+        "id": "p4_q6",
+        "question": "TLD badge consists of",
+        "options": [
+          "Disprosium",
+          "Calcium sulphate",
+          "Teflon",
+          "All the above"
+        ],
+        "correctAnswer": 3,
+        "explanation": "A thermoluminescent dosimeter (TLD) typically contains a phosphor like calcium sulfate doped with dysprosium, embedded in a Teflon matrix."
+      },
+      {
+        "id": "p4_q7",
+        "question": "In Mammography tube, anode is made of",
+        "options": [
+          "Beryllium",
+          "Tungsten",
+          "Molybdenum",
+          "Cobalt"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Molybdenum targets produce characteristic X-rays in the optimal 17-20 keV energy range needed for soft tissue contrast in mammography."
+      },
+      {
+        "id": "p4_q8",
+        "question": "Advantage of high frequency generator are",
+        "options": [
+          "initial conversion of AC to DC waveform",
+          "All the above",
+          "To ensure accurate voltage and current",
+          "Excellent service and repair"
+        ],
+        "correctAnswer": 1,
+        "explanation": "High frequency generators provide near-constant potential, ensuring accurate technique parameters and efficient operation."
+      },
+      {
+        "id": "p4_q9",
+        "question": "Modalities not involving ionizing radiations are",
+        "options": [
+          "CT Scan",
+          "PET",
+          "X-rays",
+          "MRI"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Magnetic Resonance Imaging (MRI) uses strong magnetic fields and radio waves, not ionizing radiation."
+      },
+      {
+        "id": "p4_q10",
+        "question": "Biological effect at the same energy level is in the order of",
+        "options": [
+          "alpha = beta = gamma",
+          "alpha < beta < gamma",
+          "alpha > beta > gamma",
+          "None of the above"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Alpha particles have the highest linear energy transfer (LET) and cause the most biological damage at a given energy, followed by beta and then gamma."
+      },
+      {
+        "id": "p4_q11",
+        "question": "Death due to radiation exposure occurs at the dose of",
+        "options": [
+          "0.25-1Sv",
+          "3Sv",
+          ">500REM",
+          "100 mSv"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Doses exceeding 500 REM (5 Sieverts) over a short period are typically lethal without intensive medical intervention."
+      },
+      {
+        "id": "p4_q12",
+        "question": "Cataract in eye with radiation exposure of 5-8Sv occurs within",
+        "options": [
+          "6 months",
+          "5-10 years",
+          "20-30 years",
+          "one year"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The latent period for radiation-induced cataracts after significant exposure typically ranges from several years up to a decade."
+      },
+      {
+        "id": "p4_q13",
+        "question": "Exposure can be reduced to desired level by",
+        "options": [
+          "By measuring distance between source and area under exposure",
+          "All the above",
+          "by reducing duration of exposure",
+          "Providing shield"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The three primary principles of radiation protection are maximizing distance, minimizing time, and utilizing adequate shielding."
+      },
+      {
+        "id": "p4_q14",
+        "question": "Minimum thickness of lead coat should be",
+        "options": [
+          "1.5mm",
+          "4mm",
+          "0.25 mm",
+          "2mm"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Standard lead aprons for fluoroscopy and general radiography have a minimum lead equivalent thickness of 0.25 mm."
+      },
+      {
+        "id": "p4_q15",
+        "question": "Radioactivity was discovered by",
+        "options": [
+          "Roentgen",
+          "None of the above",
+          "Bacqueral",
+          "Madam Curie"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Henri Becquerel discovered spontaneous radioactivity in 1896 while working with uranium salts."
+      },
+      {
+        "id": "p4_q16",
+        "question": "Causes of unsharpness in Radiographie image are",
+        "options": [
+          "photographic",
+          "movement",
+          "all the above",
+          "geometry"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Image unsharpness can result from geometric factors (focal spot size), photographic (screen phosphor), or patient movement."
+      },
+      {
+        "id": "p4_q17",
+        "question": "Radiographic examination of joints is called",
+        "options": [
+          "Cholangiography",
+          "Arteriography",
+          "Arthrography",
+          "Dacrocystography"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Arthrography is the medical imaging of a joint, often performed after injecting a contrast medium."
+      },
+      {
+        "id": "p4_q18",
+        "question": "Photoconductor used in Xeroradiography is",
+        "options": [
+          "Copper",
+          "Tungsten",
+          "Selenium",
+          "Cobalt"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Amorphous selenium is used as the photoconductor plate in xeroradiography due to its excellent charge-holding properties."
+      },
+      {
+        "id": "p4_q19",
+        "question": "Good and uniform compression of Breast in mammography is to",
+        "options": [
+          "All the above",
+          "Decrease scatter radiations",
+          "Decrease geometric unsharpness",
+          "Immobilise breast"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Compression reduces tissue thickness (decreasing scatter), prevents motion, and improves geometric sharpness."
+      },
+      {
+        "id": "p4_q20",
+        "question": "Most commonly used lubricant purgative in abdominal preparation is",
+        "options": [
+          "Isogel",
+          "Bisacodyl",
+          "Castor oil",
+          "Liquid paraffin"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Liquid paraffin acts as a lubricant laxative to aid in bowel clearance prior to abdominal imaging."
+      },
+      {
+        "id": "p4_q21",
+        "question": "Quantum theory fails to explain",
+        "options": [
+          "Interference",
+          "Photoelectric effect",
+          "All the above",
+          "Radiation emission"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Wave theory is required to explain phenomena like interference and diffraction, whereas quantum theory explains particle-like behavior."
+      },
+      {
+        "id": "p4_q22",
+        "question": "Visible spectrum ranges from",
+        "options": [
+          "4000-7700A",
+          "200-500A",
+          "8000-9900A",
+          "1000-3000A"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The visible light spectrum typically ranges from about 400 nm to 700 nm, which is equivalent to 4000 to 7700 Angstroms."
+      },
+      {
+        "id": "p4_q23",
+        "question": "Contrast material used in Micturating cystourethrography",
+        "options": [
+          "Sodium Iodide",
+          "Barium Sulfate",
+          "Telepaque",
+          "Water-soluble iodinated contrast"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Water-soluble iodinated contrast media are safely used to outline the bladder and urethra during MCU."
+      },
+      {
+        "id": "p4_q24",
+        "question": "Investigation of choice in pericardial effusion:",
+        "options": [
+          "Echocardiography",
+          "Cardiac catheterization",
+          "Lateral view X-ray chest",
+          "USG"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Echocardiography is highly sensitive, non-invasive, and considered the gold standard for diagnosing pericardial effusion."
+      },
+      {
+        "id": "p4_q25",
+        "question": "All are imaging modalities of chest, except",
+        "options": [
+          "HRCT",
+          "Ventilation perfusion study",
+          "Echocardiography",
+          "USG"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Ultrasound cannot penetrate the air-filled lungs, limiting its usefulness for general chest imaging compared to CT or plain X-rays."
+      },
+      {
+        "id": "p4_q26",
+        "question": "SI unit for measurement of luminous intensity is",
+        "options": [
+          "Kelvin",
+          "Parsec",
+          "Fermi",
+          "Candela"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The candela is the standard SI base unit of luminous intensity."
+      },
+      {
+        "id": "p4_q27",
+        "question": "Contraindication for intravenous pyelography is",
+        "options": [
+          "Pregnancy",
+          "Congenital anomalies involving kidney",
+          "All the above",
+          "Blunt injury abdomen with haematuria"
+        ],
+        "correctAnswer": 0,
+        "explanation": "IVP involves significant ionizing radiation and is generally contraindicated during pregnancy to protect the fetus."
+      },
+      {
+        "id": "p4_q28",
+        "question": "Which of the following is semi conductor",
+        "options": [
+          "Silicon",
+          "Aluminum",
+          "Copper",
+          "Lead"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Silicon is a widely used semiconductor material in electronic components and solid-state radiation detectors."
+      },
+      {
+        "id": "p4_q29",
+        "question": "Adverse reaction to contrast are all except",
+        "options": [
+          "Urticaria",
+          "Convulsions",
+          "Cataract",
+          "Hypotension"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Cataracts are a long-term consequence of radiation exposure, not an acute adverse reaction to contrast media."
+      },
+      {
+        "id": "p4_q30",
+        "question": "Enteroclysis is",
+        "options": [
+          "T-tube cholangiography",
+          "Barium enema",
+          "Small bowel enema",
+          "Barium meal follow thro"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Enteroclysis involves the direct instillation of contrast into the small bowel via a nasojejunal tube."
+      },
+      {
+        "id": "p4_q31",
+        "question": "Barium suspension is made of",
+        "options": [
+          "Barium sulfide",
+          "Barium chloride",
+          "Barium sulfate and water",
+          "Barium carbonate"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Barium sulfate is insoluble in water and forms a safe suspension for gastrointestinal imaging."
+      },
+      {
+        "id": "p4_q32",
+        "question": "Ohm's law of electric current is",
+        "options": [
+          "None of the above",
+          "V=IR",
+          "V=I/R",
+          "I=VR"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Ohm's law states that voltage (V) equals current (I) multiplied by resistance (R)."
+      },
+      {
+        "id": "p4_q33",
+        "question": "According to Maxwell's electromagnetic theory",
+        "options": [
+          "Light is electrical wave",
+          "Light is transverse electromagnetic wave",
+          "light is magnetic wave",
+          "All the above"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Maxwell's theory describes light as a propagating wave of oscillating electric and magnetic fields perpendicular to each other."
+      },
+      {
+        "id": "p4_q34",
+        "question": "Biliary contrast medium is",
+        "options": [
+          "Barium sulfate",
+          "Sodium Iodide",
+          "Iodipamide (Biligrafin)",
+          "Gadolinium"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Contrast media such as iodipamide are specifically excreted by the liver into the biliary system, making them useful for biliary imaging."
+      },
+      {
+        "id": "p4_q35",
+        "question": "Basic elements of image intensifier are",
+        "options": [
+          "Output phosphor",
+          "Input phosphor",
+          "All of the above",
+          "Accelerating anode"
+        ],
+        "correctAnswer": 2,
+        "explanation": "An image intensifier tube utilizes an input phosphor, photocathode, electrostatic lenses (accelerating anode), and an output phosphor."
+      },
+      {
+        "id": "p4_q36",
+        "question": "Radiographic contrast depends on",
+        "options": [
+          "All the above",
+          "Scatter radiations",
+          "Type of film",
+          "Intensifying screens"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Image contrast is influenced by the film characteristic curve, the presence of intensifying screens, and the amount of scatter reaching the receptor."
+      },
+      {
+        "id": "p4_q37",
+        "question": "Walls of radiography room should be lined with",
+        "options": [
+          "Tin",
+          "Copper",
+          "Lead",
+          "Iron"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Lead has a high atomic number and density, making it an excellent material for absorbing scattered X-rays and shielding rooms."
+      },
+      {
+        "id": "p4_q38",
+        "question": "Penetration power of radiograph is increased by",
+        "options": [
+          "Decreasing kVp",
+          "Increasing mAs",
+          "Increasing exposure time",
+          "Increasing kVp"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Increasing the kilovoltage peak (kVp) increases the average energy of the X-ray beam, enhancing its penetrating ability."
+      },
+      {
+        "id": "p4_q39",
+        "question": "Ear is located in",
+        "options": [
+          "Occipital bone",
+          "Frontal bone",
+          "Temporal bone",
+          "Parietal bone"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The middle and inner ear structures are housed within the petrous portion of the temporal bone."
+      },
+      {
+        "id": "p4_q40",
+        "question": "Length of ureter is",
+        "options": [
+          "40 cm",
+          "5 cm",
+          "25 cm",
+          "15 cm"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The human ureters are muscular tubes typically measuring about 25 to 30 cm in length."
+      },
+      {
+        "id": "p4_q41",
+        "question": "Adam's apple is due to prominence of",
+        "options": [
+          "Epiglottis",
+          "Cricoid cartilage",
+          "Arytenoid",
+          "Thyroid cartilage"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The laryngeal prominence, or Adam's apple, is formed by the angle of the thyroid cartilage."
+      },
+      {
+        "id": "p4_q42",
+        "question": "Working distance of safe light to the film should not be less than",
+        "options": [
+          "9 metres",
+          "None of the above",
+          "1.2 metres",
+          "3 metres"
+        ],
+        "correctAnswer": 2,
+        "explanation": "To prevent film fogging, safelights are typically mounted at least 1.2 meters (about 4 feet) away from the working surface."
+      },
+      {
+        "id": "p4_q43",
+        "question": "All are advantages of spiral CT except",
+        "options": [
+          "No motion artifact",
+          "Increase image noise",
+          "Multiplanar image",
+          "Improves lesion detection"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Spiral CT generally decreases motion artifacts and allows multiplanar reconstructions, but it does not inherently aim to increase image noise."
+      },
+      {
+        "id": "p4_q44",
+        "question": "Heart of MRI system is",
+        "options": [
+          "Computer",
+          "Magnet",
+          "Gradient coils",
+          "Shim coils"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The primary static magnetic field generated by the main magnet is the fundamental component required for MRI."
+      },
+      {
+        "id": "p4_q45",
+        "question": "Father of Computed Tomography is",
+        "options": [
+          "WC Roentgen",
+          "Curie",
+          "Godfrey Hounsfield",
+          "Robert Koch"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Sir Godfrey Hounsfield was the principal inventor of the first clinical CT scanner."
+      },
+      {
+        "id": "p4_q46",
+        "question": "Wattage of bulb in safe light should be less than",
+        "options": [
+          "50 watts",
+          "100 watts",
+          "15 watts",
+          "30 watts"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Safelight bulbs are kept at low wattages, typically 15 watts, to minimize the risk of fogging the photosensitive film."
+      },
+      {
+        "id": "p4_q47",
+        "question": "Heart of X-ray film is",
+        "options": [
+          "Emulsion",
+          "Substratum",
+          "Developer",
+          "Base"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The emulsion layer contains the silver halide crystals, which are responsible for capturing the latent image."
+      },
+      {
+        "id": "p4_q48",
+        "question": "Automatic film processors have all advantages except",
+        "options": [
+          "Temperature regulation is variable",
+          "Increases capacity of radiology dept",
+          "Shortened processing time",
+          "Improves quality"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Automatic processors rely on precise, consistent temperature regulation, not variable regulation, to ensure uniform film quality."
+      },
+      {
+        "id": "p4_q49",
+        "question": "All are components of fixer except",
+        "options": [
+          "Sodium sulphite",
+          "Hydroquinone",
+          "Sodium thiosulphate",
+          "Water"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Hydroquinone is a reducing agent found in the developer, whereas the fixer primarily contains clearing agents like sodium thiosulphate."
+      },
+      {
+        "id": "p4_q50",
+        "question": "Use of hyoscine N Butylbromide (Buscopan) is contraindicated in",
+        "options": [
+          "Severe Prostatism",
+          "For adequate distension of bowel",
+          "Pain abdomen",
+          "Bowel spasm"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Buscopan has anticholinergic effects that can cause urinary retention, making it contraindicated in patients with severe prostatism."
+      },
+      {
+        "id": "p4_q51",
+        "question": "RF pulse causes longitudinal magnetization to and establishes a new transversal magnetization",
+        "options": [
+          "Increase",
+          "Decrease",
+          "Remain unchanged",
+          "Become zero"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The RF pulse flips protons into the transverse plane, causing longitudinal magnetization to decrease as it converts into transverse magnetization."
+      },
+      {
+        "id": "p4_q52",
+        "question": "1/T2 is also called",
+        "options": [
+          "Transverse frequency",
+          "Longitudinal frequency",
+          "Transverse relaxation rate",
+          "Longitudinal relaxation rate"
+        ],
+        "correctAnswer": 2,
+        "explanation": "T2 is the transverse relaxation time, so its reciprocal, 1/T2, represents the transverse relaxation rate."
+      },
+      {
+        "id": "p4_q53",
+        "question": "TR less than is short.",
+        "options": [
+          "500msec",
+          "1000msec",
+          "300msec",
+          "700msec"
+        ],
+        "correctAnswer": 0,
+        "explanation": "In MRI, a Repetition Time (TR) of less than 500 milliseconds is generally considered short, maximizing T1 weighting."
+      },
+      {
+        "id": "p4_q54",
+        "question": "T2 of fat is",
+        "options": [
+          "Equal to water",
+          "100msec",
+          "Shorter than water",
+          "Longer than water"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Fat has a shorter T2 relaxation time compared to water, which has a very long T2 time."
+      },
+      {
+        "id": "p4_q55",
+        "question": "TR more than is long.",
+        "options": [
+          "700 msec",
+          "1000 msec",
+          "500msec",
+          "1500 msec"
+        ],
+        "correctAnswer": 3,
+        "explanation": "A Repetition Time (TR) of over 1500-2000 milliseconds is considered long, which is used for T2-weighted and proton density images."
+      },
+      {
+        "id": "p4_q56",
+        "question": "We get T1 weighted image, when TR is",
+        "options": [
+          "None of the above",
+          "Too long to be measured",
+          "Long",
+          "Short"
+        ],
+        "correctAnswer": 3,
+        "explanation": "A short TR and a short TE are required to produce a T1-weighted image in MRI."
+      },
+      {
+        "id": "p4_q57",
+        "question": "In a normal case, air is seen as dark on",
+        "options": [
+          "Both T1 and T2 weighted images",
+          "T1 weighted image",
+          "T2 weighted image",
+          "None of the above"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Air lacks mobile protons, meaning it yields no MRI signal and appears completely black on all standard MRI sequences."
+      },
+      {
+        "id": "p4_q58",
+        "question": "In a normal case, dense bone is seen as dark on",
+        "options": [
+          "CT image",
+          "MR image",
+          "Both MR and CT images",
+          "None of CT or MR images"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Cortical bone has very few mobile protons and a very short T2, making it appear dark (signal void) on MRI. In CT, dense bone appears bright."
+      },
+      {
+        "id": "p4_q59",
+        "question": "In medical Ultrasonography, Piezoelectric material used is",
+        "options": [
+          "Lead zirconate titanate.",
+          "None of the above.",
+          "Zinc cadmium sulphate",
+          "Calcium Tungstate"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Lead zirconate titanate (PZT) is the most common synthetic piezoelectric ceramic used in modern ultrasound transducers."
+      },
+      {
+        "id": "p4_q60",
+        "question": "To sterilise the USG transducer, it should be",
+        "options": [
+          "Cleaned with specific chemical disinfectants",
+          "Heated.",
+          "Autoclaved.",
+          "None of the above."
+        ],
+        "correctAnswer": 3,
+        "explanation": "Ultrasound transducers cannot be autoclaved or heated as it damages the piezoelectric crystals. They are typically sterilized using cold chemical disinfectants."
+      },
+      {
+        "id": "p4_q61",
+        "question": "USG produces which of the following biological effects.",
+        "options": [
+          "None of these.",
+          "Both of these.",
+          "Cavitation",
+          "Heat"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Ultrasound can cause biological effects through thermal mechanisms (heat) and mechanical mechanisms (cavitation)."
+      },
+      {
+        "id": "p4_q62",
+        "question": "In Color Doppler venous flow is normally which type?",
+        "options": [
+          "Circular flow",
+          "Plug flow",
+          "Laminar flow",
+          "Turbulent flow"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Normal venous flow is laminar, with blood moving in parallel layers and the highest velocity in the center of the vessel."
+      },
+      {
+        "id": "p4_q63",
+        "question": "Unit of Pulse repetition frequency is",
+        "options": [
+          "mm/sec",
+          "Hertz",
+          "Per minute",
+          "msec"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Pulse repetition frequency (PRF) is measured in Hertz (Hz), which represents pulses per second."
+      },
+      {
+        "id": "p4_q64",
+        "question": "In which of the following, Doppler has tws piezoelectric elements with single head?",
+        "options": [
+          "Doppler color flow imaging",
+          "Pulse Doppler",
+          "CW Doppler",
+          "Duplex"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Continuous Wave (CW) Doppler requires two separate piezoelectric elements in the transducer: one for continuously transmitting and one for continuously receiving."
+      },
+      {
+        "id": "p4_q65",
+        "question": "Transrectal scanner is best at which frequency?",
+        "options": [
+          "3.5 MHz",
+          "1.0 MHz",
+          "7.5 MHz",
+          "5.0 MHz"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Transrectal scanners use higher frequencies, typically around 7.5 to 10 MHz, to provide high-resolution images of the prostate and nearby structures."
+      },
+      {
+        "id": "p4_q66",
+        "question": "Contrast resolution in CT is",
+        "options": [
+          "None of the above",
+          "Less than conventional films",
+          "Same as conventional films",
+          "Better than conventional films"
+        ],
+        "correctAnswer": 3,
+        "explanation": "CT has significantly better contrast resolution than conventional radiography, allowing differentiation of tissues with very small density differences."
+      },
+      {
+        "id": "p4_q67",
+        "question": "CT number of water is",
+        "options": [
+          "zero",
+          "200-300",
+          "+1000",
+          "-1000"
+        ],
+        "correctAnswer": 0,
+        "explanation": "On the Hounsfield scale used in CT, the radiodensity of distilled water at standard temperature and pressure is defined as zero (0 HU)."
+      },
+      {
+        "id": "p4_q68",
+        "question": "CT number of bone is",
+        "options": [
+          "zero",
+          "-1000",
+          "200-300",
+          "+1000"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Dense cortical bone has high attenuation and corresponds to a CT number of approximately +1000 Hounsfield Units."
+      },
+      {
+        "id": "p4_q69",
+        "question": "In CT reference material is",
+        "options": [
+          "air",
+          "bone",
+          "water",
+          "none of the above"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Water is the standard reference material in CT, serving as the baseline (0 HU) for calculating the Hounsfield units of other tissues."
+      },
+      {
+        "id": "p4_q70",
+        "question": "With narrowing of the window, each gray scale",
+        "options": [
+          "no effect on CT numbers",
+          "less CT numbers.",
+          "none of the above",
+          "larger CT numbers"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A narrow window width means fewer Hounsfield units are spread across the available grayscale, increasing contrast by assigning fewer CT numbers to each shade of gray."
+      },
+      {
+        "id": "p4_q71",
+        "question": "Barium swallow is indicated in all except",
+        "options": [
+          "Tracheo Esophageal fistulae",
+          "Motility disorder",
+          "Intestinal obstruction",
+          "Failed upper Gl endoscopy"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Barium is contraindicated in suspected intestinal obstruction due to the risk of barium inspissation and exacerbation of the obstruction; water-soluble contrast should be used instead."
+      },
+      {
+        "id": "p4_q72",
+        "question": "Virtual Colonoscopy (CT colonoscopy) is the radiological investigation of choice for",
+        "options": [
+          "Detection of Lung cancer",
+          "Detection of esophageal stricture.",
+          "Detection of Colonic neoplasia.",
+          "Acid Peptic disease."
+        ],
+        "correctAnswer": 2,
+        "explanation": "CT colonography is a specialized imaging technique primarily used as a non-invasive screening tool for detecting colonic polyps and neoplasia."
+      },
+      {
+        "id": "p4_q73",
+        "question": "MR imaging of GI tract is indicated in",
+        "options": [
+          "Perianal fistula",
+          "Local staging of anorectal cancer",
+          "All the above.",
+          "Inflammatory bowel disease."
+        ],
+        "correctAnswer": 2,
+        "explanation": "MRI is excellent for soft tissue contrast and is routinely used for evaluating perianal fistulas, staging anorectal tumors, and assessing inflammatory bowel disease."
+      },
+      {
+        "id": "p4_q74",
+        "question": "Indication for MCU is",
+        "options": [
+          "Bladder leak.",
+          "To study uretheral pathologies",
+          "Vesicoureteric reflux",
+          "All the above."
+        ],
+        "correctAnswer": 3,
+        "explanation": "Micturating cystourethrography (MCU) is used to assess the lower urinary tract, making it useful for diagnosing reflux, urethral strictures, and bladder leaks."
+      },
+      {
+        "id": "p4_q75",
+        "question": "CT scan of urinary tract is done",
+        "options": [
+          "Intestinal mass",
+          "Gall stones",
+          "Renal colic/ renal stone disease",
+          "Acute Pancreatitis"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Non-contrast CT of the urinary tract (CT KUB) is the gold standard for detecting and evaluating renal and ureteric stones in patients with renal colic."
+      },
+      {
+        "id": "p4_q76",
+        "question": "Indication for MR Urography",
+        "options": [
+          "All the above",
+          "To evaluate urinary tract in pregnancy",
+          "To determine the level of obstruction.",
+          "Urinary obstruction unrelated to urolithiasis"
+        ],
+        "correctAnswer": 0,
+        "explanation": "MR urography is radiation-free and provides excellent visualization of the collecting system, making it useful for finding the level and cause of non-calculous obstructions."
+      },
+      {
+        "id": "p4_q77",
+        "question": "IVU is contraindicated in",
+        "options": [
+          "Haematuria",
+          "Vesical calculus",
+          "Acute renal failure",
+          "Recurrent urinary tract infection"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Acute renal failure is an absolute contraindication for Intravenous Urography (IVU) due to the risk of contrast-induced nephropathy worsening the condition."
+      },
+      {
+        "id": "p4_q78",
+        "question": "To evaluate Gall Bladder on imaging, patient should be fasting for",
+        "options": [
+          "24 hrs",
+          "12 hrs",
+          "6 hrs",
+          "2 hrs"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Fasting for at least 6 hours ensures the gallbladder is adequately distended for proper sonographic evaluation."
+      },
+      {
+        "id": "p4_q79",
+        "question": "ERCP is contraindicated in",
+        "options": [
+          "Management of bile duct stones.",
+          "Severe cardiac disease",
+          "Acute Pancreatitis",
+          "Post Cholecystectomy syndrome"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ERCP is an invasive endoscopic procedure and is contraindicated in patients with severe cardiac or pulmonary disease who are unfit for sedation."
+      },
+      {
+        "id": "p4_q80",
+        "question": "In MR, if fluid is darker than solids, the image is",
+        "options": [
+          "T1 weighted image",
+          "T2 weighted image",
+          "PD weighted image",
+          "None of the above"
+        ],
+        "correctAnswer": 0,
+        "explanation": "On T1-weighted sequences, fluid (like CSF or urine) has a long T1 relaxation time and appears dark (hypointense) compared to solid tissues."
+      },
+      {
+        "id": "p4_q81",
+        "question": "If fluid e.g. CSF or urine is white, image is",
+        "options": [
+          "T1 weighted image",
+          "PD weighted image",
+          "None of the above.",
+          "T2 weighted image"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Fluid appears bright (hyperintense) on T2-weighted MRI sequences due to its long transverse relaxation time."
+      },
+      {
+        "id": "p4_q82",
+        "question": "In dual source CT, which of the following filters are used?",
+        "options": [
+          "Tungsten",
+          "Tin",
+          "Lead",
+          "Rhenium"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In dual-source CT, a tin (Sn) filter is often used on the high-energy X-ray tube to improve spectral separation and reduce radiation dose."
+      },
+      {
+        "id": "p4_q83",
+        "question": "The Ultrasound frequency used in the diagnosis",
+        "options": [
+          "60kHz.",
+          "1MHz-20MHz",
+          "40 KHz",
+          "20 KHz"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Diagnostic medical ultrasound typically utilizes frequencies in the range of 1 MHz to 20 MHz to balance tissue penetration and spatial resolution."
+      },
+      {
+        "id": "p4_q84",
+        "question": "On applying electric field certain materials change",
+        "options": [
+          "Both a&b",
+          "None of the above.",
+          "Physical dimension",
+          "Chemical dimension"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The piezoelectric effect describes materials that change their physical dimensions (shape or thickness) when subjected to an electric field."
+      },
+      {
+        "id": "p4_q85",
+        "question": "Which of the following Phosphor is not used in intensifying screens",
+        "options": [
+          "Calcium tungstate.",
+          "Zinc cadmium sulphide",
+          "Terbium",
+          "Thulium blue"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Zinc cadmium sulphide was historically used for fluoroscopic screens, while calcium tungstate and rare-earth phosphors are used in radiographic intensifying screens."
+      },
+      {
+        "id": "p4_q86",
+        "question": "In CT scan the 4th generation is",
+        "options": [
+          "None of the above.",
+          "Stationary rotate type",
+          "Rotate- rotate type",
+          "Translate rotate type"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Fourth-generation CT scanners use a rotating X-ray tube inside a fixed, stationary ring of detectors."
+      },
+      {
+        "id": "p4_q87",
+        "question": "5th generation CT scan uses",
+        "options": [
+          "Broad fan beam",
+          "Multiple x-ray beams.",
+          "Narrow fan beam",
+          "Pencil beam of x-rays"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Fifth-generation (electron beam) CT scanners use an electron gun to sweep a stationary target, effectively creating multiple X-ray beams from different angles without mechanical movement."
+      },
+      {
+        "id": "p4_q88",
+        "question": "Which of the following is best lateral resolution?",
+        "options": [
+          "0.06cm",
+          "6cm",
+          "2cm.",
+          "15cm"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A smaller numerical value for lateral resolution indicates the ability to distinguish smaller, closely spaced objects, making 0.06 cm the best resolution among the options."
+      },
+      {
+        "id": "p4_q89",
+        "question": "Which of the following statements regarding protons are correct?",
+        "options": [
+          "They have no mass",
+          "They are equal to the number of electrons in a non-ionized atom",
+          "Hydrogen atom has 2 protons",
+          "They have a negative charge"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In a neutral, non-ionized atom, the number of positively charged protons in the nucleus equals the number of negatively charged electrons."
+      },
+      {
+        "id": "p4_q90",
+        "question": "Which of the following is not correct for Tungsten",
+        "options": [
+          "It is represented by the letter W",
+          "The mass number of tungsten is 284",
+          "It has an atomic number of 74",
+          "The K-shell binding energy of tungsten is 69.5 KeV"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Tungsten has an atomic number of 74 and an atomic mass of approximately 184, not 284."
+      },
+      {
+        "id": "p4_q91",
+        "question": "Which of following is correct for electromagnetic radiation:",
+        "options": [
+          "Visible light is not a part of electromagnetic spectrum",
+          "X-rays and gamma rays have different frequency and wavelength",
+          "Travels with a speed of light in vacuum.",
+          "It cannot travel in vacuum."
+        ],
+        "correctAnswer": 2,
+        "explanation": "All forms of electromagnetic radiation, including X-rays and light, travel at the speed of light in a vacuum (approximately 3 x 10^8 m/s)."
+      },
+      {
+        "id": "p4_q92",
+        "question": "In a diagnostic X-ray tube:",
+        "options": [
+          "Cathode is made of aluminium",
+          "Anode is positive",
+          "X-rays are produced by thermionic emission",
+          "Cathode is positive"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In an X-ray tube, the anode is the positively charged target electrode, while the cathode is the negative electron source."
+      },
+      {
+        "id": "p4_q93",
+        "question": "Cathode of X-ray tube is:",
+        "options": [
+          "Has a low melting point",
+          "Is commonly made of tungsten",
+          "Is positively charged in relation to the anode",
+          "Has a low resistance"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The cathode filament in an X-ray tube is typically made of tungsten due to its high melting point and efficiency in thermionic emission."
+      },
+      {
+        "id": "p4_q94",
+        "question": "The following techniques can be used to minimise scatter",
+        "options": [
+          "Air gaps between the object and the image receptor",
+          "Intensifying screens",
+          "Using collimation",
+          "Increasing the tube kV"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Collimation restricts the primary X-ray beam, reducing the volume of irradiated tissue and thereby decreasing the production of scatter radiation."
+      },
+      {
+        "id": "p4_q95",
+        "question": "Which of the following is correct for mammography tube:",
+        "options": [
+          "Single-phase voltage supply",
+          "Tube voltage of 40-50 kVp",
+          "Molybdenum window",
+          "Molybdenum target anode"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Mammography tubes typically use a molybdenum (or rhodium) target anode to produce the low-energy characteristic X-rays optimal for soft-tissue breast imaging."
+      },
+      {
+        "id": "p4_q96",
+        "question": "All of these are deterministic effects of radiation except-",
+        "options": [
+          "Hair loss",
+          "Sterility",
+          "Leukaemia",
+          "Formation of cataract"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Leukaemia is a stochastic effect of radiation (probability increases with dose), whereas sterility, cataracts, and hair loss are deterministic (severity increases with dose above a threshold)."
+      },
+      {
+        "id": "p4_q97",
+        "question": "Regarding computed tomography (CT) imaging which of these is true-",
+        "options": [
+          "High level of scatter reaches the CT detectors.",
+          "Windowing is a technique to adjust the greyscale.",
+          "Air corresponds to a CT value of 0 HU",
+          "CT number of fat is higher than water."
+        ],
+        "correctAnswer": 1,
+        "explanation": "Windowing alters the window width and level to optimize the mapping of Hounsfield units to the grayscale for optimal display of specific tissues."
+      },
+      {
+        "id": "p4_q98",
+        "question": "All of the following are true for X-rays except",
+        "options": [
+          "They form part of electromagnetic spectrum",
+          "They cause ionization",
+          "They are invisible",
+          "They cannot travel through vacuum"
+        ],
+        "correctAnswer": 3,
+        "explanation": "X-rays are a form of electromagnetic radiation and, like visible light, they can travel through a vacuum at the speed of light."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Paper 5",
+    "subtitle": "Radiographer Practice Paper",
+    "totalQuestions": 96,
+    "questions": [
+      {
+        "id": "p5_q1",
+        "question": "Ring artefact in CT scan is due to",
+        "options": [
+          "High density material in field",
+          "Patient movement",
+          "Averaging of LAC in a given voxel that is heterogeneous in composition",
+          "Failure of detector"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Ring artefacts are primarily caused by faulty or uncalibrated detectors in third-generation CT scanners."
+      },
+      {
+        "id": "p5_q2",
+        "question": "Right ventricle pumps blood into",
+        "options": [
+          "SVC",
+          "Pulmonary veins",
+          "Aorta",
+          "Pulmonary arteries"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The right ventricle receives deoxygenated blood from the right atrium and pumps it into the pulmonary trunk, which divides into the right and left pulmonary arteries."
+      },
+      {
+        "id": "p5_q3",
+        "question": "Photoelectric attenuation is",
+        "options": [
+          "Proportional to square of atomic number",
+          "Inversely proportional to cube of mass number",
+          "Inversely proportional to square of atomic number",
+          "Proportional to cube of atomic number"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The probability of photoelectric interaction is directly proportional to the cube of the atomic number (Z^3) of the absorbing material."
+      },
+      {
+        "id": "p5_q4",
+        "question": "Electrons interact with matter by",
+        "options": [
+          "Excitation",
+          "Both",
+          "Ionization",
+          "None"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Fast-moving electrons from the cathode interact with the target material via both ionization (ejection of orbital electrons) and excitation (raising an electron to a higher energy state without ejection)."
+      },
+      {
+        "id": "p5_q5",
+        "question": "Unit of exposure",
+        "options": [
+          "Roentgen",
+          "Rad",
+          "Gray",
+          "Curie"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The Roentgen (R) is the traditional unit used to measure radiation exposure in air."
+      },
+      {
+        "id": "p5_q6",
+        "question": "Output of X-Ray machine is",
+        "options": [
+          "Proportional to square of kV",
+          "Inversely proportional to square of kV",
+          "None",
+          "Proportional to kV"
+        ],
+        "correctAnswer": 0,
+        "explanation": "X-ray beam intensity or output is approximately proportional to the square of the applied kilovoltage (kVp)."
+      },
+      {
+        "id": "p5_q7",
+        "question": "Quality factor for X-Ray is",
+        "options": [
+          "4",
+          "5",
+          "1",
+          "20"
+        ],
+        "correctAnswer": 2,
+        "explanation": "X-rays, gamma rays, and beta particles have a radiation weighting factor (formerly quality factor) of 1 because they are low-LET radiations."
+      },
+      {
+        "id": "p5_q8",
+        "question": "Ways of hardening X-Ray beams",
+        "options": [
+          "Increasing mAs",
+          "Decreasing SID",
+          "Increasing filtration",
+          "Decreasing kVp"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Adding filtration to the X-ray tube absorbs lower-energy photons, thereby increasing the average energy and 'hardening' the X-ray beam."
+      },
+      {
+        "id": "p5_q9",
+        "question": "Which city topped the Swachh Vayu Sarveksha 2023 Clean Air Survey?",
+        "options": [
+          "Agra",
+          "Chandigadh",
+          "Indore",
+          "Ahmedabad"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Indore secured the first position in the Swachh Vayu Sarvekshan 2023 for having the cleanest air among cities with over 10 lakh population."
+      },
+      {
+        "id": "p5_q10",
+        "question": "National Girl Child Day is celebrated on which day?",
+        "options": [
+          "8th December",
+          "10th February",
+          "24th January",
+          "30th January"
+        ],
+        "correctAnswer": 2,
+        "explanation": "National Girl Child Day is observed annually in India on January 24th to promote awareness about the rights of the girl child."
+      },
+      {
+        "id": "p5_q11",
+        "question": "The currently debated Hoollongapar Gibbon sanctuary is situated in which state?",
+        "options": [
+          "Goa",
+          "Uttar Pradesh",
+          "Assam",
+          "Tripura"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The Hoollongapar Gibbon Sanctuary, famous for the Hoolock gibbon, is located in the Jorhat district of Assam."
+      },
+      {
+        "id": "p5_q12",
+        "question": "Who has recently inaugurated the first medical college in Nagaland?",
+        "options": [
+          "Hon'ble Health Minister of State, Shri. P. Paiwa Konyak",
+          "Hon'ble Union Minister of Health & Family Welfare, Dr. Mansukh Mandaviya",
+          "Hon'ble deputy CM of Nagaland, Shri TI Zeliang",
+          "Hon'ble CM of Nagaland, Shri Neiphiu Rio"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Dr. Mansukh Mandaviya inaugurated the Nagaland Institute of Medical Sciences and Research (NIMSR) in Kohima."
+      },
+      {
+        "id": "p5_q13",
+        "question": "World Stroke Day is celebrated on which day?",
+        "options": [
+          "31 October",
+          "24 October",
+          "22 October",
+          "29 October"
+        ],
+        "correctAnswer": 3,
+        "explanation": "World Stroke Day is observed on October 29th each year to emphasize the serious nature and high rates of stroke."
+      },
+      {
+        "id": "p5_q14",
+        "question": "Who is the present Prime Minister of the State of Palestine?",
+        "options": [
+          "Mahmoud Abbas",
+          "None of the given",
+          "Benjamin Netanyahu",
+          "Mohammad Shtayyeh"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Mohammad Shtayyeh served as the Prime Minister of the State of Palestine from 2019 to 2024."
+      },
+      {
+        "id": "p5_q15",
+        "question": "National Food Security Act, 2013 (NFSA) provides coverage of rural and urban population.",
+        "options": [
+          "75% rural and 50% urban",
+          "50% rural and 25% urban",
+          "25% rural and 75% urban",
+          "100% rural and 50% urban"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The NFSA 2013 aims to provide subsidized food grains to up to 75% of the rural and 50% of the urban population in India."
+      },
+      {
+        "id": "p5_q16",
+        "question": "\"Sarang\" is an Indian film festival organized in which country?",
+        "options": [
+          "Germany",
+          "Australia",
+          "South Korea",
+          "Canada"
+        ],
+        "correctAnswer": 2,
+        "explanation": "SARANG is an annual Indian cultural festival, which includes film screenings, organized by the Indian Embassy in South Korea."
+      },
+      {
+        "id": "p5_q17",
+        "question": "The United Nations Conference on Trade and Development (UNCTAD) is located at which of the following places?",
+        "options": [
+          "Rome",
+          "Vienna",
+          "Paris",
+          "Geneva"
+        ],
+        "correctAnswer": 3,
+        "explanation": "UNCTAD is headquartered in Geneva, Switzerland, and deals with trade, investment, and development issues."
+      },
+      {
+        "id": "p5_q18",
+        "question": "Which country had won the Cricket World Cup in 2019?",
+        "options": [
+          "New Zealand",
+          "England",
+          "Australia",
+          "South Africa"
+        ],
+        "correctAnswer": 1,
+        "explanation": "England won the 2019 ICC Cricket World Cup by defeating New Zealand in a thrilling final on boundary count."
+      },
+      {
+        "id": "p5_q19",
+        "question": "Pradhan Mantri Swasthya Suraksha Yojana (PMSSY) Scheme launched in which year?",
+        "options": [
+          "2014",
+          "2008",
+          "2006",
+          "2003"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The PMSSY scheme was announced in 2003 with the objective of correcting regional imbalances in the availability of affordable and reliable tertiary healthcare services."
+      },
+      {
+        "id": "p5_q20",
+        "question": "Who inaugurated the MedTech Expo-2023 in Gandhinagar?",
+        "options": [
+          "Dr. Mansukh Mandaviya",
+          "Hon'ble CM Bhupendra Patel",
+          "Narendra Modi",
+          "Amit Shah"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Union Health Minister Dr. Mansukh Mandaviya inaugurated the India MedTech Expo 2023 in Gandhinagar, Gujarat."
+      },
+      {
+        "id": "p5_q21",
+        "question": "Which type of fire extinguisher is used for petroleum fire as well as electrical equipment fire?",
+        "options": [
+          "Powder type",
+          "Foam type",
+          "Carbon dioxide type",
+          "Water type"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Dry powder extinguishers can be used on both Class B (petroleum/flammable liquids) and electrical fires, as powder is non-conductive."
+      },
+      {
+        "id": "p5_q22",
+        "question": "Epoxy resins are used as",
+        "options": [
+          "Adhesives",
+          "Fertilizers",
+          "Insecticides",
+          "Detergents"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Epoxy resins are widely used as strong industrial and domestic adhesives, as well as in coatings and composites."
+      },
+      {
+        "id": "p5_q23",
+        "question": "Optic fibres are mainly used for which of the following?",
+        "options": [
+          "Weaving",
+          "Communication",
+          "Food industry",
+          "Musical instrument"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Optical fibers transmit light signals over long distances with minimal loss, making them essential for high-speed telecommunications."
+      },
+      {
+        "id": "p5_q24",
+        "question": "RAM stands for",
+        "options": [
+          "Random Access Method",
+          "Read Access Memory",
+          "Random Access Memory",
+          "Random Active Memory"
+        ],
+        "correctAnswer": 2,
+        "explanation": "RAM stands for Random Access Memory, which provides temporary storage for data that the CPU needs quick access to."
+      },
+      {
+        "id": "p5_q25",
+        "question": "Which shortcut key is used to delete character on the left side of the cursor?",
+        "options": [
+          "Backspace",
+          "Delete (Del)",
+          "Alt + Delete",
+          "Ctrl + Delete"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The Backspace key is used to delete the character immediately to the left of the text cursor."
+      },
+      {
+        "id": "p5_q26",
+        "question": "Which key is used to move the cursor at the end of the line?",
+        "options": [
+          "End",
+          "Page Up",
+          "Home",
+          "Page down"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Pressing the 'End' key instantly moves the cursor to the end of the current line in most text editing software."
+      },
+      {
+        "id": "p5_q27",
+        "question": "Firefox is",
+        "options": [
+          "Internet Browser",
+          "Presentation",
+          "Word Processing",
+          "Data Analysis"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Mozilla Firefox is a free and open-source web browser used to navigate and view websites on the internet."
+      },
+      {
+        "id": "p5_q28",
+        "question": "Which tab of MS Word 2016 is used to change the orientation of the page from portrait to landscape?",
+        "options": [
+          "Layout",
+          "View",
+          "Insert",
+          "Design"
+        ],
+        "correctAnswer": 0,
+        "explanation": "In MS Word 2016, the page orientation settings (Portrait or Landscape) are found under the 'Layout' tab."
+      },
+      {
+        "id": "p5_q29",
+        "question": "Word count option is available in which tab of MS Word 2016?",
+        "options": [
+          "Mailings",
+          "Review",
+          "References",
+          "View"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Word Count feature, which checks document statistics like words and characters, is located in the 'Review' tab."
+      },
+      {
+        "id": "p5_q30",
+        "question": "If you want to apply formats to selected cell that meet specific criteria based on specific values",
+        "options": [
+          "Format",
+          "Style",
+          "Condition",
+          "Conditional Formatting"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Conditional Formatting allows users in Excel to automatically apply specific formatting to cells that meet defined criteria."
+      },
+      {
+        "id": "p5_q31",
+        "question": "Principles of radiation protection included all except",
+        "options": [
+          "Shielding",
+          "Time",
+          "Monitoring",
+          "Distance"
+        ],
+        "correctAnswer": 2,
+        "explanation": "While monitoring is important for occupational safety, the three core principles of minimizing radiation exposure are time, distance, and shielding."
+      },
+      {
+        "id": "p5_q32",
+        "question": "Number of thoracic vertebrae",
+        "options": [
+          "2",
+          "12",
+          "5",
+          "7"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The human vertebral column typically contains 12 thoracic vertebrae, which articulate with the 12 pairs of ribs."
+      },
+      {
+        "id": "p5_q33",
+        "question": "Mammography units typically operate at",
+        "options": [
+          "25 to 30 kvp",
+          "60 to 120 kvp",
+          "50 to 75 kvp",
+          "80 to 140 kvp"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Mammography utilizes a low kVp range (typically 25-30 kVp) to maximize subject contrast when imaging soft breast tissues."
+      },
+      {
+        "id": "p5_q34",
+        "question": "Hounsfield unit zero represents",
+        "options": [
+          "CSF",
+          "Blood",
+          "Water",
+          "Air"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The Hounsfield scale is a quantitative measure of radiodensity used in CT scans, where distilled water at standard pressure and temperature is arbitrarily defined as zero HU."
+      },
+      {
+        "id": "p5_q35",
+        "question": "X-Ray tube is made of which glass",
+        "options": [
+          "Duralex",
+          "Pyrex",
+          "Burmese",
+          "Gorilla"
+        ],
+        "correctAnswer": 1,
+        "explanation": "X-ray tube envelopes are typically made of Pyrex glass because of its high heat resistance and ability to withstand extreme temperature variations."
+      },
+      {
+        "id": "p5_q36",
+        "question": "False regarding tungsten",
+        "options": [
+          "High melting point",
+          "Atomic number 94",
+          "Melting point 3370 degree Celsius",
+          "High atomic number making it efficient in beam production"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Tungsten has an atomic number of 74, not 94 (which is Plutonium), making that statement false."
+      },
+      {
+        "id": "p5_q37",
+        "question": "Contrast used in MRI",
+        "options": [
+          "Gadolinium",
+          "Iodinated contrast agents",
+          "Barium contrast agents",
+          "All"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Gadolinium-based contrast agents are commonly used in MRI to enhance tissue contrast due to their paramagnetic properties."
+      },
+      {
+        "id": "p5_q38",
+        "question": "RF shielding in MRI magnet room is done using",
+        "options": [
+          "Bismuth",
+          "Manganese",
+          "Copper",
+          "Lead"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Copper shielding (often arranged as a Faraday cage) is used in MRI rooms to prevent external radiofrequency signals from interfering with the scan."
+      },
+      {
+        "id": "p5_q39",
+        "question": "Patient position for CT ankle joint",
+        "options": [
+          "Head first prone",
+          "Head first supine",
+          "Feet first prone",
+          "Feet first supine"
+        ],
+        "correctAnswer": 3,
+        "explanation": "For a CT scan of the ankle, the patient is typically positioned feet first and supine on the scanning table to position the ankle at the isocenter."
+      },
+      {
+        "id": "p5_q40",
+        "question": "Photoelectric effect yields",
+        "options": [
+          "All",
+          "Negative ion",
+          "Positive ion",
+          "Characteristic radiation"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The photoelectric effect results in the ejection of a photoelectron (negative ion), leaving behind an ionized atom (positive ion), and characteristic radiation is emitted when a higher-shell electron fills the vacancy."
+      },
+      {
+        "id": "p5_q41",
+        "question": "All increase attenuation except",
+        "options": [
+          "Electron per gram of absorber",
+          "Density of absorber",
+          "Energy of radiation",
+          "Atomic number of absorber"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Increasing the energy of the incident radiation typically decreases the probability of interactions, thereby decreasing attenuation."
+      },
+      {
+        "id": "p5_q42",
+        "question": "Grid ratio is",
+        "options": [
+          "Scatter radiation absorbed by grid",
+          "Primary scatter absorbed by grid",
+          "Total radiation absorbed by grid",
+          "Ratio of height of lead strips to distance between them"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The grid ratio in radiography is defined as the height of the radiopaque lead strips divided by the distance (width of the radiolucent interspaces) between them."
+      },
+      {
+        "id": "p5_q43",
+        "question": "Lateral end of uterine tube opens into",
+        "options": [
+          "Fornix",
+          "Uterine cavity",
+          "Peritoneal cavity",
+          "Cervix"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The lateral (fimbriated) end of the uterine (Fallopian) tube opens directly into the peritoneal cavity near the ovary."
+      },
+      {
+        "id": "p5_q44",
+        "question": "Shoulder joint is formed by",
+        "options": [
+          "Coracoid process",
+          "Glenoid cavity of scapula",
+          "Greater tuberosity",
+          "Acromion process"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The shoulder (glenohumeral) joint is a ball-and-socket joint formed by the articulation between the head of the humerus and the glenoid cavity of the scapula."
+      },
+      {
+        "id": "p5_q45",
+        "question": "Barium oral contrast concentration is expressed as",
+        "options": [
+          "g%",
+          "%w/w",
+          "mg%",
+          "mOsm/kg"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Barium sulfate suspension concentration is usually expressed as a percentage of weight per volume (%w/v) or weight per weight (%w/w)."
+      },
+      {
+        "id": "p5_q46",
+        "question": "Intensity of X-Ray beam that leaves the tube is not uniform because",
+        "options": [
+          "Tube shielding",
+          "Saturation voltage",
+          "Heel effect",
+          "Space charge"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The anode heel effect causes the X-ray beam intensity to be lower on the anode side because photons are absorbed by the target material itself."
+      },
+      {
+        "id": "p5_q47",
+        "question": "Correct as per AERB regulations",
+        "options": [
+          "TLD can be stored in control console room of X-Ray",
+          "Wear TLD at wrist level",
+          "TLD provides radiation safety to patient",
+          "Wear TLD below lead apron"
+        ],
+        "correctAnswer": 3,
+        "explanation": "According to AERB regulations, radiation workers should wear the TLD badge under the lead apron at chest level to estimate the whole-body dose accurately."
+      },
+      {
+        "id": "p5_q48",
+        "question": "Advantages of USG over CT",
+        "options": [
+          "Relatively cheap",
+          "Noninvasive",
+          "No harmful side effects",
+          "All of the above"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Ultrasound is cost-effective, non-invasive, and does not use ionizing radiation, which eliminates the risks associated with CT scans."
+      },
+      {
+        "id": "p5_q49",
+        "question": "A type of social engineering where an attacker sends a fraudulent message designed to trick a person into revealing sensitive information is known as",
+        "options": [
+          "Man in the middle attack",
+          "Phishing attack",
+          "Ransomware attack",
+          "Denial of Service attack"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Phishing is a cyber-attack that relies on deception to manipulate individuals into giving out confidential information, such as passwords or credit card numbers."
+      },
+      {
+        "id": "p5_q50",
+        "question": "Nonstochastic effect of radiation",
+        "options": [
+          "Carcinogenesis",
+          "Genetic effect",
+          "All of the above",
+          "Epilation"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Nonstochastic (deterministic) effects, like epilation (hair loss) or cataracts, have a threshold dose below which the effect does not occur and severity increases with dose."
+      },
+      {
+        "id": "p5_q1",
+        "question": "X Ray photons produced by X-Ray machines are",
+        "options": [
+          "Heterogenous in energy",
+          "Homogenous in energy",
+          "Both",
+          "None"
+        ],
+        "correctAnswer": 0,
+        "explanation": "X-ray machines produce a continuous spectrum of bremsstrahlung radiation along with characteristic X-rays, making the beam heterogeneous in energy."
+      },
+      {
+        "id": "p5_q2",
+        "question": "Bragg peak characteristic is utilized in",
+        "options": [
+          "Proton therapy",
+          "Electron therapy",
+          "Neutron therapy",
+          "Megavoltage therapy"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Proton beams exhibit a Bragg peak, depositing the majority of their energy at a specific depth, which is highly beneficial in radiation therapy."
+      },
+      {
+        "id": "p5_q3",
+        "question": "Plane dividing body into right and left halves",
+        "options": [
+          "Coronal",
+          "Mid axillary",
+          "Median sagittal",
+          "Axial"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The median sagittal plane divides the body vertically into equal right and left halves."
+      },
+      {
+        "id": "p5_q4",
+        "question": "Orthopantomogram is taken to rule out lesion in",
+        "options": [
+          "Maxilla",
+          "Facial bone",
+          "Mandible",
+          "Skull"
+        ],
+        "correctAnswer": 2,
+        "explanation": "An orthopantomogram (OPG) is a panoramic radiograph primarily used to evaluate the mandible, maxilla, and dental arches."
+      },
+      {
+        "id": "p5_q5",
+        "question": "The process by which electrons are emitted from a X-Ray cathode filament",
+        "options": [
+          "Thermionic emission",
+          "Photoconduction",
+          "Ionization",
+          "Thermo luminescence"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Heating the cathode filament causes electrons to be released, a process known as thermionic emission."
+      },
+      {
+        "id": "p5_q6",
+        "question": "X-Rays are",
+        "options": [
+          "Stream of positively charged particles",
+          "Stream of uncharged particles",
+          "Stream of electrons",
+          "Electromagnetic radiations of high frequency"
+        ],
+        "correctAnswer": 3,
+        "explanation": "X-rays are high-energy, high-frequency electromagnetic waves, not particles with mass or charge."
+      },
+      {
+        "id": "p5_q7",
+        "question": "Term neoplasia means",
+        "options": [
+          "New disease",
+          "New Growth",
+          "New cancer",
+          "New lesion"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Neoplasia literally translates to \"new growth,\" referring to an abnormal and excessive proliferation of cells."
+      },
+      {
+        "id": "p5_q8",
+        "question": "Which of the following needs the longest exposure for an X-Ray image.",
+        "options": [
+          "Spine",
+          "Pelvis",
+          "Thoracic",
+          "Abdomen"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Radiography of the spine, particularly the lateral lumbar spine, involves a large amount of tissue and dense bone, requiring the longest exposure."
+      },
+      {
+        "id": "p5_q9",
+        "question": "X-Ray is recorded on a plate coated with",
+        "options": [
+          "Iron halide",
+          "Copper halide",
+          "Silver halide",
+          "Gold halide"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Traditional X-ray films use an emulsion layer containing silver halide crystals, which are sensitive to radiation and light."
+      },
+      {
+        "id": "p5_q10",
+        "question": "Normal range of creatinine is:",
+        "options": [
+          "2 to 4 mg/100 ml",
+          "0.6 to 1.5 mg/100 ml",
+          "0 to 0.4 mg/100 ml",
+          "8 to 15 mg/100 ml"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The normal serum creatinine range is typically between 0.6 and 1.5 mg/dL (mg/100 ml), depending on muscle mass and sex."
+      },
+      {
+        "id": "p5_q11",
+        "question": "Function of housing around X-Ray tube",
+        "options": [
+          "Helps with image production.",
+          "Minimizes radiation leakage",
+          "Promotes electrical shock",
+          "Keeps heat inside the glass envelope"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The protective housing around the X-ray tube contains lead to absorb isotropically emitted X-rays and minimize leakage radiation."
+      },
+      {
+        "id": "p5_q12",
+        "question": "What is the position when a patient lies flat on their back and the head is lower than feet.",
+        "options": [
+          "Sims",
+          "Lateral recumbent",
+          "Trendelenberg",
+          "Fowler"
+        ],
+        "correctAnswer": 2,
+        "explanation": "In the Trendelenburg position, the patient is supine with the table tilted so that the head is lower than the feet."
+      },
+      {
+        "id": "p5_q13",
+        "question": "What instructions to give patient after barium enema?",
+        "options": [
+          "Don't drink fluid for 6 hours",
+          "Drink plenty of fluids",
+          "With old laxatives",
+          "Don't monitor your bowel movements"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Patients are instructed to drink plenty of fluids after a barium enema to prevent constipation and help flush the barium out of the system."
+      },
+      {
+        "id": "p5_q14",
+        "question": "What restricts useful X-Ray beams from causing unnecessary exposure?",
+        "options": [
+          "Filtration",
+          "Protective barriers",
+          "Cassette Size",
+          "Collimation"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Collimation restricts the size and shape of the primary X-ray beam, thereby reducing the irradiated field and minimizing unnecessary patient exposure."
+      },
+      {
+        "id": "p5_q15",
+        "question": "A unit measuring radiation is REM, What does REM stand for?",
+        "options": [
+          "Radiation evolved management",
+          "Roentgen Early Man",
+          "Radioactive early management",
+          "Radiation Equivalent Man"
+        ],
+        "correctAnswer": 3,
+        "explanation": "REM stands for Roentgen Equivalent Man, an older unit used to measure the biological effect of ionizing radiation."
+      },
+      {
+        "id": "p5_q16",
+        "question": "Which principle states that ionizing exposure to humans should be as far below the dose limits as practical?",
+        "options": [
+          "OAP",
+          "C/kg",
+          "ALARA",
+          "FID"
+        ],
+        "correctAnswer": 2,
+        "explanation": "ALARA stands for \"As Low As Reasonably Achievable,\" a fundamental safety principle aiming to minimize radiation exposure."
+      },
+      {
+        "id": "p5_q17",
+        "question": "What is one of the duties of a Radiation Safety Officer?",
+        "options": [
+          "Conduct annual briefings and educational sessions with employees",
+          "All of the above",
+          "Conduct yearly reviews on records on Radiation levels",
+          "Conduct quarterly reviews of radiation safety programs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A Radiation Safety Officer (RSO) is responsible for monitoring radiation records, reviewing safety programs, and conducting educational training for staff."
+      },
+      {
+        "id": "p5_q18",
+        "question": "Nausea and difficulty in breathing after injecting contrast in a patient for CT scan, what type of shock is he experiencing",
+        "options": [
+          "Anaphylactic",
+          "Cardiogenic",
+          "Hypovolemic",
+          "Septic"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Difficulty breathing and nausea following contrast administration are classic signs of an allergic or anaphylactic reaction."
+      },
+      {
+        "id": "p5_q19",
+        "question": "Chemical substances that kill pathogenic microorganisms on inanimate objects are known as:",
+        "options": [
+          "Antiseptics",
+          "Antibiotics",
+          "Disinfectants",
+          "Sterilants"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Disinfectants are chemical agents applied to non-living objects to destroy viruses, bacteria, and other pathogens."
+      },
+      {
+        "id": "p5_q20",
+        "question": "Geometric factor responsible for unequal magnification of different portions of the same object:",
+        "options": [
+          "Distortion",
+          "Focal spot",
+          "Quantum mottle",
+          "Noise"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Distortion occurs when unequal magnification of different parts of the object causes a misrepresentation of its true size or shape."
+      },
+      {
+        "id": "p5_q21",
+        "question": "What is the best way to alter quality of an X-Ray beam?",
+        "options": [
+          "REM",
+          "kVp",
+          "Gray",
+          "mAs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The kilovoltage peak (kVp) determines the maximum energy (quality or penetrability) of the X-ray beam."
+      },
+      {
+        "id": "p5_q22",
+        "question": "Which of the following is not a part of quality assurance program?",
+        "options": [
+          "Keeping a low patient dose",
+          "Making sure the patient is satisfied",
+          "Making sure the equipments are efficient",
+          "Consistent quality of radiographic images"
+        ],
+        "correctAnswer": 1,
+        "explanation": "While patient satisfaction is important in healthcare, a radiography Quality Assurance (QA) program strictly focuses on equipment performance, image quality, and radiation dose limits."
+      },
+      {
+        "id": "p5_q23",
+        "question": "What does PACS stand for?",
+        "options": [
+          "Picture Archiving and Communication Systems",
+          "Printer Analog Computer Systems",
+          "Projection Access Communication Systems",
+          "Picture Active Computer System"
+        ],
+        "correctAnswer": 0,
+        "explanation": "PACS (Picture Archiving and Communication System) is medical imaging technology used for storing, retrieving, presenting, and sharing images digitally."
+      },
+      {
+        "id": "p5_q24",
+        "question": "In the postero anterior chest radiography which of the following should be included on the X-Ray?",
+        "options": [
+          "Trachea including upper thoracic vertebrae",
+          "Maximum of 8 posterior ribs",
+          "Top of iliac crests",
+          "Exhaled lungs"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A proper PA chest radiograph should include the entire lung fields from the apices (including the trachea and upper thoracic vertebrae) down to the costophrenic angles."
+      },
+      {
+        "id": "p5_q25",
+        "question": "Stomach protruding through the cardiac orifice through the cleft of diaphragm is known as:",
+        "options": [
+          "Pleural effusion",
+          "Appendicitis",
+          "Hiatal hernia",
+          "Small bowel obstruction"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A hiatal hernia occurs when the upper part of the stomach pushes through the esophageal hiatus (cleft) of the diaphragm into the chest cavity."
+      },
+      {
+        "id": "p5_q26",
+        "question": "What does GERD stand for?",
+        "options": [
+          "Gastroesophageal Reflux Disease",
+          "Gastroesophageal Reflex Dysfunction",
+          "Gastroesophageal Reflex Disease",
+          "Gall Bladder Esophageal Reflux Dysfunction"
+        ],
+        "correctAnswer": 0,
+        "explanation": "GERD stands for Gastroesophageal Reflux Disease, a digestive disorder where stomach acid irritates the food pipe lining."
+      },
+      {
+        "id": "p5_q27",
+        "question": "Emulsion in radiographic film contains:",
+        "options": [
+          "Ag halide crystals",
+          "Cs halide crystals",
+          "Ca tungsten crystals",
+          "Ag atoms"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The emulsion layer of traditional radiographic films is composed of gelatin containing radiation-sensitive silver (Ag) halide crystals."
+      },
+      {
+        "id": "p5_q28",
+        "question": "Filter used in mammography:",
+        "options": [
+          "Aluminium",
+          "Copper",
+          "Tungsten",
+          "Molybdenum"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Molybdenum filters are commonly used in mammography to remove high-energy bremsstrahlung X-rays and produce a beam with optimal contrast for breast tissue."
+      },
+      {
+        "id": "p5_q29",
+        "question": "Protective lead apron should have minimum lead equivalence of:",
+        "options": [
+          "2 mm lead",
+          "1 mm lead",
+          "0.25 mm lead",
+          "0.5 mm lead"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Regulatory standards typically require protective lead aprons to have a minimum lead equivalent of 0.25 mm for general radiography."
+      },
+      {
+        "id": "p5_q30",
+        "question": "Maximum field of view which can be obtained with a specific radiographic system is general limited by the:",
+        "options": [
+          "Anode angle",
+          "Anode size",
+          "Focal length",
+          "Focal spot size"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The anode angle determines the actual focal spot size and restricts the maximum usable field of view due to the geometry of the X-ray beam cutoff."
+      },
+      {
+        "id": "p5_q31",
+        "question": "Beam penetration can be increased by increasing:",
+        "options": [
+          "kV",
+          "FFD",
+          "mAs",
+          "Beam area"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Increasing the kilovoltage (kV) increases the kinetic energy of the electrons, resulting in X-ray photons with higher energy and greater penetrating power."
+      },
+      {
+        "id": "p5_q32",
+        "question": "Low kV are used in some procedures for purpose of:",
+        "options": [
+          "Decreasing patient exposure",
+          "Increasing penetration",
+          "Increasing contrast sensitivity",
+          "Decreasing area contrast"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Lower kilovoltage (kV) produces a lower-energy beam, which increases differential absorption and thereby enhances subject contrast on the radiograph."
+      },
+      {
+        "id": "p5_q33",
+        "question": "Changing from 5:1 ratio to 10:1 ratio grid will",
+        "options": [
+          "Increase image contrast",
+          "Decrease required kV or mAs",
+          "Decreased X ray tube heating",
+          "Decrease patient exposure"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A higher ratio grid is more effective at absorbing scattered radiation, which results in improved image contrast but requires an increase in patient dose."
+      },
+      {
+        "id": "p5_q34",
+        "question": "Underprocessing of X-Ray film can result is increased film:",
+        "options": [
+          "Fog",
+          "Sensitivity",
+          "None",
+          "Contrast"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Underprocessing typically leads to a decrease in film density and contrast, rather than an increase in these factors."
+      },
+      {
+        "id": "p5_q35",
+        "question": "Substituting high speed radiographic film for a medium speed results in:",
+        "options": [
+          "Reduced patient exposure",
+          "More visibility of detail because of more blurring",
+          "Increased quantum noise",
+          "Higher contrast"
+        ],
+        "correctAnswer": 0,
+        "explanation": "High-speed films require less radiation to achieve the desired optical density, thereby directly reducing the radiation exposure to the patient."
+      },
+      {
+        "id": "p5_q36",
+        "question": "Factors appropriate for conventional chest X-Ray:",
+        "options": [
+          "120 kV",
+          "Low contrast",
+          "1:1 ratio grid",
+          "0.1 mm focal spot"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Conventional chest radiography typically employs a high kilovoltage technique (e.g., 110-130 kVp) to penetrate the dense mediastinum and provide a long scale of contrast."
+      },
+      {
+        "id": "p5_q37",
+        "question": "Advantages of higher kV are all except:",
+        "options": [
+          "Shorter exposure times",
+          "Reduced X-Ray tube heating",
+          "Increased patient exposure",
+          "Decreased area contrast"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Higher kV allows for a significant reduction in mAs, which actually results in decreased patient radiation exposure, not increased."
+      },
+      {
+        "id": "p5_q38",
+        "question": "Single coated X-Ray film used in all except:",
+        "options": [
+          "Skull X Ray",
+          "Fluoroscopy films",
+          "CT scan films",
+          "Mammography"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Routine general radiography, such as a skull X-ray, utilizes double-emulsion films to increase speed and reduce patient dose, unlike mammography which uses single-emulsion films for high detail."
+      },
+      {
+        "id": "p5_q39",
+        "question": "All are true for dental X-Ray films except:",
+        "options": [
+          "Corners have sharp angles",
+          "Embossed dot on film kept near crown of tooth",
+          "Occlusion film size is 2 1/4 x 3\"",
+          "Films are protected by lead coils"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Dental intraoral X-ray films have rounded corners, not sharp angles, to prevent discomfort and injury to the patient's oral mucosa."
+      },
+      {
+        "id": "p5_q40",
+        "question": "Efficiency of film washing process is done by estimating:",
+        "options": [
+          "Residual silver",
+          "Residual thiosulphate",
+          "Residual iodine",
+          "Residual chlorine"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The washing process is designed to remove the fixing agent (sodium or ammonium thiosulphate). Testing for residual thiosulphate evaluates washing efficiency."
+      },
+      {
+        "id": "p5_q41",
+        "question": "Annual effective radiation dose for technicians is less than:",
+        "options": [
+          "100 mRem",
+          "30 mSv",
+          "5 mRem",
+          "100 mSv"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Under many regulatory bodies, the occupational annual effective dose limit for radiation workers should not exceed 30 mSv in any single year."
+      },
+      {
+        "id": "p5_q42",
+        "question": "Which is a life saving measure in contrast reaction effect:",
+        "options": [
+          "Inj Rantac",
+          "Inj Phenargen",
+          "Inj Adrenaline",
+          "Saline infusion"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Epinephrine (Inj Adrenaline) is the primary life-saving pharmacological intervention for severe, anaphylactic contrast reactions."
+      },
+      {
+        "id": "p5_q43",
+        "question": "Enteroclysis is an investigation of:",
+        "options": [
+          "Small bowel",
+          "Esophagus",
+          "Large bowel",
+          "Hepato biliary tree"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Enteroclysis, also known as small bowel enema, is a fluoroscopic X-ray examination specifically dedicated to evaluating the small intestine."
+      },
+      {
+        "id": "p5_q44",
+        "question": "CCD means:",
+        "options": [
+          "Charged couple device",
+          "Continuous conventional device",
+          "Conventional charged device",
+          "Continuous charged detector"
+        ],
+        "correctAnswer": 0,
+        "explanation": "CCD stands for Charge-Coupled Device, an integrated circuit used as a sensor to convert light into electronic signals in digital imaging systems."
+      },
+      {
+        "id": "p5_q45",
+        "question": "Target material in an X-Ray tube must have:",
+        "options": [
+          "High cost",
+          "High mass number",
+          "Low melting point",
+          "High atomic number"
+        ],
+        "correctAnswer": 3,
+        "explanation": "A high atomic number target material increases the efficiency of bremsstrahlung X-ray production."
+      },
+      {
+        "id": "p5_q46",
+        "question": "Interaction of photons with matter include all except:",
+        "options": [
+          "Photoelectric radiation",
+          "Compton scattering",
+          "Leakage radiation",
+          "Pair production"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Leakage radiation refers to X-rays escaping the tube housing, whereas Pair Production, Photoelectric effect, and Compton scattering are actual photon-matter interactions."
+      }
+    ]
+  }
+
 ];
