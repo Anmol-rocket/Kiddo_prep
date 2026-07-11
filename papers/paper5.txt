@@ -1,0 +1,1057 @@
+Paper-5
+
+AMC
+
+(Radiographer)
+
+1. Ring artefact in CT scan is due to
+
+(a) Failure of detector
+
+(b) Patient movement
+
+(c) High density material in field
+
+(d) Averaging of LAC in a given voxel that is heterogeneous in composition
+
+(a) Filtration
+
+(b) Increasing voltage
+
+(c) Both
+
+(d) None
+
+3. Right ventricle pumps blood into
+
+(a) Aorta
+
+(b) Pulmonary arteries
+
+(c) Pulmonary veins
+
+(d) SVC
+
+4. Photoelectric attenuation is
+
+(a) Proportional to cube of atomic number
+
+(b) Proportional to square of atomic number
+
+(c) Inversely proportional to square of atomic number
+
+(d) Inversely proportional to cube of mass number
+
+5. Electrons interact with matter by
+
+(a) lonization
+
+(b) Excitation
+
+(c) Both
+
+(d) None
+
+6. Unit of exposure
+
+(a) Curie
+
+(b) Roentgen
+
+(c) Rad
+
+(d) Gray
+
+7.
+
+Output of X-Ray machine is
+
+(a) Proportional to kV
+
+(b) Proportional to square of kV
+
+(d) None
+
+(c) Inversely proportional to square of kV
+
+8. Quality factor for X-Ray is
+
+(a) 1
+
+(c) 5
+
+(b) 4
+
+(d) 20
+
+Highly radiosensitive tissue amongst th 9. following
+
+(a) Muscle
+
+(b) Bone
+
+(c) Epidermis
+
+(d) Nerve
+
+2. Ways of hardening X-Ray beams
+
+10. Which city topped the Swachh Vayu Sarveksha 2023 Clean Air Survey?
+
+(a) Agra
+
+(b) Indore
+
+(c) Chandigadh
+
+(d) Ahmedabad
+
+11. National Girl Child Day is celebrated on whid day?
+
+(a) 24th January
+
+(b) 30th January
+
+(c) 8th December
+
+(d) 10th February
+
+12. The currently debated Hoollongapar Gibber sanctuary is situated in which state?
+
+(a) Tripura
+
+(b) Uttar Pradesh
+
+(c) Goa
+
+(d) Assam
+
+13. Who has recently inaugurated the first medici college in Nagaland?
+
+(a) Hon'ble CM of Nagaland, Shri Neiphiu Rio
+
+(b) Hon'ble deputy CM of Nagaland, Shri TI Zeliang
+
+(c) Hon'ble Union Minister of Health & Fam Welfare, Dr. Mansukh Mandaviya
+
+(d) Hon'ble Health Minister of State, Shri. P. Paiwa Konyak
+
+14. World Stroke Day is celebrated on which day
+
+(a) 22 October
+
+(b) 24 October
+
+(c) 29 October
+
+(d) 31 October
+
+Paper 5
+
+[31]
+
+15. Who is the present Prime Minister of the State of Palestine?
+
+24. National Food Security Act, 2013 (NFSA) provides coverage of rural and urban population.
+
+(a) Mohammad Shtayyeh
+
+(b) Benjamin Netanyahu
+
+(c) Mohmoud Abbas
+
+(d) None of the given
+
+16. "Sarang" is an Indian film festival organized in which country?
+
+(a) Australia
+
+(b) Canada
+
+(c) South Korea
+
+(d) Germany
+
+17. The United Nations Conference on Trade and Development (UNCTAD) is located at which of the following places?
+
+(a) Geneva
+
+(b) Rome
+
+(c) Paris
+
+(d) Vienna
+
+18. Which country had won the Cricket World Cup in 2019?
+
+(a) Australia
+
+(b) New Zealand
+
+(c) South Africa
+
+(d) England
+
+19. Pradhan Mantri Swasthya Suraksha Yojana (PMSSY) Scheme launched in which year?
+
+(a) 2003
+
+(c) 2008
+
+20. Gandhinagar. inaugurated the MedTech Expo-2023 in
+
+(b) 2006
+
+(d) 2014
+
+(a) Dr. Mansukh Mandaviya
+
+(b) Hon'ble CM Bhupendra Patel
+
+(c) Dr. V. K. Paul
+
+(d) None of the given
+
+21. Which type of fire extinguisher is used for petroleum fire as well as electrical equipment fire?
+
+(a) Powder type
+
+(c) Foam type
+
+22. Epoxy resins are used as
+
+(a) Detergents
+
+(c) Insecticides
+
+(b) Liquid type
+
+(d) A & C both
+
+(b) Adhesives
+
+(d) Repellents
+
+23. Optic fibres are mainly used for which of the
+
+following?
+
+(a) Musical instrument
+
+(b) Weaving
+
+(c) Food industry
+
+(d) Communication
+
+(a) 25%, 50%
+
+(b) 50%, 25%
+
+(c) 75%, 50%
+
+(d) 60%, 25%
+
+show from current slide which used? 25. To start the slide short cut key is
+
+(a) F5
+
+(b) Alt + F5
+
+(c) Ctrl + F5
+
+26. RAM stands for
+
+(d) Shift + F5
+
+(a) Random Access Memory
+
+(b) Random Active Memory
+
+(c) Random Access Method
+
+(d) Random Mechanism Memory
+
+27. Which shortcut key is used to delete character on the left side of the cursor?
+
+(a) Delete (Del)
+
+(c) Alt + Delete
+
+(b) Backspace
+
+(d) Ctrl + Delete
+
+28. Which key is used to move the cursor at the end of the line?
+
+(a) Home
+
+(b) End
+
+(c) Page down
+
+(d) Page Up
+
+29. Firefox is
+
+(a) Data Analysis
+
+(b) Word Processing
+
+(c) Presentation
+
+(d) Internet Browser
+
+30. Which tab of MS Word 2016 is used to change the orientation of the page from portrait to
+
+landscape?
+
+(a) Insert
+
+(c) Layout
+
+(b) Design
+
+(d) View
+
+31. Word count option is available in which tab of MS Word 2016?
+
+(a) References:
+
+(b) Review
+
+(c) View
+
+(d) Mailings
+
+32. If you want to apply formats to selected cell that meet specific criteria based on specific values (b) Format (a) Style
+
+date and time which command 33. To show present is used in MS Excel?
+
+(c) Condition
+
+(d) Conditional Formatting
+
+(a) Date()
+
+(b) Time()
+
+(c) Now()
+
+(d) Date & Time()
+
+34. Principles of radiation protection included all except
+
+(a) Time
+
+(b) Distance
+
+(c) Shielding
+
+(d) Monitoring
+
+[32]
+
+35. Number of thoracic vertebrae
+
+(a) 2 (c) 7
+
+(b) 5
+
+(d) 12
+
+36. Mammography units typically operate at
+
+(a) 25 to 30 kvp
+
+(b) 60 to 120 kvp
+
+(c) 50 to 75 kvp
+
+(d) 80 to 140 kvp
+
+37. Hounsfield unit zero represents
+
+(a) Water
+
+(c) CSF
+
+(b) Air
+
+(d) Blood
+
+38. X-Ray tube is made of which glass
+
+(a) Burmese
+
+(c) Duralex
+
+(b) Pyrex
+
+(d) Gorilla
+
+39. False regarding tungsten
+
+(a) High atomic number making it efficient in beam
+
+production
+
+(b) High melting point
+
+(c) Atomic number 94
+
+(d) Melting point 3370 degree Celsius
+
+40. Contrast used in MRI
+
+(a) lodinated contrast agents
+
+(b) Gadolinium
+
+(c) Barium contrast agents
+
+(d) All
+
+41. RF shielding in MRI magnet room is done using
+
+(a) Bismuth
+
+(c) Copper
+
+(b) Manganese
+
+(d) Lead
+
+42. Patient position for CT ankle joint
+
+(a) Head first supine
+
+(b) Head first prone
+
+(c) Feet first supine
+
+(d) Feet first prone
+
+43. Photoelectric effect yields
+
+(a) Characteristic radiation
+
+(b) Negative ion
+
+(c) Positive ion
+
+(d) All
+
+44. All increase attenuation except
+
+(a) Energy of radiation
+
+(b) Density of absorber
+
+(c) Atomic number of absorber
+
+(d) Electron per gram of absorber
+
+45. Grid ratio is
+
+(a) Total radiation absorbed by grid
+
+(b) Primary scatter absorbed by grid
+
+(c) Scatter radiation absorbed by grid
+
+Paper
+
+(d) Ratio of height of lead strips to distance betwe them
+
+46. Lateral end of uterine tube opens into
+
+(a) Cervix
+
+(c) Peritoneal cavity
+
+(d) Fornix
+
+47. Shoulder joint is formed by
+
+(a) Glenoid
+
+(c) Acromion
+
+(b) Uterine cavity
+
+of scapula
+
+(b) Coracoid
+
+(d) Spinous process
+
+48. Barium oral contrast concentration is expressed as
+
+(a) %w/w
+
+(c) g%
+
+(b) mOsm/kg
+
+(d) mg%
+
+49. Intensity of X-Ray beam that leaves the tabe is
+
+not uniform because
+
+(a) Saturation voltage
+
+(b) Space charge
+
+(c) Tube shielding
+
+(d) Heel effect
+
+50. Correct as per AERB regulations
+
+(a) Wear TLD below lead apron
+
+(b) Wear TLD at wrist level
+
+(c) TLD provides radiation safety to patient
+
+(d) TLD can be stored in control console room of X-
+
+Ray equipment
+
+51. Advantages of USG over CT
+
+(a) No harmful side effects.
+
+(b) Relatively cheap
+
+(c) Noninvasive
+
+(d) All of the above
+
+52. A type of social engineering where an attacker sends a fraudulent message designed to trick a person into revealing sensitive information is
+
+known as
+
+(a) Phishing attack
+
+(b) Ransomware attack
+
+(c) Denial of Service attack
+
+(d) Man in the middle attack
+
+53. Nonstochastic effect of radiation
+
+(a) Epilation
+
+(b) Carcinogenesis
+
+(c) Genetic effect
+
+(d) All of the above
+
+54. X Ray photons produced by X-Ray machines
+
+are
+
+(a) Heterogenous in energy
+
+(b) Homogenous in energy
+
+(c) Both
+
+(d) None
+
+Paper 5
+
+55. Bragg peak characteristic is utilized in
+
+(a) Photon therapy
+
+(b) Neutron therapy
+
+(c) Megavoltage therapy
+
+(d) Electron therapy
+
+56. Plane dividing body into right and left halves
+
+(a) Median sagittal
+
+(b) Coronal
+
+(c) Axial
+
+(d) Mid axillary
+
+57. Orthopantomogram is taken to rule out lesion in
+
+(a) Mandible
+
+(c) Facial bone
+
+(b) Maxilla
+
+(d) Skull
+
+58. The process by which electrons are emitted from
+
+a X-Ray cathode filament
+
+(a) lonization
+
+(b) Photoconduction
+
+(c) Thermo luminescence
+
+(d) Thermionic emission
+
+59. X-Rays are
+
+(a) Stream of electrons.
+
+(b) Stream of positively charged particles
+
+(c) Electromagnetic radiations of high frequency
+
+(d) Stream of uncharged particles
+
+60. Term neoplasia means
+
+(a) New Growth
+
+(b) New cancer
+
+(c) New lesion
+
+(d) New disease
+
+61. Which of the following needs the longest exposure for an X-Ray image.
+
+(a) Thoracic
+
+(c) Spine
+
+(b) Abdomen
+
+(d) Pelvis
+
+62. X-Ray is recorded on a plate coated with
+
+(a) Gold halide
+
+(b) Silver halide
+
+(c) Copper halide
+
+(d) Iron halide
+
+63. Normal range of creatinine is:
+
+(a) 0 to 0.4 mg/100 ml
+
+(b) 0.6 to 1.5 mg/100 ml
+
+(c) 2 to 4 mg/100 ml
+
+65. Function of housing around X-Ray tube
+
+(a) Keeps heat inside the glass envelope
+
+(b) Promotes electrical shock
+
+(c) Minimizes radiation leakage
+
+(d) Helps with image production.
+
+[33]
+
+66. What is the position when a patient lies flat on their back and the head is lower than feet.
+
+(a) Fowler
+
+(c) Sims
+
+(b) Trendelenberg
+
+(d) Lateral recumbent
+
+67. When what instructions to give patient after
+
+barium enema?
+
+(a) Don't drink fluid for 6 hours
+
+(b) With old laxatives
+
+(c) Drink plenty of fluids
+
+(d) Don't monitor your bowel movements
+
+68. What restricts useful X-Ray beams from causing unnecessary exposure?
+
+(a) Protective barriers
+
+(b) Collimation
+
+(c) Filtration
+
+(d) Cassette Size
+
+69. A unit measuring radiation is REM, What does
+
+REM stand for?
+
+(a) Radiation Equivalent Man
+
+(b) Roentgen Early Man
+
+(c) Radioactive early management
+
+(d) Radiation evolved management
+
+70. Which principle states that ionizing exposure to humans should be as far below the dose limits
+
+as practical?
+
+(a) C/kg
+
+(c) FID
+
+(b) OAP
+
+(d) ALARA
+
+71. What is one of the duties of a Radiation Safety
+
+Officer?
+
+(a) Conduct yearly reviews on records on Radiation.
+
+levels
+
+(b) Conduct quarterly reviews of radiation safety
+
+programs
+
+(c) Conduct annual briefings and educational sessions with employees
+
+(d) 8 to 15 mg/100 ml
+
+64. Nausea and difficulty in breathing after injecting contrast in a patient for CT scan, what type of
+
+72. Chemical substances that kill pathogenic
+
+(d) All of the above
+
+shock is he experiencing
+
+(a) Septic
+
+(b) Anaphylactic
+
+(c) Cardiogenic
+
+(d) Neurogenic
+
+bacteria:
+
+(a) Disinfectant
+
+(b) Antiseptics
+
+(c) Chloroform
+
+(d) Wet wipes
+
+[34]
+
+73. Geometric factor responsible for unequal magnification of different portions of the same object:
+
+(a) Quantum mottle
+
+(b) Noise
+
+(c) Focal spot
+
+(d) Distortion
+
+74. What is the best way to alter quality of an X-Ray beam?
+
+(a) kVp
+
+(c) Gray
+
+(b) mAs
+
+(d) REM
+
+75. Which of the following is not a part of quality assurance program?
+
+(a) Making sure the equipments are efficient
+
+(b) Making sure the patient is satisfied
+
+(c) Consistent quality of radiographic images
+
+(d) Keeping a low patient dose
+
+76. What does PACS stand for?
+
+(b) Printer Analog Computer Systems
+
+(a) Projection Access Communication Systems
+
+(c) Picture Active Computer System
+
+(d) Picture Archiving and Communication Systems
+
+77. In the postero anterior chest radiography which of the following should be included on the X-Ray?
+
+(a) Maximum of 8 posterior ribs
+
+(b) Exhaled lungs
+
+(c) Trachea including upper thoracic vertebrae
+
+(d) Top of iliac crests
+
+78. Stomach protruding through the cardiac orifice through the cleft of diaphragm is known as:
+
+(a) Small bowel obstruction
+
+(b) Hiatal hernia
+
+(c) Pleural effusion
+
+(d) Appendicitis
+
+79. What does GERD stand for?
+
+(a) Gall Bladder Esophageal Reflux Dysfunction
+
+(b) Gastroesophageal Reflux Disease
+
+(c) Gastroesophageal Reflex Disease
+
+(d) Gastroesophageal Reflex Dysfunction
+
+80. Emulsion in radiographic film contains:
+
+(a) Cs halide crystals
+
+(b) Ca tungsten crystals
+
+(c) Ag halide crystals
+
+(d) Ag atoms
+
+81. Filter used in mammography:
+
+(a) Molybdenum
+
+(b) Tungsten
+
+(d) Aluminium
+
+(c) Copper
+
+Paper
+
+82. Protective lead apron should have minimum lea equivalence of:
+
+(a) 0.5 mm lead
+
+(b) 1 mm lead
+
+(c) 2 mm lead
+
+(d) 0.25 mm lead
+
+made of: 83. TLD badges are
+
+(a) CaSO4
+
+(c) La, B, O
+
+(b) LiF
+
+(d) CaF, Mn
+
+84. Maximum field of view which can be obtained with a specific radiographic system is general
+
+limited by the: (a) Focal spot size
+
+(b) Anode size
+
+(c) Anode angle
+
+(d) Focal length
+
+85. Beam penetration can be increased by increasing:
+
+(a) kV
+
+(c) FFD
+
+(b) mAs
+
+(d) Beam area
+
+86. Low kV are used in some procedures for purpos of:
+
+(a) Increasing penetration
+
+(b) Increasing contrast sensitivity
+
+(c) Decreasing patient exposure
+
+(d) Decreasing area contrast
+
+87. Changing from 5:1 ratio to 10:1 ratio grid will
+
+(a) Decrease patient exposure
+
+(b) Increase image contrast
+
+(c) Decrease required kV or mAs
+
+(d) Decreased X ray tube heating
+
+88. Underprocessing of X-Ray film can result is increased film:
+
+(a) Sensitivity
+
+(b) Contrast
+
+(c) Fog
+
+(d) None
+
+89. Substituting high speed radiographic film for a medium speed results in: (a) Higher contrast
+
+(b) More visibility of detail because of more blurring
+
+(c) Reduced patient exposure
+
+(d) Increased quantum noise
+
+90. Factors appropriate for conventional chest X-Ray:
+
+(a) Low contrast
+
+(b) 0.1 mm focal spot
+
+(c) 120 kV
+
+(d) 1:1 ratio grid
+
+Paper 5
+
+91. Advantages of higher kV are all except:
+
+(a) Increased patient exposure
+
+(b) Reduced X-Ray tube heating
+
+(c) Shorter exposure times
+
+(d) Decreased area contrast
+
+92. Single coated X-Ray film used in all except:
+
+(a) Mammography
+
+(b) CT scan films
+
+(c) Skull X Ray
+
+(d) Fluoroscopy films
+
+93. All are true for dental X-Ray films except:
+
+(a) Embossed dot on film kept near crown of tooth
+
+(b) Corners have sharp angles
+
+(c) Films are protected by lead coils
+
+(d) Occlusion film size is 2 1/4 x 3"
+
+94. Efficiency of film washing process is done by
+
+estimating:
+
+(a) Residual iodine
+
+(b) Residual silver
+
+(c) Residual thiosulphate
+
+(d) Residual chlorine
+
+95. Annual effective radiation dose for technicians is less than:
+
+(a) 30 mSv
+
+(b) 100 mSv
+
+(c) 100 mRem
+
+(d) 5 mRem
+
+96. All are life saving measures in contrast reaction
+
+effect:
+
+(a) Inj Rantac
+
+(b) Inj Adrenaline
+
+(c) Saline infusion
+
+(d) Inj Phenargen
+
+97. Enteroclysis is an investigation of:
+
+(a) Esophagus
+
+(b) Small bowel
+
+(c) Large bowel
+
+(d) Hepato biliary tree
+
+98. CCD means:
+
+(a) Charged couple device
+
+(b) Continuous charged detector
+
+(c) Conventional charged device
+
+(d) Continuous conventional device
+
+99. Target material in an X-Ray tube must have:
+
+(a) High atomic number
+
+(b) High mass number
+
+(c) High cost
+
+(d) Low melting point
+
+100. Interaction of photons with matter include all
+
+except:
+
+(a) Pair production
+
+(b) Leakage radiation
+
+(c) Photoelectric radiation
+
+(d) Compton scattering

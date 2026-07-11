@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIIMS CRE Radiographer - Test Paper 37</title>
+    <style>
+        :root {
+            --header-bg: #3f51b5;
+            --header-text: #fff;
+            --panel-bg: #f5f5f5;
+            --pallet-answered: #4caf50;
+            --pallet-not-answered: #f44336;
+            --pallet-review: #9c27b0;
+            --pallet-not-visited: #e0e0e0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #fff; }
+
+        /* --- Header --- */
+        header {
+            background: var(--header-bg); color: var(--header-text);
+            padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+            height: 60px; flex-shrink: 0;
+        }
+        .timer { font-size: 1.2rem; font-weight: bold; background: #fff; color: #d32f2f; padding: 5px 15px; border-radius: 4px; border: 2px solid #d32f2f; }
+
+        /* --- Main Layout --- */
+        .main-container { display: flex; flex: 1; overflow: hidden; }
+        
+        .question-area { flex: 1; display: flex; flex-direction: column; padding: 20px; overflow-y: auto; }
+        .q-header { display: flex; justify-content: space-between; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.5; }
+        
+        .options-container { display: flex; flex-direction: column; gap: 10px; }
+        .option-label { 
+            display: flex; align-items: center; padding: 10px; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; transition: 0.2s; 
+        }
+        .option-label:hover { background: #f0f8ff; }
+        .option-label input { margin-right: 15px; transform: scale(1.2); }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px; background: var(--panel-bg); border-left: 1px solid #ccc;
+            display: flex; flex-direction: column; flex-shrink: 0;
+        }
+        .user-info { padding: 10px; background: #e8eaf6; border-bottom: 1px solid #ccc; }
+        
+        .palette-legend { padding: 10px; font-size: 0.8rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: #fff; }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+        .question-grid { 
+            padding: 10px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; 
+            overflow-y: auto; flex: 1; align-content: start;
+        }
+        .q-btn {
+            height: 35px; width: 35px; border: 1px solid #ccc; background: #fff; 
+            border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .q-btn.answered { background: var(--pallet-answered); color: white; border-color: var(--pallet-answered); }
+        .q-btn.not-answered { background: var(--pallet-not-answered); color: white; border-color: var(--pallet-not-answered); }
+        .q-btn.review { background: var(--pallet-review); color: white; border-radius: 50%; }
+        .q-btn.current { border: 2px solid blue; box-shadow: 0 0 5px blue; }
+        .q-btn.locked { opacity: 0.4; cursor: not-allowed; background: #444 !important; color: #888; border: 1px solid #000; }
+
+        /* Footer */
+        .footer-controls {
+            height: 60px; background: #fff; border-top: 1px solid #ccc;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+        }
+        .btn { padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+        .btn-primary { background: #2196f3; color: white; }
+        .btn-success { background: #4caf50; color: white; }
+        .btn-warn { background: #ff9800; color: white; }
+        .btn-danger { background: #f44336; color: white; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* Mobile */
+        .mobile-toggle { display: none; background: none; border: none; color: white; font-size: 1.5rem; }
+        @media (max-width: 768px) {
+            .mobile-toggle { display: block; }
+            .sidebar { 
+                position: absolute; right: 0; top: 60px; bottom: 60px; z-index: 100;
+                transform: translateX(100%); transition: transform 0.3s; width: 85%;
+            }
+            .sidebar.active { transform: translateX(0); }
+            .question-grid { grid-template-columns: repeat(6, 1fr); }
+            .footer-controls { flex-wrap: wrap; gap: 5px; height: auto; padding: 10px; }
+            .btn { flex: 1; padding: 8px; font-size: 0.8rem; }
+        }
+
+        /* Overlay */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .hidden { display: none !important; }
+        
+        .review-panel { display: none; padding: 20px; height: 100%; overflow-y: auto; background:#f9f9f9;}
+        .review-item { margin-bottom: 20px; border: 1px solid #ddd; padding: 15px; border-radius: 5px; background:white; }
+        .explanation { background: #fff3cd; padding: 10px; margin-top: 10px; font-size: 0.9rem; border-left: 4px solid #ffc107; }
+
+    </style>
+</head>
+<body>
+
+    <div id="landingPage" class="overlay">
+        <h1>AIIMS CRE - Test Paper 37</h1>
+        <div style="width: 80%; max-width: 600px; text-align: left; margin: 20px 0;">
+            <h3>Exam Rules:</h3>
+            <ul>
+                <li><strong>Questions:</strong> 100 (5 Sections of 20 questions each).</li>
+                <li><strong>Timing:</strong> 18 Minutes per section (Strictly Dedicated).</li>
+                <li><strong>Total Time:</strong> 90 Minutes.</li>
+                <li><strong>Locking:</strong> Once 18 mins are up, or if you manually proceed to the next section, you <u>cannot</u> return to the previous section.</li>
+                <li><strong>Marking:</strong> +4 Correct, -1 Incorrect.</li>
+            </ul>
+        </div>
+        <button class="btn btn-success" style="font-size: 1.2rem;" onclick="startExam()">START EXAM</button>
+    </div>
+
+    <header id="examHeader" class="hidden">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <h3>AIIMS Radiographer</h3>
+            <span style="font-size:0.8rem; background:#eee; padding:2px 6px; border-radius:4px; color:#333;" id="sectionLabel">Section 1</span>
+        </div>
+        <div class="timer" id="timerDisplay">18:00</div>
+        <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+    </header>
+
+    <div class="main-container hidden" id="examBody">
+        <div class="question-area">
+            <div class="q-header">
+                <span id="qNumDisplay">Question No. 1</span>
+                <span style="color: #666;">Marks: +4, -1</span>
+            </div>
+            <div id="questionText" class="q-text">Loading...</div>
+            <div id="optionsBox" class="options-container"></div>
+        </div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="user-info">
+                <strong>Candidate Name</strong><br><small>Roll No: 123456</small>
+            </div>
+            <div class="palette-legend">
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-answered)"></span> Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-not-answered)"></span> Not Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-review)"></span> Review</div>
+                <div class="legend-item"><span class="dot" style="background:#444"></span> Locked</div>
+            </div>
+            <div class="question-grid" id="questionPalette"></div>
+            <div style="padding:10px; margin-top:auto;">
+                <button class="btn btn-primary" style="width:100%" onclick="submitExam()">FINISH EXAM</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-controls hidden" id="examFooter">
+        <div style="display:flex; gap:10px;">
+            <button class="btn btn-danger" onclick="clearResponse()">Clear</button>
+            <button class="btn btn-warn" onclick="markForReview()">Review</button>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <button class="btn" onclick="prevQuestion()" id="btnPrev">Previous</button>
+            <button class="btn btn-success" onclick="saveAndNext()">Save & Next</button>
+        </div>
+    </div>
+
+    <div id="resultPage" class="overlay hidden" style="display:block; overflow-y:auto; justify-content:start; padding-top:40px;">
+        <h2 style="text-align:center;">Exam Summary</h2>
+        <div id="scoreCard" style="margin: 20px auto; width:90%; max-width:600px; padding: 20px; border: 1px solid #ccc; text-align: center; background:#fff;"></div>
+        <div style="display:flex; justify-content:center; gap:20px; margin-bottom:20px;">
+            <button class="btn btn-primary" onclick="showDetailedReview()">Review Solutions</button>
+            <button class="btn btn-danger" onclick="location.reload()">Exit</button>
+        </div>
+        <div id="detailedReview" class="review-panel" style="width: 90%; max-width: 800px; margin:0 auto;"></div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const TOTAL_QUESTIONS = 100;
+        const SECTION_SIZE = 20; // 20 questions per section
+        const SECTION_TIME_LIMIT = 18 * 60; // 18 minutes in seconds
+        
+        let questions = [];
+
+        function generateQuestions() {
+            const createQ = (id, type, text, opts, ans, exp) => {
+                // Shuffle options
+                let mappedOpts = opts.map((opt, index) => ({ opt, isCorrect: index === ans }));
+                for (let i = mappedOpts.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [mappedOpts[i], mappedOpts[j]] = [mappedOpts[j], mappedOpts[i]];
+                }
+                const shuffledOpts = mappedOpts.map(m => m.opt);
+                const newAns = mappedOpts.findIndex(m => m.isCorrect);
+
+                return { id, type, text, opts: shuffledOpts, ans: newAns, exp };
+            };
+
+            questions = []; // Reset array
+
+            const raw_data = [
+                // Q1-5 Reasoning
+                { type: "Non-Core", text: "If 'SYSTEM' is coded as 'SYSMET' and 'NEARER' as 'AENRER', then 'FRACTION' is coded as:", opts: ["CARFNOIT", "NOITCARF", "FRACNOIT", "CARFTION"], ans: 0, exp: "The word is divided into two equal halves, and the letters of each half are reversed." },
+                { type: "Non-Core", text: "Pointing to a photograph, a man said, 'I have no brother or sister but that man's father is my father's son.' Whose photograph was it?", opts: ["His son's", "His own", "His father's", "His nephew's"], ans: 0, exp: "Since he has no siblings, 'my father's son' is the man himself. Thus, the man in the photograph has the speaker as his father." },
+                { type: "Non-Core", text: "A fruit seller had some apples. He sells 40% apples and still has 420 apples. Originally, he had:", opts: ["700", "588", "600", "672"], ans: 0, exp: "Remaining apples = 60%. So, 60% of X = 420. X = 420 * 100 / 60 = 700." },
+                { type: "Non-Core", text: "If 20% of a = b, then b% of 20 is the same as:", opts: ["4% of a", "5% of a", "20% of a", "None of these"], ans: 0, exp: "b = 0.20a. Then b% of 20 = (b/100)*20 = b/5 = 0.20a/5 = 0.04a, which is 4% of a." },
+                { type: "Non-Core", text: "Insert the missing number: 2, 5, 10, 17, 26, ?", opts: ["37", "39", "35", "32"], ans: 0, exp: "The differences between terms are consecutive odd numbers: 3, 5, 7, 9. Next difference is 11. 26 + 11 = 37." },
+
+                // Q6-10 GK
+                { type: "Non-Core", text: "Which Article of the Indian Constitution deals with the Right to Equality?", opts: ["Article 14", "Article 19", "Article 21", "Article 32"], ans: 0, exp: "Article 14 guarantees equality before the law and equal protection of the laws." },
+                { type: "Non-Core", text: "Who is considered the Father of the Indian Constitution?", opts: ["Dr. B.R. Ambedkar", "Jawaharlal Nehru", "Mahatma Gandhi", "Rajendra Prasad"], ans: 0, exp: "Dr. B.R. Ambedkar was the Chairman of the Drafting Committee of the Constituent Assembly." },
+                { type: "Non-Core", text: "The SI unit of force is:", opts: ["Newton", "Joule", "Watt", "Pascal"], ans: 0, exp: "Newton (N) is the SI unit of force." },
+                { type: "Non-Core", text: "Sound travels fastest in which of the following mediums?", opts: ["Solid (Steel)", "Liquid (Water)", "Gas (Air)", "Vacuum"], ans: 0, exp: "Sound waves travel fastest in solids because the molecules are closely packed." },
+                { type: "Non-Core", text: "The deepest trench in the world, the Mariana Trench, is located in which ocean?", opts: ["Pacific Ocean", "Atlantic Ocean", "Indian Ocean", "Arctic Ocean"], ans: 0, exp: "The Mariana Trench is located in the western Pacific Ocean." },
+
+                // Q11-15 English
+                { type: "Non-Core", text: "Synonym for 'Diligent':", opts: ["Hardworking", "Lazy", "Ignorant", "Careless"], ans: 0, exp: "Diligent means having or showing care and conscientiousness in one's work or duties." },
+                { type: "Non-Core", text: "Antonym for 'Opaque':", opts: ["Transparent", "Dark", "Murky", "Thick"], ans: 0, exp: "Opaque means not able to be seen through; transparent is the exact opposite." },
+                { type: "Non-Core", text: "Choose the correct preposition: 'She is good ___ mathematics.'", opts: ["at", "in", "with", "on"], ans: 0, exp: "The correct preposition to use after 'good' when talking about abilities or skills is 'at'." },
+                { type: "Non-Core", text: "What does the idiom 'A piece of cake' mean?", opts: ["A very easy task", "A pleasant surprise", "A difficult situation", "A share of profits"], ans: 0, exp: "'A piece of cake' refers to something that is easily achieved." },
+                { type: "Non-Core", text: "Select the correctly spelled word:", opts: ["Committee", "Comittee", "Committe", "Comitee"], ans: 0, exp: "'Committee' has double 'm', double 't', and double 'e'." },
+
+                // Q16-20 Computers
+                { type: "Non-Core", text: "Which protocol is primarily used for sending outgoing emails?", opts: ["SMTP", "IMAP", "POP3", "FTP"], ans: 0, exp: "Simple Mail Transfer Protocol (SMTP) is used for sending emails." },
+                { type: "Non-Core", text: "What does IMAP stand for in the context of email protocols?", opts: ["Internet Message Access Protocol", "Internal Mail Access Protocol", "Internet Mail Application Protocol", "Intranet Messaging Access Protocol"], ans: 0, exp: "IMAP stands for Internet Message Access Protocol." },
+                { type: "Non-Core", text: "In computer networks, what does 'HTTP' stand for?", opts: ["HyperText Transfer Protocol", "HyperText Transmission Protocol", "HyperLink Transfer Protocol", "HyperText Translation Protocol"], ans: 0, exp: "HTTP stands for HyperText Transfer Protocol." },
+                { type: "Non-Core", text: "Which port does HTTPS typically use by default?", opts: ["443", "80", "21", "25"], ans: 0, exp: "HTTPS uses port 443 for secure communication over a computer network." },
+                { type: "Non-Core", text: "A gigabyte (GB) is equal to:", opts: ["1024 Megabytes", "1000 Megabytes", "1024 Kilobytes", "1000 Kilobytes"], ans: 0, exp: "In computing, 1 GB is strictly 1024 Megabytes (MB)." },
+
+                // Q21-35 Physics & Darkroom
+                { type: "Physics", text: "In an X-ray tube, the process of heating the filament to emit electrons is known as:", opts: ["Thermionic emission", "Photoelectric effect", "Compton effect", "Bremsstrahlung"], ans: 0, exp: "Thermionic emission is the release of electrons from a heated filament." },
+                { type: "Physics", text: "The target of a standard diagnostic X-ray tube is typically made of:", opts: ["Tungsten", "Molybdenum", "Copper", "Aluminum"], ans: 0, exp: "Tungsten is used due to its high atomic number (74) and high melting point." },
+                { type: "Physics", text: "Why is a rotating anode used in modern diagnostic X-ray tubes?", opts: ["To dissipate heat over a larger area", "To increase the speed of electrons", "To focus the electron beam", "To filter out low-energy X-rays"], ans: 0, exp: "A rotating anode spreads the heat generated during X-ray production over a larger focal track." },
+                { type: "Physics", text: "What is the primary purpose of added filtration in an X-ray tube assembly?", opts: ["To remove low-energy X-rays", "To increase the number of high-energy X-rays", "To focus the X-ray beam", "To cool the X-ray tube"], ans: 0, exp: "Filtration absorbs low-energy (soft) X-rays, reducing patient skin dose." },
+                { type: "Physics", text: "The atomic number (Z) of Tungsten is:", opts: ["74", "42", "82", "79"], ans: 0, exp: "Tungsten (W) has an atomic number of 74." },
+                { type: "Physics", text: "The Anode Heel Effect states that X-ray intensity is greater on the:", opts: ["Cathode side of the beam", "Anode side of the beam", "Center of the beam", "Edges of the beam"], ans: 0, exp: "X-rays emitted toward the anode side must pass through more target material, decreasing intensity." },
+                { type: "Physics", text: "Which interaction of radiation with matter is primarily responsible for occupational radiation exposure to the radiographer?", opts: ["Compton scattering", "Photoelectric absorption", "Coherent scattering", "Pair production"], ans: 0, exp: "Compton scatter produces scattered photons that can reach the radiographer during exams." },
+                { type: "Physics", text: "In the photoelectric effect, an incident X-ray photon interacts with:", opts: ["An inner-shell electron", "An outer-shell electron", "The atomic nucleus", "A free electron"], ans: 0, exp: "The photon is completely absorbed by an inner-shell electron, which is then ejected." },
+                { type: "Physics", text: "Characteristic X-rays are produced when:", opts: ["An outer-shell electron fills an inner-shell vacancy", "High-speed electrons are suddenly decelerated by the target nucleus", "A photon is scattered by an outer-shell electron", "An electron is ejected from the nucleus"], ans: 0, exp: "When an inner-shell electron is ejected, an outer-shell electron drops down, emitting a characteristic photon." },
+                { type: "Physics", text: "The half-value layer (HVL) of an X-ray beam is used to measure its:", opts: ["Quality or penetrability", "Quantity or intensity", "Maximum energy", "Total exposure time"], ans: 0, exp: "HVL is the thickness of an absorber needed to reduce the beam intensity by half, indicating beam quality." },
+                { type: "Physics", text: "Grid ratio is mathematically defined as:", opts: ["Height of the lead strips divided by the distance between them", "Thickness of lead strips divided by height", "Distance between strips divided by height", "Number of lead strips per inch"], ans: 0, exp: "Grid ratio = h/D, where h is height and D is interspace width." },
+                { type: "Physics", text: "The primary developing agents in manual radiographic film processing are:", opts: ["Phenidone and Hydroquinone", "Sodium thiosulfate and Ammonium thiosulfate", "Potassium bromide and Sodium carbonate", "Glutaraldehyde and Alum"], ans: 0, exp: "Phenidone builds up gray tones rapidly, while Hydroquinone builds high contrast slowly." },
+                { type: "Physics", text: "The main function of the fixer solution in a darkroom is to:", opts: ["Remove unexposed, undeveloped silver halide crystals", "Convert exposed silver halide into black metallic silver", "Harden the film emulsion before washing", "Reduce the fog on the film"], ans: 0, exp: "Fixing clears the film by removing unexposed silver halide, making the image permanent." },
+                { type: "Physics", text: "A safelight in a darkroom usually uses which color filter for standard blue-sensitive films?", opts: ["Amber or red", "Green", "Blue", "Yellow"], ans: 0, exp: "An amber or red filter (like Wratten 6B) is safe for blue-sensitive films." },
+                { type: "Physics", text: "What causes 'dichroic fog' on a processed manual radiograph?", opts: ["Contamination of the developer by the fixer", "Exposure to stray light", "Using developer that is too hot", "Inadequate washing of the film"], ans: 0, exp: "Dichroic fog appears as chemical stains caused by fixer leaking into the developer." },
+                
+                // Q36-57 Positioning & Procedures
+                { type: "Procedures", text: "Silver recovery in a hospital darkroom is performed from the:", opts: ["Fixer solution", "Developer solution", "Wash water", "Stop bath"], ans: 0, exp: "The fixer contains the unexposed silver halide that was washed off the film." },
+                { type: "Procedures", text: "In interventional radiology, PTBD stands for:", opts: ["Percutaneous Transhepatic Biliary Drainage", "Percutaneous Transluminal Balloon Dilation", "Percutaneous Transvenous Biliary Ductography", "Primary Transhepatic Biliary Drainage"], ans: 0, exp: "PTBD is a procedure to drain bile from the liver." },
+                { type: "Procedures", text: "Which procedure involves the placement of a stent in the biliary tract to relieve obstructive jaundice?", opts: ["PTBD / Biliary stenting", "ERCP only", "Transjugular Intrahepatic Portosystemic Shunt (TIPS)", "Percutaneous Nephrostomy"], ans: 0, exp: "Biliary stents are placed via PTBD or ERCP to bypass an obstruction." },
+                { type: "Procedures", text: "A 'T-tube cholangiogram' is typically performed:", opts: ["Post-operatively, usually 7-10 days after gallbladder surgery", "Prior to cholecystectomy", "During an acute attack of cholecystitis", "As a first-line diagnostic test for gallstones"], ans: 0, exp: "It is done to check for residual stones in the common bile duct after surgery." },
+                { type: "Procedures", text: "In a Barium Swallow examination, the 'RAO' position is primarily used because it:", opts: ["Projects the esophagus away from the spine", "Fills the fundus of the stomach", "Provides a true lateral view of the esophagus", "Increases esophageal peristalsis"], ans: 0, exp: "RAO gives an unobstructed view of the esophagus between the spine and the heart." },
+                { type: "Procedures", text: "What is the typical negative contrast medium used in a double-contrast barium enema?", opts: ["Room air or Carbon dioxide", "Water", "Iodine", "Dilute barium"], ans: 0, exp: "Air or CO2 provides negative (radiolucent) contrast to coat the mucosal lining." },
+                { type: "Procedures", text: "For an elective 'Barium Meal' examination, the patient must fast for at least:", opts: ["8 hours", "2 hours", "24 hours", "4 hours"], ans: 0, exp: "An empty stomach ensures that food does not mimic polyps or tumors." },
+                { type: "Procedures", text: "Which maneuver or position is considered best for demonstrating a hiatal hernia during a barium stomach study?", opts: ["Trendelenburg position", "Erect position", "Left lateral decubitus", "Fowler's position"], ans: 0, exp: "Trendelenburg (head lower than feet) increases intra-abdominal pressure, forcing the hernia through the diaphragm." },
+                { type: "Procedures", text: "In an ERCP procedure, the endoscope is passed to the:", opts: ["Ampulla of Vater in the duodenum", "Pyloric sphincter", "Jejunum", "Terminal ileum"], ans: 0, exp: "The endoscope is positioned at the Ampulla of Vater to cannulate the biliary or pancreatic ducts." },
+                { type: "Procedures", text: "Hysterosalpingography (HSG) is primarily performed to evaluate the:", opts: ["Patency of fallopian tubes", "Size of the ovaries", "Vaginal anomalies", "Function of the cervix"], ans: 0, exp: "HSG checks if the fallopian tubes are open and examines the uterine cavity." },
+                { type: "Procedures", text: "What is a common primary indication for an Intravenous Urogram (IVU)?", opts: ["Renal calculi (kidney stones)", "Liver cirrhosis", "Gallstones", "Gastric ulcers"], ans: 0, exp: "IVU assesses the kidneys, ureters, and bladder, often for suspected stones." },
+                { type: "Procedures", text: "During an IVU, if a compression band is used, it should be applied over the:", opts: ["Distal ureters at the pelvic brim", "Symphysis pubis", "Kidneys", "Urinary bladder"], ans: 0, exp: "Compression at the pelvic brim retains contrast in the pelvicalyceal system." },
+                { type: "Procedures", text: "Which contrast agent is preferred when a gastrointestinal perforation is suspected?", opts: ["Water-soluble iodinated contrast", "High-density barium sulfate", "Oily contrast media", "Air only"], ans: 0, exp: "Barium causes severe peritonitis if leaked into the peritoneal cavity; water-soluble contrast is absorbed." },
+                { type: "Procedures", text: "In a voiding cystourethrogram (VCUG), diagnostic images are taken primarily during:", opts: ["Micturition (urination)", "Catheter insertion", "Resting state before contrast", "Post-voiding only"], ans: 0, exp: "Imaging during voiding evaluates the urethra and checks for vesicoureteral reflux." },
+                { type: "Procedures", text: "A sialogram is a radiographic examination of the:", opts: ["Salivary glands and ducts", "Sinuses", "Spinal canal", "Synovial joints"], ans: 0, exp: "Sialography uses contrast to visualize the salivary glands." },
+                { type: "Procedures", text: "A Percutaneous Nephrostomy (PCN) is primarily performed to:", opts: ["Drain urine directly from the kidney", "Inject contrast into the bladder", "Biopsy the renal cortex", "Remove the kidney"], ans: 0, exp: "PCN is a catheter placed into the renal pelvis to drain urine when the ureter is blocked." },
+                { type: "Procedures", text: "The 'Seldinger technique' is primarily utilized for:", opts: ["Percutaneous arterial or venous catheterization", "Setting up a sterile field", "Administering oral contrast", "Manual film processing"], ans: 0, exp: "It involves needle puncture, guidewire insertion, and catheter placement over the wire." },
+                { type: "Procedures", text: "Which standard projection best demonstrates the intervertebral foramina of the cervical spine?", opts: ["45-degree Oblique projection", "AP Axial projection", "True Lateral projection", "Open Mouth projection"], ans: 0, exp: "Cervical obliques open up the intervertebral foramina." },
+                { type: "Procedures", text: "To visualize the odontoid process (dens) without superimposition of the teeth, which view is taken?", opts: ["AP Open Mouth", "Lateral Cervical", "Fuchs method", "Water's view"], ans: 0, exp: "The AP Open Mouth view projects the upper incisors above the dens." },
+                { type: "Procedures", text: "The Swimmer's view is taken to demonstrate which specific region?", opts: ["C7-T1 cervicothoracic junction", "L5-S1 lumbosacral junction", "Thoracolumbar junction", "Atlantoaxial joint"], ans: 0, exp: "Swimmer's view separates the shoulders to view the lower cervical and upper thoracic vertebrae." },
+                { type: "Procedures", text: "For a true lateral projection of the sternum, the patient's SID should be at least:", opts: ["72 inches (180 cm)", "40 inches (100 cm)", "48 inches (120 cm)", "36 inches (90 cm)"], ans: 0, exp: "A 72-inch SID reduces magnification of the sternum caused by the large object-to-image distance." },
+                { type: "Procedures", text: "Which of the following views provides a tangential or axial projection of the patella?", opts: ["Sunrise / Skyline view", "Camp Coventry view", "Rosenberg view", "AP Knee view"], ans: 0, exp: "The Sunrise view demonstrates the patellofemoral joint space." },
+
+                // Q58-60 Anatomy
+                { type: "Anatomy", text: "The longest and heaviest bone in the human body is the:", opts: ["Femur", "Tibia", "Humerus", "Fibula"], ans: 0, exp: "The femur (thigh bone) is the longest bone." },
+                { type: "Anatomy", text: "The 'Circle of Willis' provides an anastomotic blood supply primarily to the:", opts: ["Brain", "Heart", "Liver", "Lungs"], ans: 0, exp: "It is a circulatory anastomosis that supplies blood to the brain." },
+                { type: "Anatomy", text: "Which valve is located between the left atrium and the left ventricle?", opts: ["Mitral (bicuspid) valve", "Tricuspid valve", "Aortic valve", "Pulmonary valve"], ans: 0, exp: "The mitral valve prevents backflow of blood from the left ventricle to the left atrium." },
+
+                // Q61-86 Advanced Modalities
+                { type: "Digital/CT/MRI", text: "In Computed Radiography (CR), the photostimulable phosphor (PSP) plate is typically made of:", opts: ["Barium fluorohalide doped with Europium", "Amorphous selenium", "Cesium iodide", "Gadolinium oxysulfide"], ans: 0, exp: "Europium-doped barium fluorohalide captures the latent image in CR." },
+                { type: "Digital/CT/MRI", text: "In a CR reader system, the latent image is stimulated and read out by:", opts: ["A red laser (e.g., helium-neon)", "An intense white light", "An electron beam", "Ultraviolet light"], ans: 0, exp: "A red laser beam scans the PSP plate, releasing trapped energy as blue-violet light." },
+                { type: "Digital/CT/MRI", text: "Direct digital radiography (DR) detectors use a photoconductor material primarily made of:", opts: ["Amorphous selenium", "Amorphous silicon", "Cesium iodide", "Sodium iodide"], ans: 0, exp: "Amorphous selenium converts X-rays directly into an electrical charge." },
+                { type: "Digital/CT/MRI", text: "Indirect DR detectors use a scintillator made of which material to convert X-rays to light?", opts: ["Cesium iodide or Gadolinium oxysulfide", "Amorphous selenium", "Barium sulfate", "Lithium fluoride"], ans: 0, exp: "Cesium iodide (CsI) structured crystals are common scintillators in indirect DR." },
+                { type: "Digital/CT/MRI", text: "What is the main function of the Thin Film Transistor (TFT) array in flat-panel DR systems?", opts: ["To collect and read out the electrical charge pixel by pixel", "To convert X-rays into light", "To digitize the analog signal", "To filter scattered radiation"], ans: 0, exp: "TFT acts as an electronic switch to release the stored charge from each pixel element." },
+                { type: "Digital/CT/MRI", text: "The baseline 'Hounsfield Unit' (HU) value of pure water in CT is:", opts: ["0", "-1000", "+1000", "+50"], ans: 0, exp: "The CT scale is calibrated so that water is exactly 0 HU." },
+                { type: "Digital/CT/MRI", text: "The Hounsfield Unit (HU) of air in a CT image is approximately:", opts: ["-1000", "0", "-100", "-500"], ans: 0, exp: "Air is the least dense and is assigned a value of -1000 HU." },
+                { type: "Digital/CT/MRI", text: "Pitch in a spiral/helical CT is defined as:", opts: ["Table travel per rotation divided by the beam collimation width", "Rotation speed divided by table speed", "kVp divided by mAs", "Number of detectors divided by rotation time"], ans: 0, exp: "Pitch = Table feed per rotation / Slice width." },
+                { type: "Digital/CT/MRI", text: "Which CT artifact frequently appears as dark streaks or bands between dense structures like the petrous bones?", opts: ["Beam hardening artifact", "Motion artifact", "Ring artifact", "Partial volume artifact"], ans: 0, exp: "Beam hardening occurs when lower energy photons are absorbed by dense bone, leaving higher energy photons." },
+                { type: "Digital/CT/MRI", text: "What is a primary clinical advantage of multi-detector CT (MDCT) over single-slice CT?", opts: ["Faster scan times and larger volume coverage", "Elimination of radiation dose", "Ability to scan without X-rays", "Lower equipment cost"], ans: 0, exp: "MDCT acquires multiple slices per rotation, dramatically reducing scan time." },
+                { type: "Digital/CT/MRI", text: "Which CT generation utilized a translate-rotate motion with a single pencil beam and a single detector?", opts: ["First generation", "Second generation", "Third generation", "Fourth generation"], ans: 0, exp: "First generation scanners used a pencil beam and translate-rotate geometry." },
+                { type: "Digital/CT/MRI", text: "In Magnetic Resonance Imaging (MRI), the main static magnetic field is denoted by the symbol:", opts: ["B0", "B1", "T1", "T2"], ans: 0, exp: "B0 represents the primary, strong magnetic field of the scanner." },
+                { type: "Digital/CT/MRI", text: "The Larmor (precessional) frequency of hydrogen protons in a 1.5 Tesla MRI scanner is approximately:", opts: ["63.86 MHz", "42.58 MHz", "21.29 MHz", "127.7 MHz"], ans: 0, exp: "The gyromagnetic ratio of hydrogen is ~42.58 MHz/T. So, 42.58 x 1.5 = 63.87 MHz." },
+                { type: "Digital/CT/MRI", text: "In MRI physics, T1 relaxation time is also known as:", opts: ["Spin-lattice relaxation", "Spin-spin relaxation", "Free induction decay", "Phase coherence"], ans: 0, exp: "T1 involves the recovery of longitudinal magnetization by giving energy to the surrounding lattice." },
+                { type: "Digital/CT/MRI", text: "In MRI physics, T2 relaxation time is also known as:", opts: ["Spin-spin relaxation", "Spin-lattice relaxation", "Resonance decay", "Inversion time"], ans: 0, exp: "T2 is the decay of transverse magnetization due to interactions between adjacent spins." },
+                { type: "Digital/CT/MRI", text: "In a standard T1-weighted MR image, Cerebrospinal Fluid (CSF) appears:", opts: ["Dark (Hypointense)", "Bright (Hyperintense)", "Grey (Isointense)", "White"], ans: 0, exp: "Fluids have long T1 relaxation times, so they appear dark on T1." },
+                { type: "Digital/CT/MRI", text: "In a standard T2-weighted MR image, fluids such as CSF appear:", opts: ["Bright (Hyperintense)", "Dark (Hypointense)", "Grey (Isointense)", "Black"], ans: 0, exp: "Fluids have long T2 relaxation times, producing high signal (bright) on T2." },
+                { type: "Digital/CT/MRI", text: "What is the primary purpose of using surface coils in MRI?", opts: ["To improve the signal-to-noise ratio (SNR) for superficial structures", "To increase the main magnetic field strength", "To shield the patient from RF pulses", "To eliminate motion artifacts completely"], ans: 0, exp: "Surface coils placed close to the anatomy pick up more signal and less noise." },
+                { type: "Digital/CT/MRI", text: "Which MRI artifact is characteristically caused by metallic implants like orthopedic screws?", opts: ["Susceptibility artifact", "Aliasing / Wrap-around", "Chemical shift", "Cross-talk"], ans: 0, exp: "Metal severely distorts the local magnetic field, causing large signal voids." },
+                { type: "Digital/CT/MRI", text: "Which MRI pulse sequence is widely used specifically to suppress the high signal from fat?", opts: ["STIR (Short Tau Inversion Recovery)", "FLAIR", "Gradient Echo", "Spin Echo"], ans: 0, exp: "STIR uses a short inversion time (TI) to null the signal from fat." },
+                { type: "Digital/CT/MRI", text: "A common and absolute contraindication for a patient undergoing an MRI scan is:", opts: ["A cardiac pacemaker", "Titanium joint replacements", "Dental fillings", "Intrauterine device (IUD)"], ans: 0, exp: "Most legacy cardiac pacemakers are strictly contraindicated due to magnetic interference." },
+                { type: "Digital/CT/MRI", text: "The term 'Quenching' an MRI magnet refers to:", opts: ["The rapid release of cryogens resulting in total loss of the magnetic field", "Turning off the RF coils", "Cooling the patient room", "Re-shimming the magnetic field"], ans: 0, exp: "Quenching safely drops the magnetic field in an emergency by venting the liquid helium." },
+                { type: "Digital/CT/MRI", text: "In diagnostic Ultrasound, the piezoelectric effect is utilized to:", opts: ["Convert electrical energy into mechanical sound waves and vice versa", "Produce X-rays from sound waves", "Measure the magnetic field", "Heat the tissues"], ans: 0, exp: "Piezoelectric crystals vibrate when voltage is applied, and generate voltage when sound hits them." },
+                { type: "Digital/CT/MRI", text: "In Ultrasound imaging, higher frequency transducers provide:", opts: ["Better spatial resolution but lower tissue penetration", "Deeper tissue penetration but poor resolution", "Faster scanning speeds", "Higher Doppler shifts"], ans: 0, exp: "High frequency waves attenuate faster but resolve smaller details." },
+                { type: "Digital/CT/MRI", text: "The Doppler effect principle in ultrasound is primarily used to assess:", opts: ["Blood flow velocity and direction", "Bone density", "Tumor volume", "Fetal age"], ans: 0, exp: "Doppler shifts occur when sound reflects off moving red blood cells." },
+                { type: "Digital/CT/MRI", text: "Which characteristic ultrasound artifact is seen posterior to a strongly reflecting structure like a gallstone?", opts: ["Acoustic shadowing", "Acoustic enhancement", "Reverberation", "Mirror image"], ans: 0, exp: "The stone absorbs or reflects all sound, leaving a dark 'shadow' behind it." },
+
+                // Q87-100 Safety, Dosimeters & Radiobiology
+                { type: "Safety", text: "The occupational annual whole-body equivalent dose limit for a radiation worker (as per current general guidelines) is:", opts: ["20 mSv", "50 mSv", "1 mSv", "150 mSv"], ans: 0, exp: "ICRP and AERB recommend a limit of 20 mSv per year averaged over 5 years." },
+                { type: "Safety", text: "In radiation protection, the ALARA principle stands for:", opts: ["As Low As Reasonably Achievable", "As Low As Radiation Allows", "Always Leave A Radiation Area", "All Low And Right Angled"], ans: 0, exp: "ALARA is the guiding philosophy to minimize radiation doses." },
+                { type: "Safety", text: "A thermoluminescent dosimeter (TLD) badge typically uses active crystals composed of:", opts: ["Lithium fluoride or Calcium sulfate", "Silver bromide", "Amorphous selenium", "Sodium iodide"], ans: 0, exp: "LiF and CaSO4 are commonly used thermoluminescent materials." },
+                { type: "Safety", text: "When a TLD crystal is heated during processing, it releases its trapped energy in the form of:", opts: ["Visible light", "Heat", "X-rays", "Beta particles"], ans: 0, exp: "The trapped electrons fall back to their ground state, emitting light proportional to the radiation dose." },
+                { type: "Safety", text: "The term 'glow curve' is directly associated with the readout process of which personal dosimeter?", opts: ["Thermoluminescent Dosimeter (TLD)", "Film Badge", "Optically Stimulated Luminescence (OSL)", "Pocket Ion Chamber"], ans: 0, exp: "A glow curve graphs the light emission of a TLD as it is heated." },
+                { type: "Safety", text: "Optically Stimulated Luminescence (OSL) dosimeters use an active sensing element made of:", opts: ["Aluminum oxide doped with carbon", "Lithium fluoride", "Sodium iodide", "Barium sulfate"], ans: 0, exp: "Al2O3:C is the standard detector material for OSL badges." },
+                { type: "Safety", text: "OSL dosimeters are 'read' out by stimulating them with:", opts: ["A specific frequency of laser light", "Heat", "Microwaves", "Chemical developer"], ans: 0, exp: "OSL uses light (laser) to stimulate the crystal instead of heat (used in TLDs)." },
+                { type: "Safety", text: "Which of the following personal dosimeters provides an immediate readout of radiation exposure?", opts: ["Pocket ionization chamber", "TLD badge", "OSL badge", "Film badge"], ans: 0, exp: "Pocket dosimeters can be looked at directly through an eyepiece for an instant reading." },
+                { type: "Safety", text: "According to the laws of radiobiology, which of the following is the most radiosensitive blood cell?", opts: ["Lymphocyte", "Erythrocyte", "Platelet", "Neutrophil"], ans: 0, exp: "Lymphocytes (white blood cells) are highly sensitive and die an interphase death." },
+                { type: "Safety", text: "Radiation-induced cataracts of the eye lens are considered a:", opts: ["Deterministic (Tissue) effect", "Stochastic effect", "Genetic effect", "Hormetic effect"], ans: 0, exp: "Cataracts have a threshold dose, making them a deterministic effect." },
+                { type: "Safety", text: "The minimum recommended lead equivalence for a protective apron worn during fluoroscopy is:", opts: ["0.5 mm Pb", "0.25 mm Pb", "1.0 mm Pb", "0.1 mm Pb"], ans: 0, exp: "0.5 mm Pb provides a good balance of protection and weight." },
+                { type: "Safety", text: "The inverse square law states that if the distance from a radiation source is doubled, the intensity of radiation becomes:", opts: ["One-fourth", "One-half", "Double", "Four times"], ans: 0, exp: "Intensity is inversely proportional to the square of the distance. (1/2)^2 = 1/4." },
+                { type: "Safety", text: "In the design of a radiographic room, the wall directly behind the upright chest Bucky is considered a:", opts: ["Primary barrier", "Secondary barrier", "Leakage barrier", "Uncontrolled area"], ans: 0, exp: "A primary barrier is one that the useful (primary) beam can be directed at." },
+                { type: "Safety", text: "The '10-day rule' suggests that non-urgent pelvic radiography in females of reproductive age should be performed:", opts: ["Within the first 10 days following the onset of menstruation", "During the 10 days before menstruation", "Anytime if she signs a waiver", "Only during the last 10 days of the month"], ans: 0, exp: "This period minimizes the possibility that the patient is pregnant." }
+            ];
+
+            raw_data.forEach((d, i) => questions.push(createQ(i + 1, d.type, d.text, d.opts, d.ans, d.exp)));
+        }
+
+        // --- STATE MANAGEMENT ---
+        let timerInterval;
+
+        let state = {
+            currentQ: 0,
+            answers: new Array(TOTAL_QUESTIONS).fill(null),
+            status: new Array(TOTAL_QUESTIONS).fill('not-visited'),
+            currentSection: 1,
+            sectionTimeLeft: SECTION_TIME_LIMIT,
+            maxSetReached: 1,
+            isFinished: false
+        };
+
+        const els = {
+            landing: document.getElementById('landingPage'),
+            header: document.getElementById('examHeader'),
+            body: document.getElementById('examBody'),
+            footer: document.getElementById('examFooter'),
+            result: document.getElementById('resultPage'),
+            qText: document.getElementById('questionText'),
+            optsBox: document.getElementById('optionsBox'),
+            qNum: document.getElementById('qNumDisplay'),
+            sectionLabel: document.getElementById('sectionLabel'),
+            palette: document.getElementById('questionPalette'),
+            timer: document.getElementById('timerDisplay'),
+            btnPrev: document.getElementById('btnPrev'),
+            sidebar: document.getElementById('sidebar')
+        };
+
+        function saveState() {
+            localStorage.setItem('test_paper_37_state', JSON.stringify(state));
+        }
+
+        function init() {
+            generateQuestions(); // Load data
+            
+            const savedState = localStorage.getItem('test_paper_37_state');
+            if (savedState) {
+                try {
+                    const parsed = JSON.parse(savedState);
+                    if (parsed && parsed.answers && parsed.answers.length === TOTAL_QUESTIONS) {
+                        state = { ...state, ...parsed };
+                    }
+                } catch(e) {}
+            }
+            
+            if (state.isFinished) {
+                els.landing.classList.add('hidden');
+                els.result.classList.remove('hidden');
+                calculateResult();
+            } else {
+                els.landing.classList.remove('hidden');
+                els.result.classList.add('hidden');
+            }
+        }
+
+        function startExam() {
+            els.landing.classList.add('hidden');
+            renderExamInterface();
+            startSectionTimer();
+            saveState();
+        }
+
+        function startSectionTimer() {
+            if(timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                state.sectionTimeLeft--;
+                
+                // Format Time
+                const m = Math.floor(state.sectionTimeLeft / 60);
+                const s = state.sectionTimeLeft % 60;
+                els.timer.innerText = `${m}:${s < 10 ? '0'+s : s}`;
+                
+                // Visual Warning
+                if(state.sectionTimeLeft < 60) els.timer.style.backgroundColor = "#ffcdd2";
+                else els.timer.style.backgroundColor = "#fff";
+
+                // Time Up Logic
+                if (state.sectionTimeLeft <= 0) {
+                    handleSectionTimeout();
+                }
+            }, 1000);
+        }
+
+        function handleSectionTimeout() {
+            clearInterval(timerInterval);
+            
+            if (state.currentSection < 5) {
+                alert(`Time is up for Section ${state.currentSection}! Moving to Section ${state.currentSection + 1}.`);
+                forceNextSection();
+            } else {
+                alert("Time is up for the final section! Submitting Exam.");
+                finishExam();
+            }
+        }
+
+        function forceNextSection() {
+            state.currentSection++;
+            state.maxSetReached = state.currentSection;
+            state.sectionTimeLeft = SECTION_TIME_LIMIT;
+            
+            // Move to first question of next section
+            const firstQofNextSection = (state.currentSection - 1) * SECTION_SIZE;
+            loadQuestion(firstQofNextSection);
+            startSectionTimer();
+            saveState();
+        }
+
+        function renderExamInterface() {
+            els.header.classList.remove('hidden');
+            els.body.classList.remove('hidden');
+            els.footer.classList.remove('hidden');
+            renderPalette();
+            loadQuestion(state.currentQ);
+        }
+
+        function loadQuestion(index) {
+            state.currentQ = index;
+            if(state.status[index] === 'not-visited') state.status[index] = 'not-answered';
+
+            // Update Section Label
+            const secNum = Math.floor(index / SECTION_SIZE) + 1;
+            els.sectionLabel.innerText = `Section ${secNum} (Q${(secNum-1)*20 + 1}-${secNum*20})`;
+
+            // Render Text
+            els.qNum.innerText = `Question ${index + 1}`;
+            els.qText.innerText = questions[index].text;
+            
+            // Render Options
+            els.optsBox.innerHTML = '';
+            questions[index].opts.forEach((opt, i) => {
+                const isChecked = state.answers[index] === i ? 'checked' : '';
+                els.optsBox.innerHTML += `
+                    <label class="option-label">
+                        <input type="radio" name="opt" value="${i}" ${isChecked} onchange="selectOption(${i})">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            // Update Palette UI
+            document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('current'));
+            const currentBtn = document.getElementById(`qbtn-${index}`);
+            if(currentBtn) currentBtn.classList.add('current');
+
+            // Handle Prev Button State (Cannot go back to previous locked section)
+            const startOfCurrentSection = (state.currentSection - 1) * SECTION_SIZE;
+            els.btnPrev.disabled = (index <= startOfCurrentSection);
+            saveState();
+        }
+
+        function selectOption(optIndex) {
+            state.answers[state.currentQ] = optIndex;
+            saveState();
+        }
+
+        function saveAndNext() {
+            const index = state.currentQ;
+            // Update status
+            state.status[index] = (state.answers[index] !== null) ? 'answered' : 'not-answered';
+            
+            moveToNextQuestion();
+            saveState();
+        }
+
+        function markForReview() {
+            const index = state.currentQ;
+            state.status[index] = (state.answers[index] !== null) ? 'marked-answered' : 'review'; // Simplified
+            moveToNextQuestion();
+            saveState();
+        }
+
+        function clearResponse() {
+            state.answers[state.currentQ] = null;
+            state.status[state.currentQ] = 'not-answered';
+            loadQuestion(state.currentQ);
+            renderPalette();
+            saveState();
+        }
+
+        function moveToNextQuestion() {
+            const nextIndex = state.currentQ + 1;
+            const currentSecBound = state.currentSection * SECTION_SIZE;
+
+            // Check if next question crosses section boundary
+            if (nextIndex >= currentSecBound) {
+                // End of section reached
+                if (state.currentSection < 5) {
+                    if (confirm(`You have reached the end of Section ${state.currentSection}.\nDo you want to submit this section and move to Section ${state.currentSection+1}?\n\nWARNING: You cannot return to this section.`)) {
+                        forceNextSection();
+                    }
+                } else {
+                    if(confirm("This was the last question. Submit Exam?")) {
+                        finishExam();
+                    }
+                }
+            } else {
+                // Normal movement within section
+                renderPalette();
+                loadQuestion(nextIndex);
+            }
+        }
+
+        function prevQuestion() {
+            // Logic handled in loadQuestion to disable button if at start of section
+            if (state.currentQ > 0) {
+                loadQuestion(state.currentQ - 1);
+            }
+        }
+
+        function renderPalette() {
+            els.palette.innerHTML = '';
+            for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+                let statusClass = state.status[i];
+                if(statusClass === 'marked-answered') statusClass = 'review';
+                
+                // Check if question belongs to a locked (previous) section
+                // A question is locked if its section index is < current active section
+                const qSection = Math.floor(i / SECTION_SIZE) + 1;
+                const isLocked = qSection < state.currentSection;
+                const lockedClass = isLocked ? ' locked' : '';
+                
+                // Gray out future sections
+                const isFuture = qSection > state.currentSection;
+                const futureStyle = isFuture ? 'opacity:0.3; pointer-events:none;' : '';
+
+                els.palette.innerHTML += `
+                    <div id="qbtn-${i}" 
+                         class="q-btn ${statusClass}${lockedClass}" 
+                         style="${futureStyle}"
+                         onclick="jumpToQuestion(${i})">
+                        ${i + 1}
+                    </div>
+                `;
+            }
+        }
+
+        function jumpToQuestion(index) {
+            const qSection = Math.floor(index / SECTION_SIZE) + 1;
+            
+            if (qSection < state.currentSection) {
+                alert("This section is locked.");
+                return;
+            }
+            if (qSection > state.currentSection) {
+                alert("You cannot jump to a future section yet.");
+                return;
+            }
+            
+            loadQuestion(index);
+        }
+
+        function submitExam() {
+            if(confirm("Are you sure you want to finish the exam? Unanswered questions in future sections will be marked zero.")) {
+                finishExam();
+            }
+        }
+
+        function finishExam() {
+            clearInterval(timerInterval);
+            state.isFinished = true;
+            saveState();
+            
+            els.header.classList.add('hidden');
+            els.body.classList.add('hidden');
+            els.footer.classList.add('hidden');
+            els.result.classList.remove('hidden');
+            
+            calculateResult();
+        }
+
+        function calculateResult() {
+            let correct = 0, wrong = 0, unattempted = 0, score = 0;
+
+            state.answers.forEach((ans, i) => {
+                if (ans === null) {
+                    unattempted++;
+                } else if (questions[i] && ans === questions[i].ans) {
+                    correct++;
+                    score += 4;
+                } else {
+                    wrong++;
+                    score -= 1;
+                }
+            });
+
+            document.getElementById('scoreCard').innerHTML = `
+                <h1 style="color:#3f51b5; font-size:3rem;">${score} / 400</h1>
+                <p><strong>Correct:</strong> ${correct} (+${correct*4})</p>
+                <p><strong>Incorrect:</strong> ${wrong} (-${wrong})</p>
+                <p><strong>Unattempted:</strong> ${unattempted}</p>
+            `;
+        }
+
+        function showDetailedReview() {
+            const container = document.getElementById('detailedReview');
+            container.style.display = 'block';
+            container.innerHTML = '<h3>Detailed Solutions</h3>';
+            
+            questions.forEach((q, i) => {
+                const userAns = state.answers[i];
+                const isCorrect = userAns === q.ans;
+                const statusColor = userAns === null ? 'gray' : (isCorrect ? 'green' : 'red');
+                const statusText = userAns === null ? 'Skipped' : (isCorrect ? 'Correct' : 'Incorrect');
+
+                let optsHtml = '';
+                q.opts.forEach((opt, oi) => {
+                    let style = '';
+                    if (oi === q.ans) style = 'font-weight:bold; color:green;'; 
+                    if (oi === userAns && !isCorrect) style = 'font-weight:bold; color:red;'; 
+                    optsHtml += `<div style="${style}">${oi+1}. ${opt}</div>`;
+                });
+
+                container.innerHTML += `
+                    <div class="review-item">
+                        <div style="color:${statusColor}; font-weight:bold; margin-bottom:5px;">Q${i+1}: ${statusText}</div>
+                        <div>${q.text}</div>
+                        <div style="margin:10px 0; padding-left:15px; border-left:3px solid #ddd;">${optsHtml}</div>
+                        <div class="explanation"><strong>Explanation:</strong> ${q.exp}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleSidebar() {
+            els.sidebar.classList.toggle('active');
+        }
+
+        // Initialize
+        init();
+
+    </script>
+</body>
+</html>
