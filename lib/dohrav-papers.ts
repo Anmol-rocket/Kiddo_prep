@@ -6000,4 +6000,1215 @@ export const dohravPapers: DohravPaper[] = [
     ]
   }
 
+,
+  // ==================== PAPER 7 (from paper6.pdf) ====================
+  {
+    "id": 7,
+    "name": "Paper 7",
+    "subtitle": "Paper 6 Radiographer Practice",
+    "totalQuestions": 100,
+    "questions": [
+      {
+        "id": "p7_q1",
+        "question": "During  a fluoroscopic  examination,  the radiologist  selects  a smaller  field  size on a \nmultifield  image  intensifier  to better  visualize  a suspected  lesion.  What  is the main  \nadvantage  of this feature?",
+        "options": [
+          "It generates color images for enhanced tissue differentiation",
+          "It entirely removes geometric distortion from the fluoroscopic image",
+          "It completely eliminates patient radiation exposure during imaging",
+          "It enables variable magnification with improved spatial resolution"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Selecting a smaller field size on an image intensifier increases the voltage to the electrostatic lenses, zooming the image and improving spatial resolution."
+      },
+      {
+        "id": "p7_q2",
+        "question": "During  radiation  safety  training,  a supervisor  describes  a device  that detects  ionizing  \nradiation  by producing  an electrical  pulse  when  particles  enter  a gas filled  tube.  Which  \nmonitoring  device  is being  described?",
+        "options": [
+          "Scintillation counter",
+          "Geiger -Muller counter",
+          "Ionization chamber survey  meter",
+          "Thermoluminescent dosimeter"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A Geiger-M\u00fcller counter is a gas-filled tube that detects ionizing radiation by producing a large electrical pulse for every ionizing event."
+      },
+      {
+        "id": "p7_q3",
+        "question": "An occlusal  radiograph  shows  image  distortion  with  foreshortening  and unequal  \nenlargement  of structures.  Which  factor  is most  likely  responsible?",
+        "options": [
+          "Incorrect vertical angulation of the X -ray beam",
+          "Improper horizontal beam alignment with receptor",
+          "Excessive exposure time during image acquisition",
+          "Incorrect receptor placement within the oral cavity"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Foreshortening in dental radiography occurs when the vertical angulation of the X-ray beam is excessive or too steep relative to the receptor."
+      },
+      {
+        "id": "p7_q4",
+        "question": "A 50-year -old female  has a wide  pelvis.  The lumbosacral  junction  (L5-S1) is \nforeshortened  on the latera l view.  Which  technical  adjustment  improves  visualization?",
+        "options": [
+          "Flex knees fully",
+          "Angle tube 5 -8 caudally",
+          "Increase SID",
+          "Angle tube 10\u00b0 cephalad"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In a lateral L5-S1 projection for a patient with a wide pelvis, a 5 to 8 degree caudal tube angulation is required to parallel the divergent beam with the intervertebral disc space."
+      },
+      {
+        "id": "p7_q5",
+        "question": "A radiology  department  notices  that an X-ray generator  remains  warm  even  during  \nperiods  of minimal  use. Which  type of transformer  loss is primarily  responsible  for this \ncontinuous  heat generation  and why is it significant?",
+        "options": [
+          "Iron losses, because they remain relatively constant from no load to full load",
+          "Mechanical losses, because they are caused by moving parts in the transformer",
+          "Magnetic losses, because they only occur when the transformer is loaded",
+          "Radiation losses, because they dissipate energy as electromagnetic wa ves"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Iron losses in the transformer core occur continuously as long as the transformer is connected to an alternating voltage source, leading to constant heat generation."
+      },
+      {
+        "id": "p7_q6",
+        "question": "Which  statement  most  accurately  defines  electric  potential  in electrostatics?",
+        "options": [
+          "Electric potential is energy stored per unit charge for work",
+          "Electric potential is movement of electrons through conductor",
+          "Electric potential is resistance to flow of current in circuit",
+          "Electric potential i s force acting between two charges in field"
+        ],
+        "correctAnswer": 0,
+        "explanation": "In electrostatics, electric potential is defined as the electric potential energy per unit charge, representing the work done to move a test charge."
+      },
+      {
+        "id": "p7_q7",
+        "question": "A radiographer  increas es the distance  between  the X-ray tube  and the patient.  In this \ncase,  which  change  is most  directly  expected  due to the inverse  square  law?",
+        "options": [
+          "Decrease in beam intensity",
+          "Increase in scatter radiation",
+          "Increase in photon energy",
+          "Change in wavelength"
+        ],
+        "correctAnswer": 0,
+        "explanation": "According to the inverse square law, as the distance from the X-ray source increases, the X-ray beam intensity decreases proportionally to the square of the distance."
+      },
+      {
+        "id": "p7_q8",
+        "question": "During  an AP axial  projection  of the toes,  what  is the primary  purpose  of angling  the \ncentral  ray posteriorly  approximately  15\u00b0 toward  the heel?",
+        "options": [
+          "To open interphalangeal joint spaces by compensating for phalangeal curvature",
+          "To superimpose metatarsal heads for accurate sesamoid visualization studies",
+          "To align the plantar surface parallel with the longitudinal image receptor",
+          "To reduce magnification of dista l phalanges during weight -bearing evaluation"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Angling the central ray 15 degrees posteriorly aligns the beam parallel to the interphalangeal joint spaces, compensating for the natural curvature of the toes."
+      },
+      {
+        "id": "p7_q9",
+        "question": "Children  exposed  to radiation  show  lasting  changes  in their  genes.  What  specific  \nalteration  in the chromosome  is most  likely  to be the cause?",
+        "options": [
+          "Ring chromosome",
+          "Chromatid break",
+          "Dicentric chromosome",
+          "Translocation"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Translocations are stable chromosome aberrations that allow the cell to divide, meaning these alterations can persist and lead to lasting genetic changes."
+      },
+      {
+        "id": "p7_q10",
+        "question": "Which  device  in X-ray equipment  uses capacitors  for energy  storage?",
+        "options": [
+          "Capacitor discharge unit",
+          "Step-up transformer",
+          "Rectifier circuit",
+          "Filamen t circuit"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A capacitor discharge unit stores electrical charge in large capacitors and releases it rapidly to the X-ray tube to produce a short exposure."
+      },
+      {
+        "id": "p7_q11",
+        "question": "In the PA axial  projection  of the olecranon  process,  what  is the main  reason  for \nangling  the central  ray 20\u00b0 toward  the wrist?",
+        "options": [
+          "Align the forearm parallel to the image receptor",
+          "Reduce superimposition of the radial head by angling the ray 20 toward the wrist",
+          "Visualize the curved extremity and articular margin of the olecranon process",
+          "Demonstrate the olecranon fossa clearly by giving angle of the central ray"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Angling the central ray 20 degrees toward the wrist helps to profile the olecranon process and clearly visualize its curved articular margin free from overlapping structures."
+      },
+      {
+        "id": "p7_q12",
+        "question": "A medical  physicist  is tasked  with  detecting  low-energy  beta emissions  from  tritium  in \na research  laboratory.  Which  method  would  provide  highest  detection  efficiency  for this \nscenario  and why?",
+        "options": [
+          "Employing a solid inorganic crystal in a fixed detector device",
+          "Relying on gamma camera systems for beta particle detection",
+          "Detector arrays adapted from computed tomography imaging",
+          "Liquid scintillation detectors mixed with radioactive sample"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Tritium emits very low-energy beta particles; liquid scintillation detectors mix the sample with scintillating fluid to eliminate window absorption and maximize efficiency."
+      },
+      {
+        "id": "p7_q13",
+        "question": "During  a radiographic  procedure,  a patient  is unable  to breathe  or communicate  due \nto choking.  Which  first aid is appropriate?",
+        "options": [
+          "Provide drinking water",
+          "Hold off and watch",
+          "Perform the Heimlich technique",
+          "Gently pat on the back"
+        ],
+        "correctAnswer": 2,
+        "explanation": "If a patient is choking and unable to breathe due to airway obstruction, performing the Heimlich maneuver is the appropriate immediate first aid response."
+      },
+      {
+        "id": "p7_q14",
+        "question": "During  a direct  fluoroscopy  exam,  the radiologist  uses a compression  device  to \nimprove  image  quality. What  is the primary  function  of this accessory  in the context  of \nfluoroscopy?",
+        "options": [
+          "Reduces patient thickness and enhances image contrast",
+          "Assists in patient posture and stability",
+          "Shields the operator from direct x -ray beam",
+          "Maximize exposure to scattered ra diation"
+        ],
+        "correctAnswer": 0,
+        "explanation": "A compression device reduces patient thickness and scatters less radiation, which enhances image contrast and improves overall image quality."
+      },
+      {
+        "id": "p7_q15",
+        "question": "A pulsating  X-ray beam  with  a noticeable  voltage  ripple  and reduced  average  photon  \nenergy  is observed  by a radiographer.  Which  of the following  generators  is used?",
+        "options": [
+          "Three -phase generator",
+          "Single -phase full -wave rectified generator",
+          "Capacitor -discharge generator",
+          "High -frequency generator"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A single-phase full-wave rectified generator has a 100% voltage ripple, causing the output to pulsate from zero to peak and reducing average photon energy."
+      },
+      {
+        "id": "p7_q16",
+        "question": "A technologist  is setting  up the imaging  equipment  for an AP supine  clavicle  X-ray. \nWhich  step is required  to correctly  center  the X-ray beam?",
+        "options": [
+          "Aligning the beam to the lateral end of the clavicle",
+          "Direct vertical beam to middle of clavicle region",
+          "Aiming the beam at the sternal notch",
+          "Focusing the beam on the humeral head"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For an AP supine clavicle projection, the central ray should be directed perpendicularly to the mid-shaft of the clavicle to optimally visualize the entire bone."
+      },
+      {
+        "id": "p7_q17",
+        "question": "Which  combination  of products  best characterizes  the initial  chemical  changes  in \nwater  after  exposure  to ionizing  radiation?",
+        "options": [
+          "Only free radicals (H and OH -) are produced",
+          "Stable water molecules and oxygen gas are produced",
+          "Hydr ogen ions, hydroxyl ions, and free radicals (H and OH -)",
+          "Only hydrogen ions (H+) and hydroxyl ions (OH -) are produced"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Radiolysis of water initially produces ion pairs and highly reactive free radicals, which are responsible for indirect biological damage."
+      },
+      {
+        "id": "p7_q18",
+        "question": "Which  circuit  in the X-ray generator  accelerates  electrons  as they move  from  the \ncathode  to the anode?",
+        "options": [
+          "Filament circuit",
+          "High -voltage circuit",
+          "Detector circuit",
+          "Collimator circuit"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The high-voltage circuit provides the large potential difference needed to rapidly accelerate electrons from the cathode filament to the anode target."
+      },
+      {
+        "id": "p7_q19",
+        "question": "The ball catcher's  (Norgaard)  projection  of both  hands  is most  specifically  useful  for \nwhich  purpose?",
+        "options": [
+          "Visualizes the scaphoid bone without superimposition",
+          "Evaluates carpal alignment in wrist instability",
+          "Demonstrate s fractures of the distal phalanges",
+          "Detects early rheumatoid arthritis and 5th metacarpal fractures"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The Norgaard projection is primarily used to detect early erosive changes of rheumatoid arthritis at the metacarpophalangeal joints."
+      },
+      {
+        "id": "p7_q20",
+        "question": "During  a long fluoroscopy  procedure,  a radiographer  observes  the TLD  ring reading.  \nWhy  is extremity  monitoring  important?",
+        "options": [
+          "X-ray energy decreases",
+          "Hands receive higher localized doses",
+          "Tube voltage increases",
+          "Patient dose is reduced"
+        ],
+        "correctAnswer": 1,
+        "explanation": "During fluoroscopy, the operator's hands are often placed near the primary beam and high-intensity scatter field, resulting in higher localized radiation doses."
+      },
+      {
+        "id": "p7_q21",
+        "question": "During  Kirschner  wire  insertion  in theatre  radiography,  which  positioning  strategy  \nbest optimizes  image  quality  and surgical  workflow?",
+        "options": [
+          "Placing t he X -ray tube closer to the limb and using continuous fluoroscopy",
+          "Positioning the limb closer to the X -ray tube to increase beam intensity",
+          "Keeping equal distance between tube, limb, and detector",
+          "Positioning the affected limb closer to the detector by rotating the C -arm 180\u00b0"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Positioning the patient's limb as close as possible to the detector reduces magnification, improves image sharpness, and minimizes radiation dose."
+      },
+      {
+        "id": "p7_q22",
+        "question": "Which  of the following  best describes  a patient's  right  to consent  to a procedure?",
+        "options": [
+          "A patient must sign a blank consent form for future completion.",
+          "Consent can be transfe rred to another physician for the same procedure.",
+          "A patient loses the right to refuse examination after signing the form.",
+          "A patient can revoke consent at any time after signing."
+        ],
+        "correctAnswer": 3,
+        "explanation": "Informed consent is an ongoing process, and a patient retains the fundamental legal right to withdraw their consent and refuse the examination at any time."
+      },
+      {
+        "id": "p7_q23",
+        "question": "A patient  receives  equal  absorbed  doses  from  X-rays and beta particles.  Which  \nstatement  best describes  the biological  effect  on the tissues?",
+        "options": [
+          "Both X -rays and beta particles have equal biologi cal effect since same quality factor.",
+          "X-rays cause more biological damage due to higher energy transfer.",
+          "Beta particles are significantly more damaging than X -rays at equal doses.",
+          "Beta particles have a lower quality factor than X -rays, resulting in less biological impact."
+        ],
+        "correctAnswer": 0,
+        "explanation": "X-rays and beta particles both have a radiation weighting factor of 1, meaning equal absorbed doses will produce approximately equal biological effects."
+      },
+      {
+        "id": "p7_q24",
+        "question": "During  posterior  oblique  imaging  of the sacroiliac  joints,  which  patient  positioning  \nerror  most  likely  results  in partial  closure  of the joint  space  nearest  the image  receptor?",
+        "options": [
+          "Increased source -to-image distance reducing joint magnification effects",
+          "Improper breathing technique causing motion across joint space",
+          "Excessive c ephalic angulation producing iliac foreshortening artifacts",
+          "Insufficient body rotation causing persistent sacral superimposition"
+        ],
+        "correctAnswer": 3,
+        "explanation": "A posterior oblique of the SI joints requires adequate body rotation; insufficient rotation fails to fully open the joint space, resulting in overlap."
+      },
+      {
+        "id": "p7_q25",
+        "question": "During  lateral  frontal  sinus  imaging,  magnificatio n of sinus  outlines  is observed.  \nWhich  adjustment  will reduce  this?",
+        "options": [
+          "Angle the X -ray tube 15\u00b0 cephalad",
+          "Rotate the patient 15\u00b0 toward the tube",
+          "Increase Object -to-Image distance (OID)",
+          "Keep frontal sinus close to detector"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Magnification is primarily caused by an increased object-to-image receptor distance (OID), so keeping the sinuses close to the detector minimizes this effect."
+      },
+      {
+        "id": "p7_q26",
+        "question": "A radiologic  technologist  has to ensure  precise  cranial  positioning  and minimize  \npatient  movement  during  the procedure,  which  specialized  table  is most  appropriate  for \nthis scenario?",
+        "options": [
+          "A standard X -ray table de signed for chest and abdominal studies",
+          "A portable imaging table equipped primarily for mobile examinations",
+          "A flat -top general radiography table with basic positioning aids",
+          "A dedicated skull table with adjustable head clamps and fine angulation controls"
+        ],
+        "correctAnswer": 3,
+        "explanation": "A dedicated skull table is specifically designed with adjustable head clamps and precise angulation controls to ensure exact cranial positioning."
+      },
+      {
+        "id": "p7_q27",
+        "question": "In a scenario  where  low-energy  X-rays interact  with  an atom  and result  in the \nemission  of radiation  as the atom  returns  to its undisturbed  state,  which  specific  process  is \nmost  consistent  with  this mechanism?",
+        "options": [
+          "Pair production",
+          "Coherent scattering",
+          "Photoelectric effect",
+          "Compton scattering"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Coherent scattering occurs when low-energy X-rays interact with an atom without ionizing it; the atom briefly absorbs the energy and emits an identical X-ray photon."
+      },
+      {
+        "id": "p7_q28",
+        "question": "A technician  notices  that adjusting  the varia ble resistor  in the filament  circuit  causes  \na large  change  in x-ray tube  current,  even  though  the filament  voltage  changes  only \nslightly.  What  is the most  likely  explanation  for this observation?",
+        "options": [
+          "Step-down transformer produces unstable voltage output to filament",
+          "Filament wire shows damage affecting normal current flow behavior",
+          "Variable resistor increases the applied high voltage to the tube",
+          "Small changes in filament current cause large changes in tube current"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Thermionic emission is highly sensitive to temperature, so even small changes in filament current lead to disproportionately large changes in X-ray tube current."
+      },
+      {
+        "id": "p7_q29",
+        "question": "Before  positioning  a patient  for a chest  X-ray, a radiologic  technologist  performs  \nhand  hygiene  using  an alcohol -based  hand  rub. What  is the primary  purpose  of this step in \ninfection  control?",
+        "options": [
+          "To ensure the hands are comfortable before handling the patient",
+          "To remove transient microbes to reduce pathogen transmission",
+          "To prevent normal flora from causing disease in  the patient",
+          "To replace the need for gloves during patient care"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The primary purpose of hand hygiene with alcohol-based rubs is to effectively eliminate transient microbes and reduce the risk of pathogen transmission."
+      },
+      {
+        "id": "p7_q30",
+        "question": "During  a lateral  lumbar  spine  radiograph,  a radiographer  appli es the air gap \ntechnique  by increasing  the object -to-image  distance  (OID)  to reduce  scatter  radiation  \nreaching  the detector.  Which  statement  best describes  the primary  trade -off associated  \nwith  this modification?",
+        "options": [
+          "Increased photon energy with corresponding reduction in wavelength of the beam",
+          "Reduced scatter reaching the detector but increased magnification of th e image",
+          "Decrease in geometric magnification due to increased object -to-image distance",
+          "Complete elimination of scatter radiation before reaching the detector"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The air gap technique reduces scatter reaching the image receptor by increasing the OID, which inherently causes geometric magnification and a decrease in sharpness."
+      },
+      {
+        "id": "p7_q31",
+        "question": "When  planning  radiation  shielding  for an exposure  room  with  multiple  X-ray units,  \nwhat  specific  challenge  arises  in defining  a \"single  source\"  for calculation  purposes?",
+        "options": [
+          "Determining a representative source point among multiple X -ray units prese nt",
+          "Identifying the closest patient position relative to the exposure room layout",
+          "Ensuring all installed equipment has uniform size within the exposure room",
+          "Selecting the appropriate tissue weighting factor for dose estimation methods"
+        ],
+        "correctAnswer": 0,
+        "explanation": "When multiple X-ray machines are used in one room, determining the correct reference point for calculating radiation shielding is complex due to multiple potential sources."
+      },
+      {
+        "id": "p7_q32",
+        "question": "What  is the prima ry purpose  of cephalometric  radiography  in dental  imaging?",
+        "options": [
+          "Detect dental caries and pulp pathology",
+          "Visualize soft tissue lesions of the oral cavity",
+          "Evaluate temporomandibular joint movement during function",
+          "Assess dentofacial relationships using standardized imaging"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Cephalometric radiography is primarily utilized in orthodontics to systematically assess and measure dentofacial skeletal relationships in a reproducible manner."
+      },
+      {
+        "id": "p7_q33",
+        "question": "In an erect  abdominal  radiograph  of a patient  with  severe  scoliosis,  rotated  organ  \nshadows  are seen despite  correct  exposure.  Which  positioning  correction  should  be \nperformed  to minimize  this rotation?",
+        "options": [
+          "Adjust the patient such that the detector and midline are parallel.",
+          "Adjust the tube focus to correct the distortion",
+          "Increase exposure time to reduce blur",
+          "Reduce tube voltage to improve detail"
+        ],
+        "correctAnswer": 0,
+        "explanation": "To minimize apparent rotation of organ shadows in a patient with severe scoliosis, the mid-sagittal plane should be as parallel to the detector as the curvature allows."
+      },
+      {
+        "id": "p7_q34",
+        "question": "A patient  with  suspected  cervical  nerve  root compr ession  undergoes  a right  posterior  \noblique  projection  of the cervical  spine.  Which  anatomical  structure  should  be best \ndemonstrated  to assess  nerve  root involvement?",
+        "options": [
+          "Facet joints on the left side",
+          "Intervertebral foramina on the right side",
+          "Vertebral arches on both sides",
+          "Anterior vertebra l bodies"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Oblique projections of the cervical spine are primarily used to assess the intervertebral foramina for suspected nerve root compression."
+      },
+      {
+        "id": "p7_q35",
+        "question": "When  caring  for a patient  suspected  of a cervical  spine  injury,  what  is the best way to \nsafely  change  their  position  for a lateral  radiograph?",
+        "options": [
+          "Remove cervical collar before repositioning patient for imaging",
+          "Move the patient alone without assistance",
+          "Use wheelchair assistance to change patient position safely",
+          "Log roll with manual in -line cervical stabilization"
+        ],
+        "correctAnswer": 3,
+        "explanation": "For patients with suspected cervical spine injuries, any change in position must be performed using the log roll technique with manual in-line stabilization."
+      },
+      {
+        "id": "p7_q36",
+        "question": "A clinician  notices  significant  peripheral  penumbra  on a radiograph  while  using  an \naperture  diaphragm.  To increase  edge  sharpness  and minimize  this effect,  how should  the \ndiaphragm  be positioned?",
+        "options": [
+          "Keep the diaphragm stationary regardless of procedure type.",
+          "Attach the diaphragm directly to the x -ray tube housing.",
+          "Position the diaphragm as far from the x -ray target as possible.",
+          "Position the diaphragm as close to the x -ray target as possible."
+        ],
+        "correctAnswer": 2,
+        "explanation": "To minimize geometric unsharpness caused by an aperture diaphragm, it should be positioned as far from the X-ray tube target as practically possible."
+      },
+      {
+        "id": "p7_q37",
+        "question": "While  reviewing  multiple  projections  for a suspected  radial  head  fracture,  consistent  \ncentering  of the X-ray beam  is essential.  Where  should  the collimated  vertical  beam  be \ncentered  for all projections?",
+        "options": [
+          "The radial tuberosity",
+          "The midpoint of the forearm",
+          "The medial epicondyle of the humerus",
+          "The lateral epicondyle of the humerus"
+        ],
+        "correctAnswer": 3,
+        "explanation": "For targeted imaging of the radial head, the central ray is typically centered just distal to the lateral epicondyle of the humerus."
+      },
+      {
+        "id": "p7_q38",
+        "question": "Why  is informed  consent  considered  essential  before  perfo rming  a radiologic  \nexamination  on a patient?",
+        "options": [
+          "To ensure proper communication and voluntary patient agreement",
+          "To increase ra diation output during imaging examinations safely",
+          "To improve equipment calibration before diagnostic exposure begins",
+          "To minimize image processing errors during radiographic procedures"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Informed consent is legally required to ensure that the patient fully understands the risks and benefits and voluntarily agrees to undergo the procedure."
+      },
+      {
+        "id": "p7_q39",
+        "question": "A student  demonstrates  that radiation  properties  affect  Relative  Biological  \nEffectiveness  (RBE).  What  is the primary  factor  influencing  RBE?",
+        "options": [
+          "Patient height",
+          "Radiation type",
+          "Machine color",
+          "Room temperature"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Relative Biological Effectiveness (RBE) describes how different types of ionizing radiation produce varying degrees of biological damage for the same absorbed dose."
+      },
+      {
+        "id": "p7_q40",
+        "question": "Which  structure  is best visualized  through  the maxillary  sinuses  in the occipito -\nmental  30\u00b0 caudal  projection?",
+        "options": [
+          "Zygomatic arches only seen without other facial structures",
+          "Nasal septum seen in central nasal cavity region",
+          "Orbital floors and lower  orbital margins",
+          "Frontal sinuses demonstrated in superior cranial region"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The occipito-mental 30\u00b0 caudal projection is specifically designed to project the petrous bones inferior to the maxillary antra, optimally visualizing the orbital floors."
+      },
+      {
+        "id": "p7_q41",
+        "question": "A radiographer  records  a radial  pulse  of 72 bpm  by counting  for 15 seconds  and \nmultiplying  by four.  However,  the rhythm  appears  irregular.  What  is the most  appropriate  \nnext step?",
+        "options": [
+          "Repeat the radial pulse count over full sixty seconds for accuracy",
+          "Record the current value as the rate lies within normal adult limits",
+          "Switch to carotid pulse and repeat the fifteen second me asurement",
+          "Estimate the average by repeating several fifteen second counts"
+        ],
+        "correctAnswer": 0,
+        "explanation": "When an irregular pulse rhythm is detected during a short assessment, the clinical protocol is to recount the pulse for a full 60 seconds to accurately determine the rate."
+      },
+      {
+        "id": "p7_q42",
+        "question": "When  exposure  factors  are optimized  for equivalent  receptor  exposure,  what  is the \nprimary  advantage  of replacing  a single -phase  generator  with  a high -frequency  generator  \nfor pediatric  chest  imaging?",
+        "options": [
+          "Significantly decreased tube life with little impact on images",
+          "Lower image quality because of the greater  image noise",
+          "Reduced motion blur and more consistent image density",
+          "Increased patient radiation dose and higher tube wear"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A high-frequency generator allows for significantly shorter exposure times that reduce motion blur, which is a critical advantage in pediatric radiography."
+      },
+      {
+        "id": "p7_q43",
+        "question": "A pregnant  woman  is advised  about  radiation  safety.  Radiation  can harm the baby  \nmainly  by causing:",
+        "options": [
+          "Random genetic changes",
+          "Electric shock",
+          "Heat in the body",
+          "Mechanical injury"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Exposure of a fetus to ionizing radiation can induce random genetic mutations and teratogenic effects, potentially leading to developmental abnormalities."
+      },
+      {
+        "id": "p7_q44",
+        "question": "On a correctly  positioned  Rhese  method  radiograph,  the optic  foramen  should  be \nprojected:",
+        "options": [
+          "In the lower in ner quadrant of the orbit",
+          "In the lower outer quadrant of the orbit",
+          "In the center of the orbit",
+          "In the upper outer quadrant of the orbit"
+        ],
+        "correctAnswer": 1,
+        "explanation": "In a correctly positioned Rhese method projection, the optic foramen should be projected precisely into the lower outer quadrant of the orbit."
+      },
+      {
+        "id": "p7_q45",
+        "question": "A clinical  team  is evaluating  the quality  of images  from  a large  fluoroscopic  \nintensifier.  They  find that the center  of the image  is brighter  and clearer  than  the \nperiphery.  Which  combination  of effects  best explains  this observation?",
+        "options": [
+          "Unequal luminescence lag times and aluminum layer thickness",
+          "Accumulation of transmitted photons and uneven lag times",
+          "Greater minification gain and improved electron focusing in the center",
+          "Retrograde light  flow and scattered X -ray photons at the periphery"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The center of a fluoroscopic image appears brighter and sharper due to vignetting, which results from the convex shape of the input phosphor and optimal central focusing."
+      },
+      {
+        "id": "p7_q46",
+        "question": "During  an audit of paper  medical  records,  which  documentation  practice  most  \ndirectly  compromises  the legal  integrity  of the record?",
+        "options": [
+          "Erasing incorrect entry instead of striking through with correction",
+          "Using the abbreviations that are not approved by the institution",
+          "Leaving blank in fields instead of entering zero or not applicable",
+          "Delaying documentation until completion of entire work shift"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Erasing an incorrect entry compromises the legal integrity of a medical record; the proper procedure is to strike through the error with a single line."
+      },
+      {
+        "id": "p7_q47",
+        "question": "In the vertical  grid technique  for PA axial  Caldwell  projection  of the ethmoidal  \nsinuses,  what  anatomical  landmark  is centered  to the image  receptor?",
+        "options": [
+          "External auditory meatus",
+          "Acanthion",
+          "Nasion",
+          "Zygoma"
+        ],
+        "correctAnswer": 2,
+        "explanation": "For the PA axial Caldwell projection used to visualize the frontal and ethmoidal sinuses, the central ray is typically directed to exit at the nasion."
+      },
+      {
+        "id": "p7_q48",
+        "question": "During  a lateral  weight -bearing  radiograph  of clubfoot,  which  feature  confirms  \nproper  positioning  of the foot against  the floor?",
+        "options": [
+          "Heel raised above floor to achieve correct positioning",
+          "Toes flexed downward against the floor during imaging",
+          "Sole of foot flat on floor without any heel elevation",
+          "The foot is rotated slightly outward from the flo or"
+        ],
+        "correctAnswer": 2,
+        "explanation": "In a lateral weight-bearing radiograph, ensuring that the sole is flat on the floor is essential to accurately assess functional alignment under normal loading."
+      },
+      {
+        "id": "p7_q49",
+        "question": "In diagnostic  radiology,  if two photons  have  identical  energy  but are traveling  \nthrou gh different  media,  which  parameter  must  necessarily  be identical  for both?",
+        "options": [
+          "Velocity must differ based on their origin",
+          "Amplitude must be identical for both photons",
+          "Wavelength must be identical for both photons",
+          "Frequency must be identical for both photons"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The frequency of a photon is directly proportional to its energy and remains constant regardless of the medium it travels through."
+      },
+      {
+        "id": "p7_q50",
+        "question": "A physicist  evaluates  the mechanism  of X-ray production  in a tube  where  electrons  \nbypass  orbital  electrons  and interact  closely  with  the nucleus.  What  is the primary  outcome  \nof this interaction,  and how does  it affect  the X-ray beam's  energy  spectrum?",
+        "options": [
+          "Electron deceleration near nucleus producing continuous Xrays",
+          "Orbital electron excitation producing discrete characteristic Xrays",
+          "Photoelectric absorption producing discontinuous Xray energies",
+          "Electron absorption producing heat with continuous spectrum"
+        ],
+        "correctAnswer": 0,
+        "explanation": "When a high-speed electron approaches a target nucleus, it is decelerated by the electrostatic field, releasing its energy as a Bremsstrahlung X-ray photon."
+      },
+      {
+        "id": "p7_q51",
+        "question": "When  is the sitting  erect  projection  mainly  used  in radiography?",
+        "options": [
+          "The patient has no respiratory issues during examination",
+          "A lateral projection is not required for imaging evaluation",
+          "The patient requires high resolution imaging of anatomical structures",
+          "The patient cannot safely stand for a erect projection"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The sitting erect projection is used as an alternative when a patient cannot safely stand."
+      },
+      {
+        "id": "p7_q52",
+        "question": "Which  of the following  best defines  capacitance?",
+        "options": [
+          "The ability to conduct electricity per unit area",
+          "The amount of current produced per unit volt age",
+          "The ability of a system to store electric charge per unit voltage",
+          "The resistance to the flow of current"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Capacitance is the ratio of stored electric charge to the corresponding change in electric potential."
+      },
+      {
+        "id": "p7_q53",
+        "question": "Why  must  both  the ionization  chamber  and its electrometer  system  be calibrated  \nperiodically?",
+        "options": [
+          "To improve diagnostic image quality during radiographic procedures",
+          "To reduce patient discomfort during imaging examinations",
+          "To meet state and federal requirements for patient dose evaluation",
+          "To monitor occupational radiation exposure of personnel"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Calibration of ionization chambers is required to maintain accuracy and comply with regulatory standards for dose evaluation."
+      },
+      {
+        "id": "p7_q54",
+        "question": "When  considering  the design  of x-ray beam  restrictors,  which  characteristic  makes  \ncylinders  particularly  effective  in limiting  the x-ray beam  for specific  anatomical  regions?",
+        "options": [
+          "The flare of the cylinder is greater than the x -ray beam flare, enhancing control.",
+          "Beam restriction with a cylinder occurs at the far end of the barrel, reducing penumbra.",
+          "Cylinders primarily act as simple aperture diaphragms rather than true restrictors.",
+          "The base plate near the tube housing determines the beam restriction in cylinders."
+        ],
+        "correctAnswer": 1,
+        "explanation": "Cylinders restrict the beam at the distal end, minimizing penumbra and improving image sharpness."
+      },
+      {
+        "id": "p7_q55",
+        "question": "Which  combination  of beam  direction,  collimation,  and distance  is most  appropriate  \nfor a PA erect  scoliosis  radiograph  using  a CR system?",
+        "options": [
+          "Vertical beam centered at the iliac crest, collimated to cover a wide area of the spine, with FRD \nless than 150 cm",
+          "Oblique beam directed through the lower thoracic and upp er lumbar region, collimated tightly \naround T12 -L5, with FRD less than 100 cm",
+          "Horizontal beam perpendicular to the image receptor, collimated from C7 to the  anterior superior \niliac spines, with FRD greater than 180 cm",
+          "Angled beam centered at T7, collimated to include mainly the thoracic spine, with FRD set at \n120 cm"
+        ],
+        "correctAnswer": 2,
+        "explanation": "A long FRD minimizes magnification, and a horizontal beam accurately displays the spine."
+      },
+      {
+        "id": "p7_q56",
+        "question": "In practice,  why does  the base  plate  of a cone  often  act as the only restricting  element  \nof the x-ray beam?",
+        "options": [
+          "The cone is always attached directly to the focal spot",
+          "The cone material absorbs the primary x -ray beam",
+          "The flare of the cone is usually  greater than the flare of the x -ray beam",
+          "The aperture diaphragm limits the cone beam restriction"
+        ],
+        "correctAnswer": 2,
+        "explanation": "When the cone flares more than the x-ray beam, its base plate aperture becomes the only restricting element."
+      },
+      {
+        "id": "p7_q57",
+        "question": "When  positioning  for a cervical  spine  radiograph,  how should  the patient's  head  be \nadjusted  to best visualize  the upper  cervical  vertebrae?",
+        "options": [
+          "Adjust the head to avoid mandibular and occipital superimposition",
+          "Rotated to one side to visualize the atlantoaxial joint",
+          "Fully flexed to separate all cervical vertebrae",
+          "Fully extended to avoid mandibular overlap"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Correct chin adjustment ensures the upper cervical vertebrae are clearly visualized without overlapping the mandible or occiput."
+      },
+      {
+        "id": "p7_q58",
+        "question": "In a charge -coupled  device  (CCD)  used  in fluoroscopic  imaging  systems,  which  of the \nfollowing  processes  is responsible  for the orderly  movement  of stored  charge  during  image  \nreadout?",
+        "options": [
+          "The sequential transfer of charge through potential wells with empty  spaces",
+          "The prevention of charge mixing between different image regions is responsible",
+          "The initial image formation occurs at the photoelectric cathode surface",
+          "The scanning of image lines sequentially for display on monitor is responsible"
+        ],
+        "correctAnswer": 0,
+        "explanation": "CCDs readout charges through a sequential transfer process along potential wells."
+      },
+      {
+        "id": "p7_q59",
+        "question": "A radiographe r uses a digital  detector  with  the mobile  X-ray. What  is the advantage?",
+        "options": [
+          "Requires film processing",
+          "Increases patient motion",
+          "Immediate image review",
+          "Reduces tube voltage"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Digital detectors provide instant imaging results, allowing immediate review."
+      },
+      {
+        "id": "p7_q60",
+        "question": "A diagnostic  radiographer  doubles  the mAs  while  maintaining  constant  kVp,  \nfiltration,  and distance.  The exposure  measured  in air at a fixed  point  also doubles.  Which  \nstatement  best explains  this observation?",
+        "options": [
+          "Exposure is inversely proportional to the atomic number of the target material used.",
+          "Exposure depends only on photon energy and is independent of photon quantity.",
+          "Exposure is directly proportional to the total numb er of X -ray photons produced by the tube.",
+          "Exposure primarily represents the biological effect of radiation in human tissue."
+        ],
+        "correctAnswer": 2,
+        "explanation": "Doubling the mAs doubles the quantity of x-ray photons produced, which directly doubles the measured exposure."
+      },
+      {
+        "id": "p7_q61",
+        "question": "What  is the primary  reason  plastic  is used  instead of oil for insulation  in dental  and \nmobile  X-ray units?",
+        "options": [
+          "Plastic increases efficiency of X ray production in unit",
+          "Oil interferes with image quality in compact X ray units",
+          "Plastic allows higher voltage generation than oil",
+          "Heat production is low, so solid plastic insulation is sufficient"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Dental and mobile units produce less heat, allowing for the use of compact, solid plastic insulation instead of oil."
+      },
+      {
+        "id": "p7_q62",
+        "question": "Why  are filter -anode  combinations  important  in mammography  equipment  design?",
+        "options": [
+          "They shape the x -ray spectrum for optimal contrast and dose.",
+          "They increase the speed of image acquisition only.",
+          "They are used solely to reduce equipment cost.",
+          "They allow any filter to be used with any anode material."
+        ],
+        "correctAnswer": 0,
+        "explanation": "Specific filter-anode combinations ensure the x-ray spectrum matches breast tissue characteristics to maximize contrast and minimize dose."
+      },
+      {
+        "id": "p7_q63",
+        "question": "During  a fluoroscopic  barium  study,  improved  image  recording  quality  is achieved  by \nconverting  the image  intensifier  output  into an electronic  signal  using  a plumbicon  tube.  \nWhich  component  performs  this function?",
+        "options": [
+          "Control panel",
+          "TV camera system",
+          "X-ray generator",
+          "Image intensifier"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The plumbicon tube is a type of television camera tube used to convert the image intensifier output into a video signal."
+      },
+      {
+        "id": "p7_q64",
+        "question": "In diagnostic  radiography,  why does  the addition  of aluminum  filtration  to the X-ray \nbeam  increase  beam  quality  while  simultaneous ly reducing  patient  skin dose?",
+        "options": [
+          "Aluminum filtration decreases kilovoltage ripple during exp osure generation processes",
+          "Aluminum filtration converts scattered photons into primary beam radiation components",
+          "Aluminum filtration increases photon production through target ionization effects",
+          "Aluminum filtration removes low -energy photons with limited penetration ability"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Filtration absorbs lower energy photons that contribute to patient dose without improving the image."
+      },
+      {
+        "id": "p7_q65",
+        "question": "In an axial  calcaneus  projection,  the talocalcaneal  joint  is not visualized  despite  \nproper  exposure.  What  is the most  likely  cause?",
+        "options": [
+          "Grid cutoff artifact affecting image receptor exposure",
+          "Incorrect source -to-image distance during imaging",
+          "Incorrect central ray angulation during projection setup",
+          "Excessive image contrast obscuring joint visualization"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Precise angulation is required to prevent superimposition of other bony structures over the talocalcaneal joint."
+      },
+      {
+        "id": "p7_q66",
+        "question": "A 45-year -old woman's  bladder  is not clearly  visible  during  a lateral  KUB.  Which  \npositioning  modification  has the most  chance  of enhancing  visualisation?",
+        "options": [
+          "Raise the SID to 120 cm",
+          "Rotate the patient 15 degrees later ally",
+          "Flex the hips and knees slightly",
+          "Raise the arms over the head"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Flexing the hips and knees improves patient stability and helps maintain a true lateral position."
+      },
+      {
+        "id": "p7_q67",
+        "question": "A radiographer  operates  an X-ray tube  at a constant  tube  voltage.  If the filament  \ncurrent  is doubled,  what  is the expected  effect  on the X-ray beam?",
+        "options": [
+          "Tube current decreases due to electron repulsion",
+          "Tube current and photon energy both increase",
+          "Photon energy increases,  tube current remains the same",
+          "Tube current increases, photon energy remains the same"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Increasing filament current boosts thermionic emission and tube current, but photon energy depends only on tube voltage."
+      },
+      {
+        "id": "p7_q68",
+        "question": "A patient  with  suspected  nasal  fracture  requires  a lateral  nasal  bone  radiograph.  How  \nshould  the head  be aligned  relativ e to the image  receptor  for correct  positioning?",
+        "options": [
+          "The median sagittal plane should be perpendicular and the interpupillary line parallel to the \nimage receptor",
+          "The nose should be positioned away from the center of the image receptor",
+          "The median sagittal plane  should be parallel and the interpupillary line perpendicular to the \nimage receptor",
+          "Both the median sagittal plane and interpupillary line should be parallel to the image receptor"
+        ],
+        "correctAnswer": 2,
+        "explanation": "This alignment ensures a true lateral projection of the nasal bones."
+      },
+      {
+        "id": "p7_q69",
+        "question": "A 58-year -old patient  cannot  be positioned  erect  for abdominal  imaging.  To detect  \nfree intraperitoneal  air when  USG  or CT imaging  are unavailable,  which  radiographic  \ntechnique  is most  appropriate?",
+        "options": [
+          "Prone abdominal radiograph",
+          "Right lateral decubitus abdominal radiograph",
+          "Left lateral decubitus abdominal radiograph",
+          "Supine abdomin al radiograph"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The left lateral decubitus allows free air to rise over the liver shadow, avoiding the gastric bubble on the right."
+      },
+      {
+        "id": "p7_q70",
+        "question": "In indirect  fluoroscopy,  what  does  the automatic  brightness  control  system  primarily  \nadjust  to maintain  image  quality?",
+        "options": [
+          "Fluoroscopic field of view",
+          "Screen resolution",
+          "X-ray exposure parameters",
+          "Patient position  \nSection B"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The ABC system automatically adjusts kVp and mA to maintain consistent image brightness during fluoroscopy."
+      },
+      {
+        "id": "p7_q71",
+        "question": "Till Feb 2025,  which  state  leads  in Solar  Power  Expansion  (Railway  Stations  Provided  \nwith  Solar  Plants)  with  the highest  275 installations  units  among  all states  and UTs?",
+        "options": [
+          "Bihar",
+          "Rajasthan",
+          "Maharashtra",
+          "Gujarat"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Rajasthan has the highest number of railway stations provided with solar plants."
+      },
+      {
+        "id": "p7_q72",
+        "question": "JYLP  is related  to SHUY  in a certain  way based  on the English  alphabetical  order.  In \nthe same  way,  TIVZ  is related  to CREI.  To which  of the following  options  is UJWA  related  \nto, following  the same  logic?",
+        "options": [
+          "DSFR",
+          "DSFJ",
+          "DSLI",
+          "DSEW"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Each letter in the word is shifted forward by 9 positions in the English alphabet."
+      },
+      {
+        "id": "p7_q73",
+        "question": "If x is the mean  proportional  between  45 and 180, find the mean  propo rtional  between  \nx and \u20b9250.",
+        "options": [
+          "\u20b9100",
+          "\u20b990",
+          "150",
+          "60"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Mean proportional between 45 and 180 is 90; mean proportional between 90 and 250 is 150."
+      },
+      {
+        "id": "p7_q74",
+        "question": "The temples  of the Khajuraho  Group  of Monuments  are regarded  as classic  examples  \nof which  broad  school  of Indian  temple  architecture?",
+        "options": [
+          "Dravida",
+          "Vesara",
+          "Nagara",
+          "Hemadpanti"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The Khajuraho Group of Monuments are classic examples of the Nagara school of temple architecture."
+      },
+      {
+        "id": "p7_q75",
+        "question": "Kiran  borrowed  a sum of \u20b918,000  at a certain  rate of simple  interest  for 4 years.  If he \npaid  an interest  of \u20b94,500  at the end of the period  at x% per annum  rate of interest,  the \nvalue  of x is:",
+        "options": [
+          "5.25",
+          "7.25",
+          "6.25",
+          "8.25"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Interest = (P*R*T)/100; substituting the values gives R = (4500*100) / (18000*4) = 6.25."
+      },
+      {
+        "id": "p7_q76",
+        "question": "A tank  has two inlet  pipes  P and Q that can fill it in 10 and 12 minutes  respectively.  A \nwaste  pipe can drain  the tank  in 15 minutes.  If all the pipes  are opened  together  and after  3 \nminutes  the waste  pipe and pipe Q are closed,  how long will it take to fill the tank  \ncompletely?",
+        "options": [
+          "9.5 minutes",
+          "7.5 minutes",
+          "8.5 minutes",
+          "6.5 minutes"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The net rate initially is 7 units/min. After 3 minutes, 21 units are filled; the remaining 39 units take 39/6 = 6.5 minutes."
+      },
+      {
+        "id": "p7_q77",
+        "question": "Which  committee  was constituted  by the Government  of India  in 1991  to examine  and \nrecommend  reforms  in the banking  and financial  sector?",
+        "options": [
+          "Narasimham Committee",
+          "Chakravarty Committ ee",
+          "Rangarajan Committee",
+          "Kelkar Committee"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The Narasimham Committee was established in 1991 to recommend reforms for India banking and financial sectors."
+      },
+      {
+        "id": "p7_q78",
+        "question": "What  should  come  in place  of '?' in the given  series  based  on the English  alphabetical  \norder?  \nLKO QPT VUY AZD ?",
+        "options": [
+          "FGJ",
+          "FEI",
+          "FFH",
+          "FDH"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Each sequence shifts characters by 5 letters; following AZD, the next group is FEI."
+      },
+      {
+        "id": "p7_q79",
+        "question": "If + means  -, - means  x, x means  /, / means  +, then  what  will come  in place  of the \nquestion  mark  (?) in the following  equation?  \n35 - 20 / 86 + 375 x 5 = ?",
+        "options": [
+          "711",
+          "715",
+          "722",
+          "755"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Substituting the operators: 35 * 20 + 86 - 375 / 5 = 700 + 86 - 75 = 711."
+      },
+      {
+        "id": "p7_q80",
+        "question": "The marked  price  of a cooker  is the same  at four shops  I, II, III and IV. Shop I allows  \ntwo successive  discounts  of 24%  and 21%,  shop  II allows  successive  discounts  of 47%  and \n26%,  shop  III allows  successive  discounts  of 50%  and 66%  and shop  IV allows  successive  \ndiscounts  of 14%,  20%,  and 43%  on the marked  price  of the cooker.  Which shop  is selling  \nthe cooker  at the lowest  price?",
+        "options": [
+          "I",
+          "II",
+          "IV",
+          "III"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Shop III offers 50% and 66% discounts, resulting in the lowest effective selling price."
+      },
+      {
+        "id": "p7_q81",
+        "question": "K, S, P, A, J live on 5 different  floors  of the same  building.  The lowermost  floor  in the \nbuilding  is numbered  1, the floor  above  it, number  2 and so on till the topmost  floor  is \nnumbered  5. 3 people  live between  S and K. 2 people  live between  J and K. Only  1 person  \nlives  between  S and A. K does  not live on the top floor.  Who  lives  on floor  number  3?",
+        "options": [
+          "J",
+          "P",
+          "A",
+          "K"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Based on the constraints, K is on floor 1, S is on 5, J is on 4, and A is on floor 3."
+      },
+      {
+        "id": "p7_q82",
+        "question": "What  will be the amount  after  1 year,  if \u20b93,200  is invested  at 20%  compound  interest  \nper annum,  compounded  half-yearly?",
+        "options": [
+          "\u20b92,899",
+          "\u20b93,872",
+          "\u20b93,282",
+          "\u20b94,319"
+        ],
+        "correctAnswer": 1,
+        "explanation": "20% p.a. compounded half-yearly for 1 year equals 2 periods at 10%, amounting to 3200 * (1.1)^2 = 3872."
+      },
+      {
+        "id": "p7_q83",
+        "question": "How  many  prime  numbers  are there  between  90 and 130?",
+        "options": [
+          "7",
+          "9",
+          "6",
+          "8"
+        ],
+        "correctAnswer": 0,
+        "explanation": "There are 7 prime numbers between 90 and 130."
+      },
+      {
+        "id": "p7_q84",
+        "question": "What  should  come  in place  of '?' in the given  series?  \n8 11 18 29 44 ?",
+        "options": [
+          "63",
+          "18",
+          "11",
+          "46"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The differences between consecutive terms are 3, 7, 11, 15, and the next difference is 19."
+      },
+      {
+        "id": "p7_q85",
+        "question": "Which  organization  marks  the International  Day of Plant  Health  in Rome  on 12 May  \n2026?",
+        "options": [
+          "World Health Organization",
+          "Food and Agriculture Organization of the United Nations",
+          "World Food Programme",
+          "United Nations Educational, Scientific and Cultural Organizat ion"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The FAO marks the International Day of Plant Health at its headquarters in Rome."
+      },
+      {
+        "id": "p7_q86",
+        "question": "Har Dayal  emerged  as one of the most  prominent  leaders  of which  revolutionary  \ngroup?",
+        "options": [
+          "India House",
+          "Anushilan Samiti",
+          "Arya Samaj",
+          "Ghadr Party"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Har Dayal was a prominent leader and one of the founders of the Ghadr Party."
+      },
+      {
+        "id": "p7_q87",
+        "question": "60%  of 10%  of 4/8 of a number  is 243. The number  is:",
+        "options": [
+          "10730",
+          "8100",
+          "9380",
+          "9280"
+        ],
+        "correctAnswer": 1,
+        "explanation": "60% of 10% of 0.5 is 0.03. 243 divided by 0.03 equals 8100."
+      },
+      {
+        "id": "p7_q88",
+        "question": "In the following  number -pairs,  the second  number  is obtained  by applying  certain  \nmathematical  operations  to the first number.  Select  the number -pair in which  the numbers  \nare related  in the same  way as are the numbers  of the following  number -pairs.  \n(Note: Operations  should  be performed  on the whole  numbers,  without  breaking  down  the \nnumbers  into their constituent  digits.  E.g. 13 - Operations  on 13 such as \nadding/subtracting/multiplying  to 13 can be performed.  Breaking  down  13 into 1 and 3 and then \nperfo rming  mathematical  operations  on 1 and 3 is not allowed.)  \n25 - 50 \n33 - 66",
+        "options": [
+          "42 - 88",
+          "34 - 58",
+          "23 - 45",
+          "132 - 264"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The pattern involves multiplying the first number by 2 to obtain the second number."
+      },
+      {
+        "id": "p7_q89",
+        "question": "Which  among  the following  constitutional  changes  was introduced  by the Seventh  \nConstitutional  Amendment  Act, 1956?",
+        "options": [
+          "Insertion of the Fundamental Duties of citizens",
+          "Introduction of the Panchay ati Raj system as a constitutional body",
+          "Lowering of the voting age from 21 years to 18 years",
+          "The abolition of the three categories of States (Part A, Part B and Part C States) and the \nclassification of certai n areas as Union territories"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The 7th Amendment implemented the States Reorganisation Act, abolishing the Part A, B, and C state categories."
+      },
+      {
+        "id": "p7_q90",
+        "question": "Which  of the following  rivers  is a tributary  of the Ganga  River?",
+        "options": [
+          "Godavari",
+          "Mahanadi",
+          "Yamuna",
+          "Sabarmati"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The Yamuna River is the longest and second-largest tributary of the Ganga River."
+      },
+      {
+        "id": "p7_q91",
+        "question": "Seven  friends  E, F, G, J, K, L and M are sitting  around  a circular  table  facing  the \ncenter  of the table.  Only  two people  sit between  F and G when  counted  from  the right  of F. \nOnly  two people  sit between  G and K. Only  three  people  sit between  F and L. J sits to the \nimmediate  left of E. Who  sits third  to the left of M?",
+        "options": [
+          "J",
+          "E",
+          "G",
+          "F"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Seating arrangement confirms that M is at position 6 and E is third to the left of M."
+      },
+      {
+        "id": "p7_q92",
+        "question": "Which  property  of a material  describes  its inability  to return  to its original  shape  \nafter  being  deformed  by an external  force?",
+        "options": [
+          "Susceptibility",
+          "Plasticity",
+          "Conduction",
+          "Elasticity"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Plasticity is the property that describes a material inability to return to its original shape after deformation."
+      },
+      {
+        "id": "p7_q93",
+        "question": "Two  trains  of equal  lengths  are running  on parallel  tracks  in the opposite  direction  at \nspeeds  of 86 km/hr  and 94 km/hr,  respectively.  The faster  train  passes  the slower  train  in \n36 seconds.  Find  the length  of each  train.",
+        "options": [
+          "640 metres",
+          "500 me tres",
+          "900 metres",
+          "780 metres"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Relative speed is 180 km/hr (50 m/s); distance covered in 36s is 1800m. Since 2L = 1800m, L = 900m."
+      },
+      {
+        "id": "p7_q94",
+        "question": "The average  volume  of three  containers  is 20 liters.  If a fourth  container  is added  to \nthe group,  the new average  volume  becomes  25 liters.  What  is the volume  of the fourth  \ncontainer?",
+        "options": [
+          "30 liters",
+          "40 liters",
+          "15 liters",
+          "60 liters"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The sum for 3 containers is 60L; for 4 it is 100L. The fourth container is 100 - 60 = 40 liters."
+      },
+      {
+        "id": "p7_q95",
+        "question": "A train  is traveling  at a constant  speed  of 54 km/h.  How  many  seconds  will it take for \nthe train  to cover  a distance  of 450 meters?",
+        "options": [
+          "40 seconds",
+          "60 seconds",
+          "20 seconds",
+          "30 seconds"
+        ],
+        "correctAnswer": 3,
+        "explanation": "54 km/h is 15 m/s. It takes 450 / 15 = 30 seconds to cover 450 meters."
+      },
+      {
+        "id": "p7_q96",
+        "question": "Which  medicine,  introduced  in 2025,  became  India's  first completely  home-developed  \nantibiotic?",
+        "options": [
+          "Erythromycin",
+          "Nafithromycin",
+          "Tetracycline",
+          "Clindamycin"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Nafithromycin is a novel home-developed antibiotic introduced to combat respiratory tract infections."
+      },
+      {
+        "id": "p7_q97",
+        "question": "Based  on the English  alphabetical  order,  three  of the following  four letter -cluster  \npairs  are alike  in a certain  way and thus form  a group.  Which  letter -cluster  pair DOES  \nNOT  belong  to that group?  \n(Note:  The odd one out is not based  on the number  of consonants/vowels  or their position  in the \nletter -cluster.)",
+        "options": [
+          "FE - KL",
+          "DC - IJ",
+          "BA - HG",
+          "NM - ST"
+        ],
+        "correctAnswer": 2,
+        "explanation": "In all other pairs, the difference between the starting letters is 5, but for BA and HG it is 6. Also both clusters are decreasing."
+      },
+      {
+        "id": "p7_q98",
+        "question": "Who  was honoured  with  the Dadasaheb  Phalke  Award  at the 70th  National  Film  \nAwards  in 2024?",
+        "options": [
+          "Rajinikanth",
+          "Amitabh Bachchan",
+          "Mithun Chakraborty",
+          "Kamal Haasan"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Mithun Chakraborty was honored with the Dadasaheb Phalke Award for his contribution to Indian cinema."
+      },
+      {
+        "id": "p7_q99",
+        "question": "Each  vowel  in the word  SQUAWKY  is changed  to the letter  immediately  following  it \nin the English  alphabetical  order  and each  consonant  is changed  to the letter  immediately  \npreceding  it in the English  alphabetical  order.  How  many  letters  will appear  exactly twice  \nin the group  of letters  thus formed?",
+        "options": [
+          "2",
+          "3",
+          "0",
+          "1"
+        ],
+        "correctAnswer": 3,
+        "explanation": "Applying the transformation yields the letters R, P, V, B, V, J, X, where only V appears twice."
+      },
+      {
+        "id": "p7_q100",
+        "question": "In a certain  code  language,  \nA + B means 'A is the son of B'  \nA - B means 'A is the sister of B'  \nA x B means 'A is the daughter of B'  \nA / B means 'A is the father of B'  \nA # B means 'A is mother of B' \nBased on the above, how is J related to O if 'J # L + K + M # O x N'?",
+        "options": [
+          "Mother",
+          "Sister",
+          "Father's Mother",
+          "Mother's Mother"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Tracing the relations confirms that M is the mother of K and K is the father of L, making M the Fathers Mother of L."
+      }
+    ]
+  }
+
 ];
