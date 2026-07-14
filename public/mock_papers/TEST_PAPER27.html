@@ -172,7 +172,7 @@
         <div id="scoreCard" style="margin: 20px auto; width:90%; max-width:600px; padding: 20px; border: 1px solid #ccc; text-align: center; background:#fff;"></div>
         <div style="display:flex; justify-content:center; gap:20px; margin-bottom:20px;">
             <button class="btn btn-primary" onclick="showDetailedReview()">Review Solutions</button>
-            <button class="btn btn-danger" onclick="location.reload()">Exit</button>
+            <button class="btn btn-danger" onclick="window.location.href='/materials'">Exit</button>
         </div>
         <div id="detailedReview" class="review-panel" style="width: 90%; max-width: 800px; margin:0 auto;"></div>
     </div>
@@ -186,10 +186,10 @@
         
         let questions = [];
 
-        function shuffleOptions(opts, ansIndex) {
+        function shuffleOptions(opts, ansIndex, seed) {
             let arr = opts.map((opt, i) => ({ opt, isAns: i === ansIndex }));
             for (let i = arr.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
+                const j = Math.floor(seededRandom(seed + i) * (i + 1));
                 [arr[i], arr[j]] = [arr[j], arr[i]];
             }
             let newOpts = arr.map(a => a.opt);
@@ -198,8 +198,12 @@
         }
 
         function generateQuestions() {
+            function seededRandom(seed) {
+                let x = Math.sin(seed) * 10000;
+                return x - Math.floor(x);
+            }
             const createQ = (id, type, text, opts, ans, exp) => {
-                let shuffled = shuffleOptions(opts, ans);
+                let shuffled = shuffleOptions(opts, ans, id);
                 return { id, type, text, opts: shuffled.newOpts, ans: shuffled.newAns, exp };
             };
             questions = []; // Reset array

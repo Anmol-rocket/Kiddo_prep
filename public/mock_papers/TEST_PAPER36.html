@@ -172,7 +172,7 @@
         <div id="scoreCard" style="margin: 20px auto; width:90%; max-width:600px; padding: 20px; border: 1px solid #ccc; text-align: center; background:#fff;"></div>
         <div style="display:flex; justify-content:center; gap:20px; margin-bottom:20px;">
             <button class="btn btn-primary" onclick="showDetailedReview()">Review Solutions</button>
-            <button class="btn btn-danger" onclick="location.reload()">Exit</button>
+            <button class="btn btn-danger" onclick="window.location.href='/materials'">Exit</button>
         </div>
         <div id="detailedReview" class="review-panel" style="width: 90%; max-width: 800px; margin:0 auto;"></div>
     </div>
@@ -297,10 +297,15 @@
                 {"type": "Anatomy", "text": "The right lung of a normal human anatomy consists of how many distinct lobes?", "opts": ["Three", "Two", "Four", "One"], "ans": 0, "exp": "The right lung has three lobes (superior, middle, inferior), whereas the left lung has two lobes."}
             ];
 
-            function shuffleOptions(opts, correctIdx) {
+                        function seededRandom(seed) {
+                let x = Math.sin(seed) * 10000;
+                return x - Math.floor(x);
+            }
+
+            function shuffleOptions(opts, correctIdx, seed) {
                 let mapped = opts.map((opt, i) => ({ text: opt, isCorrect: i === correctIdx }));
                 for (let i = mapped.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
+                    const j = Math.floor(seededRandom(seed + i) * (i + 1));
                     [mapped[i], mapped[j]] = [mapped[j], mapped[i]];
                 }
                 let newOpts = mapped.map(m => m.text);
@@ -309,7 +314,7 @@
             }
 
             const createQ = (id, type, text, opts, ans, exp) => {
-                let { newOpts, newAns } = shuffleOptions(opts, ans);
+                let { newOpts, newAns } = shuffleOptions(opts, ans, id);
                 return { id, type, text, opts: newOpts, ans: newAns, exp };
             };
 

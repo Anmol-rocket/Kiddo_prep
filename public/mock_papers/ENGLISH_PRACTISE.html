@@ -169,7 +169,7 @@
         questions.forEach(q => {
             const correctAnswerText = q.options[q.answer];
             for (let i = q.options.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
+                const j = Math.floor(seededRandom((typeof q !== 'undefined' ? (q.id || q.qId || 0) : (typeof id !== 'undefined' ? id : 0)) + i) * (i + 1));
                 [q.options[i], q.options[j]] = [q.options[j], q.options[i]];
             }
             q.answer = q.options.indexOf(correctAnswerText);
