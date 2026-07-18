@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIIMS CRE Radiographer - Test Paper 42</title>
+    <style>
+        :root {
+            --header-bg: #3f51b5;
+            --header-text: #fff;
+            --panel-bg: #f5f5f5;
+            --pallet-answered: #4caf50;
+            --pallet-not-answered: #f44336;
+            --pallet-review: #9c27b0;
+            --pallet-not-visited: #e0e0e0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #fff; }
+
+        /* --- Header --- */
+        header {
+            background: var(--header-bg); color: var(--header-text);
+            padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+            height: 60px; flex-shrink: 0;
+        }
+        .timer { font-size: 1.2rem; font-weight: bold; background: #fff; color: #d32f2f; padding: 5px 15px; border-radius: 4px; border: 2px solid #d32f2f; }
+
+        /* --- Main Layout --- */
+        .main-container { display: flex; flex: 1; overflow: hidden; }
+        
+        .question-area { flex: 1; display: flex; flex-direction: column; padding: 20px; overflow-y: auto; }
+        .q-header { display: flex; justify-content: space-between; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.5; }
+        
+        .options-container { display: flex; flex-direction: column; gap: 10px; }
+        .option-label { 
+            display: flex; align-items: center; padding: 10px; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; transition: 0.2s; 
+        }
+        .option-label:hover { background: #f0f8ff; }
+        .option-label input { margin-right: 15px; transform: scale(1.2); }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px; background: var(--panel-bg); border-left: 1px solid #ccc;
+            display: flex; flex-direction: column; flex-shrink: 0;
+        }
+        .user-info { padding: 10px; background: #e8eaf6; border-bottom: 1px solid #ccc; }
+        
+        .palette-legend { padding: 10px; font-size: 0.8rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: #fff; }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+        .question-grid { 
+            padding: 10px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; 
+            overflow-y: auto; flex: 1; align-content: start;
+        }
+        .q-btn {
+            height: 35px; width: 35px; border: 1px solid #ccc; background: #fff; 
+            border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .q-btn.answered { background: var(--pallet-answered); color: white; border-color: var(--pallet-answered); }
+        .q-btn.not-answered { background: var(--pallet-not-answered); color: white; border-color: var(--pallet-not-answered); }
+        .q-btn.review { background: var(--pallet-review); color: white; border-radius: 50%; }
+        .q-btn.current { border: 2px solid blue; box-shadow: 0 0 5px blue; }
+        .q-btn.locked { opacity: 0.4; cursor: not-allowed; background: #444 !important; color: #888; border: 1px solid #000; }
+
+        /* Footer */
+        .footer-controls {
+            height: 60px; background: #fff; border-top: 1px solid #ccc;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+        }
+        .btn { padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+        .btn-primary { background: #2196f3; color: white; }
+        .btn-success { background: #4caf50; color: white; }
+        .btn-warn { background: #ff9800; color: white; }
+        .btn-danger { background: #f44336; color: white; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* Mobile */
+        .mobile-toggle { display: none; background: none; border: none; color: white; font-size: 1.5rem; }
+        @media (max-width: 768px) {
+            .mobile-toggle { display: block; }
+            .sidebar { 
+                position: absolute; right: 0; top: 60px; bottom: 60px; z-index: 100;
+                transform: translateX(100%); transition: transform 0.3s; width: 85%;
+            }
+            .sidebar.active { transform: translateX(0); }
+            .question-grid { grid-template-columns: repeat(6, 1fr); }
+            .footer-controls { flex-wrap: wrap; gap: 5px; height: auto; padding: 10px; }
+            .btn { flex: 1; padding: 8px; font-size: 0.8rem; }
+        }
+
+        /* Overlay */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .hidden { display: none !important; }
+        
+        .review-panel { display: none; padding: 20px; height: 100%; overflow-y: auto; background:#f9f9f9;}
+        .review-item { margin-bottom: 20px; border: 1px solid #ddd; padding: 15px; border-radius: 5px; background:white; }
+        .explanation { background: #fff3cd; padding: 10px; margin-top: 10px; font-size: 0.9rem; border-left: 4px solid #ffc107; }
+
+    </style>
+</head>
+<body>
+
+    <div id="landingPage" class="overlay">
+        <h1>AIIMS CRE - Test Paper 42</h1>
+        <div style="width: 80%; max-width: 600px; text-align: left; margin: 20px 0;">
+            <h3>Exam Rules:</h3>
+            <ul>
+                <li><strong>Questions:</strong> 100 (5 Sections of 20 questions each).</li>
+                <li><strong>Timing:</strong> 18 Minutes per section (Strictly Dedicated).</li>
+                <li><strong>Total Time:</strong> 90 Minutes.</li>
+                <li><strong>Locking:</strong> Once 18 mins are up, or if you manually proceed to the next section, you <u>cannot</u> return to the previous section.</li>
+                <li><strong>Marking:</strong> +4 Correct, -1 Incorrect.</li>
+            </ul>
+        </div>
+        <button class="btn btn-success" style="font-size: 1.2rem;" onclick="startExam()">START EXAM</button>
+    </div>
+
+    <header id="examHeader" class="hidden">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <h3>AIIMS Radiographer</h3>
+            <span style="font-size:0.8rem; background:#eee; padding:2px 6px; border-radius:4px; color:#333;" id="sectionLabel">Section 1</span>
+        </div>
+        <div class="timer" id="timerDisplay">18:00</div>
+        <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+    </header>
+
+    <div class="main-container hidden" id="examBody">
+        <div class="question-area">
+            <div class="q-header">
+                <span id="qNumDisplay">Question No. 1</span>
+                <span style="color: #666;">Marks: +4, -1</span>
+            </div>
+            <div id="questionText" class="q-text">Loading...</div>
+            <div id="optionsBox" class="options-container"></div>
+        </div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="user-info">
+                <strong>Candidate Name</strong><br><small>Roll No: 123456</small>
+            </div>
+            <div class="palette-legend">
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-answered)"></span> Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-not-answered)"></span> Not Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-review)"></span> Review</div>
+                <div class="legend-item"><span class="dot" style="background:#444"></span> Locked</div>
+            </div>
+            <div class="question-grid" id="questionPalette"></div>
+            <div style="padding:10px; margin-top:auto;">
+                <button class="btn btn-primary" style="width:100%" onclick="submitExam()">FINISH EXAM</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-controls hidden" id="examFooter">
+        <div style="display:flex; gap:10px;">
+            <button class="btn btn-danger" onclick="clearResponse()">Clear</button>
+            <button class="btn btn-warn" onclick="markForReview()">Review</button>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <button class="btn" onclick="prevQuestion()" id="btnPrev">Previous</button>
+            <button class="btn btn-success" onclick="saveAndNext()">Save & Next</button>
+        </div>
+    </div>
+
+    <div id="resultPage" class="overlay hidden" style="display:block; overflow-y:auto; justify-content:start; padding-top:40px;">
+        <h2 style="text-align:center;">Exam Summary</h2>
+        <div id="scoreCard" style="margin: 20px auto; width:90%; max-width:600px; padding: 20px; border: 1px solid #ccc; text-align: center; background:#fff;"></div>
+        <div style="display:flex; justify-content:center; gap:20px; margin-bottom:20px;">
+            <button class="btn btn-primary" onclick="showDetailedReview()">Review Solutions</button>
+            <button class="btn btn-danger" onclick="window.location.href='/materials'">Exit</button>
+        </div>
+        <div id="detailedReview" class="review-panel" style="width: 90%; max-width: 800px; margin:0 auto;"></div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const TOTAL_QUESTIONS = 100;
+        const SECTION_SIZE = 20; // 20 questions per section
+        const SECTION_TIME_LIMIT = 18 * 60; // 18 minutes in seconds
+        
+        let questions = [];
+
+        function generateQuestions() {
+            const createQ = (id, type, text, opts, ans, exp) => ({ id, type, text, opts, ans, exp });
+            questions = []; // Reset array
+            
+                        function seededRandom(seed) {
+                let x = Math.sin(seed) * 10000;
+                return x - Math.floor(x);
+            }
+
+            function shuffleOptions(question, seed) {
+                let optionsWithIndex = question.opts.map((opt, index) => ({
+                    text: opt,
+                    isCorrect: index === question.ans
+                }));
+                for (let i = optionsWithIndex.length - 1; i > 0; i--) {
+                    const j = Math.floor(seededRandom(seed + i) * (i + 1));
+                    [optionsWithIndex[i], optionsWithIndex[j]] = [optionsWithIndex[j], optionsWithIndex[i]];
+                }
+                question.opts = optionsWithIndex.map(opt => opt.text);
+                question.ans = optionsWithIndex.findIndex(opt => opt.isCorrect);
+                return question;
+            }
+
+            const raw_data = [
+    {
+        "type": "Non-Core",
+        "text": "Which keyboard shortcut is used to cut the selected text or file in Windows?",
+        "opts": [
+            "Ctrl + C",
+            "Ctrl + X",
+            "Ctrl + V",
+            "Ctrl + Z"
+        ],
+        "ans": 1,
+        "exp": "Ctrl + X is used to cut selected items."
+    },
+    {
+        "type": "Non-Core",
+        "text": "What does pressing the F5 key typically do in a web browser?",
+        "opts": [
+            "Opens a new tab",
+            "Closes the browser",
+            "Refreshes or reloads the current page",
+            "Bookmarks the page"
+        ],
+        "ans": 2,
+        "exp": "F5 is the standard shortcut to reload or refresh the current webpage."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Which keyboard shortcut is used to find specific text within a document or webpage?",
+        "opts": [
+            "Ctrl + P",
+            "Ctrl + F",
+            "Ctrl + H",
+            "Ctrl + O"
+        ],
+        "ans": 1,
+        "exp": "Ctrl + F opens the Find dialog box to search for text."
+    },
+    {
+        "type": "Non-Core",
+        "text": "If the sum of two numbers is 45 and their difference is 15, what is the larger number?",
+        "opts": [
+            "25",
+            "30",
+            "35",
+            "40"
+        ],
+        "ans": 1,
+        "exp": "Let the numbers be x and y. x + y = 45 and x - y = 15. Adding the two equations gives 2x = 60, so x = 30."
+    },
+    {
+        "type": "Non-Core",
+        "text": "A train covers a distance of 180 km in 3 hours. What is its speed in m/s?",
+        "opts": [
+            "16.67 m/s",
+            "20 m/s",
+            "25 m/s",
+            "15 m/s"
+        ],
+        "ans": 0,
+        "exp": "Speed = 180 km / 3 h = 60 km/h. To convert to m/s, multiply by 5/18: 60 * 5/18 = 16.67 m/s."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Which planet is known as the Morning Star or Evening Star?",
+        "opts": [
+            "Mars",
+            "Venus",
+            "Jupiter",
+            "Mercury"
+        ],
+        "ans": 1,
+        "exp": "Venus is often called the Morning Star or Evening Star because it is the brightest natural object in the sky after the Moon."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Identify the odd one out:",
+        "opts": [
+            "Square",
+            "Rectangle",
+            "Circle",
+            "Triangle"
+        ],
+        "ans": 2,
+        "exp": "A circle has no straight edges, while the others are polygons with straight sides."
+    },
+    {
+        "type": "Non-Core",
+        "text": "In a certain code language, if CAT is written as 24 and DOG is written as 26, how will BIRD be written?",
+        "opts": [
+            "31",
+            "32",
+            "33",
+            "34"
+        ],
+        "ans": 2,
+        "exp": "Sum of alphabetic positions: B(2) + I(9) + R(18) + D(4) = 33."
+    },
+    {
+        "type": "Non-Core",
+        "text": "In a certain code, if APPLE is coded as 50, how is MAN coded?",
+        "opts": [
+            "27",
+            "28",
+            "29",
+            "30"
+        ],
+        "ans": 1,
+        "exp": "Sum of positions: M(13) + A(1) + N(14) = 28."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Who was the first woman to win a Nobel Prize?",
+        "opts": [
+            "Mother Teresa",
+            "Marie Curie",
+            "Rosalind Franklin",
+            "Dorothy Hodgkin"
+        ],
+        "ans": 1,
+        "exp": "Marie Curie was the first woman to win a Nobel Prize (Physics, 1903)."
+    },
+    {
+        "type": "Non-Core",
+        "text": "What is the capital of Australia?",
+        "opts": [
+            "Sydney",
+            "Melbourne",
+            "Canberra",
+            "Brisbane"
+        ],
+        "ans": 2,
+        "exp": "Canberra is the capital city of Australia."
+    },
+    {
+        "type": "Non-Core",
+        "text": "A shopkeeper offers a 15% discount on an item marked at Rs. 800. What is the selling price?",
+        "opts": [
+            "Rs. 680",
+            "Rs. 720",
+            "Rs. 700",
+            "Rs. 650"
+        ],
+        "ans": 0,
+        "exp": "Discount = 15% of 800 = 120. Selling Price = 800 - 120 = 680."
+    },
+    {
+        "type": "Non-Core",
+        "text": "If P is the brother of Q, Q is the sister of R, and R is the father of S, how is P related to S?",
+        "opts": [
+            "Uncle",
+            "Father",
+            "Brother",
+            "Grandfather"
+        ],
+        "ans": 0,
+        "exp": "P is the brother of Q and R. Since R is the father of S, P is the uncle of S."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Select the related word: Doctor : Patient :: Teacher : ?",
+        "opts": [
+            "School",
+            "Student",
+            "Book",
+            "Classroom"
+        ],
+        "ans": 1,
+        "exp": "A doctor treats a patient, just as a teacher teaches a student."
+    },
+    {
+        "type": "Non-Core",
+        "text": "What is the SI unit of electric current?",
+        "opts": [
+            "Volt",
+            "Ohm",
+            "Ampere",
+            "Watt"
+        ],
+        "ans": 2,
+        "exp": "The Ampere (A) is the SI unit of electric current."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Solve: 12 + (8 x 4) - 6 / 2 = ?",
+        "opts": [
+            "41",
+            "43",
+            "45",
+            "47"
+        ],
+        "ans": 0,
+        "exp": "Using BODMAS: 12 + 32 - 3 = 44 - 3 = 41."
+    },
+    {
+        "type": "Non-Core",
+        "text": "The term \"Bulls and Bears\" is associated with which field?",
+        "opts": [
+            "Agriculture",
+            "Stock Market",
+            "Sports",
+            "Politics"
+        ],
+        "ans": 1,
+        "exp": "Bulls and Bears are terms used in the Stock Market to describe rising and falling market trends."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Find the next number in the series: 2, 5, 10, 17, 26, ?",
+        "opts": [
+            "35",
+            "37",
+            "39",
+            "41"
+        ],
+        "ans": 1,
+        "exp": "The differences are consecutive odd numbers: 3, 5, 7, 9, 11. So 26 + 11 = 37. (Or n^2 + 1)"
+    },
+    {
+        "type": "Non-Core",
+        "text": "Which of the following diseases is caused by a virus?",
+        "opts": [
+            "Tuberculosis",
+            "Typhoid",
+            "Malaria",
+            "Dengue"
+        ],
+        "ans": 3,
+        "exp": "Dengue is caused by the Dengue virus, whereas TB and Typhoid are bacterial, and Malaria is protozoan."
+    },
+    {
+        "type": "Non-Core",
+        "text": "If a triangle has angles measuring 45, 45, and 90 degrees, what type of triangle is it?",
+        "opts": [
+            "Equilateral",
+            "Isosceles Right-angled",
+            "Scalene Right-angled",
+            "Obtuse Isosceles"
+        ],
+        "ans": 1,
+        "exp": "Since two angles are equal (45 degrees), it is isosceles, and one angle is 90 degrees, making it a right-angled triangle."
+    },
+    {
+        "type": "Core",
+        "text": "Which radioisotope is most commonly used in PET imaging?",
+        "opts": [
+            "Technetium-99m",
+            "Fluorine-18",
+            "Iodine-131",
+            "Gallium-67"
+        ],
+        "ans": 1,
+        "exp": "Fluorine-18 (F-18) incorporated into FDG is the most widely used radiotracer in Positron Emission Tomography."
+    },
+    {
+        "type": "Core",
+        "text": "What is the physical half-life of Technetium-99m (Tc-99m)?",
+        "opts": [
+            "2 hours",
+            "6 hours",
+            "12 hours",
+            "24 hours"
+        ],
+        "ans": 1,
+        "exp": "Tc-99m has a half-life of approximately 6 hours, which is ideal for diagnostic nuclear medicine."
+    },
+    {
+        "type": "Core",
+        "text": "In PET imaging, a positron annihilates with an electron to produce:",
+        "opts": [
+            "A single 511 keV photon",
+            "Two 511 keV photons traveling in opposite directions",
+            "Two 140 keV photons",
+            "An alpha particle"
+        ],
+        "ans": 1,
+        "exp": "Positron annihilation results in two 511 keV gamma photons emitted at approximately 180 degrees to each other."
+    },
+    {
+        "type": "Core",
+        "text": "Which device is used to detect gamma rays in a standard Nuclear Medicine scan?",
+        "opts": [
+            "Ionization chamber",
+            "Gamma camera (Anger camera)",
+            "Geiger-Muller counter",
+            "Proportional counter"
+        ],
+        "ans": 1,
+        "exp": "A Gamma camera, also known as an Anger camera, is used to image the distribution of radiotracers in the patient."
+    },
+    {
+        "type": "Core",
+        "text": "FDG (Fluorodeoxyglucose) used in PET imaging is an analog of which molecule?",
+        "opts": [
+            "Glucose",
+            "Protein",
+            "Calcium",
+            "Water"
+        ],
+        "ans": 0,
+        "exp": "FDG is a glucose analog, allowing PET to visualize areas of high metabolic activity, such as tumors."
+    },
+    {
+        "type": "Core",
+        "text": "Which crystal material is commonly used in modern PET scanner detectors due to its fast decay time and high density?",
+        "opts": [
+            "Sodium Iodide (NaI)",
+            "Lutetium Oxyorthosilicate (LSO) or BGO",
+            "Cesium Iodide (CsI)",
+            "Amorphous Selenium"
+        ],
+        "ans": 1,
+        "exp": "LSO, LYSO, and BGO are dense, fast-scintillating crystals preferred for PET to efficiently capture 511 keV photons."
+    },
+    {
+        "type": "Core",
+        "text": "What is the purpose of a collimator in a gamma camera?",
+        "opts": [
+            "To amplify the gamma rays",
+            "To restrict gamma rays to those traveling perpendicular to the detector",
+            "To convert gamma rays into light",
+            "To convert light into electrical signals"
+        ],
+        "ans": 1,
+        "exp": "A collimator absorbs scatter and off-angle gamma rays, allowing only those traveling in specific directions to reach the crystal, thus forming the image."
+    },
+    {
+        "type": "Core",
+        "text": "Which radiopharmaceutical is commonly used for myocardial perfusion imaging (stress testing)?",
+        "opts": [
+            "F-18 FDG",
+            "Tc-99m Sestamibi",
+            "I-131 Sodium Iodide",
+            "Ga-67 Citrate"
+        ],
+        "ans": 1,
+        "exp": "Tc-99m Sestamibi (Cardiolite) or Tetrofosmin is typically used for SPECT myocardial perfusion imaging."
+    },
+    {
+        "type": "Core",
+        "text": "Iodine-131 is used primarily for the diagnosis and treatment of conditions involving which organ?",
+        "opts": [
+            "Liver",
+            "Kidneys",
+            "Thyroid",
+            "Brain"
+        ],
+        "ans": 2,
+        "exp": "The thyroid gland naturally absorbs iodine, making I-131 effective for imaging and treating thyroid disorders like hyperthyroidism and thyroid cancer."
+    },
+    {
+        "type": "Core",
+        "text": "In a PET/CT scanner, what is the primary role of the CT portion?",
+        "opts": [
+            "To increase the metabolic uptake",
+            "For attenuation correction and anatomical localization",
+            "To measure the half-life of the tracer",
+            "To generate positrons"
+        ],
+        "ans": 1,
+        "exp": "The CT scan provides an anatomical map to localize the functional PET findings and is essential for generating attenuation correction maps for the PET data."
+    },
+    {
+        "type": "Core",
+        "text": "What phenomenon is measured by a dose calibrator in a nuclear medicine hot lab?",
+        "opts": [
+            "Patient dose exposure",
+            "Radioactivity in curies or becquerels",
+            "X-ray beam quality",
+            "Gamma camera uniformity"
+        ],
+        "ans": 1,
+        "exp": "A dose calibrator is an ionization chamber used to accurately measure the radioactivity of a radiopharmaceutical dose before administration."
+    },
+    {
+        "type": "Core",
+        "text": "Which of the following tests is performed daily on a gamma camera to check for dead photomultiplier tubes?",
+        "opts": [
+            "Spatial resolution",
+            "Center of rotation",
+            "Field uniformity",
+            "Linearity"
+        ],
+        "ans": 2,
+        "exp": "Field uniformity is checked daily (using a flood source) to ensure all photomultiplier tubes and crystals are functioning evenly."
+    },
+    {
+        "type": "Core",
+        "text": "How is F-18 typically produced?",
+        "opts": [
+            "In a nuclear reactor",
+            "By a cyclotron",
+            "From a Mo-99/Tc-99m generator",
+            "Extracted from uranium ore"
+        ],
+        "ans": 1,
+        "exp": "F-18 is a positron emitter produced using a particle accelerator, specifically a cyclotron."
+    },
+    {
+        "type": "Core",
+        "text": "Standard Uptake Value (SUV) in PET imaging is a semi-quantitative measure primarily dependent on:",
+        "opts": [
+            "Injected dose, patient weight, and tissue concentration",
+            "Patient heart rate and blood pressure",
+            "CT kilovoltage and pitch",
+            "Isotope half-life only"
+        ],
+        "ans": 0,
+        "exp": "SUV normalizes the tissue radioactivity concentration to the injected dose and the patient's body weight (or body surface area)."
+    },
+    {
+        "type": "Core",
+        "text": "Gallium-67 is typically used to image:",
+        "opts": [
+            "Bone metastases",
+            "Infection, inflammation, and certain tumors",
+            "Pulmonary emboli",
+            "Gastric emptying"
+        ],
+        "ans": 1,
+        "exp": "Ga-67 citrate accumulates in areas of inflammation, infection, and certain neoplasms like lymphomas."
+    },
+    {
+        "type": "Core",
+        "text": "The Mo-99 / Tc-99m generator works on the principle of:",
+        "opts": [
+            "Transient equilibrium",
+            "Secular equilibrium",
+            "Nuclear fission",
+            "Positron decay"
+        ],
+        "ans": 0,
+        "exp": "The parent (Mo-99, half-life 66h) and daughter (Tc-99m, half-life 6h) establish a transient equilibrium in a generator."
+    },
+    {
+        "type": "Core",
+        "text": "For a bone scan, which Tc-99m labeled radiopharmaceutical is routinely used?",
+        "opts": [
+            "Tc-99m MAA",
+            "Tc-99m MDP",
+            "Tc-99m DTPA",
+            "Tc-99m HIDA"
+        ],
+        "ans": 1,
+        "exp": "Tc-99m Methylene Diphosphonate (MDP) chemisorbs to hydroxyapatite crystals in the bone, highlighting osteoblastic activity."
+    },
+    {
+        "type": "Core",
+        "text": "What is the purpose of the photomultiplier tubes (PMTs) in a gamma camera?",
+        "opts": [
+            "To produce gamma rays",
+            "To convert light photons into an amplified electrical signal",
+            "To collimate the radiation",
+            "To provide shielding"
+        ],
+        "ans": 1,
+        "exp": "Scintillation crystals convert gamma rays to light; PMTs convert that light into an electrical signal and multiply it for processing."
+    },
+    {
+        "type": "Core",
+        "text": "Patients undergoing a PET scan with F-18 FDG are typically advised to do what prior to the injection?",
+        "opts": [
+            "Eat a high-carbohydrate meal",
+            "Fasting for 4 to 6 hours",
+            "Drink large amounts of barium contrast",
+            "Exercise vigorously"
+        ],
+        "ans": 1,
+        "exp": "Fasting lowers endogenous blood glucose and insulin levels, ensuring that the FDG is competitively taken up by cells."
+    },
+    {
+        "type": "Core",
+        "text": "Which of the following is considered a therapeutic radiopharmaceutical?",
+        "opts": [
+            "Tc-99m MAG3",
+            "I-123 Sodium Iodide",
+            "Lutetium-177 dotatate",
+            "F-18 Choline"
+        ],
+        "ans": 2,
+        "exp": "Lu-177 dotatate (Lutathera) is a beta-emitter used for targeted radionuclide therapy of neuroendocrine tumors. The others are diagnostic."
+    },
+    {
+        "type": "Core",
+        "text": "What type of shielding is required when handling beta-emitting isotopes (e.g., Yttrium-90)?",
+        "opts": [
+            "Thick lead",
+            "High-density concrete",
+            "Lucite or acrylic (low-Z material)",
+            "Thin paper"
+        ],
+        "ans": 2,
+        "exp": "Low-atomic-number (low-Z) materials like plastic or acrylic are used to shield beta particles to minimize the production of secondary Bremsstrahlung X-rays."
+    },
+    {
+        "type": "Core",
+        "text": "In a V/Q (Ventilation/Perfusion) scan to diagnose pulmonary embolism, which agent is used for the perfusion phase?",
+        "opts": [
+            "Xenon-133 gas",
+            "Tc-99m MAA",
+            "Tc-99m DTPA aerosol",
+            "Kr-81m gas"
+        ],
+        "ans": 1,
+        "exp": "Tc-99m Macroaggregated Albumin (MAA) particles are injected intravenously and trap in the pulmonary capillaries, showing lung perfusion."
+    },
+    {
+        "type": "Core",
+        "text": "Which energy peaking must be set on the gamma camera before imaging a patient injected with Tc-99m?",
+        "opts": [
+            "511 keV",
+            "140 keV",
+            "364 keV",
+            "74 keV"
+        ],
+        "ans": 1,
+        "exp": "The pulse height analyzer must be centered on the 140 keV photopeak of Tc-99m."
+    },
+    {
+        "type": "Core",
+        "text": "What is \"Brown adipose tissue\" (BAT) uptake in an FDG PET scan?",
+        "opts": [
+            "A sign of aggressive lymphoma",
+            "Normal physiological uptake in brown fat when the patient is cold",
+            "Metastasis to the subcutaneous fat",
+            "Artifact caused by metallic implants"
+        ],
+        "ans": 1,
+        "exp": "BAT uptake occurs symmetrically in the neck, supraclavicular, and paraspinal regions if a patient is cold during the FDG uptake phase."
+    },
+    {
+        "type": "Core",
+        "text": "Ring artifacts in a PET/CT or SPECT scan are most commonly caused by:",
+        "opts": [
+            "Patient motion",
+            "Uncalibrated detector elements or PMTs",
+            "Metal artifacts from dental fillings",
+            "Respiratory motion"
+        ],
+        "ans": 1,
+        "exp": "A faulty PMT or uncalibrated detector in a rotating system creates a circular ring artifact on the reconstructed tomographic images."
+    },
+    {
+        "type": "Core",
+        "text": "The most radiosensitive phase of the cell cycle is:",
+        "opts": [
+            "G1 phase",
+            "S phase",
+            "G2 and M phases",
+            "G0 phase"
+        ],
+        "ans": 2,
+        "exp": "Cells are most sensitive to radiation during Mitosis (M) and late G2 phases, and most resistant during the late S phase."
+    },
+    {
+        "type": "Core",
+        "text": "Which of the following is considered a deterministic (non-stochastic) effect of radiation?",
+        "opts": [
+            "Cancer induction",
+            "Genetic mutations",
+            "Cataract formation",
+            "Leukemia"
+        ],
+        "ans": 2,
+        "exp": "Deterministic effects, like cataracts or skin erythema, have a dose threshold above which the severity of the effect increases. Cancer and genetic mutations are stochastic."
+    },
+    {
+        "type": "Core",
+        "text": "According to the Law of Bergonie and Tribondeau, radiosensitivity is highest for cells that are:",
+        "opts": [
+            "Highly differentiated and mature",
+            "Undifferentiated and highly mitotic",
+            "Non-dividing and specialized",
+            "Mature muscle cells"
+        ],
+        "ans": 1,
+        "exp": "Stem cells (undifferentiated) that have a high mitotic rate are the most sensitive to ionizing radiation."
+    },
+    {
+        "type": "Core",
+        "text": "Which acute radiation syndrome occurs at whole-body doses between 2 to 10 Gray?",
+        "opts": [
+            "Central Nervous System syndrome",
+            "Gastrointestinal syndrome",
+            "Hematopoietic (Bone Marrow) syndrome",
+            "Cardiovascular syndrome"
+        ],
+        "ans": 2,
+        "exp": "The Hematopoietic syndrome occurs at 1-10 Gy, resulting in a drop in blood cell counts. The GI syndrome dominates above 10 Gy."
+    },
+    {
+        "type": "Core",
+        "text": "Linear Energy Transfer (LET) is defined as:",
+        "opts": [
+            "The rate at which energy is deposited per unit track length in tissue",
+            "The total dose received by the patient",
+            "The speed of light in a vacuum",
+            "The biological effectiveness of a photon"
+        ],
+        "ans": 0,
+        "exp": "LET represents how much energy an ionizing particle transfers to the material traversed per unit distance."
+    },
+    {
+        "type": "Core",
+        "text": "Relative Biological Effectiveness (RBE) increases as LET:",
+        "opts": [
+            "Decreases",
+            "Increases",
+            "Remains constant",
+            "Becomes zero"
+        ],
+        "ans": 1,
+        "exp": "High LET radiation (like alpha particles) causes more dense ionizations, resulting in greater biological damage (higher RBE) for the same absorbed dose."
+    },
+    {
+        "type": "Core",
+        "text": "The principal mechanism of indirect radiation damage to DNA involves the production of:",
+        "opts": [
+            "Alpha particles",
+            "Free radicals from water radiolysis",
+            "Direct breaks in the DNA backbone",
+            "Gamma photons"
+        ],
+        "ans": 1,
+        "exp": "X-rays mostly interact with water molecules to produce highly reactive free radicals (like the hydroxyl radical), which then damage DNA."
+    },
+    {
+        "type": "Core",
+        "text": "What is the Oxygen Enhancement Ratio (OER)?",
+        "opts": [
+            "The ratio of oxygen to carbon dioxide in blood",
+            "The dose required under hypoxic conditions compared to aerated conditions to produce the same effect",
+            "The oxygen level needed for cellular repair",
+            "The ratio of direct to indirect hits"
+        ],
+        "ans": 1,
+        "exp": "OER demonstrates that tissue is more radiosensitive when oxygenated. For low LET radiation, the OER is approximately 2.5 to 3.0."
+    },
+    {
+        "type": "Core",
+        "text": "A threshold dose of approximately 2 Gray to the skin will result in which early effect?",
+        "opts": [
+            "Epilation (hair loss)",
+            "Moist desquamation",
+            "Transient erythema",
+            "Necrosis"
+        ],
+        "ans": 2,
+        "exp": "Transient erythema (skin reddening) can occur within hours of an acute dose of ~2 Gy. Epilation requires about 3 Gy, moist desquamation ~15 Gy."
+    },
+    {
+        "type": "Core",
+        "text": "Stochastic effects of radiation operate on a dose-response model that is assumed to be:",
+        "opts": [
+            "Linear, non-threshold",
+            "Non-linear, threshold",
+            "Linear, threshold",
+            "Sigmoid"
+        ],
+        "ans": 0,
+        "exp": "Radiation protection standards assume a Linear Non-Threshold (LNT) model for stochastic effects like cancer, meaning any dose carries some risk."
+    },
+    {
+        "type": "Core",
+        "text": "Which of the following blood cells are considered the most radiosensitive?",
+        "opts": [
+            "Erythrocytes (Red Blood Cells)",
+            "Lymphocytes",
+            "Thrombocytes (Platelets)",
+            "Mature neurons"
+        ],
+        "ans": 1,
+        "exp": "Lymphocytes (a type of white blood cell) are the most radiosensitive cells in the human body despite being mature."
+    },
+    {
+        "type": "Core",
+        "text": "What is the unit of equivalent dose used to measure occupational exposure?",
+        "opts": [
+            "Gray (Gy)",
+            "Becquerel (Bq)",
+            "Sievert (Sv)",
+            "Coulombs/kg"
+        ],
+        "ans": 2,
+        "exp": "The Sievert is the SI unit for equivalent and effective dose, accounting for radiation type and tissue sensitivity."
+    },
+    {
+        "type": "Core",
+        "text": "The latent period for radiation-induced solid tumors is typically in the range of:",
+        "opts": [
+            "Days to weeks",
+            "Months to 1 year",
+            "10 to 30 years",
+            "Over 100 years"
+        ],
+        "ans": 2,
+        "exp": "Solid tumors have a long latent period, typically taking 10 to 30 years or more to manifest after exposure. Leukemia has a shorter latency (5-7 years)."
+    },
+    {
+        "type": "Core",
+        "text": "Which period of fetal development is the most sensitive to radiation-induced congenital abnormalities?",
+        "opts": [
+            "Pre-implantation (0-9 days)",
+            "Organogenesis (10 days - 6 weeks)",
+            "Fetal stage (6 weeks to term)",
+            "Third trimester"
+        ],
+        "ans": 1,
+        "exp": "Organogenesis (first trimester) is the period when major organs are forming, making the embryo most susceptible to structural malformations."
+    },
+    {
+        "type": "Core",
+        "text": "ALARA stands for:",
+        "opts": [
+            "As Low As Reasonably Achievable",
+            "Always Leave A Radiation Area",
+            "Acceptable Limits And Radiation Amounts",
+            "All Levels Are Regulated Appropriately"
+        ],
+        "ans": 0,
+        "exp": "ALARA is the fundamental principle of radiation protection to minimize exposure."
+    },
+    {
+        "type": "Core",
+        "text": "A whole-body acute exposure of 50 Gray will most likely lead to death within a few days due to:",
+        "opts": [
+            "Bone marrow failure",
+            "Gastrointestinal bleeding",
+            "Central Nervous System syndrome",
+            "Skin necrosis"
+        ],
+        "ans": 2,
+        "exp": "Doses over 50 Gy cause acute CNS syndrome, leading to severe brain edema, coma, and death within hours to days."
+    },
+    {
+        "type": "Core",
+        "text": "Fractionation in radiotherapy takes advantage of which biological principle?",
+        "opts": [
+            "Normal tissues repair sub-lethal damage better than tumor tissues",
+            "Tumor tissues repair faster than normal tissues",
+            "Oxygen levels decrease over time",
+            "Cell cycle arrests in G0"
+        ],
+        "ans": 0,
+        "exp": "Splitting the dose into fractions allows healthy tissues time to repair sublethal DNA damage, while rapidly dividing tumor cells are less capable of repair."
+    },
+    {
+        "type": "Core",
+        "text": "What is the radiation weighting factor (Wr) for standard X-rays and Gamma rays?",
+        "opts": [
+            "1",
+            "5",
+            "10",
+            "20"
+        ],
+        "ans": 0,
+        "exp": "X-rays, gamma rays, and electrons have a radiation weighting factor of 1. Alpha particles have a Wr of 20."
+    },
+    {
+        "type": "Core",
+        "text": "Genetic mutations caused by radiation are primarily considered to be:",
+        "opts": [
+            "Dominant",
+            "Recessive",
+            "Sex-linked",
+            "Lethal only"
+        ],
+        "ans": 1,
+        "exp": "Radiation-induced mutations are usually recessive, meaning they require both parents to have the mutation to be expressed in offspring."
+    },
+    {
+        "type": "Core",
+        "text": "Which of the following tissues has the highest tissue weighting factor (Wt) indicating the highest risk of stochastic effects?",
+        "opts": [
+            "Bone surface",
+            "Skin",
+            "Red bone marrow",
+            "Thyroid"
+        ],
+        "ans": 2,
+        "exp": "Red bone marrow, breasts, and lungs have high tissue weighting factors due to their high susceptibility to radiation-induced cancer."
+    },
+    {
+        "type": "Core",
+        "text": "In radiography QC, the X-ray tube light field to radiation field congruence must be accurate to within what percentage of the Source-to-Image Distance (SID)?",
+        "opts": [
+            "1%",
+            "2%",
+            "5%",
+            "10%"
+        ],
+        "ans": 1,
+        "exp": "The light field and the actual radiation beam must align within +/- 2% of the SID."
+    },
+    {
+        "type": "Core",
+        "text": "A spinning top test is historically used to check what aspect of a single-phase X-ray generator?",
+        "opts": [
+            "kVp accuracy",
+            "Timer accuracy",
+            "Focal spot size",
+            "mAs linearity"
+        ],
+        "ans": 1,
+        "exp": "A spinning top test creates a series of dots on a film to verify if the exposure timer is functioning correctly for single-phase units."
+    },
+    {
+        "type": "Core",
+        "text": "What tool is used to measure focal spot size in quality control testing?",
+        "opts": [
+            "Dosimeter",
+            "Sensitometer",
+            "Pinhole camera or star test pattern",
+            "Wire mesh"
+        ],
+        "ans": 2,
+        "exp": "A pinhole camera, star test pattern, or slit camera are used to evaluate focal spot size and monitor for focal spot blooming."
+    },
+    {
+        "type": "Core",
+        "text": "In a daily digital radiography (DR) QC routine, what does a flat-field test evaluate?",
+        "opts": [
+            "Detector uniformity and dead pixels",
+            "Grid alignment",
+            "kVp reproducibility",
+            "Display monitor resolution"
+        ],
+        "ans": 0,
+        "exp": "A flat-field test (taking an exposure with no object) is used to calibrate the detector, checking for uniformity and mapping out dead pixels."
+    },
+    {
+        "type": "Core",
+        "text": "Reproducibility of exposure should not vary by more than what percentage from one exposure to the next at the same technical factors?",
+        "opts": [
+            "2%",
+            "5%",
+            "10%",
+            "20%"
+        ],
+        "ans": 1,
+        "exp": "Exposure reproducibility ensures consistent output and must be within +/- 5%."
+    },
+    {
+        "type": "Core",
+        "text": "Which test checks if sequential changes in mAs produce a proportional change in radiation output?",
+        "opts": [
+            "Reproducibility",
+            "Linearity",
+            "HVL testing",
+            "Collimator congruence"
+        ],
+        "ans": 1,
+        "exp": "Exposure linearity states that adjacent mA stations (when maintaining mAs) should produce outputs within 10% of each other."
+    },
+    {
+        "type": "Core",
+        "text": "Half-value layer (HVL) testing is primarily used to evaluate:",
+        "opts": [
+            "X-ray tube filtration / beam quality",
+            "Focal spot size",
+            "Grid ratio",
+            "Detector DQE"
+        ],
+        "ans": 0,
+        "exp": "HVL is the best method to evaluate adequate beam filtration and overall beam quality."
+    },
+    {
+        "type": "Core",
+        "text": "The SMPTE test pattern is primarily used for quality control of:",
+        "opts": [
+            "X-ray tubes",
+            "Display monitors and viewing environments",
+            "Lead aprons",
+            "AEC chambers"
+        ],
+        "ans": 1,
+        "exp": "The Society of Motion Picture and Television Engineers (SMPTE) pattern is used to check resolution, contrast, and brightness of diagnostic monitors."
+    },
+    {
+        "type": "Core",
+        "text": "Lead aprons and thyroid shields should be visually inspected and fluoroscopically/radiographically tested how often to check for cracks?",
+        "opts": [
+            "Daily",
+            "Monthly",
+            "Annually",
+            "Every 5 years"
+        ],
+        "ans": 2,
+        "exp": "Personal protective equipment should be tested at least annually for structural integrity."
+    },
+    {
+        "type": "Core",
+        "text": "What is the purpose of the wire mesh test in screen-film or computed radiography (CR)?",
+        "opts": [
+            "Check for screen-film contact",
+            "Measure focal spot size",
+            "Evaluate kVp accuracy",
+            "Test AEC responsiveness"
+        ],
+        "ans": 0,
+        "exp": "A wire mesh test is used to evaluate the screen-to-film contact in a cassette to ensure no areas of blurring occur."
+    },
+    {
+        "type": "Core",
+        "text": "When testing the Automatic Exposure Control (AEC), varying the kVp or phantom thickness should result in an image with:",
+        "opts": [
+            "Consistent optical density or detector exposure index",
+            "Changing exposure indices",
+            "Varying mAs only, but variable density",
+            "Different grid ratios"
+        ],
+        "ans": 0,
+        "exp": "The AEC must adjust the exposure time (mAs) so that the resulting image maintains a consistent density/exposure regardless of kVp or thickness changes."
+    },
+    {
+        "type": "Core",
+        "text": "If an X-ray tube shows a sudden decrease in radiation output and increased \"arcing\" or popping noises, the most likely cause is:",
+        "opts": [
+            "Depleted tungsten target",
+            "Loss of tube vacuum (gassy tube)",
+            "Broken bucky mechanism",
+            "Failed collimator lamp"
+        ],
+        "ans": 1,
+        "exp": "Arcing often occurs as the tube ages and tungsten vaporizes onto the glass envelope, compromising the vacuum."
+    },
+    {
+        "type": "Core",
+        "text": "What is the maximum acceptable variation for kVp accuracy testing?",
+        "opts": [
+            "+/- 2%",
+            "+/- 5%",
+            "+/- 10%",
+            "+/- 15%"
+        ],
+        "ans": 1,
+        "exp": "The measured kVp should be within +/- 5% of the selected kVp on the console."
+    },
+    {
+        "type": "Core",
+        "text": "The erasure cycle of a CR reader should be tested to ensure there is no:",
+        "opts": [
+            "Ghosting or image lag",
+            "Focal spot blooming",
+            "Off-focus radiation",
+            "Grid cutoff"
+        ],
+        "ans": 0,
+        "exp": "Incomplete erasure of the photostimulable phosphor plate results in a ghost image (image lag) on subsequent exposures."
+    },
+    {
+        "type": "Core",
+        "text": "In a digital fluoroscopy system, what is the standard limit for maximum entrance skin exposure rate during routine fluoroscopy?",
+        "opts": [
+            "20 mGy/min",
+            "50 mGy/min",
+            "100 mGy/min (10 R/min)",
+            "200 mGy/min (20 R/min)"
+        ],
+        "ans": 2,
+        "exp": "Standard regulatory limits restrict routine fluoroscopic tabletop exposure rates to a maximum of 10 R/min (approx. 100 mGy/min)."
+    },
+    {
+        "type": "Core",
+        "text": "For a lateral projection of the skull, the central ray is directed to enter:",
+        "opts": [
+            "At the EAM",
+            "2 inches superior to the EAM",
+            "At the glabella",
+            "At the outer canthus"
+        ],
+        "ans": 1,
+        "exp": "The CR is typically directed approximately 2 inches superior to the External Acoustic Meatus (EAM) for a lateral skull."
+    },
+    {
+        "type": "Core",
+        "text": "The AP axial projection of the skull (Towne method) requires a central ray angle of:",
+        "opts": [
+            "15 degrees caudad",
+            "30 degrees caudad to the OML",
+            "30 degrees cephalad",
+            "45 degrees caudad"
+        ],
+        "ans": 1,
+        "exp": "The standard Towne method utilizes a 30-degree caudad angle if the Orbitomeatal Line (OML) is perpendicular to the IR."
+    },
+    {
+        "type": "Core",
+        "text": "Which radiographic projection best demonstrates the sphenoid sinuses?",
+        "opts": [
+            "Waters method",
+            "Caldwell method",
+            "Submentovertex (SMV) and Lateral",
+            "AP open mouth"
+        ],
+        "ans": 2,
+        "exp": "The Lateral projection and the SMV projection provide excellent views of the sphenoid sinuses."
+    },
+    {
+        "type": "Core",
+        "text": "For a PA oblique projection (RAO) of the sternum, the patient is rotated:",
+        "opts": [
+            "5 to 10 degrees",
+            "15 to 20 degrees",
+            "45 degrees",
+            "90 degrees"
+        ],
+        "ans": 1,
+        "exp": "A 15-20 degree RAO rotation shifts the sternum to the left of the thoracic spine, projecting it over the homogeneous heart shadow."
+    },
+    {
+        "type": "Core",
+        "text": "In a lateral projection of the lumbar spine, the central ray is directed at the level of:",
+        "opts": [
+            "L2",
+            "L3",
+            "Iliac crest (L4-L5)",
+            "ASIS"
+        ],
+        "ans": 2,
+        "exp": "For a standard lateral L-spine on a larger IR (14x17), the CR is centered at the level of the iliac crests."
+    },
+    {
+        "type": "Core",
+        "text": "The \"Scottie Dog\" sign on a lumbar spine radiograph is seen in which projection?",
+        "opts": [
+            "AP",
+            "Lateral",
+            "Oblique",
+            "Flexion/Extension"
+        ],
+        "ans": 2,
+        "exp": "Oblique projections of the lumbar spine demonstrate the pars interarticularis and zygapophyseal joints, resembling a Scottie dog."
+    },
+    {
+        "type": "Core",
+        "text": "When performing a PA projection of the chest, the shoulders should be rolled forward to:",
+        "opts": [
+            "Elevate the clavicles",
+            "Move the scapulae laterally out of the lung fields",
+            "Depress the diaphragm",
+            "Bring the heart closer to the IR"
+        ],
+        "ans": 1,
+        "exp": "Rolling the shoulders forward and downward pulls the scapulae laterally so they do not superimpose the lung parenchyma."
+    },
+    {
+        "type": "Core",
+        "text": "To evaluate for a small pleural effusion in the right lung if the patient cannot stand, which decubitus position is ideal?",
+        "opts": [
+            "Right lateral decubitus",
+            "Left lateral decubitus",
+            "Dorsal decubitus",
+            "Ventral decubitus"
+        ],
+        "ans": 0,
+        "exp": "Fluid falls to the lowest point. To see right-sided pleural fluid, a right lateral decubitus position is used."
+    },
+    {
+        "type": "Core",
+        "text": "Which projection of the elbow best demonstrates the radial head, neck, and tuberosity free of superimposition?",
+        "opts": [
+            "AP",
+            "Lateral",
+            "AP oblique with medial rotation",
+            "AP oblique with lateral rotation"
+        ],
+        "ans": 3,
+        "exp": "Lateral rotation (external oblique) of the elbow separates the radius and ulna, highlighting the radial head and neck."
+    },
+    {
+        "type": "Core",
+        "text": "For a PA axial projection (Holmblad method) of the intercondylar fossa, the knee is flexed approximately:",
+        "opts": [
+            "20 degrees",
+            "45 degrees",
+            "70 degrees",
+            "90 degrees"
+        ],
+        "ans": 2,
+        "exp": "The Holmblad method involves the patient kneeling on the table with the knee flexed about 70 degrees, leaning forward."
+    },
+    {
+        "type": "Core",
+        "text": "The central ray for an AP projection of the pelvis is directed:",
+        "opts": [
+            "At the iliac crest",
+            "Midway between ASIS and symphysis pubis",
+            "At the greater trochanter",
+            "At the level of the ASIS"
+        ],
+        "ans": 1,
+        "exp": "The CR is centered midway between the level of the ASIS and the symphysis pubis."
+    },
+    {
+        "type": "Core",
+        "text": "When positioning for a true lateral knee, the central ray is often angled:",
+        "opts": [
+            "5-7 degrees cephalad",
+            "5-7 degrees caudad",
+            "15 degrees cephalad",
+            "Perpendicular always"
+        ],
+        "ans": 0,
+        "exp": "A 5-7 degree cephalad angle is used to superimpose the medial and lateral femoral condyles due to the medial condyle extending slightly lower."
+    },
+    {
+        "type": "Core",
+        "text": "Which position of the hand places the thumb in a true AP or PA projection?",
+        "opts": [
+            "PA hand",
+            "Oblique hand",
+            "Lateral hand",
+            "Extreme internal rotation of hand for AP thumb"
+        ],
+        "ans": 3,
+        "exp": "To get a true AP thumb, the hand is internally rotated extremely; in a routine PA hand, the thumb is in an oblique position."
+    },
+    {
+        "type": "Core",
+        "text": "The Jones method (acute flexion) of the elbow is used primarily when:",
+        "opts": [
+            "The patient cannot straighten their arm",
+            "Evaluating the olecranon process specifically",
+            "The patient has a humerus fracture",
+            "A soft tissue injury is suspected"
+        ],
+        "ans": 0,
+        "exp": "The acute flexion views (two projections) evaluate the distal humerus and proximal forearm when the elbow cannot be extended."
+    },
+    {
+        "type": "Core",
+        "text": "The \"Y\" view (scapular Y) of the shoulder is most commonly used to rule out:",
+        "opts": [
+            "Clavicle fractures",
+            "Shoulder dislocations",
+            "AC joint separation",
+            "Bursitis"
+        ],
+        "ans": 1,
+        "exp": "The Scapular Y view projects the humeral head over the glenoid cavity; anterior or posterior displacement indicates dislocation."
+    },
+    {
+        "type": "Core",
+        "text": "For an AP axial projection of the clavicle, the central ray is angled:",
+        "opts": [
+            "15-30 degrees caudad",
+            "15-30 degrees cephalad",
+            "45 degrees cephalad",
+            "Perpendicular"
+        ],
+        "ans": 1,
+        "exp": "An axial angle of 15 to 30 degrees cephalad helps project the clavicle above the ribs and scapula."
+    },
+    {
+        "type": "Core",
+        "text": "In a plantodorsal (axial) projection of the calcaneus, the central ray is angled:",
+        "opts": [
+            "40 degrees cephalad",
+            "40 degrees caudad",
+            "10 degrees cephalad",
+            "Perpendicular"
+        ],
+        "ans": 0,
+        "exp": "With the foot dorsiflexed so the plantar surface is perpendicular to the IR, the CR is angled 40 degrees cephalad to enter the base of the third metatarsal."
+    },
+    {
+        "type": "Core",
+        "text": "The cross-table lateral (Danelius-Miller method) of the hip is indicated when:",
+        "opts": [
+            "A hip fracture is suspected and the leg cannot be moved",
+            "The patient has a known pelvic mass",
+            "Only the acetabulum is of interest",
+            "The patient is standing"
+        ],
+        "ans": 0,
+        "exp": "The axiolateral inferosuperior projection is essential for trauma patients who cannot internally rotate or move their leg due to a suspected fracture."
+    },
+    {
+        "type": "Core",
+        "text": "What line must be perpendicular to the IR for a true lateral projection of the facial bones?",
+        "opts": [
+            "Interpupillary line (IPL)",
+            "Acanthiomeatal line (AML)",
+            "Midsagittal plane (MSP)",
+            "Orbitomeatal line (OML)"
+        ],
+        "ans": 0,
+        "exp": "The IPL must be perpendicular to the IR, and the MSP parallel to the IR, for a true lateral facial bones or skull."
+    },
+    {
+        "type": "Core",
+        "text": "Which view of the cervical spine best demonstrates the intervertebral foramina?",
+        "opts": [
+            "AP open mouth",
+            "AP axial",
+            "Lateral",
+            "Obliques (45-degree)"
+        ],
+        "ans": 3,
+        "exp": "45-degree oblique positions of the cervical spine open up and clearly demonstrate the intervertebral foramina."
+    }
+];
+
+            raw_data.forEach((d, i) => {
+                let q = createQ(i + 1, d.type, d.text, d.opts, d.ans, d.exp);
+                questions.push(shuffleOptions(q, q.id));
+            });
+        }
+
+        // --- STATE MANAGEMENT ---
+        let timerInterval;
+
+        let state = JSON.parse(localStorage.getItem('test_paper_42_state')) || {
+            currentQ: 0,
+            answers: new Array(TOTAL_QUESTIONS).fill(null),
+            status: new Array(TOTAL_QUESTIONS).fill('not-visited'),
+            currentSection: 1,
+            sectionTimeLeft: SECTION_TIME_LIMIT,
+            maxSetReached: 1,
+            isFinished: false
+        };
+
+        function saveState() {
+            localStorage.setItem('test_paper_42_state', JSON.stringify(state));
+        }
+
+        const els = {
+            landing: document.getElementById('landingPage'),
+            header: document.getElementById('examHeader'),
+            body: document.getElementById('examBody'),
+            footer: document.getElementById('examFooter'),
+            result: document.getElementById('resultPage'),
+            qText: document.getElementById('questionText'),
+            optsBox: document.getElementById('optionsBox'),
+            qNum: document.getElementById('qNumDisplay'),
+            sectionLabel: document.getElementById('sectionLabel'),
+            palette: document.getElementById('questionPalette'),
+            timer: document.getElementById('timerDisplay'),
+            btnPrev: document.getElementById('btnPrev'),
+            sidebar: document.getElementById('sidebar')
+        };
+
+        function init() {
+            generateQuestions(); // Load data
+            if (state.isFinished) {
+                finishExam();
+            } else {
+                els.landing.classList.remove('hidden');
+                els.result.classList.add('hidden');
+            }
+        }
+
+        function startExam() {
+            els.landing.classList.add('hidden');
+            renderExamInterface();
+            startSectionTimer();
+        }
+
+        function startSectionTimer() {
+            if(timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                state.sectionTimeLeft--;
+                saveState();
+                
+                // Format Time
+                const m = Math.floor(state.sectionTimeLeft / 60);
+                const s = state.sectionTimeLeft % 60;
+                els.timer.innerText = `${m}:${s < 10 ? '0'+s : s}`;
+                
+                // Visual Warning
+                if(state.sectionTimeLeft < 60) els.timer.style.backgroundColor = "#ffcdd2";
+                else els.timer.style.backgroundColor = "#fff";
+
+                // Time Up Logic
+                if (state.sectionTimeLeft <= 0) {
+                    handleSectionTimeout();
+                }
+            }, 1000);
+        }
+
+        function handleSectionTimeout() {
+            clearInterval(timerInterval);
+            
+            if (state.currentSection < 5) {
+                alert(`Time is up for Section ${state.currentSection}! Moving to Section ${state.currentSection + 1}.`);
+                forceNextSection();
+            } else {
+                alert("Time is up for the final section! Submitting Exam.");
+                finishExam();
+            }
+        }
+
+        function forceNextSection() {
+            state.currentSection++;
+            state.maxSetReached = state.currentSection;
+            state.sectionTimeLeft = SECTION_TIME_LIMIT;
+            saveState();
+            
+            // Move to first question of next section
+            const firstQofNextSection = (state.currentSection - 1) * SECTION_SIZE;
+            loadQuestion(firstQofNextSection);
+            startSectionTimer();
+        }
+
+        function renderExamInterface() {
+            els.header.classList.remove('hidden');
+            els.body.classList.remove('hidden');
+            els.footer.classList.remove('hidden');
+            renderPalette();
+            loadQuestion(state.currentQ);
+        }
+
+        function loadQuestion(index) {
+            state.currentQ = index;
+            if(state.status[index] === 'not-visited') state.status[index] = 'not-answered';
+            saveState();
+
+            // Update Section Label
+            const secNum = Math.floor(index / SECTION_SIZE) + 1;
+            els.sectionLabel.innerText = `Section ${secNum} (Q${(secNum-1)*20 + 1}-${secNum*20})`;
+
+            // Render Text
+            els.qNum.innerText = `Question ${index + 1}`;
+            els.qText.innerText = questions[index].text;
+            
+            // Render Options
+            els.optsBox.innerHTML = '';
+            questions[index].opts.forEach((opt, i) => {
+                const isChecked = state.answers[index] === i ? 'checked' : '';
+                els.optsBox.innerHTML += `
+                    <label class="option-label">
+                        <input type="radio" name="opt" value="${i}" ${isChecked} onchange="selectOption(${i})">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            // Update Palette UI
+            document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('current'));
+            const currentBtn = document.getElementById(`qbtn-${index}`);
+            if(currentBtn) currentBtn.classList.add('current');
+
+            // Handle Prev Button State (Cannot go back to previous locked section)
+            const startOfCurrentSection = (state.currentSection - 1) * SECTION_SIZE;
+            els.btnPrev.disabled = (index <= startOfCurrentSection);
+        }
+
+        function selectOption(optIndex) {
+            state.answers[state.currentQ] = optIndex;
+            saveState();
+        }
+
+        function saveAndNext() {
+            const index = state.currentQ;
+            // Update status
+            state.status[index] = (state.answers[index] !== null) ? 'answered' : 'not-answered';
+            saveState();
+            
+            moveToNextQuestion();
+        }
+
+        function markForReview() {
+            const index = state.currentQ;
+            state.status[index] = (state.answers[index] !== null) ? 'marked-answered' : 'review';
+            saveState();
+            moveToNextQuestion();
+        }
+
+        function clearResponse() {
+            state.answers[state.currentQ] = null;
+            state.status[state.currentQ] = 'not-answered';
+            saveState();
+            loadQuestion(state.currentQ);
+            renderPalette();
+        }
+
+        function moveToNextQuestion() {
+            const nextIndex = state.currentQ + 1;
+            const currentSecBound = state.currentSection * SECTION_SIZE;
+
+            // Check if next question crosses section boundary
+            if (nextIndex >= currentSecBound) {
+                // End of section reached
+                if (state.currentSection < 5) {
+                    if (confirm(`You have reached the end of Section ${state.currentSection}.\nDo you want to submit this section and move to Section ${state.currentSection+1}?\n\nWARNING: You cannot return to this section.`)) {
+                        forceNextSection();
+                    }
+                } else {
+                    if(confirm("This was the last question. Submit Exam?")) {
+                        finishExam();
+                    }
+                }
+            } else {
+                // Normal movement within section
+                renderPalette();
+                loadQuestion(nextIndex);
+            }
+        }
+
+        function prevQuestion() {
+            // Logic handled in loadQuestion to disable button if at start of section
+            if (state.currentQ > 0) {
+                loadQuestion(state.currentQ - 1);
+            }
+        }
+
+        function renderPalette() {
+            els.palette.innerHTML = '';
+            for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+                let statusClass = state.status[i];
+                if(statusClass === 'marked-answered') statusClass = 'review';
+                
+                // Check if question belongs to a locked (previous) section
+                // A question is locked if its section index is < current active section
+                const qSection = Math.floor(i / SECTION_SIZE) + 1;
+                const isLocked = qSection < state.currentSection;
+                const lockedClass = isLocked ? ' locked' : '';
+                
+                // Gray out future sections
+                const isFuture = qSection > state.currentSection;
+                const futureStyle = isFuture ? 'opacity:0.3; pointer-events:none;' : '';
+
+                els.palette.innerHTML += `
+                    <div id="qbtn-${i}" 
+                         class="q-btn ${statusClass}${lockedClass}" 
+                         style="${futureStyle}"
+                         onclick="jumpToQuestion(${i})">
+                        ${i + 1}
+                    </div>
+                `;
+            }
+        }
+
+        function jumpToQuestion(index) {
+            const qSection = Math.floor(index / SECTION_SIZE) + 1;
+            
+            if (qSection < state.currentSection) {
+                alert("This section is locked.");
+                return;
+            }
+            if (qSection > state.currentSection) {
+                alert("You cannot jump to a future section yet.");
+                return;
+            }
+            
+            loadQuestion(index);
+        }
+
+        function submitExam() {
+            if(confirm("Are you sure you want to finish the exam? Unanswered questions in future sections will be marked zero.")) {
+                finishExam();
+            }
+        }
+
+        function finishExam() {
+            clearInterval(timerInterval);
+            state.isFinished = true;
+            saveState();
+            
+            els.header.classList.add('hidden');
+            els.body.classList.add('hidden');
+            els.footer.classList.add('hidden');
+            els.result.classList.remove('hidden');
+            
+            calculateResult();
+        }
+
+        function calculateResult() {
+            let correct = 0, wrong = 0, unattempted = 0, score = 0;
+
+            state.answers.forEach((ans, i) => {
+                if (ans === null) {
+                    unattempted++;
+                } else if (questions[i] && ans === questions[i].ans) {
+                    correct++;
+                    score += 4;
+                } else {
+                    wrong++;
+                    score -= 1;
+                }
+            });
+
+            document.getElementById('scoreCard').innerHTML = `
+                <h1 style="color:#3f51b5; font-size:3rem;">${score} / 400</h1>
+                <p><strong>Correct:</strong> ${correct} (+${correct*4})</p>
+                <p><strong>Incorrect:</strong> ${wrong} (-${wrong})</p>
+                <p><strong>Unattempted:</strong> ${unattempted}</p>
+            `;
+        }
+
+        function showDetailedReview() {
+            const container = document.getElementById('detailedReview');
+            container.style.display = 'block';
+            container.innerHTML = '<h3>Detailed Solutions</h3>';
+            
+            questions.forEach((q, i) => {
+                const userAns = state.answers[i];
+                const isCorrect = userAns === q.ans;
+                const statusColor = userAns === null ? 'gray' : (isCorrect ? 'green' : 'red');
+                const statusText = userAns === null ? 'Skipped' : (isCorrect ? 'Correct' : 'Incorrect');
+
+                let optsHtml = '';
+                q.opts.forEach((opt, oi) => {
+                    let style = '';
+                    if (oi === q.ans) style = 'font-weight:bold; color:green;'; 
+                    if (oi === userAns && !isCorrect) style = 'font-weight:bold; color:red;'; 
+                    optsHtml += `<div style="${style}">${oi+1}. ${opt}</div>`;
+                });
+
+                container.innerHTML += `
+                    <div class="review-item">
+                        <div style="color:${statusColor}; font-weight:bold; margin-bottom:5px;">Q${i+1}: ${statusText}</div>
+                        <div>${q.text}</div>
+                        <div style="margin:10px 0; padding-left:15px; border-left:3px solid #ddd;">${optsHtml}</div>
+                        <div class="explanation"><strong>Explanation:</strong> ${q.exp}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleSidebar() {
+            els.sidebar.classList.toggle('active');
+        }
+
+        // Initialize
+        init();
+
+    </script>
+</body>
+</html>
