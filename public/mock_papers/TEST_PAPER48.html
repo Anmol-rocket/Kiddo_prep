@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIIMS CRE Radiographer - Test Paper 48</title>
+    <style>
+        :root {
+            --header-bg: #3f51b5;
+            --header-text: #fff;
+            --panel-bg: #f5f5f5;
+            --pallet-answered: #4caf50;
+            --pallet-not-answered: #f44336;
+            --pallet-review: #9c27b0;
+            --pallet-not-visited: #e0e0e0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #fff; }
+
+        /* --- Header --- */
+        header {
+            background: var(--header-bg); color: var(--header-text);
+            padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+            height: 60px; flex-shrink: 0;
+        }
+        .timer { font-size: 1.2rem; font-weight: bold; background: #fff; color: #d32f2f; padding: 5px 15px; border-radius: 4px; border: 2px solid #d32f2f; }
+
+        /* --- Main Layout --- */
+        .main-container { display: flex; flex: 1; overflow: hidden; }
+        
+        .question-area { flex: 1; display: flex; flex-direction: column; padding: 20px; overflow-y: auto; }
+        .q-header { display: flex; justify-content: space-between; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.5; }
+        
+        .options-container { display: flex; flex-direction: column; gap: 10px; }
+        .option-label { 
+            display: flex; align-items: center; padding: 10px; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; transition: 0.2s; 
+        }
+        .option-label:hover { background: #f0f8ff; }
+        .option-label input { margin-right: 15px; transform: scale(1.2); }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px; background: var(--panel-bg); border-left: 1px solid #ccc;
+            display: flex; flex-direction: column; flex-shrink: 0;
+        }
+        .user-info { padding: 10px; background: #e8eaf6; border-bottom: 1px solid #ccc; }
+        
+        .palette-legend { padding: 10px; font-size: 0.8rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: #fff; }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+        .question-grid { 
+            padding: 10px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; 
+            overflow-y: auto; flex: 1; align-content: start;
+        }
+        .q-btn {
+            height: 35px; width: 35px; border: 1px solid #ccc; background: #fff; 
+            border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .q-btn.answered { background: var(--pallet-answered); color: white; border-color: var(--pallet-answered); }
+        .q-btn.not-answered { background: var(--pallet-not-answered); color: white; border-color: var(--pallet-not-answered); }
+        .q-btn.review { background: var(--pallet-review); color: white; border-radius: 50%; }
+        .q-btn.current { border: 2px solid blue; box-shadow: 0 0 5px blue; }
+        .q-btn.locked { opacity: 0.4; cursor: not-allowed; background: #444 !important; color: #888; border: 1px solid #000; }
+
+        /* Footer */
+        .footer-controls {
+            height: 60px; background: #fff; border-top: 1px solid #ccc;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+        }
+        .btn { padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+        .btn-primary { background: #2196f3; color: white; }
+        .btn-success { background: #4caf50; color: white; }
+        .btn-warn { background: #ff9800; color: white; }
+        .btn-danger { background: #f44336; color: white; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* Mobile */
+        .mobile-toggle { display: none; background: none; border: none; color: white; font-size: 1.5rem; }
+        @media (max-width: 768px) {
+            .mobile-toggle { display: block; }
+            .sidebar { 
+                position: absolute; right: 0; top: 60px; bottom: 60px; z-index: 100;
+                transform: translateX(100%); transition: transform 0.3s; width: 85%;
+            }
+            .sidebar.active { transform: translateX(0); }
+            .question-grid { grid-template-columns: repeat(6, 1fr); }
+            .footer-controls { flex-wrap: wrap; gap: 5px; height: auto; padding: 10px; }
+            .btn { flex: 1; padding: 8px; font-size: 0.8rem; }
+        }
+
+        /* Overlay */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .hidden { display: none !important; }
+        
+        .review-panel { display: none; padding: 20px; height: 100%; overflow-y: auto; background:#f9f9f9;}
+        .review-item { margin-bottom: 20px; border: 1px solid #ddd; padding: 15px; border-radius: 5px; background:white; }
+        .explanation { background: #fff3cd; padding: 10px; margin-top: 10px; font-size: 0.9rem; border-left: 4px solid #ffc107; }
+
+    </style>
+</head>
+<body>
+
+    <div id="landingPage" class="overlay">
+        <h1>AIIMS CRE - Test Paper 48</h1>
+        <div style="width: 80%; max-width: 600px; text-align: left; margin: 20px 0;">
+            <h3>Exam Rules:</h3>
+            <ul>
+                <li><strong>Questions:</strong> 100 (5 Sections of 20 questions each).</li>
+                <li><strong>Timing:</strong> 18 Minutes per section (Strictly Dedicated).</li>
+                <li><strong>Total Time:</strong> 90 Minutes.</li>
+                <li><strong>Locking:</strong> Once 18 mins are up, or if you manually proceed to the next section, you <u>cannot</u> return to the previous section.</li>
+                <li><strong>Marking:</strong> +4 Correct, -1 Incorrect.</li>
+            </ul>
+        </div>
+        <button class="btn btn-success" style="font-size: 1.2rem;" onclick="startExam()">START EXAM</button>
+    </div>
+
+    <header id="examHeader" class="hidden">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <h3>AIIMS Radiographer</h3>
+            <span style="font-size:0.8rem; background:#eee; padding:2px 6px; border-radius:4px; color:#333;" id="sectionLabel">Section 1</span>
+        </div>
+        <div class="timer" id="timerDisplay">18:00</div>
+        <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+    </header>
+
+    <div class="main-container hidden" id="examBody">
+        <div class="question-area">
+            <div class="q-header">
+                <span id="qNumDisplay">Question No. 1</span>
+                <span style="color: #666;">Marks: +4, -1</span>
+            </div>
+            <div id="questionText" class="q-text">Loading...</div>
+            <div id="optionsBox" class="options-container"></div>
+        </div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="user-info">
+                <strong>Candidate Name</strong><br><small>Roll No: 123456</small>
+            </div>
+            <div class="palette-legend">
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-answered)"></span> Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-not-answered)"></span> Not Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-review)"></span> Review</div>
+                <div class="legend-item"><span class="dot" style="background:#444"></span> Locked</div>
+            </div>
+            <div class="question-grid" id="questionPalette"></div>
+            <div style="padding:10px; margin-top:auto;">
+                <button class="btn btn-primary" style="width:100%" onclick="submitExam()">FINISH EXAM</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-controls hidden" id="examFooter">
+        <div style="display:flex; gap:10px;">
+            <button class="btn btn-danger" onclick="clearResponse()">Clear</button>
+            <button class="btn btn-warn" onclick="markForReview()">Review</button>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <button class="btn" onclick="prevQuestion()" id="btnPrev">Previous</button>
+            <button class="btn btn-success" onclick="saveAndNext()">Save & Next</button>
+        </div>
+    </div>
+
+    <div id="resultPage" class="overlay hidden" style="display:block; overflow-y:auto; justify-content:start; padding-top:40px;">
+        <h2 style="text-align:center;">Exam Summary</h2>
+        <div id="scoreCard" style="margin: 20px auto; width:90%; max-width:600px; padding: 20px; border: 1px solid #ccc; text-align: center; background:#fff;"></div>
+        <div style="display:flex; justify-content:center; gap:20px; margin-bottom:20px;">
+            <button class="btn btn-primary" onclick="showDetailedReview()">Review Solutions</button>
+            <button class="btn btn-danger" onclick="window.location.href='/materials'">Exit</button>
+        </div>
+        <div id="detailedReview" class="review-panel" style="width: 90%; max-width: 800px; margin:0 auto;"></div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const TOTAL_QUESTIONS = 100;
+        const SECTION_SIZE = 20; // 20 questions per section
+        const SECTION_TIME_LIMIT = 18 * 60; // 18 minutes in seconds
+        
+        let questions = [];
+
+        function generateQuestions() {
+            const createQ = (id, type, text, opts, ans, exp) => ({ id, type, text, opts, ans, exp });
+            questions = []; // Reset array
+            
+            function seededRandom(seed) {
+                let x = Math.sin(seed) * 10000;
+                return x - Math.floor(x);
+            }
+
+            function shuffleOptions(question, seed) {
+                let optionsWithIndex = question.opts.map((opt, index) => ({
+                    text: opt,
+                    isCorrect: index === question.ans
+                }));
+                for (let i = optionsWithIndex.length - 1; i > 0; i--) {
+                    const j = Math.floor(seededRandom(seed + i) * (i + 1));
+                    [optionsWithIndex[i], optionsWithIndex[j]] = [optionsWithIndex[j], optionsWithIndex[i]];
+                }
+                question.opts = optionsWithIndex.map(opt => opt.text);
+                question.ans = optionsWithIndex.findIndex(opt => opt.isCorrect);
+                return question;
+            }
+
+            const raw_data = [
+    {"type": "Non-Core", "text": "What is the keyboard shortcut for 'Paste' in most operating systems?", "opts": ["Ctrl + C", "Ctrl + V", "Ctrl + X", "Ctrl + P"], "ans": 1, "exp": "Ctrl + V is the universal shortcut for pasting copied or cut content."},
+    {"type": "Non-Core", "text": "Which shortcut is used to 'Undo' the previous action?", "opts": ["Ctrl + U", "Ctrl + Y", "Ctrl + Z", "Ctrl + X"], "ans": 2, "exp": "Ctrl + Z is the standard shortcut to undo an action."},
+    {"type": "Non-Core", "text": "What does the shortcut 'Ctrl + A' do in a document or folder?", "opts": ["Aligns text", "Selects all items", "Adds a new page", "Archives the file"], "ans": 1, "exp": "Ctrl + A selects all text or items in the active window."},
+    {"type": "Non-Core", "text": "Which is the largest ocean on Earth?", "opts": ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"], "ans": 3, "exp": "The Pacific Ocean is the largest and deepest of Earth's oceanic divisions."},
+    {"type": "Non-Core", "text": "Who is the author of the famous collection of poems 'Gitanjali'?", "opts": ["Rabindranath Tagore", "Bankim Chandra Chatterjee", "Sarojini Naidu", "Munshi Premchand"], "ans": 0, "exp": "Gitanjali was written by Rabindranath Tagore, for which he won the Nobel Prize in Literature in 1913."},
+    {"type": "Non-Core", "text": "Which is the smallest planet in our solar system?", "opts": ["Mars", "Venus", "Mercury", "Pluto"], "ans": 2, "exp": "Mercury is the smallest planet in the Solar System and the closest to the Sun."},
+    {"type": "Non-Core", "text": "What is the capital of Australia?", "opts": ["Sydney", "Melbourne", "Canberra", "Perth"], "ans": 2, "exp": "Canberra is the capital city of Australia."},
+    {"type": "Non-Core", "text": "The longest river in the world is the:", "opts": ["Amazon", "Nile", "Yangtze", "Mississippi"], "ans": 1, "exp": "The Nile is traditionally considered the longest river in the world, located in northeastern Africa."},
+    {"type": "Non-Core", "text": "Calculate the simple interest on Rs. 4000 at 5% per annum for 3 years.", "opts": ["Rs. 400", "Rs. 500", "Rs. 600", "Rs. 800"], "ans": 2, "exp": "SI = (P x R x T) / 100 = (4000 x 5 x 3) / 100 = Rs. 600."},
+    {"type": "Non-Core", "text": "The average of 5 consecutive numbers is 15. What is the largest of these numbers?", "opts": ["16", "17", "18", "19"], "ans": 1, "exp": "The numbers are 13, 14, 15, 16, 17. The largest is 17."},
+    {"type": "Non-Core", "text": "If 4 men can complete a work in 15 days, how many days will 6 men take to complete the same work?", "opts": ["10 days", "12 days", "8 days", "14 days"], "ans": 0, "exp": "M1D1 = M2D2 -> 4 * 15 = 6 * D2 -> D2 = 60 / 6 = 10 days."},
+    {"type": "Non-Core", "text": "A train 100 meters long is running at a speed of 36 km/hr. How much time will it take to pass a pole?", "opts": ["5 seconds", "10 seconds", "15 seconds", "20 seconds"], "ans": 1, "exp": "Speed = 36 km/hr = 10 m/s. Time = Distance/Speed = 100 / 10 = 10 seconds."},
+    {"type": "Non-Core", "text": "If the ratio of two numbers is 2:3 and their sum is 50, find the smaller number.", "opts": ["10", "20", "30", "40"], "ans": 1, "exp": "Let numbers be 2x and 3x. 5x = 50 -> x = 10. Smaller number = 2x = 20."},
+    {"type": "Non-Core", "text": "An article bought for Rs. 500 is sold at a loss of 10%. What is the selling price?", "opts": ["Rs. 400", "Rs. 450", "Rs. 550", "Rs. 600"], "ans": 1, "exp": "Loss = 10% of 500 = 50. Selling price = 500 - 50 = Rs. 450."},
+    {"type": "Non-Core", "text": "Find the missing number in the series: 3, 6, 11, 18, 27, ?", "opts": ["34", "36", "38", "40"], "ans": 2, "exp": "The differences are 3, 5, 7, 9. The next difference is 11. 27 + 11 = 38."},
+    {"type": "Non-Core", "text": "Pointing to a man, a woman said, 'His mother is the only daughter of my mother.' How is the woman related to the man?", "opts": ["Aunt", "Mother", "Sister", "Grandmother"], "ans": 1, "exp": "The only daughter of the woman's mother is the woman herself. So, she is the man's mother."},
+    {"type": "Non-Core", "text": "A person walks 10m North, turns left and walks 5m, turns left again and walks 10m. Which direction is he facing now?", "opts": ["North", "South", "East", "West"], "ans": 1, "exp": "Facing North, a left turn makes him face West. Another left turn makes him face South."},
+    {"type": "Non-Core", "text": "Choose the odd one out among the following:", "opts": ["Iron", "Copper", "Aluminum", "Wood"], "ans": 3, "exp": "Wood is a non-metal and an insulator, whereas the others are metals and conductors."},
+    {"type": "Non-Core", "text": "Statements: All cars are vehicles. Some vehicles are blue. Conclusion: Some cars are blue.", "opts": ["True", "False", "Cannot be determined", "Both A and B"], "ans": 2, "exp": "The conclusion does not necessarily follow from the statements. Some vehicles are blue, but they might not be cars."},
+    {"type": "Non-Core", "text": "Book is to Reading as Fork is to:", "opts": ["Writing", "Eating", "Cooking", "Stabbing"], "ans": 1, "exp": "A book is used for reading; a fork is used for eating."},
+    {"type": "Core", "text": "In a linear accelerator (LINAC), what is the function of the magnetron?", "opts": ["To bend the electron beam", "To generate high-frequency microwaves", "To amplify microwaves", "To filter the X-ray beam"], "ans": 1, "exp": "The magnetron functions as an oscillator that generates high-frequency microwaves used to accelerate electrons."},
+    {"type": "Core", "text": "Which component of a LINAC is primarily responsible for amplifying microwaves rather than generating them?", "opts": ["Magnetron", "Klystron", "Waveguide", "Thyratron"], "ans": 1, "exp": "A Klystron acts as a microwave amplifier, requiring a low-power microwave oscillator to drive it."},
+    {"type": "Core", "text": "What is the purpose of the bending magnet in a high-energy medical LINAC?", "opts": ["To steer the electron beam towards the target", "To focus the X-rays", "To generate microwaves", "To produce secondary electrons"], "ans": 0, "exp": "The bending magnet deflects the electron beam (usually by 90 or 270 degrees) so it strikes the target or scattering foil at the correct angle."},
+    {"type": "Core", "text": "Which radioactive isotope is most commonly used in High Dose Rate (HDR) brachytherapy?", "opts": ["Iodine-125", "Cesium-137", "Iridium-192", "Cobalt-60"], "ans": 2, "exp": "Iridium-192 (Ir-192) is the most widely used isotope for HDR brachytherapy due to its high specific activity and suitable half-life (73.8 days)."},
+    {"type": "Core", "text": "What is the half-life of Cobalt-60, historically used in teletherapy machines?", "opts": ["5.27 years", "30 years", "74 days", "1600 years"], "ans": 0, "exp": "Cobalt-60 has a half-life of 5.27 years, decaying with the emission of two high-energy gamma rays."},
+    {"type": "Core", "text": "The geometric penumbra in a teletherapy machine increases with an increase in which of the following?", "opts": ["Source-to-Surface Distance (SSD)", "Source size", "Source-to-Diaphragm Distance (SDD)", "Both Source size and SSD"], "ans": 3, "exp": "Geometric penumbra increases with larger source size and greater SSD, and decreases with larger SDD."},
+    {"type": "Core", "text": "In radiotherapy, the unit 'Gray' (Gy) is used to measure:", "opts": ["Radioactivity", "Equivalent dose", "Absorbed dose", "Exposure"], "ans": 2, "exp": "The Gray (Gy) is the SI unit of absorbed dose, defined as one joule of radiation energy absorbed per kilogram of matter."},
+    {"type": "Core", "text": "Which dosimeter relies on the phenomenon of electrons being trapped in crystal lattice defects and released as light when heated?", "opts": ["Ionization chamber", "Thermoluminescent dosimeter (TLD)", "Optically stimulated luminescence dosimeter (OSLD)", "Geiger-Muller counter"], "ans": 1, "exp": "TLDs use heat to release trapped electrons, emitting light proportional to the radiation dose absorbed."},
+    {"type": "Core", "text": "In prostate brachytherapy, which low-energy isotope is often implanted permanently as 'seeds'?", "opts": ["Iridium-192", "Iodine-125", "Cobalt-60", "Radium-226"], "ans": 1, "exp": "Iodine-125 (half-life ~60 days, low energy) is commonly used for permanent LDR prostate seed implants."},
+    {"type": "Core", "text": "What is the primary role of a flattening filter in a LINAC?", "opts": ["To harden the electron beam", "To convert electrons into X-rays", "To create a uniform dose distribution across the X-ray beam", "To absorb scattered radiation"], "ans": 2, "exp": "The flattening filter attenuates the forward-peaked X-ray beam more in the center than at the edges, creating a flat, uniform beam profile."},
+    {"type": "Core", "text": "Which component is used in a LINAC instead of a flattening filter when treating with electrons?", "opts": ["Target", "Scattering foil", "Multileaf collimator", "Ion chamber"], "ans": 1, "exp": "For electron therapy, the target is retracted and a scattering foil is inserted to broaden the narrow pencil beam of electrons."},
+    {"type": "Core", "text": "What is the energy of the two gamma photons emitted during the decay of Cobalt-60?", "opts": ["1.17 MeV and 1.33 MeV", "511 keV each", "140 keV and 364 keV", "662 keV each"], "ans": 0, "exp": "Cobalt-60 decays by beta emission followed by two gamma rays with energies of 1.17 MeV and 1.33 MeV."},
+    {"type": "Core", "text": "In radiation therapy, 'afterloading' techniques were developed primarily to:", "opts": ["Increase the dose rate", "Reduce radiation exposure to medical staff", "Improve image guidance", "Decrease treatment time for the patient"], "ans": 1, "exp": "Afterloading allows the applicators to be placed in the patient without radioactivity, and the radioactive source is loaded later, drastically reducing staff exposure."},
+    {"type": "Core", "text": "Which interaction is responsible for the majority of X-ray production in a LINAC target?", "opts": ["Photoelectric effect", "Compton scattering", "Bremsstrahlung", "Pair production"], "ans": 2, "exp": "Bremsstrahlung (braking radiation) occurs when high-speed electrons are decelerated by the nuclei of the target atoms, producing X-rays."},
+    {"type": "Core", "text": "The depth at which the maximum dose (Dmax) occurs for a 6 MV photon beam is approximately:", "opts": ["0.5 cm", "1.5 cm", "3.0 cm", "5.0 cm"], "ans": 1, "exp": "The depth of maximum dose (Dmax) for a 6 MV beam is typically about 1.5 cm below the skin surface."},
+    {"type": "Core", "text": "What is the primary function of the multileaf collimator (MLC) in modern radiotherapy?", "opts": ["To measure the radiation dose output", "To conform the radiation beam to the shape of the tumor", "To filter low-energy photons", "To generate microwave power"], "ans": 1, "exp": "MLCs consist of individual tungsten leaves that move independently to shape the radiation beam precisely to the target volume."},
+    {"type": "Core", "text": "Which term describes the variation in beam intensity due to the angle of the target in an X-ray tube, though less pronounced in LINACs?", "opts": ["Heel effect", "Penumbra", "Scatter fraction", "Build-up region"], "ans": 0, "exp": "The heel effect causes a variation in beam intensity along the anode-cathode axis, primarily due to self-absorption within the target."},
+    {"type": "Core", "text": "In treatment planning, the Gross Tumor Volume (GTV) represents:", "opts": ["The tumor plus a margin for microscopic spread", "The palpable or visible extent of the malignant growth", "The volume enclosed by the prescription isodose surface", "The area encompassing organ motion"], "ans": 1, "exp": "The GTV is the demonstrable extent and location of the tumor as seen on imaging or clinical examination."},
+    {"type": "Core", "text": "What is the purpose of the monitor ion chamber located in the head of a LINAC?", "opts": ["To steer the electron beam", "To measure and control the dose output and beam symmetry", "To cool the target", "To focus the microwave energy"], "ans": 1, "exp": "The monitor ion chambers constantly measure the radiation output, terminating the beam when the prescribed dose (Monitor Units) is delivered."},
+    {"type": "Core", "text": "Which isotope is commonly used in eye plaque brachytherapy for uveal melanoma?", "opts": ["Cesium-137", "Ruthenium-106", "Iridium-192", "Strontium-90"], "ans": 1, "exp": "Ruthenium-106 (Ru-106) or Iodine-125 are most commonly used in episcleral plaques for treating ocular melanomas."},
+    {"type": "Core", "text": "The fraction of a radiation dose surviving through a defined thickness of a material is characterized by the:", "opts": ["Linear attenuation coefficient", "Mass defect", "Specific activity", "Decay constant"], "ans": 0, "exp": "The linear attenuation coefficient describes the fraction of a beam of X-rays or gamma rays absorbed or scattered per unit thickness of the absorber."},
+    {"type": "Core", "text": "The 'Bragg peak' is a defining dosimetric characteristic of which type of radiation therapy?", "opts": ["Photon therapy", "Electron therapy", "Proton therapy", "Neutron therapy"], "ans": 2, "exp": "Proton beams deposit most of their energy at a specific depth (the Bragg peak) and have virtually no exit dose, unlike photons."},
+    {"type": "Core", "text": "What is the standard unit of measurement for the Activity of a radioactive source in the SI system?", "opts": ["Curie", "Becquerel", "Roentgen", "Sievert"], "ans": 1, "exp": "The Becquerel (Bq) is the SI unit for radioactivity, defined as one decay or disintegration per second."},
+    {"type": "Core", "text": "Intensity Modulated Radiation Therapy (IMRT) primarily achieves non-uniform dose delivery through the use of:", "opts": ["Physical wedges", "Dynamic movement of the Multileaf Collimator (MLC)", "Varying the electron energy", "Changing the SSD continuously"], "ans": 1, "exp": "IMRT uses computer-controlled MLCs to dynamically shape and modulate the intensity of the radiation beam during treatment."},
+    {"type": "Core", "text": "A 'Wedge Filter' in external beam radiotherapy is used to:", "opts": ["Compensate for a sloping body surface or optimize dose distribution", "Increase the dose rate", "Provide electron equilibrium", "Shield critical organs entirely"], "ans": 0, "exp": "Wedges alter the isodose distribution to compensate for missing tissue (like a sloping surface) or to correct dose gradients when beams overlap."},
+    {"type": "Core", "text": "In a gamma camera, what is the primary function of the collimator?", "opts": ["To amplify the light signal", "To convert gamma rays into light", "To reject gamma rays not traveling perpendicular to the crystal", "To convert electrical signals into a digital image"], "ans": 2, "exp": "The collimator allows only gamma rays traveling in a specific direction (usually perpendicular) to reach the crystal, defining the spatial location."},
+    {"type": "Core", "text": "Which scintillating crystal is most widely used in standard Gamma Cameras (SPECT)?", "opts": ["Bismuth Germanate (BGO)", "Lutetium Oxyorthosilicate (LSO)", "Sodium Iodide doped with Thallium (NaI(Tl))", "Cesium Iodide (CsI)"], "ans": 2, "exp": "NaI(Tl) crystals have been the standard detector material in gamma cameras due to their excellent light yield and energy resolution for Tc-99m."},
+    {"type": "Core", "text": "The Photomultiplier Tube (PMT) array in a gamma camera serves to:", "opts": ["Convert electrical current into visible light", "Convert visible light photons into an amplified electrical signal", "Filter out scattered gamma rays", "Generate gamma radiation"], "ans": 1, "exp": "PMTs detect the weak light flashes from the scintillation crystal and convert them into a measurable and amplified electrical pulse."},
+    {"type": "Core", "text": "What is the physical half-life of Technetium-99m (Tc-99m)?", "opts": ["6 hours", "12 hours", "8 days", "110 minutes"], "ans": 0, "exp": "Technetium-99m has a half-life of 6 hours, making it ideal for imaging while minimizing patient radiation dose."},
+    {"type": "Core", "text": "Which radiopharmaceutical is considered the gold standard for PET imaging in oncology?", "opts": ["Tc-99m MDP", "I-131 NaI", "F-18 Fluorodeoxyglucose (FDG)", "Ga-67 Citrate"], "ans": 2, "exp": "F-18 FDG is a glucose analog widely used in PET scans to identify highly metabolic tissues, such as tumors."},
+    {"type": "Core", "text": "The energy of the principal gamma photon emitted by Technetium-99m is:", "opts": ["511 keV", "140 keV", "364 keV", "74 keV"], "ans": 1, "exp": "Tc-99m decays by isomeric transition, emitting a 140 keV gamma ray, which is optimal for NaI(Tl) crystal detection."},
+    {"type": "Core", "text": "What physical process forms the basis of Positron Emission Tomography (PET)?", "opts": ["Isomeric transition", "Electron capture", "Annihilation reaction producing two 511 keV photons", "Bremsstrahlung production"], "ans": 2, "exp": "A positron interacts with an electron, annihilating both and creating two 511 keV photons traveling in nearly opposite directions (180 degrees)."},
+    {"type": "Core", "text": "Which component in a gamma camera uses upper and lower energy thresholds to reject scatter radiation?", "opts": ["Collimator", "Position logic circuit", "Pulse Height Analyzer (PHA)", "Photomultiplier tube"], "ans": 2, "exp": "The PHA analyzes the amplitude of electrical pulses and accepts only those falling within a specified 'window', rejecting lower-energy scattered photons."},
+    {"type": "Core", "text": "In a Mo-99/Tc-99m generator, what is the half-life of the parent isotope, Molybdenum-99?", "opts": ["6 hours", "66 hours", "8 days", "73 days"], "ans": 1, "exp": "Molybdenum-99 has a half-life of 66 hours, continually decaying to produce the daughter isotope Tc-99m."},
+    {"type": "Core", "text": "Which type of collimator produces a magnified image of the object, often used for imaging small organs like the thyroid?", "opts": ["Parallel-hole", "Diverging", "Pinhole", "Converging"], "ans": 2, "exp": "A pinhole collimator reverses and magnifies the image, providing high resolution for small, superficial organs like the thyroid gland."},
+    {"type": "Core", "text": "What radiopharmaceutical is commonly used for a thyroid uptake and scan?", "opts": ["Iodine-123 or Iodine-131", "F-18 FDG", "Tc-99m Sestamibi", "Tl-201 Chloride"], "ans": 0, "exp": "Radioactive iodine (I-123 for imaging, I-131 for therapy/imaging) is taken up directly by thyroid tissue via the sodium-iodide symporter."},
+    {"type": "Core", "text": "In myocardial perfusion imaging, which isotope is used as a potassium analog?", "opts": ["Tc-99m", "Thallium-201", "Gallium-67", "Indium-111"], "ans": 1, "exp": "Thallium-201 (Tl-201) acts analogously to potassium and is actively transported into viable myocardial cells via the Na+/K+ ATPase pump."},
+    {"type": "Core", "text": "What does 'SPECT' stand for?", "opts": ["Single Photon Emission Computed Tomography", "Simulated Positron Emission Computerized Tomography", "Spatial Photon Energy Computed Tomography", "Standard Positron Emission Computed Tomography"], "ans": 0, "exp": "SPECT refers to Single Photon Emission Computed Tomography, where standard gamma cameras rotate around the patient to create 3D images."},
+    {"type": "Core", "text": "Which crystal material is preferred in modern PET scanners due to its high stopping power and fast decay time?", "opts": ["NaI(Tl)", "Lutetium Oxyorthosilicate (LSO) or LYSO", "Cadmium Zinc Telluride (CZT)", "Lithium Fluoride (LiF)"], "ans": 1, "exp": "LSO and LYSO crystals are dense (good for stopping 511 keV photons) and very fast, allowing for time-of-flight (TOF) PET imaging."},
+    {"type": "Core", "text": "In nuclear medicine, biological half-life refers to:", "opts": ["The time required for an isotope to physically decay by half", "The time required for the body to eliminate half of the administered dose through natural processes", "The combination of physical and effective half-lives", "The shelf life of the radiopharmaceutical"], "ans": 1, "exp": "Biological half-life is the time it takes for a substance to lose half of its pharmacological, physiologic, or radiologic activity through biological elimination."},
+    {"type": "Core", "text": "Tc-99m MDP (Methylene Diphosphonate) is the radiopharmaceutical of choice for which study?", "opts": ["Bone scan", "Renal scan", "Liver scan", "Brain perfusion scan"], "ans": 0, "exp": "Tc-99m MDP chemically binds to hydroxyapatite crystals in bone, making it the standard radiopharmaceutical for skeletal scintigraphy."},
+    {"type": "Core", "text": "The standard dose limit for a radiation worker in one year, according to ICRP, is:", "opts": ["1 mSv", "5 mSv", "20 mSv", "50 mSv"], "ans": 2, "exp": "The International Commission on Radiological Protection (ICRP) recommends a limit of 20 mSv per year averaged over 5 years, with no single year exceeding 50 mSv."},
+    {"type": "Core", "text": "Which procedure is Iodine-131 (I-131) primarily used for therapeutically?", "opts": ["Bone pain palliation", "Prostate cancer seeds", "Hyperthyroidism and Thyroid cancer", "Polycythemia vera"], "ans": 2, "exp": "I-131 emits beta particles that destroy tissue locally, making it highly effective for treating hyperthyroidism and differentiated thyroid cancer."},
+    {"type": "Core", "text": "What artifact is caused when a gamma ray scatters inside the patient, loses energy, but still falls within the accepted energy window?", "opts": ["Compton scatter artifact (loss of spatial resolution)", "Star artifact", "Ring artifact", "Beam hardening artifact"], "ans": 0, "exp": "Scattered photons that are accepted by the PHA misregister the origin of the event, degrading image contrast and spatial resolution."},
+    {"type": "Core", "text": "A V/Q scan to diagnose pulmonary embolism utilizes which two radiopharmaceuticals?", "opts": ["Tc-99m MAA and Xe-133", "Tc-99m MDP and F-18 FDG", "Tc-99m Sestamibi and Tl-201", "I-123 and Tc-99m Pertechnetate"], "ans": 0, "exp": "A Ventilation/Perfusion (V/Q) scan typically uses Tc-99m Macroaggregated Albumin (MAA) for perfusion and a radioactive gas like Xe-133 (or Tc-99m DTPA aerosol) for ventilation."},
+    {"type": "Core", "text": "What does a 'cold spot' on a thyroid scan using Tc-99m typically indicate?", "opts": ["An area of hyperfunctioning tissue (e.g., toxic adenoma)", "A normal functioning gland", "An area of non-functioning tissue (e.g., cyst, potential malignancy)", "A highly vascularized tumor"], "ans": 2, "exp": "A cold nodule does not take up the radiotracer, indicating non-functioning tissue. Cold nodules have a higher probability of malignancy compared to hot nodules."},
+    {"type": "Core", "text": "What quality control procedure for a gamma camera ensures that the response is uniform across the entire field of view?", "opts": ["Center of rotation (COR) calibration", "Energy resolution check", "Intrinsic or Extrinsic Flood Field Uniformity", "Spatial linearity test"], "ans": 2, "exp": "Flood uniformity testing involves exposing the detector to a uniform radioactive source to ensure all PMTs and the crystal respond evenly."},
+    {"type": "Core", "text": "F-18, the most common PET isotope, is produced using a:", "opts": ["Nuclear reactor", "Cyclotron", "Radionuclide generator", "Linear accelerator target"], "ans": 1, "exp": "F-18 is a positron emitter produced by bombarding O-18 enriched water with protons in a medical cyclotron."},
+    {"type": "Core", "text": "Which radiotracer is commonly used to evaluate gallbladder ejection fraction in a HIDA scan?", "opts": ["Tc-99m MAG3", "Tc-99m Choletec (Mebrofenin)", "Tc-99m Sulfur Colloid", "Tc-99m DMSA"], "ans": 1, "exp": "Mebrofenin or Disofenin are iminodiacetic acid (IDA) derivatives excreted by the biliary system, used for hepatobiliary imaging."},
+    {"type": "Core", "text": "In Time-of-Flight (TOF) PET, what additional information is used to improve image quality?", "opts": ["The specific energy of the annihilation photons", "The difference in arrival times of the two 511 keV photons at the detectors", "The temperature of the crystal", "The phase of the cardiac cycle"], "ans": 1, "exp": "TOF PET measures the precise time difference between the detection of the two coincident photons, helping to localize the annihilation event more accurately along the line of response."},
+    {"type": "Core", "text": "In MR Angiography (MRA), Time-of-Flight (TOF) imaging relies primarily on which phenomenon?", "opts": ["Phase shifts in moving spins", "Flow-related enhancement (in-flow effect)", "Paramagnetic susceptibility of gadolinium", "Diffusion of water molecules"], "ans": 1, "exp": "TOF MRA uses flow-related enhancement, where unsaturated 'fresh' spins flowing into the slice appear bright against the saturated, stationary background tissue."},
+    {"type": "Core", "text": "Phase Contrast MRA (PC-MRA) generates contrast based on:", "opts": ["T1 shortening from contrast media", "The velocity-induced phase shift of moving protons", "The inflow of unsaturated spins", "Fat suppression techniques"], "ans": 1, "exp": "PC-MRA uses bipolar gradient pulses to induce a phase shift in moving spins that is directly proportional to their velocity."},
+    {"type": "Core", "text": "Which MRA technique is most dependent on the administration of a gadolinium-based contrast agent?", "opts": ["2D TOF MRA", "3D TOF MRA", "PC-MRA", "CE-MRA (Contrast-Enhanced MRA)"], "ans": 3, "exp": "CE-MRA relies heavily on the T1-shortening effect of gadolinium contrast to make blood vessels remarkably bright, largely independent of flow velocities."},
+    {"type": "Core", "text": "In MR Spectroscopy (MRS) of the brain, the N-acetylaspartate (NAA) peak is generally considered a marker of:", "opts": ["Cell membrane turnover", "Energy metabolism", "Neuronal viability and density", "Anaerobic glycolysis"], "ans": 2, "exp": "NAA is found almost exclusively in neurons. A decrease in the NAA peak indicates neuronal loss or dysfunction (e.g., in tumors or neurodegenerative diseases)."},
+    {"type": "Core", "text": "Which metabolite peak in a brain MR spectrum is significantly elevated in the presence of rapidly proliferating tumors?", "opts": ["NAA", "Choline (Cho)", "Creatine (Cr)", "Lipid"], "ans": 1, "exp": "Choline is a marker of cell membrane synthesis and turnover. Its peak elevates in high-grade gliomas and other rapidly growing tumors."},
+    {"type": "Core", "text": "The appearance of a Lactate doublet peak on brain MR spectroscopy indicates:", "opts": ["Healthy neuronal function", "Normal white matter", "Anaerobic metabolism or necrosis", "Increased blood flow"], "ans": 2, "exp": "Lactate is usually not visible in a healthy brain. Its presence suggests anaerobic glycolysis, ischemia, or tumor necrosis."},
+    {"type": "Core", "text": "Diffusion Weighted Imaging (DWI) measures the random Brownian motion of which molecules?", "opts": ["Lipids", "Water", "Hemoglobin", "Proteins"], "ans": 1, "exp": "DWI assesses the restricted or free diffusion of water molecules within tissues, providing contrast based on cellular density and membrane integrity."},
+    {"type": "Core", "text": "In acute ischemic stroke, affected brain tissue on a DWI scan typically appears:", "opts": ["Hypointense (dark)", "Isointense (gray)", "Hyperintense (bright)", "Signal void (black)"], "ans": 2, "exp": "Cytotoxic edema restricts water diffusion, causing the ischemic area to retain signal and appear hyperintense (bright) on DWI."},
+    {"type": "Core", "text": "What does ADC stand for in the context of MRI Diffusion imaging?", "opts": ["Analog to Digital Converter", "Apparent Diffusion Coefficient", "Absolute Data Calculation", "Arterial Diffusion Contrast"], "ans": 1, "exp": "ADC (Apparent Diffusion Coefficient) is a quantitative measure of diffusion. Restricted diffusion (bright on DWI) appears dark on an ADC map."},
+    {"type": "Core", "text": "The 'b-value' in Diffusion Weighted Imaging determines the:", "opts": ["Slice thickness", "Amount of diffusion weighting applied by the gradients", "Repetition time (TR)", "Flip angle"], "ans": 1, "exp": "The b-value (typically 0, 500, or 1000 s/mm2) represents the strength, duration, and timing of the diffusion gradients. Higher b-values increase diffusion weighting."},
+    {"type": "Core", "text": "Dynamic Susceptibility Contrast (DSC) Perfusion MRI primarily measures:", "opts": ["Capillary permeability (Ktrans)", "T1 shortening", "T2* signal loss during the first pass of a gadolinium bolus", "Blood oxygenation levels"], "ans": 2, "exp": "DSC tracks the passage of a gadolinium bolus, causing a transient drop in T2* signal, used to calculate cerebral blood volume (CBV) and flow (CBF)."},
+    {"type": "Core", "text": "Which MRI perfusion technique does NOT require an intravenous contrast agent?", "opts": ["DSC (Dynamic Susceptibility Contrast)", "DCE (Dynamic Contrast Enhanced)", "ASL (Arterial Spin Labeling)", "CE-MRA"], "ans": 2, "exp": "Arterial Spin Labeling (ASL) magnetically tags water protons in arterial blood using RF pulses, acting as an endogenous contrast agent to measure perfusion."},
+    {"type": "Core", "text": "Functional MRI (fMRI) relies on the BOLD effect. What does BOLD stand for?", "opts": ["Blood Oxygen Level Dependent", "Brain Optimization and Localization Data", "Biomarker of Localized Disease", "Basic Oxygenation and Lipid Density"], "ans": 0, "exp": "The BOLD effect utilizes the different magnetic susceptibilities of oxygenated (diamagnetic) and deoxygenated (paramagnetic) hemoglobin to detect brain activation."},
+    {"type": "Core", "text": "In fMRI, an area of the brain that becomes active experiences:", "opts": ["A decrease in local blood flow", "An increase in deoxygenated hemoglobin", "An overcompensation of oxygenated blood flow, reducing local deoxyhemoglobin", "A complete cessation of perfusion"], "ans": 2, "exp": "Neural activation triggers an influx of oxygenated blood that exceeds the metabolic demand, lowering the local concentration of deoxyhemoglobin and increasing the T2* signal."},
+    {"type": "Core", "text": "Which artifact in MR Spectroscopy results in a broad, distorted spectrum that masks underlying metabolites?", "opts": ["Chemical shift artifact", "Poor B0 magnetic field homogeneity (shimming)", "Magic angle artifact", "Aliasing"], "ans": 1, "exp": "Excellent B0 homogeneity (achieved by 'shimming') is critical for MRS. Poor shimming broadens spectral peaks and ruins resolution."},
+    {"type": "Core", "text": "In TOF MRA, what is the 'venetian blind' artifact?", "opts": ["Loss of signal due to in-plane flow", "Signal void from metallic implants", "A striped appearance on multi-slab 3D TOF due to variable spin saturation across slabs", "Ghosting from respiratory motion"], "ans": 2, "exp": "Multiple Overlapping Thin Slab Acquisition (MOTSA) can show horizontal bands of altered signal intensity where slabs meet, known as the venetian blind artifact."},
+    {"type": "Core", "text": "Which pulse sequence is fundamentally used to acquire Diffusion Weighted Images (DWI)?", "opts": ["Gradient Echo (GRE)", "Spin Echo Echo Planar Imaging (SE-EPI)", "Inversion Recovery", "Fast Spin Echo (FSE)"], "ans": 1, "exp": "DWI is typically acquired using an ultrafast SE-EPI sequence, which can capture images in a fraction of a second to freeze bulk motion."},
+    {"type": "Core", "text": "A 'magic angle' artifact in MRI is seen when a highly ordered structure, like a tendon, is oriented at what angle to the main magnetic field (B0)?", "opts": ["90 degrees", "0 degrees", "55 degrees", "180 degrees"], "ans": 2, "exp": "At roughly 55 degrees (specifically 54.74 degrees) to B0, the dipole-dipole interactions are minimized, artificially increasing the T2 signal of tendons."},
+    {"type": "Core", "text": "In Phase Contrast MRA, the VENC (Velocity Encoding) parameter must be set appropriately. What happens if the actual blood flow exceeds the chosen VENC?", "opts": ["The vessel disappears", "Aliasing occurs, where high velocities wrap around and are displayed as flow in the opposite direction", "The image becomes overly bright", "The scan time doubles"], "ans": 1, "exp": "If VENC is set too low, phase shifts exceed 180 degrees, causing aliasing where rapid forward flow is incorrectly mapped as reverse flow."},
+    {"type": "Core", "text": "Dynamic Contrast-Enhanced (DCE) MRI is a T1-weighted perfusion technique commonly used to assess:", "opts": ["Microvascular permeability (e.g., Ktrans in breast or prostate cancer)", "Main arterial blockages only", "Bone marrow fat content", "Cerebrospinal fluid flow"], "ans": 0, "exp": "DCE tracks the wash-in and wash-out of contrast into the extravascular extracellular space, evaluating tumor angiogenesis and permeability."},
+    {"type": "Core", "text": "Which advanced MRI technique is specifically designed to map the white matter tracts of the brain?", "opts": ["Functional MRI (fMRI)", "MR Spectroscopy (MRS)", "Diffusion Tensor Imaging (DTI)", "Susceptibility Weighted Imaging (SWI)"], "ans": 2, "exp": "DTI measures the directionality (anisotropy) of water diffusion to map and visualize the microstructural organization of white matter tracts (tractography)."},
+    {"type": "Core", "text": "Fractional Anisotropy (FA) is a metric derived from which MRI technique?", "opts": ["MR Spectroscopy", "Perfusion ASL", "Diffusion Tensor Imaging (DTI)", "BOLD fMRI"], "ans": 2, "exp": "FA measures the degree of directional restriction of water diffusion in DTI. A value near 1 indicates highly directional flow (like in healthy nerve tracts)."},
+    {"type": "Core", "text": "Susceptibility Weighted Imaging (SWI) is highly sensitive to compounds that distort the local magnetic field, such as:", "opts": ["Water and fat", "Hemoglobin degradation products (hemosiderin) and calcifications", "Gadolinium only", "Lactic acid"], "ans": 1, "exp": "SWI exploits the magnetic susceptibility differences of tissues, making it exquisitely sensitive to venous blood, hemorrhage, and iron storage."},
+    {"type": "Core", "text": "In breast MRI, a 'Type III' contrast kinetic enhancement curve indicates:", "opts": ["Slow, continuous progressive enhancement (typically benign)", "Rapid initial wash-in followed by a plateau", "Rapid initial wash-in followed by a rapid wash-out (highly suspicious for malignancy)", "No enhancement whatsoever"], "ans": 2, "exp": "A Type III curve (rapid wash-in, rapid wash-out) is strongly associated with the leaky neovasculature characteristic of malignant breast tumors."},
+    {"type": "Core", "text": "Chemical Shift Imaging (CSI) in MR Spectroscopy allows for:", "opts": ["Suppressing the fat signal across the entire image", "Acquiring spectra from multiple voxels simultaneously over a 2D or 3D grid", "Measuring the flow velocity of blood", "Mapping white matter tracts"], "ans": 1, "exp": "CSI (or MRSI) acquires spectral data from a grid of voxels, allowing the mapping of metabolite distributions over a large anatomical region."},
+    {"type": "Core", "text": "In Computed Tomography (CT), the term 'Pitch' in a helical/spiral scan is defined as:", "opts": ["The thickness of the reconstructed slice", "Table travel per rotation divided by the beam collimation", "The gantry rotation speed", "The number of detectors in the z-axis"], "ans": 1, "exp": "Pitch is the ratio of table feed per gantry rotation to the total X-ray beam width (collimation). A pitch > 1 means gaps exist in the helix; < 1 implies overlap."},
+    {"type": "Core", "text": "Which CT artifact appears as bright streaks radiating from a dense object like a dental filling or hip prosthesis?", "opts": ["Ring artifact", "Partial volume artifact", "Metal artifact (Beam hardening/photon starvation)", "Motion artifact"], "ans": 2, "exp": "Highly attenuating metal objects absorb nearly all X-ray photons, leading to photon starvation and severe beam hardening streaks in the reconstruction."},
+    {"type": "Core", "text": "In ultrasound, what artifact occurs when sound waves bounce back and forth between two highly reflective interfaces?", "opts": ["Acoustic shadowing", "Reverberation artifact", "Mirror image artifact", "Enhancement"], "ans": 1, "exp": "Reverberation occurs when the ultrasound pulse repeatedly bounces between two strong reflectors, creating multiple equidistant parallel lines on the image."},
+    {"type": "Core", "text": "Which component of an ultrasound transducer is responsible for damping the ringing of the piezoelectric crystal, thereby improving axial resolution?", "opts": ["Matching layer", "Backing material (Damping block)", "Lens", "Cable shield"], "ans": 1, "exp": "The backing material absorbs the backward-directed sound waves and shortens the spatial pulse length, which drastically improves axial resolution."},
+    {"type": "Core", "text": "According to the ALARA principle in radiography, what are the three cardinal rules of radiation protection?", "opts": ["Kilovoltage, Milliamperage, Time", "Distance, Shielding, Collimation", "Time, Distance, Shielding", "Filtration, Grid ratio, Distance"], "ans": 2, "exp": "The three cardinal principles of radiation protection are minimizing Time, maximizing Distance, and using appropriate Shielding."}
+];
+
+            raw_data.forEach((d, i) => {
+                let q = createQ(i + 1, d.type, d.text, d.opts, d.ans, d.exp);
+                questions.push(shuffleOptions(q, q.id));
+            });
+        }
+
+        // --- STATE MANAGEMENT ---
+        let timerInterval;
+
+        let state = JSON.parse(localStorage.getItem('test_paper_48_state')) || {
+            currentQ: 0,
+            answers: new Array(TOTAL_QUESTIONS).fill(null),
+            status: new Array(TOTAL_QUESTIONS).fill('not-visited'),
+            currentSection: 1,
+            sectionTimeLeft: SECTION_TIME_LIMIT,
+            maxSetReached: 1,
+            isFinished: false
+        };
+
+        function saveState() {
+            localStorage.setItem('test_paper_48_state', JSON.stringify(state));
+        }
+
+        const els = {
+            landing: document.getElementById('landingPage'),
+            header: document.getElementById('examHeader'),
+            body: document.getElementById('examBody'),
+            footer: document.getElementById('examFooter'),
+            result: document.getElementById('resultPage'),
+            qText: document.getElementById('questionText'),
+            optsBox: document.getElementById('optionsBox'),
+            qNum: document.getElementById('qNumDisplay'),
+            sectionLabel: document.getElementById('sectionLabel'),
+            palette: document.getElementById('questionPalette'),
+            timer: document.getElementById('timerDisplay'),
+            btnPrev: document.getElementById('btnPrev'),
+            sidebar: document.getElementById('sidebar')
+        };
+
+        function init() {
+            generateQuestions(); // Load data
+            if (state.isFinished) {
+                finishExam();
+            } else {
+                els.landing.classList.remove('hidden');
+                els.result.classList.add('hidden');
+            }
+        }
+
+        function startExam() {
+            els.landing.classList.add('hidden');
+            renderExamInterface();
+            startSectionTimer();
+        }
+
+        function startSectionTimer() {
+            if(timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                state.sectionTimeLeft--;
+                saveState();
+                
+                // Format Time
+                const m = Math.floor(state.sectionTimeLeft / 60);
+                const s = state.sectionTimeLeft % 60;
+                els.timer.innerText = `${m}:${s < 10 ? '0'+s : s}`;
+                
+                // Visual Warning
+                if(state.sectionTimeLeft < 60) els.timer.style.backgroundColor = "#ffcdd2";
+                else els.timer.style.backgroundColor = "#fff";
+
+                // Time Up Logic
+                if (state.sectionTimeLeft <= 0) {
+                    handleSectionTimeout();
+                }
+            }, 1000);
+        }
+
+        function handleSectionTimeout() {
+            clearInterval(timerInterval);
+            
+            if (state.currentSection < 5) {
+                alert(`Time is up for Section ${state.currentSection}! Moving to Section ${state.currentSection + 1}.`);
+                forceNextSection();
+            } else {
+                alert("Time is up for the final section! Submitting Exam.");
+                finishExam();
+            }
+        }
+
+        function forceNextSection() {
+            state.currentSection++;
+            state.maxSetReached = state.currentSection;
+            state.sectionTimeLeft = SECTION_TIME_LIMIT;
+            saveState();
+            
+            // Move to first question of next section
+            const firstQofNextSection = (state.currentSection - 1) * SECTION_SIZE;
+            loadQuestion(firstQofNextSection);
+            startSectionTimer();
+        }
+
+        function renderExamInterface() {
+            els.header.classList.remove('hidden');
+            els.body.classList.remove('hidden');
+            els.footer.classList.remove('hidden');
+            renderPalette();
+            loadQuestion(state.currentQ);
+        }
+
+        function loadQuestion(index) {
+            state.currentQ = index;
+            if(state.status[index] === 'not-visited') state.status[index] = 'not-answered';
+            saveState();
+
+            // Update Section Label
+            const secNum = Math.floor(index / SECTION_SIZE) + 1;
+            els.sectionLabel.innerText = `Section ${secNum} (Q${(secNum-1)*20 + 1}-${secNum*20})`;
+
+            // Render Text
+            els.qNum.innerText = `Question ${index + 1}`;
+            els.qText.innerText = questions[index].text;
+            
+            // Render Options
+            els.optsBox.innerHTML = '';
+            questions[index].opts.forEach((opt, i) => {
+                const isChecked = state.answers[index] === i ? 'checked' : '';
+                els.optsBox.innerHTML += `
+                    <label class="option-label">
+                        <input type="radio" name="opt" value="${i}" ${isChecked} onchange="selectOption(${i})">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            // Update Palette UI
+            document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('current'));
+            const currentBtn = document.getElementById(`qbtn-${index}`);
+            if(currentBtn) currentBtn.classList.add('current');
+
+            // Handle Prev Button State (Cannot go back to previous locked section)
+            const startOfCurrentSection = (state.currentSection - 1) * SECTION_SIZE;
+            els.btnPrev.disabled = (index <= startOfCurrentSection);
+        }
+
+        function selectOption(optIndex) {
+            state.answers[state.currentQ] = optIndex;
+            saveState();
+        }
+
+        function saveAndNext() {
+            const index = state.currentQ;
+            // Update status
+            state.status[index] = (state.answers[index] !== null) ? 'answered' : 'not-answered';
+            saveState();
+            
+            moveToNextQuestion();
+        }
+
+        function markForReview() {
+            const index = state.currentQ;
+            state.status[index] = (state.answers[index] !== null) ? 'marked-answered' : 'review';
+            saveState();
+            moveToNextQuestion();
+        }
+
+        function clearResponse() {
+            state.answers[state.currentQ] = null;
+            state.status[state.currentQ] = 'not-answered';
+            saveState();
+            loadQuestion(state.currentQ);
+            renderPalette();
+        }
+
+        function moveToNextQuestion() {
+            const nextIndex = state.currentQ + 1;
+            const currentSecBound = state.currentSection * SECTION_SIZE;
+
+            // Check if next question crosses section boundary
+            if (nextIndex >= currentSecBound) {
+                // End of section reached
+                if (state.currentSection < 5) {
+                    if (confirm(`You have reached the end of Section ${state.currentSection}.\nDo you want to submit this section and move to Section ${state.currentSection+1}?\n\nWARNING: You cannot return to this section.`)) {
+                        forceNextSection();
+                    }
+                } else {
+                    if(confirm("This was the last question. Submit Exam?")) {
+                        finishExam();
+                    }
+                }
+            } else {
+                // Normal movement within section
+                renderPalette();
+                loadQuestion(nextIndex);
+            }
+        }
+
+        function prevQuestion() {
+            // Logic handled in loadQuestion to disable button if at start of section
+            if (state.currentQ > 0) {
+                loadQuestion(state.currentQ - 1);
+            }
+        }
+
+        function renderPalette() {
+            els.palette.innerHTML = '';
+            for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+                let statusClass = state.status[i];
+                if(statusClass === 'marked-answered') statusClass = 'review';
+                
+                // Check if question belongs to a locked (previous) section
+                // A question is locked if its section index is < current active section
+                const qSection = Math.floor(i / SECTION_SIZE) + 1;
+                const isLocked = qSection < state.currentSection;
+                const lockedClass = isLocked ? ' locked' : '';
+                
+                // Gray out future sections
+                const isFuture = qSection > state.currentSection;
+                const futureStyle = isFuture ? 'opacity:0.3; pointer-events:none;' : '';
+
+                els.palette.innerHTML += `
+                    <div id="qbtn-${i}" 
+                         class="q-btn ${statusClass}${lockedClass}" 
+                         style="${futureStyle}"
+                         onclick="jumpToQuestion(${i})">
+                        ${i + 1}
+                    </div>
+                `;
+            }
+        }
+
+        function jumpToQuestion(index) {
+            const qSection = Math.floor(index / SECTION_SIZE) + 1;
+            
+            if (qSection < state.currentSection) {
+                alert("This section is locked.");
+                return;
+            }
+            if (qSection > state.currentSection) {
+                alert("You cannot jump to a future section yet.");
+                return;
+            }
+            
+            loadQuestion(index);
+        }
+
+        function submitExam() {
+            if(confirm("Are you sure you want to finish the exam? Unanswered questions in future sections will be marked zero.")) {
+                finishExam();
+            }
+        }
+
+        function finishExam() {
+            clearInterval(timerInterval);
+            state.isFinished = true;
+            saveState();
+            
+            els.header.classList.add('hidden');
+            els.body.classList.add('hidden');
+            els.footer.classList.add('hidden');
+            els.result.classList.remove('hidden');
+            
+            calculateResult();
+        }
+
+        function calculateResult() {
+            let correct = 0, wrong = 0, unattempted = 0, score = 0;
+
+            state.answers.forEach((ans, i) => {
+                if (ans === null) {
+                    unattempted++;
+                } else if (questions[i] && ans === questions[i].ans) {
+                    correct++;
+                    score += 4;
+                } else {
+                    wrong++;
+                    score -= 1;
+                }
+            });
+
+            document.getElementById('scoreCard').innerHTML = `
+                <h1 style="color:#3f51b5; font-size:3rem;">${score} / 400</h1>
+                <p><strong>Correct:</strong> ${correct} (+${correct*4})</p>
+                <p><strong>Incorrect:</strong> ${wrong} (-${wrong})</p>
+                <p><strong>Unattempted:</strong> ${unattempted}</p>
+            `;
+        }
+
+        function showDetailedReview() {
+            const container = document.getElementById('detailedReview');
+            container.style.display = 'block';
+            container.innerHTML = '<h3>Detailed Solutions</h3>';
+            
+            questions.forEach((q, i) => {
+                const userAns = state.answers[i];
+                const isCorrect = userAns === q.ans;
+                const statusColor = userAns === null ? 'gray' : (isCorrect ? 'green' : 'red');
+                const statusText = userAns === null ? 'Skipped' : (isCorrect ? 'Correct' : 'Incorrect');
+
+                let optsHtml = '';
+                q.opts.forEach((opt, oi) => {
+                    let style = '';
+                    if (oi === q.ans) style = 'font-weight:bold; color:green;'; 
+                    if (oi === userAns && !isCorrect) style = 'font-weight:bold; color:red;'; 
+                    optsHtml += `<div style="${style}">${oi+1}. ${opt}</div>`;
+                });
+
+                container.innerHTML += `
+                    <div class="review-item">
+                        <div style="color:${statusColor}; font-weight:bold; margin-bottom:5px;">Q${i+1}: ${statusText}</div>
+                        <div>${q.text}</div>
+                        <div style="margin:10px 0; padding-left:15px; border-left:3px solid #ddd;">${optsHtml}</div>
+                        <div class="explanation"><strong>Explanation:</strong> ${q.exp}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleSidebar() {
+            els.sidebar.classList.toggle('active');
+        }
+
+        // Initialize
+        init();
+
+    </script>
+</body>
+</html>
