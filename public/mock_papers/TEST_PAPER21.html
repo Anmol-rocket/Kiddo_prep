@@ -190,7 +190,20 @@
                 let x = Math.sin(seed) * 10000;
                 return x - Math.floor(x);
             }
-            const createQ = (id, type, text, opts, ans, exp) => ({ id, type, text, opts, ans, exp });
+
+            const createQ = (id, type, text, opts, ans, exp) => {
+                let mappedOpts = opts.map((opt, index) => ({ opt, isCorrect: index === ans }));
+                for (let i = mappedOpts.length - 1; i > 0; i--) {
+                    const j = Math.floor(seededRandom(id + i) * (i + 1));
+                    [mappedOpts[i], mappedOpts[j]] = [mappedOpts[j], mappedOpts[i]];
+                }
+                const shuffledOpts = mappedOpts.map(m => m.opt);
+                const newAns = mappedOpts.findIndex(m => m.isCorrect);
+
+                return { id, type, text, opts: shuffledOpts, ans: newAns, exp };
+            };
+            questions = [];
+
             const raw_data = [
                 { "type": "Non-Core", "text": "The 'Jallianwala Bagh massacre' occurred in which year?", "opts": ["1917", "1919", "1921", "1923"], "ans": 1, "exp": "It occurred on April 13, 1919." },
                 { "type": "Non-Core", "text": "When is 'World Health Day' celebrated?", "opts": ["April 7", "May 1", "June 5", "July 11"], "ans": 0, "exp": "April 7 marks the anniversary of the founding of WHO in 1948." },
@@ -380,7 +393,7 @@
                 // Format Time
                 const m = Math.floor(state.sectionTimeLeft / 60);
                 const s = state.sectionTimeLeft % 60;
-                els.timer.innerText = \`\${m}:\${s < 10 ? '0'+s : s}\`;
+                els.timer.innerText = `${m}:${s < 10 ? '0'+s : s}`;
                 
                 // Visual Warning
                 if(state.sectionTimeLeft < 60) els.timer.style.backgroundColor = "#ffcdd2";
@@ -399,7 +412,7 @@
             clearInterval(timerInterval);
             
             if (state.currentSection < 5) {
-                alert(\`Time is up for Section \${state.currentSection}! Moving to Section \${state.currentSection + 1}.\`);
+                alert(`Time is up for Section ${state.currentSection}! Moving to Section ${state.currentSection + 1}.`);
                 forceNextSection();
             } else {
                 alert("Time is up for the final section! Submitting Exam.");
@@ -433,27 +446,27 @@
 
             // Update Section Label
             const secNum = Math.floor(index / SECTION_SIZE) + 1;
-            els.sectionLabel.innerText = \`Section \${secNum} (Q\${(secNum-1)*20 + 1}-\${secNum*20})\`;
+            els.sectionLabel.innerText = `Section ${secNum} (Q${(secNum-1)*20 + 1}-${secNum*20})`;
 
             // Render Text
-            els.qNum.innerText = \`Question \${index + 1}\`;
+            els.qNum.innerText = `Question ${index + 1}`;
             els.qText.innerText = questions[index].text;
             
             // Render Options
             els.optsBox.innerHTML = '';
             questions[index].opts.forEach((opt, i) => {
                 const isChecked = state.answers[index] === i ? 'checked' : '';
-                els.optsBox.innerHTML += \`
+                els.optsBox.innerHTML += `
                     <label class="option-label">
-                        <input type="radio" name="opt" value="\${i}" \${isChecked} onchange="selectOption(\${i})">
-                        \${opt}
+                        <input type="radio" name="opt" value="${i}" ${isChecked} onchange="selectOption(${i})">
+                        ${opt}
                     </label>
-                \`;
+                `;
             });
 
             // Update Palette UI
             document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('current'));
-            const currentBtn = document.getElementById(\`qbtn-\${index}\`);
+            const currentBtn = document.getElementById(`qbtn-${index}`);
             if(currentBtn) currentBtn.classList.add('current');
 
             // Handle Prev Button State (Cannot go back to previous locked section)
@@ -500,7 +513,7 @@
             if (nextIndex >= currentSecBound) {
                 // End of section reached
                 if (state.currentSection < 5) {
-                    if (confirm(\`You have reached the end of Section \${state.currentSection}.\\nDo you want to submit this section and move to Section \${state.currentSection+1}?\\n\\nWARNING: You cannot return to this section.\`)) {
+                    if (confirm(`You have reached the end of Section ${state.currentSection}.\\nDo you want to submit this section and move to Section ${state.currentSection+1}?\\n\\nWARNING: You cannot return to this section.`)) {
                         forceNextSection();
                     }
                 } else {
@@ -538,14 +551,14 @@
                 const isFuture = qSection > state.currentSection;
                 const futureStyle = isFuture ? 'opacity:0.3; pointer-events:none;' : '';
 
-                els.palette.innerHTML += \`
-                    <div id="qbtn-\${i}" 
-                         class="q-btn \${statusClass}\${lockedClass}" 
-                         style="\${futureStyle}"
-                         onclick="jumpToQuestion(\${i})">
-                        \${i + 1}
+                els.palette.innerHTML += `
+                    <div id="qbtn-${i}" 
+                         class="q-btn ${statusClass}${lockedClass}" 
+                         style="${futureStyle}"
+                         onclick="jumpToQuestion(${i})">
+                        ${i + 1}
                     </div>
-                \`;
+                `;
             }
         }
 
@@ -599,12 +612,12 @@
                 }
             });
 
-            document.getElementById('scoreCard').innerHTML = \`
-                <h1 style="color:#3f51b5; font-size:3rem;">\${score} / 400</h1>
-                <p><strong>Correct:</strong> \${correct} (+\${correct*4})</p>
-                <p><strong>Incorrect:</strong> \${wrong} (-\${wrong})</p>
-                <p><strong>Unattempted:</strong> \${unattempted}</p>
-            \`;
+            document.getElementById('scoreCard').innerHTML = `
+                <h1 style="color:#3f51b5; font-size:3rem;">${score} / 400</h1>
+                <p><strong>Correct:</strong> ${correct} (+${correct*4})</p>
+                <p><strong>Incorrect:</strong> ${wrong} (-${wrong})</p>
+                <p><strong>Unattempted:</strong> ${unattempted}</p>
+            `;
         }
 
         function showDetailedReview() {
@@ -623,17 +636,17 @@
                     let style = '';
                     if (oi === q.ans) style = 'font-weight:bold; color:green;'; 
                     if (oi === userAns && !isCorrect) style = 'font-weight:bold; color:red;'; 
-                    optsHtml += \`<div style="\${style}">\${oi+1}. \${opt}</div>\`;
+                    optsHtml += `<div style="${style}">${oi+1}. ${opt}</div>`;
                 });
 
-                container.innerHTML += \`
+                container.innerHTML += `
                     <div class="review-item">
-                        <div style="color:\${statusColor}; font-weight:bold; margin-bottom:5px;">Q\${i+1}: \${statusText}</div>
-                        <div>\${q.text}</div>
-                        <div style="margin:10px 0; padding-left:15px; border-left:3px solid #ddd;">\${optsHtml}</div>
-                        <div class="explanation"><strong>Explanation:</strong> \${q.exp}</div>
+                        <div style="color:${statusColor}; font-weight:bold; margin-bottom:5px;">Q${i+1}: ${statusText}</div>
+                        <div>${q.text}</div>
+                        <div style="margin:10px 0; padding-left:15px; border-left:3px solid #ddd;">${optsHtml}</div>
+                        <div class="explanation"><strong>Explanation:</strong> ${q.exp}</div>
                     </div>
-                \`;
+                `;
             });
         }
 

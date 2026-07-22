@@ -186,10 +186,25 @@
         let questions = [];
 
 function generateQuestions() {
-        const createQ = (id, type, text, opts, ans, exp) => ({ id, type, text, opts, ans, exp });
-        questions = [];
+            function seededRandom(seed) {
+                let x = Math.sin(seed) * 10000;
+                return x - Math.floor(x);
+            }
 
-        questions.push(createQ(1, 'Non-Core', "Statements: All tables are chairs. No chair is a bed. Conclusion: I. No table is a bed. II. Some chairs are tables.", ["Both I and II follow","Neither I nor II follows","Only II follows","Only I follows"], 0, "Since all tables are within chairs and no chair is a bed, no table can be a bed. Also, since all tables are chairs, some chairs are tables."));
+            const createQ = (id, type, text, opts, ans, exp) => {
+                let mappedOpts = opts.map((opt, index) => ({ opt, isCorrect: index === ans }));
+                for (let i = mappedOpts.length - 1; i > 0; i--) {
+                    const j = Math.floor(seededRandom(id + i) * (i + 1));
+                    [mappedOpts[i], mappedOpts[j]] = [mappedOpts[j], mappedOpts[i]];
+                }
+                const shuffledOpts = mappedOpts.map(m => m.opt);
+                const newAns = mappedOpts.findIndex(m => m.isCorrect);
+
+                return { id, type, text, opts: shuffledOpts, ans: newAns, exp };
+            };
+            questions = [];
+
+            questions.push(createQ(1, 'Non-Core', "Statements: All tables are chairs. No chair is a bed. Conclusion: I. No table is a bed. II. Some chairs are tables.", ["Both I and II follow","Neither I nor II follows","Only II follows","Only I follows"], 0, "Since all tables are within chairs and no chair is a bed, no table can be a bed. Also, since all tables are chairs, some chairs are tables."));
         questions.push(createQ(2, 'Non-Core', "Statements: Some cats are dogs. All dogs are birds. Conclusion: I. Some cats are birds. II. No cat is a bird.", ["Only I follows","Both I and II follow","Either I or II follows","Only II follows"], 0, "Since some cats are dogs and all dogs are birds, the intersection of cats and dogs is within birds, so some cats are birds."));
         questions.push(createQ(3, 'Non-Core', "Statements: All flowers are trees. All trees are forests. Conclusion: I. All flowers are forests. II. All forests are flowers.", ["Neither I nor II follows","Both I and II follow","Only I follows","Only II follows"], 2, "Flowers is a subset of trees, which is a subset of forests. So all flowers are forests. But not all forests are flowers."));
         questions.push(createQ(4, 'Non-Core', "Statements: Some pens are pencils. Some pencils are erasers. Conclusion: I. Some pens are erasers. II. All erasers are pens.", ["Only II follows","Only I follows","Neither I nor II follows","Both I and II follow"], 2, "There is no direct relation given between pens and erasers. Both conclusions are invalid."));

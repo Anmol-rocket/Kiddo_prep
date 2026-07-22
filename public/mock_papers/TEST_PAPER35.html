@@ -190,20 +190,24 @@
                 return x - Math.floor(x);
             }
 
-            function shuffleOptions(opts, ansIndex, seed) {
-            let arr = opts.map((opt, i) => ({ text: opt, isCorrect: i === ansIndex }));
-            for (let i = arr.length - 1; i > 0; i--) {
-                const j = Math.floor(seededRandom(seed + i) * (i + 1));
-                [arr[i], arr[j]] = [arr[j], arr[i]];
+            function generateQuestions() {
+            function seededRandom(seed) {
+                let x = Math.sin(seed) * 10000;
+                return x - Math.floor(x);
             }
-            let newAnsIndex = arr.findIndex(x => x.isCorrect);
-            let newOpts = arr.map(x => x.text);
-            return { newOpts, newAnsIndex };
-        }
 
-        function generateQuestions() {
-            const createQ = (id, type, text, opts, ans, exp) => ({ id, type, text, opts, ans, exp });
-            questions = []; // Reset array
+            const createQ = (id, type, text, opts, ans, exp) => {
+                let mappedOpts = opts.map((opt, index) => ({ opt, isCorrect: index === ans }));
+                for (let i = mappedOpts.length - 1; i > 0; i--) {
+                    const j = Math.floor(seededRandom(id + i) * (i + 1));
+                    [mappedOpts[i], mappedOpts[j]] = [mappedOpts[j], mappedOpts[i]];
+                }
+                const shuffledOpts = mappedOpts.map(m => m.opt);
+                const newAns = mappedOpts.findIndex(m => m.isCorrect);
+
+                return { id, type, text, opts: shuffledOpts, ans: newAns, exp };
+            };
+            questions = [];
 
             const raw_data = [
                 // Part I: Non-Core (1-20)
