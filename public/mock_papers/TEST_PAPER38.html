@@ -1420,7 +1420,8 @@
         // --- STATE MANAGEMENT ---
         let timerInterval;
 
-        let state = JSON.parse(localStorage.getItem('test_paper_38_state')) || {
+        let savedState = JSON.parse(localStorage.getItem('test_paper_38_state'));
+        let state = (savedState && !savedState.isFinished) ? savedState : {
             currentQ: 0,
             answers: new Array(TOTAL_QUESTIONS).fill(null),
             status: new Array(TOTAL_QUESTIONS).fill('not-visited'),

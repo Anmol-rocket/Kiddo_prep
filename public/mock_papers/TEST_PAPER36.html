@@ -361,15 +361,9 @@
             generateQuestions();
             const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
             if(saved) {
-                state = JSON.parse(saved);
-                if (state.isFinished) {
-                    els.landing.classList.add('hidden');
-                    els.header.classList.add('hidden');
-                    els.body.classList.add('hidden');
-                    els.footer.classList.add('hidden');
-                    els.result.classList.remove('hidden');
-                    calculateResult();
-                    return;
+                const parsed = JSON.parse(saved);
+                if (!parsed.isFinished) {
+                    state = parsed;
                 }
             }
             els.landing.classList.remove('hidden');

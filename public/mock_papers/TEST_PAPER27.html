@@ -186,6 +186,11 @@
         
         let questions = [];
 
+        function seededRandom(seed) {
+            let x = Math.sin(seed) * 10000;
+            return x - Math.floor(x);
+        }
+
         function shuffleOptions(opts, ansIndex, seed) {
             let arr = opts.map((opt, i) => ({ opt, isAns: i === ansIndex }));
             for (let i = arr.length - 1; i > 0; i--) {
@@ -198,10 +203,6 @@
         }
 
         function generateQuestions() {
-            function seededRandom(seed) {
-                let x = Math.sin(seed) * 10000;
-                return x - Math.floor(x);
-            }
             const createQ = (id, type, text, opts, ans, exp) => {
                 let shuffled = shuffleOptions(opts, ans, id);
                 return { id, type, text, opts: shuffled.newOpts, ans: shuffled.newAns, exp };

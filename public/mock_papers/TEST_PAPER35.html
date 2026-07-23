@@ -185,12 +185,7 @@
         
         let questions = [];
 
-                    function seededRandom(seed) {
-                let x = Math.sin(seed) * 10000;
-                return x - Math.floor(x);
-            }
-
-            function generateQuestions() {
+        function generateQuestions() {
             function seededRandom(seed) {
                 let x = Math.sin(seed) * 10000;
                 return x - Math.floor(x);
@@ -322,8 +317,7 @@
             ];
 
             raw_data.forEach((d, i) => {
-                let shuffled = shuffleOptions(d.opts, d.ans);
-                questions.push(createQ(i + 1, d.type, d.text, shuffled.newOpts, shuffled.newAnsIndex, d.exp));
+                questions.push(createQ(i + 1, d.type, d.text, d.opts, d.ans, d.exp));
             });
         }
 

@@ -317,8 +317,11 @@ function generateQuestions() {
         function loadState() {
             const saved = localStorage.getItem(STATE_KEY);
             if(saved) {
-                state = JSON.parse(saved);
-                return true;
+                const parsed = JSON.parse(saved);
+                if (!parsed.isFinished) {
+                    state = parsed;
+                    return true;
+                }
             }
             return false;
         }
