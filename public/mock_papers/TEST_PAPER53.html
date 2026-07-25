@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIIMS CRE Radiographer - Test Paper 53</title>
+    <style>
+        :root {
+            --header-bg: #3f51b5;
+            --header-text: #fff;
+            --panel-bg: #f5f5f5;
+            --pallet-answered: #4caf50;
+            --pallet-not-answered: #f44336;
+            --pallet-review: #9c27b0;
+            --pallet-not-visited: #e0e0e0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #fff; }
+
+        /* --- Header --- */
+        header {
+            background: var(--header-bg); color: var(--header-text);
+            padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+            height: 60px; flex-shrink: 0;
+        }
+        .timer { font-size: 1.2rem; font-weight: bold; background: #fff; color: #d32f2f; padding: 5px 15px; border-radius: 4px; border: 2px solid #d32f2f; }
+
+        /* --- Main Layout --- */
+        .main-container { display: flex; flex: 1; overflow: hidden; }
+        
+        .question-area { flex: 1; display: flex; flex-direction: column; padding: 20px; overflow-y: auto; }
+        .q-header { display: flex; justify-content: space-between; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 15px; }
+        .q-text { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.5; }
+        
+        .options-container { display: flex; flex-direction: column; gap: 10px; }
+        .option-label { 
+            display: flex; align-items: center; padding: 10px; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; transition: 0.2s; 
+        }
+        .option-label:hover { background: #f0f8ff; }
+        .option-label input { margin-right: 15px; transform: scale(1.2); }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px; background: var(--panel-bg); border-left: 1px solid #ccc;
+            display: flex; flex-direction: column; flex-shrink: 0;
+        }
+        .user-info { padding: 10px; background: #e8eaf6; border-bottom: 1px solid #ccc; }
+        
+        .palette-legend { padding: 10px; font-size: 0.8rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: #fff; }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+        .question-grid { 
+            padding: 10px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; 
+            overflow-y: auto; flex: 1; align-content: start;
+        }
+        .q-btn {
+            height: 35px; width: 35px; border: 1px solid #ccc; background: #fff; 
+            border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .q-btn.answered { background: var(--pallet-answered); color: white; border-color: var(--pallet-answered); }
+        .q-btn.not-answered { background: var(--pallet-not-answered); color: white; border-color: var(--pallet-not-answered); }
+        .q-btn.review { background: var(--pallet-review); color: white; border-radius: 50%; }
+        .q-btn.current { border: 2px solid blue; box-shadow: 0 0 5px blue; }
+        .q-btn.locked { opacity: 0.4; cursor: not-allowed; background: #444 !important; color: #888; border: 1px solid #000; }
+
+        /* Footer */
+        .footer-controls {
+            height: 60px; background: #fff; border-top: 1px solid #ccc;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+        }
+        .btn { padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+        .btn-primary { background: #2196f3; color: white; }
+        .btn-success { background: #4caf50; color: white; }
+        .btn-warn { background: #ff9800; color: white; }
+        .btn-danger { background: #f44336; color: white; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* Mobile */
+        .mobile-toggle { display: none; background: none; border: none; color: white; font-size: 1.5rem; }
+        @media (max-width: 768px) {
+            .mobile-toggle { display: block; }
+            .sidebar { 
+                position: absolute; right: 0; top: 60px; bottom: 60px; z-index: 100;
+                transform: translateX(100%); transition: transform 0.3s; width: 85%;
+            }
+            .sidebar.active { transform: translateX(0); }
+            .question-grid { grid-template-columns: repeat(6, 1fr); }
+            .footer-controls { flex-wrap: wrap; gap: 5px; height: auto; padding: 10px; }
+            .btn { flex: 1; padding: 8px; font-size: 0.8rem; }
+        }
+
+        /* Overlay */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .hidden { display: none !important; }
+        
+        .review-panel { display: none; padding: 20px; height: 100%; overflow-y: auto; background:#f9f9f9;}
+        .review-item { margin-bottom: 20px; border: 1px solid #ddd; padding: 15px; border-radius: 5px; background:white; }
+        .explanation { background: #fff3cd; padding: 10px; margin-top: 10px; font-size: 0.9rem; border-left: 4px solid #ffc107; }
+
+    </style>
+</head>
+<body>
+
+    <div id="landingPage" class="overlay">
+        <h1>AIIMS CRE - Test Paper 49</h1>
+        <div style="width: 80%; max-width: 600px; text-align: left; margin: 20px 0;">
+            <h3>Exam Rules:</h3>
+            <ul>
+                <li><strong>Questions:</strong> 100 (5 Sections of 20 questions each).</li>
+                <li><strong>Timing:</strong> 18 Minutes per section (Strictly Dedicated).</li>
+                <li><strong>Total Time:</strong> 90 Minutes.</li>
+                <li><strong>Locking:</strong> Once 18 mins are up, or if you manually proceed to the next section, you <u>cannot</u> return to the previous section.</li>
+                <li><strong>Marking:</strong> +4 Correct, -1 Incorrect.</li>
+            </ul>
+        </div>
+        <button class="btn btn-success" style="font-size: 1.2rem;" onclick="startExam()">START EXAM</button>
+    </div>
+
+    <header id="examHeader" class="hidden">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <h3>AIIMS Radiographer</h3>
+            <span style="font-size:0.8rem; background:#eee; padding:2px 6px; border-radius:4px; color:#333;" id="sectionLabel">Section 1</span>
+        </div>
+        <div class="timer" id="timerDisplay">18:00</div>
+        <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+    </header>
+
+    <div class="main-container hidden" id="examBody">
+        <div class="question-area">
+            <div class="q-header">
+                <span id="qNumDisplay">Question No. 1</span>
+                <span style="color: #666;">Marks: +4, -1</span>
+            </div>
+            <div id="questionText" class="q-text">Loading...</div>
+            <div id="optionsBox" class="options-container"></div>
+        </div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="user-info">
+                <strong>Candidate Name</strong><br><small>Roll No: 123456</small>
+            </div>
+            <div class="palette-legend">
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-answered)"></span> Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-not-answered)"></span> Not Ans</div>
+                <div class="legend-item"><span class="dot" style="background:var(--pallet-review)"></span> Review</div>
+                <div class="legend-item"><span class="dot" style="background:#444"></span> Locked</div>
+            </div>
+            <div class="question-grid" id="questionPalette"></div>
+            <div style="padding:10px; margin-top:auto;">
+                <button class="btn btn-primary" style="width:100%" onclick="submitExam()">FINISH EXAM</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-controls hidden" id="examFooter">
+        <div style="display:flex; gap:10px;">
+            <button class="btn btn-danger" onclick="clearResponse()">Clear</button>
+            <button class="btn btn-warn" onclick="markForReview()">Review</button>
+        </div>
+        <div style="display:flex; gap:10px;">
+            <button class="btn" onclick="prevQuestion()" id="btnPrev">Previous</button>
+            <button class="btn btn-success" onclick="saveAndNext()">Save & Next</button>
+        </div>
+    </div>
+
+    <div id="resultPage" class="overlay hidden" style="display:block; overflow-y:auto; justify-content:start; padding-top:40px;">
+        <h2 style="text-align:center;">Exam Summary</h2>
+        <div id="scoreCard" style="margin: 20px auto; width:90%; max-width:600px; padding: 20px; border: 1px solid #ccc; text-align: center; background:#fff;"></div>
+        <div style="display:flex; justify-content:center; gap:20px; margin-bottom:20px;">
+            <button class="btn btn-primary" onclick="showDetailedReview()">Review Solutions</button>
+            <button class="btn btn-danger" onclick="window.location.href='/materials'">Exit</button>
+        </div>
+        <div id="detailedReview" class="review-panel" style="width: 90%; max-width: 800px; margin:0 auto;"></div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const TOTAL_QUESTIONS = 100;
+        const SECTION_SIZE = 20; // 20 questions per section
+        const SECTION_TIME_LIMIT = 18 * 60; // 18 minutes in seconds
+        
+        let questions = [];
+
+        function generateQuestions() {
+            const createQ = (id, type, text, opts, ans, exp) => ({ id, type, text, opts, ans, exp });
+            questions = []; // Reset array
+            
+            function seededRandom(seed) {
+                let x = Math.sin(seed) * 10000;
+                return x - Math.floor(x);
+            }
+
+            function shuffleOptions(question, seed) {
+                let optionsWithIndex = question.opts.map((opt, index) => ({
+                    text: opt,
+                    isCorrect: index === question.ans
+                }));
+                for (let i = optionsWithIndex.length - 1; i > 0; i--) {
+                    const j = Math.floor(seededRandom(seed + i) * (i + 1));
+                    [optionsWithIndex[i], optionsWithIndex[j]] = [optionsWithIndex[j], optionsWithIndex[i]];
+                }
+                question.opts = optionsWithIndex.map(opt => opt.text);
+                question.ans = optionsWithIndex.findIndex(opt => opt.isCorrect);
+                return question;
+            }
+
+            const raw_data = [
+    {
+        "type": "Non-Core",
+        "text": "Which keyboard shortcut is used to copy selected text or files in Windows?",
+        "opts": [
+            "Ctrl + V",
+            "Ctrl + C",
+            "Ctrl + X",
+            "Ctrl + P"
+        ],
+        "ans": 1,
+        "exp": "Ctrl + C is the standard shortcut used to copy items to the clipboard."
+    },
+    {
+        "type": "Non-Core",
+        "text": "What is the function of the keyboard shortcut Ctrl + Z in most applications?",
+        "opts": [
+            "Redo the last action",
+            "Undo the last action",
+            "Save the current file",
+            "Select all text"
+        ],
+        "ans": 1,
+        "exp": "Ctrl + Z is widely used as the command to undo the previous action."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Which shortcut is used to quickly lock your Windows computer?",
+        "opts": [
+            "Ctrl + Alt + Delete",
+            "Windows Key + L",
+            "Alt + F4",
+            "Ctrl + Shift + Esc"
+        ],
+        "ans": 1,
+        "exp": "Pressing the Windows Key + L quickly locks the computer, securing it when stepping away."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Who is known as the 'Father of the Indian Constitution'?",
+        "opts": [
+            "Mahatma Gandhi",
+            "Jawaharlal Nehru",
+            "Dr. B. R. Ambedkar",
+            "Sardar Vallabhbhai Patel"
+        ],
+        "ans": 2,
+        "exp": "Dr. B. R. Ambedkar was the chairman of the drafting committee and is considered the chief architect of the Indian Constitution."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Which planet in our solar system is known as the 'Red Planet'?",
+        "opts": [
+            "Venus",
+            "Jupiter",
+            "Mars",
+            "Saturn"
+        ],
+        "ans": 2,
+        "exp": "Mars is called the Red Planet because iron oxide on its surface gives it a reddish appearance."
+    },
+    {
+        "type": "Non-Core",
+        "text": "What is the capital city of Australia?",
+        "opts": [
+            "Sydney",
+            "Melbourne",
+            "Canberra",
+            "Perth"
+        ],
+        "ans": 2,
+        "exp": "Canberra is the capital of Australia, chosen as a compromise between Sydney and Melbourne."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Which of the following is the longest river in the world?",
+        "opts": [
+            "Amazon River",
+            "Nile River",
+            "Yangtze River",
+            "Mississippi River"
+        ],
+        "ans": 1,
+        "exp": "The Nile River in northeastern Africa is generally considered the longest river in the world."
+    },
+    {
+        "type": "Non-Core",
+        "text": "In which year did India launch its first satellite, Aryabhata?",
+        "opts": [
+            "1971",
+            "1975",
+            "1980",
+            "1983"
+        ],
+        "ans": 1,
+        "exp": "Aryabhata, India's first satellite, was launched on 19 April 1975."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Which enzyme in human saliva begins the digestion of starch?",
+        "opts": [
+            "Pepsin",
+            "Amylase",
+            "Lipase",
+            "Trypsin"
+        ],
+        "ans": 1,
+        "exp": "Salivary amylase (ptyalin) begins the breakdown of complex carbohydrates (starch) into simpler sugars."
+    },
+    {
+        "type": "Non-Core",
+        "text": "What is the chemical formula for Ozone?",
+        "opts": [
+            "O2",
+            "O3",
+            "CO2",
+            "H2O2"
+        ],
+        "ans": 1,
+        "exp": "Ozone is a molecule composed of three oxygen atoms, hence its formula is O3."
+    },
+    {
+        "type": "Non-Core",
+        "text": "If the price of a book is increased by 20% and then decreased by 20%, what is the net change in price?",
+        "opts": [
+            "No change",
+            "4% increase",
+            "4% decrease",
+            "10% decrease"
+        ],
+        "ans": 2,
+        "exp": "Net change = +20 - 20 - (20*20)/100 = -4%. Hence, a 4% decrease."
+    },
+    {
+        "type": "Non-Core",
+        "text": "A train 150 meters long is running at 72 km/hr. How long will it take to cross a pole?",
+        "opts": [
+            "5 seconds",
+            "7.5 seconds",
+            "10 seconds",
+            "12 seconds"
+        ],
+        "ans": 1,
+        "exp": "Speed = 72 * (5/18) = 20 m/s. Time = Distance / Speed = 150 / 20 = 7.5 seconds."
+    },
+    {
+        "type": "Non-Core",
+        "text": "What is the HCF (Highest Common Factor) of 36 and 84?",
+        "opts": [
+            "6",
+            "12",
+            "18",
+            "24"
+        ],
+        "ans": 1,
+        "exp": "The factors of 36 are 12*3 and 84 are 12*7. The largest common factor is 12."
+    },
+    {
+        "type": "Non-Core",
+        "text": "If 5 men can complete a work in 12 days, how many days will 10 men take to complete the same work?",
+        "opts": [
+            "6 days",
+            "5 days",
+            "10 days",
+            "24 days"
+        ],
+        "ans": 0,
+        "exp": "M1*D1 = M2*D2 -> 5 * 12 = 10 * D2 -> D2 = 60 / 10 = 6 days."
+    },
+    {
+        "type": "Non-Core",
+        "text": "What is the square root of 1024?",
+        "opts": [
+            "32",
+            "34",
+            "28",
+            "24"
+        ],
+        "ans": 0,
+        "exp": "32 * 32 = 1024."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Find the missing number in the series: 5, 10, 20, 40, ?",
+        "opts": [
+            "60",
+            "70",
+            "80",
+            "100"
+        ],
+        "ans": 2,
+        "exp": "Each number is multiplied by 2. 40 * 2 = 80."
+    },
+    {
+        "type": "Non-Core",
+        "text": "If 'APPLE' is coded as 'BQQMF', how is 'MANGO' coded?",
+        "opts": [
+            "NBOHP",
+            "NZMFO",
+            "OCPIQ",
+            "NBPGP"
+        ],
+        "ans": 0,
+        "exp": "Each letter is shifted forward by one position in the alphabet. M+1=N, A+1=B, N+1=O, G+1=H, O+1=P. So NBOHP."
+    },
+    {
+        "type": "Non-Core",
+        "text": "A is the brother of B. B is the sister of C. C is the father of D. How is A related to D?",
+        "opts": [
+            "Uncle",
+            "Grandfather",
+            "Brother",
+            "Cousin"
+        ],
+        "ans": 0,
+        "exp": "A is the brother of B and C. Since C is the father of D, A is the uncle of D."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Choose the odd one out from the following words:",
+        "opts": [
+            "Guitar",
+            "Violin",
+            "Flute",
+            "Sitar"
+        ],
+        "ans": 2,
+        "exp": "Flute is a wind instrument, while the others are string instruments."
+    },
+    {
+        "type": "Non-Core",
+        "text": "Which word cannot be formed using the letters of the word 'RECREATION'?",
+        "opts": [
+            "CREATE",
+            "ACTION",
+            "RATION",
+            "NATION"
+        ],
+        "ans": 3,
+        "exp": "The word NATION requires two 'N's, but 'RECREATION' only has one 'N'."
+    },
+    {
+        "type": "Core",
+        "text": "What is the recommended maximum time a CR imaging plate can remain unexposed before it must be erased?",
+        "opts": [
+            "12 hours",
+            "24 hours",
+            "48 hours",
+            "72 hours"
+        ],
+        "ans": 2,
+        "exp": "CR plates are sensitive to background radiation and should be erased if unused for 48 hours to prevent fog."
+    },
+    {
+        "type": "Core",
+        "text": "Which standard test pattern is widely used to evaluate the spatial resolution and contrast of digital display monitors?",
+        "opts": [
+            "Star test pattern",
+            "SMPTE pattern",
+            "Pinhole camera pattern",
+            "Wisconsin test cassette"
+        ],
+        "ans": 1,
+        "exp": "The Society of Motion Picture and Television Engineers (SMPTE) pattern is standard for assessing display monitor performance."
+    },
+    {
+        "type": "Core",
+        "text": "A QA test called flat-field correction is used in DR to correct for:",
+        "opts": [
+            "Dead pixels",
+            "Non-uniform pixel sensitivity across the detector",
+            "Ghosting artifacts",
+            "Geometric distortion"
+        ],
+        "ans": 1,
+        "exp": "Flat-field correction (or gain calibration) normalizes the response of all detector elements to a uniform X-ray field."
+    },
+    {
+        "type": "Core",
+        "text": "Which instrument is used to measure the luminance and illuminance of digital display monitors?",
+        "opts": [
+            "Sensitometer",
+            "Densitometer",
+            "Photometer",
+            "Dosimeter"
+        ],
+        "ans": 2,
+        "exp": "A photometer measures the brightness (luminance) emitted by the monitor and ambient light (illuminance)."
+    },
+    {
+        "type": "Core",
+        "text": "What is the primary purpose of conducting a wire mesh test in digital radiography?",
+        "opts": [
+            "Measure X-ray tube output",
+            "Evaluate image distortion and spatial resolution",
+            "Check AEC calibration",
+            "Monitor grid cutoff"
+        ],
+        "ans": 1,
+        "exp": "The wire mesh test is traditionally used for film-screen contact, but in digital systems, it checks for distortion and spatial resolution."
+    },
+    {
+        "type": "Core",
+        "text": "How often should the exterior of CR cassettes and imaging plates be inspected and cleaned according to typical QA protocols?",
+        "opts": [
+            "Daily",
+            "Weekly",
+            "Monthly or as needed",
+            "Annually"
+        ],
+        "ans": 2,
+        "exp": "Monthly inspection and cleaning with a manufacturer-approved solution prevents artifacts from dust and debris."
+    },
+    {
+        "type": "Core",
+        "text": "A ghosting artifact on a computed radiography (CR) image is most commonly caused by:",
+        "opts": [
+            "Patient motion",
+            "Incomplete erasure of the imaging plate",
+            "Grid cutoff",
+            "Histogram analysis error"
+        ],
+        "ans": 1,
+        "exp": "Ghosting occurs when the previous latent image is not entirely erased by the intense white light in the CR reader."
+    },
+    {
+        "type": "Core",
+        "text": "According to QA standards, the reproducibility of the X-ray generator output should not vary by more than:",
+        "opts": [
+            "\u00b12%",
+            "\u00b15%",
+            "\u00b110%",
+            "\u00b115%"
+        ],
+        "ans": 1,
+        "exp": "Exposure reproducibility must be consistent within \u00b15% for repeated exposures at the same technique."
+    },
+    {
+        "type": "Core",
+        "text": "The linearity of mA stations across the X-ray control panel must be within what percentage of each other?",
+        "opts": [
+            "\u00b12%",
+            "\u00b15%",
+            "\u00b110%",
+            "\u00b115%"
+        ],
+        "ans": 2,
+        "exp": "mA linearity ensures proportional changes in mAs lead to proportional changes in output, with a maximum variance of \u00b110%."
+    },
+    {
+        "type": "Core",
+        "text": "To ensure accurate penetration, the indicated kVp on the console must be within what percentage of the actual measured kVp?",
+        "opts": [
+            "\u00b12%",
+            "\u00b15%",
+            "\u00b110%",
+            "\u00b112%"
+        ],
+        "ans": 1,
+        "exp": "kVp accuracy must be maintained within \u00b15% to ensure consistent image contrast and patient dose."
+    },
+    {
+        "type": "Core",
+        "text": "The coincidence between the collimator light field and the actual X-ray beam must be within what percentage of the Source-to-Image Distance (SID)?",
+        "opts": [
+            "\u00b11%",
+            "\u00b12%",
+            "\u00b15%",
+            "\u00b110%"
+        ],
+        "ans": 1,
+        "exp": "Light field-radiation field alignment must be accurate to within \u00b12% of the SID to prevent clipping anatomy or overexposing the patient."
+    },
+    {
+        "type": "Core",
+        "text": "For radiation safety, the Automatic Exposure Control (AEC) backup timer should automatically terminate the exposure at a maximum of:",
+        "opts": [
+            "100 mAs",
+            "300 mAs",
+            "600 mAs",
+            "1000 mAs"
+        ],
+        "ans": 2,
+        "exp": "The backup timer for AEC systems is required to terminate at 600 mAs to prevent tube overload and extreme patient dose."
+    },
+    {
+        "type": "Core",
+        "text": "How does a digital radiography (DR) system typically compensate for a small number of defective or 'dead' pixels?",
+        "opts": [
+            "By applying a high-pass filter",
+            "Through spatial interpolation using adjacent pixels",
+            "By increasing the overall mAs",
+            "By adjusting the histogram"
+        ],
+        "ans": 1,
+        "exp": "Software uses spatial interpolation to estimate the value of dead pixels based on the signal of the surrounding functional pixels."
+    },
+    {
+        "type": "Core",
+        "text": "Regular calibration of the CR reader is essential primarily to ensure:",
+        "opts": [
+            "Faster processing speed",
+            "Consistent Exposure Indicator (EI) values",
+            "Reduction of scatter radiation",
+            "Longer tube life"
+        ],
+        "ans": 1,
+        "exp": "Reader calibration ensures the photomultiplier tube accurately converts light to electrical signal, maintaining accurate EI values."
+    },
+    {
+        "type": "Core",
+        "text": "In a DR detector, 'dark noise' refers to:",
+        "opts": [
+            "Background acoustic noise in the room",
+            "Signal generated by the detector without any X-ray exposure",
+            "Scatter radiation reaching the detector",
+            "Black artifacts caused by dust"
+        ],
+        "ans": 1,
+        "exp": "Dark noise is the electronic thermal noise generated by the detector array even when no X-rays are present."
+    },
+    {
+        "type": "Core",
+        "text": "Which device checks the accuracy of the focal spot size?",
+        "opts": [
+            "Pinhole camera or star pattern",
+            "Spinning top test",
+            "Penetrometer",
+            "Photometer"
+        ],
+        "ans": 0,
+        "exp": "A pinhole camera, star test pattern, or slit camera is used to accurately measure focal spot size."
+    },
+    {
+        "type": "Core",
+        "text": "Banding artifacts or jagged lines across a CR image are most likely caused by:",
+        "opts": [
+            "A scratched imaging plate",
+            "Laser jitter or inconsistent transport speed in the reader",
+            "Backscatter radiation",
+            "Grid lines"
+        ],
+        "ans": 1,
+        "exp": "Mechanical issues in the CR reader, such as laser jitter or unsteady plate transport, cause wavy or banded lines."
+    },
+    {
+        "type": "Core",
+        "text": "Which phosphor material is most commonly used in the scintillator layer of an indirect capture DR system?",
+        "opts": [
+            "Amorphous selenium",
+            "Barium fluorohalide",
+            "Cesium iodide",
+            "Calcium tungstate"
+        ],
+        "ans": 2,
+        "exp": "Cesium iodide (CsI) is the preferred scintillator in indirect DR due to its columnar structure, which minimizes light spread."
+    },
+    {
+        "type": "Core",
+        "text": "What QA tool is used to evaluate the penetrability or beam quality of an X-ray beam?",
+        "opts": [
+            "Sensitometer",
+            "Half-Value Layer (HVL) measurement",
+            "Spinning top",
+            "SMPTE pattern"
+        ],
+        "ans": 1,
+        "exp": "The HVL is measured using aluminum absorbers to ensure the beam has adequate filtration and penetrating ability."
+    },
+    {
+        "type": "Core",
+        "text": "Routine QA for digital display systems includes verifying the minimum acceptable luminance. For a diagnostic reading monitor, this is typically at least:",
+        "opts": [
+            "50 cd/m\u00b2",
+            "100 cd/m\u00b2",
+            "250 cd/m\u00b2",
+            "1000 cd/m\u00b2"
+        ],
+        "ans": 2,
+        "exp": "Diagnostic monitors require high brightness, typically a minimum of 250 cd/m\u00b2 (often >350 cd/m\u00b2), to display adequate contrast resolution."
+    },
+    {
+        "type": "Core",
+        "text": "The Moire effect (aliasing) in digital radiography occurs when:",
+        "opts": [
+            "The patient moves during exposure",
+            "The grid lines run parallel to the CR reader scan lines and the Nyquist frequency is mismatched",
+            "The imaging plate is exposed to extreme heat",
+            "The tube is off-center to the grid"
+        ],
+        "ans": 1,
+        "exp": "Moire artifact appears as wavy lines when the frequency of the stationary grid lines closely matches the laser scanning frequency."
+    },
+    {
+        "type": "Core",
+        "text": "In digital imaging, what term describes the loss of image detail in highly radiolucent areas (e.g., lungs) due to massive overexposure?",
+        "opts": [
+            "Quantum mottle",
+            "Data drop or Saturation",
+            "Aliasing",
+            "Planking"
+        ],
+        "ans": 1,
+        "exp": "Saturation occurs when the detector receives too many photons, maxing out its electrical capacity and resulting in a flat black area with no detail."
+    },
+    {
+        "type": "Core",
+        "text": "A grainy or speckled appearance on a digital radiograph due to an insufficient number of X-ray photons reaching the detector is called:",
+        "opts": [
+            "Ghosting",
+            "Quantum mottle",
+            "Foreshortening",
+            "Halation"
+        ],
+        "ans": 1,
+        "exp": "Quantum mottle (noise) is caused by a low signal-to-noise ratio, typically due to insufficient mAs."
+    },
+    {
+        "type": "Core",
+        "text": "A 'halo' artifact around a dense object (like a prosthesis) in a digital image is usually the result of:",
+        "opts": [
+            "Scatter radiation",
+            "Excessive edge enhancement processing",
+            "A defective detector element",
+            "Incomplete erasure"
+        ],
+        "ans": 1,
+        "exp": "Excessive edge enhancement algorithms artificially increase contrast at boundaries, causing an artificial dark or light halo."
+    },
+    {
+        "type": "Core",
+        "text": "Which of the following errors leads to an incorrect exposure indicator and a poorly processed image displaying improper contrast?",
+        "opts": [
+            "Histogram analysis error",
+            "Dead pixel artifact",
+            "Grid cutoff",
+            "Off-focus radiation"
+        ],
+        "ans": 0,
+        "exp": "If collimation borders are not recognized, the system includes scatter/raw beam in the histogram analysis, leading to incorrect rescaling."
+    },
+    {
+        "type": "Core",
+        "text": "Dropped pixels or a straight thin white line along the entire length of a DR image most likely indicates:",
+        "opts": [
+            "A scratched CR plate",
+            "Detector element (TFT) failure or a dead row",
+            "Laser jitter",
+            "Grid cutoff"
+        ],
+        "ans": 1,
+        "exp": "A malfunctioning row of detector elements or readout electronics in a DR panel causes a continuous dropped line of data."
+    },
+    {
+        "type": "Core",
+        "text": "A backscatter artifact on a CR image typically presents as:",
+        "opts": [
+            "Wavy bands across the image",
+            "A dark shadow of the cassette hinges or internal electronics on the image",
+            "A bright white spot",
+            "A blurry halo"
+        ],
+        "ans": 1,
+        "exp": "If the lead backing of the cassette is compromised or exposure is excessively high, backscatter from the wall/table can project cassette electronics onto the image."
+    },
+    {
+        "type": "Core",
+        "text": "Dust or a scratch on the light guide of a CR reader will manifest on the image as:",
+        "opts": [
+            "A single bright white line running parallel to the direction of plate travel",
+            "Random black specks",
+            "A dark band across the center",
+            "Overall image fog"
+        ],
+        "ans": 0,
+        "exp": "Debris blocking the light guide prevents light collection at that exact spot as the plate moves, causing a continuous white line."
+    },
+    {
+        "type": "Core",
+        "text": "To prevent the Moire artifact when using stationary grids with CR, the grid frequency should ideally be:",
+        "opts": [
+            "Less than 60 lines/inch",
+            "Exactly matching the scan frequency",
+            "Greater than 103 lines/inch (high frequency)",
+            "Grids should not be used in CR"
+        ],
+        "ans": 2,
+        "exp": "High-frequency grids (>103 lines/inch) have grid lines that are finer than the laser scanning pitch, preventing the Moire pattern."
+    },
+    {
+        "type": "Core",
+        "text": "Misalignment of overlapping images during full-spine or long-leg radiography causes which artifact?",
+        "opts": [
+            "Planking artifact",
+            "Stitching artifact",
+            "Aliasing artifact",
+            "Ghosting artifact"
+        ],
+        "ans": 1,
+        "exp": "Stitching artifacts occur when software fails to seamlessly blend two or more separate exposures into a single long image."
+    },
+    {
+        "type": "Core",
+        "text": "The 'planking' artifact in DR systems is typically caused by:",
+        "opts": [
+            "Patient motion",
+            "Varying gain or offset correction across different detector panel blocks",
+            "Excessive mAs",
+            "Using an upside-down grid"
+        ],
+        "ans": 1,
+        "exp": "DR panels are made of multiple sub-panels. Differences in calibration between these blocks can cause a blocky, plank-like appearance."
+    },
+    {
+        "type": "Core",
+        "text": "Extraneous highly attenuating items (like keys or metal implants) within the exposure field of a digital radiograph can cause:",
+        "opts": [
+            "Histogram shift leading to a darker or washed-out image",
+            "Quantum mottle",
+            "Grid cutoff",
+            "Plate cracking"
+        ],
+        "ans": 0,
+        "exp": "Large metal objects create a huge spike on the left side of the histogram, which can skew the automatic rescaling, altering overall image brightness."
+    },
+    {
+        "type": "Core",
+        "text": "How does grid cutoff manifest on a digital radiograph compared to film?",
+        "opts": [
+            "It prevents the image from displaying at all",
+            "It presents as high contrast on one side",
+            "It shows a decreased Exposure Indicator and increased quantum mottle on the cutoff side",
+            "It causes a Moire pattern"
+        ],
+        "ans": 2,
+        "exp": "Digital systems will attempt to rescale the brightness, but the loss of photons from grid cutoff results in severe quantum mottle and a low EI."
+    },
+    {
+        "type": "Core",
+        "text": "Which artifact is caused by bending or stressing a CR imaging plate over time?",
+        "opts": [
+            "Moire effect",
+            "Cracking artifacts (appearing as white, jagged lines)",
+            "Halo effect",
+            "Dark noise"
+        ],
+        "ans": 1,
+        "exp": "Physical damage like cracks in the phosphor layer cannot absorb X-rays, leaving white lucent lines on the final image."
+    },
+    {
+        "type": "Core",
+        "text": "An exposure indicator that is significantly lower than the manufacturer's target range indicates:",
+        "opts": [
+            "The image will be saturated",
+            "The patient was overexposed",
+            "The image will likely exhibit quantum mottle due to underexposure",
+            "The grid was upside down"
+        ],
+        "ans": 2,
+        "exp": "A low EI means not enough radiation reached the detector, resulting in a noisy (mottled) image."
+    },
+    {
+        "type": "Core",
+        "text": "Geometric distortion where an anatomical structure appears shorter than its true size is known as:",
+        "opts": [
+            "Elongation",
+            "Foreshortening",
+            "Magnification",
+            "Minification"
+        ],
+        "ans": 1,
+        "exp": "Foreshortening occurs when the anatomical part is not parallel to the image receptor."
+    },
+    {
+        "type": "Core",
+        "text": "Which processing artifact occurs when extreme blacks and whites are artificially inverted for a specific visual effect, sometimes used in locating lines/tubes?",
+        "opts": [
+            "Edge enhancement",
+            "Equalization",
+            "Black/White reversal (Inversion)",
+            "Smoothing"
+        ],
+        "ans": 2,
+        "exp": "Inversion changes the pixels so dense structures appear black and air appears white, often helping to visualize fine structures like catheters."
+    },
+    {
+        "type": "Core",
+        "text": "A CR cassette is exposed to a high dose of radiation and then immediately processed. The very next image taken on that cassette shows faint outlines of the previous patient's anatomy. This is called:",
+        "opts": [
+            "Saturation",
+            "Ghosting / Image lag",
+            "Dark noise",
+            "Histogram error"
+        ],
+        "ans": 1,
+        "exp": "Image lag or ghosting happens when residual trapped electrons are not completely cleared during the erasure cycle."
+    },
+    {
+        "type": "Core",
+        "text": "What is the best way to prevent histogram analysis errors due to collimation?",
+        "opts": [
+            "Leave the collimator fully open for every exam",
+            "Ensure collimation margins are parallel to the edges of the imaging plate",
+            "Angle the tube 15 degrees",
+            "Use a high-ratio grid"
+        ],
+        "ans": 1,
+        "exp": "Digital systems recognize the exposure field best when collimation borders are sharp and parallel to the detector edges."
+    },
+    {
+        "type": "Core",
+        "text": "Excessive equalization (dynamic range compression) applied to a digital chest image can lead to:",
+        "opts": [
+            "Loss of spatial resolution",
+            "An artificially flat image with low contrast (loss of depth)",
+            "Increased patient dose",
+            "Severe magnification"
+        ],
+        "ans": 1,
+        "exp": "Equalization compresses the grayscale to show both lungs and mediastinum, but over-applying it makes the image look artificially flat and gray."
+    },
+    {
+        "type": "Core",
+        "text": "What is the first-line pharmacological treatment for a severe anaphylactic reaction (e.g., laryngeal edema, severe hypotension)?",
+        "opts": [
+            "Intravenous Diphenhydramine",
+            "Intramuscular Epinephrine",
+            "Intravenous Corticosteroids",
+            "Subcutaneous Atropine"
+        ],
+        "ans": 1,
+        "exp": "Epinephrine is the life-saving, first-line drug for anaphylaxis as it reverses bronchoconstriction and cardiovascular collapse."
+    },
+    {
+        "type": "Core",
+        "text": "What is the standard adult dose of intramuscular Epinephrine (1:1000 concentration) for anaphylaxis?",
+        "opts": [
+            "0.1 mg",
+            "0.3 mg",
+            "1.0 mg",
+            "3.0 mg"
+        ],
+        "ans": 1,
+        "exp": "The standard IM dose of 1:1000 Epinephrine in adults is 0.3 mg (up to 0.5 mg), usually injected into the anterolateral thigh."
+    },
+    {
+        "type": "Core",
+        "text": "A patient experiences severe bradycardia and hypotension immediately following an IV contrast injection. What is this reaction called?",
+        "opts": [
+            "Anaphylactoid reaction",
+            "Vasovagal reaction",
+            "Chemotoxic reaction",
+            "Thyrotoxic crisis"
+        ],
+        "ans": 1,
+        "exp": "A vasovagal reaction is characterized by increased vagal tone, causing a drop in both heart rate (bradycardia) and blood pressure (hypotension)."
+    },
+    {
+        "type": "Core",
+        "text": "Which drug is primarily administered to treat the severe bradycardia associated with a vasovagal reaction?",
+        "opts": [
+            "Epinephrine",
+            "Atropine",
+            "Albuterol",
+            "Diphenhydramine"
+        ],
+        "ans": 1,
+        "exp": "Atropine is an anticholinergic agent that blocks the vagus nerve, effectively increasing the heart rate."
+    },
+    {
+        "type": "Core",
+        "text": "What is the standard initial IV dose of Atropine for an adult experiencing severe symptomatic bradycardia?",
+        "opts": [
+            "0.1 mg",
+            "0.5 to 1.0 mg",
+            "3.0 mg",
+            "5.0 mg"
+        ],
+        "ans": 1,
+        "exp": "The typical initial dose is 0.5 to 1.0 mg IV, which can be repeated up to a maximum of 3 mg."
+    },
+    {
+        "type": "Core",
+        "text": "What is the immediate first action a technologist must take if contrast extravasation is suspected?",
+        "opts": [
+            "Administer IV Benadryl",
+            "Stop the injection immediately",
+            "Call for a code blue",
+            "Pull the IV out rapidly"
+        ],
+        "ans": 1,
+        "exp": "The injection must be stopped immediately to limit the volume of contrast escaping into the surrounding tissue."
+    },
+    {
+        "type": "Core",
+        "text": "Which of the following is considered a mild, self-limiting reaction to IV iodinated contrast?",
+        "opts": [
+            "Laryngeal edema",
+            "Scattered urticaria (hives) and nausea",
+            "Profound hypotension",
+            "Status epilepticus"
+        ],
+        "ans": 1,
+        "exp": "Mild reactions like nausea, metallic taste, and a few hives typically require only observation and reassurance."
+    },
+    {
+        "type": "Core",
+        "text": "A patient with a known severe allergy to iodine contrast requires a contrast-enhanced CT. What is the standard premedication protocol?",
+        "opts": [
+            "Oral Diphenhydramine 10 minutes before the scan",
+            "Systemic corticosteroids (e.g., Prednisone) 13, 7, and 1 hr prior, plus an antihistamine",
+            "Intravenous fluids only",
+            "Epinephrine injection 30 minutes prior"
+        ],
+        "ans": 1,
+        "exp": "Corticosteroids take time to alter gene expression and reduce the inflammatory response, hence the 13-hour protocol."
+    },
+    {
+        "type": "Core",
+        "text": "For patients with acute kidney injury or severe chronic kidney disease, Metformin should be withheld for how long following IV iodinated contrast administration?",
+        "opts": [
+            "It does not need to be withheld",
+            "12 hours",
+            "24 hours",
+            "48 hours"
+        ],
+        "ans": 3,
+        "exp": "Metformin is withheld for 48 hours to prevent lactic acidosis in case the contrast causes contrast-induced nephropathy (CIN)."
+    },
+    {
+        "type": "Core",
+        "text": "What is the primary risk factor for developing contrast-induced nephropathy (CIN)?",
+        "opts": [
+            "Asthma",
+            "Pre-existing renal impairment (low eGFR)",
+            "Hypertension",
+            "Obesity"
+        ],
+        "ans": 1,
+        "exp": "Pre-existing renal dysfunction is the strongest predictor of CIN."
+    },
+    {
+        "type": "Core",
+        "text": "Which medication is a commonly used H1-antihistamine for treating moderate allergic-like contrast reactions?",
+        "opts": [
+            "Epinephrine",
+            "Diphenhydramine (Benadryl)",
+            "Methylprednisolone",
+            "Furosemide"
+        ],
+        "ans": 1,
+        "exp": "Diphenhydramine is a potent H1 receptor antagonist used to treat hives and pruritus."
+    },
+    {
+        "type": "Core",
+        "text": "If a patient develops moderate bronchospasm (wheezing) without cardiovascular collapse, the most appropriate initial treatment is:",
+        "opts": [
+            "Beta-2 agonist inhaler (e.g., Albuterol)",
+            "IV Atropine",
+            "CPR",
+            "Oral fluids"
+        ],
+        "ans": 0,
+        "exp": "An inhaled beta-2 agonist (Albuterol) acts directly on the lungs to cause bronchodilation."
+    },
+    {
+        "type": "Core",
+        "text": "During a severe contrast reaction resulting in hypotension (without bradycardia), what is the most appropriate initial fluid therapy?",
+        "opts": [
+            "Oral water",
+            "Rapid IV infusion of Normal Saline (0.9%) or Ringer's Lactate",
+            "Dextrose 5% in water (D5W) slow drip",
+            "Hypertonic saline (3%)"
+        ],
+        "ans": 1,
+        "exp": "Rapid volume expansion with isotonic crystalloids (Normal Saline or RL) is crucial to correct hypotension."
+    },
+    {
+        "type": "Core",
+        "text": "If oxygen must be administered during an emergency contrast reaction, what is the recommended flow rate for a non-rebreather mask?",
+        "opts": [
+            "2-4 L/min",
+            "6-8 L/min",
+            "10-15 L/min",
+            "20-25 L/min"
+        ],
+        "ans": 2,
+        "exp": "A non-rebreather mask requires a high flow rate (10-15 L/min) to keep the reservoir bag inflated and deliver a high concentration of oxygen (60-90%)."
+    },
+    {
+        "type": "Core",
+        "text": "If a patient becomes severely hypotensive after contrast administration, what physical position should they be placed in (unless contraindicated)?",
+        "opts": [
+            "Fowler's position",
+            "Prone position",
+            "Trendelenburg position or legs elevated",
+            "Sims position"
+        ],
+        "ans": 2,
+        "exp": "Elevating the legs promotes venous return to the heart, helping to increase cardiac output and blood pressure."
+    },
+    {
+        "type": "Core",
+        "text": "The most severe, life-threatening form of an allergic-like reaction to contrast media is termed:",
+        "opts": [
+            "Urticaria",
+            "Anaphylactic shock",
+            "Vasovagal syncope",
+            "Chemotoxicity"
+        ],
+        "ans": 1,
+        "exp": "Anaphylactic shock involves severe airway compromise and cardiovascular collapse."
+    },
+    {
+        "type": "Core",
+        "text": "If a patient experiences a seizure following intrathecal contrast administration, the pharmacological treatment of choice is typically:",
+        "opts": [
+            "Epinephrine",
+            "Diazepam or Lorazepam (Benzodiazepines)",
+            "Atropine",
+            "Albuterol"
+        ],
+        "ans": 1,
+        "exp": "Benzodiazepines are the standard first-line treatment for acute, sustained seizures."
+    },
+    {
+        "type": "Core",
+        "text": "According to ACR guidelines, what is the minimum duration a patient should be actively monitored after an IV contrast injection?",
+        "opts": [
+            "5 minutes",
+            "20 to 30 minutes",
+            "2 hours",
+            "24 hours"
+        ],
+        "ans": 1,
+        "exp": "The vast majority of severe contrast reactions occur within the first 20 minutes following injection."
+    },
+    {
+        "type": "Core",
+        "text": "Extravasation of non-ionic, low-osmolar contrast media is generally:",
+        "opts": [
+            "Fatal within minutes",
+            "Self-limiting and causes mild tissue irritation compared to high-osmolar agents",
+            "Guaranteed to require surgical fasciotomy",
+            "Best treated by injecting saline into the same site"
+        ],
+        "ans": 1,
+        "exp": "Low-osmolar agents are much less toxic to tissues than older high-osmolar agents, though large volumes can still cause compartment syndrome."
+    },
+    {
+        "type": "Core",
+        "text": "Which of the following is an absolute contraindication to the administration of Gadolinium-based contrast agents (GBCA) in MRI?",
+        "opts": [
+            "Prior mild hives to iodinated contrast",
+            "End-stage renal disease (ESRD) or eGFR <30 due to risk of NSF",
+            "Asthma",
+            "Hypertension"
+        ],
+        "ans": 1,
+        "exp": "GBCAs are strictly avoided in severe renal failure to prevent Nephrogenic Systemic Fibrosis (NSF)."
+    },
+    {
+        "type": "Core",
+        "text": "According to the Atomic Energy Regulatory Board (AERB), what is the annual effective dose limit for an occupational radiation worker?",
+        "opts": [
+            "1 mSv",
+            "20 mSv averaged over 5 years (max 30 mSv in any single year)",
+            "50 mSv per year unconditionally",
+            "100 mSv per year"
+        ],
+        "ans": 1,
+        "exp": "AERB limits occupational effective dose to 20 mSv/year averaged over 5 consecutive years, not exceeding 30 mSv in any single year."
+    },
+    {
+        "type": "Core",
+        "text": "What is the revised AERB annual equivalent dose limit for the lens of the eye for occupational workers?",
+        "opts": [
+            "15 mSv",
+            "20 mSv",
+            "50 mSv",
+            "150 mSv"
+        ],
+        "ans": 1,
+        "exp": "In alignment with ICRP, the AERB revised the dose limit for the lens of the eye to 20 mSv/year (averaged over 5 years)."
+    },
+    {
+        "type": "Core",
+        "text": "According to AERB, what is the annual effective dose limit for a member of the general public?",
+        "opts": [
+            "1 mSv",
+            "5 mSv",
+            "20 mSv",
+            "50 mSv"
+        ],
+        "ans": 0,
+        "exp": "The general public dose limit is strictly set at 1 mSv per year."
+    },
+    {
+        "type": "Core",
+        "text": "For a declared pregnant radiation worker, the AERB recommends that the equivalent dose to the embryo/fetus should not exceed what amount for the remainder of the pregnancy?",
+        "opts": [
+            "1 mSv",
+            "5 mSv",
+            "10 mSv",
+            "20 mSv"
+        ],
+        "ans": 0,
+        "exp": "Once pregnancy is declared, the limit is 1 mSv for the remainder of the pregnancy to protect the fetus, equivalent to the public dose limit."
+    },
+    {
+        "type": "Core",
+        "text": "Where is the primary Thermoluminescent Dosimeter (TLD) badge worn during fluoroscopic procedures when a lead apron is used?",
+        "opts": [
+            "Over the lead apron at the collar",
+            "Under the lead apron at the chest or waist level",
+            "On the wrist",
+            "On the ankle"
+        ],
+        "ans": 1,
+        "exp": "The primary TLD is worn under the apron at chest/waist level to estimate the effective dose to the entire body."
+    },
+    {
+        "type": "Core",
+        "text": "According to AERB safety codes, what is the standard minimum lead equivalence required for protective aprons used in diagnostic radiology?",
+        "opts": [
+            "0.10 mm Pb",
+            "0.25 mm Pb",
+            "1.0 mm Pb",
+            "2.0 mm Pb"
+        ],
+        "ans": 1,
+        "exp": "AERB requires a minimum of 0.25 mm lead equivalence, though 0.5 mm Pb is widely used for better protection in fluoroscopy."
+    },
+    {
+        "type": "Core",
+        "text": "Leakage radiation from the X-ray tube housing must not exceed what limit at a distance of 1 meter from the source?",
+        "opts": [
+            "1 mGy/hr (100 mR/hr)",
+            "5 mGy/hr (500 mR/hr)",
+            "10 mGy/hr (1000 mR/hr)",
+            "50 mGy/hr (5000 mR/hr)"
+        ],
+        "ans": 0,
+        "exp": "Regulatory standards dictate that tube housing must be shielded so leakage does not exceed 1 mGy/hr (100 mR/hr) at 1 meter."
+    },
+    {
+        "type": "Core",
+        "text": "What is the active dosimetric material commonly used in the TLD badges supplied in India (e.g., by BARC/Avantika)?",
+        "opts": [
+            "Lithium Fluoride (LiF)",
+            "Aluminum Oxide (Al2O3)",
+            "Calcium Sulfate doped with Dysprosium (CaSO4:Dy)",
+            "Sodium Iodide (NaI)"
+        ],
+        "ans": 2,
+        "exp": "The standard TLD badge used in India utilizes CaSO4:Dy Teflon discs due to its high sensitivity to X-rays and gamma rays."
+    },
+    {
+        "type": "Core",
+        "text": "How frequently must TLD badges be exchanged and sent for reading according to standard Indian regulatory practices?",
+        "opts": [
+            "Monthly",
+            "Quarterly (Every 3 months)",
+            "Bi-annually",
+            "Annually"
+        ],
+        "ans": 1,
+        "exp": "TLD badges in India are typically exchanged on a quarterly basis (every 3 months) for occupational monitoring."
+    },
+    {
+        "type": "Core",
+        "text": "What is the standard lead equivalence of a thyroid shield used during fluoroscopy?",
+        "opts": [
+            "0.25 mm Pb",
+            "0.5 mm Pb",
+            "1.0 mm Pb",
+            "1.5 mm Pb"
+        ],
+        "ans": 1,
+        "exp": "Thyroid shields typically provide 0.5 mm lead equivalence to protect the highly radiosensitive thyroid gland."
+    },
+    {
+        "type": "Core",
+        "text": "In the design of an X-ray room, the primary protective barrier must be thick enough to attenuate the primary beam. What is its typical lead equivalent thickness in general radiography?",
+        "opts": [
+            "0.5 mm",
+            "1.0 mm",
+            "2.0 mm (approx. 1/16 inch)",
+            "5.0 mm"
+        ],
+        "ans": 2,
+        "exp": "Primary barriers typically require 2.0 mm (1/16 inch) of lead equivalent to safely stop the primary beam."
+    },
+    {
+        "type": "Core",
+        "text": "The fundamental radiation protection principle that requires all exposures to be kept 'As Low As Reasonably Achievable' is known as:",
+        "opts": [
+            "The Inverse Square Law",
+            "ALARA",
+            "The 10-day rule",
+            "Hormesis"
+        ],
+        "ans": 1,
+        "exp": "ALARA dictates that any radiation dose should be justified and optimized to be as low as practically possible."
+    },
+    {
+        "type": "Core",
+        "text": "Which type of personal dosimeter provides an immediate, real-time reading of radiation exposure?",
+        "opts": [
+            "Film badge",
+            "TLD badge",
+            "OSL dosimeter",
+            "Pocket dosimeter (direct reading)"
+        ],
+        "ans": 3,
+        "exp": "Pocket ionization chambers provide an immediate reading, useful for high-dose procedures."
+    },
+    {
+        "type": "Core",
+        "text": "What is the minimum Source-to-Skin Distance (SSD) allowed for mobile (portable) radiography units to prevent excessive entrance skin dose?",
+        "opts": [
+            "15 cm (6 inches)",
+            "30 cm (12 inches)",
+            "50 cm (20 inches)",
+            "100 cm (40 inches)"
+        ],
+        "ans": 1,
+        "exp": "The SSD must not be less than 30 cm (12 inches) for mobile radiography to protect the skin."
+    },
+    {
+        "type": "Core",
+        "text": "How does the use of an anti-scatter grid affect patient radiation dose?",
+        "opts": [
+            "It decreases the dose by absorbing scatter",
+            "It has no effect on patient dose",
+            "It increases patient dose because mAs must be increased",
+            "It decreases dose by filtering the primary beam"
+        ],
+        "ans": 2,
+        "exp": "Because the grid absorbs some primary photons and scatter, the technique (mAs) must be increased, thus increasing patient dose."
+    },
+    {
+        "type": "Core",
+        "text": "What are the three cardinal principles of radiation protection for personnel?",
+        "opts": [
+            "Time, Distance, Shielding",
+            "kVp, mAs, SID",
+            "Filtration, Collimation, Grids",
+            "ALARA, Dose Limits, Monitoring"
+        ],
+        "ans": 0,
+        "exp": "Minimize Time, maximize Distance, and use Shielding."
+    },
+    {
+        "type": "Core",
+        "text": "What is the AERB annual equivalent dose limit for the skin and extremities (hands and feet) for an occupational worker?",
+        "opts": [
+            "150 mSv",
+            "300 mSv",
+            "500 mSv",
+            "1000 mSv"
+        ],
+        "ans": 2,
+        "exp": "The limit for localized exposures to the skin and extremities is 500 mSv per year."
+    },
+    {
+        "type": "Core",
+        "text": "In India, which regulatory body is responsible for issuing licenses and enforcing radiation safety standards for X-ray installations?",
+        "opts": [
+            "BARC (Bhabha Atomic Research Centre)",
+            "AERB (Atomic Energy Regulatory Board)",
+            "ICMR (Indian Council of Medical Research)",
+            "WHO (World Health Organization)"
+        ],
+        "ans": 1,
+        "exp": "The AERB is the sole regulatory authority for nuclear and radiation safety in India."
+    },
+    {
+        "type": "Core",
+        "text": "According to AERB, the total filtration (inherent + added) for a diagnostic X-ray tube operating above 70 kVp must be at least:",
+        "opts": [
+            "1.5 mm Al equivalent",
+            "2.5 mm Al equivalent",
+            "3.5 mm Al equivalent",
+            "5.0 mm Al equivalent"
+        ],
+        "ans": 1,
+        "exp": "A minimum total filtration of 2.5 mm Aluminum equivalent is required to filter out low-energy photons and reduce skin dose."
+    },
+    {
+        "type": "Core",
+        "text": "Which interactions of X-rays with matter are primarily responsible for the occupational radiation dose received by radiographers during fluoroscopy?",
+        "opts": [
+            "Photoelectric absorption",
+            "Pair production",
+            "Compton scattering",
+            "Coherent scattering"
+        ],
+        "ans": 2,
+        "exp": "Compton scatter from the patient is the main source of radiation exposure to personnel in the room."
+    }
+];
+
+            raw_data.forEach((d, i) => {
+                let q = createQ(i + 1, d.type, d.text, d.opts, d.ans, d.exp);
+                questions.push(shuffleOptions(q, q.id));
+            });
+        }
+
+        // --- STATE MANAGEMENT ---
+        let timerInterval;
+
+        let state = JSON.parse(localStorage.getItem('test_paper_49_state')) || {
+            currentQ: 0,
+            answers: new Array(TOTAL_QUESTIONS).fill(null),
+            status: new Array(TOTAL_QUESTIONS).fill('not-visited'),
+            currentSection: 1,
+            sectionTimeLeft: SECTION_TIME_LIMIT,
+            maxSetReached: 1,
+            isFinished: false
+        };
+
+        function saveState() {
+            localStorage.setItem('test_paper_49_state', JSON.stringify(state));
+        }
+
+        const els = {
+            landing: document.getElementById('landingPage'),
+            header: document.getElementById('examHeader'),
+            body: document.getElementById('examBody'),
+            footer: document.getElementById('examFooter'),
+            result: document.getElementById('resultPage'),
+            qText: document.getElementById('questionText'),
+            optsBox: document.getElementById('optionsBox'),
+            qNum: document.getElementById('qNumDisplay'),
+            sectionLabel: document.getElementById('sectionLabel'),
+            palette: document.getElementById('questionPalette'),
+            timer: document.getElementById('timerDisplay'),
+            btnPrev: document.getElementById('btnPrev'),
+            sidebar: document.getElementById('sidebar')
+        };
+
+        function init() {
+            generateQuestions(); // Load data
+            if (state.isFinished) {
+                finishExam();
+            } else {
+                els.landing.classList.remove('hidden');
+                els.result.classList.add('hidden');
+            }
+        }
+
+        function startExam() {
+            els.landing.classList.add('hidden');
+            renderExamInterface();
+            startSectionTimer();
+        }
+
+        function startSectionTimer() {
+            if(timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                state.sectionTimeLeft--;
+                saveState();
+                
+                // Format Time
+                const m = Math.floor(state.sectionTimeLeft / 60);
+                const s = state.sectionTimeLeft % 60;
+                els.timer.innerText = `${m}:${s < 10 ? '0'+s : s}`;
+                
+                // Visual Warning
+                if(state.sectionTimeLeft < 60) els.timer.style.backgroundColor = "#ffcdd2";
+                else els.timer.style.backgroundColor = "#fff";
+
+                // Time Up Logic
+                if (state.sectionTimeLeft <= 0) {
+                    handleSectionTimeout();
+                }
+            }, 1000);
+        }
+
+        function handleSectionTimeout() {
+            clearInterval(timerInterval);
+            
+            if (state.currentSection < 5) {
+                alert(`Time is up for Section ${state.currentSection}! Moving to Section ${state.currentSection + 1}.`);
+                forceNextSection();
+            } else {
+                alert("Time is up for the final section! Submitting Exam.");
+                finishExam();
+            }
+        }
+
+        function forceNextSection() {
+            state.currentSection++;
+            state.maxSetReached = state.currentSection;
+            state.sectionTimeLeft = SECTION_TIME_LIMIT;
+            saveState();
+            
+            // Move to first question of next section
+            const firstQofNextSection = (state.currentSection - 1) * SECTION_SIZE;
+            loadQuestion(firstQofNextSection);
+            startSectionTimer();
+        }
+
+        function renderExamInterface() {
+            els.header.classList.remove('hidden');
+            els.body.classList.remove('hidden');
+            els.footer.classList.remove('hidden');
+            renderPalette();
+            loadQuestion(state.currentQ);
+        }
+
+        function loadQuestion(index) {
+            state.currentQ = index;
+            if(state.status[index] === 'not-visited') state.status[index] = 'not-answered';
+            saveState();
+
+            // Update Section Label
+            const secNum = Math.floor(index / SECTION_SIZE) + 1;
+            els.sectionLabel.innerText = `Section ${secNum} (Q${(secNum-1)*20 + 1}-${secNum*20})`;
+
+            // Render Text
+            els.qNum.innerText = `Question ${index + 1}`;
+            els.qText.innerText = questions[index].text;
+            
+            // Render Options
+            els.optsBox.innerHTML = '';
+            questions[index].opts.forEach((opt, i) => {
+                const isChecked = state.answers[index] === i ? 'checked' : '';
+                els.optsBox.innerHTML += `
+                    <label class="option-label">
+                        <input type="radio" name="opt" value="${i}" ${isChecked} onchange="selectOption(${i})">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            // Update Palette UI
+            document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('current'));
+            const currentBtn = document.getElementById(`qbtn-${index}`);
+            if(currentBtn) currentBtn.classList.add('current');
+
+            // Handle Prev Button State (Cannot go back to previous locked section)
+            const startOfCurrentSection = (state.currentSection - 1) * SECTION_SIZE;
+            els.btnPrev.disabled = (index <= startOfCurrentSection);
+        }
+
+        function selectOption(optIndex) {
+            state.answers[state.currentQ] = optIndex;
+            saveState();
+        }
+
+        function saveAndNext() {
+            const index = state.currentQ;
+            // Update status
+            state.status[index] = (state.answers[index] !== null) ? 'answered' : 'not-answered';
+            saveState();
+            
+            moveToNextQuestion();
+        }
+
+        function markForReview() {
+            const index = state.currentQ;
+            state.status[index] = (state.answers[index] !== null) ? 'marked-answered' : 'review';
+            saveState();
+            moveToNextQuestion();
+        }
+
+        function clearResponse() {
+            state.answers[state.currentQ] = null;
+            state.status[state.currentQ] = 'not-answered';
+            saveState();
+            loadQuestion(state.currentQ);
+            renderPalette();
+        }
+
+        function moveToNextQuestion() {
+            const nextIndex = state.currentQ + 1;
+            const currentSecBound = state.currentSection * SECTION_SIZE;
+
+            // Check if next question crosses section boundary
+            if (nextIndex >= currentSecBound) {
+                // End of section reached
+                if (state.currentSection < 5) {
+                    if (confirm(`You have reached the end of Section ${state.currentSection}.\nDo you want to submit this section and move to Section ${state.currentSection+1}?\n\nWARNING: You cannot return to this section.`)) {
+                        forceNextSection();
+                    }
+                } else {
+                    if(confirm("This was the last question. Submit Exam?")) {
+                        finishExam();
+                    }
+                }
+            } else {
+                // Normal movement within section
+                renderPalette();
+                loadQuestion(nextIndex);
+            }
+        }
+
+        function prevQuestion() {
+            // Logic handled in loadQuestion to disable button if at start of section
+            if (state.currentQ > 0) {
+                loadQuestion(state.currentQ - 1);
+            }
+        }
+
+        function renderPalette() {
+            els.palette.innerHTML = '';
+            for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+                let statusClass = state.status[i];
+                if(statusClass === 'marked-answered') statusClass = 'review';
+                
+                // Check if question belongs to a locked (previous) section
+                // A question is locked if its section index is < current active section
+                const qSection = Math.floor(i / SECTION_SIZE) + 1;
+                const isLocked = qSection < state.currentSection;
+                const lockedClass = isLocked ? ' locked' : '';
+                
+                // Gray out future sections
+                const isFuture = qSection > state.currentSection;
+                const futureStyle = isFuture ? 'opacity:0.3; pointer-events:none;' : '';
+
+                els.palette.innerHTML += `
+                    <div id="qbtn-${i}" 
+                         class="q-btn ${statusClass}${lockedClass}" 
+                         style="${futureStyle}"
+                         onclick="jumpToQuestion(${i})">
+                        ${i + 1}
+                    </div>
+                `;
+            }
+        }
+
+        function jumpToQuestion(index) {
+            const qSection = Math.floor(index / SECTION_SIZE) + 1;
+            
+            if (qSection < state.currentSection) {
+                alert("This section is locked.");
+                return;
+            }
+            if (qSection > state.currentSection) {
+                alert("You cannot jump to a future section yet.");
+                return;
+            }
+            
+            loadQuestion(index);
+        }
+
+        function submitExam() {
+            if(confirm("Are you sure you want to finish the exam? Unanswered questions in future sections will be marked zero.")) {
+                finishExam();
+            }
+        }
+
+        function finishExam() {
+            clearInterval(timerInterval);
+            state.isFinished = true;
+            saveState();
+            
+            els.header.classList.add('hidden');
+            els.body.classList.add('hidden');
+            els.footer.classList.add('hidden');
+            els.result.classList.remove('hidden');
+            
+            calculateResult();
+        }
+
+        function calculateResult() {
+            let correct = 0, wrong = 0, unattempted = 0, score = 0;
+
+            state.answers.forEach((ans, i) => {
+                if (ans === null) {
+                    unattempted++;
+                } else if (questions[i] && ans === questions[i].ans) {
+                    correct++;
+                    score += 4;
+                } else {
+                    wrong++;
+                    score -= 1;
+                }
+            });
+
+            document.getElementById('scoreCard').innerHTML = `
+                <h1 style="color:#3f51b5; font-size:3rem;">${score} / 400</h1>
+                <p><strong>Correct:</strong> ${correct} (+${correct*4})</p>
+                <p><strong>Incorrect:</strong> ${wrong} (-${wrong})</p>
+                <p><strong>Unattempted:</strong> ${unattempted}</p>
+            `;
+        }
+
+        function showDetailedReview() {
+            const container = document.getElementById('detailedReview');
+            container.style.display = 'block';
+            container.innerHTML = '<h3>Detailed Solutions</h3>';
+            
+            questions.forEach((q, i) => {
+                const userAns = state.answers[i];
+                const isCorrect = userAns === q.ans;
+                const statusColor = userAns === null ? 'gray' : (isCorrect ? 'green' : 'red');
+                const statusText = userAns === null ? 'Skipped' : (isCorrect ? 'Correct' : 'Incorrect');
+
+                let optsHtml = '';
+                q.opts.forEach((opt, oi) => {
+                    let style = '';
+                    if (oi === q.ans) style = 'font-weight:bold; color:green;'; 
+                    if (oi === userAns && !isCorrect) style = 'font-weight:bold; color:red;'; 
+                    optsHtml += `<div style="${style}">${oi+1}. ${opt}</div>`;
+                });
+
+                container.innerHTML += `
+                    <div class="review-item">
+                        <div style="color:${statusColor}; font-weight:bold; margin-bottom:5px;">Q${i+1}: ${statusText}</div>
+                        <div>${q.text}</div>
+                        <div style="margin:10px 0; padding-left:15px; border-left:3px solid #ddd;">${optsHtml}</div>
+                        <div class="explanation"><strong>Explanation:</strong> ${q.exp}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleSidebar() {
+            els.sidebar.classList.toggle('active');
+        }
+
+        // Initialize
+        init();
+
+    </script>
+
+    <!-- Back Button Trap -->
+    <script>
+        window.history.pushState(null, null, window.location.href);
+        window.addEventListener('popstate', function (event) {
+            if (confirm("Are you sure you want to exit the exam?")) {
+                window.history.back();
+            } else {
+                window.history.pushState(null, null, window.location.href);
+            }
+        });
+    </script>
+</body>
+</html>
