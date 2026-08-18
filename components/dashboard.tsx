@@ -20,7 +20,8 @@ import {
   Flame,
   BookOpen,
   GraduationCap,
-  Brain
+  Brain,
+  ClipboardCheck
 } from "lucide-react"
 
 interface DashboardProps {
@@ -66,6 +67,13 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
     totalIncorrect: number
     papersCompleted: number
   }>({ totalAttempted: 0, totalCorrect: 0, totalIncorrect: 0, papersCompleted: 0 })
+
+  // DSSSB Practise stats
+  const [dsssbStats, setDsssbStats] = useState<{
+    attempts: number
+    bestScore: number
+    papersAttempted: number
+  }>({ attempts: 0, bestScore: 0, papersAttempted: 0 })
 
   useEffect(() => {
     // Load stats from localStorage
@@ -117,6 +125,20 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
       }
     } catch (e) {
       console.error("Error loading dohrav stats:", e)
+    }
+
+    // Load DSSSB Practise stats
+    try {
+      const raw = localStorage.getItem("kiddoprep_dsssb_progress")
+      if (raw) {
+        const parsed = JSON.parse(raw)
+        const entries: any[] = Object.values(parsed?.attempts || {})
+        const attempts = entries.reduce((a, x) => a + (x.count || 0), 0)
+        const bestScore = entries.reduce((a, x) => Math.max(a, x.bestScore ?? 0), 0)
+        setDsssbStats({ attempts, bestScore, papersAttempted: entries.length })
+      }
+    } catch (e) {
+      console.error("Error loading DSSSB stats:", e)
     }
   }, [])
 
@@ -375,6 +397,26 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
                   <span className="text-muted-foreground">{dohravStats.papersCompleted}/3 papers</span>
                 </div>
               ) : undefined}
+            />
+            <FeatureCard
+              href="/dsssb"
+              icon={<ClipboardCheck />}
+              title="DSSSB Practise"
+              description="Full 200-question DSSSB Radiographer mock papers — 120 min, sectional analysis, negative marking"
+              gradient="bg-gradient-to-br from-emerald-500/10 via-teal-500/5 to-transparent"
+              borderColor="border-emerald-500/30 hover:border-emerald-500/50"
+              iconColor="text-emerald-500"
+              stats={dsssbStats.attempts > 0 ? (
+                <div className="flex gap-3 text-xs">
+                  <span className="text-emerald-500">Best {dsssbStats.bestScore}/200</span>
+                  <span className="text-muted-foreground">{dsssbStats.attempts} attempt{dsssbStats.attempts === 1 ? "" : "s"}</span>
+                  <span className="text-muted-foreground">{dsssbStats.papersAttempted}/2 papers</span>
+                </div>
+              ) : (
+                <div className="flex gap-3 text-xs">
+                  <span className="text-muted-foreground">2 papers &middot; 200 Qs each &middot; 120 min</span>
+                </div>
+              )}
             />
             <FeatureCard
               href="/materials"
