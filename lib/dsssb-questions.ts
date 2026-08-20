@@ -3,11 +3,13 @@
 
 import paper1Raw from "./dsssb/paper1.json"
 import paper2Raw from "./dsssb/paper2.json"
+import paper3Raw from "./dsssb/paper3.json"
 import type { DsssbPaper } from "./dsssb-papers"
 
 const papers: DsssbPaper[] = [
   paper1Raw as unknown as DsssbPaper,
   paper2Raw as unknown as DsssbPaper,
+  paper3Raw as unknown as DsssbPaper,
 ]
 
 export function getDsssbPaper(id: number): DsssbPaper | undefined {

@@ -10,12 +10,12 @@ import { StatsCard, FeatureCard, SectionHeader, ProgressRing } from "@/component
 import Heatmap from "./heatmap"
 import TopicCard from "./topic-card"
 import { questions } from "@/lib/questions"
-import { 
-  Target, 
-  CheckCircle2, 
-  TrendingUp, 
-  Clock, 
-  Settings, 
+import {
+  Target,
+  CheckCircle2,
+  TrendingUp,
+  Clock,
+  Settings,
   BarChart3,
   Flame,
   BookOpen,
@@ -361,8 +361,8 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
 
         {/* Quick Actions / Features Section */}
         <section>
-          <SectionHeader 
-            title="Study Modes" 
+          <SectionHeader
+            title="Study Modes"
             subtitle="Choose your preferred way to practice"
           />
           <div className="space-y-4">
@@ -410,7 +410,7 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
                 <div className="flex gap-3 text-xs">
                   <span className="text-emerald-500">Best {dsssbStats.bestScore}/200</span>
                   <span className="text-muted-foreground">{dsssbStats.attempts} attempt{dsssbStats.attempts === 1 ? "" : "s"}</span>
-                  <span className="text-muted-foreground">{dsssbStats.papersAttempted}/2 papers</span>
+                  <span className="text-muted-foreground">{dsssbStats.papersAttempted}/3 papers</span>
                 </div>
               ) : (
                 <div className="flex gap-3 text-xs">
@@ -432,8 +432,8 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
 
         {/* Topics Section */}
         <section>
-          <SectionHeader 
-            title="Practice by Topic" 
+          <SectionHeader
+            title="Practice by Topic"
             subtitle={`${questions.topics.length} topics available`}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

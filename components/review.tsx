@@ -64,7 +64,7 @@ export default function Review({ topicId, onBack }: ReviewProps) {
         {lastAttempt && (() => {
           // determine review questions (either the saved ids or all topic questions)
           const reviewQuestions = Array.isArray(lastAttempt.quizQuestionIds) && lastAttempt.quizQuestionIds.length > 0
-            ? lastAttempt.quizQuestionIds.map((id: number) => topic.questions.find((q) => q.id === id)).filter(Boolean)
+            ? lastAttempt.quizQuestionIds.map((id: number) => topic.questions.find((q: any) => q.id === id)).filter(Boolean)
             : topic.questions
 
           return (
@@ -89,10 +89,10 @@ export default function Review({ topicId, onBack }: ReviewProps) {
                         const bg = wasSkippedOpt
                           ? "bg-slate-700 border-slate-600"
                           : correct
-                          ? "bg-green-50 border-green-300"
-                          : chosen && !correct
-                          ? "bg-red-50 border-red-300"
-                          : "bg-background/30 border-border/50"
+                            ? "bg-green-50 border-green-300"
+                            : chosen && !correct
+                              ? "bg-red-50 border-red-300"
+                              : "bg-background/30 border-border/50"
                         const textClass = wasSkippedOpt ? "text-slate-200 font-medium" : correct ? "text-green-900 font-medium" : chosen && !correct ? "text-red-900 font-medium" : "text-foreground"
 
                         return (
