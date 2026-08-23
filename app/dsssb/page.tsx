@@ -12,7 +12,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import {
+  BookOpen,
   ChevronLeft,
+  ChevronRight,
   Clock,
   FileText,
   Play,
@@ -24,6 +26,7 @@ import {
   ListChecks,
   Languages,
   MinusCircle,
+  Zap,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
@@ -160,6 +163,59 @@ export default function DsssbHome() {
             </Card>
           </section>
         )}
+
+        {/* Practice Material + Rapid Quiz */}
+        <section>
+          <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
+            <Languages className="h-5 w-5 text-emerald-400" />
+            Hindi Vocabulary — Quick Revision
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <Card
+              className="p-5 bg-gradient-to-br from-emerald-900/30 to-teal-900/10 border-emerald-500/40 cursor-pointer hover:border-emerald-500/70 transition-colors"
+              onClick={() => router.push("/dsssb/practice-material")}
+            >
+              <div className="flex items-start gap-3">
+                <div className="bg-emerald-500/20 p-2 rounded-full h-fit shrink-0">
+                  <BookOpen className="h-5 w-5 text-emerald-400" />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="font-bold text-sm">Practice Material</h3>
+                  <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
+                    विलोम, पर्यायवाची &amp; मुहावरे — a searchable reference of the most-asked Hindi
+                    vocabulary.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-1 text-xs text-emerald-400 mt-3 font-semibold">
+                Open reference
+                <ChevronRight className="h-3.5 w-3.5" />
+              </div>
+            </Card>
+
+            <Card
+              className="p-5 bg-gradient-to-br from-teal-900/30 to-emerald-900/10 border-teal-500/40 cursor-pointer hover:border-teal-500/70 transition-colors"
+              onClick={() => router.push("/dsssb/rapid-quiz")}
+            >
+              <div className="flex items-start gap-3">
+                <div className="bg-teal-500/20 p-2 rounded-full h-fit shrink-0">
+                  <Zap className="h-5 w-5 text-teal-400" />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="font-bold text-sm">Rapid Quiz</h3>
+                  <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
+                    Quick-fire MCQs from the material above — timed, instant feedback, no negative
+                    marking.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-1 text-xs text-teal-400 mt-3 font-semibold">
+                Start quiz
+                <ChevronRight className="h-3.5 w-3.5" />
+              </div>
+            </Card>
+          </div>
+        </section>
 
         {/* Papers */}
         <section>
