@@ -200,6 +200,14 @@ export const dsssbPaperList: DsssbPaperMeta[] = [
     totalQuestions: 200,
     durationMinutes: 120,
   },
+  {
+    id: 4,
+    name: "Practice Paper 4",
+    subtitle: "DSSSB Radiographer — Full Mock (Tier-1)",
+    code: "DSSSB/RAD/PP-04",
+    totalQuestions: 200,
+    durationMinutes: 120,
+  },
 ]
 
 export const DSSSB_STRATEGY: string[] = [
