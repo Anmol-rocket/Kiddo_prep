@@ -1,0 +1,3294 @@
+{
+  "id": 7,
+  "name": "Practice Paper 7",
+  "subtitle": "DSSSB Radiographer — Full Mock (Tier-1) — Advanced Level",
+  "code": "DSSSB/RAD/PP-07",
+  "totalQuestions": 200,
+  "durationMinutes": 120,
+  "markPerCorrect": 1,
+  "negativeMark": 0.25,
+  "subsections": [
+    {
+      "id": "a1",
+      "section": "A",
+      "title": "General Intelligence & Reasoning",
+      "start": 1,
+      "end": 20,
+      "count": 20
+    },
+    {
+      "id": "a2",
+      "section": "A",
+      "title": "General Awareness",
+      "start": 21,
+      "end": 40,
+      "count": 20
+    },
+    {
+      "id": "a3",
+      "section": "A",
+      "title": "Arithmetical & Numerical Ability",
+      "start": 41,
+      "end": 60,
+      "count": 20
+    },
+    {
+      "id": "a4",
+      "section": "A",
+      "title": "English Language & Comprehension",
+      "start": 61,
+      "end": 80,
+      "count": 20
+    },
+    {
+      "id": "a5",
+      "section": "A",
+      "title": "Hindi Language & Comprehension",
+      "start": 81,
+      "end": 100,
+      "count": 20
+    },
+    {
+      "id": "b1",
+      "section": "B",
+      "title": "Human Anatomy & Physiology",
+      "start": 101,
+      "end": 120,
+      "count": 20
+    },
+    {
+      "id": "b2",
+      "section": "B",
+      "title": "Pathology & Patient Care",
+      "start": 121,
+      "end": 140,
+      "count": 20
+    },
+    {
+      "id": "b3",
+      "section": "B",
+      "title": "MRI & CT Imaging",
+      "start": 141,
+      "end": 160,
+      "count": 20
+    },
+    {
+      "id": "b4",
+      "section": "B",
+      "title": "Radiation Physics & Safety",
+      "start": 161,
+      "end": 180,
+      "count": 20
+    },
+    {
+      "id": "b5",
+      "section": "B",
+      "title": "USG, Mammography & Special Procedures",
+      "start": 181,
+      "end": 200,
+      "count": 20
+    }
+  ],
+  "questions": [
+    {
+      "id": "p7_q1",
+      "no": 1,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Find the missing number in the series: 2, 5, 10, 17, 26, 37, ?",
+      "options": [
+        "50",
+        "48",
+        "52",
+        "49"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The differences between consecutive terms increase by 2 each time (3,5,7,9,11,13). 37 + 13 = 50."
+    },
+    {
+      "id": "p7_q2",
+      "no": 2,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Find the missing letter in the series: Z, W, T, Q, N, ?",
+      "options": [
+        "L",
+        "K",
+        "J",
+        "M"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Each letter moves back 3 places in the alphabet: Z(26)-3=W(23)-3=T(20)-3=Q(17)-3=N(14)-3=K(11)."
+    },
+    {
+      "id": "p7_q3",
+      "no": 3,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "In a certain code, MOUNTAIN is written as NPVOUBJO. What will GRANITE be written as in the same code?",
+      "options": [
+        "HSBOJUF",
+        "HSBOUJF",
+        "GSBOJUF",
+        "HSBNJUF"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Each letter of the code is one place ahead of the original letter (+1 shift): G-H, R-S, A-B, N-O, I-J, T-U, E-F, giving HSBOJUF."
+    },
+    {
+      "id": "p7_q4",
+      "no": 4,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Pointing to a photograph, Rina said, 'He is the son of my grandfather's only son.' How is the person in the photograph related to Rina (assuming Rina is female and has no other siblings mentioned)?",
+      "options": [
+        "Brother",
+        "Cousin",
+        "Nephew",
+        "Father"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Grandfather's only son is Rina's father (since Rina is not male). The son of Rina's father is Rina's brother."
+    },
+    {
+      "id": "p7_q5",
+      "no": 5,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "A man walks 8 km north, turns right and walks 6 km, then turns right again and walks 8 km. How far is he from his starting point and in which direction?",
+      "options": [
+        "6 km, East",
+        "8 km, South",
+        "10 km, South-East",
+        "6 km, West"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Plotting the path on coordinates: (0,0) to (0,8) to (6,8) to (6,0). The straight-line distance from the origin to (6,0) is 6 km due East."
+    },
+    {
+      "id": "p7_q6",
+      "no": 6,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "In a class of 40 students, Meera ranks 14th from the top. If there are 8 students between Meera and Arjun, with Arjun ranking below Meera, what is Arjun's rank from the bottom?",
+      "options": [
+        "18",
+        "17",
+        "19",
+        "16"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Arjun's rank from the top = 14 + 8 + 1 = 23. Rank from the bottom = 40 - 23 + 1 = 18."
+    },
+    {
+      "id": "p7_q7",
+      "no": 7,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Radiograph is to Radiologist as Blueprint is to:",
+      "options": [
+        "Architect",
+        "Engineer",
+        "Builder",
+        "Draftsman"
+      ],
+      "correctAnswer": 0,
+      "explanation": "A radiologist interprets a radiograph just as an architect interprets and designs from a blueprint; both are the primary technical readers of the respective document."
+    },
+    {
+      "id": "p7_q8",
+      "no": 8,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Select the one that does not belong with the others: Femur, Humerus, Sternum, Tibia",
+      "options": [
+        "Femur",
+        "Humerus",
+        "Sternum",
+        "Tibia"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Femur, Humerus and Tibia are all long bones; the Sternum is a flat bone, making it the odd one out."
+    },
+    {
+      "id": "p7_q9",
+      "no": 9,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "If '+' means '÷', '−' means '×', '×' means '−', and '÷' means '+', evaluate: 18 − 6 ÷ 4 + 2 × 3",
+      "options": [
+        "107",
+        "105",
+        "109",
+        "111"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Substituting the coded meanings gives 18 × 6 + 4 ÷ 2 − 3. Using normal precedence: 18×6=108, 4÷2=2, so 108+2−3=107."
+    },
+    {
+      "id": "p7_q10",
+      "no": 10,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "If P$Q means 'P is father of Q', P#Q means 'P is mother of Q', and P@Q means 'P is sister of Q', which expression means 'M is grandfather of N'?",
+      "options": [
+        "M$K$N",
+        "M#K$N",
+        "M$K@N",
+        "M@K$N"
+      ],
+      "correctAnswer": 0,
+      "explanation": "M$K means M is father of K, and K$N means K is father of N. Together this makes M the (paternal) grandfather of N."
+    },
+    {
+      "id": "p7_q11",
+      "no": 11,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Find the missing term: A2C, D5F, G8I, J11L, ?",
+      "options": [
+        "M14O",
+        "M13O",
+        "N14O",
+        "M14N"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The letters skip in groups of three moving forward (A-C, D-F, G-I, J-L, M-O), while the numbers increase by 3 each time (2,5,8,11,14)."
+    },
+    {
+      "id": "p7_q12",
+      "no": 12,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Statements: All doctors are scientists. Some scientists are professors. Conclusions: I. Some professors are doctors. II. Some scientists are doctors.",
+      "options": [
+        "Only conclusion I follows",
+        "Only conclusion II follows",
+        "Both conclusions follow",
+        "Neither conclusion follows"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Since all doctors are scientists, it necessarily follows (by conversion) that some scientists are doctors (conclusion II). Conclusion I does not necessarily follow, as the professors overlapping with scientists need not include any doctor."
+    },
+    {
+      "id": "p7_q13",
+      "no": 13,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Five years ago, the ratio of the ages of A and B was 3:4. Ten years from now, the ratio will be 4:5. What is B's present age?",
+      "options": [
+        "65 years",
+        "60 years",
+        "70 years",
+        "55 years"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Let ages 5 years ago be 3x and 4x. Then (3x+15)/(4x+15)=4/5, giving x=15. B's present age = 4x+5 = 65 years."
+    },
+    {
+      "id": "p7_q14",
+      "no": 14,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Ravi walks 5 km east, turns left and walks 5 km, turns left again and walks 5 km, then turns right and walks 3 km. How far and in which direction is he from his starting point?",
+      "options": [
+        "8 km, North",
+        "8 km, East",
+        "13 km, North",
+        "8 km, South"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Tracking the path on coordinates from (0,0): east to (5,0), north to (5,5), west to (0,5), and finally (turning right while facing west means facing north) north to (0,8) — 8 km due North of the start."
+    },
+    {
+      "id": "p7_q15",
+      "no": 15,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "A is B's brother. B is C's sister. C is D's father. How is A related to D?",
+      "options": [
+        "Uncle",
+        "Father",
+        "Grandfather",
+        "Brother"
+      ],
+      "correctAnswer": 0,
+      "explanation": "B and C are siblings (B is C's sister); A is B's brother, so A is also C's sibling. Since C is D's father, A (C's sibling) is D's uncle."
+    },
+    {
+      "id": "p7_q16",
+      "no": 16,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Find the missing number: 7, 26, 63, 124, 215, ?",
+      "options": [
+        "342",
+        "340",
+        "344",
+        "336"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Each term equals n³ − 1 for n = 2,3,4,5,6,7: 8−1=7, 27−1=26, 64−1=63, 125−1=124, 216−1=215, 343−1=342."
+    },
+    {
+      "id": "p7_q17",
+      "no": 17,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "If A=1, B=2, C=3 ... Z=26, what is the code for 'RADIO' when each letter's numeric value is written in reverse sequence (last value first)?",
+      "options": [
+        "15 9 4 1 18",
+        "18 1 4 9 15",
+        "15 4 9 1 18",
+        "18 9 4 1 15"
+      ],
+      "correctAnswer": 0,
+      "explanation": "R=18, A=1, D=4, I=9, O=15 gives the forward sequence 18 1 4 9 15; writing this back to front gives 15 9 4 1 18."
+    },
+    {
+      "id": "p7_q18",
+      "no": 18,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Select the incorrectly matched pair:",
+      "options": [
+        "Femur – Longest bone",
+        "Stapes – Smallest bone",
+        "Sternum – Flat bone",
+        "Patella – Irregular bone"
+      ],
+      "correctAnswer": 3,
+      "explanation": "The patella is classified as a sesamoid bone (embedded within the quadriceps tendon), not an irregular bone, making this pair incorrect."
+    },
+    {
+      "id": "p7_q19",
+      "no": 19,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Introducing a boy, a woman said, 'His father is the only son of my father.' How is the woman related to the boy?",
+      "options": [
+        "Aunt",
+        "Mother",
+        "Sister",
+        "Grandmother"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The only son of the woman's father is her brother. Since this person is the boy's father, the woman (her brother's sister) is the boy's aunt."
+    },
+    {
+      "id": "p7_q20",
+      "no": 20,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "If EXAMINE is coded as FYBNJOF, what is the code for REFLECT?",
+      "options": [
+        "SFGMFDU",
+        "SFGMFCU",
+        "RFGMFDU",
+        "SFHMFDU"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Each letter of EXAMINE is shifted one place forward to give FYBNJOF, confirming a +1 shift rule. Applying the same shift to REFLECT gives SFGMFDU."
+    },
+    {
+      "id": "p7_q21",
+      "no": 21,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Which Article of the Indian Constitution abolishes untouchability?",
+      "options": [
+        "Article 17",
+        "Article 15",
+        "Article 21",
+        "Article 14"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Article 17 of the Constitution abolishes untouchability and forbids its practice in any form."
+    },
+    {
+      "id": "p7_q22",
+      "no": 22,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Deficiency of which vitamin causes the disease Beriberi?",
+      "options": [
+        "Vitamin B1 (Thiamine)",
+        "Vitamin B2 (Riboflavin)",
+        "Vitamin B12",
+        "Vitamin C"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Beriberi is caused by a deficiency of thiamine (Vitamin B1), which affects nerve and cardiac function."
+    },
+    {
+      "id": "p7_q23",
+      "no": 23,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Which blood group is known as the 'universal recipient'?",
+      "options": [
+        "AB positive",
+        "O negative",
+        "A positive",
+        "B negative"
+      ],
+      "correctAnswer": 0,
+      "explanation": "AB positive individuals lack anti-A and anti-B antibodies and are Rh positive, allowing them to receive blood from any ABO/Rh group, hence 'universal recipient'."
+    },
+    {
+      "id": "p7_q24",
+      "no": 24,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "The Battle of Plassey, which laid the foundation of British rule in India, was fought in the year:",
+      "options": [
+        "1757",
+        "1764",
+        "1857",
+        "1707"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The Battle of Plassey (1757) between the British East India Company and Siraj-ud-Daulah marked the beginning of British political control in Bengal."
+    },
+    {
+      "id": "p7_q25",
+      "no": 25,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Kanchenjunga, the highest peak located entirely within Indian territory, is situated in which state?",
+      "options": [
+        "Sikkim",
+        "Uttarakhand",
+        "Himachal Pradesh",
+        "Arunachal Pradesh"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Kanchenjunga, the third-highest mountain in the world, lies on the India-Nepal border in Sikkim and is the highest peak wholly within India."
+    },
+    {
+      "id": "p7_q26",
+      "no": 26,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "The concept of 'Directive Principles of State Policy' in the Indian Constitution has been borrowed from the Constitution of:",
+      "options": [
+        "Ireland",
+        "U.S.A.",
+        "U.K.",
+        "Canada"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The Directive Principles of State Policy were inspired by the Irish Constitution's provisions on directive principles."
+    },
+    {
+      "id": "p7_q27",
+      "no": 27,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Which of the following correctly describes the 'Repo Rate'?",
+      "options": [
+        "The rate at which RBI lends short-term funds to commercial banks against securities",
+        "The rate at which commercial banks lend to RBI",
+        "The rate of interest banks offer on savings accounts",
+        "The minimum cash reserve banks must hold with RBI"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Repo rate is the interest rate at which the Reserve Bank of India lends money to commercial banks against government securities to meet short-term liquidity needs."
+    },
+    {
+      "id": "p7_q28",
+      "no": 28,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "The term 'Chukker' is associated with which sport?",
+      "options": [
+        "Polo",
+        "Hockey",
+        "Golf",
+        "Cricket"
+      ],
+      "correctAnswer": 0,
+      "explanation": "A 'chukker' refers to a period of play in the game of polo, typically lasting about 7 minutes."
+    },
+    {
+      "id": "p7_q29",
+      "no": 29,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Kathakali, a classical dance-drama form, originated in which Indian state?",
+      "options": [
+        "Kerala",
+        "Tamil Nadu",
+        "Odisha",
+        "Andhra Pradesh"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Kathakali is a classical dance-drama form that originated in Kerala, known for its elaborate costumes and facial expressions."
+    },
+    {
+      "id": "p7_q30",
+      "no": 30,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "The Red Fort in Delhi was built by which Mughal emperor?",
+      "options": [
+        "Shah Jahan",
+        "Akbar",
+        "Aurangzeb",
+        "Humayun"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The Red Fort was constructed by Emperor Shah Jahan as the palace-fort of his new capital, Shahjahanabad."
+    },
+    {
+      "id": "p7_q31",
+      "no": 31,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Erythropoietin, the hormone that stimulates red blood cell production, is primarily secreted by which organ?",
+      "options": [
+        "Kidney",
+        "Liver",
+        "Spleen",
+        "Bone marrow"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Erythropoietin is produced mainly by the kidneys in response to hypoxia and stimulates red blood cell production in the bone marrow."
+    },
+    {
+      "id": "p7_q32",
+      "no": 32,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Which gas is commonly referred to as 'laughing gas'?",
+      "options": [
+        "Nitrous oxide",
+        "Nitrogen dioxide",
+        "Nitric oxide",
+        "Ammonia"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Nitrous oxide (N2O) produces mild euphoria when inhaled and is used as an analgesic/anaesthetic, popularly called laughing gas."
+    },
+    {
+      "id": "p7_q33",
+      "no": 33,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "The phenomenon of splitting white light into its constituent colours (as in a rainbow) is called:",
+      "options": [
+        "Dispersion",
+        "Diffraction",
+        "Refraction",
+        "Reflection"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Dispersion is the splitting of white light into its component colours due to varying refractive indices for different wavelengths; refraction alone does not describe the splitting into a spectrum."
+    },
+    {
+      "id": "p7_q34",
+      "no": 34,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Which Schedule of the Indian Constitution deals with provisions relating to disqualification on the ground of defection (anti-defection law)?",
+      "options": [
+        "Tenth Schedule",
+        "Ninth Schedule",
+        "Eighth Schedule",
+        "Twelfth Schedule"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The Tenth Schedule, added by the 52nd Amendment (1985), contains provisions relating to disqualification of members on grounds of defection."
+    },
+    {
+      "id": "p7_q35",
+      "no": 35,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Who founded the Brahmo Samaj in 1828?",
+      "options": [
+        "Raja Ram Mohan Roy",
+        "Swami Vivekananda",
+        "Ishwar Chandra Vidyasagar",
+        "Dayanand Saraswati"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Raja Ram Mohan Roy founded the Brahmo Samaj in 1828 to reform Hindu society and oppose practices like sati."
+    },
+    {
+      "id": "p7_q36",
+      "no": 36,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "The Tropic of Cancer does NOT pass through which of the following Indian states?",
+      "options": [
+        "Rajasthan",
+        "Punjab",
+        "Gujarat",
+        "Jharkhand"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The Tropic of Cancer passes through Gujarat, Rajasthan, Madhya Pradesh, Chhattisgarh, Jharkhand, West Bengal, Tripura and Mizoram, but not through Punjab."
+    },
+    {
+      "id": "p7_q37",
+      "no": 37,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "The Merdeka Cup, an international tournament, is associated with which sport?",
+      "options": [
+        "Football",
+        "Hockey",
+        "Badminton",
+        "Cricket"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The Merdeka Cup is an international football tournament held in Malaysia, first contested in 1957."
+    },
+    {
+      "id": "p7_q38",
+      "no": 38,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Goods and Services Tax (GST) in India is best described as:",
+      "options": [
+        "A destination-based indirect tax levied on the supply of goods and services",
+        "A direct tax levied on individual income",
+        "A tax levied only on imported goods",
+        "A wealth tax levied on total assets"
+      ],
+      "correctAnswer": 0,
+      "explanation": "GST is a comprehensive, multi-stage, destination-based indirect tax levied on the supply of goods and services, replacing several earlier indirect taxes."
+    },
+    {
+      "id": "p7_q39",
+      "no": 39,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Which part of the human eye contains the rod and cone cells responsible for vision?",
+      "options": [
+        "Retina",
+        "Cornea",
+        "Lens",
+        "Iris"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The retina, the innermost layer of the eye, contains photoreceptor cells (rods and cones) that convert light into neural signals."
+    },
+    {
+      "id": "p7_q40",
+      "no": 40,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "The headquarters of the World Health Organization (WHO) is located in:",
+      "options": [
+        "Geneva",
+        "New York",
+        "Vienna",
+        "Paris"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The World Health Organization is headquartered in Geneva, Switzerland."
+    },
+    {
+      "id": "p7_q41",
+      "no": 41,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "The average of 11 numbers is 42. If the average of the first 6 numbers is 38 and that of the last 6 numbers is 45, find the 6th number.",
+      "options": [
+        "36",
+        "34",
+        "38",
+        "40"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Sum of all 11 = 462; sum of first 6 = 228; sum of last 6 = 270. The 6th number is counted in both groups: 228+270−462 = 36."
+    },
+    {
+      "id": "p7_q42",
+      "no": 42,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "In an election between two candidates, one candidate got 60% of the valid votes. If 10% of the total votes were invalid and the total votes polled were 15000, find the number of valid votes polled in favour of the other candidate.",
+      "options": [
+        "5400",
+        "5600",
+        "5200",
+        "5000"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Valid votes = 90% of 15000 = 13500. The other candidate got 40% of valid votes = 0.4×13500 = 5400."
+    },
+    {
+      "id": "p7_q43",
+      "no": 43,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "A shopkeeper marks an article 40% above the cost price and allows a discount of 15% on the marked price. Find his profit percentage.",
+      "options": [
+        "19%",
+        "17%",
+        "21%",
+        "25%"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Let CP=100. MP=140. SP = 140×0.85 = 119. Profit = 119−100 = 19, i.e., 19%."
+    },
+    {
+      "id": "p7_q44",
+      "no": 44,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "Two numbers are in the ratio 5:7. If 6 is subtracted from each, the new ratio becomes 3:5. Find the two numbers.",
+      "options": [
+        "15 and 21",
+        "10 and 14",
+        "20 and 28",
+        "25 and 35"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Let the numbers be 5x and 7x. (5x−6)/(7x−6)=3/5 gives 25x−30=21x−18, so x=3. The numbers are 15 and 21."
+    },
+    {
+      "id": "p7_q45",
+      "no": 45,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "Find the compound interest on Rs. 8000 for 2 years at 10% per annum, compounded annually.",
+      "options": [
+        "Rs. 1680",
+        "Rs. 1600",
+        "Rs. 1760",
+        "Rs. 1800"
+      ],
+      "correctAnswer": 0,
+      "explanation": "CI = 8000×[(1.1)²−1] = 8000×0.21 = Rs. 1680."
+    },
+    {
+      "id": "p7_q46",
+      "no": 46,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "A can complete a piece of work in 12 days and B in 18 days. They work together for 4 days, after which A leaves. In how many more days will B finish the remaining work?",
+      "options": [
+        "8 days",
+        "6 days",
+        "9 days",
+        "10 days"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Combined rate = 1/12+1/18 = 5/36 per day. Work done in 4 days = 20/36 = 5/9. Remaining work = 4/9, which B alone (rate 1/18) finishes in (4/9)×18 = 8 days."
+    },
+    {
+      "id": "p7_q47",
+      "no": 47,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "A car covers a certain distance at a speed of 60 km/h and returns over the same distance at 40 km/h. Find its average speed for the entire journey.",
+      "options": [
+        "48 km/h",
+        "50 km/h",
+        "45 km/h",
+        "52 km/h"
+      ],
+      "correctAnswer": 0,
+      "explanation": "For an equal-distance round trip, average speed = 2×v1×v2/(v1+v2) = 2×60×40/100 = 48 km/h (the simple average of 50 km/h is incorrect since time spent at each speed differs)."
+    },
+    {
+      "id": "p7_q48",
+      "no": 48,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "The HCF of two numbers is 12 and their LCM is 336. If one of the numbers is 84, find the other number.",
+      "options": [
+        "48",
+        "42",
+        "56",
+        "36"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Product of two numbers = HCF × LCM = 12×336 = 4032. The other number = 4032/84 = 48."
+    },
+    {
+      "id": "p7_q49",
+      "no": 49,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "Simplify: 3/5 of 25 + 40% of 150 − (2³ × 5) ÷ 4",
+      "options": [
+        "65",
+        "60",
+        "70",
+        "55"
+      ],
+      "correctAnswer": 0,
+      "explanation": "3/5 of 25 = 15; 40% of 150 = 60; (8×5)÷4 = 10. So 15+60−10 = 65."
+    },
+    {
+      "id": "p7_q50",
+      "no": 50,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "In what ratio should tea worth Rs. 60/kg be mixed with tea worth Rs. 90/kg so that the mixture is worth Rs. 75/kg?",
+      "options": [
+        "1:1",
+        "2:3",
+        "3:2",
+        "1:2"
+      ],
+      "correctAnswer": 0,
+      "explanation": "By the rule of alligation: (90−75):(75−60) = 15:15 = 1:1."
+    },
+    {
+      "id": "p7_q51",
+      "no": 51,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "A factory's production increased from 2500 units to 3200 units over 2 years, at a uniform annual growth rate. Find the approximate annual percentage increase.",
+      "options": [
+        "About 13%",
+        "About 10%",
+        "About 15%",
+        "About 28%"
+      ],
+      "correctAnswer": 0,
+      "explanation": "3200/2500 = 1.28 = (1+r)². Solving, (1+r) ≈ 1.131, so r ≈ 13.1% per year."
+    },
+    {
+      "id": "p7_q52",
+      "no": 52,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "The present age of a father is 3 times that of his son. After 12 years, the father's age will be twice that of his son. Find the son's present age.",
+      "options": [
+        "12 years",
+        "10 years",
+        "15 years",
+        "9 years"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Let son's age = x, father's = 3x. 3x+12 = 2(x+12) gives x = 12."
+    },
+    {
+      "id": "p7_q53",
+      "no": 53,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "Find the remainder when 7^100 is divided by 5.",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "correctAnswer": 0,
+      "explanation": "7 ≡ 2 (mod 5). Powers of 2 mod 5 cycle as 2,4,3,1 with period 4. Since 100 is divisible by 4, the remainder corresponds to the 4th term, which is 1."
+    },
+    {
+      "id": "p7_q54",
+      "no": 54,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "The price of an item is first increased by 20% and then decreased by 20%. What is the net percentage change in the price?",
+      "options": [
+        "4% decrease",
+        "4% increase",
+        "No change",
+        "2% decrease"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Net factor = 1.2×0.8 = 0.96, i.e., a net decrease of 4% from the original price."
+    },
+    {
+      "id": "p7_q55",
+      "no": 55,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "A and B invest Rs. 24,000 and Rs. 32,000 respectively in a business. At the end of the year, the total profit is Rs. 15,400. Find A's share of the profit.",
+      "options": [
+        "Rs. 6600",
+        "Rs. 6800",
+        "Rs. 7000",
+        "Rs. 6200"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Investment ratio A:B = 24000:32000 = 3:4. A's share = (3/7)×15400 = Rs. 6600."
+    },
+    {
+      "id": "p7_q56",
+      "no": 56,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "A boat covers 24 km upstream in 6 hours and returns downstream in 4 hours. Find the speed of the stream.",
+      "options": [
+        "1 km/h",
+        "2 km/h",
+        "1.5 km/h",
+        "0.5 km/h"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Upstream speed = 24/6 = 4 km/h; downstream speed = 24/4 = 6 km/h. Speed of stream = (6−4)/2 = 1 km/h."
+    },
+    {
+      "id": "p7_q57",
+      "no": 57,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "Pipe A can fill a tank in 10 hours; pipe B can empty it in 15 hours. If both are opened together, how long will it take to fill the empty tank?",
+      "options": [
+        "30 hours",
+        "25 hours",
+        "20 hours",
+        "35 hours"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Net rate = 1/10 − 1/15 = 1/30 per hour, so the tank fills in 30 hours."
+    },
+    {
+      "id": "p7_q58",
+      "no": 58,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "The radius of a cylinder is doubled and its height is halved. What is the ratio of the new volume to the original volume?",
+      "options": [
+        "2:1",
+        "1:2",
+        "4:1",
+        "1:1"
+      ],
+      "correctAnswer": 0,
+      "explanation": "V=πr²h. New volume = π(2r)²(h/2) = 2πr²h = 2V, giving a ratio of 2:1."
+    },
+    {
+      "id": "p7_q59",
+      "no": 59,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "A sum of money doubles itself in 8 years at simple interest. In how many years will it become 4 times itself (at the same rate)?",
+      "options": [
+        "24 years",
+        "16 years",
+        "20 years",
+        "32 years"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Doubling in 8 years means the interest earned equals the principal in 8 years, i.e., rate = 12.5% per annum. To become 4 times (3P interest needed), time = 3P/(0.125P) = 24 years."
+    },
+    {
+      "id": "p7_q60",
+      "no": 60,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "If the sum of a number (greater than 1) and its reciprocal is 2.9, find the number.",
+      "options": [
+        "2.5",
+        "2",
+        "3",
+        "1.5"
+      ],
+      "correctAnswer": 0,
+      "explanation": "x + 1/x = 2.9 gives x² − 2.9x + 1 = 0. Solving, x = 2.5 or x = 0.4; since the number is greater than 1, x = 2.5."
+    },
+    {
+      "id": "p7_q61",
+      "no": 61,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Choose the word most similar in meaning to 'ESOTERIC':",
+      "options": [
+        "Abstruse",
+        "Obvious",
+        "Simple",
+        "Common"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'Esoteric' means intended for or understood by only a small group with specialised knowledge; 'abstruse' (difficult to understand) is the closest synonym."
+    },
+    {
+      "id": "p7_q62",
+      "no": 62,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Choose the word most opposite in meaning to 'PROFLIGATE':",
+      "options": [
+        "Frugal",
+        "Wasteful",
+        "Generous",
+        "Extravagant"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'Profligate' means recklessly wasteful or extravagant; 'frugal' (careful with money/resources) is its opposite."
+    },
+    {
+      "id": "p7_q63",
+      "no": 63,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "The idiom 'to bell the cat' means:",
+      "options": [
+        "To undertake a risky task on behalf of a group",
+        "To flatter someone for personal gain",
+        "To solve a problem easily",
+        "To avoid responsibility"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'To bell the cat' means to take on a difficult or dangerous task for the benefit of others, derived from the fable of mice deciding to put a bell on the cat."
+    },
+    {
+      "id": "p7_q64",
+      "no": 64,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "A person who is unable to pay their debts is called:",
+      "options": [
+        "Insolvent",
+        "Indolent",
+        "Insurgent",
+        "Innocent"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'Insolvent' describes a person or entity unable to pay debts owed, i.e., in a state of bankruptcy."
+    },
+    {
+      "id": "p7_q65",
+      "no": 65,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Identify the part of the sentence that contains an error: 'Neither of the two boys (A) / have completed (B) / their homework (C) / on time (D)'",
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Neither' is singular and takes a singular verb; the sentence should read 'has completed', not 'have completed', so the error is in part B."
+    },
+    {
+      "id": "p7_q66",
+      "no": 66,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Select the correct improvement for the underlined part: 'She is one of the students who has passed the exam.'",
+      "options": [
+        "...one of the students who have passed the exam",
+        "...one of the student who has passed the exam",
+        "...one of the students who has pass the exam",
+        "No improvement needed"
+      ],
+      "correctAnswer": 0,
+      "explanation": "In the construction 'one of the + plural noun + who', the relative pronoun 'who' refers to the plural noun (students), so the verb must agree in the plural: 'have passed'."
+    },
+    {
+      "id": "p7_q67",
+      "no": 67,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "He is allergic ___ dust and pollen.",
+      "options": [
+        "to",
+        "with",
+        "from",
+        "of"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The correct preposition following 'allergic' is 'to' — 'allergic to something'."
+    },
+    {
+      "id": "p7_q68",
+      "no": 68,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Despite his ___ efforts, he could not finish the project on time.",
+      "options": [
+        "earnest",
+        "earnestly",
+        "earnestness",
+        "earnests"
+      ],
+      "correctAnswer": 0,
+      "explanation": "An adjective is required to modify the noun 'efforts'; 'earnest' (meaning sincere/serious) is the correct adjective form."
+    },
+    {
+      "id": "p7_q69",
+      "no": 69,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Change into passive voice: 'The committee will announce the results tomorrow.'",
+      "options": [
+        "The results will be announced by the committee tomorrow.",
+        "The results were announced by the committee tomorrow.",
+        "The results are being announced by the committee tomorrow.",
+        "The results will announce by the committee tomorrow."
+      ],
+      "correctAnswer": 0,
+      "explanation": "For a future simple active sentence, the passive form uses 'will be + past participle': 'The results will be announced by the committee tomorrow.'"
+    },
+    {
+      "id": "p7_q70",
+      "no": 70,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Change into indirect speech: She said, 'I am writing a letter.'",
+      "options": [
+        "She said that she was writing a letter.",
+        "She said that she is writing a letter.",
+        "She said that she has been writing a letter.",
+        "She told that she was writing a letter."
+      ],
+      "correctAnswer": 0,
+      "explanation": "In reported speech, present continuous ('am writing') in the direct statement shifts to past continuous ('was writing'), and the pronoun changes from 'I' to 'she'."
+    },
+    {
+      "id": "p7_q71",
+      "no": 71,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Arrange the parts P, Q, R, S into a meaningful sentence: P: to improve their skills, Q: many radiographers, R: attend workshops regularly, S: and stay updated with new technology.",
+      "options": [
+        "QRPS",
+        "QPRS",
+        "RQPS",
+        "PQRS"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The logical order is 'Many radiographers (Q) attend workshops regularly (R) to improve their skills (P) and stay updated with new technology (S)', i.e., QRPS."
+    },
+    {
+      "id": "p7_q72",
+      "no": 72,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "A person who collects and studies stamps is called:",
+      "options": [
+        "Philatelist",
+        "Numismatist",
+        "Archivist",
+        "Cartographer"
+      ],
+      "correctAnswer": 0,
+      "explanation": "A philatelist is a person who collects and studies postage stamps; a numismatist collects coins."
+    },
+    {
+      "id": "p7_q73",
+      "no": 73,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "The idiom 'to show the white feather' means:",
+      "options": [
+        "To display cowardice",
+        "To celebrate a victory",
+        "To offer an apology",
+        "To reveal a secret"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'To show the white feather' is an idiom meaning to display cowardice or fear, historically linked to a white feather symbolising cowardice."
+    },
+    {
+      "id": "p7_q74",
+      "no": 74,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Choose the synonym of 'PARSIMONIOUS':",
+      "options": [
+        "Stingy",
+        "Generous",
+        "Lavish",
+        "Charitable"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'Parsimonious' means extremely unwilling to spend money; 'stingy' is its closest synonym."
+    },
+    {
+      "id": "p7_q75",
+      "no": 75,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Choose the antonym of 'GARRULOUS':",
+      "options": [
+        "Taciturn",
+        "Talkative",
+        "Verbose",
+        "Loquacious"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'Garrulous' means excessively talkative; 'taciturn' (reserved, saying little) is its opposite."
+    },
+    {
+      "id": "p7_q76",
+      "no": 76,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Identify the part of the sentence that contains an error: 'The number of students (A) / in the class are (B) / more than fifty (C) / this year (D)'",
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'The number of' takes a singular verb ('is'), so 'are' in part B is incorrect; it should read 'is more than fifty'."
+    },
+    {
+      "id": "p7_q77",
+      "no": 77,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "The scientific study of ancient societies through the excavation of sites and analysis of artefacts is called:",
+      "options": [
+        "Archaeology",
+        "Anthropology",
+        "Palaeontology",
+        "Geology"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Archaeology is the study of human history through the excavation and analysis of material remains and artefacts."
+    },
+    {
+      "id": "p7_q78",
+      "no": 78,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "___ he was tired, he continued working.",
+      "options": [
+        "Although",
+        "Because",
+        "Unless",
+        "So"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'Although' correctly introduces a contrast between being tired and continuing to work; the other conjunctions do not fit the logical relationship."
+    },
+    {
+      "id": "p7_q79",
+      "no": 79,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Select the correct option for the sentence: 'Scarcely had he reached the station when the train left.'",
+      "options": [
+        "No improvement required",
+        "...station than the train left",
+        "...station before the train left",
+        "...station and the train left"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'Scarcely...when' is the grammatically correct paired construction to express that one event occurred immediately after another; the sentence as given is already correct."
+    },
+    {
+      "id": "p7_q80",
+      "no": 80,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Read the passage and answer: 'Radiographers must balance the need for diagnostic image quality against the principle of dose optimisation. Even when a referring clinician requests additional views, the radiographer is professionally obligated to justify each exposure.' According to the passage, what is a radiographer professionally obligated to do?",
+      "options": [
+        "Justify each exposure",
+        "Refuse all clinician requests",
+        "Maximise image quality regardless of dose",
+        "Repeat every examination twice"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The passage explicitly states that the radiographer is professionally obligated to justify each exposure, balancing image quality against dose optimisation."
+    },
+    {
+      "id": "p7_q81",
+      "no": 81,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'पवन' का पर्यायवाची शब्द नहीं है:",
+      "options": [
+        "वायु",
+        "समीर",
+        "अनिल",
+        "जलद"
+      ],
+      "correctAnswer": 3,
+      "explanation": "'जलद' का अर्थ बादल होता है, जबकि वायु, समीर और अनिल — तीनों 'पवन' (हवा) के पर्यायवाची हैं।"
+    },
+    {
+      "id": "p7_q82",
+      "no": 82,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'निर्माण' का विलोम शब्द है:",
+      "options": [
+        "विनाश",
+        "सृजन",
+        "रचना",
+        "स्थापना"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'निर्माण' का अर्थ है बनाना या रचना करना; इसका विलोम 'विनाश' है, जिसका अर्थ है नष्ट करना।"
+    },
+    {
+      "id": "p7_q83",
+      "no": 83,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'नौ दो ग्यारह होना' मुहावरे का अर्थ है:",
+      "options": [
+        "भाग जाना",
+        "बहुत खुश होना",
+        "धोखा देना",
+        "हार जाना"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'नौ दो ग्यारह होना' मुहावरे का अर्थ है चुपचाप या जल्दी से भाग जाना।"
+    },
+    {
+      "id": "p7_q84",
+      "no": 84,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "जिसका कोई शत्रु न हो, उसके लिए एक शब्द है:",
+      "options": [
+        "अजातशत्रु",
+        "निःशत्रु",
+        "शत्रुहीन",
+        "अमित्र"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'अजातशत्रु' शब्द उस व्यक्ति के लिए प्रयुक्त होता है जिसका कोई शत्रु उत्पन्न ही न हुआ हो।"
+    },
+    {
+      "id": "p7_q85",
+      "no": 85,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "निम्नलिखित में से शुद्ध वाक्य चुनिए:",
+      "options": [
+        "मुझे विद्यालय जाना है",
+        "मुझे को विद्यालय जाना है",
+        "मैं विद्यालय को जाना है",
+        "मुझे विद्यालय जाना था है"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'मुझे विद्यालय जाना है' व्याकरणिक दृष्टि से शुद्ध वाक्य है; शेष विकल्पों में कारक-प्रयोग अथवा काल संबंधी अशुद्धि है।"
+    },
+    {
+      "id": "p7_q86",
+      "no": 86,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'सूर्योदय' शब्द में प्रयुक्त संधि है:",
+      "options": [
+        "गुण संधि",
+        "यण संधि",
+        "वृद्धि संधि",
+        "दीर्घ संधि"
+      ],
+      "correctAnswer": 0,
+      "explanation": "सूर्य + उदय में 'अ' और 'उ' के मेल से 'ओ' बनता है, जो गुण संधि का उदाहरण है।"
+    },
+    {
+      "id": "p7_q87",
+      "no": 87,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'नीलकंठ' शब्द में कौन-सा समास है?",
+      "options": [
+        "बहुव्रीहि समास",
+        "तत्पुरुष समास",
+        "द्वंद्व समास",
+        "द्विगु समास"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'नीलकंठ' का अर्थ है 'जिसका कंठ नीला है' अर्थात शिव — यहाँ कोई भी पद प्रधान नहीं होकर किसी तीसरे अर्थ (अन्य पद) की प्रधानता है, जो बहुव्रीहि समास की पहचान है।"
+    },
+    {
+      "id": "p7_q88",
+      "no": 88,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'अग्नि' का तद्भव रूप है:",
+      "options": [
+        "आग",
+        "अगिन",
+        "अगन",
+        "अग्नि"
+      ],
+      "correctAnswer": 0,
+      "explanation": "संस्कृत शब्द 'अग्नि' का हिंदी में प्रचलित तद्भव रूप 'आग' है।"
+    },
+    {
+      "id": "p7_q89",
+      "no": 89,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "वीर रस का स्थायी भाव है:",
+      "options": [
+        "उत्साह",
+        "शोक",
+        "क्रोध",
+        "भय"
+      ],
+      "correctAnswer": 0,
+      "explanation": "वीर रस में स्थायी भाव 'उत्साह' होता है, जो वीरता और साहस से संबंधित घटनाओं में प्रकट होता है।"
+    },
+    {
+      "id": "p7_q90",
+      "no": 90,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'चरण-कमल बंदौं हरि राई' पंक्ति में कौन-सा अलंकार है?",
+      "options": [
+        "रूपक अलंकार",
+        "उपमा अलंकार",
+        "उत्प्रेक्षा अलंकार",
+        "अनुप्रास अलंकार"
+      ],
+      "correctAnswer": 0,
+      "explanation": "जहाँ उपमेय (चरण) पर उपमान (कमल) का आरोप बिना 'सा/जैसा' के किया जाए, वहाँ रूपक अलंकार होता है।"
+    },
+    {
+      "id": "p7_q91",
+      "no": 91,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'सरस्वती' का पर्यायवाची शब्द नहीं है:",
+      "options": [
+        "वाग्देवी",
+        "भारती",
+        "शारदा",
+        "लक्ष्मी"
+      ],
+      "correctAnswer": 3,
+      "explanation": "वाग्देवी, भारती और शारदा — तीनों सरस्वती के पर्यायवाची हैं, जबकि लक्ष्मी धन की देवी हैं, अतः यह पर्यायवाची नहीं है।"
+    },
+    {
+      "id": "p7_q92",
+      "no": 92,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'सुगम' का विलोम शब्द है:",
+      "options": [
+        "दुर्गम",
+        "सरल",
+        "सुलभ",
+        "आसान"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'सुगम' का अर्थ है जिस तक पहुँचना आसान हो; इसका विलोम 'दुर्गम' है, जिसका अर्थ है जिस तक पहुँचना कठिन हो।"
+    },
+    {
+      "id": "p7_q93",
+      "no": 93,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'आँखों में धूल झोंकना' मुहावरे का अर्थ है:",
+      "options": [
+        "धोखा देना",
+        "चिढ़ाना",
+        "सावधान करना",
+        "प्रसन्न करना"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'आँखों में धूल झोंकना' मुहावरे का अर्थ है छल या धोखा देना।"
+    },
+    {
+      "id": "p7_q94",
+      "no": 94,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "जिसे बुलाया न गया हो, उसके लिए एक शब्द है:",
+      "options": [
+        "अनाहूत",
+        "आमंत्रित",
+        "अनिच्छुक",
+        "आगंतुक"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'अनाहूत' शब्द उस व्यक्ति के लिए प्रयुक्त होता है जो बिना बुलाए ही आ जाए।"
+    },
+    {
+      "id": "p7_q95",
+      "no": 95,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "शुद्ध वाक्य चुनिए:",
+      "options": [
+        "लड़कियाँ खेल रही हैं",
+        "लड़कियाँ खेल रहा है",
+        "लड़कियाँ खेल रहे हैं",
+        "लड़कियाँ खेलती था"
+      ],
+      "correctAnswer": 0,
+      "explanation": "कर्ता 'लड़कियाँ' स्त्रीलिंग बहुवचन है, अतः क्रिया भी स्त्रीलिंग बहुवचन में होनी चाहिए — 'खेल रही हैं'।"
+    },
+    {
+      "id": "p7_q96",
+      "no": 96,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'मनोहर' शब्द का सही संधि-विच्छेद है:",
+      "options": [
+        "मनः + हर",
+        "मन + ओहर",
+        "मनो + हर",
+        "मन: + अहर"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'मनः' के विसर्ग का 'ह' से पूर्व होने के कारण उच्चारण परिवर्तन होकर 'मनोहर' बनता है; शुद्ध संधि-विच्छेद 'मनः + हर' है।"
+    },
+    {
+      "id": "p7_q97",
+      "no": 97,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'राजपुत्र' शब्द में समास है:",
+      "options": [
+        "तत्पुरुष समास",
+        "द्वंद्व समास",
+        "बहुव्रीहि समास",
+        "अव्ययीभाव समास"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'राजा का पुत्र' — यहाँ दूसरा पद प्रधान है और कारक-चिह्न का लोप हुआ है, जो तत्पुरुष समास की पहचान है।"
+    },
+    {
+      "id": "p7_q98",
+      "no": 98,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'दाँतों तले उँगली दबाना' मुहावरे का अर्थ है:",
+      "options": [
+        "आश्चर्यचकित होना",
+        "क्रोधित होना",
+        "शर्मिंदा होना",
+        "डरना"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'दाँतों तले उँगली दबाना' मुहावरे का अर्थ है अत्यधिक आश्चर्यचकित होना।"
+    },
+    {
+      "id": "p7_q99",
+      "no": 99,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'दूध' किस संस्कृत शब्द का तद्भव रूप है?",
+      "options": [
+        "दुग्ध",
+        "दधि",
+        "घृत",
+        "नवनीत"
+      ],
+      "correctAnswer": 0,
+      "explanation": "संस्कृत शब्द 'दुग्ध' का हिंदी में प्रचलित तद्भव रूप 'दूध' है।"
+    },
+    {
+      "id": "p7_q100",
+      "no": 100,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'राम ने रावण को मारा' वाक्य में 'रावण को' किस कारक का उदाहरण है?",
+      "options": [
+        "कर्म कारक",
+        "करण कारक",
+        "संप्रदान कारक",
+        "अपादान कारक"
+      ],
+      "correctAnswer": 0,
+      "explanation": "जिस पर क्रिया का प्रभाव पड़ता है, वह कर्म कारक कहलाता है; यहाँ मारने की क्रिया रावण पर पड़ रही है, अतः यह कर्म कारक है।"
+    },
+    {
+      "id": "p7_q101",
+      "no": 101,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The transpyloric plane (of Addison), an important abdominal cross-sectional landmark, typically passes through which vertebral level?",
+      "options": [
+        "L1",
+        "L3",
+        "T12",
+        "L4"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The transpyloric plane lies midway between the jugular notch and the pubic symphysis, corresponding approximately to the L1 vertebral level, and marks the pylorus, pancreatic neck and hila of the kidneys."
+    },
+    {
+      "id": "p7_q102",
+      "no": 102,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The sternal angle (angle of Louis), a key surface landmark, corresponds to which internal structure?",
+      "options": [
+        "Bifurcation of the trachea at the T4/T5 level",
+        "Termination of the spinal cord",
+        "Bifurcation of the aorta",
+        "Origin of the coeliac trunk"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The sternal angle marks the junction of the manubrium and body of the sternum, corresponding internally to the T4/T5 level where the trachea bifurcates into the main bronchi."
+    },
+    {
+      "id": "p7_q103",
+      "no": 103,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The iliac crest, a common surface landmark used for lumbar puncture, corresponds approximately to which vertebral level?",
+      "options": [
+        "L4",
+        "L2",
+        "L1",
+        "S1"
+      ],
+      "correctAnswer": 0,
+      "explanation": "A line joining the highest points of the iliac crests (Tuffier's line) passes approximately through the L4 vertebra or the L4-L5 interspace, commonly used to localise the level for lumbar puncture."
+    },
+    {
+      "id": "p7_q104",
+      "no": 104,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The conus medullaris, the tapering termination of the spinal cord, typically lies at which vertebral level in an adult?",
+      "options": [
+        "L1-L2",
+        "L3-L4",
+        "T12",
+        "S2"
+      ],
+      "correctAnswer": 0,
+      "explanation": "In adults, the spinal cord terminates as the conus medullaris at approximately the L1-L2 vertebral level, below which lies the cauda equina."
+    },
+    {
+      "id": "p7_q105",
+      "no": 105,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The coeliac trunk typically arises from the abdominal aorta at which vertebral level?",
+      "options": [
+        "T12",
+        "L1",
+        "L2",
+        "T10"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The coeliac trunk (coeliac axis) arises from the anterior aspect of the abdominal aorta at approximately the T12 vertebral level, just below the aortic hiatus of the diaphragm."
+    },
+    {
+      "id": "p7_q106",
+      "no": 106,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The Circle of Willis at the base of the brain is formed mainly by anastomoses between which two arterial systems?",
+      "options": [
+        "The internal carotid and vertebrobasilar systems",
+        "The external carotid and vertebral systems",
+        "The subclavian and carotid systems",
+        "The ophthalmic and basilar systems"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The Circle of Willis connects the anterior circulation (internal carotid arteries) with the posterior circulation (vertebrobasilar system) via the posterior communicating arteries, providing collateral flow."
+    },
+    {
+      "id": "p7_q107",
+      "no": 107,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "Which skull foramen transmits the internal carotid artery?",
+      "options": [
+        "Carotid canal",
+        "Foramen ovale",
+        "Foramen spinosum",
+        "Jugular foramen"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The internal carotid artery enters the cranial cavity through the carotid canal in the petrous part of the temporal bone."
+    },
+    {
+      "id": "p7_q108",
+      "no": 108,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "ECG-gated cardiac CT acquisitions are typically timed to which phase of the cardiac cycle to minimise cardiac motion artifact?",
+      "options": [
+        "Mid-diastole",
+        "End-systole",
+        "Early systole",
+        "Isovolumetric contraction"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Mid-diastole (diastasis) is the period of relative cardiac quiescence with minimal motion, making it the preferred phase for ECG-gated coronary CT acquisition."
+    },
+    {
+      "id": "p7_q109",
+      "no": 109,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "Glomerular filtration rate (GFR) is most commonly estimated in routine clinical practice, prior to contrast administration, using:",
+      "options": [
+        "Serum creatinine-based estimation (e.g., CKD-EPI/MDRD formula)",
+        "Direct inulin clearance",
+        "24-hour urine protein estimation",
+        "Serum sodium concentration"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Serum creatinine-based formulae such as CKD-EPI or MDRD are used routinely to estimate GFR before contrast administration, since direct inulin clearance is impractical for routine screening."
+    },
+    {
+      "id": "p7_q110",
+      "no": 110,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The hilum of the right kidney typically lies at approximately which vertebral level, slightly lower than the left kidney?",
+      "options": [
+        "L2",
+        "L1",
+        "L3",
+        "T12"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The right kidney is displaced slightly inferiorly by the liver, placing its hilum at approximately the L2 level, compared to L1 for the left kidney."
+    },
+    {
+      "id": "p7_q111",
+      "no": 111,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The carina, marking the bifurcation of the trachea into the main bronchi, typically lies at the level of:",
+      "options": [
+        "T4-T5",
+        "T2-T3",
+        "T7-T8",
+        "T10"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The carina lies at approximately the T4-T5 vertebral level, corresponding externally to the sternal angle."
+    },
+    {
+      "id": "p7_q112",
+      "no": 112,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "Which lobe of the cerebrum is primarily responsible for the initial cortical processing of visual information?",
+      "options": [
+        "Occipital lobe",
+        "Frontal lobe",
+        "Parietal lobe",
+        "Temporal lobe"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The primary visual cortex is located in the occipital lobe, around the calcarine sulcus."
+    },
+    {
+      "id": "p7_q113",
+      "no": 113,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The anatomical variant termed 'fetal origin of the posterior cerebral artery' refers to:",
+      "options": [
+        "The PCA arising directly from the internal carotid artery via a large posterior communicating artery, rather than from the basilar artery",
+        "Absence of the posterior communicating artery",
+        "Duplication of the basilar artery",
+        "The PCA arising from the external carotid artery"
+      ],
+      "correctAnswer": 0,
+      "explanation": "In this common variant, the posterior cerebral artery is supplied mainly by the internal carotid artery through a large posterior communicating artery instead of the basilar artery, which is relevant when planning carotid interventions."
+    },
+    {
+      "id": "p7_q114",
+      "no": 114,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "On a parasternal long-axis echocardiographic view, which two cardiac valves are typically well demonstrated along with the left ventricular outflow tract?",
+      "options": [
+        "Aortic and mitral valves",
+        "Pulmonary and tricuspid valves",
+        "Aortic and tricuspid valves",
+        "Mitral and pulmonary valves"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The parasternal long-axis view demonstrates the left ventricular outflow tract along with the aortic and mitral valves, the left atrium and the proximal aorta."
+    },
+    {
+      "id": "p7_q115",
+      "no": 115,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "For a correctly positioned PA chest radiograph, the medial ends of the clavicles should be equidistant from:",
+      "options": [
+        "The spinous processes of the vertebrae in the midline",
+        "The lateral border of the ribs",
+        "The sternal angle",
+        "The costophrenic angle"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Symmetrical clavicle positioning relative to the vertebral spinous processes in the midline confirms that there is no rotation of the patient."
+    },
+    {
+      "id": "p7_q116",
+      "no": 116,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "On an erect chest or abdominal radiograph, free intraperitoneal air (pneumoperitoneum) is best demonstrated:",
+      "options": [
+        "As a lucent crescent beneath the diaphragm",
+        "As a lucent line along the flank (Rigler's sign) only on a supine film",
+        "Within the pelvis only",
+        "As increased density in the right upper quadrant"
+      ],
+      "correctAnswer": 0,
+      "explanation": "On an erect film, free air rises to the highest point in the peritoneal cavity, appearing as a thin lucent crescent beneath one or both hemidiaphragms."
+    },
+    {
+      "id": "p7_q117",
+      "no": 117,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "Gastrin, the hormone that stimulates gastric acid secretion, is produced mainly by which cells?",
+      "options": [
+        "G cells of the gastric antrum",
+        "Chief cells of the gastric body",
+        "Parietal cells of the gastric body",
+        "Beta cells of the pancreas"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Gastrin is secreted by G cells located predominantly in the antral mucosa of the stomach, stimulating parietal cells to secrete hydrochloric acid."
+    },
+    {
+      "id": "p7_q118",
+      "no": 118,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The umbilicus, a common surface landmark, corresponds approximately to which vertebral level?",
+      "options": [
+        "L3-L4",
+        "L1",
+        "T10",
+        "S1"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The umbilicus lies at approximately the L3-L4 vertebral level, at the level of the aortic bifurcation into the common iliac arteries."
+    },
+    {
+      "id": "p7_q119",
+      "no": 119,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The normal ejection fraction of the left ventricle is generally considered to fall within which range?",
+      "options": [
+        "55-70%",
+        "30-40%",
+        "40-50%",
+        "70-90%"
+      ],
+      "correctAnswer": 0,
+      "explanation": "A normal left ventricular ejection fraction is typically 55-70%; values below 40% generally indicate significant systolic dysfunction."
+    },
+    {
+      "id": "p7_q120",
+      "no": 120,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "Which cranial nerve provides the sensory (afferent) limb of the corneal reflex, testing corneal sensation?",
+      "options": [
+        "Trigeminal nerve (CN V)",
+        "Facial nerve (CN VII)",
+        "Oculomotor nerve (CN III)",
+        "Abducens nerve (CN VI)"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The ophthalmic division of the trigeminal nerve (CN V1) carries corneal sensation, forming the afferent limb of the corneal reflex, while the facial nerve (CN VII) mediates the efferent (blink) response."
+    },
+    {
+      "id": "p7_q121",
+      "no": 121,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "Codman's triangle, a periosteal reaction seen on radiographs, is classically associated with which bone tumour?",
+      "options": [
+        "Osteosarcoma",
+        "Osteochondroma",
+        "Enchondroma",
+        "Giant cell tumour"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Codman's triangle is formed when an aggressive lesion lifts the periosteum, classically described in osteosarcoma, though it can occur in other aggressive bone lesions."
+    },
+    {
+      "id": "p7_q122",
+      "no": 122,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "The 'onion-skin' (lamellated) periosteal reaction on a radiograph is most characteristically associated with:",
+      "options": [
+        "Ewing's sarcoma",
+        "Osteoid osteoma",
+        "Simple bone cyst",
+        "Fibrous dysplasia"
+      ],
+      "correctAnswer": 0,
+      "explanation": "A multilayered 'onion-skin' periosteal reaction is a classic radiographic feature of Ewing's sarcoma, reflecting repeated cycles of tumour growth and periosteal new bone formation."
+    },
+    {
+      "id": "p7_q123",
+      "no": 123,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "Ground-glass opacities on high-resolution CT chest are a nonspecific finding classically described in:",
+      "options": [
+        "Interstitial lung disease and atypical/viral pneumonia",
+        "Lobar consolidation from bacterial pneumonia",
+        "Simple pleural effusion",
+        "Tension pneumothorax"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Ground-glass opacity represents partial filling of air spaces or interstitial thickening and is a nonspecific but classic finding in interstitial lung disease and atypical/viral pneumonias."
+    },
+    {
+      "id": "p7_q124",
+      "no": 124,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "The 'air-crescent sign' on chest CT is classically associated with:",
+      "options": [
+        "Pulmonary aspergilloma",
+        "Lung abscess",
+        "Pulmonary embolism",
+        "Bronchiectasis"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The air-crescent sign, a crescent of air surrounding a mycetoma within a pre-existing cavity, is classically seen in pulmonary aspergilloma."
+    },
+    {
+      "id": "p7_q125",
+      "no": 125,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "Caseous necrosis, characterised by a cheese-like, friable appearance, is classically seen in which condition?",
+      "options": [
+        "Tuberculosis",
+        "Myocardial infarction",
+        "Bacterial abscess",
+        "Pancreatitis"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Caseous necrosis is the hallmark of tuberculous granulomas, where the necrotic tissue has a soft, cheese-like appearance."
+    },
+    {
+      "id": "p7_q126",
+      "no": 126,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "Liquefactive necrosis is the characteristic tissue response classically seen in:",
+      "options": [
+        "Bacterial (pyogenic) abscess formation and cerebral infarction",
+        "Tuberculous granulomas",
+        "Fat necrosis in acute pancreatitis",
+        "Coagulative necrosis of the myocardium"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Liquefactive necrosis, in which dead tissue is transformed into a liquid viscous mass, is characteristic of pyogenic bacterial infections and cerebral (hypoxic) infarction."
+    },
+    {
+      "id": "p7_q127",
+      "no": 127,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "The term used to describe how closely a tumour resembles its normal tissue of origin (degree of differentiation) is called:",
+      "options": [
+        "Grading",
+        "Staging",
+        "Metastasis",
+        "Anaplasia (as a standalone term for this concept)"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Tumour grading assesses the degree of differentiation and cellular atypia, whereas staging describes the anatomical extent of disease spread."
+    },
+    {
+      "id": "p7_q128",
+      "no": 128,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "In the TNM cancer staging system, the 'N' component specifically refers to:",
+      "options": [
+        "Regional lymph node involvement",
+        "Tumour size and local invasion",
+        "Presence of distant metastasis",
+        "Tumour necrosis"
+      ],
+      "correctAnswer": 0,
+      "explanation": "In the TNM system, T describes the primary tumour, N describes regional lymph node involvement, and M describes distant metastasis."
+    },
+    {
+      "id": "p7_q129",
+      "no": 129,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "As per Bio-Medical Waste Management Rules, discarded gloves and other plastic items contaminated with blood or body fluids are segregated into which colour-coded bag?",
+      "options": [
+        "Red",
+        "Yellow",
+        "Blue",
+        "Black"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Contaminated recyclable waste such as gloves, IV tubing and catheters is segregated into red bags as per the Bio-Medical Waste Management Rules."
+    },
+    {
+      "id": "p7_q130",
+      "no": 130,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "As per Bio-Medical Waste Management Rules, human anatomical waste (body parts, tissues, organs) is segregated into which colour-coded bag?",
+      "options": [
+        "Yellow",
+        "Red",
+        "Blue",
+        "Black"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Human anatomical waste, soiled waste and expired/discarded medicines are segregated into yellow bags for incineration or deep burial as applicable."
+    },
+    {
+      "id": "p7_q131",
+      "no": 131,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "Obtaining a signed, written consent from a patient before a contrast-enhanced CT scan is an example of:",
+      "options": [
+        "Express (written) consent",
+        "Implied consent",
+        "Verbal-only consent",
+        "Presumed consent"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Express written consent involves the patient explicitly agreeing, usually in writing, to a specific procedure after being informed of its risks and benefits."
+    },
+    {
+      "id": "p7_q132",
+      "no": 132,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "In the case of an unconscious patient requiring an emergency radiological procedure with no relative available to consent, the applicable legal principle is:",
+      "options": [
+        "Implied consent under the doctrine of necessity",
+        "Informed refusal",
+        "Substituted judgment by the radiographer alone",
+        "Consent is not required in any emergency"
+      ],
+      "correctAnswer": 0,
+      "explanation": "In life-threatening emergencies where a patient cannot give consent and no surrogate is available, treatment may proceed under the doctrine of necessity/implied consent, acting in the patient's best interest."
+    },
+    {
+      "id": "p7_q133",
+      "no": 133,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "The single most effective and simplest measure to prevent healthcare-associated infections in a radiology department is:",
+      "options": [
+        "Hand hygiene",
+        "Use of lead aprons",
+        "Air conditioning of the department",
+        "Use of contrast media filters"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Consistent hand hygiene, before and after patient contact, remains the single most effective and cost-efficient measure in preventing healthcare-associated infections."
+    },
+    {
+      "id": "p7_q134",
+      "no": 134,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "As per WHO guidance, the recommended duration for hand rubbing with an alcohol-based handrub during hand hygiene is approximately:",
+      "options": [
+        "20-30 seconds",
+        "5 seconds",
+        "2 minutes",
+        "5 minutes"
+      ],
+      "correctAnswer": 0,
+      "explanation": "WHO's hand hygiene technique for alcohol-based handrub specifies a total rubbing duration of approximately 20-30 seconds to ensure adequate antimicrobial effect."
+    },
+    {
+      "id": "p7_q135",
+      "no": 135,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "A patient develops sudden bradycardia, pallor, sweating and hypotension during venepuncture, which resolves promptly on lying flat. This is most consistent with:",
+      "options": [
+        "A vasovagal reaction",
+        "Anaphylactic shock",
+        "Cardiogenic shock",
+        "A generalised seizure"
+      ],
+      "correctAnswer": 0,
+      "explanation": "A vasovagal reaction, triggered by pain or anxiety, classically presents with bradycardia, pallor, sweating and transient hypotension, and typically resolves with the patient supine and legs elevated."
+    },
+    {
+      "id": "p7_q136",
+      "no": 136,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "The first-line drug of choice in the emergency management of anaphylactic shock is:",
+      "options": [
+        "Adrenaline (epinephrine), given intramuscularly",
+        "Oral antihistamine",
+        "Intravenous hydrocortisone alone",
+        "Intravenous normal saline alone"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Intramuscular adrenaline is the first-line, life-saving treatment in anaphylaxis; antihistamines and steroids play only a secondary, supportive role."
+    },
+    {
+      "id": "p7_q137",
+      "no": 137,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "A localised collection of pus within a cavity formed by the disintegration of tissue is termed:",
+      "options": [
+        "Abscess",
+        "Granuloma",
+        "Cyst",
+        "Ulcer"
+      ],
+      "correctAnswer": 0,
+      "explanation": "An abscess is a localised collection of pus surrounded by inflamed tissue, resulting from tissue destruction and a pyogenic infective process."
+    },
+    {
+      "id": "p7_q138",
+      "no": 138,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "Metaplasia refers to:",
+      "options": [
+        "Reversible replacement of one differentiated cell type by another differentiated cell type",
+        "Irreversible cell death",
+        "Increase in cell size without cell division",
+        "Uncontrolled malignant cell proliferation"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Metaplasia is an adaptive, reversible change in which one mature cell type is replaced by another mature cell type better suited to a new stress, such as squamous metaplasia in the bronchial epithelium of smokers."
+    },
+    {
+      "id": "p7_q139",
+      "no": 139,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "Before administering intravenous iodinated contrast in a patient with no known risk factors, the MOST important baseline investigation to review is:",
+      "options": [
+        "Serum creatinine / estimated renal function (eGFR)",
+        "Serum calcium",
+        "Random blood glucose",
+        "Serum bilirubin"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Baseline renal function (serum creatinine/eGFR) is reviewed before iodinated contrast administration to assess the risk of contrast-induced nephropathy."
+    },
+    {
+      "id": "p7_q140",
+      "no": 140,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "In the primary survey (ABCDE approach) used in trauma/emergency assessment, 'E' stands for:",
+      "options": [
+        "Exposure",
+        "Evaluation",
+        "Examination",
+        "Emergency"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The ABCDE approach stands for Airway, Breathing, Circulation, Disability and Exposure, the last involving fully exposing the patient to identify injuries while preventing hypothermia."
+    },
+    {
+      "id": "p7_q141",
+      "no": 141,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "The Larmor equation states that the precessional frequency of protons in MRI is directly proportional to:",
+      "options": [
+        "The strength of the external magnetic field (B0)",
+        "The repetition time (TR)",
+        "The echo time (TE)",
+        "The slice thickness"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The Larmor equation (ω0 = γB0) shows that precessional frequency is directly proportional to the external magnetic field strength, scaled by the gyromagnetic ratio (γ)."
+    },
+    {
+      "id": "p7_q142",
+      "no": 142,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "At a field strength of 1.5 Tesla, the Larmor (resonant) frequency of hydrogen protons is approximately:",
+      "options": [
+        "64 MHz",
+        "128 MHz",
+        "42 MHz",
+        "21 MHz"
+      ],
+      "correctAnswer": 0,
+      "explanation": "With a gyromagnetic ratio for hydrogen of about 42.58 MHz/T, at 1.5 T the resonant frequency is approximately 1.5×42.58 ≈ 64 MHz."
+    },
+    {
+      "id": "p7_q143",
+      "no": 143,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Which MRI pulse sequence selectively suppresses signal from fat and is particularly useful in detecting bone marrow oedema?",
+      "options": [
+        "STIR (Short Tau Inversion Recovery)",
+        "FLAIR",
+        "Conventional T1-weighted spin echo",
+        "In-phase gradient echo"
+      ],
+      "correctAnswer": 0,
+      "explanation": "STIR uses an inversion time tuned to the T1 relaxation time of fat, nulling its signal, making it highly sensitive to fluid/oedema such as bone marrow oedema."
+    },
+    {
+      "id": "p7_q144",
+      "no": 144,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "The FLAIR sequence in MRI is primarily used to suppress signal from which tissue/fluid?",
+      "options": [
+        "Cerebrospinal fluid (CSF)",
+        "Fat",
+        "Blood",
+        "Muscle"
+      ],
+      "correctAnswer": 0,
+      "explanation": "FLAIR (Fluid Attenuated Inversion Recovery) nulls the signal from CSF, improving conspicuity of periventricular lesions that would otherwise be obscured by bright CSF on T2-weighted images."
+    },
+    {
+      "id": "p7_q145",
+      "no": 145,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Diffusion restriction with high signal on DWI and correspondingly low signal on the ADC map is classically seen in:",
+      "options": [
+        "Acute cerebral infarction",
+        "Chronic (old) cerebral infarction",
+        "Intracranial haemorrhage only",
+        "A simple arachnoid cyst"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Acute cerebral infarction causes cytotoxic oedema that restricts water diffusion, producing high signal on DWI and correspondingly low signal (dark) on the ADC map."
+    },
+    {
+      "id": "p7_q146",
+      "no": 146,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Gadolinium-based contrast agents are used with extreme caution or avoided in patients with severe renal impairment mainly due to the risk of:",
+      "options": [
+        "Nephrogenic systemic fibrosis (NSF)",
+        "Contrast-induced nephropathy identical to iodinated agents",
+        "Anaphylactic shock in all such patients",
+        "Thyroid storm"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Nephrogenic systemic fibrosis is a rare but serious fibrosing condition linked to gadolinium retention in patients with severe renal impairment (particularly with older, less stable agents)."
+    },
+    {
+      "id": "p7_q147",
+      "no": 147,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "The MRI safety zone that houses the scanner magnet itself, requiring the strictest access control, is designated:",
+      "options": [
+        "Zone IV",
+        "Zone I",
+        "Zone II",
+        "Zone III"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The ACR MRI safety zoning system designates Zone IV as the scanner room itself, with the most stringent access restrictions, while Zone I is freely accessible to the public."
+    },
+    {
+      "id": "p7_q148",
+      "no": 148,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Which of the following is an ABSOLUTE contraindication to MRI scanning?",
+      "options": [
+        "A non-MRI-conditional cardiac pacemaker",
+        "A hip replacement implant labelled MR-conditional",
+        "Pregnancy in the first trimester (per most current guidance)",
+        "Presence of dental fillings"
+      ],
+      "correctAnswer": 0,
+      "explanation": "A non-MRI-conditional cardiac pacemaker or ferromagnetic intracranial aneurysm clip represents an absolute contraindication due to the risk of device malfunction or projectile/heating injury."
+    },
+    {
+      "id": "p7_q149",
+      "no": 149,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "In CT scanning, 'beam collimation' refers to:",
+      "options": [
+        "The width of the X-ray beam set by the pre-patient collimator, which determines the nominal slice thickness",
+        "The total length of the patient scanned",
+        "The angle of the gantry tilt",
+        "The reconstruction algorithm applied to raw data"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Beam collimation is controlled by the pre-patient collimator and defines the width of the X-ray beam exposing the detector array, thereby determining the nominal (collimated) slice thickness."
+    },
+    {
+      "id": "p7_q150",
+      "no": 150,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "A helical CT scan uses a table feed of 20 mm per rotation with a total beam collimation of 10 mm. What is the pitch?",
+      "options": [
+        "2",
+        "1",
+        "0.5",
+        "4"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Pitch = table feed per rotation / total collimation = 20 mm / 10 mm = 2."
+    },
+    {
+      "id": "p7_q151",
+      "no": 151,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "CTDIvol (Volume CT Dose Index) is a standardised dose descriptor that primarily reflects:",
+      "options": [
+        "The average radiation dose within the scan volume, measured using a standard phantom",
+        "The total effective dose received by the patient",
+        "The dose received only at the skin surface",
+        "The dose to the eye lens specifically"
+      ],
+      "correctAnswer": 0,
+      "explanation": "CTDIvol is a phantom-based dose index representing the average absorbed dose within the scanned volume for a given protocol, and is used to compare and optimise scanner dose output."
+    },
+    {
+      "id": "p7_q152",
+      "no": 152,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Dose Length Product (DLP) in CT is calculated as:",
+      "options": [
+        "CTDIvol multiplied by the scan length",
+        "CTDIvol divided by the scan length",
+        "kVp multiplied by mAs",
+        "Tube current multiplied by rotation time only"
+      ],
+      "correctAnswer": 0,
+      "explanation": "DLP = CTDIvol × scan length, providing an estimate of the total radiation exposure for the entire scanned volume, from which effective dose can be estimated using conversion factors."
+    },
+    {
+      "id": "p7_q153",
+      "no": 153,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Which CT reconstruction technique reduces image noise and permits dose reduction compared to conventional filtered back projection?",
+      "options": [
+        "Iterative reconstruction",
+        "Multiplanar reformation",
+        "Maximum intensity projection",
+        "Volume rendering"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Iterative reconstruction algorithms model noise and system statistics to produce lower-noise images at reduced dose compared with traditional filtered back projection."
+    },
+    {
+      "id": "p7_q154",
+      "no": 154,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Dual-energy CT primarily exploits differences in tissue attenuation obtained at:",
+      "options": [
+        "Two different tube voltages (e.g., 80 kVp and 140 kVp)",
+        "Two different slice thicknesses",
+        "Two different pitches",
+        "Two different reconstruction kernels only"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Dual-energy CT acquires data at two different kVp settings, exploiting the energy-dependent attenuation differences of tissues to enable material decomposition (e.g., iodine mapping, virtual non-contrast images)."
+    },
+    {
+      "id": "p7_q155",
+      "no": 155,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "The Hounsfield Unit (HU) value assigned to water on a CT scan is defined as:",
+      "options": [
+        "0",
+        "-1000",
+        "+1000",
+        "100"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The Hounsfield scale is calibrated such that water is defined as 0 HU and air as -1000 HU."
+    },
+    {
+      "id": "p7_q156",
+      "no": 156,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Air on a CT scan has a Hounsfield Unit value of approximately:",
+      "options": [
+        "-1000",
+        "0",
+        "+1000",
+        "-100"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Air, being far less attenuating than water, is assigned a value of approximately -1000 HU on the Hounsfield scale."
+    },
+    {
+      "id": "p7_q157",
+      "no": 157,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Which MRI artifact arises at fat-water interfaces due to differing proton precessional frequencies, appearing as a dark or bright band?",
+      "options": [
+        "Chemical shift artifact",
+        "Aliasing (wrap-around) artifact",
+        "Motion artifact",
+        "Zipper artifact"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Chemical shift artifact occurs because fat and water protons precess at slightly different frequencies, causing a spatial misregistration that appears as a bright or dark band at their interface, particularly in the frequency-encoding direction."
+    },
+    {
+      "id": "p7_q158",
+      "no": 158,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Susceptibility artifact on MRI (signal loss and geometric distortion near metal or air-tissue interfaces) is most pronounced with which pulse sequence?",
+      "options": [
+        "Gradient echo (GRE)",
+        "Spin echo",
+        "FLAIR",
+        "STIR"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Gradient echo sequences lack the 180° refocusing pulse used in spin echo, making them far more sensitive to local magnetic field inhomogeneities and susceptibility effects."
+    },
+    {
+      "id": "p7_q159",
+      "no": 159,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "In MR angiography, the 'time-of-flight' technique generates vascular contrast based primarily on:",
+      "options": [
+        "Inflow of unsaturated (fresh) blood producing high signal relative to saturated background tissue",
+        "Direct labelling of blood with an exogenous contrast agent",
+        "T2* decay of deoxyhaemoglobin",
+        "Diffusion restriction within vessels"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Time-of-flight MRA exploits flow-related enhancement: unsaturated protons in flowing blood entering the imaging slice produce high signal compared to the saturated stationary background tissue."
+    },
+    {
+      "id": "p7_q160",
+      "no": 160,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "The centre of k-space in an MRI acquisition primarily determines:",
+      "options": [
+        "Overall image contrast",
+        "Spatial resolution only",
+        "Signal-to-noise ratio exclusively",
+        "Slice thickness"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The central region of k-space contains the low spatial-frequency data that predominantly determines image contrast, while the peripheral regions contribute mainly to spatial resolution and fine detail."
+    },
+    {
+      "id": "p7_q161",
+      "no": 161,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "As per AERB regulations, the annual effective dose limit for an occupational radiation worker is:",
+      "options": [
+        "20 mSv/year averaged over 5 consecutive years (max 30 mSv in any single year)",
+        "1 mSv/year with no averaging permitted",
+        "50 mSv/year with no upper single-year restriction",
+        "100 mSv over a working lifetime only"
+      ],
+      "correctAnswer": 0,
+      "explanation": "AERB prescribes an occupational effective dose limit of 20 mSv per year averaged over any five consecutive years, with a ceiling of 30 mSv in a single year."
+    },
+    {
+      "id": "p7_q162",
+      "no": 162,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "As per AERB regulations, the annual effective dose limit for a member of the public from a regulated practice is:",
+      "options": [
+        "1 mSv/year",
+        "5 mSv/year",
+        "10 mSv/year",
+        "20 mSv/year"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The public dose limit is set at 1 mSv per year, one-twentieth of the occupational limit, reflecting the precautionary approach for non-radiation workers."
+    },
+    {
+      "id": "p7_q163",
+      "no": 163,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "A radiographer standing 2 metres from an X-ray source receives 4 mGy per exposure. Applying the inverse square law, what dose would be received at a distance of 4 metres, all other factors remaining unchanged?",
+      "options": [
+        "1 mGy",
+        "2 mGy",
+        "0.5 mGy",
+        "4 mGy"
+      ],
+      "correctAnswer": 0,
+      "explanation": "By the inverse square law, dose is inversely proportional to the square of the distance. Doubling the distance from 2 m to 4 m reduces the dose to (2/4)² × 4 = 1 mGy."
+    },
+    {
+      "id": "p7_q164",
+      "no": 164,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "If the Half Value Layer (HVL) of a beam is 3 mm of aluminium, what thickness of aluminium is required to reduce the beam intensity to one-eighth (1/8) of its original value?",
+      "options": [
+        "9 mm",
+        "6 mm",
+        "12 mm",
+        "3 mm"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Reducing intensity to 1/8 requires three half-value layers (since (1/2)³ = 1/8). Three HVLs of 3 mm each = 9 mm of aluminium."
+    },
+    {
+      "id": "p7_q165",
+      "no": 165,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "ALARA, a fundamental principle of radiation protection, stands for:",
+      "options": [
+        "As Low As Reasonably Achievable",
+        "As Little As Reasonably Allowed",
+        "As Low As Radiologically Advised",
+        "As Limited As Reasonably Achievable"
+      ],
+      "correctAnswer": 0,
+      "explanation": "ALARA is the guiding principle that radiation exposure should be kept As Low As Reasonably Achievable, considering economic and social factors."
+    },
+    {
+      "id": "p7_q166",
+      "no": 166,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "The three cardinal principles used to minimise occupational radiation exposure are Time, Distance and:",
+      "options": [
+        "Shielding",
+        "Filtration",
+        "Collimation",
+        "Dosimetry"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Time, Distance and Shielding form the three fundamental strategies for reducing occupational radiation dose: minimising exposure time, maximising distance from the source, and using appropriate shielding."
+    },
+    {
+      "id": "p7_q167",
+      "no": 167,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "Which personal dosimeter provides an immediate, real-time dose reading, unlike a TLD or film badge which require laboratory processing?",
+      "options": [
+        "Pocket/electronic personal dosimeter (EPD)",
+        "Film badge",
+        "Thermoluminescent dosimeter (TLD)",
+        "Optically Stimulated Luminescence (OSL) badge"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Electronic personal dosimeters (and older pocket ionisation chamber dosimeters) allow the wearer to read the accumulated or instantaneous dose immediately, unlike TLD or film badges which must be processed later."
+    },
+    {
+      "id": "p7_q168",
+      "no": 168,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "A thermoluminescent dosimeter (TLD) badge commonly uses which crystal to store absorbed radiation energy?",
+      "options": [
+        "Lithium fluoride (LiF)",
+        "Silver bromide",
+        "Barium sulphate",
+        "Calcium tungstate"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Lithium fluoride is the most commonly used TLD crystal, storing energy from absorbed radiation as trapped electrons that are released as light on heating (thermoluminescence)."
+    },
+    {
+      "id": "p7_q169",
+      "no": 169,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "The SI unit of absorbed dose is the:",
+      "options": [
+        "Gray (Gy)",
+        "Sievert (Sv)",
+        "Becquerel (Bq)",
+        "Roentgen (R)"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Absorbed dose, the energy deposited per unit mass of tissue, is measured in Grays (Gy), where 1 Gy = 1 joule/kilogram."
+    },
+    {
+      "id": "p7_q170",
+      "no": 170,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "The SI unit of equivalent/effective dose, which accounts for the biological effect of different radiation types, is the:",
+      "options": [
+        "Sievert (Sv)",
+        "Gray (Gy)",
+        "Becquerel (Bq)",
+        "Curie (Ci)"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Equivalent and effective dose, which weight absorbed dose by radiation type and tissue sensitivity, are expressed in Sieverts (Sv)."
+    },
+    {
+      "id": "p7_q171",
+      "no": 171,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "The SI unit of radioactivity (activity of a radioactive source) is the:",
+      "options": [
+        "Becquerel (Bq)",
+        "Gray (Gy)",
+        "Sievert (Sv)",
+        "Roentgen (R)"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The Becquerel (Bq) represents one radioactive disintegration per second, replacing the older non-SI unit, the Curie (Ci)."
+    },
+    {
+      "id": "p7_q172",
+      "no": 172,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "As per AERB norms, the minimum lead-equivalent thickness typically required for the primary protective barrier of a diagnostic X-ray room is approximately:",
+      "options": [
+        "2 mm Pb",
+        "1 mm Pb",
+        "0.5 mm Pb",
+        "3.5 mm Pb"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Primary barriers, which intercept the useful (direct) beam, generally require a higher lead equivalence (commonly around 2 mm Pb) than secondary barriers, which only need to attenuate scattered and leakage radiation."
+    },
+    {
+      "id": "p7_q173",
+      "no": 173,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "Filtration of the X-ray beam serves primarily to:",
+      "options": [
+        "Remove low-energy (soft) photons that would be absorbed by the patient without contributing to the image, thereby reducing patient dose",
+        "Increase the number of low-energy photons reaching the patient",
+        "Increase overall beam intensity without affecting quality",
+        "Eliminate the need for collimation"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Filtration selectively removes low-energy photons that would otherwise be absorbed within the patient (adding to dose) without reaching the image receptor, thereby improving the effective beam quality while reducing patient dose."
+    },
+    {
+      "id": "p7_q174",
+      "no": 174,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "For a diagnostic X-ray unit operating above 70 kVp, the total (inherent plus added) filtration should be at least:",
+      "options": [
+        "2.5 mm Al equivalent",
+        "0.5 mm Al equivalent",
+        "1.0 mm Al equivalent",
+        "5.0 mm Al equivalent"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Regulatory standards typically require a minimum total filtration of 2.5 mm aluminium equivalent for X-ray units operating above 70 kVp, to adequately remove low-energy photons."
+    },
+    {
+      "id": "p7_q175",
+      "no": 175,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "Grids are used in radiography primarily to:",
+      "options": [
+        "Absorb scattered radiation and improve image contrast",
+        "Increase patient dose intentionally for better contrast",
+        "Replace the need for collimation",
+        "Reduce the kVp required for an exposure"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Antiscatter grids absorb obliquely travelling scattered photons before they reach the image receptor, improving radiographic contrast at the cost of requiring increased mAs (patient dose)."
+    },
+    {
+      "id": "p7_q176",
+      "no": 176,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "A grid with a higher grid ratio, compared to a lower ratio grid, will generally:",
+      "options": [
+        "Require higher patient dose (mAs) but provide better scatter cleanup and contrast",
+        "Require lower patient dose and provide worse contrast",
+        "Have no effect on required exposure or contrast",
+        "Eliminate the need for any exposure factor adjustment"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Higher grid ratios (taller lead strips relative to their spacing) absorb scatter more effectively, improving contrast, but require a higher mAs (Bucky factor) and hence greater patient dose."
+    },
+    {
+      "id": "p7_q177",
+      "no": 177,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "The kVp (kilovoltage peak) applied across an X-ray tube primarily controls:",
+      "options": [
+        "The penetrating power (quality/energy) of the X-ray beam",
+        "The total number of photons produced, exclusively",
+        "The heat capacity of the anode",
+        "The focal spot size"
+      ],
+      "correctAnswer": 0,
+      "explanation": "kVp determines the maximum energy (and hence penetrating power) of the X-ray photons produced, directly affecting beam quality/penetration, though it also has a secondary effect on quantity."
+    },
+    {
+      "id": "p7_q178",
+      "no": 178,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "The mAs (milliampere-seconds) setting on an X-ray unit primarily controls:",
+      "options": [
+        "The quantity (number) of X-ray photons produced, and hence radiographic density",
+        "The penetrating power of the beam exclusively",
+        "The scatter-to-primary ratio only",
+        "The source-to-image distance"
+      ],
+      "correctAnswer": 0,
+      "explanation": "mAs is directly proportional to the number of electrons flowing in the tube over the exposure time, controlling the quantity of X-ray photons produced and therefore image density."
+    },
+    {
+      "id": "p7_q179",
+      "no": 179,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "Compared with X-rays and gamma rays, alpha particles have:",
+      "options": [
+        "Much higher linear energy transfer (LET)",
+        "Much lower linear energy transfer (LET)",
+        "Identical LET",
+        "No measurable ionising effect"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Alpha particles are densely ionising, high-LET radiation, depositing a large amount of energy over a very short path length compared to the sparsely ionising, low-LET X-rays and gamma rays."
+    },
+    {
+      "id": "p7_q180",
+      "no": 180,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "The inverse square law in radiation physics states that beam intensity is:",
+      "options": [
+        "Inversely proportional to the square of the distance from the source",
+        "Directly proportional to the square of the distance from the source",
+        "Inversely proportional to the distance from the source (linear)",
+        "Independent of distance from the source"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The inverse square law states that radiation intensity decreases in proportion to the square of the distance from a point source, assuming no attenuating medium."
+    },
+    {
+      "id": "p7_q181",
+      "no": 181,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "The axial resolution of an ultrasound beam (the ability to distinguish two closely spaced reflectors along the beam axis) is primarily determined by:",
+      "options": [
+        "The spatial pulse length (wavelength and number of cycles per pulse)",
+        "The transducer footprint size",
+        "The frame rate of the scanner",
+        "The depth setting alone"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Axial resolution improves as spatial pulse length decreases, which depends on the ultrasound wavelength (frequency) and the number of cycles emitted per pulse."
+    },
+    {
+      "id": "p7_q182",
+      "no": 182,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "Increasing the operating frequency of an ultrasound transducer improves image resolution but at the cost of:",
+      "options": [
+        "Reduced depth of penetration",
+        "Increased frame rate only",
+        "Improved lateral resolution only",
+        "Increased field of view"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Higher-frequency ultrasound is attenuated more rapidly by tissue, improving resolution of superficial structures but reducing penetration to deeper structures."
+    },
+    {
+      "id": "p7_q183",
+      "no": 183,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "Aliasing artifact on pulsed-wave Doppler occurs when:",
+      "options": [
+        "The Doppler shift frequency exceeds the Nyquist limit (half the pulse repetition frequency)",
+        "The transducer frequency is too low",
+        "The angle of insonation is exactly 90 degrees",
+        "The gain setting is too low"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Aliasing occurs when the sampled Doppler frequency shift exceeds the Nyquist limit, which is half the pulse repetition frequency (PRF), causing wrap-around artifact on the spectral display."
+    },
+    {
+      "id": "p7_q184",
+      "no": 184,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "To avoid aliasing while assessing a high-velocity jet on colour Doppler, which adjustment is most appropriate?",
+      "options": [
+        "Increase the pulse repetition frequency (raise the velocity scale)",
+        "Decrease the pulse repetition frequency",
+        "Decrease the transducer frequency only",
+        "Switch to B-mode imaging only"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Raising the pulse repetition frequency (velocity scale) increases the Nyquist limit, allowing higher velocities to be sampled correctly without aliasing."
+    },
+    {
+      "id": "p7_q185",
+      "no": 185,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "Which BI-RADS mammography category indicates a finding 'highly suggestive of malignancy', warranting biopsy?",
+      "options": [
+        "Category 5",
+        "Category 2",
+        "Category 3",
+        "Category 0"
+      ],
+      "correctAnswer": 0,
+      "explanation": "BI-RADS Category 5 indicates a finding with a very high likelihood of malignancy (≥95%), for which biopsy is strongly recommended."
+    },
+    {
+      "id": "p7_q186",
+      "no": 186,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "The classical target material used in conventional screen-film/CR mammography X-ray tubes is:",
+      "options": [
+        "Molybdenum",
+        "Tungsten",
+        "Rhodium only",
+        "Copper"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Molybdenum (often combined with a molybdenum or rhodium filter) has traditionally been used as the target material in mammography tubes due to its characteristic low-energy X-ray spectrum suited to breast imaging."
+    },
+    {
+      "id": "p7_q187",
+      "no": 187,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "Select the INCORRECT statement regarding breast compression during mammography:",
+      "options": [
+        "Compression increases radiation dose to the breast",
+        "Compression reduces motion blur and improves image sharpness",
+        "Compression reduces the required radiation dose by decreasing tissue thickness",
+        "Compression reduces scatter radiation and improves contrast"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Compression actually reduces the radiation dose required (by decreasing tissue thickness), in addition to reducing motion blur and scatter; stating that it increases dose is incorrect."
+    },
+    {
+      "id": "p7_q188",
+      "no": 188,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "Iohexol and iopamidol, non-ionic iodinated contrast agents, are classified as:",
+      "options": [
+        "Low-osmolar contrast media (LOCM)",
+        "High-osmolar contrast media (HOCM)",
+        "Iso-osmolar contrast media",
+        "Negative contrast agents"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Non-ionic agents such as iohexol and iopamidol have an osmolality roughly 2-3 times that of plasma, classifying them as low-osmolar contrast media, with a much better safety profile than older ionic high-osmolar agents."
+    },
+    {
+      "id": "p7_q189",
+      "no": 189,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "Iodixanol is distinctive among iodinated contrast media in being:",
+      "options": [
+        "Iso-osmolar (osmolality similar to blood plasma)",
+        "The only agent with high osmolality",
+        "An ionic monomer",
+        "A negative contrast agent"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Iodixanol is a non-ionic dimer formulated to be iso-osmolar with blood plasma, potentially reducing certain osmotic side effects compared with low-osmolar agents."
+    },
+    {
+      "id": "p7_q190",
+      "no": 190,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "A patient develops generalised urticaria and mild bronchospasm after intravenous contrast administration, without hypotension. This is classified as a:",
+      "options": [
+        "Mild reaction",
+        "Moderate reaction",
+        "Severe reaction",
+        "Not a true contrast reaction"
+      ],
+      "correctAnswer": 1,
+      "explanation": "A reaction involving diffuse urticaria with mild bronchospasm, requiring treatment but not immediately life-threatening, is classified as a moderate contrast reaction, distinct from mild (limited, self-resolving) and severe (life-threatening, e.g., hypotensive shock) reactions."
+    },
+    {
+      "id": "p7_q191",
+      "no": 191,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "Contrast-induced nephropathy risk following intravenous iodinated contrast is highest in patients with which pre-existing condition?",
+      "options": [
+        "Diabetic nephropathy / pre-existing renal impairment",
+        "Well-controlled hypertension alone",
+        "Mild seasonal allergy",
+        "Controlled hypothyroidism"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Pre-existing renal impairment, particularly diabetic nephropathy, is the strongest risk factor for contrast-induced nephropathy following iodinated contrast administration."
+    },
+    {
+      "id": "p7_q192",
+      "no": 192,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "In a diabetic patient on metformin with NORMAL renal function scheduled for contrast-enhanced CT, current practice is to:",
+      "options": [
+        "Continue metformin as usual; withhold only if renal impairment is present or a reaction occurs",
+        "Always stop metformin 48 hours before and after the scan regardless of renal function",
+        "Substitute metformin with insulin for one week before the scan",
+        "Metformin has no relevance to contrast administration and need not be considered"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Current guidance no longer mandates routine withholding of metformin in patients with normal renal function; it is withheld only when there is pre-existing renal impairment or a risk of acute kidney injury/lactic acidosis after contrast."
+    },
+    {
+      "id": "p7_q193",
+      "no": 193,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "Immediate management of a small, asymptomatic contrast extravasation at the intravenous injection site includes:",
+      "options": [
+        "Elevation of the limb with a cold or warm compress and clinical observation",
+        "Immediate surgical exploration in all cases",
+        "Administration of intravenous adrenaline",
+        "Ignoring the extravasation as it never causes complications"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Most small-volume extravasations are managed conservatively with limb elevation, a compress and observation; surgical referral is reserved for large-volume extravasations or signs of compartment syndrome/skin compromise."
+    },
+    {
+      "id": "p7_q194",
+      "no": 194,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "The investigation of choice for suspected acute appendicitis in a young, non-obese adult is:",
+      "options": [
+        "Ultrasound of the abdomen (with CT reserved for equivocal cases)",
+        "Plain abdominal radiograph",
+        "Barium follow-through",
+        "MRI abdomen as the first-line test in all patients"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Ultrasound is typically the first-line investigation for suspected appendicitis in young, non-obese patients due to its lack of ionising radiation and good accuracy, with CT reserved for equivocal or complex cases."
+    },
+    {
+      "id": "p7_q195",
+      "no": 195,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "The investigation of choice for suspected acute pulmonary embolism is:",
+      "options": [
+        "CT Pulmonary Angiography (CTPA)",
+        "Plain chest radiograph alone",
+        "V/Q scan as the first-line test in all patients",
+        "Doppler ultrasound of the chest"
+      ],
+      "correctAnswer": 0,
+      "explanation": "CT Pulmonary Angiography is the current first-line imaging investigation of choice for suspected acute pulmonary embolism in most patients, offering high sensitivity and specificity."
+    },
+    {
+      "id": "p7_q196",
+      "no": 196,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "The investigation of choice for suspected acute ischaemic stroke within the first few hours of symptom onset is:",
+      "options": [
+        "Non-contrast CT of the head",
+        "Contrast-enhanced MRI of the brain as the first-line test",
+        "Plain skull radiograph",
+        "Cerebral catheter angiography as the initial test"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Non-contrast CT of the head is the standard first-line investigation in suspected acute stroke, primarily to rapidly exclude haemorrhage before considering thrombolysis."
+    },
+    {
+      "id": "p7_q197",
+      "no": 197,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "The investigation of choice for suspected renal/ureteric colic (renal stone disease) is:",
+      "options": [
+        "Non-contrast CT of the kidneys, ureters and bladder (NCCT KUB)",
+        "Intravenous urography as the first-line test",
+        "Barium enema",
+        "MRI abdomen as the first-line test"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Non-contrast CT KUB has largely replaced intravenous urography as the first-line investigation for suspected renal colic, offering high sensitivity for stones without the need for contrast."
+    },
+    {
+      "id": "p7_q198",
+      "no": 198,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "In a combined PET-CT study, attenuation correction of the PET emission data is performed using:",
+      "options": [
+        "The CT component of the study",
+        "A separate transmission scan using a Cs-137 source only",
+        "Manual correction by the reporting physician",
+        "No attenuation correction is required in PET-CT"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The co-registered CT scan provides attenuation maps that are used to correct the PET emission data for photon attenuation within the patient, improving image quality and quantification."
+    },
+    {
+      "id": "p7_q199",
+      "no": 199,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "Technetium-99m is preferred for most diagnostic nuclear medicine studies mainly because of its:",
+      "options": [
+        "Ideal gamma photon energy (140 keV) and short physical half-life (~6 hours), minimising patient dose",
+        "Very long physical half-life allowing weeks of imaging",
+        "Emission of high-energy beta particles used for imaging",
+        "Requirement for no radiation shielding"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Technetium-99m's 140 keV gamma emission is well suited to gamma camera detection, and its short 6-hour half-life minimises patient radiation dose while still allowing adequate imaging time."
+    },
+    {
+      "id": "p7_q200",
+      "no": 200,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "In digital subtraction angiography (DSA), the 'mask' image refers to:",
+      "options": [
+        "The image acquired before contrast injection, subtracted from subsequent contrast-filled images to remove background structures",
+        "The final contrast-enhanced image only",
+        "An image acquired after contrast has fully washed out",
+        "A duplicate of the contrast image used for storage"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The mask image, acquired prior to contrast administration, is digitally subtracted from later contrast-filled images, removing overlying bone and soft tissue to isolate the vascular structures."
+    }
+  ]
+}
