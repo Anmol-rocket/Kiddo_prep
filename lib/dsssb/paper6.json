@@ -1,0 +1,3294 @@
+{
+  "id": 6,
+  "name": "Practice Paper 6",
+  "subtitle": "DSSSB Radiographer — Full Mock (Tier-1)",
+  "code": "DSSSB/RAD/PP-06",
+  "totalQuestions": 200,
+  "durationMinutes": 120,
+  "markPerCorrect": 1,
+  "negativeMark": 0.25,
+  "subsections": [
+    {
+      "id": "a1",
+      "section": "A",
+      "title": "General Intelligence & Reasoning",
+      "start": 1,
+      "end": 20,
+      "count": 20
+    },
+    {
+      "id": "a2",
+      "section": "A",
+      "title": "General Awareness",
+      "start": 21,
+      "end": 40,
+      "count": 20
+    },
+    {
+      "id": "a3",
+      "section": "A",
+      "title": "Arithmetical & Numerical Ability",
+      "start": 41,
+      "end": 60,
+      "count": 20
+    },
+    {
+      "id": "a4",
+      "section": "A",
+      "title": "English Language & Comprehension",
+      "start": 61,
+      "end": 80,
+      "count": 20
+    },
+    {
+      "id": "a5",
+      "section": "A",
+      "title": "Hindi Language & Comprehension",
+      "start": 81,
+      "end": 100,
+      "count": 20
+    },
+    {
+      "id": "b1",
+      "section": "B",
+      "title": "Human Anatomy & Physiology",
+      "start": 101,
+      "end": 120,
+      "count": 20
+    },
+    {
+      "id": "b2",
+      "section": "B",
+      "title": "Pathology & Patient Care",
+      "start": 121,
+      "end": 140,
+      "count": 20
+    },
+    {
+      "id": "b3",
+      "section": "B",
+      "title": "MRI & CT Imaging",
+      "start": 141,
+      "end": 160,
+      "count": 20
+    },
+    {
+      "id": "b4",
+      "section": "B",
+      "title": "Radiation Physics & Safety",
+      "start": 161,
+      "end": 180,
+      "count": 20
+    },
+    {
+      "id": "b5",
+      "section": "B",
+      "title": "USG, Mammography & Special Procedures",
+      "start": 181,
+      "end": 200,
+      "count": 20
+    }
+  ],
+  "questions": [
+    {
+      "id": "p6_q1",
+      "no": 1,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Find the next number in the series: 3, 8, 18, 38, 78, ?",
+      "options": [
+        "162",
+        "156",
+        "150",
+        "158"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Each term follows ×2+2: 3×2+2=8, 8×2+2=18, 18×2+2=38, 38×2+2=78, 78×2+2=158."
+    },
+    {
+      "id": "p6_q2",
+      "no": 2,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Find the next number in the series: 4, 9, 19, 39, 79, ?",
+      "options": [
+        "161",
+        "157",
+        "159",
+        "155"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Each term follows ×2+1: 4×2+1=9, 9×2+1=19, 19×2+1=39, 39×2+1=79, 79×2+1=159."
+    },
+    {
+      "id": "p6_q3",
+      "no": 3,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Find the missing letter in the series: A, C, F, J, O, ?",
+      "options": [
+        "T",
+        "S",
+        "U",
+        "V"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The gap between consecutive letters increases by 1 each time: A(+2)C(+3)F(+4)J(+5)O(+6)U, i.e., positions 1,3,6,10,15,21 which correspond to A,C,F,J,O,U."
+    },
+    {
+      "id": "p6_q4",
+      "no": 4,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Pen is to Write as Knife is to:",
+      "options": [
+        "Sharp",
+        "Blade",
+        "Cut",
+        "Kitchen"
+      ],
+      "correctAnswer": 2,
+      "explanation": "A pen's primary function is to write; similarly, a knife's primary function is to cut."
+    },
+    {
+      "id": "p6_q5",
+      "no": 5,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Fish is to Water as Bird is to:",
+      "options": [
+        "Nest",
+        "Air",
+        "Feather",
+        "Tree"
+      ],
+      "correctAnswer": 1,
+      "explanation": "A fish's natural habitat/medium of movement is water; similarly, a bird's natural medium of movement is air."
+    },
+    {
+      "id": "p6_q6",
+      "no": 6,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Find the odd one out: Triangle, Square, Circle, Cube",
+      "options": [
+        "Triangle",
+        "Square",
+        "Circle",
+        "Cube"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Triangle, Square and Circle are all two-dimensional (2D) shapes, whereas Cube is a three-dimensional (3D) solid."
+    },
+    {
+      "id": "p6_q7",
+      "no": 7,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Find the odd one out: 8, 27, 64, 125, 150",
+      "options": [
+        "27",
+        "64",
+        "8",
+        "150"
+      ],
+      "correctAnswer": 3,
+      "explanation": "8, 27, 64 and 125 are all perfect cubes (2³, 3³, 4³, 5³); 150 is not a perfect cube."
+    },
+    {
+      "id": "p6_q8",
+      "no": 8,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "In a certain code, GARDEN is written as HBSEFO. How will FLOWER be written in the same code?",
+      "options": [
+        "GMPXFS",
+        "GLPXFS",
+        "GMPXFT",
+        "FMPXFS"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Each letter of GARDEN is shifted one place forward in the alphabet (G→H, A→B, R→S, D→E, E→F, N→O) to give HBSEFO. Applying the same shift to FLOWER: F→G, L→M, O→P, W→X, E→F, R→S, giving GMPXFS."
+    },
+    {
+      "id": "p6_q9",
+      "no": 9,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "If in a certain code DELHI is written as 4-5-12-8-9 (using each letter's position in the alphabet), what is the code for MUMBAI?",
+      "options": [
+        "13-21-13-2-1-8",
+        "12-21-13-2-1-9",
+        "13-21-13-2-1-9",
+        "13-20-13-2-1-9"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Each letter is replaced by its position number in the English alphabet: M=13, U=21, M=13, B=2, A=1, I=9, giving 13-21-13-2-1-9."
+    },
+    {
+      "id": "p6_q10",
+      "no": 10,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Pointing to a man, a woman said, 'He is the son of my father's only son.' How is the man related to the woman?",
+      "options": [
+        "Son",
+        "Nephew",
+        "Brother",
+        "Cousin"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Since the woman is female, 'my father's only son' must be her brother. The son of her brother is her nephew."
+    },
+    {
+      "id": "p6_q11",
+      "no": 11,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "X's mother is the sister of Y's father. What is the relation between X and Y?",
+      "options": [
+        "Cousins",
+        "Aunt and nephew",
+        "Uncle and nephew",
+        "Siblings"
+      ],
+      "correctAnswer": 0,
+      "explanation": "X's mother and Y's father are siblings, making X and Y first cousins."
+    },
+    {
+      "id": "p6_q12",
+      "no": 12,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "A person walks 10 km east, then 6 km south, then 10 km west. How far is he from the starting point and in which direction?",
+      "options": [
+        "6 km, South",
+        "10 km, South",
+        "6 km, North",
+        "16 km, South"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The 10 km east and 10 km west displacements cancel each other out, leaving only the 6 km southward displacement as the net distance from the starting point."
+    },
+    {
+      "id": "p6_q13",
+      "no": 13,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Meena walks 15 m towards north, then turns right and walks 10 m, then turns right again and walks 15 m. How far is she from her starting point?",
+      "options": [
+        "5 m",
+        "15 m",
+        "25 m",
+        "10 m"
+      ],
+      "correctAnswer": 3,
+      "explanation": "North 15 m, then right (east) 10 m, then right again (south) 15 m cancels the north-south displacement, leaving a net displacement of 10 m to the east of the starting point."
+    },
+    {
+      "id": "p6_q14",
+      "no": 14,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Five friends A, B, D, E and C are sitting in a row facing north. B sits second to the left of E. D sits immediately to the right of B. A sits at one of the extreme ends. Only one person sits between D and C. Who sits second from the right?",
+      "options": [
+        "C",
+        "D",
+        "E",
+        "B"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Placing B at position 2 and E at position 4 (second to the left of E), D immediately right of B gives D at position 3. A takes the remaining extreme end (position 1), leaving C at position 5. The order is A-B-D-E-C, satisfying 'only one person (E) between D and C'. The person second from the right (position 4) is E."
+    },
+    {
+      "id": "p6_q15",
+      "no": 15,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "If 'A' means '+', 'B' means '−', 'C' means '×', and 'D' means '÷', find the value of: 18 C 2 D 4 A 6 B 3",
+      "options": [
+        "10",
+        "15",
+        "12",
+        "9"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Substituting the meanings: 18×2÷4+6−3. By BODMAS: 18×2=36; 36÷4=9; 9+6=15; 15−3=12."
+    },
+    {
+      "id": "p6_q16",
+      "no": 16,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "What will come in place of the question mark in the series: Z, X, V, T, ?",
+      "options": [
+        "Q",
+        "S",
+        "R",
+        "T"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The series decreases by 2 letters each time: Z(26), X(24), V(22), T(20), and the next term is 18, which is R."
+    },
+    {
+      "id": "p6_q17",
+      "no": 17,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "If 15 August 2023 was a Tuesday, what day of the week was 15 August 2024?",
+      "options": [
+        "Monday",
+        "Friday",
+        "Thursday",
+        "Wednesday"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The period from 15 August 2023 to 15 August 2024 spans 366 days because it includes 29 February 2024 (a leap year). 366 ÷ 7 leaves a remainder of 2, so the day advances by 2 from Tuesday to Thursday."
+    },
+    {
+      "id": "p6_q18",
+      "no": 18,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "A father is 4 times as old as his son. After 5 years, he will be 3 times as old as his son. What is the son's present age?",
+      "options": [
+        "12 years",
+        "8 years",
+        "15 years",
+        "10 years"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Let the son's present age be x, so the father's is 4x. After 5 years: 4x+5 = 3(x+5) ⟹ 4x+5 = 3x+15 ⟹ x = 10."
+    },
+    {
+      "id": "p6_q19",
+      "no": 19,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "Statements: Some cats are dogs. All dogs are animals. Conclusions: I. Some cats are animals. II. All animals are dogs. Which conclusion(s) follow?",
+      "options": [
+        "Neither follows",
+        "Only I follows",
+        "Both I and II follow",
+        "Only II follows"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Since some cats are dogs and all dogs are animals, it follows that some cats are animals (I). Conclusion II reverses the relationship incorrectly and does not follow from the given statements."
+    },
+    {
+      "id": "p6_q20",
+      "no": 20,
+      "section": "A",
+      "subsectionId": "a1",
+      "subject": "General Intelligence & Reasoning",
+      "question": "In a queue, Suresh is 18th from the front and 12th from the back. How many people are there in the queue?",
+      "options": [
+        "31",
+        "28",
+        "30",
+        "29"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Total number of people = (Position from front) + (Position from back) − 1 = 18 + 12 − 1 = 29."
+    },
+    {
+      "id": "p6_q21",
+      "no": 21,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Which organ in the human body produces insulin?",
+      "options": [
+        "Liver",
+        "Spleen",
+        "Kidney",
+        "Pancreas"
+      ],
+      "correctAnswer": 3,
+      "explanation": "The pancreas contains clusters of cells called the Islets of Langerhans, whose beta cells produce and secrete insulin to regulate blood glucose levels."
+    },
+    {
+      "id": "p6_q22",
+      "no": 22,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Which vitamin is synthesised in human skin upon exposure to sunlight?",
+      "options": [
+        "Vitamin C",
+        "Vitamin D",
+        "Vitamin K",
+        "Vitamin A"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Vitamin D is synthesised in the skin when 7-dehydrocholesterol reacts with ultraviolet-B (UVB) radiation from sunlight."
+    },
+    {
+      "id": "p6_q23",
+      "no": 23,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "The functional unit of the nervous system is called:",
+      "options": [
+        "Alveolus",
+        "Axon",
+        "Nephron",
+        "Neuron"
+      ],
+      "correctAnswer": 3,
+      "explanation": "The neuron (nerve cell) is the basic structural and functional unit of the nervous system, responsible for transmitting electrical and chemical signals."
+    },
+    {
+      "id": "p6_q24",
+      "no": 24,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Which gas is most abundant in the Earth's atmosphere?",
+      "options": [
+        "Argon",
+        "Nitrogen",
+        "Carbon dioxide",
+        "Oxygen"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Nitrogen makes up approximately 78% of the Earth's atmosphere by volume, making it the most abundant atmospheric gas."
+    },
+    {
+      "id": "p6_q25",
+      "no": 25,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Which part of the human eye controls the amount of light entering it?",
+      "options": [
+        "Iris",
+        "Cornea",
+        "Retina",
+        "Lens"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The iris, the coloured part of the eye, contains muscles that adjust the size of the pupil to control the amount of light entering the eye."
+    },
+    {
+      "id": "p6_q26",
+      "no": 26,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "The Preamble of the Indian Constitution was amended by which Constitutional Amendment Act?",
+      "options": [
+        "44th Amendment Act, 1978",
+        "1st Amendment Act, 1951",
+        "42nd Amendment Act, 1976",
+        "24th Amendment Act, 1971"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The 42nd Amendment Act, 1976 added the words 'Socialist', 'Secular' and 'Integrity' to the Preamble of the Indian Constitution."
+    },
+    {
+      "id": "p6_q27",
+      "no": 27,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Who has the power to declare a National Emergency under Article 352 of the Indian Constitution?",
+      "options": [
+        "The Speaker of Lok Sabha",
+        "The President of India",
+        "The Prime Minister",
+        "The Chief Justice of India"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Under Article 352, the President of India can declare a National Emergency on the written advice of the Union Cabinet, on grounds of war, external aggression or armed rebellion."
+    },
+    {
+      "id": "p6_q28",
+      "no": 28,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "The Election Commission of India is a constitutional body established under which Article?",
+      "options": [
+        "Article 324",
+        "Article 280",
+        "Article 356",
+        "Article 315"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Article 324 of the Constitution vests the power of superintendence, direction and control of elections in the Election Commission of India."
+    },
+    {
+      "id": "p6_q29",
+      "no": 29,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "The Indian National Congress was founded in which year?",
+      "options": [
+        "1905",
+        "1857",
+        "1885",
+        "1875"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The Indian National Congress was founded in 1885 by A.O. Hume along with other Indian leaders, and held its first session in Bombay."
+    },
+    {
+      "id": "p6_q30",
+      "no": 30,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Who gave the famous slogan 'Give me blood, and I shall give you freedom'?",
+      "options": [
+        "Bal Gangadhar Tilak",
+        "Subhas Chandra Bose",
+        "Bhagat Singh",
+        "Lala Lajpat Rai"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Subhas Chandra Bose gave this famous call to the Indian National Army (INA) soldiers to inspire them in the fight for India's independence."
+    },
+    {
+      "id": "p6_q31",
+      "no": 31,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "The Jallianwala Bagh massacre took place in which year?",
+      "options": [
+        "1909",
+        "1942",
+        "1919",
+        "1929"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The Jallianwala Bagh massacre occurred on 13 April 1919 in Amritsar, when British troops under General Dyer opened fire on an unarmed gathering."
+    },
+    {
+      "id": "p6_q32",
+      "no": 32,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Which is the longest river in India (entirely or partly within the country)?",
+      "options": [
+        "Godavari",
+        "Narmada",
+        "Ganga",
+        "Yamuna"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The Ganga, originating from Gangotri glacier, is the longest river flowing through India, extending over approximately 2,525 km."
+    },
+    {
+      "id": "p6_q33",
+      "no": 33,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Mount K2, the second-highest peak in the world, is located in which mountain range?",
+      "options": [
+        "Himalayas (Great Himalayas)",
+        "Pir Panjal Range",
+        "Hindu Kush",
+        "Karakoram Range"
+      ],
+      "correctAnswer": 3,
+      "explanation": "K2 (Mount Godwin-Austen), the world's second-highest peak, is located in the Karakoram Range on the Pakistan-China border."
+    },
+    {
+      "id": "p6_q34",
+      "no": 34,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Which Indian state is known as the 'Spice Garden of India'?",
+      "options": [
+        "Karnataka",
+        "Kerala",
+        "Goa",
+        "Tamil Nadu"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Kerala is called the 'Spice Garden of India' due to its extensive cultivation of spices such as pepper, cardamom and cloves."
+    },
+    {
+      "id": "p6_q35",
+      "no": 35,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Humayun's Tomb in Delhi was built under the orders of:",
+      "options": [
+        "Akbar",
+        "Shah Jahan",
+        "Jahangir",
+        "Empress Bega Begum (Haji Begum)"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Humayun's Tomb was commissioned by Humayun's widow, Empress Bega Begum (Haji Begum), and is considered a precursor to the Taj Mahal in Mughal architecture."
+    },
+    {
+      "id": "p6_q36",
+      "no": 36,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "The India Gate in Delhi was built as a memorial to Indian soldiers who died in which war?",
+      "options": [
+        "World War I",
+        "World War II",
+        "The 1965 Indo-Pak War",
+        "The Kargil War"
+      ],
+      "correctAnswer": 0,
+      "explanation": "India Gate commemorates the roughly 70,000 Indian soldiers who died fighting for the British Indian Army in World War I and the Third Anglo-Afghan War."
+    },
+    {
+      "id": "p6_q37",
+      "no": 37,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "The Sultan Azlan Shah Cup is an international tournament associated with which sport?",
+      "options": [
+        "Hockey",
+        "Football",
+        "Cricket",
+        "Badminton"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The Sultan Azlan Shah Cup is a prestigious international field hockey tournament held annually in Malaysia."
+    },
+    {
+      "id": "p6_q38",
+      "no": 38,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "How many players from each team are on the field at one time in a standard game of Kabaddi?",
+      "options": [
+        "5",
+        "7",
+        "9",
+        "11"
+      ],
+      "correctAnswer": 1,
+      "explanation": "In standard Kabaddi, each team fields 7 players on the mat at a time."
+    },
+    {
+      "id": "p6_q39",
+      "no": 39,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "The Khajuraho temples, famous for their intricate sculptures, are located in which Indian state?",
+      "options": [
+        "Odisha",
+        "Madhya Pradesh",
+        "Rajasthan",
+        "Uttar Pradesh"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The Khajuraho group of temples, built by the Chandela dynasty, is located in Madhya Pradesh and is a UNESCO World Heritage Site."
+    },
+    {
+      "id": "p6_q40",
+      "no": 40,
+      "section": "A",
+      "subsectionId": "a2",
+      "subject": "General Awareness",
+      "question": "Odissi, one of the classical dance forms of India, originated in which state?",
+      "options": [
+        "West Bengal",
+        "Assam",
+        "Odisha",
+        "Andhra Pradesh"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Odissi is a classical dance form that originated in the temples of Odisha and is characterised by fluid, sculpturesque body movements."
+    },
+    {
+      "id": "p6_q41",
+      "no": 41,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "The average of three numbers is 45. If one number is excluded, the average of the remaining two becomes 40. Find the excluded number.",
+      "options": [
+        "45",
+        "60",
+        "50",
+        "55"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Sum of the three numbers = 3×45 = 135. Sum of the remaining two = 2×40 = 80. Excluded number = 135 − 80 = 55."
+    },
+    {
+      "id": "p6_q42",
+      "no": 42,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "A student scored 456 marks out of a maximum of 600 marks. What percentage of marks did the student score?",
+      "options": [
+        "76%",
+        "78%",
+        "80%",
+        "72%"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Percentage = (456/600) × 100 = 76%."
+    },
+    {
+      "id": "p6_q43",
+      "no": 43,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "A trader marks his goods 40% above the cost price and then gives a discount of 10%. Find his profit percentage.",
+      "options": [
+        "26%",
+        "20%",
+        "30%",
+        "24%"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Let CP = 100. Marked price = 140. After a 10% discount, SP = 140 × 0.9 = 126. Profit = 126 − 100 = 26%."
+    },
+    {
+      "id": "p6_q44",
+      "no": 44,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "The ratio of present ages of A and B is 4:5. After 8 years, the ratio will become 5:6. Find A's present age.",
+      "options": [
+        "36 years",
+        "30 years",
+        "32 years",
+        "28 years"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Let the ages be 4x and 5x. Then (4x+8)/(5x+8) = 5/6 ⟹ 6(4x+8) = 5(5x+8) ⟹ 24x+48 = 25x+40 ⟹ x = 8. A's present age = 4×8 = 32 years."
+    },
+    {
+      "id": "p6_q45",
+      "no": 45,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "A sum of money doubles itself in 8 years at simple interest. Find the rate of interest per annum.",
+      "options": [
+        "10%",
+        "12.5%",
+        "15%",
+        "8%"
+      ],
+      "correctAnswer": 1,
+      "explanation": "If the sum doubles, SI equals the principal P. Using SI = PRT/100: P = P×R×8/100 ⟹ R = 100/8 = 12.5%."
+    },
+    {
+      "id": "p6_q46",
+      "no": 46,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "Find the compound interest on ₹15,000 at 20% per annum for 2 years, compounded annually.",
+      "options": [
+        "₹6,300",
+        "₹6,900",
+        "₹6,600",
+        "₹6,000"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Amount = 15000 × 1.2 × 1.2 = 15000 × 1.44 = ₹21,600. Compound interest = 21600 − 15000 = ₹6,600."
+    },
+    {
+      "id": "p6_q47",
+      "no": 47,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "A alone can finish a work in 15 days and B alone in 10 days. They work together for 3 days and then A leaves. In how many more days will B finish the remaining work?",
+      "options": [
+        "5 days",
+        "6 days",
+        "3 days",
+        "4 days"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Combined 1-day work = 1/15 + 1/10 = 5/30 = 1/6. In 3 days, they complete 3/6 = 1/2 of the work, leaving 1/2 remaining. B alone completes 1/10 of the work per day, so B needs (1/2) ÷ (1/10) = 5 days for the remaining work."
+    },
+    {
+      "id": "p6_q48",
+      "no": 48,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "A car covers a distance of 450 km in 9 hours. What is its speed in metres per second?",
+      "options": [
+        "Approximately 11.1 m/s",
+        "Approximately 15.6 m/s",
+        "Approximately 13.9 m/s",
+        "Approximately 12.5 m/s"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Speed = 450/9 = 50 km/hr = 50 × 5/18 = 125/9 ≈ 13.9 m/s."
+    },
+    {
+      "id": "p6_q49",
+      "no": 49,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "Find the LCM of 18, 24 and 36.",
+      "options": [
+        "72",
+        "144",
+        "108",
+        "96"
+      ],
+      "correctAnswer": 0,
+      "explanation": "18 = 2×3², 24 = 2³×3, 36 = 2²×3². LCM takes the highest power of each prime: 2³×3² = 8×9 = 72."
+    },
+    {
+      "id": "p6_q50",
+      "no": 50,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "Simplify: 15 − [8 − {3 + (6 − 4)}]",
+      "options": [
+        "12",
+        "14",
+        "10",
+        "9"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Working from the innermost bracket: 6−4=2; {3+2}=5; [8−5]=3; 15−3=12."
+    },
+    {
+      "id": "p6_q51",
+      "no": 51,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "If 30% of a number is 90, find 50% of that number.",
+      "options": [
+        "160",
+        "150",
+        "120",
+        "135"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The number = 90/0.30 = 300. 50% of 300 = 150."
+    },
+    {
+      "id": "p6_q52",
+      "no": 52,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "Divide ₹1,800 among A, B and C in the ratio 2:3:4. Find B's share.",
+      "options": [
+        "₹800",
+        "₹400",
+        "₹500",
+        "₹600"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Total parts = 2+3+4 = 9. B's share = 1800 × (3/9) = ₹600."
+    },
+    {
+      "id": "p6_q53",
+      "no": 53,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "The average marks of 30 students in a class is 68. If the average marks of the 18 boys is 72, find the average marks of the 12 girls.",
+      "options": [
+        "60",
+        "66",
+        "64",
+        "62"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Total marks of all students = 30×68 = 2040. Total marks of boys = 18×72 = 1296. Total marks of girls = 2040−1296 = 744. Average marks of girls = 744/12 = 62."
+    },
+    {
+      "id": "p6_q54",
+      "no": 54,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "By selling an article for ₹450, a shopkeeper incurs a loss of 10%. At what price should he sell it to gain 10%?",
+      "options": [
+        "₹550",
+        "₹500",
+        "₹540",
+        "₹495"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Cost price = 450/0.9 = ₹500. Selling price for a 10% gain = 500 × 1.1 = ₹550."
+    },
+    {
+      "id": "p6_q55",
+      "no": 55,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "If 8 workers can build a wall in 15 days, how many days will 12 workers take to build the same wall?",
+      "options": [
+        "9 days",
+        "10 days",
+        "8 days",
+        "12 days"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Using workers × days = constant: 8×15 = 12×D ⟹ D = 120/12 = 10 days."
+    },
+    {
+      "id": "p6_q56",
+      "no": 56,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "Two trains 120 m and 180 m long run in opposite directions on parallel tracks at speeds of 42 km/hr and 48 km/hr respectively. In what time will they completely cross each other?",
+      "options": [
+        "12 seconds",
+        "15 seconds",
+        "10 seconds",
+        "8 seconds"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Relative speed (opposite directions) = 42+48 = 90 km/hr = 90×5/18 = 25 m/s. Total length to be crossed = 120+180 = 300 m. Time = 300/25 = 12 seconds."
+    },
+    {
+      "id": "p6_q57",
+      "no": 57,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "Find the compound interest on ₹20,000 for 1.5 years at 10% per annum, compounded half-yearly.",
+      "options": [
+        "₹3,000.50",
+        "₹3,300",
+        "₹3,000",
+        "₹3,152.50"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Rate per half-year = 5%, number of half-year periods = 3. Amount = 20000 × (1.05)³ = 20000 × 1.157625 = ₹23,152.50. Compound interest = 23,152.50 − 20,000 = ₹3,152.50."
+    },
+    {
+      "id": "p6_q58",
+      "no": 58,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "The HCF of two numbers is 23 and their LCM is 1449. If one of the numbers is 161, find the other number.",
+      "options": [
+        "184",
+        "230",
+        "253",
+        "207"
+      ],
+      "correctAnswer": 3,
+      "explanation": "For two numbers, HCF × LCM = product of the numbers. Other number = (23 × 1449)/161 = 33,327/161 = 207."
+    },
+    {
+      "id": "p6_q59",
+      "no": 59,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "Find the value of: (2/3 + 3/4) ÷ (5/6)",
+      "options": [
+        "1.5",
+        "1.2",
+        "2.0",
+        "1.7"
+      ],
+      "correctAnswer": 3,
+      "explanation": "2/3 + 3/4 = 8/12 + 9/12 = 17/12. Dividing by 5/6: (17/12) × (6/5) = 102/60 = 17/10 = 1.7."
+    },
+    {
+      "id": "p6_q60",
+      "no": 60,
+      "section": "A",
+      "subsectionId": "a3",
+      "subject": "Arithmetical & Numerical Ability",
+      "question": "The price of an item is first increased by 20% and then decreased by 25%. What is the net percentage change?",
+      "options": [
+        "5% decrease",
+        "10% decrease",
+        "10% increase",
+        "No change"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Net multiplying factor = 1.20 × 0.75 = 0.90, meaning the final price is 90% of the original — a net decrease of 10%."
+    },
+    {
+      "id": "p6_q61",
+      "no": 61,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Choose the word most nearly similar in meaning to 'CANDID':",
+      "options": [
+        "Frank",
+        "Secretive",
+        "Deceptive",
+        "Evasive"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'Candid' means truthful and straightforward, which is closest in meaning to 'frank'."
+    },
+    {
+      "id": "p6_q62",
+      "no": 62,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Choose the word most opposite in meaning to 'ABUNDANT':",
+      "options": [
+        "Scarce",
+        "Copious",
+        "Ample",
+        "Plentiful"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'Abundant' means existing in large quantities; its opposite is 'scarce', meaning insufficient or in short supply."
+    },
+    {
+      "id": "p6_q63",
+      "no": 63,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Choose the correct meaning of the idiom: 'To add fuel to the fire'",
+      "options": [
+        "To ignore a problem",
+        "To make a bad situation worse",
+        "To calm a difficult situation",
+        "To start a new venture"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'To add fuel to the fire' means to say or do something that makes an already difficult or bad situation even worse."
+    },
+    {
+      "id": "p6_q64",
+      "no": 64,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Choose the correct one-word substitute for: 'A person who loves and collects books'",
+      "options": [
+        "Author",
+        "Librarian",
+        "Bibliographer",
+        "Bibliophile"
+      ],
+      "correctAnswer": 3,
+      "explanation": "'Bibliophile' precisely means a person who loves books, especially for their content, value or rarity."
+    },
+    {
+      "id": "p6_q65",
+      "no": 65,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Spot the error in the sentence: 'The number of students (a) / in the class (b) / have increased (c) / No error (d)'",
+      "options": [
+        "The number of students",
+        "No error",
+        "in the class",
+        "have increased"
+      ],
+      "correctAnswer": 3,
+      "explanation": "The phrase 'the number of' is treated as singular, so the verb should be 'has increased', not 'have increased'."
+    },
+    {
+      "id": "p6_q66",
+      "no": 66,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Fill in the blank with the most appropriate preposition: 'He is good ___ mathematics.'",
+      "options": [
+        "in",
+        "with",
+        "for",
+        "at"
+      ],
+      "correctAnswer": 3,
+      "explanation": "The idiomatic expression is 'good at' a subject or skill, such as 'good at mathematics'."
+    },
+    {
+      "id": "p6_q67",
+      "no": 67,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Choose the correct improvement for the underlined part: 'I have saw that movie already.'",
+      "options": [
+        "No improvement",
+        "have seen",
+        "has saw",
+        "have see"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The present perfect tense requires the past participle form of the verb, which is 'seen', not 'saw': 'I have seen that movie already.'"
+    },
+    {
+      "id": "p6_q68",
+      "no": 68,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Choose the word most nearly similar in meaning to 'DILIGENT':",
+      "options": [
+        "Lazy",
+        "Careless",
+        "Indifferent",
+        "Hardworking"
+      ],
+      "correctAnswer": 3,
+      "explanation": "'Diligent' means showing careful and persistent effort in one's work, closest in meaning to 'hardworking'."
+    },
+    {
+      "id": "p6_q69",
+      "no": 69,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Choose the word most opposite in meaning to 'GENEROUS':",
+      "options": [
+        "Stingy",
+        "Magnanimous",
+        "Charitable",
+        "Liberal"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'Generous' means willing to give freely; its opposite is 'stingy', meaning unwilling to spend or give."
+    },
+    {
+      "id": "p6_q70",
+      "no": 70,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Choose the correct meaning of the idiom: 'To pull someone's leg'",
+      "options": [
+        "To betray someone's trust",
+        "To compete with someone",
+        "To joke or tease someone",
+        "To help someone in trouble"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'To pull someone's leg' means to playfully joke with or tease someone, not seriously meant to harm."
+    },
+    {
+      "id": "p6_q71",
+      "no": 71,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Choose the correct one-word substitute for: 'A person who can speak many languages'",
+      "options": [
+        "Linguist",
+        "Polyglot",
+        "Translator",
+        "Interpreter"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Polyglot' precisely means a person who knows and can use several languages."
+    },
+    {
+      "id": "p6_q72",
+      "no": 72,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Spot the error in the sentence: 'She is senior (a) / than me (b) / in the office (c) / No error (d)'",
+      "options": [
+        "than me",
+        "She is senior",
+        "No error",
+        "in the office"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The adjective 'senior' is followed by 'to', not 'than': the correct phrase is 'senior to me'."
+    },
+    {
+      "id": "p6_q73",
+      "no": 73,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Fill in the blank with the most appropriate preposition: 'They have been married ___ ten years.'",
+      "options": [
+        "from",
+        "during",
+        "since",
+        "for"
+      ],
+      "correctAnswer": 3,
+      "explanation": "'For' is used to indicate a duration of time (such as 'ten years'), whereas 'since' is used with a specific starting point."
+    },
+    {
+      "id": "p6_q74",
+      "no": 74,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Choose the correct improvement for the underlined part: 'He is too weak to walked.'",
+      "options": [
+        "walking",
+        "to walk",
+        "walked",
+        "No improvement"
+      ],
+      "correctAnswer": 1,
+      "explanation": "After 'too...to', the base (infinitive) form of the verb is required: 'He is too weak to walk.'"
+    },
+    {
+      "id": "p6_q75",
+      "no": 75,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Choose the word most nearly similar in meaning to 'ABOLISH':",
+      "options": [
+        "Create",
+        "Eliminate",
+        "Preserve",
+        "Establish"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Abolish' means to formally put an end to a system or practice, closest in meaning to 'eliminate'."
+    },
+    {
+      "id": "p6_q76",
+      "no": 76,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Choose the word most opposite in meaning to 'OPTIMISTIC':",
+      "options": [
+        "Hopeful",
+        "Positive",
+        "Pessimistic",
+        "Confident"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'Optimistic' means hopeful and confident about the future; its opposite is 'pessimistic', meaning expecting the worst."
+    },
+    {
+      "id": "p6_q77",
+      "no": 77,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Choose the correct meaning of the idiom: 'To turn over a new leaf'",
+      "options": [
+        "To change one's residence",
+        "To read a book carefully",
+        "To lose interest in something",
+        "To start afresh and behave in a better way"
+      ],
+      "correctAnswer": 3,
+      "explanation": "'To turn over a new leaf' means to make a fresh start, especially by improving one's behaviour or habits."
+    },
+    {
+      "id": "p6_q78",
+      "no": 78,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Choose the correct one-word substitute for: 'A person who does not believe in the existence of God'",
+      "options": [
+        "Pagan",
+        "Agnostic",
+        "Fanatic",
+        "Atheist"
+      ],
+      "correctAnswer": 3,
+      "explanation": "'Atheist' precisely refers to a person who does not believe that God or gods exist."
+    },
+    {
+      "id": "p6_q79",
+      "no": 79,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Spot the error in the sentence: 'Neither the manager nor the employees (a) / was informed (b) / about the meeting (c) / No error (d)'",
+      "options": [
+        "Neither the manager nor the employees",
+        "was informed",
+        "No error",
+        "about the meeting"
+      ],
+      "correctAnswer": 1,
+      "explanation": "In 'neither...nor' constructions, the verb agrees with the subject nearer to it. Since 'employees' (plural) is nearer, the verb should be 'were informed', not 'was informed'."
+    },
+    {
+      "id": "p6_q80",
+      "no": 80,
+      "section": "A",
+      "subsectionId": "a4",
+      "subject": "English Language & Comprehension",
+      "question": "Fill in the blank with the most appropriate preposition: 'She is afraid ___ dogs.'",
+      "options": [
+        "from",
+        "of",
+        "at",
+        "with"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The correct idiomatic preposition after 'afraid' is 'of', as in 'afraid of dogs'."
+    },
+    {
+      "id": "p6_q81",
+      "no": 81,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "निम्नलिखित में से 'पृथ्वी' का पर्यायवाची शब्द नहीं है:",
+      "options": [
+        "वसुधा",
+        "भूमि",
+        "धरा",
+        "गगन"
+      ],
+      "correctAnswer": 3,
+      "explanation": "'गगन' का अर्थ है 'आकाश', जो 'पृथ्वी' का पर्यायवाची नहीं है। धरा, वसुधा और भूमि — तीनों 'पृथ्वी' के पर्यायवाची हैं।"
+    },
+    {
+      "id": "p6_q82",
+      "no": 82,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "निम्नलिखित में से 'रात' का पर्यायवाची शब्द नहीं है:",
+      "options": [
+        "दिवस",
+        "निशा",
+        "यामिनी",
+        "रजनी"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'दिवस' का अर्थ है 'दिन', जो 'रात' का पर्यायवाची नहीं है। निशा, रजनी और यामिनी — तीनों 'रात' के पर्यायवाची हैं।"
+    },
+    {
+      "id": "p6_q83",
+      "no": 83,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'आरोहण' का विलोम शब्द है:",
+      "options": [
+        "उत्थान",
+        "अवरोहण",
+        "प्रस्थान",
+        "आगमन"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'आरोहण' (ऊपर चढ़ना) का विलोम शब्द 'अवरोहण' (नीचे उतरना) है।"
+    },
+    {
+      "id": "p6_q84",
+      "no": 84,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'स्वतंत्र' का विलोम शब्द है:",
+      "options": [
+        "पराधीन",
+        "स्वच्छंद",
+        "निर्बंध",
+        "मुक्त"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'स्वतंत्र' (आज़ाद) का विलोम शब्द 'पराधीन' (जो स्वतंत्र न हो, दूसरों के अधीन) है।"
+    },
+    {
+      "id": "p6_q85",
+      "no": 85,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "मुहावरा 'अपना उल्लू सीधा करना' का सही अर्थ है:",
+      "options": [
+        "बहुत मेहनत करना",
+        "स्वार्थ सिद्ध करना",
+        "ईमानदारी से काम करना",
+        "दूसरों की मदद करना"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'अपना उल्लू सीधा करना' मुहावरे का अर्थ है केवल अपना स्वार्थ पूरा करना, चाहे दूसरों को कोई भी हानि हो।"
+    },
+    {
+      "id": "p6_q86",
+      "no": 86,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "मुहावरा 'हाथ पैर मारना' का सही अर्थ है:",
+      "options": [
+        "थक जाना",
+        "आराम करना",
+        "भरसक प्रयत्न करना",
+        "झगड़ा करना"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'हाथ पैर मारना' मुहावरे का अर्थ है किसी काम को पूरा करने के लिए अपनी पूरी शक्ति से प्रयास करना।"
+    },
+    {
+      "id": "p6_q87",
+      "no": 87,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'जो पहले कभी न हुआ हो' के लिए एक शब्द है:",
+      "options": [
+        "अकल्पनीय",
+        "अभूतपूर्व",
+        "असाधारण",
+        "अद्वितीय"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'जो पहले कभी न हुआ हो' के लिए प्रयुक्त उपयुक्त एक शब्द 'अभूतपूर्व' है।"
+    },
+    {
+      "id": "p6_q88",
+      "no": 88,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'स्त्री और पुरुष दोनों के लिए प्रयुक्त होने वाला शब्द' के लिए एक शब्द है:",
+      "options": [
+        "उभयलिंगी",
+        "द्विलिंगी",
+        "समलिंगी",
+        "नपुंसक"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'स्त्री और पुरुष दोनों के लिए प्रयुक्त होने वाला शब्द' के लिए उपयुक्त एक शब्द 'उभयलिंगी' है।"
+    },
+    {
+      "id": "p6_q89",
+      "no": 89,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "निम्नलिखित वाक्य का शुद्ध रूप चुनिए: 'बालिकाएँ खेल रहा है।'",
+      "options": [
+        "बालिकाएँ खेल रही हैं।",
+        "बालिकाएँ खेला रही है।",
+        "बालिकाएँ खेल रहे हैं।",
+        "बालिका खेल रहा है।"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'बालिकाएँ' शब्द स्त्रीलिंग बहुवचन है, इसलिए क्रिया भी स्त्रीलिंग बहुवचन होनी चाहिए — 'खेल रही हैं', न कि 'खेल रहा है'।"
+    },
+    {
+      "id": "p6_q90",
+      "no": 90,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'विद्यालय' शब्द में कौन-सी संधि है?",
+      "options": [
+        "दीर्घ संधि",
+        "यण संधि",
+        "वृद्धि संधि",
+        "गुण संधि"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'विद्या + आलय' में 'अ' और 'आ' मिलकर 'आ' बनता है (आ+आ=आ, दीर्घ स्वर), जो दीर्घ संधि का नियम है।"
+    },
+    {
+      "id": "p6_q91",
+      "no": 91,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'त्रिभुज' शब्द में कौन-सा समास है?",
+      "options": [
+        "कर्मधारय समास",
+        "बहुव्रीहि समास",
+        "तत्पुरुष समास",
+        "द्विगु समास"
+      ],
+      "correctAnswer": 3,
+      "explanation": "'त्रिभुज' का अर्थ है 'तीन भुजाओं का समूह', जिसमें पहला पद संख्यावाचक है — यह द्विगु समास का उदाहरण है।"
+    },
+    {
+      "id": "p6_q92",
+      "no": 92,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'हस्त' शब्द का तद्भव रूप है:",
+      "options": [
+        "भुजा",
+        "कर",
+        "पाणि",
+        "हाथ"
+      ],
+      "correctAnswer": 3,
+      "explanation": "'हस्त' तत्सम शब्द है और इसका तद्भव रूप 'हाथ' है।"
+    },
+    {
+      "id": "p6_q93",
+      "no": 93,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'चन्द्र' शब्द का तद्भव रूप है:",
+      "options": [
+        "चाँद",
+        "शशि",
+        "इन्दु",
+        "चंद्रमा"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'चन्द्र' तत्सम शब्द है और इसका तद्भव रूप 'चाँद' है।"
+    },
+    {
+      "id": "p6_q94",
+      "no": 94,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'गाय' शब्द का बहुवचन रूप क्या है?",
+      "options": [
+        "गायों",
+        "गायेँ",
+        "गाय",
+        "गायें"
+      ],
+      "correctAnswer": 3,
+      "explanation": "'गाय' (एकवचन, स्त्रीलिंग) का सही बहुवचन रूप 'गायें' है।"
+    },
+    {
+      "id": "p6_q95",
+      "no": 95,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "निम्नलिखित में से कौन-सा शब्द पुल्लिंग है?",
+      "options": [
+        "कमरा",
+        "कुर्सी",
+        "मेज",
+        "किताब"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'कमरा' शब्द पुल्लिंग है, जबकि किताब, मेज और कुर्सी — तीनों स्त्रीलिंग शब्द हैं।"
+    },
+    {
+      "id": "p6_q96",
+      "no": 96,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "निम्नलिखित में से 'अमृत' का पर्यायवाची शब्द नहीं है:",
+      "options": [
+        "सुधा",
+        "पीयूष",
+        "गरल",
+        "अमिय"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'गरल' का अर्थ है 'विष', जो 'अमृत' का विलोम है, पर्यायवाची नहीं। सुधा, पीयूष और अमिय — तीनों 'अमृत' के पर्यायवाची हैं।"
+    },
+    {
+      "id": "p6_q97",
+      "no": 97,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'प्राचीन' का विलोम शब्द है:",
+      "options": [
+        "पुराना",
+        "अर्वाचीन",
+        "प्राचीनतम",
+        "पुरातन"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'प्राचीन' (पुराना) का विलोम शब्द 'अर्वाचीन' (नया/आधुनिक) है।"
+    },
+    {
+      "id": "p6_q98",
+      "no": 98,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "मुहावरा 'कान भरना' का सही अर्थ है:",
+      "options": [
+        "सलाह देना",
+        "चुपचाप सुनना",
+        "किसी के विरुद्ध भड़काना",
+        "प्रशंसा करना"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'कान भरना' मुहावरे का अर्थ है किसी के मन में किसी अन्य व्यक्ति के विरुद्ध गलत बातें डालकर भड़काना।"
+    },
+    {
+      "id": "p6_q99",
+      "no": 99,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'जो विश्वास के योग्य हो' के लिए एक शब्द है:",
+      "options": [
+        "संदिग्ध",
+        "विश्वासघाती",
+        "विश्वसनीय",
+        "अविश्वसनीय"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'जो विश्वास के योग्य हो' के लिए प्रयुक्त उपयुक्त एक शब्द 'विश्वसनीय' है।"
+    },
+    {
+      "id": "p6_q100",
+      "no": 100,
+      "section": "A",
+      "subsectionId": "a5",
+      "subject": "Hindi Language & Comprehension",
+      "question": "'महोदय' शब्द में कौन-सी संधि है?",
+      "options": [
+        "गुण संधि",
+        "दीर्घ संधि",
+        "यण संधि",
+        "वृद्धि संधि"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'महा + उदय' में 'आ' और 'उ' मिलकर 'ओ' बनता है (आ+उ=ओ), जो गुण संधि का नियम है।"
+    },
+    {
+      "id": "p6_q101",
+      "no": 101,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "Which is the smallest bone in the human body?",
+      "options": [
+        "Hyoid",
+        "Stapes",
+        "Malleus",
+        "Incus"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The stapes, one of the three tiny ossicles of the middle ear, is the smallest bone in the human body."
+    },
+    {
+      "id": "p6_q102",
+      "no": 102,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The scaphoid, a carpal bone commonly fractured in FOOSH (fall on outstretched hand) injuries, is located in which part of the body?",
+      "options": [
+        "Wrist",
+        "Elbow",
+        "Ankle",
+        "Shoulder"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The scaphoid is one of the eight carpal bones of the wrist and is the most commonly fractured carpal bone, often from a fall on an outstretched hand."
+    },
+    {
+      "id": "p6_q103",
+      "no": 103,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The greater trochanter of the femur, used as a positioning landmark, lies at approximately the same level as which pelvic landmark?",
+      "options": [
+        "Iliac crest",
+        "Symphysis pubis",
+        "Coccyx",
+        "Sacral promontory"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The greater trochanter is commonly used as a positioning landmark that corresponds approximately to the level of the symphysis pubis and the hip joint."
+    },
+    {
+      "id": "p6_q104",
+      "no": 104,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "Which muscle is the primary muscle of inspiration, responsible for most of the work of breathing at rest?",
+      "options": [
+        "Sternocleidomastoid",
+        "Rectus abdominis",
+        "Diaphragm",
+        "Intercostal muscles"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The diaphragm, a dome-shaped musculotendinous structure, is the principal muscle of inspiration, contracting and flattening to increase thoracic volume during quiet breathing."
+    },
+    {
+      "id": "p6_q105",
+      "no": 105,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The brachial plexus, responsible for innervating the upper limb, is formed by the ventral rami of which spinal nerve roots?",
+      "options": [
+        "C1–C4",
+        "T1–T5",
+        "L1–L4",
+        "C5–T1"
+      ],
+      "correctAnswer": 3,
+      "explanation": "The brachial plexus is formed by the ventral rami of spinal nerves C5 through T1, supplying motor and sensory innervation to the upper limb."
+    },
+    {
+      "id": "p6_q106",
+      "no": 106,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "Which valve separates the left atrium from the left ventricle?",
+      "options": [
+        "Aortic valve",
+        "Pulmonary valve",
+        "Mitral (bicuspid) valve",
+        "Tricuspid valve"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The mitral valve, also called the bicuspid valve, has two leaflets and controls blood flow from the left atrium into the left ventricle."
+    },
+    {
+      "id": "p6_q107",
+      "no": 107,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The functional unit of the kidney, responsible for filtration and urine formation, is called the:",
+      "options": [
+        "Ureter",
+        "Glomerulus alone",
+        "Nephron",
+        "Bowman's capsule alone"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The nephron is the basic structural and functional unit of the kidney, comprising the glomerulus, Bowman's capsule and the renal tubule system."
+    },
+    {
+      "id": "p6_q108",
+      "no": 108,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "Which cranial nerve is primarily responsible for the movement of most extraocular muscles (except the superior oblique and lateral rectus)?",
+      "options": [
+        "Trochlear nerve (CN IV)",
+        "Optic nerve (CN II)",
+        "Abducens nerve (CN VI)",
+        "Oculomotor nerve (CN III)"
+      ],
+      "correctAnswer": 3,
+      "explanation": "The oculomotor nerve (CN III) innervates most of the extraocular muscles, along with the levator palpebrae superioris and the pupillary constrictor muscles."
+    },
+    {
+      "id": "p6_q109",
+      "no": 109,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The falciform ligament divides the liver into which two lobes?",
+      "options": [
+        "Right and left lobes",
+        "Superior and inferior lobes",
+        "Anterior and posterior lobes",
+        "Caudate and quadrate lobes"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The falciform ligament, a peritoneal fold, anatomically divides the liver into the larger right lobe and the smaller left lobe."
+    },
+    {
+      "id": "p6_q110",
+      "no": 110,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "Which part of the brain is primarily responsible for the coordination of voluntary movement and balance?",
+      "options": [
+        "Medulla oblongata",
+        "Cerebellum",
+        "Cerebrum",
+        "Thalamus"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The cerebellum coordinates voluntary movements such as posture, balance and speech, ensuring smooth and accurate motor activity."
+    },
+    {
+      "id": "p6_q111",
+      "no": 111,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The trachea bifurcates into the right and left main bronchi. Which of these is shorter, wider and more vertical, making it a more common site for aspirated foreign bodies?",
+      "options": [
+        "Both are equal",
+        "Neither, the trachea itself is the common site",
+        "Right main bronchus",
+        "Left main bronchus"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The right main bronchus is shorter, wider and more vertically oriented than the left, making aspirated foreign bodies more likely to lodge there."
+    },
+    {
+      "id": "p6_q112",
+      "no": 112,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The pleura is a double-layered serous membrane surrounding which organ?",
+      "options": [
+        "Heart",
+        "Lungs",
+        "Liver",
+        "Kidneys"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The pleura consists of a visceral layer covering the lungs and a parietal layer lining the thoracic cavity, with a thin fluid-filled space between them."
+    },
+    {
+      "id": "p6_q113",
+      "no": 113,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "Which bone forms the posterior part of the hard palate along with the maxilla?",
+      "options": [
+        "Vomer",
+        "Palatine bone",
+        "Ethmoid bone",
+        "Zygomatic bone"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The palatine bones, located at the back of the nasal cavity, form the posterior part of the hard palate along with the palatine processes of the maxilla."
+    },
+    {
+      "id": "p6_q114",
+      "no": 114,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The sciatic nerve, the longest and widest nerve in the human body, originates primarily from which plexus?",
+      "options": [
+        "Cervical plexus",
+        "Coeliac plexus",
+        "Brachial plexus",
+        "Sacral plexus (lumbosacral plexus)"
+      ],
+      "correctAnswer": 3,
+      "explanation": "The sciatic nerve arises from the lumbosacral plexus (nerve roots L4–S3), formed within the sacral plexus, and supplies most of the skin and muscles of the leg and foot."
+    },
+    {
+      "id": "p6_q115",
+      "no": 115,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "Which chamber of the heart has the thickest muscular wall, since it must generate enough pressure to pump blood through the systemic circulation?",
+      "options": [
+        "Left ventricle",
+        "Left atrium",
+        "Right atrium",
+        "Right ventricle"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The left ventricle has the thickest myocardial wall of all four chambers because it must generate high pressure to pump oxygenated blood throughout the entire systemic circulation."
+    },
+    {
+      "id": "p6_q116",
+      "no": 116,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The pituitary gland, often called the 'master gland' of the endocrine system, is housed within which bony structure of the skull?",
+      "options": [
+        "Cribriform plate",
+        "Foramen magnum",
+        "Sella turcica (of the sphenoid bone)",
+        "Mastoid process"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The pituitary gland sits in a saddle-shaped depression called the sella turcica, part of the sphenoid bone at the base of the skull."
+    },
+    {
+      "id": "p6_q117",
+      "no": 117,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "Which structure connects the two cerebral hemispheres, allowing communication between them?",
+      "options": [
+        "Hypothalamus",
+        "Cerebellum",
+        "Brainstem",
+        "Corpus callosum"
+      ],
+      "correctAnswer": 3,
+      "explanation": "The corpus callosum is a thick band of nerve fibres that connects the left and right cerebral hemispheres, enabling interhemispheric communication."
+    },
+    {
+      "id": "p6_q118",
+      "no": 118,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The manubrium, body and xiphoid process together form which bone?",
+      "options": [
+        "Sternum",
+        "Scapula",
+        "Rib cage as a whole",
+        "Clavicle"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The sternum (breastbone) is composed of three parts: the manubrium (superior), the body (middle), and the xiphoid process (inferior)."
+    },
+    {
+      "id": "p6_q119",
+      "no": 119,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "Which type of epithelium lines the alveoli of the lungs, enabling efficient gas exchange?",
+      "options": [
+        "Pseudostratified ciliated epithelium",
+        "Simple columnar epithelium",
+        "Stratified squamous epithelium",
+        "Simple squamous epithelium"
+      ],
+      "correctAnswer": 3,
+      "explanation": "The alveoli are lined by simple squamous epithelium, whose extremely thin, flattened cells minimise the diffusion distance for efficient gas exchange."
+    },
+    {
+      "id": "p6_q120",
+      "no": 120,
+      "section": "B",
+      "subsectionId": "b1",
+      "subject": "Human Anatomy & Physiology",
+      "question": "The coronary sinus, which drains most of the venous blood from the heart muscle, empties into which chamber?",
+      "options": [
+        "Right ventricle",
+        "Left ventricle",
+        "Left atrium",
+        "Right atrium"
+      ],
+      "correctAnswer": 3,
+      "explanation": "The coronary sinus collects most of the deoxygenated venous blood from the myocardium and drains it directly into the right atrium."
+    },
+    {
+      "id": "p6_q121",
+      "no": 121,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "Which type of hypersensitivity reaction is responsible for anaphylactic/anaphylactoid shock, such as that seen with iodinated contrast media?",
+      "options": [
+        "Type I hypersensitivity (immediate)",
+        "Type II hypersensitivity",
+        "Type IV hypersensitivity",
+        "Type III hypersensitivity"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Anaphylactic reactions are classically Type I (immediate) hypersensitivity reactions, mediated by IgE and mast cell degranulation, producing rapid-onset symptoms."
+    },
+    {
+      "id": "p6_q122",
+      "no": 122,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "A localised collection of pus within a cavity, walled off by inflamed tissue, is termed:",
+      "options": [
+        "Cyst",
+        "Granuloma",
+        "Ulcer",
+        "Abscess"
+      ],
+      "correctAnswer": 3,
+      "explanation": "An abscess is a localised collection of pus surrounded by inflamed tissue, typically resulting from a bacterial infection."
+    },
+    {
+      "id": "p6_q123",
+      "no": 123,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "The suffix '-itis' in medical terminology denotes:",
+      "options": [
+        "Tumour formation",
+        "Inflammation",
+        "Deficiency",
+        "Surgical removal"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The suffix '-itis' means inflammation, as in 'appendicitis' (inflammation of the appendix) or 'hepatitis' (inflammation of the liver)."
+    },
+    {
+      "id": "p6_q124",
+      "no": 124,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "Which type of gangrene results from arterial occlusion without significant bacterial infection, presenting as dry, shrivelled, mummified tissue?",
+      "options": [
+        "Fournier's gangrene",
+        "Dry gangrene",
+        "Gas gangrene",
+        "Wet gangrene"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Dry gangrene develops slowly from a gradual reduction in arterial blood supply, producing dry, shrivelled and mummified tissue without significant bacterial superinfection."
+    },
+    {
+      "id": "p6_q125",
+      "no": 125,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "As per Bio-Medical Waste Management Rules, which colour-coded bag/container is used for contaminated recyclable waste such as IV tubing and catheters?",
+      "options": [
+        "Red",
+        "Yellow",
+        "Black",
+        "White"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Red bags/containers are designated for contaminated recyclable waste such as tubing, bottles, catheters and other plastic items, meant for autoclaving or microwaving before recycling."
+    },
+    {
+      "id": "p6_q126",
+      "no": 126,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "Atrophy refers to:",
+      "options": [
+        "The complete death of tissue",
+        "A decrease in the size of a cell, tissue or organ due to reduced functional demand or blood supply",
+        "An increase in the number of cells in a tissue",
+        "Abnormal, disorganised cell growth"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Atrophy is the shrinkage in size of a cell, tissue or organ, often occurring due to disuse, reduced blood supply, or loss of hormonal/nervous stimulation."
+    },
+    {
+      "id": "p6_q127",
+      "no": 127,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "Hyperplasia refers to:",
+      "options": [
+        "Programmed cell death",
+        "An increase in the number of cells in a tissue or organ, leading to increased size",
+        "Abnormal cell differentiation",
+        "A decrease in cell number"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Hyperplasia is an increase in the number of cells in an organ or tissue, usually in response to a stimulus, resulting in increased organ/tissue size."
+    },
+    {
+      "id": "p6_q128",
+      "no": 128,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "The process by which the body isolates a foreign body or necrotic tissue by surrounding it with fibrous connective tissue is termed:",
+      "options": [
+        "Regeneration",
+        "Metaplasia",
+        "Encapsulation",
+        "Resolution"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Encapsulation is the process by which the body walls off material it cannot remove or destroy (such as a foreign body or caseous necrotic focus) with a fibrous capsule."
+    },
+    {
+      "id": "p6_q129",
+      "no": 129,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "Which term describes the death of a localised area of tissue due to inadequate blood supply?",
+      "options": [
+        "Infarction",
+        "Hypertrophy",
+        "Atrophy",
+        "Dysplasia"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Infarction refers to tissue death (necrosis) resulting from an inadequate blood supply (ischemia) to that area, as seen in myocardial or cerebral infarction."
+    },
+    {
+      "id": "p6_q130",
+      "no": 130,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "A patient refusing a radiological procedure even after being informed of the risks of not undergoing it is exercising their right to:",
+      "options": [
+        "A second medical opinion",
+        "Confidentiality",
+        "Refuse treatment (patient autonomy)",
+        "Compensation"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Patient autonomy includes the right to refuse a recommended treatment or procedure after being adequately informed, and this decision must be respected by healthcare providers."
+    },
+    {
+      "id": "p6_q131",
+      "no": 131,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "Which term best describes 'nosocomial infection'?",
+      "options": [
+        "A seasonal viral infection",
+        "An infection acquired within a healthcare facility (hospital-acquired infection)",
+        "A congenital infection present at birth",
+        "An infection transmitted through food"
+      ],
+      "correctAnswer": 1,
+      "explanation": "A nosocomial (hospital-acquired) infection is one that a patient develops during their stay in a healthcare facility, not present or incubating at the time of admission."
+    },
+    {
+      "id": "p6_q132",
+      "no": 132,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "Granulomatous inflammation, characterised by the formation of granulomas (organised collections of macrophages), is classically associated with which disease?",
+      "options": [
+        "Tuberculosis",
+        "Urinary tract infection",
+        "Acute appendicitis",
+        "Common cold"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Tuberculosis is a classic example of granulomatous inflammation, in which activated macrophages aggregate to form granulomas, often with central caseous necrosis."
+    },
+    {
+      "id": "p6_q133",
+      "no": 133,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "The term used for the spread of infection or malignant cells via the bloodstream is:",
+      "options": [
+        "Lymphatic spread",
+        "Transluminal spread",
+        "Haematogenous spread",
+        "Direct (contiguous) spread"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Haematogenous spread refers to the dissemination of infectious agents or malignant cells through the bloodstream to distant sites."
+    },
+    {
+      "id": "p6_q134",
+      "no": 134,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "Personal Protective Equipment (PPE) such as gloves, gowns and masks is primarily used to prevent:",
+      "options": [
+        "Radiation exposure",
+        "Transmission of infection between patient and healthcare worker",
+        "Chemical burns",
+        "Musculoskeletal injury"
+      ],
+      "correctAnswer": 1,
+      "explanation": "PPE forms a barrier that protects both the healthcare worker and the patient from the transmission of infectious agents through contact, droplet or airborne routes."
+    },
+    {
+      "id": "p6_q135",
+      "no": 135,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "A benign tumour of fatty (adipose) tissue is termed:",
+      "options": [
+        "Lipoma",
+        "Osteoma",
+        "Liposarcoma",
+        "Fibroma"
+      ],
+      "correctAnswer": 0,
+      "explanation": "A lipoma is a common benign tumour arising from adipose (fatty) tissue; its malignant counterpart is called a liposarcoma."
+    },
+    {
+      "id": "p6_q136",
+      "no": 136,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "Which term describes an abnormal, usually reversible change in which one differentiated cell type is replaced by another cell type better able to withstand an adverse environment, such as chronic irritation?",
+      "options": [
+        "Metaplasia",
+        "Anaplasia",
+        "Dysplasia",
+        "Neoplasia"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Metaplasia is the reversible replacement of one differentiated cell type by another, often as an adaptive response to chronic irritation or stress."
+    },
+    {
+      "id": "p6_q137",
+      "no": 137,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "As per Bio-Medical Waste Management Rules, glassware and metallic body implants are disposed of in which colour-coded container?",
+      "options": [
+        "Blue",
+        "Black",
+        "Yellow",
+        "Red"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Blue containers/puncture-proof boxes are used for the disposal of glassware and metallic body implants, meant for disinfection followed by recycling."
+    },
+    {
+      "id": "p6_q138",
+      "no": 138,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "Checking a patient's history for asthma, prior contrast reactions and renal function before administering IV contrast is part of:",
+      "options": [
+        "Radiation dose optimisation only",
+        "Post-procedure monitoring only",
+        "Equipment quality assurance",
+        "Pre-procedure risk assessment (informed consent process)"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Reviewing relevant history (allergies, prior reactions, renal function) before contrast administration is a key part of pre-procedure risk assessment, which also informs the informed consent discussion."
+    },
+    {
+      "id": "p6_q139",
+      "no": 139,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "Which vital parameters are most immediately monitored during a suspected anaphylactic reaction to contrast media?",
+      "options": [
+        "Blood pressure and pulse (with respiratory status)",
+        "Urine output alone",
+        "Body temperature alone",
+        "Blood glucose alone"
+      ],
+      "correctAnswer": 0,
+      "explanation": "During a suspected contrast reaction, blood pressure, pulse and respiratory status are the vital parameters most immediately monitored to guide emergency management."
+    },
+    {
+      "id": "p6_q140",
+      "no": 140,
+      "section": "B",
+      "subsectionId": "b2",
+      "subject": "Pathology & Patient Care",
+      "question": "Standard/universal precautions in a radiology department primarily aim to protect healthcare workers from exposure to:",
+      "options": [
+        "Blood-borne pathogens",
+        "Loud noise",
+        "Extreme temperatures",
+        "Ionising radiation"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Universal precautions require treating all blood and body fluids as potentially infectious, primarily to prevent the transmission of blood-borne pathogens such as HIV and hepatitis viruses."
+    },
+    {
+      "id": "p6_q141",
+      "no": 141,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Which Hounsfield Unit (HU) range is most typical for cortical (compact) bone on a CT scan?",
+      "options": [
+        "+1000 to +3000 HU",
+        "0 HU",
+        "-100 to -50 HU",
+        "+30 to +45 HU"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Dense cortical bone shows very high attenuation on CT, typically ranging from approximately +1000 to +3000 HU, well above water (0 HU) and soft tissue (~+30 to +45 HU)."
+    },
+    {
+      "id": "p6_q142",
+      "no": 142,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Fat on a CT scan typically shows Hounsfield Unit (HU) values in which range?",
+      "options": [
+        "+30 to +45 HU",
+        "+1000 HU and above",
+        "-100 to -50 HU",
+        "0 HU"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Fat is less dense than water and attenuates X-rays less, giving it negative HU values, typically in the range of approximately -100 to -50 HU."
+    },
+    {
+      "id": "p6_q143",
+      "no": 143,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "In MRI, the term 'k-space' refers to:",
+      "options": [
+        "A type of pulse sequence used for fat suppression",
+        "The physical space occupied by the magnet bore",
+        "A data matrix in which raw MR signal data is stored before Fourier transformation into an image",
+        "The area outside Zone IV accessible to the public"
+      ],
+      "correctAnswer": 2,
+      "explanation": "K-space is an abstract data matrix that stores the raw spatial-frequency signal data acquired during an MRI scan; a Fourier transform of k-space produces the final image."
+    },
+    {
+      "id": "p6_q144",
+      "no": 144,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Which type of MRI sequence, characterised by a very short TR and TE, is commonly used for rapid imaging and 3D acquisitions?",
+      "options": [
+        "Spin echo",
+        "Inversion recovery",
+        "Gradient echo (GRE)",
+        "Fast spin echo only"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Gradient echo sequences use short TR and TE values and a variable flip angle, enabling much faster acquisition than conventional spin echo sequences, useful for 3D and dynamic imaging."
+    },
+    {
+      "id": "p6_q145",
+      "no": 145,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Diffusion-Weighted Imaging (DWI) in MRI is particularly sensitive for the early detection of:",
+      "options": [
+        "Chronic degenerative joint disease",
+        "Simple renal cysts",
+        "Uncomplicated fatty liver",
+        "Acute cerebral infarction (stroke)"
+      ],
+      "correctAnswer": 3,
+      "explanation": "DWI detects the restricted movement of water molecules that occurs in cytotoxic oedema, making it highly sensitive for identifying acute ischemic stroke often within minutes of onset."
+    },
+    {
+      "id": "p6_q146",
+      "no": 146,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "In MRI safety zoning, Zone II typically refers to:",
+      "options": [
+        "A publicly accessible waiting area with no screening",
+        "The MRI control room only",
+        "The scanner (magnet) room itself",
+        "An interface/transition area between the public Zone I and the more restricted Zone III, where patients are greeted and screened"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Zone II is a transition/interface zone between the freely accessible public area (Zone I) and the restricted areas (Zone III/IV), where patient screening for MRI safety typically occurs."
+    },
+    {
+      "id": "p6_q147",
+      "no": 147,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "In CT imaging, the term 'slice thickness' refers to:",
+      "options": [
+        "The total length of the anatomical region scanned",
+        "The distance the table moves per rotation",
+        "The diameter of the X-ray tube's focal spot",
+        "The width of the tissue volume represented in each reconstructed image"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Slice thickness is the thickness of the tissue volume that contributes to a single reconstructed CT image, directly affecting spatial resolution and partial volume averaging."
+    },
+    {
+      "id": "p6_q148",
+      "no": 148,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Which artifact in CT appears as dark and bright streaks radiating from dense objects such as metal implants or dental fillings?",
+      "options": [
+        "Partial volume artifact",
+        "Motion artifact",
+        "Ring artifact",
+        "Metal (streak/beam-hardening) artifact"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Dense metallic objects cause severe beam hardening and photon starvation, producing characteristic dark and bright streaks radiating outward on CT images."
+    },
+    {
+      "id": "p6_q149",
+      "no": 149,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "In CT, 'beam hardening' refers to:",
+      "options": [
+        "The physical hardening of the detector array over time",
+        "A type of motion artifact",
+        "An increase in tube current during scanning",
+        "The preferential absorption of lower-energy photons as the beam passes through tissue, increasing the average energy of the remaining beam"
+      ],
+      "correctAnswer": 3,
+      "explanation": "As a polychromatic X-ray beam passes through tissue, lower-energy (softer) photons are absorbed preferentially, leaving a beam of progressively higher average energy — a phenomenon called beam hardening."
+    },
+    {
+      "id": "p6_q150",
+      "no": 150,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Which type of MRI coil is typically placed directly over or around the body part being imaged to improve signal-to-noise ratio?",
+      "options": [
+        "Gradient coil",
+        "Body coil (transmit-only)",
+        "Surface (local) coil",
+        "Shim coil"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Surface (local) coils are placed close to the anatomy of interest and are optimised to receive signal with a high signal-to-noise ratio for that specific region."
+    },
+    {
+      "id": "p6_q151",
+      "no": 151,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "The main magnetic field strength of a typical clinical MRI scanner is most commonly:",
+      "options": [
+        "0.1 Tesla",
+        "50 Tesla",
+        "10 Tesla",
+        "1.5 Tesla or 3 Tesla"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Most clinical MRI scanners used in routine diagnostic imaging operate at a field strength of 1.5 Tesla or 3 Tesla."
+    },
+    {
+      "id": "p6_q152",
+      "no": 152,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "In multi-detector CT (MDCT), increasing the number of detector rows primarily allows for:",
+      "options": [
+        "Reduced spatial resolution",
+        "Faster coverage of a larger anatomical volume in a single rotation",
+        "Lower tube voltage requirements",
+        "Elimination of the need for contrast media"
+      ],
+      "correctAnswer": 1,
+      "explanation": "A greater number of detector rows allows the scanner to acquire more slices per gantry rotation, significantly reducing scan time for a given anatomical coverage."
+    },
+    {
+      "id": "p6_q153",
+      "no": 153,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Which contrast mechanism is exploited by BOLD (Blood Oxygen Level Dependent) imaging, commonly used in functional MRI?",
+      "options": [
+        "The T1 shortening effect of gadolinium",
+        "The diffusion of water molecules",
+        "Differences in the magnetic properties of oxygenated versus deoxygenated haemoglobin",
+        "Differences in proton density between grey and white matter"
+      ],
+      "correctAnswer": 2,
+      "explanation": "BOLD imaging exploits the fact that deoxyhaemoglobin is paramagnetic while oxyhaemoglobin is diamagnetic, causing local signal changes related to neural activity and blood oxygenation."
+    },
+    {
+      "id": "p6_q154",
+      "no": 154,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "The Specific Absorption Rate (SAR) in MRI refers to:",
+      "options": [
+        "The rate of gradient coil switching",
+        "The strength of the static magnetic field",
+        "The rate at which radiofrequency energy is absorbed by the patient's tissue during scanning",
+        "The speed of table movement during a scan"
+      ],
+      "correctAnswer": 2,
+      "explanation": "SAR quantifies the amount of radiofrequency energy absorbed per unit mass of tissue during an MRI scan and is monitored to prevent excessive tissue heating."
+    },
+    {
+      "id": "p6_q155",
+      "no": 155,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Which sequence weighting is most useful for demonstrating detailed anatomy with good grey-white matter differentiation in brain imaging?",
+      "options": [
+        "STIR imaging",
+        "Proton density-weighted imaging alone",
+        "T2-weighted imaging",
+        "T1-weighted imaging"
+      ],
+      "correctAnswer": 3,
+      "explanation": "T1-weighted images provide excellent anatomical detail and grey-white matter differentiation, making them the standard choice for depicting normal brain anatomy."
+    },
+    {
+      "id": "p6_q156",
+      "no": 156,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "In CT, 'reconstruction interval' refers to:",
+      "options": [
+        "The time delay before contrast injection",
+        "The spacing between reconstructed image slices, which can be smaller than the actual slice thickness for overlapping reconstruction",
+        "The total scan time",
+        "The distance between the tube and detector"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Reconstruction interval describes how far apart consecutive reconstructed slices are placed; using an interval smaller than the slice thickness produces overlapping reconstructions that improve 3D image quality."
+    },
+    {
+      "id": "p6_q157",
+      "no": 157,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Which MRI artifact results from the patient's inability to remain still during acquisition, producing blurring or ghosting predominantly in the phase-encoding direction?",
+      "options": [
+        "Motion artifact",
+        "Chemical shift artifact",
+        "Susceptibility artifact",
+        "Aliasing (wrap-around) artifact"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Patient motion during data acquisition causes inconsistencies in the phase-encoded data, producing blurring or discrete ghost images along the phase-encoding direction."
+    },
+    {
+      "id": "p6_q158",
+      "no": 158,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "What does the acronym MRI stand for?",
+      "options": [
+        "Magnetic Resonance Imaging",
+        "Magnetic Reflection Imaging",
+        "Magnetic Radiological Imaging",
+        "Molecular Resonance Imaging"
+      ],
+      "correctAnswer": 0,
+      "explanation": "MRI stands for Magnetic Resonance Imaging, a technique that uses a strong magnetic field and radiofrequency pulses to generate detailed images of internal structures."
+    },
+    {
+      "id": "p6_q159",
+      "no": 159,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "In CT angiography, precise timing of contrast injection relative to scan acquisition is critical to opacify:",
+      "options": [
+        "The air-filled spaces only",
+        "The vascular structures of interest (arteries or veins, depending on the study)",
+        "The bony structures only",
+        "The muscular structures only"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Correct bolus timing ensures the contrast bolus is at peak concentration within the vessels of interest at the moment of scanning, giving optimal vascular opacification."
+    },
+    {
+      "id": "p6_q160",
+      "no": 160,
+      "section": "B",
+      "subsectionId": "b3",
+      "subject": "MRI & CT Imaging",
+      "question": "Chemical shift artifact in MRI occurs at the interface of which two tissue types, due to their differing resonant frequencies?",
+      "options": [
+        "Bone and air",
+        "Grey matter and white matter",
+        "Fat and water",
+        "Muscle and CSF"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Fat and water protons precess at slightly different frequencies due to their differing chemical environments, producing a characteristic chemical shift artifact (a dark/bright band) at fat-water interfaces."
+    },
+    {
+      "id": "p6_q161",
+      "no": 161,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "The inverse square law states that the intensity of radiation is inversely proportional to:",
+      "options": [
+        "The distance from the source",
+        "The square of the distance from the source",
+        "The cube of the distance from the source",
+        "The square root of the distance from the source"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The inverse square law states that radiation intensity decreases in proportion to the square of the distance from the source: I ∝ 1/d²."
+    },
+    {
+      "id": "p6_q162",
+      "no": 162,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "Which term describes the reduction in beam intensity as X-rays pass through matter, due to absorption and scattering?",
+      "options": [
+        "Attenuation",
+        "Amplification",
+        "Refraction",
+        "Diffraction"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Attenuation refers to the overall reduction in the intensity of an X-ray beam as it passes through matter, resulting from both absorption and scattering interactions."
+    },
+    {
+      "id": "p6_q163",
+      "no": 163,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "The process by which an X-ray photon transfers all of its energy to an electron, ejecting it from an atom and being completely absorbed, is called:",
+      "options": [
+        "Compton scattering",
+        "The photoelectric effect",
+        "Pair production",
+        "Coherent (Rayleigh) scattering"
+      ],
+      "correctAnswer": 1,
+      "explanation": "In the photoelectric effect, an incident X-ray photon transfers its entire energy to an inner-shell electron, ejecting it and being completely absorbed in the process."
+    },
+    {
+      "id": "p6_q164",
+      "no": 164,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "Compton scattering, a major interaction at diagnostic X-ray energies, results in:",
+      "options": [
+        "Partial energy transfer to an electron and a scattered photon of lower energy",
+        "Complete absorption of the photon with no scattering",
+        "Production of a positron-electron pair",
+        "No interaction with the atom"
+      ],
+      "correctAnswer": 0,
+      "explanation": "In Compton scattering, an incident photon interacts with an outer-shell (loosely bound) electron, transferring only part of its energy and continuing as a lower-energy scattered photon in a different direction."
+    },
+    {
+      "id": "p6_q165",
+      "no": 165,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "Which component of the X-ray tube produces the beam of electrons that strike the anode?",
+      "options": [
+        "The anode target",
+        "The cathode (filament)",
+        "The collimator",
+        "The glass envelope"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The cathode assembly houses the filament, which, when heated, releases electrons via thermionic emission; these electrons are then accelerated toward the anode to produce X-rays."
+    },
+    {
+      "id": "p6_q166",
+      "no": 166,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "The thermionic emission of electrons from the heated filament in an X-ray tube is achieved by:",
+      "options": [
+        "Passing current through the filament to heat it sufficiently to release electrons",
+        "Cooling the filament to very low temperatures",
+        "Rotating the filament at high speed",
+        "Applying a strong magnetic field to the filament"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Thermionic emission occurs when the filament is heated (by passing an electric current through it) to a temperature high enough for electrons to gain sufficient energy to escape its surface."
+    },
+    {
+      "id": "p6_q167",
+      "no": 167,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "Which term describes the total quantity and quality of radiation produced by an X-ray tube, often measured to verify tube output consistency?",
+      "options": [
+        "Tube (radiation) output",
+        "Focal spot blur",
+        "Grid ratio",
+        "Quantum mottle"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Tube output refers to the amount and energy characteristics of the radiation produced by an X-ray tube for a given set of exposure factors, routinely checked during quality assurance testing."
+    },
+    {
+      "id": "p6_q168",
+      "no": 168,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "What is the typical focal spot size range used for fine-detail radiography?",
+      "options": [
+        "10 to 20 mm",
+        "1 to 2 mm",
+        "5 to 10 mm",
+        "0.1 to 0.3 mm"
+      ],
+      "correctAnswer": 3,
+      "explanation": "A small (fine) focal spot, typically in the range of 0.1 to 0.3 mm, is used to improve spatial resolution for fine-detail radiographic work such as extremity or magnification imaging."
+    },
+    {
+      "id": "p6_q169",
+      "no": 169,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "As per AERB norms, what is the approximate additional dose constraint applied to the abdomen of a declared pregnant radiation worker for the remainder of the pregnancy?",
+      "options": [
+        "50 mSv",
+        "5 mSv",
+        "20 mSv",
+        "1 mSv"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Once pregnancy is declared, AERB norms apply a more restrictive dose constraint of approximately 1 mSv to the abdomen (foetus) for the remainder of the pregnancy, well below the standard occupational limit."
+    },
+    {
+      "id": "p6_q170",
+      "no": 170,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "Which type of personnel monitoring device provides an immediate, real-time readout of accumulated dose, useful in high-dose interventional settings?",
+      "options": [
+        "OSL badge",
+        "Pocket dosimeter / electronic personal dosimeter (EPD)",
+        "TLD badge",
+        "Film badge"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Electronic personal dosimeters (pocket dosimeters) provide an immediate, real-time display of accumulated dose, unlike TLD, OSL or film badges, which require processing after the exposure period."
+    },
+    {
+      "id": "p6_q171",
+      "no": 171,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "According to the inverse square law, if the distance from a radiation source is doubled, the exposure rate at the new distance becomes:",
+      "options": [
+        "Half of the original value",
+        "One-quarter of the original value",
+        "Twice the original value",
+        "The same as the original value"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Since intensity is inversely proportional to the square of the distance, doubling the distance reduces the intensity to (1/2)² = 1/4 of its original value."
+    },
+    {
+      "id": "p6_q172",
+      "no": 172,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "Grid ratio in an anti-scatter grid is defined as the ratio of the height of the lead strips to:",
+      "options": [
+        "The thickness of the interspace material only",
+        "The total number of lead strips per centimetre",
+        "The distance (gap) between them",
+        "The width of each lead strip"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Grid ratio = height of the lead strips ÷ the distance (interspace) between adjacent strips; a higher grid ratio removes more scatter but requires greater exposure."
+    },
+    {
+      "id": "p6_q173",
+      "no": 173,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "Which type of grid, with lead strips angled to match the divergence of the X-ray beam, helps reduce grid cut-off?",
+      "options": [
+        "Parallel (linear) grid",
+        "Focused grid",
+        "Moving (Potter-Bucky) grid alone",
+        "Crossed grid without focusing"
+      ],
+      "correctAnswer": 1,
+      "explanation": "A focused grid has its lead strips progressively angled to converge at the same point as the diverging X-ray beam, minimising grid cut-off (loss of peripheral image density) compared to a parallel grid."
+    },
+    {
+      "id": "p6_q174",
+      "no": 174,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "Increasing the Source-to-Image Distance (SID) while keeping other factors constant primarily results in:",
+      "options": [
+        "No change in image quality or dose",
+        "Increased magnification and increased sharpness",
+        "Increased scatter radiation reaching the receptor",
+        "Reduced geometric (magnification) unsharpness and decreased radiation intensity at the receptor"
+      ],
+      "correctAnswer": 3,
+      "explanation": "A greater SID reduces geometric magnification and unsharpness by making the beam more parallel, but also reduces beam intensity at the image receptor as per the inverse square law, requiring compensating exposure adjustments."
+    },
+    {
+      "id": "p6_q175",
+      "no": 175,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "Which occupational radiation monitoring device measures cumulative dose using a photographic film that darkens in proportion to exposure?",
+      "options": [
+        "Electronic personal dosimeter",
+        "Geiger-Müller counter",
+        "Film badge dosimeter",
+        "Ionisation chamber survey meter"
+      ],
+      "correctAnswer": 2,
+      "explanation": "A film badge dosimeter contains a small piece of radiographic film that darkens proportionally to the radiation dose received, providing a permanent, evaluable record of cumulative exposure."
+    },
+    {
+      "id": "p6_q176",
+      "no": 176,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "Which combination of exposure factors generally results in the LOWEST patient dose while maintaining adequate image quality?",
+      "options": [
+        "Maximum kVp and maximum mAs together",
+        "Minimum kVp and minimum mAs together",
+        "Lower kVp with correspondingly higher mAs",
+        "Higher kVp with correspondingly lower mAs"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Using a higher kVp allows the mAs to be proportionally reduced while still achieving adequate image density, generally resulting in a lower overall patient dose (the well-known '15% rule' trade-off)."
+    },
+    {
+      "id": "p6_q177",
+      "no": 177,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "Radiolysis of water within tissue, producing free radicals that damage cellular DNA, is an example of which mechanism of radiation damage?",
+      "options": [
+        "Thermal action of radiation",
+        "Direct action of radiation",
+        "Indirect action of radiation",
+        "Chemical action of radiation independent of ionisation"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Indirect action occurs when radiation ionises water molecules within the cell, producing highly reactive free radicals that subsequently damage critical structures such as DNA — the dominant mechanism at diagnostic X-ray energies given the high water content of tissue."
+    },
+    {
+      "id": "p6_q178",
+      "no": 178,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "In radiation shielding calculations, the 'occupancy factor' refers to:",
+      "options": [
+        "The thickness of lead required for a barrier",
+        "The fraction of time an area beyond a barrier is likely to be occupied by a person",
+        "The use factor of the primary beam",
+        "The workload of the X-ray tube"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The occupancy factor accounts for how frequently and for how long an adjacent area is expected to be occupied, allowing shielding requirements to be tailored realistically rather than assuming constant full-time occupancy."
+    },
+    {
+      "id": "p6_q179",
+      "no": 179,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "The historical unit 'roentgen (R)' was used to measure which quantity of radiation?",
+      "options": [
+        "Radioactivity",
+        "Absorbed dose in tissue",
+        "Equivalent dose",
+        "Exposure (ionisation produced in air)"
+      ],
+      "correctAnswer": 3,
+      "explanation": "The roentgen (R) is a traditional unit of exposure, quantifying the amount of ionisation produced by X- or gamma radiation in a given mass of air."
+    },
+    {
+      "id": "p6_q180",
+      "no": 180,
+      "section": "B",
+      "subsectionId": "b4",
+      "subject": "Radiation Physics & Safety",
+      "question": "As per AERB classification, an area where radiation levels could exceed the dose limits prescribed for members of the public is designated as a:",
+      "options": [
+        "Free-release area",
+        "Supervised area",
+        "Public area",
+        "Controlled area"
+      ],
+      "correctAnswer": 3,
+      "explanation": "A controlled area is one where special protective measures and safety procedures are required because radiation levels could exceed the dose limits set for the general public."
+    },
+    {
+      "id": "p6_q181",
+      "no": 181,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "The 'gain' control in ultrasound imaging primarily adjusts:",
+      "options": [
+        "The depth of field being scanned",
+        "The overall amplification (brightness) of returning echo signals",
+        "The direction of the ultrasound beam",
+        "The frequency of the transmitted ultrasound beam"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Gain controls the overall amplification applied to the returning echo signals, uniformly increasing or decreasing the brightness of the displayed image."
+    },
+    {
+      "id": "p6_q182",
+      "no": 182,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "Time Gain Compensation (TGC) in ultrasound is used to:",
+      "options": [
+        "Focus the beam at a fixed shallow depth",
+        "Adjust the frequency of the transducer",
+        "Increase the frame rate of the image",
+        "Compensate for the progressive attenuation of the ultrasound beam with increasing depth"
+      ],
+      "correctAnswer": 3,
+      "explanation": "TGC selectively amplifies echoes returning from greater depths to compensate for the greater attenuation they undergo, ensuring uniform image brightness at all depths."
+    },
+    {
+      "id": "p6_q183",
+      "no": 183,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "In mammography, microcalcifications suspicious for malignancy are typically described as:",
+      "options": [
+        "Rim (eggshell) calcifications",
+        "Pleomorphic, clustered and fine/linear branching in pattern",
+        "Large, round and uniformly distributed",
+        "Coarse, popcorn-like and widely scattered"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Suspicious microcalcifications are typically pleomorphic (varying in size and shape), clustered together, and may show a fine linear or branching pattern, in contrast to coarse, well-defined benign calcifications."
+    },
+    {
+      "id": "p6_q184",
+      "no": 184,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "Which additional mammographic view is obtained at exactly 90° to the chest wall, providing a true lateral projection?",
+      "options": [
+        "Craniocaudal (CC) view",
+        "Mediolateral (ML) or Lateromedial (LM) view",
+        "Axillary tail view",
+        "Mediolateral Oblique (MLO) view"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The mediolateral (ML) or lateromedial (LM) view is obtained at a true 90° angle to the chest wall and is commonly used to help localise a lesion seen on only one standard view."
+    },
+    {
+      "id": "p6_q185",
+      "no": 185,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "In the BI-RADS mammography reporting system, Category 3 indicates:",
+      "options": [
+        "Definitely benign, routine screening recommended",
+        "Incomplete assessment, needs additional imaging",
+        "A probably benign finding, with short-interval follow-up recommended",
+        "Highly suggestive of malignancy"
+      ],
+      "correctAnswer": 2,
+      "explanation": "BI-RADS Category 3 denotes findings with a high probability of being benign (<2% likelihood of malignancy), for which short-interval (usually 6-month) follow-up imaging is recommended rather than immediate biopsy."
+    },
+    {
+      "id": "p6_q186",
+      "no": 186,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "Digital mammography commonly uses which target material as an alternative to molybdenum for imaging denser breast tissue?",
+      "options": [
+        "Copper",
+        "Tungsten",
+        "Beryllium",
+        "Rhodium"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Rhodium is commonly used as an alternative target (or filter) material to molybdenum in mammography, producing higher-energy X-rays better suited to penetrating denser breast tissue."
+    },
+    {
+      "id": "p6_q187",
+      "no": 187,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "A barium enema is primarily used to evaluate which part of the gastrointestinal tract?",
+      "options": [
+        "The large intestine (colon and rectum)",
+        "The stomach",
+        "The small intestine only",
+        "The oesophagus"
+      ],
+      "correctAnswer": 0,
+      "explanation": "A barium enema involves the retrograde administration of barium contrast into the rectum to outline and evaluate the large intestine (colon and rectum)."
+    },
+    {
+      "id": "p6_q188",
+      "no": 188,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "Digital Subtraction Angiography (DSA) improves vessel visualisation by:",
+      "options": [
+        "Digitally subtracting a pre-contrast (mask) image from post-contrast images to remove overlying bony and soft tissue structures",
+        "Increasing the tube current during the entire procedure",
+        "Using only non-ionic contrast media",
+        "Reducing the frame rate of image acquisition"
+      ],
+      "correctAnswer": 0,
+      "explanation": "DSA subtracts a mask image (taken before contrast injection) from subsequent contrast-filled images, effectively removing overlying bone and soft tissue and leaving only the contrast-enhanced vasculature."
+    },
+    {
+      "id": "p6_q189",
+      "no": 189,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "A contrast reaction involving severe hypotension, bronchospasm and loss of consciousness is classified as:",
+      "options": [
+        "A vasovagal reaction requiring no treatment",
+        "A severe/anaphylactoid contrast reaction",
+        "A moderate contrast reaction requiring only observation",
+        "A mild/minor contrast reaction"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Severe/anaphylactoid contrast reactions present with life-threatening features such as severe hypotension, bronchospasm, laryngeal oedema or loss of consciousness, requiring immediate emergency resuscitation."
+    },
+    {
+      "id": "p6_q190",
+      "no": 190,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "In nuclear medicine, a bone scan commonly uses which radiopharmaceutical?",
+      "options": [
+        "Technetium-99m pertechnetate",
+        "Iodine-131 sodium iodide",
+        "Fluorine-18 FDG",
+        "Technetium-99m methylene diphosphonate (Tc-99m MDP)"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Tc-99m MDP is the standard radiopharmaceutical for bone scintigraphy, as it localises in areas of increased osteoblastic activity, highlighting fractures, metastases and infection."
+    },
+    {
+      "id": "p6_q191",
+      "no": 191,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "The physical half-life of Iodine-131, commonly used in thyroid imaging and therapy, is approximately:",
+      "options": [
+        "73 hours",
+        "8 days",
+        "14 days",
+        "6 hours"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Iodine-131 has a physical half-life of approximately 8 days, making it suitable for both diagnostic thyroid imaging and therapeutic ablation of thyroid tissue."
+    },
+    {
+      "id": "p6_q192",
+      "no": 192,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "In radiotherapy, the prescribed and delivered radiation dose is typically measured in which unit?",
+      "options": [
+        "Sievert (Sv)",
+        "Becquerel (Bq)",
+        "Gray (Gy)",
+        "Curie (Ci)"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Radiotherapy doses are prescribed and recorded in Gray (Gy), the SI unit of absorbed dose, representing the energy deposited per unit mass of tissue."
+    },
+    {
+      "id": "p6_q193",
+      "no": 193,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "Brachytherapy differs from external beam radiotherapy in that the radioactive source is:",
+      "options": [
+        "Positioned several metres away from the patient",
+        "Administered orally as a liquid",
+        "Placed directly within or adjacent to the tumour",
+        "Delivered only through inhalation"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Brachytherapy involves placing a sealed radioactive source directly inside or immediately next to the tumour, delivering a high localised dose while sparing more distant normal tissue, unlike external beam therapy delivered from outside the body."
+    },
+    {
+      "id": "p6_q194",
+      "no": 194,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "Which ultrasound mode displays a graphical waveform of blood flow velocity over time, commonly used to assess vascular flow patterns?",
+      "options": [
+        "Spectral (pulsed-wave) Doppler",
+        "M-mode imaging",
+        "B-mode (grey-scale) imaging",
+        "Colour Doppler alone"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Spectral (pulsed-wave) Doppler displays blood flow velocity as a waveform plotted against time, allowing detailed assessment of flow characteristics such as resistance and velocity patterns."
+    },
+    {
+      "id": "p6_q195",
+      "no": 195,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "Colour Doppler ultrasound represents the direction of blood flow using which visual convention?",
+      "options": [
+        "Different levels of grey-scale brightness only",
+        "Different colours (commonly red and blue) indicating flow toward or away from the transducer",
+        "Flashing versus steady colours",
+        "Different line thicknesses"
+      ],
+      "correctAnswer": 1,
+      "explanation": "In colour Doppler, flow toward the transducer is conventionally displayed in one colour (commonly red) and flow away from the transducer in another (commonly blue), allowing quick visual assessment of flow direction."
+    },
+    {
+      "id": "p6_q196",
+      "no": 196,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "In an intravenous urogram (IVU), the 'nephrogram phase' refers to the period when contrast:",
+      "options": [
+        "Opacifies the renal parenchyma shortly after injection, before filling the collecting system",
+        "Is still within the injection vein",
+        "Has completely cleared from the kidneys",
+        "Fills only the urinary bladder"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The nephrogram phase occurs shortly after contrast injection, when the contrast opacifies the renal cortex and medulla (the parenchyma) before it has passed into the calyces and collecting system."
+    },
+    {
+      "id": "p6_q197",
+      "no": 197,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "Which imaging modality combines functional PET data with anatomical CT data in a single fused study?",
+      "options": [
+        "PET-CT",
+        "MR spectroscopy",
+        "SPECT alone",
+        "Conventional planar scintigraphy"
+      ],
+      "correctAnswer": 0,
+      "explanation": "PET-CT is a hybrid imaging modality that fuses the functional/metabolic information from PET with the detailed anatomical information from CT in a single combined study."
+    },
+    {
+      "id": "p6_q198",
+      "no": 198,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "The compression applied to the breast during mammography primarily serves to:",
+      "options": [
+        "Improve patient comfort with no imaging benefit",
+        "Increase the total radiation dose delivered",
+        "Reduce tissue thickness and motion, improving image quality and reducing radiation dose",
+        "Eliminate the need for two standard views"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Breast compression spreads out overlapping tissue, reduces the thickness the beam must penetrate, minimises motion blur, and allows lower radiation dose while improving overall image quality."
+    },
+    {
+      "id": "p6_q199",
+      "no": 199,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "Which vascular access site is increasingly preferred in interventional procedures as an alternative to the femoral artery, offering easier haemostasis and earlier patient mobilisation?",
+      "options": [
+        "Radial artery",
+        "Brachial artery",
+        "Axillary artery",
+        "Popliteal artery"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Radial artery access has become increasingly popular because it allows easier compression for haemostasis, lower access-site complication rates and earlier patient mobilisation compared to femoral access."
+    },
+    {
+      "id": "p6_q200",
+      "no": 200,
+      "section": "B",
+      "subsectionId": "b5",
+      "subject": "USG, Mammography & Special Procedures",
+      "question": "In nuclear medicine, the term 'uptake' refers to:",
+      "options": [
+        "The half-life of the radioisotope used",
+        "The degree to which a radiopharmaceutical accumulates in a target tissue or organ",
+        "The rate at which contrast is injected intravenously",
+        "The speed of gamma camera rotation"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Uptake describes how much of the administered radiopharmaceutical is taken up and concentrated by the target tissue or organ, forming the basis of functional nuclear medicine imaging."
+    }
+  ]
+}
