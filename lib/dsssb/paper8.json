@@ -1,0 +1,3294 @@
+{
+ "id": 8,
+ "name": "Practice Paper 8",
+ "subtitle": "DSSSB Radiographer — Official Previous Year Paper (20 Jul 2024, Shift 2)",
+ "code": "DSSSB/RAD/PYQ-2024-S2",
+ "totalQuestions": 200,
+ "durationMinutes": 120,
+ "markPerCorrect": 1,
+ "negativeMark": 0.25,
+ "subsections": [
+  {
+   "id": "a1",
+   "section": "A",
+   "title": "General Intelligence & Reasoning",
+   "start": 1,
+   "end": 20,
+   "count": 20
+  },
+  {
+   "id": "a2",
+   "section": "A",
+   "title": "General Awareness",
+   "start": 21,
+   "end": 40,
+   "count": 20
+  },
+  {
+   "id": "a3",
+   "section": "A",
+   "title": "Arithmetical & Numerical Ability",
+   "start": 41,
+   "end": 60,
+   "count": 20
+  },
+  {
+   "id": "a4",
+   "section": "A",
+   "title": "English Language & Comprehension",
+   "start": 61,
+   "end": 80,
+   "count": 20
+  },
+  {
+   "id": "a5",
+   "section": "A",
+   "title": "Hindi Language & Comprehension",
+   "start": 81,
+   "end": 100,
+   "count": 20
+  },
+  {
+   "id": "b1",
+   "section": "B",
+   "title": "Human Anatomy & Physiology",
+   "start": 101,
+   "end": 114,
+   "count": 14
+  },
+  {
+   "id": "b2",
+   "section": "B",
+   "title": "Pathology & Patient Care",
+   "start": 115,
+   "end": 138,
+   "count": 24
+  },
+  {
+   "id": "b3",
+   "section": "B",
+   "title": "MRI & CT Imaging",
+   "start": 139,
+   "end": 156,
+   "count": 18
+  },
+  {
+   "id": "b4",
+   "section": "B",
+   "title": "Radiation Physics & Safety",
+   "start": 157,
+   "end": 179,
+   "count": 23
+  },
+  {
+   "id": "b5",
+   "section": "B",
+   "title": "USG, Mammography & Special Procedures",
+   "start": 180,
+   "end": 200,
+   "count": 21
+  }
+ ],
+ "questions": [
+  {
+   "id": "p8_q1",
+   "no": 1,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "Select the pair which follows the same pattern as that followed by the two set of pairs given below. Both pairs follow the same pattern.\nEPF : BNK\nRQR : OOW",
+   "options": [
+    "YPN : VRQ",
+    "DUQ : ASV",
+    "IGN : FFS",
+    "VEP : YCT"
+   ],
+   "correctAnswer": 1,
+   "explanation": "In each given pair the letters shift by a fixed rule from the first word to the second: 1st letter −3, 2nd letter −2, 3rd letter +5 (e.g. E→B, P→N, F→K). Applying the same rule, D→A, U→S, Q→V, so DUQ : ASV is the matching pair."
+  },
+  {
+   "id": "p8_q2",
+   "no": 2,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "Refer to the following letter and symbol series and answer the question that follows. Counting to be done from left to right only.\n(Left) G C Σ A % D W @ U $ A Q σ E R Ω Y U # E * T £ B (Right)\nHow many such symbols are there each of which is immediately preceded by a vowel but NOT immediately followed by a vowel?",
+   "options": [
+    "Two",
+    "Four",
+    "Three",
+    "One"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Scanning the series for a symbol coming right after a vowel (A, E, U, etc.) but not right before one, exactly two such symbols occur: % (after A) and Ω (after E, followed by Y)."
+  },
+  {
+   "id": "p8_q3",
+   "no": 3,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "What should come in place of '?' in the given series?\n11, 13, 17, 25, 41, ?",
+   "options": [
+    "67",
+    "63",
+    "70",
+    "73"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The difference between consecutive terms doubles each time: 2, 4, 8, 16, so the next difference is 32, giving 41 + 32 = 73."
+  },
+  {
+   "id": "p8_q4",
+   "no": 4,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "In the following number-pairs, the second number is obtained by applying certain mathematical operations to the first number. Which numbers should replace X and Y so that the pattern followed by the two numbers on the left side of :: is same as that on the right side of ::?\n(NOTE: Operations should be performed on the whole numbers, without breaking down the numbers into their constituent digits. E.g. 13 – Operations on 13 such as adding/subtracting/multiplying to 13 can be performed. Breaking down 13 into 1 and 3 and then performing mathematical operations on 1 and 3 is not allowed.)\nX : 180 :: 32 : Y",
+   "options": [
+    "X = 25 , Y = 120",
+    "X = 35 , Y = 128",
+    "X = 45 , Y = 128",
+    "X = 30 , Y = 160"
+   ],
+   "correctAnswer": 2,
+   "explanation": "The rule is (number × 4) = pair: 45 × 4 = 180, and 32 × 4 = 128, so X = 45 and Y = 128."
+  },
+  {
+   "id": "p8_q5",
+   "no": 5,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "[Non-verbal reasoning: figure series] A 3×3 grid of panels is shown, each panel containing a set of shapes (triangle, circle, star, arrow) that rotate and reposition according to a rule from panel to panel. Which of the four answer figures logically continues the series in place of the '?' panel?",
+   "options": [
+    "Panel showing the shapes rotated 90° clockwise from the previous panel, arrow pointing down-left",
+    "Panel showing the shapes rotated 90° anticlockwise, arrow pointing up-right",
+    "Panel showing the shapes rotated 180° with the arrow pointing left and the star moved to the bottom row",
+    "Panel showing the shapes unchanged from the previous panel"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Note: the original exam question here was a purely visual figure-matching item (a 3x3 grid of rotating shapes) that cannot be reproduced in this text-only format, so this is a substitute reasoning question in the same spirit, not the original DSSSB item."
+  },
+  {
+   "id": "p8_q6",
+   "no": 6,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "Refer to the following letter and symbol series and answer the question that follows. Counting to be done from left to right only.\n(Left) C S Σ U # E * P £ B % D U @ T $ Q N σ R E Ω Y A (Right)\nHow many such symbols are there each of which is immediately preceded by a vowel but NOT immediately followed by a vowel?",
+   "options": [
+    "Three",
+    "None",
+    "Two",
+    "One"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Checking each symbol after a vowel: # follows U (not followed by a vowel), @ follows U (not followed by a vowel), and Ω follows E (followed by Y, a consonant) — three symbols in total satisfy the condition."
+  },
+  {
+   "id": "p8_q7",
+   "no": 7,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "Three of the following four are alike in a certain way and thus form a group. Which is the one that does not belong to that group?",
+   "options": [
+    "QTW",
+    "MPS",
+    "VYB",
+    "ILP"
+   ],
+   "correctAnswer": 3,
+   "explanation": "In QTW, MPS and VYB each letter is 3 places after the previous one (Q+3=T, T+3=W, etc., wrapping the alphabet for VYB). In ILP the gaps are +3 and +4, so ILP breaks the pattern and is the odd one out."
+  },
+  {
+   "id": "p8_q8",
+   "no": 8,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "In a certain code language, ‘give him money’ is coded as ‘lo ef da’, 'they give gifts' is coded as 're fi da' and ‘money for gifts’ is coded as ‘ef re pu’. How is ‘him’ coded in the given code language?",
+   "options": [
+    "da",
+    "re",
+    "ef",
+    "lo"
+   ],
+   "correctAnswer": 3,
+   "explanation": "'give' and 'money' are common to sentences 1 and 3, matching the common codes 'da' and 'ef'; 'give' is also common to sentences 1 and 2, matching 'da' again, so 'da' = give. The remaining code in sentence 1, 'lo', must then stand for 'him'."
+  },
+  {
+   "id": "p8_q9",
+   "no": 9,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "A, B, C, X, Y and Z are sitting around a circular table, facing the centre. Z sits second to the left of A. X is an immediate neighbour of Z. C sits second to the left of X. B sits to the immediate right of Y. Who sits second to the right of Y?",
+   "options": [
+    "B",
+    "C",
+    "A",
+    "Z"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Placing Z two seats left of A, X next to Z, and C two seats left of X fixes the circle as A, Z, X, C, Y, B (clockwise); counting two seats to the right of Y lands on C."
+  },
+  {
+   "id": "p8_q10",
+   "no": 10,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "If '#' means '+', '%' means '−', '$' means '×', and '@' means '÷', then what is the value of 7 # 3 % 2 $ 24 @ 6?",
+   "options": [
+    "34",
+    "8",
+    "2",
+    "23"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Substituting symbols: 7 + 3 − 2 × 24 ÷ 6. By BODMAS: 24 ÷ 6 = 4, 2 × 4 = 8, so 7 + 3 − 8 = 2."
+  },
+  {
+   "id": "p8_q11",
+   "no": 11,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "Select the option that is related to the third word in the same way as the second word is related to the first word. (The words must be considered as meaningful English words and must not be related to each other based on the number of letters/number of consonants/vowels in the word)\nHuman : Food :: Engine : ?",
+   "options": [
+    "Oil",
+    "Fuel",
+    "Smoke",
+    "Grease"
+   ],
+   "correctAnswer": 1,
+   "explanation": "A human runs on food for energy, just as an engine runs on fuel for energy — the same functional relationship."
+  },
+  {
+   "id": "p8_q12",
+   "no": 12,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "What should come in place of the question mark (?) in the following series?\n52, 56, 65, 81, 106, ?",
+   "options": [
+    "151",
+    "142",
+    "149",
+    "146"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The differences between terms are 4, 9, 16, 25 (perfect squares 2², 3², 4², 5²); the next difference is 6² = 36, so 106 + 36 = 142."
+  },
+  {
+   "id": "p8_q13",
+   "no": 13,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "Each of P, Q, R, S, T, U and V has an exam on a different day of a week starting from Monday and ending on Sunday of the same week. Only two people have an exam before P. Q has an exam immediately after P. V has an exam on one of the days before Q but after S. Only three people have an exam between S and T. R does not have an exam on Sunday. How many people have an exam between P and U?",
+   "options": [
+    "More than two",
+    "One",
+    "Two",
+    "None"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Fixing P on Wednesday (two people before it) makes Q Thursday; S must come before V which comes before Q, and three people separate S and T, which places S on Monday and T on Friday, leaving V on Tuesday, R on Saturday (not Sunday) and U on Sunday — putting three people (Q, R and one more) between P and U."
+  },
+  {
+   "id": "p8_q14",
+   "no": 14,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "What should come in place of '?' in the given series?\n41, 65, 85, 101, 113, ?",
+   "options": [
+    "129",
+    "133",
+    "124",
+    "121"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The differences are 24, 20, 16, 12 (decreasing by 4 each time), so the next difference is 8, giving 113 + 8 = 121."
+  },
+  {
+   "id": "p8_q15",
+   "no": 15,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "Three of the following pairs of letter-clusters are alike in some manner and hence form a group. Which pair does not belong to that group?",
+   "options": [
+    "WT-YV",
+    "MJ-OK",
+    "IF-KH",
+    "RO-TQ"
+   ],
+   "correctAnswer": 1,
+   "explanation": "In WT-YV, IF-KH and RO-TQ, both letters of the second cluster are exactly 2 places ahead of the corresponding letters in the first cluster; in MJ-OK the shift is inconsistent (M→O is +2 but J→K is only +1), so MJ-OK does not belong to the group."
+  },
+  {
+   "id": "p8_q16",
+   "no": 16,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "There are 15 bikes parked in a row. David's bike is 6th from the left and Emily's bike is 4th from the right. How many bikes are there between David's and Emily's bikes?",
+   "options": [
+    "Two",
+    "Six",
+    "Five",
+    "Four"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Emily's bike, 4th from the right in a row of 15, is 12th from the left; between the 6th and 12th positions there are 5 bikes (positions 7 to 11)."
+  },
+  {
+   "id": "p8_q17",
+   "no": 17,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "Select the option that is related to the third word in the same way as the second word is related to the first word: Human : Food :: Engine : ?\n(Restated) Three of the following four are alike in a certain way and thus form a group. Which is the one that does not belong to that group?",
+   "options": [
+    "LPR",
+    "HLO",
+    "RVY",
+    "CGJ"
+   ],
+   "correctAnswer": 0,
+   "explanation": "In HLO, RVY and CGJ each letter is 4 places after the previous one (H+4=L, L+4=O, etc.); in LPR the gaps are +4 and +2, breaking the pattern, so LPR is the odd one out."
+  },
+  {
+   "id": "p8_q18",
+   "no": 18,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "In a certain code language, ‘on the hills’ is coded as ‘mp rc gp’, 'slopes of hills' is coded as 'gp hk vi' and ‘the wet slopes’ is coded as ‘hk mp bo’. How is ‘wet’ coded in the given code language?",
+   "options": [
+    "vi",
+    "hk",
+    "rc",
+    "bo"
+   ],
+   "correctAnswer": 3,
+   "explanation": "'hills' is common to sentences 1 and 2 (code 'gp'); 'the' is common to sentences 1 and 3 (code 'mp'); 'slopes' is common to sentences 2 and 3 (code 'hk'). The remaining code in sentence 3, 'bo', must then stand for 'wet'."
+  },
+  {
+   "id": "p8_q19",
+   "no": 19,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "Select the set in which the numbers are related in the same way as are the numbers of the following sets.\n(NOTE: Operations should be performed on the whole numbers, without breaking down the numbers into their constituent digits. E.g. 13 – Operations on 13 such as adding / subtracting /multiplying to 13 can be performed. Breaking down 13 into 1 and 3 and then performing mathematical operations on 1 and 3 is not allowed.)\n(6, 13, 91) (7, 15, 120)",
+   "options": [
+    "(4, 13, 56)",
+    "(8, 17, 133)",
+    "(4, 13, 189)",
+    "(15, 19, 76)"
+   ],
+   "correctAnswer": 3,
+   "explanation": "In each given set, the third number equals (second number) × (second − first): for (6,13,91), 13×(13−6)=13×7=91; for (7,15,120), 15×(15−7)=15×8=120. Applying the rule to (15,19,76): 19×(19−15)=19×4=76, so this is the matching set."
+  },
+  {
+   "id": "p8_q20",
+   "no": 20,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "General Intelligence & Reasoning",
+   "question": "What will come in the place of the question mark ‘?’ in the following equation, if ‘+’ and ‘×’ are interchanged and ‘−’ and ‘÷’ are interchanged?\n12 ÷ 16 – 4 × 3 + 3 = ?",
+   "options": [
+    "8",
+    "17",
+    "23",
+    "14"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Swapping the symbols turns the expression into 12 − 16 ÷ 4 + 3 × 3. By BODMAS: 16 ÷ 4 = 4, 3 × 3 = 9, so 12 − 4 + 9 = 17."
+  },
+  {
+   "id": "p8_q21",
+   "no": 21,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "The enzymes that control the topology of DNA in all cells are:",
+   "options": [
+    "Nucleases",
+    "DNA helicases",
+    "DNA polymerases",
+    "DNA topoisomerases"
+   ],
+   "correctAnswer": 3,
+   "explanation": "DNA topoisomerases relieve and control the supercoiling (topology) of the DNA double helix during replication and transcription."
+  },
+  {
+   "id": "p8_q22",
+   "no": 22,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "What was the percentage of the population living in rural areas in India as per the 2011 Census?",
+   "options": [
+    "72.1%",
+    "63.2%",
+    "58.7%",
+    "68.8%"
+   ],
+   "correctAnswer": 3,
+   "explanation": "As per Census 2011, about 68.84% of India's population lived in rural areas."
+  },
+  {
+   "id": "p8_q23",
+   "no": 23,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "What is the backbone of the internet's structure?",
+   "options": [
+    "Telephone cables",
+    "Large computers",
+    "Home Wi-Fi networks",
+    "Packet-switched networks"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The internet is built on packet-switched networks, where data is broken into packets and routed independently to their destination."
+  },
+  {
+   "id": "p8_q24",
+   "no": 24,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "In the framework of monetary policy transmission in India, how does the signaling effect of central bank actions influence market expectations and economic outcomes?",
+   "options": [
+    "Central bank signals affect exchange rates, resulting in changes in the competitiveness of exports and imports.",
+    "Central bank signals influence long-term interest rates, leading to adjustments in borrowing costs for households and businesses.",
+    "Central bank signals primarily affect short-term interest rates, thereby impacting consumption and investment decisions in the economy.",
+    "Central bank signals influence inflation expectations, shaping wage negotiations and price-setting behaviour in the economy."
+   ],
+   "correctAnswer": 3,
+   "explanation": "The signaling channel works mainly through inflation expectations: central bank communication shapes what households and firms expect prices to do, which feeds into wage and price-setting behaviour."
+  },
+  {
+   "id": "p8_q25",
+   "no": 25,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "Which of the following rivers flows westwards through a rift valley and discharges into the Arabian sea?",
+   "options": [
+    "Narmada",
+    "Krishna",
+    "Mahanadi",
+    "Godavari"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The Narmada flows westward through a rift valley between the Vindhya and Satpura ranges and drains into the Arabian Sea via the Gulf of Khambhat."
+  },
+  {
+   "id": "p8_q26",
+   "no": 26,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "The Losoong festival is celebrated at the end of the harvest season and the end of the tenth month of the Tibetan Year in rural ________.",
+   "options": [
+    "Manipur",
+    "Kerala",
+    "Assam",
+    "Sikkim"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Losoong is the Sikkimese (Bhutia) harvest and New Year festival, marking the end of the tenth month of the Tibetan calendar."
+  },
+  {
+   "id": "p8_q27",
+   "no": 27,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "The upper and often sticky part of the female reproductive system of a flower is termed as:",
+   "options": [
+    "Stigma",
+    "Anther",
+    "Style",
+    "Ovary"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The stigma is the sticky tip of the pistil that receives pollen grains; the anther is a male part, and the style connects stigma to ovary."
+  },
+  {
+   "id": "p8_q28",
+   "no": 28,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "Which of the following is NOT a factor responsible for the development of Indian Monsoon?",
+   "options": [
+    "Intense low pressure formation over Tibetan plateau",
+    "Jet streams and upper air circulation",
+    "Inter-Tropical Convergence Zone",
+    "Western disturbances"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Western disturbances are winter-season extratropical storms from the Mediterranean; they do not drive the Indian monsoon, unlike the ITCZ, jet streams and the Tibetan plateau's heating."
+  },
+  {
+   "id": "p8_q29",
+   "no": 29,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "Which are stem parasites that naturally graft to their host plants to extract water and nutrients?",
+   "options": [
+    "Phytoplankton",
+    "Cuscuta",
+    "Grass",
+    "Seaweed"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Cuscuta (dodder) is a leafless stem parasite that attaches to a host plant's stem using haustoria to draw water and nutrients."
+  },
+  {
+   "id": "p8_q30",
+   "no": 30,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "In the context of income determination in an economy, what does the consumption function represent?",
+   "options": [
+    "The relationship between consumption and disposable income, illustrating the propensity to consume",
+    "The relationship between consumption and total income, showing the average propensity to consume",
+    "The relationship between investment and consumption, indicating the marginal propensity to consume",
+    "The relationship between investment and savings, reflecting the equilibrium level of income"
+   ],
+   "correctAnswer": 0,
+   "explanation": "In Keynesian theory, the consumption function shows how consumption spending varies with disposable income, capturing the propensity to consume."
+  },
+  {
+   "id": "p8_q31",
+   "no": 31,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "When was the Citizenship Act passed?",
+   "options": [
+    "1955",
+    "1953",
+    "1954",
+    "1952"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The Citizenship Act was enacted in 1955, laying down the rules for acquisition and termination of Indian citizenship."
+  },
+  {
+   "id": "p8_q32",
+   "no": 32,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "Anai Mudi is located in which of the following regions?",
+   "options": [
+    "The Himalayas",
+    "The Western Ghats",
+    "The Purvachal",
+    "The Eastern Ghats"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Anamudi, the highest peak in Peninsular India, is located in the Western Ghats (Kerala)."
+  },
+  {
+   "id": "p8_q33",
+   "no": 33,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "Shopkeepers are considered under which of the following categories of employment?",
+   "options": [
+    "Contract Employment",
+    "Commission-based Employment",
+    "Causal Employment",
+    "Self employment"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Shopkeepers run their own business and are not employed by another party, so they fall under self-employment."
+  },
+  {
+   "id": "p8_q34",
+   "no": 34,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "If the blood group of the father is AB and the mother is O, which of the following blood groups is possible in their children?",
+   "options": [
+    "A and O",
+    "B and AB",
+    "A and B",
+    "A and AB"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Father AB contributes either A or B allele; mother O contributes only O. So children can be A (AO) or B (BO), but not AB or O, giving 'A and B'."
+  },
+  {
+   "id": "p8_q35",
+   "no": 35,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "Animals with joint legs belong to:",
+   "options": [
+    "Protozoa",
+    "Annelida",
+    "Porifera",
+    "Arthropoda"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Arthropoda literally means 'jointed feet/legs' — the phylum is defined by segmented bodies and jointed appendages."
+  },
+  {
+   "id": "p8_q36",
+   "no": 36,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "In genotoxicity, the target area is:",
+   "options": [
+    "Gene",
+    "Blood",
+    "Liver",
+    "Kidney"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Genotoxicity refers to the damaging effect of a substance on a cell's genetic material (genes/DNA)."
+  },
+  {
+   "id": "p8_q37",
+   "no": 37,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "Which of the following is the correct way of calculating the number of unemployed people?",
+   "options": [
+    "Unemployed people = Labour force × Work force",
+    "Unemployed people = Labour force + Work force",
+    "Unemployed people = Labour force − Work force",
+    "Unemployed people = Work Force ÷ Labour force"
+   ],
+   "correctAnswer": 2,
+   "explanation": "The labour force includes both employed (work force) and unemployed people, so unemployed people = labour force − work force."
+  },
+  {
+   "id": "p8_q38",
+   "no": 38,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "Match the followings revolts with their respective regions:\na. Rampa Rebellion — I. Chhota Nagpur\nb. Kuka Movement — II. Bengal\nc. Munda Rebellion — III. Madras\nd. Indigo Revolt — IV. Punjab",
+   "options": [
+    "a - II, b - III, c - IV, d - I",
+    "a - I, b - II, c - III, d - IV",
+    "a - III, b - IV, c - I, d - II",
+    "a - IV, b - I, c - II, d - III"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Rampa Rebellion took place in Madras Presidency (Andhra region), the Kuka Movement in Punjab, the Munda Rebellion in Chhota Nagpur, and the Indigo Revolt in Bengal — giving a-III, b-IV, c-I, d-II."
+  },
+  {
+   "id": "p8_q39",
+   "no": 39,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "Recently, who released the book titled 'FIH Odisha Hockey Men's World Cup 2023' showcasing Odisha's commitment towards hockey?",
+   "options": [
+    "Narendra Modi",
+    "Naveen Patnaik",
+    "Anurag Singh Thakur",
+    "Tusharkanti Behera"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The commemorative book on the FIH Odisha Hockey Men's World Cup 2023 was released by then Odisha Chief Minister Naveen Patnaik."
+  },
+  {
+   "id": "p8_q40",
+   "no": 40,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "General Awareness",
+   "question": "Which ministry constituted a six-member committee in April 2024 to address issues related to the queer community such as accessing goods and services, social welfare schemes, or facing the threat of violence among others?",
+   "options": [
+    "Ministry of Women and Child Development",
+    "Ministry of Social Justice and Empowerment",
+    "Ministry of Law and Justice",
+    "Ministry of Health and Family Welfare"
+   ],
+   "correctAnswer": 2,
+   "explanation": "The Ministry of Social Justice and Empowerment, which handles LGBTQ+ welfare matters in India, constituted this six-member committee in April 2024."
+  },
+  {
+   "id": "p8_q41",
+   "no": 41,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "A fruit seller had some guavas. He sold 20% of those and still had 240 guavas left with him. What was the initial number of guavas that the fruit seller had?",
+   "options": [
+    "300",
+    "1200",
+    "270",
+    "450"
+   ],
+   "correctAnswer": 0,
+   "explanation": "If 80% of the guavas equal 240, the total is 240 ÷ 0.8 = 300."
+  },
+  {
+   "id": "p8_q42",
+   "no": 42,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "If 10.8 : x :: x : 43.2, and x > 0, then find the value of x.",
+   "options": [
+    "21.6",
+    "20.1",
+    "24",
+    "23.5"
+   ],
+   "correctAnswer": 0,
+   "explanation": "For a mean proportional, x² = 10.8 × 43.2 = 466.56, so x = √466.56 = 21.6."
+  },
+  {
+   "id": "p8_q43",
+   "no": 43,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "The HCF and the LCM of two numbers are 26 and 728, respectively. If one of the numbers is 7/4 times of the other, what is the larger number?",
+   "options": [
+    "183",
+    "168",
+    "222",
+    "182"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Let the numbers be 26m and 26n with m,n coprime; HCF×LCM relation gives m×n = 728/26 = 28. Since one number is 7/4 of the other, 4m = 7n, so m=7, n=4 (coprime, product 28). The numbers are 26×7=182 and 26×4=104, so the larger number is 182."
+  },
+  {
+   "id": "p8_q44",
+   "no": 44,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "The average of three numbers is 20. If two numbers are 15 and 24, the third number is:",
+   "options": [
+    "20",
+    "21",
+    "22",
+    "23"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Total of three numbers = 20×3 = 60; third number = 60 − 15 − 24 = 21."
+  },
+  {
+   "id": "p8_q45",
+   "no": 45,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "By how much is 60% of 45 greater than 2/5 of 45?",
+   "options": [
+    "9",
+    "6",
+    "3",
+    "7"
+   ],
+   "correctAnswer": 0,
+   "explanation": "60% of 45 = 27, and 2/5 of 45 = 18; the difference is 27 − 18 = 9."
+  },
+  {
+   "id": "p8_q46",
+   "no": 46,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "A group of 30 students appeared in a test. The average score of 12 students is 66, and that of the rest is 80. What is the average score of the group?",
+   "options": [
+    "74.4",
+    "73.4",
+    "72.4",
+    "75.4"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Total score = 12×66 + 18×80 = 792 + 1440 = 2232; average = 2232 ÷ 30 = 74.4."
+  },
+  {
+   "id": "p8_q47",
+   "no": 47,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "The average of three numbers is 20. If two numbers are 14 and 27, the third number is:",
+   "options": [
+    "21",
+    "20",
+    "18",
+    "19"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Total of three numbers = 60; third number = 60 − 14 − 27 = 19."
+  },
+  {
+   "id": "p8_q48",
+   "no": 48,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "A man purchased two varieties of erasers at the rates of ₹2 for 3 erasers and ₹6 per eraser, respectively. If he purchased an equal number of eraser of each variety and then sold all his erasers at ₹5 per eraser, what was his profit percentage?",
+   "options": [
+    "50 Percent",
+    "52 Percent",
+    "60 Percent",
+    "48 Percent"
+   ],
+   "correctAnswer": 0,
+   "explanation": "For 3 erasers of each type: cost = 3×(2/3) + 3×6 = 2+18 = ₹20 for 6 erasers; selling all 6 at ₹5 gives ₹30. Profit = ₹10 on cost ₹20 = 50%."
+  },
+  {
+   "id": "p8_q49",
+   "no": 49,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "A person saves 50% of his income. If his expenditure is ₹320, then his income (in ₹) is:",
+   "options": [
+    "560",
+    "640",
+    "600",
+    "680"
+   ],
+   "correctAnswer": 1,
+   "explanation": "If 50% is saved, expenditure is also 50% of income, so income = 320 × 2 = ₹640."
+  },
+  {
+   "id": "p8_q50",
+   "no": 50,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "By selling an article for ₹112, a man loses 30%. At what price (in ₹) should he sell it to gain 40%?",
+   "options": [
+    "214",
+    "224",
+    "234",
+    "244"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Cost price = 112 ÷ 0.7 = ₹160; selling price for 40% gain = 160 × 1.4 = ₹224."
+  },
+  {
+   "id": "p8_q51",
+   "no": 51,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "If a number is divisible by 95, then what will be the remainder when the same number is divided by 19?",
+   "options": [
+    "0",
+    "2",
+    "1",
+    "3"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Since 95 = 19 × 5, any multiple of 95 is also a multiple of 19, leaving remainder 0."
+  },
+  {
+   "id": "p8_q52",
+   "no": 52,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "The average of 7 numbers is 41. If each number is increased by 5, what will the new average be?",
+   "options": [
+    "41",
+    "7",
+    "46",
+    "51"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Increasing every number by 5 increases the average by 5 as well: 41 + 5 = 46."
+  },
+  {
+   "id": "p8_q53",
+   "no": 53,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "If 5 : x :: x : 33.8, and x > 0, then find the value of x.",
+   "options": [
+    "14.5",
+    "14",
+    "13",
+    "15.1"
+   ],
+   "correctAnswer": 2,
+   "explanation": "x² = 5 × 33.8 = 169, so x = √169 = 13."
+  },
+  {
+   "id": "p8_q54",
+   "no": 54,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "A man purchased two varieties of chocolates at the rates of ₹2 for 3 chocolates and ₹6 per chocolate, respectively. If he purchased an equal number of chocolates of each variety and then sold all his chocolates at ₹5 per chocolate, what was his profit percentage?",
+   "options": [
+    "52 Percent",
+    "50 Percent",
+    "49 Percent",
+    "51 Percent"
+   ],
+   "correctAnswer": 1,
+   "explanation": "For 3 of each: cost = 3×(2/3) + 3×6 = 2+18 = ₹20 for 6 chocolates; sold at ₹5 each = ₹30. Profit = ₹10 on ₹20 = 50%."
+  },
+  {
+   "id": "p8_q55",
+   "no": 55,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "The average of 7 numbers is 41. If each number is increased by 7, what will the new average be?",
+   "options": [
+    "48",
+    "55",
+    "41",
+    "7"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Increasing every number by 7 raises the average by the same amount: 41 + 7 = 48."
+  },
+  {
+   "id": "p8_q56",
+   "no": 56,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "The LCM of two numbers 1512 and 810 is 22680. What is one-third of their HCF?",
+   "options": [
+    "36",
+    "54",
+    "18",
+    "27"
+   ],
+   "correctAnswer": 2,
+   "explanation": "HCF × LCM = product of numbers: HCF = (1512 × 810) ÷ 22680 = 54; one-third of 54 is 18."
+  },
+  {
+   "id": "p8_q57",
+   "no": 57,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "A sum of ₹15,792 gives a simple interest of ₹2,105.60 in 2 years and 8 months. Find the rate of interest per annum.",
+   "options": [
+    "8%",
+    "5%",
+    "4.5%",
+    "6.8%"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Time = 2 years 8 months = 8/3 years. Rate = (SI×100)/(P×T) = (2105.60×100)/(15792×8/3) = 210560/42112 = 5%."
+  },
+  {
+   "id": "p8_q58",
+   "no": 58,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "A fruit seller had some oranges. He sold 20% of those and still had 600 oranges left with him. What was the initial number of oranges that the fruit seller had?",
+   "options": [
+    "675",
+    "3000",
+    "750",
+    "1125"
+   ],
+   "correctAnswer": 2,
+   "explanation": "If 80% of the oranges equal 600, the total is 600 ÷ 0.8 = 750."
+  },
+  {
+   "id": "p8_q59",
+   "no": 59,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "By selling an article for ₹112, a man loses 20%. At what price (in ₹) should he sell it to gain 45%?",
+   "options": [
+    "203",
+    "223",
+    "213",
+    "193"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Cost price = 112 ÷ 0.8 = ₹140; selling price for 45% gain = 140 × 1.45 = ₹203."
+  },
+  {
+   "id": "p8_q60",
+   "no": 60,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Arithmetical & Numerical Ability",
+   "question": "A person deposits ₹14,250 in a firm and gets ₹1,995 interest after 1 year. What is the rate of interest per annum?",
+   "options": [
+    "15%",
+    "12%",
+    "14%",
+    "16%"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Rate = (Interest × 100) ÷ (Principal × Time) = (1995 × 100) ÷ 14250 = 14%."
+  },
+  {
+   "id": "p8_q61",
+   "no": 61,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Select the most appropriate idiom for the given segment.\nComing close to a successful outcome only to fall short at the end",
+   "options": [
+    "Go Dutch",
+    "Break even",
+    "Plum job",
+    "Close but no cigar"
+   ],
+   "correctAnswer": 3,
+   "explanation": "'Close but no cigar' means coming near success but ultimately falling just short of it."
+  },
+  {
+   "id": "p8_q62",
+   "no": 62,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Select the INCORRECTLY spelt word.",
+   "options": [
+    "Neccessary",
+    "License",
+    "Address",
+    "Immediate"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The correct spelling is 'Necessary' (one 'c', two 's'); 'Neccessary' is misspelt."
+  },
+  {
+   "id": "p8_q63",
+   "no": 63,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Select the most appropriate idiom for the given group of words.\nDifficult to understand",
+   "options": [
+    "All Greek to me",
+    "Cast pearls before swine",
+    "Come in handy",
+    "Butter fingers"
+   ],
+   "correctAnswer": 0,
+   "explanation": "'All Greek to me' is the standard idiom for something that is incomprehensible."
+  },
+  {
+   "id": "p8_q64",
+   "no": 64,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Select the most appropriate ANTONYM of the given word.\nExplicit",
+   "options": [
+    "Vague",
+    "Clear",
+    "Detailed",
+    "Precise"
+   ],
+   "correctAnswer": 0,
+   "explanation": "'Explicit' means stated clearly and in detail; its opposite is 'vague', meaning unclear or imprecise."
+  },
+  {
+   "id": "p8_q65",
+   "no": 65,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Select the INCORRECTLY spelt word in the given sentence.\nThe professor's lecture on astrophysics was thoroughly enlightning and informative.",
+   "options": [
+    "Thoroughly",
+    "Astrophysics",
+    "Professor's",
+    "Enlightning"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The correct spelling is 'enlightening' (with an 'e' before 'ning'); 'enlightning' is misspelt."
+  },
+  {
+   "id": "p8_q66",
+   "no": 66,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Select the most appropriate idiom for the underlined segment in the given sentence.\nTrying to change his mind is like trying to do something impossible.",
+   "options": [
+    "Better late than never",
+    "Barking up the wrong tree",
+    "Banging one’s head against a brick wall",
+    "Blood is thicker than water"
+   ],
+   "correctAnswer": 2,
+   "explanation": "'Banging one's head against a brick wall' describes making a persistent effort at something that is impossible or futile."
+  },
+  {
+   "id": "p8_q67",
+   "no": 67,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Sentences of a paragraph are given below in jumbled order. Arrange the sentences in the correct order to form a meaningful and coherent paragraph.\nA. It has a part to play in everything from the decision-making process to powerful algorithms that power artificial intelligence.\nB. It also helps you solve problems, handle uncertainty, verify claims and assess situations carefully to ensure the decision you make is in your best interest.\nC. Moreover, reasoning allows you to weigh the benefits and disadvantages of two or more courses of action before choosing the one with the most benefit or the one that suits your needs.\nD. The term ‘Reasoning’ refers to the ability to assess things rationally by applying logic based on new or existing information when making a decision or solving a problem.",
+   "options": [
+    "DCBA",
+    "CBAD",
+    "ACBD",
+    "DABC"
+   ],
+   "correctAnswer": 3,
+   "explanation": "D introduces 'reasoning' as a definition, A extends it to decision-making and AI, B continues with what reasoning helps you do, and C adds a further benefit — giving the order D-A-B-C."
+  },
+  {
+   "id": "p8_q68",
+   "no": 68,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Select the most appropriate ANTONYM of the given word.\nAbase",
+   "options": [
+    "Quell",
+    "Oscillate",
+    "Elevate",
+    "Abate"
+   ],
+   "correctAnswer": 2,
+   "explanation": "'Abase' means to lower or degrade someone; its opposite is 'elevate', to raise up."
+  },
+  {
+   "id": "p8_q69",
+   "no": 69,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Select the most appropriate ANTONYM of the given word.\nGarish",
+   "options": [
+    "Hackneyed",
+    "Incisive",
+    "Tasteful",
+    "Jubilant"
+   ],
+   "correctAnswer": 2,
+   "explanation": "'Garish' means excessively bright or gaudy; its opposite is 'tasteful', meaning showing good judgement in style."
+  },
+  {
+   "id": "p8_q70",
+   "no": 70,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Select the option that can be used as a one-word substitute for the given group of words.\nAn author who writes the story of another person’s life.",
+   "options": [
+    "Wordsmith",
+    "Dramatist",
+    "Historian",
+    "Biographer"
+   ],
+   "correctAnswer": 3,
+   "explanation": "A 'biographer' is someone who writes an account of another person's life."
+  },
+  {
+   "id": "p8_q71",
+   "no": 71,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Select the most appropriate idiom that can substitute the underlined segment in the given sentence.\nMartina has been working on her master’s thesis inconsistently and irregularly. She needs to work on it constantly.",
+   "options": [
+    "by fits and starts",
+    "at one’s wits end",
+    "in the nick of time",
+    "In a fair way"
+   ],
+   "correctAnswer": 0,
+   "explanation": "'By fits and starts' means doing something irregularly, with intervals of activity and inactivity — matching 'inconsistently and irregularly'."
+  },
+  {
+   "id": "p8_q72",
+   "no": 72,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Sentences of a paragraph are given below in jumbled order. Arrange the sentences in the correct order to form a meaningful and coherent paragraph.\nA. They fled to the higher ground.\nB. Soon the floods retired and the villagers were able to return.\nC. The Ganges overflowed its banks.\nD. It rained heavily for several days.\nE. The terrified villagers abandoned their homes.",
+   "options": [
+    "CEBAD",
+    "DCEAB",
+    "EDABC",
+    "DEBCA"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Logically: it rained heavily (D), the Ganges overflowed (C), villagers abandoned their homes (E), fled to higher ground (A), and finally the floods retired (B) — giving D-C-E-A-B."
+  },
+  {
+   "id": "p8_q73",
+   "no": 73,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Select the most appropriate idiom that can substitute the underlined segment in the given sentence.\nMy father seems to have been too busy for the last few weeks.",
+   "options": [
+    "snowed under",
+    "blue in the face",
+    "through thick and thin",
+    "a black sheep"
+   ],
+   "correctAnswer": 0,
+   "explanation": "'Snowed under' means overwhelmed with a large amount of work — matching 'too busy'."
+  },
+  {
+   "id": "p8_q74",
+   "no": 74,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Identify the most appropriate ANTONYM of the given word.\nDecipher",
+   "options": [
+    "Conceal",
+    "Decode",
+    "Interpret",
+    "Decrypt"
+   ],
+   "correctAnswer": 0,
+   "explanation": "'Decipher' means to work out the meaning of something unclear; its opposite is 'conceal', to hide or keep secret."
+  },
+  {
+   "id": "p8_q75",
+   "no": 75,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Select the INCORRECTLY spelt word.",
+   "options": [
+    "Harass",
+    "Comittee",
+    "Maintenance",
+    "Accommodation"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The correct spelling is 'Committee' (double 'm', double 't'); 'Comittee' is missing a letter."
+  },
+  {
+   "id": "p8_q76",
+   "no": 76,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Comprehension: Read the given passage and answer the questions.\n\nJRD Tata, a visionary industrialist, had a profound impact on the industrial landscape of India. His foresight and innovative thinking led to the establishment of several industries, including airlines, steel, and hotels, that have become cornerstones of the Indian economy. Despite his immense success, JRD remained humble and dedicated to the well-being of his employees and the society at large. He believed in creating wealth not just for personal gain but for the benefit of the country and its people. His leadership style was characterised by a deep sense of responsibility and a commitment to ethical practices. JRD Tata's legacy is not just in the industries he built, but in the values he instilled in Indian business practices. His approach to business was holistic, considering the economic, social, and environmental impact of industrial activities. This perspective made him a respected figure not only in India but globally. JRD's contributions to aviation were pioneering. He founded Tata Airlines, which later became Air India, putting India on the global aviation map. His vision, perseverance, and integrity continue to inspire generations of entrepreneurs and business leaders.\n\nSubQuestion: What would be the most appropriate title for this passage?",
+   "options": [
+    "The Industrial Giant",
+    "The Humble Visionary",
+    "JRD Tata's Business Empire",
+    "Aviation in India"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The passage centres on JRD Tata's humility, ethics and vision alongside his industrial success, making 'The Humble Visionary' the most fitting title."
+  },
+  {
+   "id": "p8_q77",
+   "no": 77,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Comprehension: Read the given passage and answer the questions.\n\nJRD Tata, a visionary industrialist, had a profound impact on the industrial landscape of India. His foresight and innovative thinking led to the establishment of several industries, including airlines, steel, and hotels, that have become cornerstones of the Indian economy. Despite his immense success, JRD remained humble and dedicated to the well-being of his employees and the society at large. He believed in creating wealth not just for personal gain but for the benefit of the country and its people. His leadership style was characterised by a deep sense of responsibility and a commitment to ethical practices. JRD Tata's legacy is not just in the industries he built, but in the values he instilled in Indian business practices. His approach to business was holistic, considering the economic, social, and environmental impact of industrial activities. This perspective made him a respected figure not only in India but globally. JRD's contributions to aviation were pioneering. He founded Tata Airlines, which later became Air India, putting India on the global aviation map. His vision, perseverance, and integrity continue to inspire generations of entrepreneurs and business leaders.\n\nSubQuestion: Select the most appropriate ANTONYM of 'holistic'.",
+   "options": [
+    "Balanced",
+    "Fragmented",
+    "Integrated",
+    "Comprehensive"
+   ],
+   "correctAnswer": 1,
+   "explanation": "'Holistic' means considering something as a whole; its opposite is 'fragmented', meaning broken into disconnected parts."
+  },
+  {
+   "id": "p8_q78",
+   "no": 78,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Comprehension: Read the given passage and answer the questions.\n\nJRD Tata, a visionary industrialist, had a profound impact on the industrial landscape of India. His foresight and innovative thinking led to the establishment of several industries, including airlines, steel, and hotels, that have become cornerstones of the Indian economy. Despite his immense success, JRD remained humble and dedicated to the well-being of his employees and the society at large. He believed in creating wealth not just for personal gain but for the benefit of the country and its people. His leadership style was characterised by a deep sense of responsibility and a commitment to ethical practices. JRD Tata's legacy is not just in the industries he built, but in the values he instilled in Indian business practices. His approach to business was holistic, considering the economic, social, and environmental impact of industrial activities. This perspective made him a respected figure not only in India but globally. JRD's contributions to aviation were pioneering. He founded Tata Airlines, which later became Air India, putting India on the global aviation map. His vision, perseverance, and integrity continue to inspire generations of entrepreneurs and business leaders.\n\nSubQuestion: What can be inferred about JRD Tata's leadership from the passage?",
+   "options": [
+    "He was indifferent to social responsibilities.",
+    "He valued ethical practices and social welfare.",
+    "He focused only on the aviation industry.",
+    "He prioritised profit over ethics."
+   ],
+   "correctAnswer": 1,
+   "explanation": "The passage describes JRD's deep sense of responsibility, commitment to ethical practices and concern for employees and society, indicating he valued ethics and social welfare."
+  },
+  {
+   "id": "p8_q79",
+   "no": 79,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Comprehension: Read the given passage and answer the questions.\n\nJRD Tata, a visionary industrialist, had a profound impact on the industrial landscape of India. His foresight and innovative thinking led to the establishment of several industries, including airlines, steel, and hotels, that have become cornerstones of the Indian economy. Despite his immense success, JRD remained humble and dedicated to the well-being of his employees and the society at large. He believed in creating wealth not just for personal gain but for the benefit of the country and its people. His leadership style was characterised by a deep sense of responsibility and a commitment to ethical practices. JRD Tata's legacy is not just in the industries he built, but in the values he instilled in Indian business practices. His approach to business was holistic, considering the economic, social, and environmental impact of industrial activities. This perspective made him a respected figure not only in India but globally. JRD's contributions to aviation were pioneering. He founded Tata Airlines, which later became Air India, putting India on the global aviation map. His vision, perseverance, and integrity continue to inspire generations of entrepreneurs and business leaders.\n\nSubQuestion: What is the tone of the passage?",
+   "options": [
+    "Critical",
+    "Sarcastic",
+    "Nostalgic",
+    "Admirable"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The passage praises JRD Tata's vision, integrity and legacy throughout, giving it an admiring (admirable) tone."
+  },
+  {
+   "id": "p8_q80",
+   "no": 80,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "English Language & Comprehension",
+   "question": "Comprehension: Read the given passage and answer the questions.\n\nJRD Tata, a visionary industrialist, had a profound impact on the industrial landscape of India. His foresight and innovative thinking led to the establishment of several industries, including airlines, steel, and hotels, that have become cornerstones of the Indian economy. Despite his immense success, JRD remained humble and dedicated to the well-being of his employees and the society at large. He believed in creating wealth not just for personal gain but for the benefit of the country and its people. His leadership style was characterised by a deep sense of responsibility and a commitment to ethical practices. JRD Tata's legacy is not just in the industries he built, but in the values he instilled in Indian business practices. His approach to business was holistic, considering the economic, social, and environmental impact of industrial activities. This perspective made him a respected figure not only in India but globally. JRD's contributions to aviation were pioneering. He founded Tata Airlines, which later became Air India, putting India on the global aviation map. His vision, perseverance, and integrity continue to inspire generations of entrepreneurs and business leaders.\n\nSubQuestion: Which of the following is a fact mentioned in the passage?",
+   "options": [
+    "JRD Tata's leadership style was authoritarian.",
+    "JRD Tata's legacy is confined to aviation.",
+    "JRD Tata founded Air India.",
+    "JRD Tata believed in creating wealth for personal gain."
+   ],
+   "correctAnswer": 2,
+   "explanation": "The passage explicitly states JRD founded Tata Airlines, which later became Air India."
+  },
+  {
+   "id": "p8_q81",
+   "no": 81,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "'घड़ी में तोला घड़ी में माशा' मुहावरे का अर्थ है-",
+   "options": [
+    "समय का पक्का",
+    "घड़ी देख के उठना बैठना",
+    "जरा सी बात पर खुश और नाराज होना",
+    "माप तौल में कुशल व्यापारी"
+   ],
+   "correctAnswer": 2,
+   "explanation": "'घड़ी में तोला घड़ी में माशा' मुहावरे का अर्थ है — किसी की मनोदशा का बार-बार बदलना, अर्थात जरा सी बात पर खुश और नाराज हो जाना।"
+  },
+  {
+   "id": "p8_q82",
+   "no": 82,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "शिकारी ______ शेर पर गोली चलाई पर वह बच निकला। उचित कारक का प्रयोग करते हुए वाक्य पूर्ण करें।",
+   "options": [
+    "ने",
+    "में",
+    "को",
+    "से"
+   ],
+   "correctAnswer": 0,
+   "explanation": "कर्ता कारक 'ने' का प्रयोग सकर्मक क्रिया के भूतकाल में कर्ता के साथ होता है — 'शिकारी ने शेर पर गोली चलाई'।"
+  },
+  {
+   "id": "p8_q83",
+   "no": 83,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "हिमालय सबसे ऊँचा पर्वत है। वाक्य के किस भाग में त्रुटि है?",
+   "options": [
+    "ऊँचा",
+    "सबसे",
+    "हिमालय",
+    "पर्वत है।"
+   ],
+   "correctAnswer": 0,
+   "explanation": "हिमालय एक पर्वतमाला (श्रृंखला) है, अतः शुद्ध प्रयोग 'सबसे ऊँची पर्वत श्रृंखला' या स्त्रीलिंग रूप होना चाहिए; 'ऊँचा' शब्द में लिंग-दोष है।"
+  },
+  {
+   "id": "p8_q84",
+   "no": 84,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "निश्चित रूप से नहीं कहा जा सकता। वाक्य के किस भाग में त्रुटि है?",
+   "options": [
+    "निश्चित",
+    "कहा जा सकता।",
+    "नहीं",
+    "रूप से"
+   ],
+   "correctAnswer": 0,
+   "explanation": "वाक्य में 'निश्चित' शब्द के साथ पुनरुक्ति दोष है, क्योंकि आगे 'नहीं कहा जा सकता' पहले से ही अनिश्चितता दर्शाता है।"
+  },
+  {
+   "id": "p8_q85",
+   "no": 85,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "वह किसी ______ बैठा है। उचित कारक का प्रयोग करते हुए वाक्य पूर्ण करें।",
+   "options": [
+    "से",
+    "में",
+    "ने",
+    "पर"
+   ],
+   "correctAnswer": 3,
+   "explanation": "अधिकरण कारक 'पर' का प्रयोग किसी वस्तु के ऊपर बैठने की स्थिति दर्शाने के लिए होता है — 'वह किसी पर बैठा है'।"
+  },
+  {
+   "id": "p8_q86",
+   "no": 86,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "निम्नलिखित में कौन सा शब्द तत्सम है?",
+   "options": [
+    "पत्र",
+    "जाड़ा",
+    "जेठ",
+    "जांघ"
+   ],
+   "correctAnswer": 0,
+   "explanation": "'पत्र' संस्कृत का शब्द है और बिना किसी परिवर्तन के हिंदी में प्रयुक्त होता है, इसलिए यह तत्सम शब्द है; शेष शब्द तद्भव हैं।"
+  },
+  {
+   "id": "p8_q87",
+   "no": 87,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "'जो स्त्री सूर्य भी न देख सके' वाक्यांश के लिए एक सार्थक शब्द है-",
+   "options": [
+    "सुरसती",
+    "असूर्यम्पश्या",
+    "सूर्यपथा",
+    "सूर्यदृष्टि"
+   ],
+   "correctAnswer": 1,
+   "explanation": "'जो स्त्री सूर्य को भी न देख सके' अर्थात घर से बाहर न निकलने वाली स्त्री के लिए सार्थक शब्द 'असूर्यम्पश्या' है।"
+  },
+  {
+   "id": "p8_q88",
+   "no": 88,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "निम्नलिखित में कौन सा शब्द तद्भव नहीं है?",
+   "options": [
+    "तांबूल",
+    "ताँबा",
+    "तमोली",
+    "तेल"
+   ],
+   "correctAnswer": 0,
+   "explanation": "'तांबूल' संस्कृत का तत्सम शब्द है (पान के अर्थ में); शेष शब्द 'ताँबा', 'तमोली' और 'तेल' तद्भव रूप हैं।"
+  },
+  {
+   "id": "p8_q89",
+   "no": 89,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "'मक्खी मारते रहना' मुहावरे का सही अर्थ है-",
+   "options": [
+    "एक जगह रहना",
+    "जीवों से घृणा",
+    "जीवों की हत्या",
+    "खाली बैठना"
+   ],
+   "correctAnswer": 3,
+   "explanation": "'मक्खी मारना/मारते रहना' मुहावरे का अर्थ है निठल्ला बैठे रहना अर्थात खाली बैठना।"
+  },
+  {
+   "id": "p8_q90",
+   "no": 90,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "'इसका मूल्य आँका नहीं जा सकता' वाक्य के किस भाग में त्रुटि है?",
+   "options": [
+    "नहीं जा सकता।",
+    "मूल्य",
+    "आँका",
+    "इसका"
+   ],
+   "correctAnswer": 2,
+   "explanation": "शुद्ध प्रयोग 'आँका नहीं जा सकता' के स्थान पर 'आँका नहीं जा सकता है/लगाया नहीं जा सकता' होना चाहिए; क्रिया रूप 'आँका' में त्रुटि है।"
+  },
+  {
+   "id": "p8_q91",
+   "no": 91,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "'थोड़ी देर बाद सन्यासी लौट आये।' वाक्य के किस भाग में त्रुटि है?",
+   "options": [
+    "लौट आये",
+    "सन्यासी",
+    "थोड़ी",
+    "देर बाद"
+   ],
+   "correctAnswer": 1,
+   "explanation": "शुद्ध वर्तनी 'सन्यासी' नहीं बल्कि 'संन्यासी' (दो न् सहित) है, अतः त्रुटि 'सन्यासी' शब्द में है।"
+  },
+  {
+   "id": "p8_q92",
+   "no": 92,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "'खाद्य सामग्री जो यात्रा के समय राह में उपभोग के लिए दी जाती है' वाक्यांश के लिए सार्थक शब्द है-",
+   "options": [
+    "आहार",
+    "पाथेय",
+    "उपहार",
+    "भेप्य"
+   ],
+   "correctAnswer": 1,
+   "explanation": "यात्रा में राह के लिए साथ लिया गया भोजन 'पाथेय' कहलाता है।"
+  },
+  {
+   "id": "p8_q93",
+   "no": 93,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "'एक ही माता के पुत्र' वाक्यांश के लिए सार्थक शब्द है-",
+   "options": [
+    "सामंत",
+    "सहोदर",
+    "पथावर",
+    "सम्बोध"
+   ],
+   "correctAnswer": 1,
+   "explanation": "एक ही माता से उत्पन्न पुत्रों के लिए सार्थक शब्द 'सहोदर' है।"
+  },
+  {
+   "id": "p8_q94",
+   "no": 94,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "'खिसियानी बिल्ली खम्भा नोचे' लोकोक्ति का अर्थ है-",
+   "options": [
+    "बिल्ली का खम्भा चढ़ना",
+    "ऊँचाई पर बैठना",
+    "अपनी शर्म छुपाने को व्यर्थ हुज्जत करना",
+    "बिल्ली का विचलित होना"
+   ],
+   "correctAnswer": 2,
+   "explanation": "इस लोकोक्ति का अर्थ है — अपनी असफलता या शर्मिंदगी छुपाने के लिए व्यर्थ का प्रदर्शन या झगड़ा करना।"
+  },
+  {
+   "id": "p8_q95",
+   "no": 95,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "'खग जाने खग की भाषा' लोकोक्ति का अर्थ है-",
+   "options": [
+    "समान प्रवृति वाले लोगों का एक दूसरे की बात समझना",
+    "कठोर वाणी बोलना",
+    "जानवर एक दूसरे को समझते हैं",
+    "दूसरे की बात समझना"
+   ],
+   "correctAnswer": 0,
+   "explanation": "इस लोकोक्ति का अर्थ है — समान स्वभाव या प्रवृति वाले लोग ही एक-दूसरे की बात और भावना को भली-भाँति समझ पाते हैं।"
+  },
+  {
+   "id": "p8_q96",
+   "no": 96,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "गद्यांश: दिए गये गद्यांश को पढ़ें और नीचे दिए गये प्रश्नों का उत्तर दें।\n\nस्वामी विवेकानन्द का जन्म 12 जनवरी सन् 1863 ई. को महानगर कलकत्ता में हुआ था। स्वामी विवेकानन्द के बचपन का नाम नरेन्द्रनाथ था। आप अपने बचपन के दिनों में अत्यंत नटखट स्वभाव के थे। उनके पिताजी का नाम विश्वनाथ दत्त तथा माताजी का नाम भुवनेश्वरी देवी था। बालक नरेन्द्रनाथ को पाँच वर्ष की आयु में अध्ययन के लिए मेट्रोपॉलिटन इंस्टीट्यूट भेजा गया। स्वामीजी पर अपने पिता के पंडिती संस्कृत ज्ञान और विचारों का तो प्रभाव नहीं पड़ा, लेकिन माता के भारतीय धार्मिक आचार-विचारों का उन पर गहरा प्रभाव पड़ा। यही कारण था कि स्वामीजी अपने जीवन के आरंभिक दिनों में धार्मिक प्रवृति में ढलते गए और धर्म के प्रति आग्रहशील हो गये। ईश्वर-ज्ञान की जिज्ञासा से आप बार-बार चिन्तामग्न होते रहे।\n\nउपप्रश्न: बालक नरेन्द्रनाथ को अध्ययन के लिए कहाँ भेजा गया?",
+   "options": [
+    "बालक नरेन्द्रनाथ को अध्ययन के लिए काशी विद्यापीठ में भेजा गया।",
+    "बालक नरेन्द्रनाथ को अध्ययन के लिए मेट्रोपॉलिटन इंस्टीट्यूट भेजा गया।",
+    "बालक नरेन्द्रनाथ को अध्ययन के लिए अंग्रेजी स्कूल में भेजा गया।",
+    "बालक नरेन्द्रनाथ को पढ़ने के लिए स्कूल भेजा गया।"
+   ],
+   "correctAnswer": 1,
+   "explanation": "गद्यांश के अनुसार बालक नरेन्द्रनाथ को पाँच वर्ष की आयु में अध्ययन के लिए मेट्रोपॉलिटन इंस्टीट्यूट भेजा गया था।"
+  },
+  {
+   "id": "p8_q97",
+   "no": 97,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "गद्यांश: दिए गये गद्यांश को पढ़ें और नीचे दिए गये प्रश्नों का उत्तर दें।\n\nस्वामी विवेकानन्द का जन्म 12 जनवरी सन् 1863 ई. को महानगर कलकत्ता में हुआ था। स्वामी विवेकानन्द के बचपन का नाम नरेन्द्रनाथ था। आप अपने बचपन के दिनों में अत्यंत नटखट स्वभाव के थे। उनके पिताजी का नाम विश्वनाथ दत्त तथा माताजी का नाम भुवनेश्वरी देवी था। बालक नरेन्द्रनाथ को पाँच वर्ष की आयु में अध्ययन के लिए मेट्रोपॉलिटन इंस्टीट्यूट भेजा गया। स्वामीजी पर अपने पिता के पंडिती संस्कृत ज्ञान और विचारों का तो प्रभाव नहीं पड़ा, लेकिन माता के भारतीय धार्मिक आचार-विचारों का उन पर गहरा प्रभाव पड़ा। यही कारण था कि स्वामीजी अपने जीवन के आरंभिक दिनों में धार्मिक प्रवृति में ढलते गए और धर्म के प्रति आग्रहशील हो गये। ईश्वर-ज्ञान की जिज्ञासा से आप बार-बार चिन्तामग्न होते रहे।\n\nउपप्रश्न: स्वामी जी अपने जीवन के आरंभिक दिनों में किस प्रवृति में ढलते गए?",
+   "options": [
+    "स्वामी जी अपने आरंभिक दिनों में पाश्चात्य संस्कृति की प्रवृति में ढलते गए।",
+    "स्वामी जी आरंभिक दिनों में सहायता की प्रवृति में ढलते गए।",
+    "स्वामी जी अपने आरंभिक दिनों में गृहस्थ प्रवृति में ढलते गए।",
+    "स्वामी जी अपने जीवन के आरंभिक दिनों में धार्मिक प्रवृति में ढलते गए।"
+   ],
+   "correctAnswer": 3,
+   "explanation": "गद्यांश के अनुसार माता के धार्मिक आचार-विचारों के प्रभाव से स्वामी जी आरंभिक दिनों में धार्मिक प्रवृति में ढलते गए।"
+  },
+  {
+   "id": "p8_q98",
+   "no": 98,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "गद्यांश: दिए गये गद्यांश को पढ़ें और नीचे दिए गये प्रश्नों का उत्तर दें।\n\nस्वामी विवेकानन्द का जन्म 12 जनवरी सन् 1863 ई. को महानगर कलकत्ता में हुआ था। स्वामी विवेकानन्द के बचपन का नाम नरेन्द्रनाथ था। आप अपने बचपन के दिनों में अत्यंत नटखट स्वभाव के थे। उनके पिताजी का नाम विश्वनाथ दत्त तथा माताजी का नाम भुवनेश्वरी देवी था। बालक नरेन्द्रनाथ को पाँच वर्ष की आयु में अध्ययन के लिए मेट्रोपॉलिटन इंस्टीट्यूट भेजा गया। स्वामीजी पर अपने पिता के पंडिती संस्कृत ज्ञान और विचारों का तो प्रभाव नहीं पड़ा, लेकिन माता के भारतीय धार्मिक आचार-विचारों का उन पर गहरा प्रभाव पड़ा। यही कारण था कि स्वामीजी अपने जीवन के आरंभिक दिनों में धार्मिक प्रवृति में ढलते गए और धर्म के प्रति आग्रहशील हो गये। ईश्वर-ज्ञान की जिज्ञासा से आप बार-बार चिन्तामग्न होते रहे।\n\nउपप्रश्न: स्वामी विवेकानन्द जी का बचपन का नाम क्या था?",
+   "options": [
+    "स्वामी विवेकानन्द जी के बचपन का नाम संन्यासी था।",
+    "स्वामी विवेकानन्द जी के बचपन का नाम नाथ था।",
+    "स्वामी विवेकानन्द जी के बचपन का नाम नरेन था।",
+    "स्वामी विवेकानन्द जी के बचपन का नाम नरेन्द्रनाथ था।"
+   ],
+   "correctAnswer": 3,
+   "explanation": "गद्यांश के अनुसार स्वामी विवेकानन्द जी के बचपन का नाम नरेन्द्रनाथ था।"
+  },
+  {
+   "id": "p8_q99",
+   "no": 99,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "गद्यांश: दिए गये गद्यांश को पढ़ें और नीचे दिए गये प्रश्नों का उत्तर दें।\n\nस्वामी विवेकानन्द का जन्म 12 जनवरी सन् 1863 ई. को महानगर कलकत्ता में हुआ था। स्वामी विवेकानन्द के बचपन का नाम नरेन्द्रनाथ था। आप अपने बचपन के दिनों में अत्यंत नटखट स्वभाव के थे। उनके पिताजी का नाम विश्वनाथ दत्त तथा माताजी का नाम भुवनेश्वरी देवी था। बालक नरेन्द्रनाथ को पाँच वर्ष की आयु में अध्ययन के लिए मेट्रोपॉलिटन इंस्टीट्यूट भेजा गया। स्वामीजी पर अपने पिता के पंडिती संस्कृत ज्ञान और विचारों का तो प्रभाव नहीं पड़ा, लेकिन माता के भारतीय धार्मिक आचार-विचारों का उन पर गहरा प्रभाव पड़ा। यही कारण था कि स्वामीजी अपने जीवन के आरंभिक दिनों में धार्मिक प्रवृति में ढलते गए और धर्म के प्रति आग्रहशील हो गये। ईश्वर-ज्ञान की जिज्ञासा से आप बार-बार चिन्तामग्न होते रहे।\n\nउपप्रश्न: स्वामी जी पर किसके विचारों का प्रभाव पड़ा?",
+   "options": [
+    "स्वामी जी पर उनकी माता के भारतीय धार्मिक आचार-विचारों का गहरा प्रभाव पड़ा।",
+    "स्वामी जी पर संतों के विचारों का प्रभाव पड़ा।",
+    "स्वामी जी पर उनके पिता के विचारों का प्रभाव पड़ा।",
+    "स्वामी जी पर समाजसेवियों के विचारों का प्रभाव पड़ा।"
+   ],
+   "correctAnswer": 0,
+   "explanation": "गद्यांश स्पष्ट करता है कि पिता के विचारों का प्रभाव नहीं पड़ा, बल्कि माता के भारतीय धार्मिक आचार-विचारों का उन पर गहरा प्रभाव पड़ा।"
+  },
+  {
+   "id": "p8_q100",
+   "no": 100,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Hindi Language & Comprehension",
+   "question": "गद्यांश: दिए गये गद्यांश को पढ़ें और नीचे दिए गये प्रश्नों का उत्तर दें।\n\nस्वामी विवेकानन्द का जन्म 12 जनवरी सन् 1863 ई. को महानगर कलकत्ता में हुआ था। स्वामी विवेकानन्द के बचपन का नाम नरेन्द्रनाथ था। आप अपने बचपन के दिनों में अत्यंत नटखट स्वभाव के थे। उनके पिताजी का नाम विश्वनाथ दत्त तथा माताजी का नाम भुवनेश्वरी देवी था। बालक नरेन्द्रनाथ को पाँच वर्ष की आयु में अध्ययन के लिए मेट्रोपॉलिटन इंस्टीट्यूट भेजा गया। स्वामीजी पर अपने पिता के पंडिती संस्कृत ज्ञान और विचारों का तो प्रभाव नहीं पड़ा, लेकिन माता के भारतीय धार्मिक आचार-विचारों का उन पर गहरा प्रभाव पड़ा। यही कारण था कि स्वामीजी अपने जीवन के आरंभिक दिनों में धार्मिक प्रवृति में ढलते गए और धर्म के प्रति आग्रहशील हो गये। ईश्वर-ज्ञान की जिज्ञासा से आप बार-बार चिन्तामग्न होते रहे।\n\nउपप्रश्न: स्वामी विवेकानन्द जी का जन्म किस महानगर में हुआ था?",
+   "options": [
+    "स्वामी विवेकानंद जी का जन्म किसी महानगर में हुआ था।",
+    "स्वामी विवेकानंद जी का जन्म कलकत्ता महानगर में हुआ था।",
+    "स्वामी विवेकानंद जी का जन्म मद्रास महानगर में हुआ था।",
+    "स्वामी विवेकानंद जी का जन्म बम्बई महानगर में हुआ था।"
+   ],
+   "correctAnswer": 1,
+   "explanation": "गद्यांश के अनुसार स्वामी विवेकानन्द जी का जन्म 12 जनवरी सन् 1863 ई. को कलकत्ता महानगर में हुआ था।"
+  },
+  {
+   "id": "p8_q101",
+   "no": 101,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Select the INCORRECT statement regarding blood pressure.",
+   "options": [
+    "Blood pressure depends on peripheral resistance.",
+    "Blood pressure depends on the pumping action of the heart.",
+    "Blood pressure depends on the blood volume.",
+    "Blood pressure decreases with increased blood viscosity."
+   ],
+   "correctAnswer": 3,
+   "explanation": "Blood pressure actually INCREASES with higher blood viscosity (thicker blood resists flow more), so the statement that it decreases is incorrect."
+  },
+  {
+   "id": "p8_q102",
+   "no": 102,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Select the INCORRECT statement regarding changes with ageing in the cardiovascular system in geriatric patients.",
+   "options": [
+    "Aorta and its branches dilate and elongate",
+    "There is decline in coronary blood flow",
+    "Coronary arteries calcify and lose elasticity",
+    "Baroreceptors in the aorta and internal carotid arteries become highly sensitive to blood volume and pressure changes"
+   ],
+   "correctAnswer": 3,
+   "explanation": "With ageing, baroreceptor sensitivity actually DECLINES (not increases), making elderly patients more prone to blood pressure swings, so this statement is incorrect."
+  },
+  {
+   "id": "p8_q103",
+   "no": 103,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which type of blood vessel allows exchange of nutrients, gases, and waste products between the blood and tissues?",
+   "options": [
+    "Vein",
+    "Venule",
+    "Artery",
+    "Capillary"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Capillaries have thin, single-cell-layer walls that permit exchange of gases, nutrients and waste between blood and surrounding tissue."
+  },
+  {
+   "id": "p8_q104",
+   "no": 104,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which hormone, produced by the ovaries, is primarily responsible for the development and maintenance of female secondary sexual characteristics and the regulation of the menstrual cycle?",
+   "options": [
+    "Luteinizing hormone (LH)",
+    "Progesterone",
+    "Follicle-stimulating hormone (FSH)",
+    "Oestrogen"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Oestrogen, secreted by the ovaries, drives female secondary sexual characteristics and regulates the menstrual cycle; LH and FSH are pituitary hormones that stimulate the ovaries."
+  },
+  {
+   "id": "p8_q105",
+   "no": 105,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which part of the neuron is responsible for the transmission of electrical impulses away from the cell body toward other neurons or effector cells?",
+   "options": [
+    "Dendrite",
+    "Axon",
+    "Axon terminal",
+    "Cell body"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The axon carries electrical impulses away from the cell body toward other neurons or effector organs; dendrites carry impulses toward the cell body."
+  },
+  {
+   "id": "p8_q106",
+   "no": 106,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which hormone, produced by the adrenal glands, is responsible for regulating the body's response to stress and promoting the synthesis of glucose from non-carbohydrate sources?",
+   "options": [
+    "Cortisol",
+    "Aldosterone",
+    "Epinephrine",
+    "Insulin"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Cortisol, from the adrenal cortex, is the primary stress hormone and stimulates gluconeogenesis (glucose synthesis from non-carbohydrate sources)."
+  },
+  {
+   "id": "p8_q107",
+   "no": 107,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which heart valve prevents the backflow of blood from the right ventricle into the right atrium?",
+   "options": [
+    "Mitral valve",
+    "Pulmonary valve",
+    "Tricuspid valve",
+    "Aortic valve"
+   ],
+   "correctAnswer": 2,
+   "explanation": "The tricuspid valve sits between the right atrium and right ventricle and prevents backflow into the right atrium."
+  },
+  {
+   "id": "p8_q108",
+   "no": 108,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which organ of the digestive system primarily functions in the reabsorption of water and electrolytes, as well as the formation of feces?",
+   "options": [
+    "Stomach",
+    "Small intestine",
+    "Large intestine",
+    "Liver"
+   ],
+   "correctAnswer": 2,
+   "explanation": "The large intestine (colon) reabsorbs water and electrolytes from indigestible food matter and forms/stores feces."
+  },
+  {
+   "id": "p8_q109",
+   "no": 109,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which type of epithelial tissue is best suited for areas in the body that requires rapid diffusion?",
+   "options": [
+    "Stratified squamous epithelium",
+    "Simple squamous epithelium",
+    "Simple cuboidal epithelium",
+    "Transitional epithelium"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Simple squamous epithelium is a single thin layer of flattened cells, ideal for rapid diffusion — e.g. in alveoli and capillary walls."
+  },
+  {
+   "id": "p8_q110",
+   "no": 110,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which lymphatic organ primarily functions in the maturation of T-lymphocytes and is the most active during childhood?",
+   "options": [
+    "Lymph nodes",
+    "Thymus",
+    "Tonsils",
+    "Spleen"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The thymus is where T-lymphocytes mature; it is largest and most active in childhood and gradually involutes with age."
+  },
+  {
+   "id": "p8_q111",
+   "no": 111,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which division of the peripheral nervous system is responsible for regulating involuntary bodily functions such as heart rate, digestion, and respiratory rate?",
+   "options": [
+    "Sensory nervous system",
+    "Autonomic nervous system",
+    "Motor nervous system",
+    "Somatic nervous system"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The autonomic nervous system controls involuntary functions like heart rate, digestion and respiration via its sympathetic and parasympathetic divisions."
+  },
+  {
+   "id": "p8_q112",
+   "no": 112,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which structure in the respiratory system is responsible for filtering, humidifying, and warming air as it enters the respiratory tract?",
+   "options": [
+    "Pharynx",
+    "Nasal cavity",
+    "Alveoli",
+    "Bronchioles"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The nasal cavity, lined with mucosa and fine hairs, filters, warms and humidifies incoming air before it reaches the lower airway."
+  },
+  {
+   "id": "p8_q113",
+   "no": 113,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which component of blood is primarily responsible for clotting?",
+   "options": [
+    "Platelets",
+    "White blood cells",
+    "Plasma",
+    "Red blood cells"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Platelets (thrombocytes) aggregate at a wound site and trigger the clotting cascade to stop bleeding."
+  },
+  {
+   "id": "p8_q114",
+   "no": 114,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which part of the heart's conduction system is known as the natural pacemaker?",
+   "options": [
+    "Sinoatrial (SA) node",
+    "Atrioventricular (AV) node",
+    "Purkinje fibers",
+    "Bundle of His"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The sinoatrial (SA) node in the right atrium initiates each normal heartbeat and is therefore called the heart's natural pacemaker."
+  },
+  {
+   "id": "p8_q115",
+   "no": 115,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "Select the INCORRECT statement regarding body temperature measurement.",
+   "options": [
+    "Thermometer with a sharp tip is used to measure rectal temperature.",
+    "Tympanic membrane thermometer measures temperature of the blood vessels in the tympanic membrane.",
+    "Temperature-sensitive patches are used to measure temperature in children.",
+    "Axillary temperature measurement is the safest method of measuring body temperature."
+   ],
+   "correctAnswer": 0,
+   "explanation": "A rectal thermometer must have a rounded/blunt tip, not a sharp one, to avoid injury to rectal tissue — so this statement is incorrect."
+  },
+  {
+   "id": "p8_q116",
+   "no": 116,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "Which of the following statements regarding patient's rights and responsibilities is INCORRECT?",
+   "options": [
+    "Health care workers must respect patient's privacy and confidentiality.",
+    "Patient's rights must be upheld.",
+    "Patients do not have the right to refuse treatment.",
+    "Patient must be treated with respect and consideration."
+   ],
+   "correctAnswer": 2,
+   "explanation": "Patients DO have the right to refuse treatment (informed consent principle), so stating they do not is incorrect."
+  },
+  {
+   "id": "p8_q117",
+   "no": 117,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "The neglect of reasonable care or caution in the context of a professional relationship is termed as:",
+   "options": [
+    "malfeasance",
+    "misdemeanor",
+    "malapropism",
+    "malpractice"
+   ],
+   "correctAnswer": 3,
+   "explanation": "'Malpractice' specifically refers to negligent or improper professional conduct that causes harm."
+  },
+  {
+   "id": "p8_q118",
+   "no": 118,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "Blunt and penetrating trauma of the abdomen can result in:",
+   "options": [
+    "internal haemorrhage",
+    "appendicitis",
+    "pancreatitis",
+    "ectopic pregnancy"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Abdominal trauma commonly damages solid/vascular organs, leading to internal haemorrhage; the other options are disease conditions, not typical trauma outcomes."
+  },
+  {
+   "id": "p8_q119",
+   "no": 119,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "___________ is a hallmark of a profession because it signifies high principles of professional behaviour and willingness by the profession to control its own conduct.",
+   "options": [
+    "Codes of ethics",
+    "Morals",
+    "Torts",
+    "Regulations"
+   ],
+   "correctAnswer": 0,
+   "explanation": "A formal code of ethics is what signifies a profession's self-regulation and commitment to high standards of conduct."
+  },
+  {
+   "id": "p8_q120",
+   "no": 120,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "Select the INCORRECT statement regarding fever.",
+   "options": [
+    "As body temperature increases, the body's demand for oxygen reduces.",
+    "Increased pulse and respiratory rate are symptoms of fever.",
+    "Pyrexia refers to an increase in body temperature above normal temperature.",
+    "Fever is a disturbance in the heat regulation systems of the body."
+   ],
+   "correctAnswer": 0,
+   "explanation": "As body temperature rises, metabolic rate and oxygen demand INCREASE (not reduce), so this statement is incorrect."
+  },
+  {
+   "id": "p8_q121",
+   "no": 121,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "Select the INCORRECT statement regarding pediatric patient care.",
+   "options": [
+    "Cribs can be used to transport older children.",
+    "An infant can be held by holding it upright with the buttocks resting on the arm and another arm around the infant supporting the neck and back.",
+    "Children must never be left alone unattended during their stay in the radiology department.",
+    "Infants and small children can be carried for short distances (from one diagnostic room to another)."
+   ],
+   "correctAnswer": 0,
+   "explanation": "Cribs are meant for infants and very young children, not older children, so using them to transport older children is incorrect practice."
+  },
+  {
+   "id": "p8_q122",
+   "no": 122,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "Select the INCORRECT statement regarding Pediatric Radiography.",
+   "options": [
+    "Pigg-O-Stat is an immobiliser used for pediatric radiography of chest and abdomen.",
+    "ALARA concept must be practiced in Pediatric Radiography.",
+    "Posi-Tot and Infantainer are commercially available immobilisers used in Pediatric Radiography.",
+    "Fast speed imaging system and short exposure times increase the patient's radiation exposure."
+   ],
+   "correctAnswer": 3,
+   "explanation": "Fast imaging systems and short exposure times actually REDUCE patient radiation exposure, not increase it, so this statement is incorrect."
+  },
+  {
+   "id": "p8_q123",
+   "no": 123,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "Which of the following is NOT a precaution that a radiographer must take while performing radiographs on a patient with a fractured extremity?",
+   "options": [
+    "Inform the patient before moving the fractured limb",
+    "Support the joint above and below the fracture and at the joints if moving a splinted limb",
+    "Should not remove the splints without the direction of the physician in charge",
+    "Should remove the supporting sand bags or immobilisation pads before shifting the patient to X-ray couch"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Support devices like sand bags/immobilisation pads should stay in place, not be removed, before shifting a fractured limb — removing them is unsafe and is NOT a correct precaution."
+  },
+  {
+   "id": "p8_q124",
+   "no": 124,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "If a patient has the large bowel removed at the sigmoid area and the working is made at the anterior surface of the abdomen, the patient is said to have had a/an:",
+   "options": [
+    "ileostomy",
+    "sigmoidostomy",
+    "colostomy",
+    "colonoscopy"
+   ],
+   "correctAnswer": 1,
+   "explanation": "An opening created specifically from the sigmoid colon onto the anterior abdominal wall is termed a sigmoidostomy (a colostomy sited at the sigmoid colon); the answer key marks the more specific term 'sigmoidostomy' as correct here."
+  },
+  {
+   "id": "p8_q125",
+   "no": 125,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "Select the INCORRECT statement regarding viruses.",
+   "options": [
+    "Genetic material of a virus is protected by capsomeres.",
+    "Viruses are minute microorganisms that cannot be visualised under an ordinary microscope.",
+    "Genetic material of a virus is both RNA and DNA.",
+    "Genetic material of a virus is either RNA or DNA."
+   ],
+   "correctAnswer": 2,
+   "explanation": "A virus contains only ONE type of nucleic acid, either RNA or DNA, never both together — so stating it has 'both' is incorrect."
+  },
+  {
+   "id": "p8_q126",
+   "no": 126,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "According to CDC 2022 guidelines, hand hygiene refers to all of the following EXCEPT:",
+   "options": [
+    "washing hands with antiseptic hand rubs",
+    "washing hands with alcohol-based hand rubs",
+    "washing hands in running water for 10 minutes",
+    "washing hands with soap and water"
+   ],
+   "correctAnswer": 2,
+   "explanation": "CDC hand hygiene guidance calls for brief, thorough handwashing (about 15-20 seconds), not washing in running water for as long as 10 minutes, so that option is not part of the definition."
+  },
+  {
+   "id": "p8_q127",
+   "no": 127,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "Which of the following cellular changes is characterised by swelling of the cell and organelles with preservation of the nucleus?",
+   "options": [
+    "Autophagy",
+    "Necrosis",
+    "Hypertrophy",
+    "Apoptosis"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Cellular/hydropic swelling with organelle swelling but an intact nucleus is an early reversible stage of cell injury that progresses toward necrosis if the insult continues."
+  },
+  {
+   "id": "p8_q128",
+   "no": 128,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "Select the platelet count that typically indicates thrombocytopenia, a condition associated with an increased risk of bleeding.",
+   "options": [
+    "150,000 to 400,000/µL",
+    "100,000 to 150,000/µL",
+    "Below 100,000/µL",
+    "450,000 to 600,000/µL"
+   ],
+   "correctAnswer": 2,
+   "explanation": "A platelet count below 100,000/µL (well under the normal 150,000-400,000/µL range) is generally used to define thrombocytopenia with bleeding risk."
+  },
+  {
+   "id": "p8_q129",
+   "no": 129,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "Which of the following cell types is typically associated with chronic inflammation?",
+   "options": [
+    "Neutrophils",
+    "Macrophages",
+    "Basophils",
+    "Eosinophils"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Macrophages (and lymphocytes) dominate chronic inflammation, whereas neutrophils are the hallmark cell of acute inflammation."
+  },
+  {
+   "id": "p8_q130",
+   "no": 130,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "Which of the following cellular changes is reversible in response to mild or transient injury?",
+   "options": [
+    "Hypertrophy",
+    "Necrosis",
+    "Apoptosis",
+    "Hyperplasia"
+   ],
+   "correctAnswer": 2,
+   "explanation": "The official answer key marks 'Apoptosis' here. (Hypertrophy and hyperplasia are the classically reversible adaptive changes in most pathology texts, but this paper's answer key marks apoptosis as correct — note this discrepancy if cross-checking against a textbook.)"
+  },
+  {
+   "id": "p8_q131",
+   "no": 131,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "Which of the following statements best describes the term 'clinical features' in the context of pathology?",
+   "options": [
+    "The microscopic examination of tissue samples",
+    "The study of the distribution and determinants of health related states in population",
+    "The molecular and genetic changes that occur in a disease",
+    "The observable and measurable signs and symptoms associated with a disease"
+   ],
+   "correctAnswer": 3,
+   "explanation": "'Clinical features' refers to the observable signs and symptoms that present with a disease."
+  },
+  {
+   "id": "p8_q132",
+   "no": 132,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "Select the option that best describes the characteristic feature of chronic inflammation regarding tissue damage.",
+   "options": [
+    "Minimal tissue destruction",
+    "Acute onset of tissue repair",
+    "Predominantly liquefactive necrosis",
+    "Granuloma formation"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Granuloma formation, alongside simultaneous tissue destruction and repair, is a hallmark feature of chronic inflammation."
+  },
+  {
+   "id": "p8_q133",
+   "no": 133,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "Which of the following terms is used to describe a malignant neoplasm of connective tissue origin?",
+   "options": [
+    "Lymphoma",
+    "Adenocarcinoma",
+    "Sarcoma",
+    "Carcinoma"
+   ],
+   "correctAnswer": 2,
+   "explanation": "A sarcoma is a malignant tumour arising from connective/mesenchymal tissue (bone, muscle, fat, cartilage), unlike carcinomas which arise from epithelial tissue."
+  },
+  {
+   "id": "p8_q134",
+   "no": 134,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "Which of the following statements best describes the role of morphological changes in the diagnosis of diseases in pathology?",
+   "options": [
+    "They provide visual evidence of the alterations in cellular or tissue architecture due to disease.",
+    "They suggest the epidemiological patterns and spread of a disease in a population.",
+    "They are used to identify the environmental factors contributing to a disease.",
+    "They indicate the biochemical pathways affected by a disease."
+   ],
+   "correctAnswer": 0,
+   "explanation": "Morphological changes are the visible structural alterations in cells/tissue that pathologists examine as direct evidence of disease."
+  },
+  {
+   "id": "p8_q135",
+   "no": 135,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "What is the purpose of performing a cross match in blood transfusion?",
+   "options": [
+    "To detect the presence of unexpected antibodies in the recipient's plasma that could react with donor red blood cells",
+    "To measure the haemoglobin concentration in the donor's blood",
+    "To determine the ABO blood group compatibility between donor and recipient",
+    "To assess the Rh factor compatibility between donor and recipient"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Cross-matching mixes recipient plasma with donor red cells to catch unexpected antibodies that could cause a transfusion reaction, beyond simple ABO/Rh typing."
+  },
+  {
+   "id": "p8_q136",
+   "no": 136,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "Which of the following best illustrates the importance of identifying morphological changes in cells during the early stages of a disease?",
+   "options": [
+    "They provide information on the patient's immune response to the disease.",
+    "They allow for the detection of early cellular injury before clinical symptoms appear, potentially enabling earlier intervention.",
+    "They help in understanding the genetic predisposition of the disease.",
+    "They determine the environmental factors that might have caused the disease."
+   ],
+   "correctAnswer": 1,
+   "explanation": "Early morphological (structural) changes in cells can reveal injury before a patient shows clinical symptoms, allowing earlier diagnosis and treatment."
+  },
+  {
+   "id": "p8_q137",
+   "no": 137,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "In the context of pathology, which of the following best explains the significance of morphological changes at the ultrastructural level?",
+   "options": [
+    "They highlight the gross anatomical changes observable without microscopy.",
+    "They provide detailed insights into the cellular and subcellular alterations that may not be apparent at the light microscopic level, aiding in precise disease characterisation.",
+    "They are primarily used to understand the genetic variations across different populations.",
+    "They reveal the immediate clinical symptoms experienced by the patient."
+   ],
+   "correctAnswer": 1,
+   "explanation": "Ultrastructural (electron-microscopic level) changes reveal subcellular detail not visible under a light microscope, aiding precise disease characterisation."
+  },
+  {
+   "id": "p8_q138",
+   "no": 138,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "Pathology & Patient Care",
+   "question": "Which of the following is a symptom of vasovagal reaction?",
+   "options": [
+    "Bradycardia",
+    "Erythema",
+    "Urticaria",
+    "Nausea"
+   ],
+   "correctAnswer": 0,
+   "explanation": "A vasovagal reaction is marked by a sudden drop in heart rate (bradycardia) and blood pressure, often with sweating and light-headedness — unlike urticaria/erythema which are allergic contrast-reaction signs."
+  },
+  {
+   "id": "p8_q139",
+   "no": 139,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "MRI & CT Imaging",
+   "question": "Which of the following technical advancements in multi-detector CT (MDCT) allows for isotropic imaging, enabling high-quality three-dimensional reconstructions without compromising image resolution?",
+   "options": [
+    "Increased gantry rotation speed",
+    "Adaptive Statistical Iterative Reconstruction (ASIR)",
+    "Dynamic z-flying focal spot technology",
+    "Iterative Reconstruction Algorithms"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Dynamic z-flying focal spot technology doubles the number of samples along the z-axis, producing isotropic voxels that support high-quality 3D reconstructions."
+  },
+  {
+   "id": "p8_q140",
+   "no": 140,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "MRI & CT Imaging",
+   "question": "Which of the following in cardiac CT has significantly reduced patient radiation exposure while maintaining image quality?",
+   "options": [
+    "Retrospective ECG Gating",
+    "Dual-Energy CT (DECT)",
+    "Dual-Source CT (DSCT)",
+    "Prospective ECG Gating"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Prospective ECG gating acquires data only during a predefined phase of the cardiac cycle (instead of throughout, as in retrospective gating), substantially cutting radiation dose."
+  },
+  {
+   "id": "p8_q141",
+   "no": 141,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "MRI & CT Imaging",
+   "question": "Select the INCORRECT statement regarding MR perfusion.",
+   "options": [
+    "Ultrafast T2 or T2* acquisition method are mostly performed.",
+    "Gadolinium contrast causes transient increase in T2 and T2* decay in and around the microvasculature perfused with contrast.",
+    "Gradient echo EPI maximises susceptibility effects in MR perfusion.",
+    "Perfusion uses an IV bolus injection of Gadolinium based contrast agents."
+   ],
+   "correctAnswer": 1,
+   "explanation": "Gadolinium in DSC perfusion imaging causes a transient DECREASE (signal loss/dephasing), not an increase, in T2 and T2* — so this statement is incorrect."
+  },
+  {
+   "id": "p8_q142",
+   "no": 142,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "MRI & CT Imaging",
+   "question": "For 3D Phase contrast MRA, ________ venc factors are used for imaging renal artery.",
+   "options": [
+    "400 cm/sec",
+    "80 cm/sec",
+    "150 cm/sec",
+    "40 cm/sec"
+   ],
+   "correctAnswer": 3,
+   "explanation": "For renal artery phase-contrast MRA a relatively low velocity-encoding (VENC) value of about 40 cm/sec is typically used, matching normal renal arterial flow speeds."
+  },
+  {
+   "id": "p8_q143",
+   "no": 143,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "MRI & CT Imaging",
+   "question": "Which recent advancement in CT technology allows for the differentiation of materials based on their atomic number, improving tissue characterisation and reducing the need for multiple contrast phases?",
+   "options": [
+    "Four-Dimensional CT (4D-CT)",
+    "Multislice CT",
+    "Dual-Energy CT (DECT)",
+    "Iterative Reconstruction Techniques"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Dual-Energy CT acquires data at two different x-ray energies, allowing materials to be distinguished by their atomic-number-dependent attenuation, which improves tissue/material characterisation."
+  },
+  {
+   "id": "p8_q144",
+   "no": 144,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "MRI & CT Imaging",
+   "question": "In a patient with multiple sclerosis, capillary sized DSC-MRI parameter reveals _______.",
+   "options": [
+    "increased CBV, CBF and MTT",
+    "decreased CBV, CBF and MTT",
+    "increased CBV and decreased CBF and MTT",
+    "decreased CBV, CBF and increased MTT"
+   ],
+   "correctAnswer": 3,
+   "explanation": "MS lesions typically show reduced cerebral blood volume and flow with a prolonged mean transit time on DSC perfusion MRI, reflecting impaired microvascular perfusion."
+  },
+  {
+   "id": "p8_q145",
+   "no": 145,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "MRI & CT Imaging",
+   "question": "Which of the following is a primary advantage of multi-detector CT (MDCT) over single-detector CT?",
+   "options": [
+    "Reduced radiation dose",
+    "Lower cost of equipment",
+    "Faster image acquisition and improved spatial resolution",
+    "Increased patient comfort"
+   ],
+   "correctAnswer": 2,
+   "explanation": "MDCT acquires many slices simultaneously per rotation, giving much faster scans with thinner slices and improved spatial resolution compared to single-detector CT."
+  },
+  {
+   "id": "p8_q146",
+   "no": 146,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "MRI & CT Imaging",
+   "question": "Which of the following is a significant advantage of CT fluoroscopy over conventional CT in interventional procedures?",
+   "options": [
+    "Reduced contrast medium usage",
+    "Lower radiation dose",
+    "Improved spatial resolution",
+    "Real-time imaging with higher temporal resolution"
+   ],
+   "correctAnswer": 3,
+   "explanation": "CT fluoroscopy provides continuously updated, near real-time images, giving much higher temporal resolution for guiding interventional procedures than conventional step-and-shoot CT."
+  },
+  {
+   "id": "p8_q147",
+   "no": 147,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "MRI & CT Imaging",
+   "question": "Select the INCORRECT statement regarding MRI diffusion.",
+   "options": [
+    "T2 shine through occurs in lesions with very long T2 decay time.",
+    "Apparent diffusion coefficient (ADC) values of restricted tissues have higher ADC than the values of free diffusion areas.",
+    "On diffusion weighted images, damaged tissues that have restricted diffusion appear brighter than normal tissues.",
+    "In normal tissues where diffusion is random, refocusing of spins is not complete and signals cancel out."
+   ],
+   "correctAnswer": 1,
+   "explanation": "Restricted diffusion (e.g. acute infarct) shows LOWER ADC values than free diffusion, not higher, so this statement is incorrect."
+  },
+  {
+   "id": "p8_q148",
+   "no": 148,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "MRI & CT Imaging",
+   "question": "What is the primary advantage of spiral (helical) CT over traditional sequential CT?",
+   "options": [
+    "Faster scan times and continuous data acquisition",
+    "Reduced patient dose",
+    "Better contrast resolution",
+    "Improved spatial resolution"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Helical CT moves the table continuously through the gantry while scanning, giving continuous volumetric data acquisition and much faster overall scan times than step-and-shoot sequential CT."
+  },
+  {
+   "id": "p8_q149",
+   "no": 149,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "MRI & CT Imaging",
+   "question": "Which component of a CT scanner is primarily responsible for converting the x-ray photons into electrical signals?",
+   "options": [
+    "Detector array",
+    "X-ray tube",
+    "Data acquisition system (DAS)",
+    "Gantry"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The detector array absorbs transmitted x-ray photons and converts them into electrical signals, which the DAS then digitises."
+  },
+  {
+   "id": "p8_q150",
+   "no": 150,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "MRI & CT Imaging",
+   "question": "Which of the following parameters is typically adjusted in a routine CT protocol to optimise image quality while minimising radiation dose?",
+   "options": [
+    "Reconstruction algorithm",
+    "Patient positioning",
+    "Slice thickness",
+    "Tube current"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Tube current (mAs) is the parameter most directly adjusted (often via automatic exposure control) to balance image noise/quality against patient radiation dose."
+  },
+  {
+   "id": "p8_q151",
+   "no": 151,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "MRI & CT Imaging",
+   "question": "What does the term 'CT number' or 'Hounsfield Unit (HU)' represent in computed tomography?",
+   "options": [
+    "The speed of the X-ray tube rotation",
+    "The reconstruction algorithm used",
+    "The relative density of tissues compared to water",
+    "The amount of radiation dose received by the patient"
+   ],
+   "correctAnswer": 2,
+   "explanation": "The Hounsfield Unit scale expresses a tissue's x-ray attenuation relative to water (0 HU), with air at -1000 HU and dense bone at +1000 HU or more."
+  },
+  {
+   "id": "p8_q152",
+   "no": 152,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "MRI & CT Imaging",
+   "question": "What is the primary function of the collimator in a CT scanner?",
+   "options": [
+    "To reconstruct the image from raw data",
+    "To shape and limit the x-ray beam",
+    "To convert x-ray photons into electrical signals",
+    "To detect the x-ray photons"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The collimator shapes and restricts the x-ray beam to the desired slice thickness/field, reducing unnecessary patient dose and scatter."
+  },
+  {
+   "id": "p8_q153",
+   "no": 153,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "MRI & CT Imaging",
+   "question": "Select the correct statement regarding scan time in MRI.",
+   "options": [
+    "Scan time depends on TE.",
+    "Scan time depends on slice thickness.",
+    "Scan time depends on number of frequency encoding steps.",
+    "Scan time depends on number of signal averages (NSA/NEX)."
+   ],
+   "correctAnswer": 3,
+   "explanation": "MRI scan time = TR × number of phase-encoding steps × NSA (number of signal averages); increasing NSA directly and proportionally increases scan time."
+  },
+  {
+   "id": "p8_q154",
+   "no": 154,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "MRI & CT Imaging",
+   "question": "Which of the following statements is true regarding MRI?",
+   "options": [
+    "Superconducting magnets are supercooled to absolute zero so that negligible resistance can be achieved.",
+    "Permanent magnets can produce magnetic field up to 1.5 T.",
+    "A Faraday cage in MRI is used to eliminate Fringe fields.",
+    "Permanent magnets typically weigh up to 80 tonnes."
+   ],
+   "correctAnswer": 3,
+   "explanation": "Permanent MRI magnets are extremely heavy (often tens of tonnes, up to around 80 tonnes) because large masses of magnetic material are needed to reach clinically useful field strengths."
+  },
+  {
+   "id": "p8_q155",
+   "no": 155,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "MRI & CT Imaging",
+   "question": "Which of the following statement is true regarding MRI?\n(Regarding MR active nuclei)",
+   "options": [
+    "Only Hydrogen nuclei are said to be MR active.",
+    "The strength of the magnetic field is measured in Gauss/Tesla.",
+    "An MR active nucleus always spins at its own precessional frequency.",
+    "Larmor frequency is defined as the sum of magnetic field strength and the Gyromagnetic ratio."
+   ],
+   "correctAnswer": 1,
+   "explanation": "Magnetic field strength in MRI is measured in Gauss or Tesla; note that many nuclei besides hydrogen (e.g. sodium-23, phosphorus-31) are MR active, so option 1 is false."
+  },
+  {
+   "id": "p8_q156",
+   "no": 156,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "MRI & CT Imaging",
+   "question": "Which of the following is correct regarding chemical shift artefact in MRI?",
+   "options": [
+    "Occurs in the frequency encoding direction",
+    "Can be rectified by using a stronger magnetic field",
+    "Manifests as signal enhancement between areas of fat and water",
+    "Can be decreased by decreasing receiver bandwidth"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Chemical shift artefact arises from the frequency difference between fat and water protons and appears as a misregistration band along the frequency-encoding direction."
+  },
+  {
+   "id": "p8_q157",
+   "no": 157,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "The radiation emission accompanying electron deceleration is called:",
+   "options": [
+    "Bremsstrahlung Emission",
+    "Positron Annihilation",
+    "Pair Production",
+    "Compton Scattering"
+   ],
+   "correctAnswer": 0,
+   "explanation": "'Bremsstrahlung' (German for 'braking radiation') is x-ray emission produced when fast electrons decelerate near a nucleus, the main mechanism of x-ray tube output."
+  },
+  {
+   "id": "p8_q158",
+   "no": 158,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "The average number of primary and secondary ion pairs produced per unit length of the charged particle's path is called:",
+   "options": [
+    "specific ionisation",
+    "de-excitation",
+    "secondary ionisation",
+    "non-ionisation"
+   ],
+   "correctAnswer": 0,
+   "explanation": "'Specific ionisation' is defined as the number of ion pairs produced per unit path length of a charged particle."
+  },
+  {
+   "id": "p8_q159",
+   "no": 159,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "The device that converts mechanical energy to electrical energy is called:",
+   "options": [
+    "generator",
+    "induction motor",
+    "transformer",
+    "rectification"
+   ],
+   "correctAnswer": 0,
+   "explanation": "A generator converts mechanical energy into electrical energy (the reverse of a motor, which converts electrical to mechanical energy)."
+  },
+  {
+   "id": "p8_q160",
+   "no": 160,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "What type of generator produce an almost constant potential difference across the x-ray tube?",
+   "options": [
+    "Three phase",
+    "Half phase",
+    "Full phase",
+    "Single phase"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Three-phase (and high-frequency) generators produce a nearly constant (low-ripple) potential across the x-ray tube, unlike single-phase units which have large voltage ripple."
+  },
+  {
+   "id": "p8_q161",
+   "no": 161,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "What is defined as the thickness of material required to reduce the intensity (e.g., air kerma rate) of an x-ray or gamma-ray beam to one half of its initial value?",
+   "options": [
+    "Half-value layer",
+    "Tenth-value layer",
+    "Fourth-value layer",
+    "Eight-value layer"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The Half-Value Layer (HVL) is, by definition, the thickness of absorber needed to reduce beam intensity to half its original value."
+  },
+  {
+   "id": "p8_q162",
+   "no": 162,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "The energy (E) imparted by ionising radiation per unit mass of irradiated material (m) is defined as:",
+   "options": [
+    "equivalent dose",
+    "cummulative dose",
+    "effective dose",
+    "absorbed dose"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Absorbed dose is defined as energy imparted per unit mass (measured in Gray); equivalent and effective dose further weight this for radiation type and tissue sensitivity."
+  },
+  {
+   "id": "p8_q163",
+   "no": 163,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "What is the effect of the predominant interaction of x-ray and gamma-ray photons in the diagnostic energy range with soft tissue?",
+   "options": [
+    "Positron Annihilation",
+    "Pair Production",
+    "Photo-electric",
+    "Compton"
+   ],
+   "correctAnswer": 3,
+   "explanation": "In the diagnostic energy range, Compton scattering is the predominant interaction with soft tissue (photoelectric effect dominates more at lower energies and with higher-Z materials like bone)."
+  },
+  {
+   "id": "p8_q164",
+   "no": 164,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "What type of transformer has many more turns in the secondary coil than in the primary coil?",
+   "options": [
+    "Step down",
+    "Rectifications",
+    "Step up",
+    "Autotransformer"
+   ],
+   "correctAnswer": 2,
+   "explanation": "A step-up transformer has more turns in the secondary than the primary, increasing voltage — used in x-ray circuits to raise the kV supplied to the tube."
+  },
+  {
+   "id": "p8_q165",
+   "no": 165,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "The electric field of the incident photon's electromagnetic wave expends energy, causing all of the electrons in the scattering atom to oscillate in phase called:",
+   "options": [
+    "Pair production",
+    "Compton",
+    "Photo-electric effect",
+    "Rayleigh"
+   ],
+   "correctAnswer": 1,
+   "explanation": "This description matches coherent (Rayleigh) scattering in most physics texts, but this paper's official answer key marks 'Compton' as correct — note the discrepancy if cross-checking against a physics textbook."
+  },
+  {
+   "id": "p8_q166",
+   "no": 166,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "__________ are specially designed devices in which a film similar to dental radiographic film is sandwiched between metal filters inside a plastic holder.",
+   "options": [
+    "Thermoluminescence dosimeters",
+    "Optically stimulated luminescence dosimeters",
+    "Film badges",
+    "Electronic digital dosimeters"
+   ],
+   "correctAnswer": 2,
+   "explanation": "A film badge holds a small dental-type film between metal filters in a plastic holder, used for personnel radiation monitoring."
+  },
+  {
+   "id": "p8_q167",
+   "no": 167,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "Both absorption and scattering of the primary photons is called:",
+   "options": [
+    "ionisation",
+    "transmission",
+    "excitation",
+    "attenuation"
+   ],
+   "correctAnswer": 3,
+   "explanation": "'Attenuation' is the combined reduction of a beam's intensity due to both absorption and scattering as it passes through matter."
+  },
+  {
+   "id": "p8_q168",
+   "no": 168,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "What type of generator produce an x-ray exposure in the shortest possible exposure time by operating the x-ray tube at its maximum kilowatt rating during the entire exposure?",
+   "options": [
+    "Conventional 2 Pulse X-ray generator",
+    "Falling load generator",
+    "Battery-powered generator",
+    "Capacitor discharge generator"
+   ],
+   "correctAnswer": 1,
+   "explanation": "A falling-load generator starts at maximum tube current (kW rating) and lets it fall as the anode heats, keeping the tube at its maximum capacity throughout to minimise exposure time."
+  },
+  {
+   "id": "p8_q169",
+   "no": 169,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "AERB has which of the following functions?",
+   "options": [
+    "Inspection is not necessary of new X-ray installations",
+    "Registration and commissioning new X-ray machine and related equipment",
+    "No Certification of service personnel and RSO",
+    "Issuing TLD badges"
+   ],
+   "correctAnswer": 1,
+   "explanation": "AERB (Atomic Energy Regulatory Board) is responsible for registering and approving/commissioning new x-ray machines and related equipment in India."
+  },
+  {
+   "id": "p8_q170",
+   "no": 170,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "Which of the following devices is commonly used for the daily quality control (QC) testing of X-ray beams in radiology departments?",
+   "options": [
+    "Film densitometer",
+    "Ionisation chamber",
+    "Pocket dosimeter",
+    "TLD (thermoluminescent dosimeter)"
+   ],
+   "correctAnswer": 1,
+   "explanation": "An ionisation chamber gives an immediate, direct dose/output reading, making it the standard tool for routine daily QC of x-ray beam output."
+  },
+  {
+   "id": "p8_q171",
+   "no": 171,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "The recommended annual equivalent dose for employees for the lens of the eye is:",
+   "options": [
+    "200 mSv",
+    "100 mSv",
+    "500 mSv",
+    "150 mSv"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The (widely used) annual occupational equivalent dose limit for the lens of the eye is 150 mSv per year in this paper's answer key."
+  },
+  {
+   "id": "p8_q172",
+   "no": 172,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "Which of the following tests is used to evaluate the accuracy of the automatic exposure control (AEC) system in a computed radiography (CR) or digital radiography (DR) system?",
+   "options": [
+    "Sensitometry",
+    "Half-value layer (HVL) measurement",
+    "Exposure index (EI) consistency check",
+    "Phantom image quality evaluation"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Checking that the exposure index (EI) stays consistent across different phantom thicknesses/kVp settings is the standard way to verify AEC accuracy in CR/DR."
+  },
+  {
+   "id": "p8_q173",
+   "no": 173,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "As per AERB, the minimum area required for installing a CT scanner machine is:",
+   "options": [
+    "30 m2",
+    "36 m2",
+    "25 m2",
+    "20 m2"
+   ],
+   "correctAnswer": 2,
+   "explanation": "AERB guidelines specify a minimum room area of 25 m² for installing a CT scanner."
+  },
+  {
+   "id": "p8_q174",
+   "no": 174,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "As per AERB recommendation, all the doors to X-ray room shall have lead (equivalent) lining of:",
+   "options": [
+    "1.8 mm",
+    "5 mm",
+    "1.7 mm",
+    "0.2 mm"
+   ],
+   "correctAnswer": 2,
+   "explanation": "This paper's answer key marks 1.7 mm lead equivalent as the AERB-recommended lining thickness for X-ray room doors."
+  },
+  {
+   "id": "p8_q175",
+   "no": 175,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "Select the correct option regarding the measurements of radiation.",
+   "options": [
+    "1 Gy = 10 rads",
+    "1 Gy = 100 rads",
+    "1 rad = 10 cGy",
+    "1 rad = 1 Gy"
+   ],
+   "correctAnswer": 1,
+   "explanation": "1 Gray equals 100 rad (since 1 rad = 1 centigray), making '1 Gy = 100 rads' the correct conversion."
+  },
+  {
+   "id": "p8_q176",
+   "no": 176,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "As per AERB, lead equivalent thickness of gonad shield should be at least:",
+   "options": [
+    "0.25 mm",
+    "0.5 mm",
+    "2 mm",
+    "1 mm"
+   ],
+   "correctAnswer": 0,
+   "explanation": "AERB specifies a minimum gonad shield lead equivalence of 0.25 mm to adequately attenuate the useful x-ray beam."
+  },
+  {
+   "id": "p8_q177",
+   "no": 177,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "Which of the following is a primary advantage of using intensity-modulated radiation therapy (IMRT) over conventional radiation therapy techniques?",
+   "options": [
+    "Reduced treatment time",
+    "Ability to deliver higher doses to the tumour while sparing surrounding healthy tissue",
+    "Simplified treatment planning process",
+    "Lower cost"
+   ],
+   "correctAnswer": 1,
+   "explanation": "IMRT shapes and modulates beam intensity across the field, allowing a higher, more conformal dose to the tumour while better sparing surrounding normal tissue."
+  },
+  {
+   "id": "p8_q178",
+   "no": 178,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "What is the primary precaution taken to minimise radiation exposure in the nuclear medicine laboratory while handling radioactive isotopes?",
+   "options": [
+    "Implementing proper shielding and time management",
+    "Utilising protective gloves",
+    "Maintaining a safe distance",
+    "Using thick lead aprons"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The core radiation-safety principle (time, distance and shielding, all combined) is best captured by 'proper shielding and time management', which is why it is the primary precaution among these options."
+  },
+  {
+   "id": "p8_q179",
+   "no": 179,
+   "section": "B",
+   "subsectionId": "b4",
+   "subject": "Radiation Physics & Safety",
+   "question": "Which of the following techniques is to be followed to minimise radiation dose to the hands of technologists while preparing radiopharmaceuticals in nuclear medicine?",
+   "options": [
+    "Wearing double-layered lead gloves",
+    "Employing liquid nitrogen shielding",
+    "Utilising remote dispensing systems",
+    "Implementing automated dose calibrators"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Remote dispensing/handling systems keep the technologist's hands away from the radioactive source, directly reducing hand dose during radiopharmaceutical preparation."
+  },
+  {
+   "id": "p8_q180",
+   "no": 180,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "Select the correct option regarding three principal advantages of compression in mammography.",
+   "options": [
+    "Decreased spatial resolution, improved contrast resolution and higher patient dose",
+    "Decreased spatial resolution, Decreased contrast resolution and higher patient dose",
+    "Decreased spatial resolution, improved contrast resolution and lower patient dose",
+    "Improved spatial resolution, improved contrast resolution and lower patient dose"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Breast compression in mammography thins and immobilises the tissue, improving spatial and contrast resolution while allowing a lower radiation dose to achieve adequate image quality."
+  },
+  {
+   "id": "p8_q181",
+   "no": 181,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "Most mammography x-ray tubes have inherent filtration in the window of approximately:",
+   "options": [
+    "0.5 mm Al equivalent",
+    "0.8 mm Al equivalent",
+    "0.1 mm Al equivalent",
+    "0.7 mm Al equivalent"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Mammography tubes use a thin beryllium window with very low inherent filtration, around 0.1 mm Al equivalent, to preserve the low-energy photons needed for soft-tissue contrast."
+  },
+  {
+   "id": "p8_q182",
+   "no": 182,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "Identify the correct technique that presents a real-time image of both anatomy and blood flow.",
+   "options": [
+    "The Continuous Wave",
+    "The Duplex Scanner",
+    "Pulsed Doppler",
+    "The Color Doppler"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Color Doppler overlays real-time flow information (as colour) directly onto the greyscale anatomical image in real time."
+  },
+  {
+   "id": "p8_q183",
+   "no": 183,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "Which interventional radiology procedure is most commonly used to alleviate symptoms in patients with biliary obstruction?",
+   "options": [
+    "Percutaneous transhepatic biliary drainage (PTBD)",
+    "Balloon angioplasty",
+    "Vertebroplasty",
+    "Radiofrequency ablation (RFA)"
+   ],
+   "correctAnswer": 0,
+   "explanation": "PTBD places a catheter through the liver into the bile ducts to drain bile and relieve obstruction, making it the standard interventional treatment for biliary obstruction."
+  },
+  {
+   "id": "p8_q184",
+   "no": 184,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "_______effects change in the perceived frequency of sound emitted by a moving source.",
+   "options": [
+    "The Stochastic",
+    "The Doppler",
+    "The Compton",
+    "The Determenistic"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The Doppler effect describes the shift in perceived frequency of a wave when its source (or the observer) is moving."
+  },
+  {
+   "id": "p8_q185",
+   "no": 185,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "Which of the following is a potential complication associated with transjugular intrahepatic portosystemic shunt (TIPS) placement?",
+   "options": [
+    "Pulmonary embolism",
+    "Renal artery thrombosis",
+    "Hepatic encephalopathy",
+    "Aortic dissection"
+   ],
+   "correctAnswer": 2,
+   "explanation": "By shunting portal blood directly into the systemic circulation, TIPS can precipitate hepatic encephalopathy as toxins bypass liver filtration."
+  },
+  {
+   "id": "p8_q186",
+   "no": 186,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "Select the correct option regarding Doppler mode that employs two piezoelectric elements, both contained in a single head.",
+   "options": [
+    "The Color Doppler",
+    "The Duplex Scanner",
+    "The Pulsed Wave",
+    "The Continuous Wave"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Continuous Wave (CW) Doppler uses two separate crystals in one probe — one continuously transmitting and one continuously receiving — unlike pulsed systems which use a single element that alternates."
+  },
+  {
+   "id": "p8_q187",
+   "no": 187,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "Which of the following procedures is typically performed by interventional radiologists to treat liver tumours?",
+   "options": [
+    "Percutaneous nephrostomy",
+    "Transarterial chemoembolisation (TACE)",
+    "Transjugular intrahepatic portosystemic shunt (TIPS)",
+    "Coronary angiography"
+   ],
+   "correctAnswer": 1,
+   "explanation": "TACE delivers chemotherapy directly into the tumour's blood supply while blocking that supply, a standard interventional treatment for liver tumours."
+  },
+  {
+   "id": "p8_q188",
+   "no": 188,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "What type of material is used in mammographic intensifying screen?",
+   "options": [
+    "Silver bromide",
+    "Cesium iodide",
+    "Terbium-activated gadolinium oxysulphide",
+    "Calcium sulphate"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Terbium-activated gadolinium oxysulphide is the standard phosphor used in mammographic (and general) intensifying screens for its efficient light output."
+  },
+  {
+   "id": "p8_q189",
+   "no": 189,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "Which of the following is the INCORRECT target-filter combination in Mammography?",
+   "options": [
+    "Rhodium target – Molybdenum filter",
+    "Rhodium target – Rhodium filter",
+    "Molybdenum target – Molybdenum filter",
+    "Molybdenum target – Rhodium filter"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Standard mammography pairs a target with its own or a higher-Z filter (Mo/Mo, Mo/Rh, Rh/Rh); a Rhodium target with a lower-Z Molybdenum filter is not a standard/correct combination."
+  },
+  {
+   "id": "p8_q190",
+   "no": 190,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "Which of the following isotopes is most commonly used in nuclear medicine for diagnostic purpose?",
+   "options": [
+    "Iodine-131",
+    "Carbon-14",
+    "Fluorine-18",
+    "Technetium-99m"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Technetium-99m is the most widely used diagnostic radioisotope in nuclear medicine due to its ideal 140 keV gamma emission and short 6-hour half-life."
+  },
+  {
+   "id": "p8_q191",
+   "no": 191,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "Which isotope is commonly used in PET (Positron Emission Tomography) scans for detecting metabolic activity in tissues?",
+   "options": [
+    "Iodine-123",
+    "Technetium-99m",
+    "Fluorine-18",
+    "Thallium-201"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Fluorine-18 (as FDG) is the standard positron-emitting isotope used in PET scans to assess tissue glucose metabolism."
+  },
+  {
+   "id": "p8_q192",
+   "no": 192,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "Select the correct option that provides the means of detecting the depth at which a returning signal has originated in ultrasound.",
+   "options": [
+    "Pulsed Doppler",
+    "The Duplex Scanner",
+    "The Color Doppler",
+    "The Continuous Wave"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Pulsed Doppler sends brief pulses and times the returning echo, so the depth of the reflecting structure can be calculated from that time delay — something continuous wave systems cannot do."
+  },
+  {
+   "id": "p8_q193",
+   "no": 193,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "What is the maximum mean glandular dose per view that should NOT be exceeded in mammogram?",
+   "options": [
+    "0.05 mGy/view",
+    "5 mGy/view",
+    "3 mGy/view",
+    "0.03 mGy/view"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Standard mammography QC guidance sets the maximum mean glandular dose at about 3 mGy per view for a standard breast."
+  },
+  {
+   "id": "p8_q194",
+   "no": 194,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "The velocity of ultrasound in FAT is:",
+   "options": [
+    "1160 m/sec",
+    "1450 m/sec",
+    "1540 m/sec",
+    "330 m/sec"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Ultrasound travels through fat at about 1450 m/sec, slower than its average 1540 m/sec speed in soft tissue."
+  },
+  {
+   "id": "p8_q195",
+   "no": 195,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "Which of the following statements is correct?\n(Regarding contrast media)",
+   "options": [
+    "IODIXANOL is an iso-osmolar contrast medium.",
+    "IOPAMIDOL is an ionic contrast median.",
+    "IOHEXOL is a gas molar contrast medium.",
+    "DIATRIZOATE MEGLUMINE and DIATRIZOATE SODIUM is a non-ionic contrast medium."
+   ],
+   "correctAnswer": 0,
+   "explanation": "Iodixanol is a dimeric, iso-osmolar (matching blood osmolality) non-ionic contrast agent; the other statements misclassify their respective agents."
+  },
+  {
+   "id": "p8_q196",
+   "no": 196,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "In ultrasound, absorption coefficient of muscle (in dB/cm) is:",
+   "options": [
+    "2.2",
+    "3.3",
+    "1.1",
+    "0.18"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Muscle has a relatively high ultrasound absorption coefficient of about 3.3 dB/cm compared to more homogeneous soft tissues."
+  },
+  {
+   "id": "p8_q197",
+   "no": 197,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "Select the INCORRECT statement.\n(Regarding Barium and water-soluble contrast agents)",
+   "options": [
+    "Adverse effects can result if Barium leaks into the bloodstream.",
+    "Water soluble contrast agents must not be used in patients with suspected GI track perforation.",
+    "Barium peritonitis is a possible complication if Barium leaks into the peritoneum.",
+    "Barium granuloma formation is a possible complication."
+   ],
+   "correctAnswer": 1,
+   "explanation": "Water-soluble contrast agents are actually PREFERRED (not prohibited) when GI perforation is suspected, since leaked barium can cause serious peritonitis — so this statement is incorrect."
+  },
+  {
+   "id": "p8_q198",
+   "no": 198,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "Which of the following statements related to Ultrasound Transducer operation is INCORRECT?",
+   "options": [
+    "A reflected echo returns towards the transducer.",
+    "The ultrasound pulse generated is typically two to three cycles long.",
+    "Echoes that return from deeper structures are stronger than those that come from tissues nearest to the surface.",
+    "In pulse echo mode, a brief pulse of ultrasound is created on transducer crystal element."
+   ],
+   "correctAnswer": 2,
+   "explanation": "Echoes from deeper structures are actually WEAKER (attenuated by more tissue) than those from shallow structures, not stronger, so this statement is incorrect."
+  },
+  {
+   "id": "p8_q199",
+   "no": 199,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "Select the INCORRECT statement.\n(Regarding positive and negative contrast agents)",
+   "options": [
+    "Negative contrast agents decrease organ density to produce contrast.",
+    "Carbon dioxide and air are negative contrast agents.",
+    "Barium sulphate is a positive contrast agent.",
+    "Positive contrast agents are used to reduce organ density and improve radiographic visualisation."
+   ],
+   "correctAnswer": 3,
+   "explanation": "Positive contrast agents INCREASE organ/structure density (radiopacity), they don't reduce it — so this statement is incorrect."
+  },
+  {
+   "id": "p8_q200",
+   "no": 200,
+   "section": "B",
+   "subsectionId": "b5",
+   "subject": "USG, Mammography & Special Procedures",
+   "question": "Select the INCORRECT statement regarding sonographic appearance of normal liver.",
+   "options": [
+    "Portal and hepatic veins are seen as hyperechoic tubular structure branching throughout the lobe.",
+    "Liver appears hypoechoic to normal pancreas.",
+    "Liver appears as homogeneous, mild grey echoes.",
+    "Blood vessels and bile duct have anechoic lumens surrounded by hyperechoic walls."
+   ],
+   "correctAnswer": 0,
+   "explanation": "Portal and hepatic vein lumens are actually ANECHOIC (fluid-filled) with echogenic walls, not hyperechoic structures themselves — so this statement is incorrect."
+  }
+ ]
+}

@@ -232,6 +232,14 @@ export const dsssbPaperList: DsssbPaperMeta[] = [
     totalQuestions: 200,
     durationMinutes: 120,
   },
+  {
+    id: 8,
+    name: "Practice Paper 8",
+    subtitle: "DSSSB Radiographer — Official Previous Year Paper (20 Jul 2024, Shift 2)",
+    code: "DSSSB/RAD/PYQ-2024-S2",
+    totalQuestions: 200,
+    durationMinutes: 120,
+  },
 ]
 
 export const DSSSB_STRATEGY: string[] = [

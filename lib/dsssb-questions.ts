@@ -8,6 +8,7 @@ import paper4Raw from "./dsssb/paper4.json"
 import paper5Raw from "./dsssb/paper5.json"
 import paper6Raw from "./dsssb/paper6.json"
 import paper7Raw from "./dsssb/paper7.json"
+import paper8Raw from "./dsssb/paper8.json"
 import type { DsssbPaper } from "./dsssb-papers"
 
 const papers: DsssbPaper[] = [
@@ -18,6 +19,7 @@ const papers: DsssbPaper[] = [
   paper5Raw as unknown as DsssbPaper,
   paper6Raw as unknown as DsssbPaper,
   paper7Raw as unknown as DsssbPaper,
+  paper8Raw as unknown as DsssbPaper,
 ]
 
 export function getDsssbPaper(id: number): DsssbPaper | undefined {
