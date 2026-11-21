@@ -21,7 +21,8 @@ import {
   BookOpen,
   GraduationCap,
   Brain,
-  ClipboardCheck
+  ClipboardCheck,
+  TrainFront
 } from "lucide-react"
 
 interface DashboardProps {
@@ -70,6 +71,13 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
 
   // DSSSB Practise stats
   const [dsssbStats, setDsssbStats] = useState<{
+    attempts: number
+    bestScore: number
+    papersAttempted: number
+  }>({ attempts: 0, bestScore: 0, papersAttempted: 0 })
+
+  // RRB Practise stats
+  const [rrbStats, setRrbStats] = useState<{
     attempts: number
     bestScore: number
     papersAttempted: number
@@ -139,6 +147,20 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
       }
     } catch (e) {
       console.error("Error loading DSSSB stats:", e)
+    }
+
+    // Load RRB Practise stats
+    try {
+      const raw = localStorage.getItem("kiddoprep_rrb_progress")
+      if (raw) {
+        const parsed = JSON.parse(raw)
+        const entries: any[] = Object.values(parsed?.attempts || {})
+        const attempts = entries.reduce((a, x) => a + (x.count || 0), 0)
+        const bestScore = entries.reduce((a, x) => Math.max(a, x.bestScore ?? 0), 0)
+        setRrbStats({ attempts, bestScore, papersAttempted: entries.length })
+      }
+    } catch (e) {
+      console.error("Error loading RRB stats:", e)
     }
   }, [])
 
@@ -415,6 +437,26 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
               ) : (
                 <div className="flex gap-3 text-xs">
                   <span className="text-muted-foreground">2 papers &middot; 200 Qs each &middot; 120 min</span>
+                </div>
+              )}
+            />
+            <FeatureCard
+              href="/rrb"
+              icon={<TrainFront />}
+              title="RRB Practise"
+              description="RRB Paramedical Radiographer / X-Ray Technician CBT mocks — 100 Qs, 90 min, -1/3 negative marking"
+              gradient="bg-gradient-to-br from-sky-500/10 via-cyan-500/5 to-transparent"
+              borderColor="border-sky-500/30 hover:border-sky-500/50"
+              iconColor="text-sky-500"
+              stats={rrbStats.attempts > 0 ? (
+                <div className="flex gap-3 text-xs">
+                  <span className="text-sky-500">Best {rrbStats.bestScore}/100</span>
+                  <span className="text-muted-foreground">{rrbStats.attempts} attempt{rrbStats.attempts === 1 ? "" : "s"}</span>
+                  <span className="text-muted-foreground">{rrbStats.papersAttempted}/3 papers</span>
+                </div>
+              ) : (
+                <div className="flex gap-3 text-xs">
+                  <span className="text-muted-foreground">3 papers &middot; 100 Qs each &middot; 90 min</span>
                 </div>
               )}
             />
