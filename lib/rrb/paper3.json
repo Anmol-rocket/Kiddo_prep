@@ -1,0 +1,1686 @@
+{
+ "id": 3,
+ "name": "Practice Paper 3",
+ "subtitle": "RRB Radiographer / X-Ray Technician — Full CBT Mock (Moderate–Tough)",
+ "code": "RRB/PARAMED/RAD/PP-03",
+ "totalQuestions": 100,
+ "durationMinutes": 90,
+ "markPerCorrect": 1,
+ "negativeMark": 0.3333333333333333,
+ "subsections": [
+  {
+   "id": "a1",
+   "section": "A",
+   "title": "Human Anatomy & Physiology",
+   "start": 1,
+   "end": 12,
+   "count": 12
+  },
+  {
+   "id": "a2",
+   "section": "A",
+   "title": "Radiation Physics & X-ray Equipment",
+   "start": 13,
+   "end": 28,
+   "count": 16
+  },
+  {
+   "id": "a3",
+   "section": "A",
+   "title": "Clinical Radiography — Positioning",
+   "start": 29,
+   "end": 44,
+   "count": 16
+  },
+  {
+   "id": "a4",
+   "section": "A",
+   "title": "Image Processing, Darkroom & Image Quality",
+   "start": 45,
+   "end": 52,
+   "count": 8
+  },
+  {
+   "id": "a5",
+   "section": "A",
+   "title": "Radiation Protection, Contrast & Special Procedures",
+   "start": 53,
+   "end": 62,
+   "count": 10
+  },
+  {
+   "id": "a6",
+   "section": "A",
+   "title": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "start": 63,
+   "end": 70,
+   "count": 8
+  },
+  {
+   "id": "b1",
+   "section": "B",
+   "title": "General Awareness",
+   "start": 71,
+   "end": 80,
+   "count": 10
+  },
+  {
+   "id": "b2",
+   "section": "B",
+   "title": "General Arithmetic, Intelligence & Reasoning",
+   "start": 81,
+   "end": 90,
+   "count": 10
+  },
+  {
+   "id": "b3",
+   "section": "B",
+   "title": "General Science",
+   "start": 91,
+   "end": 100,
+   "count": 10
+  }
+ ],
+ "questions": [
+  {
+   "id": "p3_q1",
+   "no": 1,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "The foramen magnum is located in which bone?",
+   "options": [
+    "Sphenoid",
+    "Temporal",
+    "Parietal",
+    "Occipital"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The spinal cord passes through the foramen magnum of the occipital bone, which is shown on Towne's view."
+  },
+  {
+   "id": "p3_q2",
+   "no": 2,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "The right and left coronary arteries arise from the:",
+   "options": [
+    "Arch of aorta",
+    "Ascending aorta (aortic sinuses)",
+    "Pulmonary trunk",
+    "Descending thoracic aorta"
+   ],
+   "correctAnswer": 1,
+   "explanation": "They arise from the aortic sinuses just above the aortic valve cusps."
+  },
+  {
+   "id": "p3_q3",
+   "no": 3,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "The tracheal bifurcation (carina) lies at approximately the level of:",
+   "options": [
+    "C6",
+    "T4–T5 (sternal angle)",
+    "T8",
+    "T10"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The sternal angle (of Louis) marks T4/T5, where the trachea divides."
+  },
+  {
+   "id": "p3_q4",
+   "no": 4,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "The pylorus connects the:",
+   "options": [
+    "Oesophagus to the stomach",
+    "Stomach to the duodenum",
+    "Ileum to the caecum",
+    "Duodenum to the jejunum"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The pyloric sphincter controls emptying of the stomach into the duodenum."
+  },
+  {
+   "id": "p3_q5",
+   "no": 5,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "The head of the femur articulates with the:",
+   "options": [
+    "Acetabulum",
+    "Glenoid cavity",
+    "Obturator foramen",
+    "Ischial tuberosity"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The hip joint is a ball-and-socket joint between the femoral head and the acetabulum."
+  },
+  {
+   "id": "p3_q6",
+   "no": 6,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which carpal bone is a sesamoid bone lying within the tendon of flexor carpi ulnaris?",
+   "options": [
+    "Trapezium",
+    "Hamate",
+    "Capitate",
+    "Pisiform"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The pea-shaped pisiform lies on the triquetrum within the FCU tendon."
+  },
+  {
+   "id": "p3_q7",
+   "no": 7,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which is the largest paranasal sinus?",
+   "options": [
+    "Frontal sinus",
+    "Maxillary sinus",
+    "Sphenoid sinus",
+    "Ethmoid sinus"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The maxillary sinus (antrum of Highmore) is the largest and is best seen on Waters view."
+  },
+  {
+   "id": "p3_q8",
+   "no": 8,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "How many bronchopulmonary segments are there in the right lung?",
+   "options": [
+    "8",
+    "10",
+    "12",
+    "5"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The right lung has 10 segments (3 upper, 2 middle, 5 lower)."
+  },
+  {
+   "id": "p3_q9",
+   "no": 9,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "The spleen lies in relation to which ribs on the left side?",
+   "options": [
+    "9th to 11th",
+    "5th to 7th",
+    "1st to 3rd",
+    "12th only"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The spleen lies under ribs 9–11 in the left hypochondrium, so lower left rib fractures can rupture it."
+  },
+  {
+   "id": "p3_q10",
+   "no": 10,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "In adults, the spinal cord usually ends at the level of:",
+   "options": [
+    "T10",
+    "L1–L2 vertebrae",
+    "L4–L5",
+    "S2"
+   ],
+   "correctAnswer": 1,
+   "explanation": "This is why lumbar puncture is done below this level, at L3–L4 or L4–L5."
+  },
+  {
+   "id": "p3_q11",
+   "no": 11,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which tarsal bone has no muscle attachments?",
+   "options": [
+    "Calcaneum",
+    "Talus",
+    "Navicular",
+    "Cuboid"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The talus is largely covered with articular cartilage and has no muscle attachments."
+  },
+  {
+   "id": "p3_q12",
+   "no": 12,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "The total blood volume of a normal adult is about:",
+   "options": [
+    "2 litres",
+    "8 litres",
+    "12 litres",
+    "5 litres"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Blood volume is about 7–8% of body weight, roughly 5 L in a 70-kg adult."
+  },
+  {
+   "id": "p3_q13",
+   "no": 13,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "An X-ray tube is operated at 100 kVp. What is the maximum energy of the X-ray photons produced?",
+   "options": [
+    "100 keV",
+    "50 keV",
+    "33 keV",
+    "200 keV"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The maximum photon energy in keV equals the peak kilovoltage. The average energy is about one-third to one-half of this."
+  },
+  {
+   "id": "p3_q14",
+   "no": 14,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "What is the minimum wavelength of X-rays produced at 124 kVp? (λ in nm = 1.24 / E in keV)",
+   "options": [
+    "0.1 nm",
+    "1.0 nm",
+    "0.124 nm",
+    "0.01 nm"
+   ],
+   "correctAnswer": 3,
+   "explanation": "λmin = 1.24/124 = 0.01 nm (Duane–Hunt law)."
+  },
+  {
+   "id": "p3_q15",
+   "no": 15,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "The K-shell binding energy of tungsten is approximately:",
+   "options": [
+    "12 keV",
+    "20 keV",
+    "69.5 keV",
+    "140 keV"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Tungsten K-characteristic X-rays (~59–69 keV) appear only when the tube is operated above about 70 kVp."
+  },
+  {
+   "id": "p3_q16",
+   "no": 16,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "An exposure of 200 mA for 0.1 second gives:",
+   "options": [
+    "2 mAs",
+    "200 mAs",
+    "20 mAs",
+    "2000 mAs"
+   ],
+   "correctAnswer": 2,
+   "explanation": "mAs = mA × time = 200 × 0.1 = 20."
+  },
+  {
+   "id": "p3_q17",
+   "no": 17,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "How many heat units (HU) are produced by a single-phase exposure of 80 kVp, 100 mA and 0.5 s?",
+   "options": [
+    "8,000 HU",
+    "400 HU",
+    "4,000 HU",
+    "5,400 HU"
+   ],
+   "correctAnswer": 2,
+   "explanation": "HU = kVp × mA × s = 80 × 100 × 0.5 = 4,000. (For three-phase and high-frequency generators, a factor of 1.35–1.41 is applied.)"
+  },
+  {
+   "id": "p3_q18",
+   "no": 18,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "According to the '15% rule', increasing kVp by 15% has about the same effect on film density as:",
+   "options": [
+    "Halving the mAs",
+    "Doubling the FFD",
+    "Doubling the mAs",
+    "Halving the kVp"
+   ],
+   "correctAnswer": 2,
+   "explanation": "+15% kVp ≈ 2 × mAs. The 15% rule is used to cut exposure time or patient dose."
+  },
+  {
+   "id": "p3_q19",
+   "no": 19,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "After passing through three half-value layers, the intensity of an X-ray beam is reduced to:",
+   "options": [
+    "33% of the original",
+    "25% of the original",
+    "12.5% of the original",
+    "3% of the original"
+   ],
+   "correctAnswer": 2,
+   "explanation": "(1/2)³ = 1/8 = 12.5%."
+  },
+  {
+   "id": "p3_q20",
+   "no": 20,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "Reducing the anode target angle results in:",
+   "options": [
+    "A larger effective focal spot and less heel effect",
+    "No change in focal spot size",
+    "A smaller effective focal spot but a more pronounced heel effect",
+    "A larger field coverage"
+   ],
+   "correctAnswer": 2,
+   "explanation": "A smaller angle gives finer detail but reduces field coverage and increases the heel effect."
+  },
+  {
+   "id": "p3_q21",
+   "no": 21,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "Tube current (mA) in an X-ray tube is controlled mainly by:",
+   "options": [
+    "The autotransformer kV selector",
+    "Anode rotation speed",
+    "Filament current (filament temperature)",
+    "Added filtration"
+   ],
+   "correctAnswer": 2,
+   "explanation": "A higher filament current heats the filament more, which releases more electrons and increases tube mA."
+  },
+  {
+   "id": "p3_q22",
+   "no": 22,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "The autotransformer in an X-ray circuit:",
+   "options": [
+    "Works on self-induction with a single winding and is used to select kVp",
+    "Has two separate windings and steps voltage up to kilovolts",
+    "Converts AC to DC",
+    "Controls the filament temperature only"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The autotransformer supplies an adjustable voltage to the primary of the high-tension transformer."
+  },
+  {
+   "id": "p3_q23",
+   "no": 23,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "A high-tension transformer has a turns ratio of 1 : 500. If 200 V is applied to the primary, the secondary voltage is:",
+   "options": [
+    "40 kV",
+    "2.5 kV",
+    "500 kV",
+    "100 kV"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Vs = Vp × (Ns/Np) = 200 × 500 = 100,000 V = 100 kV."
+  },
+  {
+   "id": "p3_q24",
+   "no": 24,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "Which interaction involves no loss of photon energy and no ionisation, and occurs mainly below about 10 keV?",
+   "options": [
+    "Compton scattering",
+    "Coherent (classical/Rayleigh) scattering",
+    "Photoelectric effect",
+    "Pair production"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The photon is only redirected; its energy and wavelength are unchanged."
+  },
+  {
+   "id": "p3_q25",
+   "no": 25,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "The relationship between half-value layer (HVL) and the linear attenuation coefficient (μ) is:",
+   "options": [
+    "HVL = μ / 0.693",
+    "HVL = 0.693 × μ",
+    "HVL = 1 / μ²",
+    "HVL = 0.693 / μ"
+   ],
+   "correctAnswer": 3,
+   "explanation": "From I = I₀e^(−μx), setting I = I₀/2 gives x = ln2/μ = 0.693/μ."
+  },
+  {
+   "id": "p3_q26",
+   "no": 26,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "Compared with an 8 : 1 grid, a 12 : 1 grid:",
+   "options": [
+    "Removes less scatter and needs a lower exposure",
+    "Removes more scatter but needs a higher exposure and more accurate centring",
+    "Has no effect on patient dose",
+    "Can be used at any FFD without cut-off"
+   ],
+   "correctAnswer": 1,
+   "explanation": "A higher grid ratio cleans up scatter better, but it raises the Bucky factor (dose) and narrows the positioning latitude."
+  },
+  {
+   "id": "p3_q27",
+   "no": 27,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "The 'air-gap technique' reduces scattered radiation reaching the image by:",
+   "options": [
+    "Decreasing the FFD",
+    "Increasing the object-to-image distance",
+    "Adding a high-ratio grid",
+    "Increasing the kVp"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Obliquely scattered photons miss the receptor across the gap. Used in lateral C-spine and magnification radiography."
+  },
+  {
+   "id": "p3_q28",
+   "no": 28,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "The inherent filtration of an X-ray tube is mainly provided by the:",
+   "options": [
+    "Aluminium sheets added at the collimator",
+    "Patient's skin",
+    "Glass envelope, insulating oil and tube window",
+    "Lead shutters of the collimator"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Inherent filtration is about 0.5–1 mm Al equivalent. Added filtration brings the total up to at least 2.5 mm Al."
+  },
+  {
+   "id": "p3_q29",
+   "no": 29,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "In a true lateral skull projection:",
+   "options": [
+    "The interpupillary line is parallel to the IR",
+    "The median sagittal plane is perpendicular to the IR",
+    "The interpupillary line is perpendicular to the IR and the median sagittal plane is parallel to it",
+    "The orbitomeatal line is at 37° to the IR"
+   ],
+   "correctAnswer": 2,
+   "explanation": "This avoids rotation and tilt so that the two halves of the skull superimpose exactly."
+  },
+  {
+   "id": "p3_q30",
+   "no": 30,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "In the Waters (occipitomental) projection, the orbitomeatal line forms an angle of about ___ with the image receptor.",
+   "options": [
+    "15°",
+    "30°",
+    "37°",
+    "53°"
+   ],
+   "correctAnswer": 2,
+   "explanation": "With a 37° OML angle (mentomeatal line perpendicular), the petrous ridges are projected just below the maxillary sinuses."
+  },
+  {
+   "id": "p3_q31",
+   "no": 31,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "For Towne's (AP axial) projection, the central ray is angled:",
+   "options": [
+    "30° cephalad to the orbitomeatal line",
+    "15° caudad",
+    "30° caudad to the orbitomeatal line",
+    "45° cephalad"
+   ],
+   "correctAnswer": 2,
+   "explanation": "If the IOML is used as the baseline, the angle becomes 37° caudad."
+  },
+  {
+   "id": "p3_q32",
+   "no": 32,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "For the PA axial (Caldwell) projection of the skull, the central ray is angled:",
+   "options": [
+    "15° cephalad",
+    "30° caudad",
+    "37° caudad",
+    "15° caudad"
+   ],
+   "correctAnswer": 3,
+   "explanation": "This projects the petrous ridges into the lower third of the orbits."
+  },
+  {
+   "id": "p3_q33",
+   "no": 33,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "The 'frog-leg' lateral projection of the hips is contraindicated in:",
+   "options": [
+    "Slipped capital femoral epiphysis follow-up",
+    "Perthes disease follow-up",
+    "Developmental dysplasia screening",
+    "Suspected fracture of the femoral neck"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The position needs abduction and external rotation of the hip, which can displace a fracture."
+  },
+  {
+   "id": "p3_q34",
+   "no": 34,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "Judet's (45° oblique) projections of the pelvis are used to demonstrate the:",
+   "options": [
+    "Acetabulum (anterior and posterior columns)",
+    "Sacroiliac joints only",
+    "Lumbar pedicles",
+    "Pubic symphysis widening only"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The obturator oblique and iliac oblique views show the acetabular columns and rims."
+  },
+  {
+   "id": "p3_q35",
+   "no": 35,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "For a lateral lumbar spine projection, the central ray is directed to:",
+   "options": [
+    "The level of T12",
+    "The level of L3 (about 4 cm above the iliac crest) at the mid-coronal plane",
+    "The level of the symphysis pubis",
+    "The xiphisternum"
+   ],
+   "correctAnswer": 1,
+   "explanation": "L3 lies at about the lower costal margin. Centring there covers L1–S1."
+  },
+  {
+   "id": "p3_q36",
+   "no": 36,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "In an AP shoulder projection with the arm externally rotated, which structure is seen in profile laterally?",
+   "options": [
+    "Lesser tubercle",
+    "Coracoid process",
+    "Acromioclavicular joint",
+    "Greater tubercle"
+   ],
+   "correctAnswer": 3,
+   "explanation": "External rotation shows the greater tubercle laterally; internal rotation shows the lesser tubercle medially."
+  },
+  {
+   "id": "p3_q37",
+   "no": 37,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "For a lateral projection of the elbow, the elbow is flexed to:",
+   "options": [
+    "90°",
+    "45°",
+    "180° (fully extended)",
+    "30°"
+   ],
+   "correctAnswer": 0,
+   "explanation": "With 90° flexion, a true lateral elbow shows the fat pads and the three concentric arcs."
+  },
+  {
+   "id": "p3_q38",
+   "no": 38,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "Bone age assessment is routinely done with a radiograph of the:",
+   "options": [
+    "Right foot (AP)",
+    "Left hand and wrist (PA)",
+    "Skull (lateral)",
+    "Pelvis (AP)"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The Greulich–Pyle atlas is based on PA radiographs of the left hand and wrist."
+  },
+  {
+   "id": "p3_q39",
+   "no": 39,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "Robert's method (AP thumb) best demonstrates the:",
+   "options": [
+    "Scaphoid waist",
+    "Fifth metacarpal head",
+    "First carpometacarpal joint",
+    "Distal radioulnar joint"
+   ],
+   "correctAnswer": 2,
+   "explanation": "The forearm is hyperpronated so that the dorsal surface of the thumb rests on the IR."
+  },
+  {
+   "id": "p3_q40",
+   "no": 40,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "Bilateral AP views of the acromioclavicular joints are taken with and without weights to demonstrate:",
+   "options": [
+    "Rotator cuff tear",
+    "Clavicle fracture",
+    "Shoulder impingement",
+    "AC joint separation (dislocation)"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Weights (5–8 lb) hanging from the wrists increase the gap at an injured AC joint."
+  },
+  {
+   "id": "p3_q41",
+   "no": 41,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "The tunnel (Holmblad / Camp–Coventry) projection of the knee demonstrates the:",
+   "options": [
+    "Patellofemoral joint",
+    "Intercondylar fossa",
+    "Fibular head",
+    "Tibial tuberosity"
+   ],
+   "correctAnswer": 1,
+   "explanation": "It shows loose bodies and osteochondral defects in the intercondylar notch."
+  },
+  {
+   "id": "p3_q42",
+   "no": 42,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "The sternum is radiographed in the RAO position (15°–20°) mainly to:",
+   "options": [
+    "Separate the sternum from the clavicles",
+    "Project the sternum over the homogeneous heart shadow, clear of the vertebrae",
+    "Reduce the dose to the breasts only",
+    "Avoid using a long exposure time"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The heart provides a uniform background; a breathing technique blurs the overlying lung markings."
+  },
+  {
+   "id": "p3_q43",
+   "no": 43,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "The zygomatic arches are best demonstrated by the:",
+   "options": [
+    "PA Caldwell",
+    "Lateral skull",
+    "Towne's at 15°",
+    "Submentovertical (SMV) / 'jug-handle' projection"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The SMV with reduced exposure shows the arches free of overlap, like jug handles."
+  },
+  {
+   "id": "p3_q44",
+   "no": 44,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "A 'horizontal beam' is used for the lateral knee in trauma mainly to demonstrate:",
+   "options": [
+    "Patellar alignment only",
+    "Osgood–Schlatter disease",
+    "Meniscal tears",
+    "Lipohaemarthrosis (fat–fluid level)"
+   ],
+   "correctAnswer": 3,
+   "explanation": "A fat–fluid level in the suprapatellar bursa indicates an intra-articular fracture."
+  },
+  {
+   "id": "p3_q45",
+   "no": 45,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "The slope of the straight-line portion of the characteristic (H&D) curve indicates the film's:",
+   "options": [
+    "Contrast (gamma)",
+    "Speed",
+    "Base-plus-fog",
+    "Latitude only"
+   ],
+   "correctAnswer": 0,
+   "explanation": "A steeper slope means higher contrast and narrower latitude."
+  },
+  {
+   "id": "p3_q46",
+   "no": 46,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "If a processed radiograph transmits 1% of the incident light, its optical density is:",
+   "options": [
+    "1.0",
+    "2.0",
+    "0.01",
+    "3.0"
+   ],
+   "correctAnswer": 1,
+   "explanation": "OD = log₁₀(I₀/It) = log₁₀(100) = 2."
+  },
+  {
+   "id": "p3_q47",
+   "no": 47,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "In a 90-second automatic processor, the developer temperature is typically about:",
+   "options": [
+    "20 °C (68 °F)",
+    "50 °C (122 °F)",
+    "35 °C (93–95 °F)",
+    "10 °C (50 °F)"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Higher temperature allows rapid development. Manual processing uses about 20 °C for 5 minutes."
+  },
+  {
+   "id": "p3_q48",
+   "no": 48,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "Which method is commonly used to recover silver from used fixer?",
+   "options": [
+    "Boiling the solution",
+    "Adding sodium carbonate",
+    "Electrolytic recovery",
+    "Freezing the fixer"
+   ],
+   "correctAnswer": 2,
+   "explanation": "An electric current plates the silver onto a cathode. Metallic replacement (steel wool) is another method."
+  },
+  {
+   "id": "p3_q49",
+   "no": 49,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "A direct-conversion flat-panel detector uses which material to convert X-rays straight into an electrical charge?",
+   "options": [
+    "Amorphous selenium",
+    "Caesium iodide",
+    "Gadolinium oxysulphide",
+    "Barium fluorobromide"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Indirect detectors use a CsI or Gd₂O₂S scintillator with amorphous-silicon photodiodes."
+  },
+  {
+   "id": "p3_q50",
+   "no": 50,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "Quantum mottle (noise) in a radiographic image is mainly caused by:",
+   "options": [
+    "Too high a kVp",
+    "Using a grid",
+    "Too few X-ray photons (low mAs)",
+    "A large focal spot"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Too few photons give statistical fluctuation, which appears as a grainy image. Raise the mAs to reduce it."
+  },
+  {
+   "id": "p3_q51",
+   "no": 51,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "In digital or CT image display, increasing the window width will:",
+   "options": [
+    "Decrease image contrast (more grey shades shown)",
+    "Increase image contrast",
+    "Increase brightness only",
+    "Increase spatial resolution"
+   ],
+   "correctAnswer": 0,
+   "explanation": "A wide window (e.g., lung or bone) shows a long grey scale; a narrow window gives high contrast. Window level controls brightness."
+  },
+  {
+   "id": "p3_q52",
+   "no": 52,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "Reciprocity law failure in film-screen radiography occurs mainly with:",
+   "options": [
+    "Very long or very short exposure times",
+    "Exposures at exactly 100 ms",
+    "Using a grid",
+    "High kVp only"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The same mAs does not always give the same density when screen light intensity is extreme."
+  },
+  {
+   "id": "p3_q53",
+   "no": 53,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "Which of the following is a stochastic effect of radiation?",
+   "options": [
+    "Skin erythema",
+    "Radiation-induced cancer",
+    "Cataract",
+    "Epilation"
+   ],
+   "correctAnswer": 1,
+   "explanation": "For stochastic effects the probability rises with dose and there is no threshold. Deterministic effects have a threshold."
+  },
+  {
+   "id": "p3_q54",
+   "no": 54,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "According to the law of Bergonié and Tribondeau, which cells are the most radiosensitive?",
+   "options": [
+    "Lymphocytes",
+    "Nerve cells",
+    "Muscle cells",
+    "Mature red cells"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Cells that divide rapidly and are less differentiated are the most radiosensitive."
+  },
+  {
+   "id": "p3_q55",
+   "no": 55,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "The whole-body LD50/30 for humans (without medical treatment) is about:",
+   "options": [
+    "0.5 Gy",
+    "10–20 Gy",
+    "50 Gy",
+    "3–4 Gy"
+   ],
+   "correctAnswer": 3,
+   "explanation": "About 3–4 Gy kills 50% of an exposed population within 30 days."
+  },
+  {
+   "id": "p3_q56",
+   "no": 56,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "OSL (optically stimulated luminescence) dosimeters use:",
+   "options": [
+    "Aluminium oxide doped with carbon (Al₂O₃:C)",
+    "Lithium fluoride",
+    "Silver bromide",
+    "Sodium iodide"
+   ],
+   "correctAnswer": 0,
+   "explanation": "When stimulated by a laser, OSL material releases light proportional to the dose absorbed."
+  },
+  {
+   "id": "p3_q57",
+   "no": 57,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "Non-ionic iodinated contrast media cause fewer adverse reactions than ionic media mainly because they have:",
+   "options": [
+    "Lower osmolality",
+    "Higher iodine content per molecule only",
+    "Higher viscosity",
+    "A positive charge"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Low-osmolar agents cause less fluid shift, pain, heat sensation and fewer reactions."
+  },
+  {
+   "id": "p3_q58",
+   "no": 58,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "Water-soluble contrast (e.g., Gastrografin) is preferred over barium when there is suspected:",
+   "options": [
+    "Peptic ulcer",
+    "Hiatus hernia",
+    "Gastrointestinal perforation",
+    "Achalasia cardia"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Barium leaking into the peritoneum causes severe peritonitis. Water-soluble contrast is absorbed."
+  },
+  {
+   "id": "p3_q59",
+   "no": 59,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "Hysterosalpingography is ideally performed:",
+   "options": [
+    "Just before menstruation",
+    "During menstruation",
+    "Between the 7th and 10th day of the menstrual cycle, after bleeding stops",
+    "Around the 25th day of the cycle"
+   ],
+   "correctAnswer": 2,
+   "explanation": "This avoids irradiating an early pregnancy and avoids pushing endometrial tissue into the tubes."
+  },
+  {
+   "id": "p3_q60",
+   "no": 60,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "Lipiodol, an oil-based iodinated contrast, is classically used in:",
+   "options": [
+    "Barium meal",
+    "Intravenous urography",
+    "CT angiography",
+    "Lymphangiography"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Oily contrast must never be given intravenously. Its uses include lymphangiography and TACE."
+  },
+  {
+   "id": "p3_q61",
+   "no": 61,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "The most common arterial puncture site for diagnostic angiography by the Seldinger technique is the:",
+   "options": [
+    "Carotid artery",
+    "Common femoral artery",
+    "Popliteal artery",
+    "Subclavian artery"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The femoral artery is large and superficial, and can be compressed over the femoral head. The radial artery is increasingly used for cardiac work."
+  },
+  {
+   "id": "p3_q62",
+   "no": 62,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "If iodinated contrast extravasates during an IV injection, the immediate step is to:",
+   "options": [
+    "Continue injecting faster to finish the dose",
+    "Massage the area vigorously",
+    "Stop the injection, elevate the limb and apply a cold compress",
+    "Apply a tight tourniquet above the site"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Most extravasations settle with conservative care. Large volumes or compartment signs need surgical review."
+  },
+  {
+   "id": "p3_q63",
+   "no": 63,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "In helical CT, pitch is defined as:",
+   "options": [
+    "Number of detector rows × slice thickness",
+    "Table movement per rotation ÷ total beam collimation",
+    "Gantry rotation time ÷ table speed",
+    "Tube current × rotation time"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Pitch > 1 means faster coverage and lower dose but more gaps; pitch < 1 means overlapping data."
+  },
+  {
+   "id": "p3_q64",
+   "no": 64,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "Beam-hardening artefact on a head CT appears as:",
+   "options": [
+    "Concentric rings",
+    "Dark streaks between dense bony structures (e.g., petrous bones)",
+    "Stair-step edges on reformats",
+    "Bright halo around the whole image"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Low-energy photons are filtered out in dense bone, so the beam's mean energy rises and the area beyond appears falsely dark (Hounsfield bar). Ring artefacts mean a detector fault."
+  },
+  {
+   "id": "p3_q65",
+   "no": 65,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "The Larmor frequency of hydrogen protons in a 1.5 T MRI scanner is about:",
+   "options": [
+    "42.6 MHz",
+    "127.7 MHz",
+    "63.9 MHz",
+    "15 MHz"
+   ],
+   "correctAnswer": 2,
+   "explanation": "f = γB = 42.58 MHz/T × 1.5 T ≈ 63.9 MHz. At 3 T it is about 127.7 MHz."
+  },
+  {
+   "id": "p3_q66",
+   "no": 66,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "A T1-weighted MR image is obtained with:",
+   "options": [
+    "Short TR and short TE",
+    "Long TR and long TE",
+    "Long TR and short TE",
+    "Short TR and long TE"
+   ],
+   "correctAnswer": 0,
+   "explanation": "T1W uses short TR and short TE; T2W uses long TR and long TE; PD uses long TR and short TE. Fat is bright on T1."
+  },
+  {
+   "id": "p3_q67",
+   "no": 67,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "In the ACR MRI safety zoning, Zone IV is the:",
+   "options": [
+    "Public reception area",
+    "Patient changing area",
+    "Control room",
+    "MRI magnet (scanner) room"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Zone IV is the magnet room, where the field is always on and only screened persons may enter."
+  },
+  {
+   "id": "p3_q68",
+   "no": 68,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "The average speed of sound in soft tissue, assumed by ultrasound machines, is:",
+   "options": [
+    "330 m/s",
+    "4080 m/s",
+    "1540 m/s",
+    "1000 m/s"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Depth is calculated from the echo time using 1540 m/s. Sound is about 330 m/s in air and about 4080 m/s in bone."
+  },
+  {
+   "id": "p3_q69",
+   "no": 69,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "The radiotracer most widely used in PET imaging is:",
+   "options": [
+    "Tc-99m MDP",
+    "F-18 FDG (half-life about 110 minutes)",
+    "I-131",
+    "Tl-201"
+   ],
+   "correctAnswer": 1,
+   "explanation": "FDG is a glucose analogue, so tumours with high metabolism take up more of it."
+  },
+  {
+   "id": "p3_q70",
+   "no": 70,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "The two standard views in screening mammography are:",
+   "options": [
+    "Craniocaudal (CC) and mediolateral oblique (MLO)",
+    "AP and lateral",
+    "PA and lateral decubitus",
+    "Axial and tangential"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The MLO view shows the most breast tissue, including the axillary tail."
+  },
+  {
+   "id": "p3_q71",
+   "no": 71,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "The Integral Coach Factory (ICF) of Indian Railways is located at:",
+   "options": [
+    "Kapurthala",
+    "Rae Bareli",
+    "Varanasi",
+    "Chennai (Perambur)"
+   ],
+   "correctAnswer": 3,
+   "explanation": "ICF is in Chennai, RCF in Kapurthala, MCF in Rae Bareli and BLW in Varanasi."
+  },
+  {
+   "id": "p3_q72",
+   "no": 72,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "The Banaras Locomotive Works (formerly Diesel Locomotive Works) is situated in:",
+   "options": [
+    "Varanasi",
+    "Chittaranjan",
+    "Patiala",
+    "Bengaluru"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Chittaranjan has CLW (electric locomotives) and Patiala has PLW (formerly DMW)."
+  },
+  {
+   "id": "p3_q73",
+   "no": 73,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "Constitutional status was given to Panchayati Raj institutions by the:",
+   "options": [
+    "74th Amendment Act, 1992",
+    "61st Amendment Act, 1989",
+    "52nd Amendment Act, 1985",
+    "73rd Amendment Act, 1992"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The 73rd Amendment added Part IX (Panchayats). The 74th Amendment covers Municipalities."
+  },
+  {
+   "id": "p3_q74",
+   "no": 74,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "A 'Money Bill' is defined in which Article of the Constitution?",
+   "options": [
+    "Article 112",
+    "Article 356",
+    "Article 280",
+    "Article 110"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Article 112 covers the Annual Financial Statement, Article 356 President's Rule and Article 280 the Finance Commission."
+  },
+  {
+   "id": "p3_q75",
+   "no": 75,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "The Quit India Movement was launched in:",
+   "options": [
+    "1942",
+    "1930",
+    "1920",
+    "1947"
+   ],
+   "correctAnswer": 0,
+   "explanation": "It was launched on 8 August 1942 at the Bombay session, with the call 'Do or Die'."
+  },
+  {
+   "id": "p3_q76",
+   "no": 76,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "India and Sri Lanka are separated by the:",
+   "options": [
+    "Strait of Malacca",
+    "Palk Strait",
+    "Ten Degree Channel",
+    "Bab-el-Mandeb"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The Palk Strait lies between Tamil Nadu and northern Sri Lanka."
+  },
+  {
+   "id": "p3_q77",
+   "no": 77,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "Which is the largest freshwater lake in India?",
+   "options": [
+    "Wular Lake",
+    "Chilika Lake",
+    "Dal Lake",
+    "Loktak Lake"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Wular (J&K) is the largest freshwater lake. Chilika is a brackish-water lagoon."
+  },
+  {
+   "id": "p3_q78",
+   "no": 78,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "National Sports Day (29 August) is celebrated on the birth anniversary of:",
+   "options": [
+    "Milkha Singh",
+    "Sachin Tendulkar",
+    "Major Dhyan Chand",
+    "P. T. Usha"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Dhyan Chand, the hockey legend, was born on 29 August 1905."
+  },
+  {
+   "id": "p3_q79",
+   "no": 79,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "The Goods and Services Tax (GST) was implemented in India from:",
+   "options": [
+    "1 April 2017",
+    "8 November 2016",
+    "1 July 2017",
+    "1 January 2018"
+   ],
+   "correctAnswer": 2,
+   "explanation": "GST was introduced by the 101st Constitutional Amendment and launched on 1 July 2017."
+  },
+  {
+   "id": "p3_q80",
+   "no": 80,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "The headquarters of the World Health Organization (WHO) is in:",
+   "options": [
+    "New York",
+    "Paris",
+    "Vienna",
+    "Geneva"
+   ],
+   "correctAnswer": 3,
+   "explanation": "WHO was established on 7 April 1948, now observed as World Health Day."
+  },
+  {
+   "id": "p3_q81",
+   "no": 81,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "Pipe A can fill a tank in 10 hours and pipe B can empty it in 15 hours. If both are opened together, the empty tank will be filled in:",
+   "options": [
+    "25 hours",
+    "30 hours",
+    "6 hours",
+    "12 hours"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Net rate = 1/10 − 1/15 = 1/30 per hour, so it takes 30 hours."
+  },
+  {
+   "id": "p3_q82",
+   "no": 82,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "Two successive discounts of 20% and 10% are equivalent to a single discount of:",
+   "options": [
+    "30%",
+    "25%",
+    "32%",
+    "28%"
+   ],
+   "correctAnswer": 3,
+   "explanation": "0.8 × 0.9 = 0.72, so the single discount is 28%."
+  },
+  {
+   "id": "p3_q83",
+   "no": 83,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "The speed of a boat in still water is 15 km/h and the speed of the stream is 3 km/h. How long will the boat take to travel 36 km downstream?",
+   "options": [
+    "2 hours",
+    "3 hours",
+    "2.5 hours",
+    "1.5 hours"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Downstream speed = 18 km/h, and 36/18 = 2 hours."
+  },
+  {
+   "id": "p3_q84",
+   "no": 84,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "A father is three times as old as his son. After 15 years he will be twice as old as his son. What is the father's present age?",
+   "options": [
+    "30 years",
+    "45 years",
+    "54 years",
+    "60 years"
+   ],
+   "correctAnswer": 1,
+   "explanation": "3S + 15 = 2(S + 15), so S = 15 and F = 45."
+  },
+  {
+   "id": "p3_q85",
+   "no": 85,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "What is the LCM of 12, 18 and 30?",
+   "options": [
+    "180",
+    "90",
+    "360",
+    "60"
+   ],
+   "correctAnswer": 0,
+   "explanation": "12 = 2²·3, 18 = 2·3², 30 = 2·3·5, so LCM = 2²·3²·5 = 180."
+  },
+  {
+   "id": "p3_q86",
+   "no": 86,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "Find the next number: 2, 6, 12, 20, 30, ?",
+   "options": [
+    "42",
+    "40",
+    "36",
+    "44"
+   ],
+   "correctAnswer": 0,
+   "explanation": "n(n + 1): 1·2, 2·3, 3·4, 4·5, 5·6, 6·7 = 42."
+  },
+  {
+   "id": "p3_q87",
+   "no": 87,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "If TUBE is coded as UVCF, how is FILM coded?",
+   "options": [
+    "GJMN",
+    "GHKL",
+    "EHKL",
+    "GJNM"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Each letter moves one step forward: F→G, I→J, L→M, M→N."
+  },
+  {
+   "id": "p3_q88",
+   "no": 88,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "A is the sister of B. C is the mother of B. D is the father of C. How is A related to D?",
+   "options": [
+    "Daughter",
+    "Niece",
+    "Granddaughter",
+    "Grandmother"
+   ],
+   "correctAnswer": 2,
+   "explanation": "A is C's daughter and C is D's daughter, so A is D's granddaughter."
+  },
+  {
+   "id": "p3_q89",
+   "no": 89,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "A man is facing North. He turns 90° clockwise, then 180°, and then 90° anticlockwise. Which direction is he facing now?",
+   "options": [
+    "South",
+    "North",
+    "East",
+    "West"
+   ],
+   "correctAnswer": 0,
+   "explanation": "North → (90° clockwise) East → (180°) West → (90° anticlockwise) South."
+  },
+  {
+   "id": "p3_q90",
+   "no": 90,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "Statements: All radiographers are technicians. Some technicians are doctors. Conclusions: I. Some radiographers are doctors.  II. All technicians are radiographers.",
+   "options": [
+    "Only conclusion I follows",
+    "Only conclusion II follows",
+    "Both I and II follow",
+    "Neither I nor II follows"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The doctors may lie among technicians who are not radiographers, so I does not follow. 'All radiographers are technicians' cannot be reversed, so II does not follow."
+  },
+  {
+   "id": "p3_q91",
+   "no": 91,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "The escape velocity from the surface of the Earth is about:",
+   "options": [
+    "7.9 km/s",
+    "3 km/s",
+    "42 km/s",
+    "11.2 km/s"
+   ],
+   "correctAnswer": 3,
+   "explanation": "7.9 km/s is the orbital velocity near the Earth's surface; 11.2 km/s is the escape velocity."
+  },
+  {
+   "id": "p3_q92",
+   "no": 92,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Isotopes of an element have:",
+   "options": [
+    "The same mass number but different atomic numbers",
+    "Different numbers of protons",
+    "The same atomic number but different mass numbers",
+    "The same number of neutrons"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Isotopes differ only in the number of neutrons, e.g., C-12 and C-14, or Tc-99 and Tc-99m (an isomer)."
+  },
+  {
+   "id": "p3_q93",
+   "no": 93,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Which blood cells help in the clotting of blood?",
+   "options": [
+    "Erythrocytes",
+    "Platelets (thrombocytes)",
+    "Lymphocytes",
+    "Neutrophils"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Platelets form a plug and release clotting factors."
+  },
+  {
+   "id": "p3_q94",
+   "no": 94,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Which gas is released during photosynthesis?",
+   "options": [
+    "Carbon dioxide",
+    "Oxygen",
+    "Nitrogen",
+    "Hydrogen"
+   ],
+   "correctAnswer": 1,
+   "explanation": "6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂ (in sunlight, with chlorophyll)."
+  },
+  {
+   "id": "p3_q95",
+   "no": 95,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "What is the chemical formula of baking soda?",
+   "options": [
+    "Na₂CO₃",
+    "NaOH",
+    "CaCO₃",
+    "NaHCO₃"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Baking soda is sodium bicarbonate; washing soda is Na₂CO₃·10H₂O."
+  },
+  {
+   "id": "p3_q96",
+   "no": 96,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Two resistors of 6 Ω each are connected in parallel. What is the equivalent resistance?",
+   "options": [
+    "3 Ω",
+    "12 Ω",
+    "6 Ω",
+    "1.5 Ω"
+   ],
+   "correctAnswer": 0,
+   "explanation": "1/R = 1/6 + 1/6 = 1/3, so R = 3 Ω."
+  },
+  {
+   "id": "p3_q97",
+   "no": 97,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "How many chromosomes are present in a normal human somatic cell?",
+   "options": [
+    "46",
+    "23",
+    "44",
+    "48"
+   ],
+   "correctAnswer": 0,
+   "explanation": "23 pairs: 22 pairs of autosomes and 1 pair of sex chromosomes."
+  },
+  {
+   "id": "p3_q98",
+   "no": 98,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Which type of mirror is used as a rear-view mirror in vehicles?",
+   "options": [
+    "Concave mirror",
+    "Plane mirror",
+    "Convex mirror",
+    "Parabolic concave mirror"
+   ],
+   "correctAnswer": 2,
+   "explanation": "A convex mirror gives an erect, diminished image with a wide field of view."
+  },
+  {
+   "id": "p3_q99",
+   "no": 99,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Which inert gas is filled in electric bulbs to prolong the life of the filament?",
+   "options": [
+    "Neon",
+    "Helium",
+    "Oxygen",
+    "Argon"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Argon reduces evaporation of the tungsten filament and does not react with it."
+  },
+  {
+   "id": "p3_q100",
+   "no": 100,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Which enzyme present in saliva begins the digestion of starch?",
+   "options": [
+    "Pepsin",
+    "Trypsin",
+    "Lipase",
+    "Salivary amylase (ptyalin)"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Ptyalin converts starch into maltose in the mouth."
+  }
+ ]
+}

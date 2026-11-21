@@ -1,0 +1,1686 @@
+{
+ "id": 1,
+ "name": "Practice Paper 1",
+ "subtitle": "RRB Radiographer / X-Ray Technician — Full CBT Mock",
+ "code": "RRB/PARAMED/RAD/PP-01",
+ "totalQuestions": 100,
+ "durationMinutes": 90,
+ "markPerCorrect": 1,
+ "negativeMark": 0.3333333333333333,
+ "subsections": [
+  {
+   "id": "a1",
+   "section": "A",
+   "title": "Human Anatomy & Physiology",
+   "start": 1,
+   "end": 12,
+   "count": 12
+  },
+  {
+   "id": "a2",
+   "section": "A",
+   "title": "Radiation Physics & X-ray Equipment",
+   "start": 13,
+   "end": 28,
+   "count": 16
+  },
+  {
+   "id": "a3",
+   "section": "A",
+   "title": "Clinical Radiography — Positioning",
+   "start": 29,
+   "end": 44,
+   "count": 16
+  },
+  {
+   "id": "a4",
+   "section": "A",
+   "title": "Image Processing, Darkroom & Image Quality",
+   "start": 45,
+   "end": 52,
+   "count": 8
+  },
+  {
+   "id": "a5",
+   "section": "A",
+   "title": "Radiation Protection, Contrast & Special Procedures",
+   "start": 53,
+   "end": 62,
+   "count": 10
+  },
+  {
+   "id": "a6",
+   "section": "A",
+   "title": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "start": 63,
+   "end": 70,
+   "count": 8
+  },
+  {
+   "id": "b1",
+   "section": "B",
+   "title": "General Awareness",
+   "start": 71,
+   "end": 80,
+   "count": 10
+  },
+  {
+   "id": "b2",
+   "section": "B",
+   "title": "General Arithmetic, Intelligence & Reasoning",
+   "start": 81,
+   "end": 90,
+   "count": 10
+  },
+  {
+   "id": "b3",
+   "section": "B",
+   "title": "General Science",
+   "start": 91,
+   "end": 100,
+   "count": 10
+  }
+ ],
+ "questions": [
+  {
+   "id": "p1_q1",
+   "no": 1,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "How many bones are present in the normal adult human skeleton?",
+   "options": [
+    "212",
+    "206",
+    "300",
+    "196"
+   ],
+   "correctAnswer": 1,
+   "explanation": "An adult skeleton has 206 bones; a newborn has about 270–300 that fuse during growth."
+  },
+  {
+   "id": "p1_q2",
+   "no": 2,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which is the largest sesamoid bone of the human body?",
+   "options": [
+    "Pisiform",
+    "Fabella",
+    "Hyoid",
+    "Patella"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The patella develops within the quadriceps tendon and is the largest sesamoid bone."
+  },
+  {
+   "id": "p1_q3",
+   "no": 3,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "How many vertebrae make up the cervical spine?",
+   "options": [
+    "5",
+    "8",
+    "7",
+    "12"
+   ],
+   "correctAnswer": 2,
+   "explanation": "There are 7 cervical, 12 thoracic, 5 lumbar vertebrae, plus the sacrum and coccyx."
+  },
+  {
+   "id": "p1_q4",
+   "no": 4,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "The 'atlas' is the name given to the:",
+   "options": [
+    "Second cervical vertebra",
+    "First thoracic vertebra",
+    "First cervical vertebra",
+    "Fifth lumbar vertebra"
+   ],
+   "correctAnswer": 2,
+   "explanation": "C1 is the atlas (supports the skull); C2 is the axis, which carries the dens."
+  },
+  {
+   "id": "p1_q5",
+   "no": 5,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "The sella turcica, which houses the pituitary gland, is a part of which bone?",
+   "options": [
+    "Sphenoid",
+    "Ethmoid",
+    "Temporal",
+    "Occipital"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The sella turcica is a saddle-shaped depression on the body of the sphenoid bone."
+  },
+  {
+   "id": "p1_q6",
+   "no": 6,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "What is the structural and functional unit of the kidney?",
+   "options": [
+    "Neuron",
+    "Alveolus",
+    "Nephron",
+    "Hepatic lobule"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Each kidney contains about one million nephrons, which filter blood and form urine."
+  },
+  {
+   "id": "p1_q7",
+   "no": 7,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "How many lobes does the right lung have?",
+   "options": [
+    "3",
+    "2",
+    "4",
+    "5"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The right lung has upper, middle and lower lobes; the left lung has two (upper and lower)."
+  },
+  {
+   "id": "p1_q8",
+   "no": 8,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which is the longest and strongest bone of the human body?",
+   "options": [
+    "Femur",
+    "Tibia",
+    "Humerus",
+    "Fibula"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The femur (thigh bone) is the longest and strongest bone."
+  },
+  {
+   "id": "p1_q9",
+   "no": 9,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which is the longest part of the small intestine?",
+   "options": [
+    "Ileum",
+    "Jejunum",
+    "Duodenum",
+    "Caecum"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The ileum forms roughly the distal three-fifths of the small intestine; the duodenum is the shortest part."
+  },
+  {
+   "id": "p1_q10",
+   "no": 10,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which valve lies between the left atrium and the left ventricle?",
+   "options": [
+    "Tricuspid valve",
+    "Mitral (bicuspid) valve",
+    "Pulmonary valve",
+    "Aortic valve"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The mitral valve has two cusps and guards the left atrioventricular opening."
+  },
+  {
+   "id": "p1_q11",
+   "no": 11,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "The floor of the 'anatomical snuffbox' is formed mainly by which carpal bone?",
+   "options": [
+    "Lunate",
+    "Capitate",
+    "Scaphoid",
+    "Pisiform"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Tenderness in the anatomical snuffbox suggests a scaphoid fracture, which needs dedicated scaphoid views."
+  },
+  {
+   "id": "p1_q12",
+   "no": 12,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "What is the normal lifespan of a red blood cell?",
+   "options": [
+    "About 30 days",
+    "About 120 days",
+    "About 60 days",
+    "About 1 year"
+   ],
+   "correctAnswer": 1,
+   "explanation": "RBCs survive about 120 days and are then removed mainly by the spleen."
+  },
+  {
+   "id": "p1_q13",
+   "no": 13,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "In which year did Wilhelm Conrad Roentgen discover X-rays?",
+   "options": [
+    "1896",
+    "1885",
+    "1895",
+    "1901"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Roentgen discovered X-rays on 8 November 1895 and received the first Nobel Prize in Physics in 1901."
+  },
+  {
+   "id": "p1_q14",
+   "no": 14,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "The target of the anode in a general diagnostic X-ray tube is usually made of:",
+   "options": [
+    "Copper",
+    "Aluminium",
+    "Lead",
+    "Tungsten"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Tungsten has a high atomic number (74) and a very high melting point (3410 °C), so it is efficient and heat-resistant."
+  },
+  {
+   "id": "p1_q15",
+   "no": 15,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "Approximately what percentage of the electron energy at the target is converted into X-rays in a diagnostic tube?",
+   "options": [
+    "About 25%",
+    "About 50%",
+    "About 99%",
+    "About 1%"
+   ],
+   "correctAnswer": 3,
+   "explanation": "About 99% of the electron energy becomes heat; only about 1% becomes X-rays."
+  },
+  {
+   "id": "p1_q16",
+   "no": 16,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "Because of the anode heel effect, X-ray intensity is greater on the:",
+   "options": [
+    "Anode side of the beam",
+    "Cathode side of the beam",
+    "Centre only, falling equally on both sides",
+    "Side nearest the collimator lamp"
+   ],
+   "correctAnswer": 1,
+   "explanation": "X-rays leaving towards the anode side pass through more target material and are absorbed, so the cathode side is more intense. Place the thicker part of the body under the cathode."
+  },
+  {
+   "id": "p1_q17",
+   "no": 17,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "What is the speed of X-rays in a vacuum?",
+   "options": [
+    "3 × 10⁶ m/s",
+    "3 × 10⁵ m/s",
+    "3 × 10⁸ m/s",
+    "1.5 × 10⁸ m/s"
+   ],
+   "correctAnswer": 2,
+   "explanation": "X-rays are electromagnetic waves and travel at the speed of light."
+  },
+  {
+   "id": "p1_q18",
+   "no": 18,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "According to the inverse square law, if the source-to-image distance is doubled, the intensity becomes:",
+   "options": [
+    "One-half",
+    "Double",
+    "One-fourth",
+    "Four times"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Intensity ∝ 1/d². Doubling d reduces intensity to (1/2)² = 1/4."
+  },
+  {
+   "id": "p1_q19",
+   "no": 19,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "A radiograph is correctly exposed at 20 mAs at 100 cm FFD. To keep the same density at 200 cm FFD, the new mAs should be:",
+   "options": [
+    "40 mAs",
+    "80 mAs",
+    "20 mAs",
+    "10 mAs"
+   ],
+   "correctAnswer": 1,
+   "explanation": "New mAs = old mAs × (new d / old d)² = 20 × (200/100)² = 80 mAs."
+  },
+  {
+   "id": "p1_q20",
+   "no": 20,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "Kilovoltage (kVp) chiefly controls the:",
+   "options": [
+    "Number of electrons emitted by the filament only",
+    "Size of the focal spot",
+    "Penetrating power (quality) of the beam",
+    "Speed of anode rotation"
+   ],
+   "correctAnswer": 2,
+   "explanation": "kVp determines photon energy and therefore penetration and radiographic contrast; mAs controls quantity."
+  },
+  {
+   "id": "p1_q21",
+   "no": 21,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "The emission of electrons from the heated filament of an X-ray tube is called:",
+   "options": [
+    "Photoelectric emission",
+    "Field emission",
+    "Thermionic emission",
+    "Pair production"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Heating the tungsten filament gives electrons enough energy to escape its surface — thermionic emission."
+  },
+  {
+   "id": "p1_q22",
+   "no": 22,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "According to the line focus principle, the effective focal spot is smaller than the actual focal spot because of the:",
+   "options": [
+    "Filament current",
+    "Angle of the anode target",
+    "Speed of anode rotation",
+    "Added filtration"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The target is angled (typically 7°–20°), so the focal spot projected towards the patient is foreshortened."
+  },
+  {
+   "id": "p1_q23",
+   "no": 23,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "The minimum total filtration recommended for an X-ray tube operating above 70 kVp is:",
+   "options": [
+    "2.5 mm aluminium equivalent",
+    "0.5 mm aluminium equivalent",
+    "1.0 mm aluminium equivalent",
+    "5 mm lead"
+   ],
+   "correctAnswer": 0,
+   "explanation": "At least 2.5 mm Al total filtration (inherent + added) removes soft, low-energy photons that only add to skin dose."
+  },
+  {
+   "id": "p1_q24",
+   "no": 24,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "At diagnostic energies, scattered radiation in soft tissue is produced mainly by:",
+   "options": [
+    "Compton scattering",
+    "Photoelectric absorption",
+    "Pair production",
+    "Photodisintegration"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Compton scatter dominates in soft tissue at most diagnostic kVp values and is the main source of scatter fog and staff dose."
+  },
+  {
+   "id": "p1_q25",
+   "no": 25,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "The minimum photon energy needed for pair production is:",
+   "options": [
+    "0.511 keV",
+    "1.02 MeV",
+    "100 keV",
+    "10 keV"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Two electron rest masses (2 × 0.511 MeV) are needed, so pair production does not occur at diagnostic energies."
+  },
+  {
+   "id": "p1_q26",
+   "no": 26,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "Grid ratio is defined as:",
+   "options": [
+    "Number of lead strips per cm",
+    "Distance between strips ÷ height of strips",
+    "Height of the lead strips ÷ distance between the strips",
+    "Thickness of lead ÷ thickness of interspace"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Grid ratio = h/D. A higher ratio removes more scatter but needs more exposure and accurate centring."
+  },
+  {
+   "id": "p1_q27",
+   "no": 27,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "What is the SI unit of absorbed dose?",
+   "options": [
+    "Sievert (Sv)",
+    "Becquerel (Bq)",
+    "Roentgen (R)",
+    "Gray (Gy)"
+   ],
+   "correctAnswer": 3,
+   "explanation": "1 Gy = 1 joule of energy absorbed per kilogram. The sievert is for equivalent/effective dose."
+  },
+  {
+   "id": "p1_q28",
+   "no": 28,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "Characteristic X-rays are produced when:",
+   "options": [
+    "An electron is slowed down by the attraction of the nucleus",
+    "A photon is completely absorbed by a free electron",
+    "An electron and a positron annihilate each other",
+    "An incident electron ejects an inner-shell electron and an outer-shell electron fills the vacancy"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The energy difference between the shells is released as a characteristic photon. Slowing near the nucleus gives Bremsstrahlung."
+  },
+  {
+   "id": "p1_q29",
+   "no": 29,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "What is the standard focus-to-film distance (FFD) for a routine PA chest radiograph?",
+   "options": [
+    "100 cm (40 inches)",
+    "90 cm (36 inches)",
+    "60 cm (24 inches)",
+    "180 cm (72 inches)"
+   ],
+   "correctAnswer": 3,
+   "explanation": "A long FFD of 180 cm reduces magnification of the heart and gives a sharper image."
+  },
+  {
+   "id": "p1_q30",
+   "no": 30,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "A routine PA chest radiograph is exposed at:",
+   "options": [
+    "The end of full expiration",
+    "Normal quiet breathing",
+    "Valsalva manoeuvre",
+    "The end of full inspiration"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Full inspiration lowers the diaphragm and shows about 10 posterior ribs above it. Expiration films are taken only for special cases such as pneumothorax."
+  },
+  {
+   "id": "p1_q31",
+   "no": 31,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "The occipitomental (Waters) view best demonstrates the:",
+   "options": [
+    "Sphenoid sinus",
+    "Mastoid air cells",
+    "Sella turcica",
+    "Maxillary sinuses"
+   ],
+   "correctAnswer": 3,
+   "explanation": "In Waters view the petrous ridges are projected below the maxillary sinuses, so the antra are seen clearly."
+  },
+  {
+   "id": "p1_q32",
+   "no": 32,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "The occipitofrontal 15° (Caldwell) view mainly demonstrates the:",
+   "options": [
+    "Maxillary sinuses",
+    "Frontal and ethmoid sinuses",
+    "Mastoid air cells",
+    "Zygomatic arches"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Caldwell projects the petrous ridges into the lower third of the orbits, showing the frontal sinuses and anterior ethmoid cells."
+  },
+  {
+   "id": "p1_q33",
+   "no": 33,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "The AP axial (Towne's) projection with 30° caudal angulation demonstrates the:",
+   "options": [
+    "Frontal bone",
+    "Nasal bones",
+    "Occipital bone and foramen magnum",
+    "Maxillary sinuses"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Towne's view shows the occipital bone, the petrous ridges symmetrically and the dorsum sellae within the foramen magnum."
+  },
+  {
+   "id": "p1_q34",
+   "no": 34,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "The submentovertical (SMV) projection is mainly used to demonstrate the:",
+   "options": [
+    "Vertex of the skull",
+    "Base of the skull",
+    "Nasal bones",
+    "Mandibular symphysis only"
+   ],
+   "correctAnswer": 1,
+   "explanation": "SMV (full basal view) shows the skull base, foramina, sphenoid sinus and zygomatic arches."
+  },
+  {
+   "id": "p1_q35",
+   "no": 35,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "The line joining the outer canthus of the eye to the centre of the external auditory meatus is the:",
+   "options": [
+    "Infraorbitomeatal line",
+    "Interpupillary line",
+    "Glabellomeatal line",
+    "Orbitomeatal line"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The orbitomeatal line (radiographic baseline) is the reference used for most skull projections."
+  },
+  {
+   "id": "p1_q36",
+   "no": 36,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "Which projection is added to show a suspected scaphoid fracture?",
+   "options": [
+    "PA wrist with radial deviation",
+    "PA wrist with ulnar deviation",
+    "Lateral wrist only",
+    "AP forearm"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Ulnar deviation stretches the scaphoid out from behind the other carpals, so the waist is seen without foreshortening."
+  },
+  {
+   "id": "p1_q37",
+   "no": 37,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "The AP lordotic chest projection is mainly used to demonstrate the:",
+   "options": [
+    "Costophrenic angles",
+    "Lung apices",
+    "Heart size",
+    "Diaphragm movement"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The lordotic position projects the clavicles above the apices, showing apical lesions such as TB."
+  },
+  {
+   "id": "p1_q38",
+   "no": 38,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "To show a small right-sided pleural effusion, the patient is positioned in the:",
+   "options": [
+    "Left lateral decubitus position",
+    "Supine position",
+    "Right lateral decubitus position",
+    "Prone position"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Fluid gravitates to the dependent side, so the affected side is placed down. For a pneumothorax the affected side is placed up."
+  },
+  {
+   "id": "p1_q39",
+   "no": 39,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "The AP open-mouth projection of the cervical spine demonstrates:",
+   "options": [
+    "C7–T1 junction",
+    "Intervertebral foramina",
+    "Lumbosacral junction",
+    "Atlas, axis and the dens (C1–C2)"
+   ],
+   "correctAnswer": 3,
+   "explanation": "With the mouth open, the teeth and mandible are moved away from C1–C2, showing the dens."
+  },
+  {
+   "id": "p1_q40",
+   "no": 40,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "The 'Swimmer's' (Twining) projection is used to demonstrate the:",
+   "options": [
+    "Atlanto-occipital joint",
+    "Lumbosacral junction",
+    "Cervicothoracic junction (C7–T1)",
+    "Sacroiliac joints"
+   ],
+   "correctAnswer": 2,
+   "explanation": "One arm is raised and the other depressed so that the shoulders do not hide C7–T1 on the lateral view."
+  },
+  {
+   "id": "p1_q41",
+   "no": 41,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "In the oblique lumbar spine projection, the 'neck' of the Scottie dog represents the:",
+   "options": [
+    "Transverse process",
+    "Spinous process",
+    "Pars interarticularis",
+    "Pedicle"
+   ],
+   "correctAnswer": 2,
+   "explanation": "A break across the neck of the Scottie dog indicates spondylolysis (pars defect)."
+  },
+  {
+   "id": "p1_q42",
+   "no": 42,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "For a suspected fracture of the neck of the femur, the lateral projection of choice is the:",
+   "options": [
+    "Frog-leg lateral",
+    "Lateral with the leg abducted and externally rotated",
+    "Von Rosen view",
+    "Horizontal-beam (cross-table) lateral"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The injured limb is not moved. The frog-leg lateral needs hip abduction and is contraindicated in trauma."
+  },
+  {
+   "id": "p1_q43",
+   "no": 43,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "A patient who cannot stand is suspected of having a pneumoperitoneum. The best projection is the:",
+   "options": [
+    "Right lateral decubitus abdomen",
+    "Prone abdomen",
+    "Left lateral decubitus abdomen",
+    "Supine AP abdomen"
+   ],
+   "correctAnswer": 2,
+   "explanation": "With the left side down, free air rises over the liver, where it is easily seen against the homogeneous liver shadow."
+  },
+  {
+   "id": "p1_q44",
+   "no": 44,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "For an AP projection of the knee, the central ray is directed:",
+   "options": [
+    "To the upper border of the patella",
+    "1.25 cm below the apex of the patella",
+    "To the tibial tuberosity",
+    "5 cm above the patella"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Centring about 1.25 cm (½ inch) below the patellar apex places the central ray through the knee joint space."
+  },
+  {
+   "id": "p1_q45",
+   "no": 45,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "Which developing agent acts slowly and produces high contrast (dense black areas)?",
+   "options": [
+    "Hydroquinone",
+    "Metol",
+    "Phenidone",
+    "Potassium bromide"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Hydroquinone builds up the dense black tones. Metol/Phenidone act quickly and bring out grey detail."
+  },
+  {
+   "id": "p1_q46",
+   "no": 46,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "The clearing (fixing) agent in an X-ray fixer solution is:",
+   "options": [
+    "Sodium or ammonium thiosulphate",
+    "Sodium carbonate",
+    "Potassium bromide",
+    "Sodium sulphite"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Thiosulphate (hypo) dissolves the unexposed, undeveloped silver halide from the emulsion."
+  },
+  {
+   "id": "p1_q47",
+   "no": 47,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "Which safelight should be used when handling green-sensitive (orthochromatic) film?",
+   "options": [
+    "Red safelight",
+    "Amber safelight",
+    "Green safelight",
+    "Blue safelight"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Orthochromatic film is sensitive to blue and green light, so a red filter (e.g., GBX-2) is used. Amber is safe only for blue-sensitive film."
+  },
+  {
+   "id": "p1_q48",
+   "no": 48,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "Which of the following is a rare-earth intensifying screen phosphor?",
+   "options": [
+    "Calcium tungstate",
+    "Zinc sulphide",
+    "Gadolinium oxysulphide",
+    "Lead sulphate"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Rare-earth phosphors (gadolinium, lanthanum) convert X-rays to light more efficiently than calcium tungstate, so less patient dose is needed."
+  },
+  {
+   "id": "p1_q49",
+   "no": 49,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "The base of a modern radiographic film is made of:",
+   "options": [
+    "Polyester",
+    "Cellulose nitrate",
+    "Glass",
+    "Paper"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Polyester is strong, stable and non-flammable. Cellulose nitrate was flammable and is no longer used."
+  },
+  {
+   "id": "p1_q50",
+   "no": 50,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "Geometric unsharpness (penumbra) is reduced by:",
+   "options": [
+    "A larger focal spot",
+    "A larger object-to-film distance",
+    "A smaller focal spot and a smaller object-to-film distance",
+    "A shorter focus-to-film distance"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Unsharpness = focal spot × OFD / FOD. Use a small focal spot, keep the part close to the film and use a long FFD."
+  },
+  {
+   "id": "p1_q51",
+   "no": 51,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "In computed radiography (CR), the imaging plate is coated with:",
+   "options": [
+    "Amorphous selenium",
+    "Silver bromide emulsion",
+    "Photostimulable phosphor (barium fluorohalide)",
+    "Lead oxide"
+   ],
+   "correctAnswer": 2,
+   "explanation": "The BaFBr:Eu phosphor stores the latent image, which is released as light when a laser scans the plate."
+  },
+  {
+   "id": "p1_q52",
+   "no": 52,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "DICOM, the standard used in PACS, stands for:",
+   "options": [
+    "Digital Image Compression of Medical files",
+    "Digital Imaging and Communications in Medicine",
+    "Data Integration for Computerised Optical Media",
+    "Digital Investigation and Computed Organ Mapping"
+   ],
+   "correctAnswer": 1,
+   "explanation": "DICOM is the international standard for storing and transmitting medical images."
+  },
+  {
+   "id": "p1_q53",
+   "no": 53,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "As per AERB, the effective dose limit for radiation workers is:",
+   "options": [
+    "50 mSv every year with no averaging",
+    "20 mSv per year averaged over 5 years (not more than 30 mSv in any single year)",
+    "1 mSv per year",
+    "100 mSv per year"
+   ],
+   "correctAnswer": 1,
+   "explanation": "AERB limits occupational effective dose to 20 mSv/yr averaged over 5 consecutive years, with a maximum of 30 mSv in any one year."
+  },
+  {
+   "id": "p1_q54",
+   "no": 54,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "What is the annual effective dose limit for members of the public?",
+   "options": [
+    "5 mSv",
+    "1 mSv",
+    "20 mSv",
+    "0.1 mSv"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The public dose limit is 1 mSv per year."
+  },
+  {
+   "id": "p1_q55",
+   "no": 55,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "The TLD badges issued to radiation workers in India (BARC personnel monitoring) use which phosphor?",
+   "options": [
+    "Sodium iodide",
+    "Silver bromide",
+    "Calcium tungstate",
+    "CaSO₄:Dy"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The Indian TLD badge holds three CaSO₄:Dy–Teflon discs under different filters."
+  },
+  {
+   "id": "p1_q56",
+   "no": 56,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "Lead aprons used in diagnostic radiology usually provide a lead equivalence of:",
+   "options": [
+    "0.25–0.5 mm Pb",
+    "2–3 mm Pb",
+    "5 mm Pb",
+    "0.01 mm Pb"
+   ],
+   "correctAnswer": 0,
+   "explanation": "A minimum of 0.25 mm Pb is required, and 0.35–0.5 mm Pb is commonly used. This stops most scattered radiation."
+  },
+  {
+   "id": "p1_q57",
+   "no": 57,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "The '10-day rule' in radiography applies to:",
+   "options": [
+    "Patients 10 days after surgery",
+    "Women of reproductive age, during the 10 days after the onset of menstruation",
+    "Children under 10 years",
+    "Repeating an X-ray within 10 days"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Non-urgent abdominal/pelvic exposures are scheduled in the first 10 days of the cycle, when pregnancy is unlikely."
+  },
+  {
+   "id": "p1_q58",
+   "no": 58,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "Which contrast agent is used for a barium meal?",
+   "options": [
+    "Barium chloride",
+    "Barium carbonate",
+    "Barium sulphate",
+    "Barium sulphide"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Barium sulphate is insoluble and inert. Soluble barium salts such as the chloride are poisonous."
+  },
+  {
+   "id": "p1_q59",
+   "no": 59,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "Hysterosalpingography (HSG) is the radiographic examination of the:",
+   "options": [
+    "Uterus and fallopian tubes",
+    "Urinary bladder and urethra",
+    "Salivary glands",
+    "Spinal canal"
+   ],
+   "correctAnswer": 0,
+   "explanation": "HSG shows uterine cavity shape and tubal patency in infertility work-up."
+  },
+  {
+   "id": "p1_q60",
+   "no": 60,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "Which type of contrast medium is used for myelography?",
+   "options": [
+    "Barium sulphate",
+    "Non-ionic water-soluble iodinated contrast",
+    "High-osmolar ionic iodinated contrast",
+    "Air only"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Only non-ionic agents approved for intrathecal use (e.g., iohexol) are used; ionic agents are neurotoxic intrathecally."
+  },
+  {
+   "id": "p1_q61",
+   "no": 61,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "The first drug given for a severe anaphylactic reaction to contrast media is:",
+   "options": [
+    "Adrenaline (epinephrine) intramuscularly",
+    "Atropine",
+    "Furosemide",
+    "Paracetamol"
+   ],
+   "correctAnswer": 0,
+   "explanation": "IM adrenaline 1:1000 (0.5 mg in adults) is first-line, with oxygen, IV fluids and calling the resuscitation team."
+  },
+  {
+   "id": "p1_q62",
+   "no": 62,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "The Seldinger technique is used for:",
+   "options": [
+    "Percutaneous catheterisation of vessels",
+    "Barium swallow",
+    "Pleural tapping",
+    "Lumbar puncture"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Needle puncture → guidewire → needle removed → catheter over the wire. This is the basis of angiography."
+  },
+  {
+   "id": "p1_q63",
+   "no": 63,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "What is the CT number (Hounsfield unit) of water?",
+   "options": [
+    "−1000 HU",
+    "0 HU",
+    "+1000 HU",
+    "+100 HU"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Water is defined as 0 HU and air as −1000 HU; dense cortical bone is about +1000 HU."
+  },
+  {
+   "id": "p1_q64",
+   "no": 64,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "The first clinical CT scanner was developed by:",
+   "options": [
+    "Wilhelm Roentgen",
+    "Sir Godfrey Hounsfield",
+    "Raymond Damadian",
+    "Henri Becquerel"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Hounsfield built the EMI scanner in 1971–72 and shared the 1979 Nobel Prize with Allan Cormack."
+  },
+  {
+   "id": "p1_q65",
+   "no": 65,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "Clinical MR imaging is based on signals from the nucleus of:",
+   "options": [
+    "Hydrogen (protons)",
+    "Carbon-12",
+    "Oxygen-16",
+    "Helium"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Hydrogen is plentiful in water and fat, and its single proton gives a strong MR signal."
+  },
+  {
+   "id": "p1_q66",
+   "no": 66,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "Which of the following is a classical contraindication to MRI?",
+   "options": [
+    "Plaster of Paris cast",
+    "Amalgam dental fillings",
+    "Wearing cotton clothing",
+    "Conventional (non-MR-conditional) cardiac pacemaker"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The strong magnetic and RF fields can cause a non-conditional pacemaker to malfunction, move or heat up."
+  },
+  {
+   "id": "p1_q67",
+   "no": 67,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "Diagnostic ultrasound commonly uses a frequency range of:",
+   "options": [
+    "20 Hz–20 kHz",
+    "1–2 GHz",
+    "50–100 kHz",
+    "2–15 MHz"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Low frequencies (2–5 MHz) penetrate deeper; high frequencies (7–15 MHz) give better resolution for superficial parts."
+  },
+  {
+   "id": "p1_q68",
+   "no": 68,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "Which radionuclide is the most widely used in diagnostic nuclear medicine?",
+   "options": [
+    "Iodine-131",
+    "Cobalt-60",
+    "Technetium-99m",
+    "Caesium-137"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Tc-99m has a 6-hour half-life and emits 140 keV gamma rays, which suits gamma cameras."
+  },
+  {
+   "id": "p1_q69",
+   "no": 69,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "The anode target commonly used in film-screen mammography is:",
+   "options": [
+    "Tungsten",
+    "Molybdenum",
+    "Copper",
+    "Lead"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Molybdenum's characteristic X-rays (17–19 keV) give high contrast for soft breast tissue."
+  },
+  {
+   "id": "p1_q70",
+   "no": 70,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "During adult CPR, chest compressions should be given at a rate of:",
+   "options": [
+    "40–60 per minute",
+    "60–80 per minute",
+    "150–180 per minute",
+    "100–120 per minute"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Current guidelines: 100–120 compressions/min at a depth of 5–6 cm, with full chest recoil."
+  },
+  {
+   "id": "p1_q71",
+   "no": 71,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "Where is the headquarters of the Northern Railway zone?",
+   "options": [
+    "New Delhi (Baroda House)",
+    "Lucknow",
+    "Prayagraj",
+    "Jaipur"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Northern Railway is headquartered at Baroda House, New Delhi."
+  },
+  {
+   "id": "p1_q72",
+   "no": 72,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "India's first passenger train ran on 16 April 1853 between:",
+   "options": [
+    "Howrah and Hooghly",
+    "Madras and Arcot",
+    "Bori Bunder (Bombay) and Thane",
+    "Delhi and Agra"
+   ],
+   "correctAnswer": 2,
+   "explanation": "The 34-km run from Bori Bunder to Thane marks the start of Indian Railways."
+  },
+  {
+   "id": "p1_q73",
+   "no": 73,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "Article 21 of the Indian Constitution deals with:",
+   "options": [
+    "Protection of life and personal liberty",
+    "Right to equality",
+    "Abolition of untouchability",
+    "Right to constitutional remedies"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Article 21 provides that no person shall be deprived of life or personal liberty except by procedure established by law."
+  },
+  {
+   "id": "p1_q74",
+   "no": 74,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "Fundamental Duties were added to the Indian Constitution by the:",
+   "options": [
+    "44th Amendment, 1978",
+    "73rd Amendment, 1992",
+    "86th Amendment, 2002",
+    "42nd Amendment, 1976"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The 42nd Amendment added Part IV-A (Article 51A) on the Swaran Singh Committee's recommendation."
+  },
+  {
+   "id": "p1_q75",
+   "no": 75,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "The Tropic of Cancer does NOT pass through which of these states?",
+   "options": [
+    "Odisha",
+    "Jharkhand",
+    "Mizoram",
+    "Tripura"
+   ],
+   "correctAnswer": 0,
+   "explanation": "It passes through Gujarat, Rajasthan, MP, Chhattisgarh, Jharkhand, West Bengal, Tripura and Mizoram — not Odisha."
+  },
+  {
+   "id": "p1_q76",
+   "no": 76,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "The Battle of Plassey was fought in:",
+   "options": [
+    "1764",
+    "1757",
+    "1857",
+    "1761"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Robert Clive defeated Siraj-ud-Daulah at Plassey in 1757. Buxar was in 1764 and the Third Battle of Panipat in 1761."
+  },
+  {
+   "id": "p1_q77",
+   "no": 77,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "Which river is known as the 'Dakshin Ganga'?",
+   "options": [
+    "Krishna",
+    "Kaveri",
+    "Godavari",
+    "Narmada"
+   ],
+   "correctAnswer": 2,
+   "explanation": "The Godavari is the longest river of peninsular India and is called the Dakshin Ganga."
+  },
+  {
+   "id": "p1_q78",
+   "no": 78,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "23 August, the day Chandrayaan-3 landed near the lunar south pole, is observed in India as:",
+   "options": [
+    "National Science Day",
+    "National Technology Day",
+    "National Innovation Day",
+    "National Space Day"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Vikram landed on 23 August 2023, and the date is now observed as National Space Day. National Science Day is 28 February."
+  },
+  {
+   "id": "p1_q79",
+   "no": 79,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "The Durand Cup is associated with which sport?",
+   "options": [
+    "Football",
+    "Hockey",
+    "Cricket",
+    "Badminton"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The Durand Cup (first held in 1888) is one of the oldest football tournaments in the world."
+  },
+  {
+   "id": "p1_q80",
+   "no": 80,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "The President of India is elected by an electoral college consisting of:",
+   "options": [
+    "Elected members of both Houses of Parliament and elected members of State Legislative Assemblies (including Delhi and Puducherry)",
+    "All members of Lok Sabha only",
+    "All members of both Houses of Parliament, including nominated members",
+    "Elected members of Rajya Sabha and Legislative Councils"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Under Article 54, nominated members and members of Legislative Councils do not vote."
+  },
+  {
+   "id": "p1_q81",
+   "no": 81,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "What is 25% of 480?",
+   "options": [
+    "96",
+    "140",
+    "120",
+    "160"
+   ],
+   "correctAnswer": 2,
+   "explanation": "25% = 1/4, and 480 ÷ 4 = 120."
+  },
+  {
+   "id": "p1_q82",
+   "no": 82,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "A train 240 m long passes a signal pole in 12 seconds. What is its speed in km/h?",
+   "options": [
+    "60 km/h",
+    "20 km/h",
+    "80 km/h",
+    "72 km/h"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Speed = 240/12 = 20 m/s, and 20 × 18/5 = 72 km/h."
+  },
+  {
+   "id": "p1_q83",
+   "no": 83,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "What is the simple interest on ₹5,000 at 8% per annum for 3 years?",
+   "options": [
+    "₹1,000",
+    "₹1,400",
+    "₹1,250",
+    "₹1,200"
+   ],
+   "correctAnswer": 3,
+   "explanation": "SI = P × R × T / 100 = 5000 × 8 × 3 / 100 = ₹1,200."
+  },
+  {
+   "id": "p1_q84",
+   "no": 84,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "What is the average of the first 10 natural numbers?",
+   "options": [
+    "5",
+    "6",
+    "5.5",
+    "10"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Sum = 55, and 55 ÷ 10 = 5.5."
+  },
+  {
+   "id": "p1_q85",
+   "no": 85,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "A can finish a job in 12 days and B in 18 days. Working together, they will finish it in:",
+   "options": [
+    "15 days",
+    "7.2 days",
+    "6 days",
+    "8 days"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Combined rate = 1/12 + 1/18 = 5/36 per day, so time = 36/5 = 7.2 days."
+  },
+  {
+   "id": "p1_q86",
+   "no": 86,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "An article bought for ₹400 is sold for ₹460. What is the profit percentage?",
+   "options": [
+    "15%",
+    "12%",
+    "60%",
+    "13%"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Profit = 60, and 60/400 × 100 = 15%."
+  },
+  {
+   "id": "p1_q87",
+   "no": 87,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "Find the next number: 3, 8, 15, 24, 35, ?",
+   "options": [
+    "46",
+    "48",
+    "45",
+    "50"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Differences are 5, 7, 9, 11, so the next is +13: 35 + 13 = 48. (Also n² − 1.)"
+  },
+  {
+   "id": "p1_q88",
+   "no": 88,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "If CAT is written as DBU, how is DOG written in the same code?",
+   "options": [
+    "EPG",
+    "FPH",
+    "CNF",
+    "EPH"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Each letter moves one step forward: D→E, O→P, G→H."
+  },
+  {
+   "id": "p1_q89",
+   "no": 89,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "Pointing to a boy, Rita says, 'He is the son of my father's only son.' How is the boy related to Rita?",
+   "options": [
+    "Brother",
+    "Son",
+    "Cousin",
+    "Nephew"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Rita's father's only son is her brother; his son is Rita's nephew."
+  },
+  {
+   "id": "p1_q90",
+   "no": 90,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "Ravi walks 5 km north, turns right and walks 3 km, then turns right again and walks 5 km. Where is he now from the starting point?",
+   "options": [
+    "3 km East",
+    "3 km West",
+    "5 km North",
+    "8 km East"
+   ],
+   "correctAnswer": 0,
+   "explanation": "North 5 and then south 5 cancel out, leaving only the 3 km eastward move."
+  },
+  {
+   "id": "p1_q91",
+   "no": 91,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "What is the SI unit of force?",
+   "options": [
+    "Joule",
+    "Pascal",
+    "Watt",
+    "Newton"
+   ],
+   "correctAnswer": 3,
+   "explanation": "1 N = 1 kg·m/s²."
+  },
+  {
+   "id": "p1_q92",
+   "no": 92,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "What is the pH of pure water at 25 °C?",
+   "options": [
+    "7",
+    "0",
+    "14",
+    "5"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Pure water is neutral, with [H⁺] = 10⁻⁷ mol/L."
+  },
+  {
+   "id": "p1_q93",
+   "no": 93,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Which cell organelle is known as the 'powerhouse of the cell'?",
+   "options": [
+    "Mitochondria",
+    "Ribosome",
+    "Golgi body",
+    "Lysosome"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Mitochondria make ATP by aerobic respiration."
+  },
+  {
+   "id": "p1_q94",
+   "no": 94,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "What is the chemical formula of common salt?",
+   "options": [
+    "NaCl",
+    "KCl",
+    "Na₂CO₃",
+    "NaHCO₃"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Common salt is sodium chloride."
+  },
+  {
+   "id": "p1_q95",
+   "no": 95,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Scurvy is caused by a deficiency of:",
+   "options": [
+    "Vitamin A",
+    "Vitamin D",
+    "Vitamin K",
+    "Vitamin C"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Vitamin C (ascorbic acid) is needed for collagen synthesis; its lack causes bleeding gums."
+  },
+  {
+   "id": "p1_q96",
+   "no": 96,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Myopia (short-sightedness) is corrected by using a:",
+   "options": [
+    "Convex lens",
+    "Cylindrical lens",
+    "Bifocal lens only",
+    "Concave lens"
+   ],
+   "correctAnswer": 3,
+   "explanation": "In myopia the image forms in front of the retina, and a diverging (concave) lens corrects it."
+  },
+  {
+   "id": "p1_q97",
+   "no": 97,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Which gas is the most abundant in the Earth's atmosphere?",
+   "options": [
+    "Oxygen",
+    "Nitrogen",
+    "Argon",
+    "Carbon dioxide"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Nitrogen makes up about 78% of the atmosphere and oxygen about 21%."
+  },
+  {
+   "id": "p1_q98",
+   "no": 98,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "A potential difference of 12 V drives a current of 3 A through a resistor. What is its resistance?",
+   "options": [
+    "36 Ω",
+    "0.25 Ω",
+    "4 Ω",
+    "15 Ω"
+   ],
+   "correctAnswer": 2,
+   "explanation": "R = V/I = 12/3 = 4 Ω."
+  },
+  {
+   "id": "p1_q99",
+   "no": 99,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Insulin is secreted by the:",
+   "options": [
+    "Alpha cells of the pancreas",
+    "Beta cells of the islets of Langerhans in the pancreas",
+    "Adrenal cortex",
+    "Liver cells"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Beta cells secrete insulin and alpha cells secrete glucagon."
+  },
+  {
+   "id": "p1_q100",
+   "no": 100,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Which metal is liquid at room temperature?",
+   "options": [
+    "Sodium",
+    "Gallium",
+    "Aluminium",
+    "Mercury"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Mercury melts at −38.8 °C. Gallium melts at about 30 °C, which is above normal room temperature."
+  }
+ ]
+}
