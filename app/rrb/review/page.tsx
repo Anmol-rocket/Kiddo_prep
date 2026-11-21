@@ -152,7 +152,7 @@ function ReviewContent() {
                     {q.no}
                   </span>
                   <div className="min-w-0">
-                    <p className="text-sm md:text-base leading-relaxed text-zinc-50">{q.question}</p>
+                    <p className="text-sm md:text-base leading-relaxed text-zinc-50 whitespace-pre-wrap">{q.question}</p>
                     <div className="mt-1.5 flex flex-wrap items-center gap-2">
                       <span className="text-[10px] text-zinc-600">{q.subject}</span>
                       {isMarked && (

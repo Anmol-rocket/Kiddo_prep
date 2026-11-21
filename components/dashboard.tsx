@@ -452,11 +452,11 @@ export default function Dashboard({ onStartQuiz, onReviewTopic }: DashboardProps
                 <div className="flex gap-3 text-xs">
                   <span className="text-sky-500">Best {rrbStats.bestScore}/100</span>
                   <span className="text-muted-foreground">{rrbStats.attempts} attempt{rrbStats.attempts === 1 ? "" : "s"}</span>
-                  <span className="text-muted-foreground">{rrbStats.papersAttempted}/3 papers</span>
+                  <span className="text-muted-foreground">{rrbStats.papersAttempted}/4 papers</span>
                 </div>
               ) : (
                 <div className="flex gap-3 text-xs">
-                  <span className="text-muted-foreground">3 papers &middot; 100 Qs each &middot; 90 min</span>
+                  <span className="text-muted-foreground">4 papers &middot; 100 Qs each &middot; 90 min</span>
                 </div>
               )}
             />

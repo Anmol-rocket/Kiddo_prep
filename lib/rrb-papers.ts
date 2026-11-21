@@ -129,6 +129,7 @@ export const rrbPaperList: RrbPaperMeta[] = [
   { id: 1, name: "Practice Paper 1", subtitle: "RRB Radiographer / X-Ray Technician — Full CBT Mock", code: "RRB/PARAMED/RAD/PP-01", totalQuestions: 100, durationMinutes: 90 },
   { id: 2, name: "Practice Paper 2", subtitle: "RRB Radiographer / X-Ray Technician — Full CBT Mock", code: "RRB/PARAMED/RAD/PP-02", totalQuestions: 100, durationMinutes: 90 },
   { id: 3, name: "Practice Paper 3", subtitle: "RRB Radiographer / X-Ray Technician — Full CBT Mock (Moderate–Tough)", code: "RRB/PARAMED/RAD/PP-03", totalQuestions: 100, durationMinutes: 90 },
+  { id: 4, name: "Practice Paper 4", subtitle: "RRB Radiographer / X-Ray Technician — Advanced Mock (Level 8/10 · twisted language)", code: "RRB/PARAMED/RAD/PP-04-ADV", totalQuestions: 100, durationMinutes: 90 },
 ]
 
 export const RRB_STRATEGY: string[] = [

@@ -1,0 +1,1686 @@
+{
+ "id": 4,
+ "name": "Practice Paper 4",
+ "subtitle": "RRB Radiographer / X-Ray Technician — Advanced Mock (Level 8/10 · twisted language)",
+ "code": "RRB/PARAMED/RAD/PP-04-ADV",
+ "totalQuestions": 100,
+ "durationMinutes": 90,
+ "markPerCorrect": 1,
+ "negativeMark": 0.3333333333333333,
+ "subsections": [
+  {
+   "id": "a1",
+   "section": "A",
+   "title": "Human Anatomy & Physiology",
+   "start": 1,
+   "end": 12,
+   "count": 12
+  },
+  {
+   "id": "a2",
+   "section": "A",
+   "title": "Radiation Physics & X-ray Equipment",
+   "start": 13,
+   "end": 28,
+   "count": 16
+  },
+  {
+   "id": "a3",
+   "section": "A",
+   "title": "Clinical Radiography — Positioning",
+   "start": 29,
+   "end": 44,
+   "count": 16
+  },
+  {
+   "id": "a4",
+   "section": "A",
+   "title": "Image Processing, Darkroom & Image Quality",
+   "start": 45,
+   "end": 52,
+   "count": 8
+  },
+  {
+   "id": "a5",
+   "section": "A",
+   "title": "Radiation Protection, Contrast & Special Procedures",
+   "start": 53,
+   "end": 62,
+   "count": 10
+  },
+  {
+   "id": "a6",
+   "section": "A",
+   "title": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "start": 63,
+   "end": 70,
+   "count": 8
+  },
+  {
+   "id": "b1",
+   "section": "B",
+   "title": "General Awareness",
+   "start": 71,
+   "end": 80,
+   "count": 10
+  },
+  {
+   "id": "b2",
+   "section": "B",
+   "title": "General Arithmetic, Intelligence & Reasoning",
+   "start": 81,
+   "end": 90,
+   "count": 10
+  },
+  {
+   "id": "b3",
+   "section": "B",
+   "title": "General Science",
+   "start": 91,
+   "end": 100,
+   "count": 10
+  }
+ ],
+ "questions": [
+  {
+   "id": "p4_q1",
+   "no": 1,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which one of the following bones does NOT take part in forming the bony orbit?",
+   "options": [
+    "Lacrimal bone",
+    "Palatine bone",
+    "Nasal bone",
+    "Zygomatic bone"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Seven bones form the orbit: frontal, sphenoid, zygomatic, maxilla, lacrimal, ethmoid and palatine. The nasal bone forms the bridge of the nose only."
+  },
+  {
+   "id": "p4_q2",
+   "no": 2,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Consider the following statements:\n1. The left kidney usually lies at a higher level than the right kidney.\n2. The right main bronchus is shorter, wider and more vertical than the left.\n3. The spleen lies in the right hypochondrium.\nWhich of the statements given above is/are correct?",
+   "options": [
+    "Only 1 and 2",
+    "Only 2 and 3",
+    "Only 1 and 3",
+    "1, 2 and 3"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Statement 1 is true because the liver pushes the right kidney down. Statement 2 is true, which is why aspirated objects usually enter the right bronchus. Statement 3 is false: the spleen lies in the LEFT hypochondrium."
+  },
+  {
+   "id": "p4_q3",
+   "no": 3,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "A patient aspirates a peanut while sitting upright. On the chest radiograph, where is the foreign body MOST likely to have lodged?",
+   "options": [
+    "Apical segment of the left upper lobe",
+    "Lingula of the left lung",
+    "Medial segment of the right middle lobe",
+    "Posterior basal segment of the right lower lobe"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The right bronchus is more vertical, and gravity carries the object to the most dependent segment when upright. In the supine position, the superior segment of the right lower lobe is more likely."
+  },
+  {
+   "id": "p4_q4",
+   "no": 4,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "All of the following pass through the foramen magnum EXCEPT:",
+   "options": [
+    "Vertebral arteries",
+    "Internal jugular vein",
+    "Medulla oblongata / spinal cord junction",
+    "Spinal roots of the accessory nerve"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The internal jugular vein leaves the skull through the jugular foramen, not the foramen magnum."
+  },
+  {
+   "id": "p4_q5",
+   "no": 5,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "A fracture through the surgical neck of the humerus seen on a shoulder radiograph puts which nerve at greatest risk?",
+   "options": [
+    "Axillary nerve",
+    "Radial nerve",
+    "Ulnar nerve",
+    "Musculocutaneous nerve"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The axillary nerve winds around the surgical neck. The radial nerve is at risk in shaft fractures (spiral groove), and the ulnar nerve at the medial epicondyle."
+  },
+  {
+   "id": "p4_q6",
+   "no": 6,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "During a barium follow-through, the ligament of Treitz is used as a landmark for the:",
+   "options": [
+    "Ileocaecal junction",
+    "Gastro-oesophageal junction",
+    "Duodenojejunal flexure",
+    "Pyloric canal"
+   ],
+   "correctAnswer": 2,
+   "explanation": "The suspensory ligament of the duodenum (Treitz) fixes the DJ flexure, normally to the left of L2. An abnormal position suggests malrotation."
+  },
+  {
+   "id": "p4_q7",
+   "no": 7,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Assertion (A): A fracture through the waist of the scaphoid may lead to avascular necrosis of its proximal fragment.\nReason (R): The blood supply of the scaphoid enters mainly through its distal part and flows backwards towards the proximal pole.",
+   "options": [
+    "Both A and R are true, and R is the correct explanation of A",
+    "Both A and R are true, but R is not the correct explanation of A",
+    "A is true, but R is false",
+    "A is false, but R is true"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Both statements are true. Because the vessels enter distally, a waist fracture cuts off the proximal pole, so R correctly explains A."
+  },
+  {
+   "id": "p4_q8",
+   "no": 8,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which of the following is NOT a content of the carpal tunnel?",
+   "options": [
+    "Median nerve",
+    "Ulnar nerve",
+    "Tendons of flexor digitorum superficialis",
+    "Tendon of flexor pollicis longus"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The ulnar nerve and artery pass through Guyon's canal, outside the flexor retinaculum."
+  },
+  {
+   "id": "p4_q9",
+   "no": 9,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "The hepatic portal vein is formed behind the neck of the pancreas by the union of the:",
+   "options": [
+    "Inferior mesenteric vein and superior mesenteric vein",
+    "Splenic vein and left gastric vein",
+    "Right and left hepatic veins",
+    "Superior mesenteric vein and splenic vein"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The IMV usually drains into the splenic vein; the hepatic veins drain into the IVC, not the portal vein."
+  },
+  {
+   "id": "p4_q10",
+   "no": 10,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "Which of the following statements about the sacrum is INCORRECT?",
+   "options": [
+    "Its promontory projects into the pelvic inlet",
+    "It articulates with the ilia at the sacroiliac joints",
+    "It is formed by the fusion of four vertebrae",
+    "It has four pairs of anterior sacral foramina"
+   ],
+   "correctAnswer": 2,
+   "explanation": "The sacrum is formed by five fused sacral vertebrae. The coccyx usually has four."
+  },
+  {
+   "id": "p4_q11",
+   "no": 11,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "On a frontal skull radiograph of an adult, a calcified pineal gland is useful mainly because:",
+   "options": [
+    "It confirms the patient's age",
+    "It marks the position of the pituitary fossa",
+    "Its displacement from the midline suggests a space-occupying lesion",
+    "It indicates the level of the foramen magnum"
+   ],
+   "correctAnswer": 2,
+   "explanation": "The pineal gland is a midline structure. If it shifts more than about 3 mm, it raises suspicion of a mass or haematoma."
+  },
+  {
+   "id": "p4_q12",
+   "no": 12,
+   "section": "A",
+   "subsectionId": "a1",
+   "subject": "Human Anatomy & Physiology",
+   "question": "If a patient's cardiac output is 5 L/min at a heart rate of 70 beats/min, the stroke volume is approximately:",
+   "options": [
+    "35 mL",
+    "71 mL",
+    "140 mL",
+    "350 mL"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Stroke volume = cardiac output ÷ heart rate = 5000 ÷ 70 ≈ 71 mL."
+  },
+  {
+   "id": "p4_q13",
+   "no": 13,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "An exposure of 80 kVp and 40 mAs at 100 cm FFD gives a satisfactory image. The FFD is increased to 150 cm and the kVp is raised to 92. Using the 15% rule, the new mAs needed is approximately:",
+   "options": [
+    "45 mAs",
+    "90 mAs",
+    "20 mAs",
+    "22.5 mAs"
+   ],
+   "correctAnswer": 0,
+   "explanation": "92 kVp is about +15%, which halves the mAs to 20. The distance change multiplies it by (150/100)² = 2.25, so 20 × 2.25 = 45 mAs."
+  },
+  {
+   "id": "p4_q14",
+   "no": 14,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "Which change increases the NUMBER of photons produced at the target WITHOUT changing their maximum energy?",
+   "options": [
+    "Increasing the kVp",
+    "Adding 2 mm of aluminium filtration",
+    "Increasing the focus-to-film distance",
+    "Increasing the tube current (mA)"
+   ],
+   "correctAnswer": 3,
+   "explanation": "mA changes only the quantity. kVp changes both quantity and maximum energy. Filtration removes photons, and FFD does not affect production."
+  },
+  {
+   "id": "p4_q15",
+   "no": 15,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "A tungsten-target tube is operated at 65 kVp. Which component will be ABSENT from the X-ray spectrum produced?",
+   "options": [
+    "Bremsstrahlung radiation",
+    "L-characteristic radiation",
+    "K-characteristic radiation",
+    "The continuous spectrum"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Ejecting a K-shell electron in tungsten needs about 69.5 keV. At 65 kVp no electron has enough energy, so there are no K lines."
+  },
+  {
+   "id": "p4_q16",
+   "no": 16,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "Consider the following statements about the anode heel effect:\n1. It is more marked at a shorter FFD.\n2. It is more marked with a larger image receptor.\n3. It is more marked with a larger anode angle.\nWhich of the statements given above is/are correct?",
+   "options": [
+    "1, 2 and 3",
+    "Only 2 and 3",
+    "Only 1 and 2",
+    "Only 1 and 3"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Short FFD and a large field both include the steep part of the intensity gradient. A SMALLER anode angle (not a larger one) increases the heel effect, so statement 3 is wrong."
+  },
+  {
+   "id": "p4_q17",
+   "no": 17,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "A beam has a half-value layer of 3 mm Al. What thickness of aluminium will reduce its intensity to 1/16 of the original?",
+   "options": [
+    "48 mm",
+    "16 mm",
+    "9 mm",
+    "12 mm"
+   ],
+   "correctAnswer": 3,
+   "explanation": "1/16 = (1/2)⁴, which is 4 HVLs. 4 × 3 mm = 12 mm. (This assumes a monoenergetic beam; real beams harden.)"
+  },
+  {
+   "id": "p4_q18",
+   "no": 18,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "The tenth-value layer (TVL) of a material is approximately equal to:",
+   "options": [
+    "10 HVL",
+    "2 HVL",
+    "0.1 HVL",
+    "3.3 HVL"
+   ],
+   "correctAnswer": 3,
+   "explanation": "TVL = ln10/μ and HVL = ln2/μ, so TVL/HVL = 2.303/0.693 ≈ 3.32."
+  },
+  {
+   "id": "p4_q19",
+   "no": 19,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "Which statement about Compton scattering is CORRECT?",
+   "options": [
+    "Its probability rises steeply with Z³",
+    "Its probability is almost independent of atomic number and depends mainly on electron density",
+    "It needs photon energy above 1.02 MeV",
+    "The scattered photon has more energy than the incident photon"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Compton scattering involves loosely bound outer electrons, so tissue type matters less than electron density. This is why it reduces subject contrast."
+  },
+  {
+   "id": "p4_q20",
+   "no": 20,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "For the same exposure at the image receptor, which of the following would NOT reduce the patient's skin entrance dose?",
+   "options": [
+    "Increasing the total filtration",
+    "Using a faster rare-earth screen or more sensitive detector",
+    "Reducing the focus-to-skin distance",
+    "Raising the kVp and lowering the mAs"
+   ],
+   "correctAnswer": 2,
+   "explanation": "A shorter focus-to-skin distance concentrates the beam on the skin (inverse square), so skin dose increases. The other three all reduce it."
+  },
+  {
+   "id": "p4_q21",
+   "no": 21,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "The effective focal spot of a tube is 1 mm and the anode angle is 12° (sin 12° ≈ 0.21). The length of the actual focal spot is approximately:",
+   "options": [
+    "0.21 mm",
+    "1.2 mm",
+    "4.8 mm",
+    "12 mm"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Effective = actual × sin θ, so actual = 1 / 0.21 ≈ 4.8 mm. This is the line focus principle."
+  },
+  {
+   "id": "p4_q22",
+   "no": 22,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "An object 4 cm wide lies 20 cm from the image receptor and the SID is 100 cm. What will be the width of its image?",
+   "options": [
+    "5 cm",
+    "4 cm",
+    "4.8 cm",
+    "6.25 cm"
+   ],
+   "correctAnswer": 0,
+   "explanation": "SOD = 80 cm, so M = SID/SOD = 100/80 = 1.25, and the image = 4 × 1.25 = 5 cm."
+  },
+  {
+   "id": "p4_q23",
+   "no": 23,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "With a 1.2 mm focal spot, a source-to-object distance of 90 cm and an object-to-image distance of 10 cm, the geometric unsharpness is about:",
+   "options": [
+    "0.13 mm",
+    "1.2 mm",
+    "0.9 mm",
+    "10.8 mm"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Ug = focal spot × OID / SOD = 1.2 × 10 / 90 ≈ 0.13 mm."
+  },
+  {
+   "id": "p4_q24",
+   "no": 24,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "Assertion (A): Increasing kVp while reducing mAs generally lowers the patient dose for the same receptor exposure.\nReason (R): The probability of photoelectric absorption increases as kVp increases.",
+   "options": [
+    "Both A and R are true, and R is the correct explanation of A",
+    "Both A and R are true, but R is not the correct explanation of A",
+    "A is true, but R is false",
+    "A is false, but R is true"
+   ],
+   "correctAnswer": 2,
+   "explanation": "A is true: more penetrating photons mean fewer are needed at the receptor. R is false: photoelectric absorption DECREASES with higher energy (∝ 1/E³), which is the real reason for the lower dose."
+  },
+  {
+   "id": "p4_q25",
+   "no": 25,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "At the same kVp setting, which generator produces the beam with the HIGHEST average photon energy?",
+   "options": [
+    "Single-phase self-rectified",
+    "Single-phase full-wave rectified",
+    "High-frequency generator",
+    "Three-phase six-pulse"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Less ripple means the voltage stays near its peak for longer, which gives a harder beam and more output per mAs."
+  },
+  {
+   "id": "p4_q26",
+   "no": 26,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "On a tube rating chart, which factor allows a HIGHER maximum mA for the same exposure time and kVp?",
+   "options": [
+    "Selecting the larger focal spot",
+    "Selecting the smaller focal spot",
+    "Using a lower anode rotation speed",
+    "Using a higher kVp"
+   ],
+   "correctAnswer": 0,
+   "explanation": "A larger focal track area spreads the heat. Lower rotation speed and higher kVp both REDUCE the permitted mA."
+  },
+  {
+   "id": "p4_q27",
+   "no": 27,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "Off-focus (extrafocal) radiation reaching the image is best reduced by:",
+   "options": [
+    "First-stage collimator shutters placed as close as possible to the tube port",
+    "Increasing the FFD",
+    "Using a higher-ratio grid",
+    "Selecting a smaller focal spot"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Off-focus X-rays come from parts of the anode outside the focal spot. Shutters close to the source block them; a grid mainly removes patient scatter."
+  },
+  {
+   "id": "p4_q28",
+   "no": 28,
+   "section": "A",
+   "subsectionId": "a2",
+   "subject": "Radiation Physics & X-ray Equipment",
+   "question": "An absorbed dose of 1 Gy from alpha particles (radiation weighting factor = 20) corresponds to an equivalent dose of:",
+   "options": [
+    "1 Sv",
+    "0.05 Sv",
+    "20 Sv",
+    "20 Gy"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Equivalent dose (Sv) = absorbed dose (Gy) × wR = 1 × 20 = 20 Sv. X-rays and gamma rays have wR = 1."
+  },
+  {
+   "id": "p4_q29",
+   "no": 29,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "A patient with suspected acute sinusitis is to be checked for an air–fluid level in the maxillary antra. Which condition is ESSENTIAL for the occipitomental (Waters) view?",
+   "options": [
+    "Patient supine with a 30° caudal angle",
+    "Patient prone with a 15° cephalic angle",
+    "Patient supine with a vertical beam",
+    "Patient erect with a horizontal central ray"
+   ],
+   "correctAnswer": 3,
+   "explanation": "A fluid level is shown only when the beam is parallel to the fluid surface. If the patient cannot sit up, a horizontal-beam lateral can be used instead."
+  },
+  {
+   "id": "p4_q30",
+   "no": 30,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "Which of the following is NOT a criterion of a correctly positioned and exposed PA chest radiograph?",
+   "options": [
+    "Scapulae projected over the lung fields",
+    "Medial ends of the clavicles equidistant from the spinous processes",
+    "About ten posterior ribs visible above the diaphragm",
+    "Thoracic vertebrae faintly visible through the heart shadow"
+   ],
+   "correctAnswer": 0,
+   "explanation": "In a good PA chest the scapulae are rotated OFF the lung fields. The other three show no rotation, full inspiration and correct exposure."
+  },
+  {
+   "id": "p4_q31",
+   "no": 31,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "The Haas method (PA axial, 25° cephalad) is used as an alternative to which projection?",
+   "options": [
+    "Occipitomental (Waters) projection",
+    "AP axial (Towne's) projection",
+    "PA Caldwell projection",
+    "Submentovertical projection"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Haas shows the occipital bone and dorsum sellae like Towne's, and it lowers the dose to the eyes and thyroid."
+  },
+  {
+   "id": "p4_q32",
+   "no": 32,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "A trauma patient is on a spine board with a cervical collar. On the horizontal-beam lateral, the shoulders hide C7. What should the radiographer do FIRST (if there is no contraindication)?",
+   "options": [
+    "Remove the collar and flex the neck",
+    "Turn the patient prone for a vertical-beam lateral",
+    "Apply gentle downward traction on both arms and repeat the horizontal-beam lateral",
+    "Abandon the lateral and take only an AP open-mouth view"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Pulling the shoulders down usually shows C7–T1. If it fails, a horizontal-beam Swimmer's view or CT follows. The neck must never be moved."
+  },
+  {
+   "id": "p4_q33",
+   "no": 33,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "In which of the following projections is the central ray angled CAUDALLY?",
+   "options": [
+    "AP axial clavicle",
+    "AP axial (Towne's) skull",
+    "Axial (plantodorsal) calcaneum",
+    "AP axial sacrum"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Towne's uses 30° caudad. The clavicle (15–30°), calcaneum (40°) and sacrum (15°) projections are all angled cephalad."
+  },
+  {
+   "id": "p4_q34",
+   "no": 34,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "On an AP forearm radiograph, the radius is seen crossing over the ulna. The MOST likely positioning error is that the:",
+   "options": [
+    "Hand was pronated",
+    "Hand was supinated",
+    "Elbow was flexed to 90°",
+    "Wrist was in ulnar deviation"
+   ],
+   "correctAnswer": 0,
+   "explanation": "In pronation the radius crosses the ulna. An AP forearm needs full supination so that the two bones lie parallel."
+  },
+  {
+   "id": "p4_q35",
+   "no": 35,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "On a lateral knee radiograph, the femoral condyles are not superimposed because the medial condyle is projected below the lateral. The usual correction is to:",
+   "options": [
+    "Angle the central ray 15° caudad",
+    "Flex the knee to 90°",
+    "Angle the central ray 5°–7° cephalad",
+    "Rotate the leg 45° externally"
+   ],
+   "correctAnswer": 2,
+   "explanation": "The medial condyle extends lower than the lateral, so a slight cephalic angle superimposes them."
+  },
+  {
+   "id": "p4_q36",
+   "no": 36,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "Which projection is CONTRAINDICATED in an acute trauma patient until a cervical fracture or instability has been excluded?",
+   "options": [
+    "Lateral flexion and extension views",
+    "Horizontal-beam lateral",
+    "AP axial lower cervical spine",
+    "Horizontal-beam Swimmer's lateral"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Flexion–extension views move the spine on purpose and could displace an unstable injury. They are done only after a radiologist or clinician has cleared the spine."
+  },
+  {
+   "id": "p4_q37",
+   "no": 37,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "On an AP pelvis, the lesser trochanters are clearly seen in profile and the femoral necks look short. This means that:",
+   "options": [
+    "The limbs were correctly internally rotated 15°–20°",
+    "The central ray was angled cephalad",
+    "The lower limbs were externally rotated (not internally rotated)",
+    "The patient was rotated towards the left"
+   ],
+   "correctAnswer": 2,
+   "explanation": "With 15°–20° internal rotation, the lesser trochanters are hidden or barely seen and the femoral necks are shown in full length."
+  },
+  {
+   "id": "p4_q38",
+   "no": 38,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "On a PA skull projection, the petrous ridges completely fill the orbits. The central ray must have been:",
+   "options": [
+    "Perpendicular to the orbitomeatal line (0°)",
+    "15° caudad to the OML",
+    "30° caudad to the OML",
+    "37° cephalad to the OML"
+   ],
+   "correctAnswer": 0,
+   "explanation": "At 0° the petrous ridges fill the orbits. With 15° caudad (Caldwell) they move to the lower third of the orbits."
+  },
+  {
+   "id": "p4_q39",
+   "no": 39,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "To demonstrate the RIGHT intervertebral foramina of the cervical spine using a posterior oblique projection, the patient should be placed in:",
+   "options": [
+    "RPO with a 15°–20° cephalic angle",
+    "LPO with a 15°–20° cephalic angle",
+    "RAO with a 15°–20° cephalic angle",
+    "LAO with a 15°–20° caudal angle"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Posterior obliques show the foramina FARTHEST from the IR, so the right side is up in LPO, with a cephalic angle. Anterior obliques show the side closest to the IR and use a caudal angle."
+  },
+  {
+   "id": "p4_q40",
+   "no": 40,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "Consider the following statements:\n1. In anterior oblique projections of the cervical spine, the intervertebral foramina CLOSEST to the IR are shown.\n2. In posterior oblique projections of the lumbar spine, the zygapophyseal joints CLOSEST to the IR are shown.\n3. In anterior oblique projections of the lumbar spine, the zygapophyseal joints FARTHEST from the IR are shown.\nWhich of the statements given above is/are correct?",
+   "options": [
+    "Only 1 and 2",
+    "Only 2 and 3",
+    "1, 2 and 3",
+    "Only 1"
+   ],
+   "correctAnswer": 2,
+   "explanation": "All three are correct. This is a classic trap: the cervical and lumbar oblique rules are the reverse of each other."
+  },
+  {
+   "id": "p4_q41",
+   "no": 41,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "An erect abdomen radiograph taken to look for free intraperitoneal air MUST include the:",
+   "options": [
+    "Symphysis pubis",
+    "Domes of the diaphragm",
+    "Ischial tuberosities",
+    "Lesser trochanters"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Free gas collects under the diaphragm, so the diaphragm domes must be on the image. A KUB, by contrast, must include the symphysis pubis."
+  },
+  {
+   "id": "p4_q42",
+   "no": 42,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "The Von Rosen projection (hips abducted 45° with internal rotation) is used to assess:",
+   "options": [
+    "Developmental dysplasia of the hip",
+    "Slipped capital femoral epiphysis in trauma",
+    "Fracture of the femoral neck",
+    "Sacroiliitis"
+   ],
+   "correctAnswer": 0,
+   "explanation": "It helps assess the hip joint in infants and young children with suspected DDH. Ultrasound is preferred in early infancy."
+  },
+  {
+   "id": "p4_q43",
+   "no": 43,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "After a punch to the eye, an orbital floor 'blow-out' fracture with a 'hanging-drop' sign is BEST shown on the:",
+   "options": [
+    "Lateral skull",
+    "AP axial (Towne's)",
+    "Occipitomental (Waters) view",
+    "Submentovertical view"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Waters shows the orbital floors and maxillary antra, where herniated orbital contents look like a teardrop. CT confirms the fracture."
+  },
+  {
+   "id": "p4_q44",
+   "no": 44,
+   "section": "A",
+   "subsectionId": "a3",
+   "subject": "Clinical Radiography — Positioning",
+   "question": "For an AP projection of the coccyx, the central ray is directed:",
+   "options": [
+    "10° caudad, about 5 cm above the symphysis pubis",
+    "15° cephalad, midway between the ASIS and the symphysis",
+    "Perpendicular to the ASIS",
+    "30° caudad to the umbilicus"
+   ],
+   "correctAnswer": 0,
+   "explanation": "The coccyx curves forward, so it needs a caudal angle. The sacrum uses about 15° cephalad."
+  },
+  {
+   "id": "p4_q45",
+   "no": 45,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "A processed film shows a general increase in density (chemical fog). All of the following are possible causes EXCEPT:",
+   "options": [
+    "Developer temperature too high",
+    "Exhausted (oxidised) developer",
+    "Unsafe safelight or a light leak in the darkroom",
+    "Prolonged development time"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Exhausted developer gives LIGHTER, under-developed films. Heat, overdevelopment and light leaks all increase fog."
+  },
+  {
+   "id": "p4_q46",
+   "no": 46,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "Months after processing, some radiographs develop yellowish-brown stains. The MOST likely cause is:",
+   "options": [
+    "Too much fixer hardener",
+    "Overexposure",
+    "Developer temperature too low",
+    "Inadequate washing, leaving residual thiosulphate"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Retained hypo breaks down to silver sulphide over time, which shows as brown staining that spoils archived films."
+  },
+  {
+   "id": "p4_q47",
+   "no": 47,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "The 'speed' of a radiographic film is conventionally defined as the reciprocal of the exposure needed to produce a density of:",
+   "options": [
+    "0.25 absolute",
+    "2.0 absolute",
+    "3.0 above base-plus-fog",
+    "1.0 above base-plus-fog"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Speed = 1 / exposure at D = 1.0 + base + fog. Faster films sit to the LEFT on the H&D curve."
+  },
+  {
+   "id": "p4_q48",
+   "no": 48,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "Assertion (A): A wide-latitude film is often preferred for chest radiography.\nReason (R): Wide-latitude films have very high contrast.",
+   "options": [
+    "Both A and R are true, and R is the correct explanation of A",
+    "Both A and R are true, but R is not the correct explanation of A",
+    "A is true, but R is false",
+    "A is false, but R is true"
+   ],
+   "correctAnswer": 2,
+   "explanation": "A is true: wide latitude records both dense mediastinum and lucent lungs. R is false: latitude and contrast are inversely related, so wide latitude means LOW contrast (a shallow gamma)."
+  },
+  {
+   "id": "p4_q49",
+   "no": 49,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "In computed radiography, a faint residual image from the previous patient appears on a new image. This 'ghost' artefact is due to:",
+   "options": [
+    "Use of a stationary grid",
+    "Too few photons (quantum mottle)",
+    "Incomplete erasure of the imaging plate",
+    "An incorrect window level"
+   ],
+   "correctAnswer": 2,
+   "explanation": "The erasure light must fully clear the stored energy. A stationary grid aligned with the laser scan causes moiré, not ghosting."
+  },
+  {
+   "id": "p4_q50",
+   "no": 50,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "For the same field of view, increasing the image matrix from 512 × 512 to 1024 × 1024 will:",
+   "options": [
+    "Increase pixel size and reduce noise only",
+    "Have no effect on resolution",
+    "Reduce pixel size and improve spatial resolution, but increase file size",
+    "Reduce storage requirements"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Pixel size = FOV / matrix. Smaller pixels resolve finer detail but need four times the data."
+  },
+  {
+   "id": "p4_q51",
+   "no": 51,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "The parameter that describes how efficiently a digital detector converts incident X-ray quanta into useful image signal is the:",
+   "options": [
+    "Modulation transfer function (MTF)",
+    "Detective quantum efficiency (DQE)",
+    "Window width",
+    "Exposure latitude"
+   ],
+   "correctAnswer": 1,
+   "explanation": "A higher DQE means less dose is needed for the same image quality. MTF describes resolution."
+  },
+  {
+   "id": "p4_q52",
+   "no": 52,
+   "section": "A",
+   "subsectionId": "a4",
+   "subject": "Image Processing, Darkroom & Image Quality",
+   "question": "On a Fuji-type CR system, a HIGHER 'S' (sensitivity) number displayed after processing indicates:",
+   "options": [
+    "HIGHER exposure to the imaging plate",
+    "Higher kVp only",
+    "A larger collimated field only",
+    "LOWER exposure to the imaging plate"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The Fuji S-number is inversely proportional to exposure. A high S suggests underexposure (noise); a low S suggests overexposure. Some other vendors' exposure indices work the opposite way."
+  },
+  {
+   "id": "p4_q53",
+   "no": 53,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "Consider the following statements:\n1. Stochastic effects have a threshold dose below which they do not occur.\n2. The severity of deterministic effects increases with dose.\n3. Hereditary (genetic) effects of radiation are stochastic.\nWhich of the statements given above is/are correct?",
+   "options": [
+    "Only 1 and 2",
+    "Only 2 and 3",
+    "Only 1 and 3",
+    "1, 2 and 3"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Stochastic effects (cancer, hereditary) are assumed to have NO threshold, and only their probability rises with dose. Deterministic effects have a threshold, and their severity rises with dose."
+  },
+  {
+   "id": "p4_q54",
+   "no": 54,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "A radiographer standing 1 m from the patient receives 4 µSv during a fluoroscopy procedure. In a repeat procedure she stands 2 m away and the screening time is halved. Her dose will now be about:",
+   "options": [
+    "0.5 µSv",
+    "1 µSv",
+    "2 µSv",
+    "0.25 µSv"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Doubling the distance gives ¼ of the dose (inverse square), and halving the time gives ½ more. 4 × ¼ × ½ = 0.5 µSv."
+  },
+  {
+   "id": "p4_q55",
+   "no": 55,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "According to the law of Bergonié and Tribondeau, which of the following is the LEAST radiosensitive?",
+   "options": [
+    "Lymphocytes",
+    "Spermatogonia",
+    "Mature nerve cells",
+    "Intestinal crypt cells"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Highly differentiated, non-dividing cells such as neurons and muscle are the most radioresistant."
+  },
+  {
+   "id": "p4_q56",
+   "no": 56,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "Which of the following is NOT, by itself, considered a contraindication to iodinated contrast media?",
+   "options": [
+    "A history of shellfish (seafood) allergy",
+    "A previous moderate-to-severe reaction to iodinated contrast",
+    "Severely reduced renal function (low eGFR)",
+    "Untreated hyperthyroidism"
+   ],
+   "correctAnswer": 0,
+   "explanation": "There is no specific cross-reaction between seafood allergy and iodinated contrast. Any allergic history only slightly raises general risk. The other three need real precautions."
+  },
+  {
+   "id": "p4_q57",
+   "no": 57,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "According to ESUR guidelines, a 'late' (delayed) adverse reaction to iodinated contrast is one occurring:",
+   "options": [
+    "Between 1 hour and 1 week after injection",
+    "Within the first 5 minutes",
+    "More than 1 month after injection",
+    "Only during the injection"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Acute reactions occur within 1 hour, late reactions between 1 hour and 1 week (often skin rashes), and very late reactions after 1 week (e.g., NSF with gadolinium, thyrotoxicosis)."
+  },
+  {
+   "id": "p4_q58",
+   "no": 58,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "During a barium swallow, the patient coughs violently and the screen shows barium outlining the bronchial tree. The MOST appropriate immediate action is to:",
+   "options": [
+    "Give more barium to clear the oesophagus quickly",
+    "Lay the patient flat supine to drain the lungs",
+    "Inject IV contrast to assess the bronchi",
+    "Stop the examination, sit the patient upright, encourage coughing and inform the radiologist"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Aspiration needs the procedure stopped, the airway cleared (coughing or physiotherapy) and clinical review. Water-soluble high-osmolar agents are especially dangerous if aspirated."
+  },
+  {
+   "id": "p4_q59",
+   "no": 59,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "A T-tube cholangiogram is performed mainly to:",
+   "options": [
+    "Assess gall bladder function before cholecystectomy",
+    "Check for retained common bile duct stones and free drainage into the duodenum before the T-tube is removed",
+    "Show the pancreatic duct during ERCP",
+    "Assess hepatic arterial supply"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Contrast is injected through the T-tube left after CBD exploration, usually about 7–10 days after surgery."
+  },
+  {
+   "id": "p4_q60",
+   "no": 60,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "Hysterosalpingography is contraindicated in all of the following situations EXCEPT:",
+   "options": [
+    "Active pelvic inflammatory disease",
+    "Primary infertility",
+    "Suspected pregnancy",
+    "Active menstrual bleeding"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Infertility is the main INDICATION for HSG. Infection, pregnancy and active bleeding are contraindications."
+  },
+  {
+   "id": "p4_q61",
+   "no": 61,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "In digital subtraction angiography (DSA), the 'mask' image is:",
+   "options": [
+    "The image with maximum contrast opacification",
+    "A lead mask placed over the patient's eyes",
+    "An image acquired before contrast arrives, which is subtracted from the later contrast images",
+    "The image after the contrast has washed out"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Subtraction removes bone and soft tissue, leaving only the opacified vessels. Patient movement causes misregistration artefacts."
+  },
+  {
+   "id": "p4_q62",
+   "no": 62,
+   "section": "A",
+   "subsectionId": "a5",
+   "subject": "Radiation Protection, Contrast & Special Procedures",
+   "question": "During C-arm fluoroscopy in a lateral projection, which practice will INCREASE the operator's dose?",
+   "options": [
+    "Using last-image-hold instead of repeated screening",
+    "Standing on the X-ray tube side of the patient",
+    "Using pulsed rather than continuous fluoroscopy",
+    "Keeping the image intensifier close to the patient"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Scatter is highest where the beam enters the patient, on the tube side. Staff should stand on the image intensifier (detector) side."
+  },
+  {
+   "id": "p4_q63",
+   "no": 63,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "On a non-contrast CT, a well-defined lesion measures −80 HU. It is MOST likely composed of:",
+   "options": [
+    "Fresh blood",
+    "Calcification",
+    "Simple fluid",
+    "Fat"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Fat measures about −50 to −100 HU (e.g., lipoma). Simple fluid is 0 to +20, fresh blood +50 to +80 and calcification above +100 HU."
+  },
+  {
+   "id": "p4_q64",
+   "no": 64,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "In helical CT, increasing the pitch from 1.0 to 1.5 while keeping the mAs per rotation constant will:",
+   "options": [
+    "Increase patient dose",
+    "Shorten scan time and reduce patient dose, with some loss of z-axis resolution",
+    "Improve z-axis resolution",
+    "Have no effect on scan time"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The table moves 1.5 times the beam width per rotation, so less of the patient is overlapped and irradiated."
+  },
+  {
+   "id": "p4_q65",
+   "no": 65,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "Which MRI sequence nulls the signal from CSF and is especially useful for showing periventricular white-matter lesions?",
+   "options": [
+    "STIR",
+    "Diffusion-weighted imaging",
+    "FLAIR",
+    "T1 spin echo"
+   ],
+   "correctAnswer": 2,
+   "explanation": "FLAIR suppresses fluid signal (bright T2 lesions next to dark CSF). STIR suppresses fat."
+  },
+  {
+   "id": "p4_q66",
+   "no": 66,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "On a T2-weighted spin-echo MR image, which of the following appears BRIGHT?",
+   "options": [
+    "Cortical bone",
+    "Cerebrospinal fluid",
+    "Air in the paranasal sinuses",
+    "Fast-flowing arterial blood"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Water and CSF are bright on T2. Cortical bone and air give almost no signal, and fast-flowing blood shows a dark flow void."
+  },
+  {
+   "id": "p4_q67",
+   "no": 67,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "Which of the following items can be SAFELY taken into MRI Zone IV?",
+   "options": [
+    "Equipment tested and labelled 'MR Safe'",
+    "A steel oxygen cylinder",
+    "Ferromagnetic scissors",
+    "A standard steel wheelchair"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Ferromagnetic objects become dangerous projectiles in the magnet room. Only MR-Safe (or MR-Conditional, under stated conditions) items may enter."
+  },
+  {
+   "id": "p4_q68",
+   "no": 68,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "Which ultrasound artefact helps to confirm that an echogenic focus in the gall bladder is a gallstone?",
+   "options": [
+    "Posterior acoustic enhancement",
+    "Mirror-image artefact",
+    "Posterior acoustic shadowing",
+    "Comet-tail reverberation"
+   ],
+   "correctAnswer": 2,
+   "explanation": "A stone strongly reflects or absorbs sound, leaving a dark shadow behind it. Posterior enhancement is typical of a fluid-filled cyst."
+  },
+  {
+   "id": "p4_q69",
+   "no": 69,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "Changing an ultrasound transducer from 3.5 MHz to 7.5 MHz will:",
+   "options": [
+    "Reduce resolution and increase penetration",
+    "Increase both resolution and penetration",
+    "Have no effect on image quality",
+    "Improve axial resolution but reduce depth of penetration"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Higher frequency means shorter wavelength (better resolution) but more attenuation (less penetration)."
+  },
+  {
+   "id": "p4_q70",
+   "no": 70,
+   "section": "A",
+   "subsectionId": "a6",
+   "subject": "CT, MRI, USG, Nuclear Medicine & Patient Care",
+   "question": "In a nuclear medicine generator ('cow'), Tc-99m is obtained from the decay of:",
+   "options": [
+    "Technetium-99",
+    "Molybdenum-99",
+    "Iodine-123",
+    "Gallium-67"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Mo-99 (half-life about 66 h) decays to Tc-99m, which is eluted with saline."
+  },
+  {
+   "id": "p4_q71",
+   "no": 71,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "Which one of the following pairs is INCORRECTLY matched?",
+   "options": [
+    "Chittaranjan Locomotive Works — West Bengal",
+    "Integral Coach Factory — Chennai",
+    "Rail Wheel Factory — Kapurthala",
+    "Modern Coach Factory — Rae Bareli"
+   ],
+   "correctAnswer": 2,
+   "explanation": "The Rail Wheel Factory is at Yelahanka (Bengaluru). Kapurthala has the Rail Coach Factory."
+  },
+  {
+   "id": "p4_q72",
+   "no": 72,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "Consider the following statements:\n1. The Rajya Sabha is a permanent body and is not subject to dissolution.\n2. One-third of its members retire every second year.\n3. The Vice-President of India is the ex-officio Chairman of the Rajya Sabha.\nWhich of the statements given above is/are correct?",
+   "options": [
+    "Only 1 and 2",
+    "Only 2 and 3",
+    "Only 1 and 3",
+    "1, 2 and 3"
+   ],
+   "correctAnswer": 3,
+   "explanation": "All three are correct (Articles 83(1) and 89)."
+  },
+  {
+   "id": "p4_q73",
+   "no": 73,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "Which one of the following is NOT a Fundamental Right under the Indian Constitution?",
+   "options": [
+    "Equality before law (Article 14)",
+    "Right to property (Article 300A)",
+    "Freedom of speech and expression (Article 19)",
+    "Right to constitutional remedies (Article 32)"
+   ],
+   "correctAnswer": 1,
+   "explanation": "The 44th Amendment (1978) removed property from Part III. It is now only a constitutional/legal right under Article 300A."
+  },
+  {
+   "id": "p4_q74",
+   "no": 74,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "Arrange the following events in chronological order:\n1. Non-Cooperation Movement\n2. Dandi March\n3. Quit India Movement\n4. Partition of Bengal",
+   "options": [
+    "1, 4, 2, 3",
+    "4, 1, 2, 3",
+    "4, 2, 1, 3",
+    "1, 2, 4, 3"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Partition of Bengal (1905), Non-Cooperation (1920), Dandi March (1930), Quit India (1942)."
+  },
+  {
+   "id": "p4_q75",
+   "no": 75,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "Which of the following rivers does NOT flow westward into the Arabian Sea?",
+   "options": [
+    "Narmada",
+    "Tapi",
+    "Sabarmati",
+    "Mahanadi"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The Mahanadi flows east into the Bay of Bengal. Narmada and Tapi flow west through rift valleys."
+  },
+  {
+   "id": "p4_q76",
+   "no": 76,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "Which Indian state shares its boundary with the largest number of other states?",
+   "options": [
+    "Madhya Pradesh",
+    "Uttar Pradesh",
+    "Assam",
+    "Maharashtra"
+   ],
+   "correctAnswer": 1,
+   "explanation": "UP borders 8 states (Uttarakhand, Himachal Pradesh, Haryana, Rajasthan, MP, Chhattisgarh, Jharkhand, Bihar) plus the NCT of Delhi."
+  },
+  {
+   "id": "p4_q77",
+   "no": 77,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "Who among the following was NOT a member of the Cabinet Mission of 1946?",
+   "options": [
+    "Lord Mountbatten",
+    "Sir Stafford Cripps",
+    "Lord Pethick-Lawrence",
+    "A. V. Alexander"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Mountbatten came in 1947 as the last Viceroy. The Cabinet Mission had Pethick-Lawrence, Cripps and Alexander."
+  },
+  {
+   "id": "p4_q78",
+   "no": 78,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "The 'Fairy Queen', which holds a Guinness World Record, is:",
+   "options": [
+    "India's first air-conditioned train",
+    "India's fastest semi-high-speed train",
+    "The longest goods train run in India",
+    "The oldest working steam locomotive in the world"
+   ],
+   "correctAnswer": 3,
+   "explanation": "Built in 1855, the Fairy Queen is preserved by Indian Railways and still runs occasionally."
+  },
+  {
+   "id": "p4_q79",
+   "no": 79,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "Which one of the following trophy–sport pairs is CORRECTLY matched?",
+   "options": [
+    "Davis Cup — Golf",
+    "Ryder Cup — Tennis",
+    "Thomas Cup — Badminton",
+    "Santosh Trophy — Hockey"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Davis Cup is tennis, Ryder Cup is golf and Santosh Trophy is football."
+  },
+  {
+   "id": "p4_q80",
+   "no": 80,
+   "section": "B",
+   "subsectionId": "b1",
+   "subject": "General Awareness",
+   "question": "The Comptroller and Auditor General of India submits the audit reports relating to the accounts of the Union to the:",
+   "options": [
+    "President, who causes them to be laid before Parliament",
+    "Speaker of the Lok Sabha directly",
+    "Prime Minister",
+    "Union Finance Minister"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Under Article 151, Union reports go to the President and State reports to the Governor."
+  },
+  {
+   "id": "p4_q81",
+   "no": 81,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "A train 180 m long running at 54 km/h crosses a platform in 20 seconds. What is the length of the platform?",
+   "options": [
+    "300 m",
+    "180 m",
+    "120 m",
+    "90 m"
+   ],
+   "correctAnswer": 2,
+   "explanation": "54 km/h = 15 m/s, and the distance covered = 15 × 20 = 300 m. Platform = 300 − 180 = 120 m."
+  },
+  {
+   "id": "p4_q82",
+   "no": 82,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "The price of petrol rises by 25%. By what percentage must a family reduce its consumption to keep its expenditure unchanged?",
+   "options": [
+    "20%",
+    "25%",
+    "15%",
+    "33⅓%"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Reduction = r/(100 + r) × 100 = 25/125 × 100 = 20%."
+  },
+  {
+   "id": "p4_q83",
+   "no": 83,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "A sum of money doubles itself in 5 years at simple interest. In how many years will it become four times itself?",
+   "options": [
+    "15 years",
+    "10 years",
+    "20 years",
+    "12 years"
+   ],
+   "correctAnswer": 0,
+   "explanation": "Doubling means 100% interest in 5 years, so the rate is 20% p.a. Four times means 300% interest, which takes 15 years."
+  },
+  {
+   "id": "p4_q84",
+   "no": 84,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "A and B together can do a work in 12 days, B and C in 15 days, and C and A in 20 days. In how many days can A alone do it?",
+   "options": [
+    "24 days",
+    "40 days",
+    "60 days",
+    "30 days"
+   ],
+   "correctAnswer": 3,
+   "explanation": "2(A+B+C) = 1/12 + 1/15 + 1/20 = 1/5, so A+B+C = 1/10. A = 1/10 − 1/15 = 1/30, which is 30 days."
+  },
+  {
+   "id": "p4_q85",
+   "no": 85,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "The average of 11 results is 50. The average of the first six is 49 and that of the last six is 52. What is the sixth result?",
+   "options": [
+    "50",
+    "52",
+    "48",
+    "56"
+   ],
+   "correctAnswer": 3,
+   "explanation": "(6 × 49) + (6 × 52) − (11 × 50) = 294 + 312 − 550 = 56. The sixth result is counted in both groups."
+  },
+  {
+   "id": "p4_q86",
+   "no": 86,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "By selling an article for ₹720, a shopkeeper loses 10%. At what price should he sell it to gain 15%?",
+   "options": [
+    "₹828",
+    "₹900",
+    "₹880",
+    "₹920"
+   ],
+   "correctAnswer": 3,
+   "explanation": "CP = 720 / 0.9 = ₹800, and SP for 15% gain = 800 × 1.15 = ₹920."
+  },
+  {
+   "id": "p4_q87",
+   "no": 87,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "Find the next term: 4, 6, 12, 30, 90, ?",
+   "options": [
+    "270",
+    "360",
+    "180",
+    "315"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The multipliers are ×1.5, ×2, ×2.5, ×3, so next is ×3.5: 90 × 3.5 = 315."
+  },
+  {
+   "id": "p4_q88",
+   "no": 88,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "In a certain code, RADIATION is written as NOITAIDAR. How is SHIELDING written in that code?",
+   "options": [
+    "GNIDLIEHS",
+    "GNIDELIHS",
+    "GNIDLEHIS",
+    "GNIDLEIHS"
+   ],
+   "correctAnswer": 3,
+   "explanation": "The word is written in reverse: S-H-I-E-L-D-I-N-G becomes G-N-I-D-L-E-I-H-S."
+  },
+  {
+   "id": "p4_q89",
+   "no": 89,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "If 'P + Q' means P is the father of Q, 'P − Q' means P is the wife of Q, and 'P × Q' means P is the brother of Q, which expression shows that M is the mother of N?",
+   "options": [
+    "M + K − N",
+    "M × K + N",
+    "K − M + N",
+    "M − K + N"
+   ],
+   "correctAnswer": 3,
+   "explanation": "M − K means M is K's wife; K + N means K is N's father. So M is N's mother."
+  },
+  {
+   "id": "p4_q90",
+   "no": 90,
+   "section": "B",
+   "subsectionId": "b2",
+   "subject": "General Arithmetic, Intelligence & Reasoning",
+   "question": "Five friends A, B, C, D and E sit in a row facing North. C is in the middle. A is to the immediate left of C. E is at the extreme right end. B is to the left of A. Who is sitting between C and E?",
+   "options": [
+    "A",
+    "B",
+    "D",
+    "No one"
+   ],
+   "correctAnswer": 2,
+   "explanation": "From left to right: B, A, C, D, E. So D sits between C and E."
+  },
+  {
+   "id": "p4_q91",
+   "no": 91,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "If the velocity of a moving body is doubled, its kinetic energy becomes:",
+   "options": [
+    "Four times",
+    "Two times",
+    "Half",
+    "Unchanged"
+   ],
+   "correctAnswer": 0,
+   "explanation": "KE = ½mv², so KE ∝ v² and (2)² = 4."
+  },
+  {
+   "id": "p4_q92",
+   "no": 92,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Which one of the following is NOT a vector quantity?",
+   "options": [
+    "Displacement",
+    "Work",
+    "Momentum",
+    "Acceleration"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Work (F·s) is a scalar dot product. The others have both magnitude and direction."
+  },
+  {
+   "id": "p4_q93",
+   "no": 93,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Among the following, which electromagnetic radiation has the LONGEST wavelength?",
+   "options": [
+    "Microwaves",
+    "Radio waves",
+    "Infrared rays",
+    "X-rays"
+   ],
+   "correctAnswer": 1,
+   "explanation": "In order of increasing wavelength: γ < X-ray < UV < visible < IR < microwave < radio."
+  },
+  {
+   "id": "p4_q94",
+   "no": 94,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Which statement about the isotopes of hydrogen is CORRECT?",
+   "options": [
+    "Deuterium has two protons",
+    "Tritium has one proton and two neutrons",
+    "Protium has one neutron",
+    "Tritium is a stable isotope"
+   ],
+   "correctAnswer": 1,
+   "explanation": "Protium has 1p and 0n, deuterium 1p and 1n, and tritium 1p and 2n. Tritium is radioactive (β⁻, half-life about 12.3 years)."
+  },
+  {
+   "id": "p4_q95",
+   "no": 95,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Which one of the following non-metals is a good conductor of electricity?",
+   "options": [
+    "Graphite",
+    "Sulphur",
+    "Phosphorus",
+    "Iodine"
+   ],
+   "correctAnswer": 0,
+   "explanation": "In graphite each carbon uses three electrons for bonding, leaving one free (delocalised) electron to carry current."
+  },
+  {
+   "id": "p4_q96",
+   "no": 96,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Which one of the following diseases is NOT caused by a virus?",
+   "options": [
+    "Measles",
+    "Tuberculosis",
+    "Poliomyelitis",
+    "Hepatitis B"
+   ],
+   "correctAnswer": 1,
+   "explanation": "TB is caused by the bacterium Mycobacterium tuberculosis."
+  },
+  {
+   "id": "p4_q97",
+   "no": 97,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Which hormone is known as the 'emergency' or 'fight-or-flight' hormone?",
+   "options": [
+    "Insulin",
+    "Thyroxine",
+    "Adrenaline",
+    "Oxytocin"
+   ],
+   "correctAnswer": 2,
+   "explanation": "Adrenaline from the adrenal medulla raises heart rate, blood glucose and blood flow to muscles."
+  },
+  {
+   "id": "p4_q98",
+   "no": 98,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "A solution of pH 3, compared with a solution of pH 5, has a hydrogen-ion concentration that is:",
+   "options": [
+    "100 times greater",
+    "2 times greater",
+    "20 times greater",
+    "100 times smaller"
+   ],
+   "correctAnswer": 0,
+   "explanation": "pH is logarithmic: a difference of 2 units means 10² = 100 times the [H⁺]."
+  },
+  {
+   "id": "p4_q99",
+   "no": 99,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "Two thin lenses of power +2 D and −0.5 D are placed in contact. The focal length of the combination is about:",
+   "options": [
+    "40 cm (converging)",
+    "66.7 cm (converging)",
+    "150 cm (diverging)",
+    "2.5 cm (converging)"
+   ],
+   "correctAnswer": 1,
+   "explanation": "P = 2 − 0.5 = +1.5 D, so f = 1/1.5 m ≈ 66.7 cm. A positive power means converging."
+  },
+  {
+   "id": "p4_q100",
+   "no": 100,
+   "section": "B",
+   "subsectionId": "b3",
+   "subject": "General Science",
+   "question": "The depletion of the stratospheric ozone layer is mainly caused by:",
+   "options": [
+    "Carbon dioxide",
+    "Chlorofluorocarbons (CFCs)",
+    "Methane",
+    "Nitrogen gas"
+   ],
+   "correctAnswer": 1,
+   "explanation": "UV light releases chlorine radicals from CFCs, and these destroy ozone catalytically. The Montreal Protocol (1987) phases them out."
+  }
+ ]
+}
